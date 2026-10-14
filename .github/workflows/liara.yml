@@ -23,4 +23,8 @@ jobs:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
           APP: ${{ vars.LIARA_APP_NAME || 'beautywallet' }}
           PLATFORM: ${{ vars.LIARA_PLATFORM || 'node' }}
-        run: npx --yes @liara/cli@latest deploy --app "$APP" --api-token "$LIARA_TOKEN" --port 3000 --platform "$PLATFORM" --detach
+        run: |
+          set -o pipefail
+          if ! npx --yes @liara/cli@latest deploy --app "$APP" --api-token "$LIARA_TOKEN" --port 3000 --platform "$PLATFORM" --detach 2>&1 | tee out.txt; then
+            msg=$(tail -c 900 out.txt | tr -d '\r' | tr '\n' ' ' | sed 's/[^[:print:]]//g'); echo "::error title=liara deploy::$msg"; exit 1
+          fi
