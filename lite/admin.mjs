@@ -8,7 +8,7 @@ const tehranDay=iso=>{try{return new Date(iso).toLocaleDateString('en-CA',{timeZ
 const faDay=day=>{try{return new Date(day+'T12:00:00Z').toLocaleDateString('fa-IR',{month:'short',day:'numeric',weekday:'short'})}catch{return day}};
 export function readJsonl(file){try{return fs.readFileSync(file,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
 
-export function makeAdmin({E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin}){
+export function makeAdmin({chatCall,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin}){
   // tolerate stray spaces/case in the variable name or value as typed in the Liara console
 const adminKey=Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN');
 // normalise what phones add: Persian/Arabic digits, invisible marks, stray spaces
@@ -120,7 +120,7 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});
       const f=await readForm(req);const k=String(f.key||'').replace(/[\s\u200b-\u200f\ufeff]/g,'').replace(/^Bearer/i,'');
       const fp=v=>v?crypto.createHash('sha256').update(v).digest('hex').slice(0,10):'-';
-      let status=0,body='';try{const r=await fetch(BASE+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+k},body:JSON.stringify({model:'openai/gpt-4o-mini',messages:[{role:'user',content:'say hi'}],max_tokens:20})});status=r.status;body=(await r.text()).replace(/(sk-|eyJ)[\w.-]+/g,'[redacted]').slice(0,200)}catch(e){body=e.message}
+      let status=0,body='';try{const x=await chatCall('openai/gpt-5.4-mini',[{role:'user',content:'say hi'}],undefined,k);status=x.r.status;body=String(x.d?.choices?.[0]?.message?.content||x.d?.error?.message||'').replace(/(sk-|eyJ)[\w.-]+/g,'[redacted]').slice(0,200)}catch(e){body=e.message}
       return send(res,200,{pasted:{length:k.length,fingerprint:fp(k)},server:{length:String(KEY).length,fingerprint:fp(String(KEY))},same:fp(k)===fp(String(KEY)),status,body,url:BASE+'/chat/completions'},'application/json',{'Cache-Control':'no-store'});
     }
     if(p==='/admin/test-search'&&req.method==='POST'){

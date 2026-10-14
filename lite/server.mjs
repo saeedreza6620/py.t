@@ -41,6 +41,17 @@ const hits=new Map();let day=new Date().toDateString(),dayCount=0;
 function allow(addr){const now=Date.now();if(new Date().toDateString()!==day){day=new Date().toDateString();dayCount=0}if(dayCount>=DAILY)return 'daily';const list=(hits.get(addr)||[]).filter(t=>now-t<3600e3);if(list.length>=HOURLY){hits.set(addr,list);return 'hourly'}list.push(now);hits.set(addr,list);dayCount++;return ''}
 
 function sourcesOf(msg){const out=[],seen=new Set();for(const a of msg?.annotations||[]){const v=a.url_citation||a;try{const u=new URL(v.url);if(u.protocol!=='https:'||seen.has(u.href))continue;seen.add(u.href);out.push({url:u.href,title:String(v.title||u.hostname).slice(0,180)})}catch{}}return out.slice(0,12)}
+// Liara support's recommended connection: the official OpenAI SDK with baseURL + apiKey
+let client=null;
+async function sdk(key=KEY){const {default:OpenAI}=await import('openai');if(key!==KEY)return new OpenAI({baseURL:BASE,apiKey:key,maxRetries:0});if(!client)client=new OpenAI({baseURL:BASE,apiKey:KEY,maxRetries:0});return client}
+async function chatCall(model,messages,signal,key){
+  const params={model,messages};
+  // gpt-5 family rejects custom temperature / max_tokens; others get a roomy budget for reasoning
+  if(!/gpt-5/.test(model)){params.max_tokens=MAX_TOKENS;params.temperature=0.3}
+  try{const c=await (await sdk(key)).chat.completions.create(params,{signal,timeout:110000});return {r:{ok:true,status:200},d:c}}
+  catch(e){if(e?.name==='AbortError'||e?.constructor?.name==='APIUserAbortError')throw Object.assign(new Error('aborted'),{name:'AbortError'});
+    const status=Number(e?.status)||0;if(!status)throw e;return {r:{ok:false,status},d:{error:{message:e?.error?.message||e?.message||'',code:e?.code||e?.error?.code||status}}}}
+}
 async function ai(body){
   if(!KEY||!BASE)return {status:503,body:{error:'دستیار هنوز روی سرور تنظیم نشده (کلید یا آدرس)',code:'not_configured'}};
   const tier=['light','default','complex'].includes(body.tier)?body.tier:'default';
@@ -52,11 +63,10 @@ async function ai(body){
   const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),body.search?110000:90000);
   try{
     let r,d;const first=model;
-    const chain=[...new Set([model,fallback,body.search?'openai/gpt-4o-mini:online':'openai/gpt-4o-mini'])];const tried=[];
+    const chain=[...new Set([model,fallback,body.search?'openai/gpt-4o-mini:online':'openai/gpt-5.4-mini',body.search?'openai/gpt-5.4-mini:online':'openai/gpt-4o-mini'])];const tried=[];
     for(const m of chain){
       model=m;
-      r=await fetch(BASE+'/chat/completions',{method:'POST',signal:ctl.signal,headers:{'Content-Type':'application/json','Authorization':'Bearer '+KEY},body:JSON.stringify({model,messages,max_tokens:MAX_TOKENS,temperature:0.3})});
-      d=await r.json().catch(()=>null);
+      ({r,d}=await chatCall(m,messages,ctl.signal));
       // unknown/unavailable model → try the safe fallback once instead of failing the user
       tried.push(m+':'+r.status);if(r.ok||![400,401,403,404,422,503].includes(r.status))break;
       console.error('ai model failed, falling back',r.status,m);
@@ -76,7 +86,7 @@ function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSO
 let lastUpstream=null;
 function osOf(ua){ua=String(ua||'');return /iPhone|iPad|iPod/i.test(ua)?'ios':/Android/i.test(ua)?'android':'desktop'}
 function logUsage(row){fs.appendFile(path.join(DATA,'usage.jsonl'),JSON.stringify(row)+'\n',()=>{})}
-const admin=makeAdmin({E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
+const admin=makeAdmin({chatCall,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
@@ -87,7 +97,7 @@ const server=http.createServer(async(req,res)=>{
         const t0=Date.now();const a=await ai({tier:'default',input:'فقط بنویس: سلام'});const t1=Date.now();
         const b=await ai({search:true,input:'قیمت امروز میسلار واتر بایودرما سبیوم ۲۵۰ میل در دیجی‌کالا یا ترب چنده؟ خیلی کوتاه با منبع.'});
         const probe=async u=>{try{const r=await fetch(u,{headers:{Authorization:'Bearer '+KEY}});const t=await r.text();return r.status+' '+t.replace(/(sk-|eyJ)[\w.-]+/g,'[redacted]').slice(0,120)}catch(e){return 'ERR '+e.message}};
-        const probes={models:await probe(BASE+'/models'),noKey:await (async()=>{try{const r=await fetch(BASE+'/models');return r.status+' '+(await r.text()).slice(0,80)}catch(e){return 'ERR '+e.message}})()};
+        const probes={sdk:await (async()=>{try{const x=await chatCall('openai/gpt-5.4-mini',[{role:'user',content:'say hi'}]);return x.r.status+' '+String(x.d?.choices?.[0]?.message?.content||x.d?.error?.message||'').slice(0,60)}catch(e){return 'ERR '+e.message}})(),models:await probe(BASE+'/models'),noKey:await (async()=>{try{const r=await fetch(BASE+'/models');return r.status+' '+(await r.text()).slice(0,80)}catch(e){return 'ERR '+e.message}})()};
         deepCache={t:Date.now(),ok:a.status===200&&b.status===200,r:{at:new Date().toISOString(),probes,key:keyInfo(),upstream:a.status===200?null:lastUpstream,base:BASE.replace(/^https?:\/\//,''),answer:{ok:a.status===200,model:a.body.model,fallback:!!a.body.fallback,seconds:Math.round((t1-t0)/100)/10,error:a.body.code||null},search:{ok:b.status===200,model:b.body.model,fallback:!!b.body.fallback,seconds:Math.round((Date.now()-t1)/100)/10,sources:(b.body.sources||[]).map(x=>new URL(x.url).hostname),sample:String(b.body.text||'').slice(0,300),error:b.body.code||null}}};
         logUsage({at:new Date().toISOString(),test:true,status:b.status,model:b.body.model||'',search:true,sources:(b.body.sources||[]).length});
       }
