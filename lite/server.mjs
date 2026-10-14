@@ -13,9 +13,10 @@ const PUBLIC=path.join(here,'public');
 import os from 'node:os';import {makeAdmin} from './admin.mjs';
 // Liara app filesystems are read-only unless a disk is mounted: pick the first writable folder, never crash.
 function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
-const DATA=[process.env.DATA_DIR,path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
+const DATA=[process.env.DATA_DIR,'/data',path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
 const E=process.env;
-const persistent=!!E.DATA_DIR&&path.resolve(DATA)===path.resolve(E.DATA_DIR);
+// /data is where the Liara disk is mounted (liara.json); DATA_DIR overrides it
+const persistent=path.resolve(DATA)===path.resolve(E.DATA_DIR||'/data');
 const BASE=String(E.AI_BASE_URL||'').trim().replace(/\/(chat\/completions)\/?$/,'').replace(/\/$/,'');
 const KEY=E.LIARA_API_KEY||E.AI_API_KEY||'';
 const MODELS={light:E.AI_MODEL_LIGHT||E.AI_MODEL||'openai/gpt-4.1-mini',default:E.AI_MODEL||'openai/gpt-4.1-mini',complex:E.AI_MODEL_COMPLEX||E.AI_MODEL||'openai/gpt-4.1-mini',search:E.AI_MODEL_SEARCH||'openai/gpt-4.1-mini:online'};

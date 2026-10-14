@@ -73,7 +73,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 6px;b
     return page('پنل مدیریت بیوتی‌ولت',`
 <header><div class="brand"><div class="logo">BW</div><h1>پنل مدیریت بیوتی‌ولت<small>نسخه آزمایشی · آخرین فعالیت: ${s.lastAt?esc(new Date(s.lastAt).toLocaleString('fa-IR',{timeZone:'Asia/Tehran'})):'—'}</small></h1></div><div><a class="btn ghost" href="/admin">تازه‌سازی</a> <a class="btn ghost" href="/admin/logout">خروج</a></div></header>
 <div class="card links"><div class="l"><span>🧪 لینک تست برای کاربران</span><a href="${esc(o)}/legacy/" target="_blank">${esc(o)}/legacy/</a></div><div class="l"><span>🌐 وب‌سایت</span><a href="${esc(o)}/" target="_blank">${esc(o)}/</a></div><div class="l"><span>🛠 پنل مدیریت (همین صفحه)</span><a href="${esc(o)}/admin">${esc(o)}/admin</a></div></div>
-${persistent?'':`<div class="card" style="margin-top:12px;border-color:rgba(183,121,31,.5);background:#fff8ec"><div class="st"><span class="dot warn"></span><b>داده‌ها دائمی نیستند.</b></div><p class="note">با هر انتشار تازه، آمار و بازخوردها پاک می‌شوند. در لیارا یک دیسک بساز، به <code>/data</code> وصل کن و متغیر <code>DATA_DIR=/data</code> را اضافه کن. (الان: <code>${esc(DATA)}</code>)</p></div>`}
+${persistent?'':`<div class="card" style="margin-top:12px;border-color:rgba(183,121,31,.5);background:#fff8ec"><div class="st"><span class="dot warn"></span><b>داده‌ها دائمی نیستند.</b></div><p class="note">با هر انتشار تازه، آمار و بازخوردها پاک می‌شوند. در لیارا یک دیسک با نام <code>data</code> بساز تا به <code>/data</code> وصل شود. (الان: <code>${esc(DATA)}</code>)</p></div>`}
 <h2>نصب و استفاده</h2><div class="grid">
 ${k(s.installed,'نصب روی گوشی','از آیکن صفحه اصلی باز شده یا نصب اندروید')}
 ${k(s.devices,'دستگاه یکتا',`امروز: ${fa(s.today)}`)}
