@@ -4,6 +4,7 @@
 //   POST /api/feedback  → appends to DATA_DIR/feedback.jsonl
 //   GET  /admin/feedback?token=ADMIN_TOKEN[&format=csv] → owner view of feedback
 // Env: LIARA_API_KEY (secret), AI_BASE_URL, AI_MODEL, AI_MODEL_LIGHT, AI_MODEL_COMPLEX, AI_MODEL_SEARCH,
+//      AI_MODEL_FALLBACK, AI_MODEL_SEARCH_FALLBACK, AI_MAX_TOKENS (optional)
 //      ADMIN_TOKEN (secret), PORT (default 3000), DATA_DIR (default ./data), HOURLY_LIMIT, DAILY_LIMIT
 import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
@@ -13,6 +14,9 @@ const E=process.env;
 const BASE=String(E.AI_BASE_URL||'').trim().replace(/\/(chat\/completions)\/?$/,'').replace(/\/$/,'');
 const KEY=E.LIARA_API_KEY||E.AI_API_KEY||'';
 const MODELS={light:E.AI_MODEL_LIGHT||E.AI_MODEL||'openai/gpt-4.1-mini',default:E.AI_MODEL||'openai/gpt-4.1-mini',complex:E.AI_MODEL_COMPLEX||E.AI_MODEL||'openai/gpt-4.1-mini',search:E.AI_MODEL_SEARCH||'openai/gpt-4.1-mini:online'};
+const FALLBACK=E.AI_MODEL_FALLBACK||'google/gemini-2.5-flash',FALLBACK_SEARCH=E.AI_MODEL_SEARCH_FALLBACK||'openai/gpt-4.1-mini:online';
+// reasoning models (Gemini Pro, GPT-5…) spend tokens on thinking first, so leave room for the answer
+const MAX_TOKENS=Number(E.AI_MAX_TOKENS||8000);
 const HOURLY=Number(E.HOURLY_LIMIT||40),DAILY=Number(E.DAILY_LIMIT||600);
 const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.PNG':'image/png','.JPG':'image/jpeg','.webp':'image/webp','.svg':'image/svg+xml','.ico':'image/x-icon','.woff2':'font/woff2','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.xml':'application/xml'};
 const SEC={'X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','X-Frame-Options':'DENY'};
@@ -33,10 +37,18 @@ async function ai(body){
   messages=messages.filter(m=>m&&(m.role==='user'||m.role==='assistant')&&typeof m.content==='string').slice(-8).map(m=>({role:m.role,content:m.content.slice(0,24000)}));
   if(!messages.length||messages[messages.length-1].role!=='user')return {status:400,body:{error:'پیام نامعتبر است'}};
   let model=body.search?MODELS.search:MODELS[tier];if(body.search&&!/:online$/.test(model))model+=':online';
-  const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),body.search?75000:55000);
+  const fallback=body.search?FALLBACK_SEARCH:FALLBACK;
+  const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),body.search?110000:90000);
   try{
-    const r=await fetch(BASE+'/chat/completions',{method:'POST',signal:ctl.signal,headers:{'Content-Type':'application/json','Authorization':'Bearer '+KEY},body:JSON.stringify({model,messages,max_tokens:body.search?1400:1100,temperature:0.3})});
-    const d=await r.json().catch(()=>null);
+    let r,d;
+    for(const m of model===fallback?[model]:[model,fallback]){
+      model=m;
+      r=await fetch(BASE+'/chat/completions',{method:'POST',signal:ctl.signal,headers:{'Content-Type':'application/json','Authorization':'Bearer '+KEY},body:JSON.stringify({model,messages,max_tokens:MAX_TOKENS,temperature:0.3})});
+      d=await r.json().catch(()=>null);
+      // unknown/unavailable model → try the safe fallback once instead of failing the user
+      if(r.ok||![400,404,422,503].includes(r.status))break;
+      console.error('ai model failed, falling back',r.status,m);
+    }
     if(!r.ok){const code=String(d?.error?.code||d?.code||r.status).replace(/[^\w.-]/g,'').slice(0,60);console.error('ai upstream',r.status,code,model);
       return {status:r.status===429?429:502,body:{error:r.status===401||r.status===403?'کلید یا دسترسی سرویس هوش مصنوعی مشکل دارد':r.status===402?'اعتبار سرویس هوش مصنوعی تمام شده':r.status===429?'سرویس شلوغه؛ یه کم بعد دوباره بزن':r.status===404?'نام مدل یا آدرس سرویس درست نیست':'دستیار الان جواب نداد؛ دوباره تلاش کن',code:'upstream_'+code}}}
     const msg=d?.choices?.[0]?.message;const text=typeof msg?.content==='string'?msg.content:Array.isArray(msg?.content)?msg.content.map(x=>x.text||'').join('\n'):'';
