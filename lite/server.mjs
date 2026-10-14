@@ -9,7 +9,10 @@
 import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC=path.join(here,'public');
-const DATA=process.env.DATA_DIR||path.join(here,'data');fs.mkdirSync(DATA,{recursive:true});
+import os from 'node:os';
+// Liara app filesystems are read-only unless a disk is mounted: pick the first writable folder, never crash.
+function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
+const DATA=[process.env.DATA_DIR,path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
 const E=process.env;
 const BASE=String(E.AI_BASE_URL||'').trim().replace(/\/(chat\/completions)\/?$/,'').replace(/\/$/,'');
 const KEY=E.LIARA_API_KEY||E.AI_API_KEY||'';
@@ -77,7 +80,7 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname==='/api/feedback'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const b=await readBody(req,8000);const row={at:new Date().toISOString(),kind:String(b.kind||'app').slice(0,20),rating:Math.max(0,Math.min(5,Number(b.rating)||0))||undefined,tags:Array.isArray(b.tags)?b.tags.slice(0,8).map(t=>String(t).slice(0,40)):undefined,text:String(b.text||'').slice(0,1000)||undefined,skin:String(b.skin||'').slice(0,20)||undefined,routineSize:Number(b.routineSize)||undefined,raw:b.kind==='answer'?{rating:String(b.rating||'').slice(0,20),messageId:String(b.assistantMessageId||'').slice(0,60)}:undefined};
-      fs.appendFileSync(path.join(DATA,'feedback.jsonl'),JSON.stringify(row)+'\n');return send(res,200,{ok:true,message:'رسید، مرسی 💗'});
+      try{fs.appendFileSync(path.join(DATA,'feedback.jsonl'),JSON.stringify(row)+'\n')}catch(e){console.error('feedback write failed',e.code);return send(res,500,{error:'ذخیره نشد؛ دوباره بزن'})}return send(res,200,{ok:true,message:'رسید، مرسی 💗'});
     }
     if(url.pathname==='/admin/feedback'){
       if(!E.ADMIN_TOKEN||url.searchParams.get('token')!==E.ADMIN_TOKEN)return send(res,401,'نیاز به توکن مدیریت','text/plain; charset=utf-8');
@@ -93,4 +96,5 @@ const server=http.createServer(async(req,res)=>{
     fs.stat(file,(err,st)=>{if(err||!st.isFile())return send(res,404,'پیدا نشد','text/plain; charset=utf-8');const ext=path.extname(file);const html=ext==='.html'||/sw\.js$/.test(file);res.writeHead(200,{'Content-Type':TYPES[ext]||'application/octet-stream',...SEC,'Cache-Control':html?'no-cache':'public, max-age=604800'});fs.createReadStream(file).pipe(res)});
   }catch(e){send(res,e.status||500,{error:e.status===413?'پیام خیلی طولانیه':'خطای سرور',code:e.message})}
 });
-server.listen(Number(E.PORT||3000),()=>console.log('BeautyWallet lite on :'+(E.PORT||3000)+' ai='+(KEY&&BASE?'configured':'missing')));
+server.listen(Number(E.PORT||3000),'0.0.0.0',()=>console.log('BeautyWallet lite on 0.0.0.0:'+(E.PORT||3000)+' ai='+(KEY&&BASE?'configured':'missing')+' data='+DATA));
+process.on('uncaughtException',e=>console.error('uncaught',e));process.on('unhandledRejection',e=>console.error('unhandled',e));
