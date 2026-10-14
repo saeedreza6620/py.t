@@ -1,0 +1,13 @@
+# Manual end-to-end check of the deployed test app (no secrets needed).
+name: Check live app
+on: workflow_dispatch
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Health
+        run: |
+          curl -sS -m 30 https://beautywallet.liara.run/healthz; echo
+          curl -sS -m 30 -o /dev/null -w "legacy %{http_code}\n" https://beautywallet.liara.run/legacy/
+          curl -sS -m 30 -o /dev/null -w "site %{http_code}\n" https://beautywallet.liara.run/
+          curl -sS -m 200 https://beautywallet.liara.run/healthz/deep; echo
