@@ -1,0 +1,38 @@
+{
+  "id": "./index.html",
+  "name": "BeautyWallet | کیف هوشمند زیبایی",
+  "short_name": "BeautyWallet",
+  "description": "پروفایل پوست، روتین، خرید هوشمند و پیگیری نتیجه",
+  "lang": "fa",
+  "dir": "rtl",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
+  "start_url": "/legacy/?v=69",
+  "scope": "./",
+  "background_color": "#f1faff",
+  "theme_color": "#e7f8ff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./bw-circle-192-v27.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./bw-circle-512-v27.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./bw-circle-maskable-512-v27.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

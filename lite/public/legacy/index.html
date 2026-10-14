@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="fa" dir="rtl" class="purchase-first">
+<head>
+<base href="/legacy/">
+<script>window.BW_LITE=true</script>
+<script src="./claude-bridge.js?v=69"></script>
+<script src="./bw-prompts.js?v=69"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=5">
+<meta name="theme-color" content="#e7f8ff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BeautyWallet">
+<meta name="color-scheme" content="light">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./manifest.webmanifest?v=69">
+<link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180-v27.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+
+
+
+<title>BeautyWallet — انتخاب مطمئن</title>
+<meta name="description" content="قبل از خرید محصول پوستی، تناسب آن با پوست، روتین و بودجه‌ات را بررسی کن. راهنماهای عمومی جدا از تصمیم شخصی و داده‌های خصوصی تو هستند.">
+<link rel="canonical" href="https://beautywallet-ir.saeedrezabarzkar6.chatgpt.site/legacy/">
+<meta name="bw-build" content="v6-friendly-flow-20260920">
+<style>
+:root{--ink:#111411;--muted:#747970;--paper:#f7f5ef;--card:#fffdf8;--line:#e8e1d3;--gold:#a77c2d;--gold2:#d3b46d;--deep:#0d1110;--ok:#2e7256;--warn:#9a6a23;--shadow:0 18px 60px rgba(32,27,18,.10);--r:24px;}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(circle at 80% -10%,#eee3ca 0,transparent 34%),var(--paper);color:var(--ink);font-family:'Estedad',Tahoma,Arial,sans-serif;-webkit-font-smoothing:antialiased;padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+button,input{font:inherit} button{cursor:pointer} a{color:inherit} .shell{width:min(1120px,100%);margin:auto;padding:0 18px}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(247,245,239,.82);backdrop-filter:blur(18px);border-bottom:1px solid rgba(167,124,45,.10);padding-top:env(safe-area-inset-top)}
+.topbar .inner{height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px} .brand{display:flex;align-items:center;gap:10px;min-width:0} .logo{width:38px;height:38px;flex:0 0 38px;filter:drop-shadow(0 8px 16px rgba(94,67,18,.14))} .brandtext b{display:block;font-size:16px;letter-spacing:.2px} .brandtext small{color:var(--muted);font-size:10.5px}
+.trust-pill{border:1px solid #d9c692;background:#fffbef;border-radius:999px;padding:7px 10px;font-size:11px;color:#6f551f;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.hero{padding:24px 0 12px} .hero-card{position:relative;overflow:hidden;background:linear-gradient(135deg,#101512 0%,#1c211d 65%,#2f2b21 100%);color:#fff;border-radius:32px;padding:26px 22px 24px;box-shadow:0 28px 80px rgba(18,18,13,.16)} .hero-card:before{content:"";position:absolute;inset:-80px -110px auto auto;width:240px;height:240px;border:1px solid rgba(211,180,109,.28);border-radius:50%;box-shadow:0 0 0 28px rgba(211,180,109,.03),0 0 0 58px rgba(211,180,109,.02)} .hero-kicker{font-size:11px;color:#dfc98e;letter-spacing:.8px} h1{font-size:clamp(29px,8vw,48px);line-height:1.12;margin:10px 0 11px;max-width:720px} .hero p{margin:0;color:#d5d8d4;font-size:13.5px;line-height:1.9;max-width:650px} .hero-actions{display:flex;gap:10px;margin-top:19px;flex-wrap:wrap} .primary{border:0;background:linear-gradient(135deg,#c7a65a,#f0d58f);color:#15120b;padding:12px 16px;border-radius:14px;font-weight:800;box-shadow:0 10px 30px rgba(205,168,84,.2)} .ghost{border:1px solid rgba(255,255,255,.18);color:#fff;background:rgba(255,255,255,.06);padding:12px 15px;border-radius:14px}
+.signal-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px} .signal{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:13px 10px;min-height:78px} .signal b{font-size:13px;display:block;margin-bottom:5px} .signal span{font-size:10.5px;color:var(--muted);line-height:1.45;display:block}
+.section{padding:14px 0} .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:11px} .section-head h2{font-size:19px;margin:0} .section-head small{color:var(--muted)}
+.search-wrap{position:relative} .search{width:100%;border:1px solid var(--line);border-radius:18px;background:#fff;padding:14px 46px 14px 14px;outline:none;box-shadow:0 8px 25px rgba(40,30,10,.035)} .search:focus{border-color:#cdb575;box-shadow:0 0 0 4px rgba(205,181,117,.12)} .search-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold);width:20px;height:20px;pointer-events:none}.search-icon svg,.regret-symbol svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.chips{display:flex;gap:8px;overflow:auto;padding:10px 1px 4px;scrollbar-width:none} .chips::-webkit-scrollbar{display:none} .chip{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 13px;color:#575b54;font-size:12px} .chip.active{background:var(--deep);color:#fff;border-color:var(--deep)}
+.catalog{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px} .product-card{text-align:right;border:1px solid var(--line);background:var(--card);padding:0;border-radius:22px;overflow:hidden;box-shadow:0 7px 28px rgba(25,20,10,.045);transition:.2s transform,.2s box-shadow;min-width:0;color:inherit} .product-card:active{transform:scale(.985)} .product-card[hidden]{display:none} .product-media{height:170px;background:linear-gradient(145deg,#fbf9f3,#eee8dc);position:relative;display:grid;place-items:center;overflow:hidden} .product-media img{width:100%;height:100%;object-fit:contain;padding:10px;background:#fff} .product-media.img-error:after{content:"نمای دسته محصول";font-size:11px;color:var(--muted)} .placeholder-mark{text-align:center;color:#91743b} .placeholder-mark>span{display:grid;place-items:center;width:58px;height:58px;border:1px solid #d8c797;border-radius:20px;margin:auto;font-size:25px;background:rgba(255,255,255,.58)} .placeholder-mark small{display:block;margin-top:8px;font-size:10px} .badge-wrap{position:absolute;right:8px;top:8px} .verify-badge,.match-badge{font-size:9.5px;padding:6px 8px;border-radius:999px;backdrop-filter:blur(10px)} .verify-badge{background:rgba(234,248,240,.90);color:#256248;border:1px solid rgba(46,114,86,.18)} .match-badge{background:rgba(255,248,230,.93);color:#7a5920;border:1px solid rgba(154,106,35,.18)} .product-copy{padding:12px 12px 14px} .product-copy .eyebrow{font-size:9.5px;color:var(--gold);display:block;margin-bottom:5px} .product-copy strong{font-size:12.5px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:40px} .product-copy small{color:var(--muted);font-size:9.2px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:5px;direction:ltr;text-align:left}
+.panel{display:none} .panel.active{display:block} .soft-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 8px 32px rgba(25,20,10,.045);margin:10px 0} .soft-card h3{margin:0 0 7px;font-size:17px} .soft-card p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.9}
+.empty{text-align:center;padding:34px 16px;color:var(--muted)} .wallet-list{display:grid;gap:9px} .wallet-item{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:17px;padding:10px} .wallet-thumb{width:58px;height:58px;border-radius:14px;object-fit:contain;background:#f4f0e6} .wallet-item .meta{flex:1;min-width:0} .wallet-item b{font-size:12.5px} .wallet-item small{display:block;color:var(--muted);font-size:10px;margin-top:3px} .tiny-btn{border:0;background:#f2eee4;border-radius:10px;padding:8px 9px;font-size:10px}
+.track-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px} .routine{background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px} .routine h3{font-size:14px;margin:0 0 9px} .task{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed #eee8dc;font-size:11.5px} .task:last-child{border-bottom:0} .task input{accent-color:#9a742b;width:18px;height:18px} textarea{width:100%;min-height:105px;border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff;resize:vertical;outline:none;font:inherit}
+.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px} .choice{border:1px solid var(--line);background:#fff;border-radius:14px;padding:11px;text-align:center;font-size:11.5px} .choice.selected{border-color:#b18a3f;background:#fff8e7;color:#6e531f;font-weight:700} .concerns{display:flex;flex-wrap:wrap;gap:8px} .privacy-note{display:flex;gap:9px;align-items:flex-start;background:#eef6f1;border:1px solid #d8e9df;border-radius:17px;padding:12px;color:#345846;font-size:11px;line-height:1.7}
+.bottom-nav{position:fixed;z-index:50;bottom:0;left:0;right:0;padding:8px 12px calc(8px + env(safe-area-inset-bottom));background:rgba(249,247,241,.91);backdrop-filter:blur(20px);border-top:1px solid rgba(167,124,45,.12)} .nav-inner{width:min(760px,100%);margin:auto;display:flex;gap:3px;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity}.nav-inner::-webkit-scrollbar{display:none}.nav-btn{border:0;background:transparent;color:#777b74;border-radius:14px;padding:8px 8px 6px;font-size:9.5px;display:grid;place-items:center;gap:4px;min-height:53px;min-width:72px;flex:1 0 72px;scroll-snap-align:center} .nav-btn i{font-style:normal;font-size:18px;line-height:1} .nav-btn.active{color:#2b2417;background:#f0e6ce;font-weight:800}
+.sheet-backdrop{position:fixed;z-index:90;inset:0;background:rgba(6,8,6,.52);backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:center;padding-top:20px} .sheet-backdrop.open{display:flex} .sheet{width:min(620px,100%);max-height:89vh;overflow:auto;background:#faf8f2;border-radius:30px 30px 0 0;padding:10px 18px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -18px 70px rgba(0,0,0,.18)} .grab{width:48px;height:5px;border-radius:99px;background:#d7d0c2;margin:2px auto 13px} .sheet-media{height:260px;background:#fff;border:1px solid var(--line);border-radius:24px;display:grid;place-items:center;overflow:hidden;position:relative} .sheet-media img{width:100%;height:100%;object-fit:contain;padding:14px} .sheet h3{font-size:19px;margin:15px 0 5px} .sheet .en{font-size:11px;color:var(--muted);direction:ltr;text-align:left} .sheet-status{margin:12px 0;background:#fff;border:1px solid var(--line);border-radius:17px;padding:12px;font-size:11.5px;line-height:1.75} .sheet-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px} .sheet-actions button,.sheet-actions a{text-decoration:none;text-align:center;border:0;border-radius:14px;padding:12px;font-weight:800;font-size:11px} .add-wallet{background:var(--deep);color:#fff} .source-link{background:#eee8da;color:#3f3523}
+.toast{position:fixed;z-index:120;bottom:100px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#111711;color:#fff;padding:10px 14px;border-radius:999px;font-size:11px;transition:.2s} .toast.show{opacity:1;transform:translate(-50%,0)}
+.footer-note{padding:28px 5px 8px;color:#8b8e87;font-size:10px;line-height:1.8;text-align:center}
+@media(min-width:700px){.shell{padding:0 26px}.catalog{grid-template-columns:repeat(4,minmax(0,1fr))}.product-media{height:220px}.signal-row{grid-template-columns:repeat(3,1fr)}.hero-card{padding:42px}.track-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1020px){.catalog{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* === Luxury mobile refresh v4 === */
+body,button,input,textarea,select{font-family:'Estedad',Tahoma,sans-serif}
+.brandtext b,.hero h1,.section-head h2{font-family:'Estedad',Tahoma,sans-serif}
+.brandtext b{font-weight:800;letter-spacing:-.02em}
+.hero .eyebrow,.eyebrow,.hero p,.section-head small{letter-spacing:-.01em}
+.hero{position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:-40% -20% auto auto;width:220px;height:220px;background:radial-gradient(circle at center,rgba(214,174,79,.20),rgba(214,174,79,0) 70%);pointer-events:none}
+.product-card{border:1px solid rgba(214,174,79,.18);box-shadow:0 16px 36px rgba(7,10,18,.08)}
+.product-card:hover{transform:translateY(-1px)}
+.product-media{position:relative;overflow:hidden;background:linear-gradient(180deg,#fffaf1,#f5efe1)}
+.product-media img{width:100%;height:100%;object-fit:contain;padding:10px;mix-blend-mode:multiply}
+.badge-wrap{position:absolute;top:10px;right:10px;display:flex;gap:6px;flex-wrap:wrap}
+.verify-badge,.match-badge,.ref-badge{padding:6px 10px;border-radius:999px;font-size:11px;font-weight:700;backdrop-filter:blur(10px)}
+.verify-badge{background:rgba(17,84,60,.92);color:#fff}
+.match-badge{background:rgba(122,89,32,.92);color:#fff}
+.ref-badge{background:rgba(30,46,82,.92);color:#fff}
+.placeholder-mark{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;height:100%;background:linear-gradient(145deg,#fbf6eb,#eee2c8);color:#907243;text-align:center;padding:18px}
+.placeholder-mark span{font-size:28px}
+.soft-card.scan-card{padding:16px}
+.face-upload{display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:center}
+.face-preview{width:92px;height:92px;border-radius:24px;border:1px solid rgba(214,174,79,.35);background:linear-gradient(180deg,#fffaf1,#eee5d0);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.face-preview img{width:100%;height:100%;object-fit:cover}
+.face-preview .placeholder{font-size:28px;color:#a7833e}
+.upload-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.upload-actions label,.upload-actions button{border:none;border-radius:14px;padding:11px 14px;font-weight:700;cursor:pointer}
+.upload-actions label{background:linear-gradient(135deg,#c9a857,#ebd696);color:#191919;box-shadow:0 12px 24px rgba(201,168,87,.24)}
+.upload-actions button{background:#f7f1e2;color:#735d31}
+.scan-note{margin-top:10px;font-size:12px;color:#746a59;line-height:1.8}
+.track-grid{margin-bottom:14px}
+.source-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.sheet-media{background:linear-gradient(180deg,#fffaf0,#f6eddc);border:1px solid rgba(214,174,79,.18)}
+.sheet-media img{mix-blend-mode:multiply}
+.wallet-thumb{background:linear-gradient(180deg,#fffaf0,#f6eddc)}
+.footer-note{font-size:12px}
+@media (max-width:420px){
+  .face-upload{grid-template-columns:78px 1fr;gap:12px}
+  .face-preview{width:78px;height:78px;border-radius:20px}
+}
+
+
+/* === Typography and bidi polish v4 === */
+.brandtext b,.hero-kicker,.product-copy small,.sheet .en,.latin-inline{font-family:'Manrope',Arial,sans-serif}
+.brandtext b{direction:ltr;unicode-bidi:isolate;text-align:left}
+.hero-kicker{direction:ltr;unicode-bidi:isolate;text-align:left;display:block;letter-spacing:.14em;font-weight:700}
+.product-copy small{direction:ltr!important;text-align:left!important;unicode-bidi:plaintext;font-weight:600;line-height:1.45}
+.sheet .en{direction:ltr!important;text-align:left!important;unicode-bidi:plaintext;font-weight:600;line-height:1.55}
+.latin-inline{direction:ltr;unicode-bidi:isolate;display:inline-block}
+.latin-run{direction:ltr;unicode-bidi:isolate;display:inline;font-family:'Manrope',Arial,sans-serif;font-weight:600}
+.product-copy strong,.sheet h3,.wallet-item b{unicode-bidi:plaintext}
+.hero p,.signal span,.soft-card p,.privacy-note,.scan-note,.footer-note{line-height:1.95}
+.hero-card h1{letter-spacing:-.045em}
+.soft-card h3{letter-spacing:-.025em}
+
+
+/* === Mobile image stability v6 === */
+.product-media img,.sheet-media img,.wallet-thumb{transform:translateZ(0);-webkit-transform:translateZ(0);}
+@media(max-width:699px){.product-media{height:172px}.product-media img{padding:9px}.sheet-media{height:250px}}
+.purchase-box,.account-card{background:#fff;border:1px solid #cde5f0;border-radius:20px;padding:17px;margin-top:14px;line-height:1.8}.purchase-box h3{margin:0 0 8px;color:#23577a}.purchase-box p,.account-card p{font-size:14px}.purchase-item{display:flex;gap:12px;align-items:center;padding:12px;border-radius:14px;background:#f0f9fc;margin:9px 0}.purchase-item img{width:54px;height:60px;object-fit:contain;background:#fff;border-radius:9px}.purchase-item strong{font-size:14px}.purchase-item small{display:block;color:#526e7e}.purchase-box a.buy-link,.account-actions a,.account-actions button{display:inline-block;border:0;border-radius:11px;background:#30789c;color:#fff;padding:10px 14px;text-decoration:none;font:inherit;font-size:14px;cursor:pointer;margin:4px}.purchase-box .caution{font-size:12px;color:#566f7c}.phone-login{display:grid;gap:10px;width:100%;max-width:340px}.phone-login[hidden]{display:none}.phone-login label{display:grid;gap:5px}.phone-login input{font:inherit;padding:10px;border:1px solid #bddde9;border-radius:11px;direction:ltr;text-align:left}.account-actions{display:flex;flex-wrap:wrap;gap:4px}.account-actions .danger{background:#fff0f4;color:#8f355e}.purchase-box a.buy-link:focus-visible,.account-actions a:focus-visible,.account-actions button:focus-visible{outline:3px solid #bd4f85}
+</style>
+<style>
+.product-media,.sheet-media{background:#fff!important;background-image:none!important;border:0!important;box-shadow:none!important}.product-media img,.sheet-media img{object-fit:contain!important;background:transparent!important;mix-blend-mode:multiply;padding:8px!important}.sheet-media.img-error:after{content:"عکس در دسترس نیست؛ مدل را از روی نام بررسی کن";font-size:14px;color:#747970}.product-media img[hidden],.sheet-media img[hidden]{display:none!important}.product-media .badge-wrap{pointer-events:none}.product-copy strong{font-size:14px}.product-copy small{font-size:11px}.verify-badge,.match-badge,.ref-badge{font-size:10px}input,select,textarea{font-size:16px!important}.sheet{max-height:90vh;max-height:90dvh;overflow:auto;-webkit-overflow-scrolling:touch}button{touch-action:manipulation}.product-card:focus-visible,.nav-btn:focus-visible{outline:3px solid #a77c2d;outline-offset:3px}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style><style>@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./assets/font-350bb4afb18fb09f.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./assets/font-7b6fe5814f478847.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./assets/font-bd5022cfa45e362a.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(./assets/font-b891fedf79c4d747.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Estedad';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(./assets/font-7386239ad1f239ec.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./assets/font-f433e5d333be1128.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./assets/font-6bad1a774228464c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(./assets/font-b9584e099e0e7f1e.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(./assets/font-b8f802f05b322a73.ttf) format('truetype');
+}
+.check-options{max-height:280px;overflow:auto;display:grid;gap:7px;margin:12px 0 10px;overscroll-behavior:contain}
+#checkSearch{width:100%;font:inherit;font-size:15px;padding:12px 15px;border:1px solid #ded7c8;border-radius:15px;background:#fff;outline:none}
+#checkSearch:focus{border-color:#a48c59}.check-option{display:flex;align-items:center;gap:11px;width:100%;padding:8px 10px;border:1px solid #ece8df;border-radius:14px;background:#fff;text-align:right;color:#262823;font:inherit;font-size:13px;cursor:pointer}
+.check-option.selected{background:#e9f2ed;border-color:#539071}.check-option img,.compare-row img{width:42px;height:48px;object-fit:contain;background:#fff;flex-shrink:0}.check-option .mini-label{flex:1;min-width:0}.check-option .mini-label small{display:block;color:#746b59}.check-option .marker{font-size:22px;color:#235d46}
+.compare-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.compare-head h3{margin:0}.compare-selected{display:grid;gap:9px;margin:12px 0}.compare-row{display:flex;align-items:center;gap:9px;padding:8px;border:1px solid #e9e4d8;border-radius:14px;background:#fff}.compare-row .label{flex:1;min-width:0;font-size:12px;font-weight:700}.active-caption{display:block;color:#8c7350;font-size:10px;font-weight:400;margin-top:4px}.compare-row select{max-width:75px;padding:8px 5px;border-radius:10px;border:1px solid #d7d2c7;background:#faf9f5;font:inherit;font-size:12px}.compare-row button{border:0;background:transparent;color:#675e51;font:inherit;font-size:19px;cursor:pointer}
+.compare-note{border-radius:14px;padding:11px 13px;margin:9px 0;font-size:13px;line-height:1.9}.compare-note.warn{background:#fff4e8;color:#794c24}.compare-note.mild{background:#f4f1e7;color:#584a2f}.compare-note.ok{background:#eaf4ee;color:#225943}.compare-note strong{display:block;margin-bottom:2px}.compare-foot{font-size:11px;color:#6c665a;line-height:1.9;margin-top:12px}.compare-foot a{color:#2b5b49}.compare-empty{font-size:13px;color:#7c725e;padding:9px 0}.photo-upright{transform:rotate(180deg)}
+</style><style>
+/* Fresh pink and light blue, layered over the preserved v6 product photography. */
+:root{--ink:#263a49;--muted:#56717e;--paper:#f1faff;--card:#fff;--line:#cee8f3;--gold:#bd4f85;--gold2:#e88ab5;--deep:#245579;--ok:#287162;--shadow:0 18px 45px rgba(43,116,151,.11)}body{background:radial-gradient(circle at 90% 0,#ffe7f3,transparent 38%),linear-gradient(160deg,#f0faff,#fff8fc 85%);color:var(--ink)}.topbar,.bottom-nav{background:rgba(245,251,255,.94);border-color:#d4e9f3}.hero-card{background:linear-gradient(125deg,#2f779c,#7bc5db 59%,#f3a5c8);box-shadow:0 18px 45px rgba(56,132,168,.22)}.hero-card:before{border-color:rgba(255,255,255,.45)}.hero p,.hero-kicker{color:#fff}.primary{background:linear-gradient(120deg,#e783b1,#f7b7d3);color:#3a2543;box-shadow:0 8px 22px rgba(211,94,150,.18)}.trust-pill,.choice.selected{background:#ffeaf4;color:#80335d;border-color:#efbad4}.chip.active,.add-wallet{background:#28688c;color:white}.nav-btn.active{background:#e1f4fc;color:#245579}.source-link,.tiny-btn{background:#e6f5fc;color:#285777}.soft-card,.product-card,.signal,.routine{border-color:#d9eaf2}.product-media,.sheet-media{background:#fff!important}.choice{font-size:14px}.profile-guide p,.soft-card p,.offer-panel p{font-size:15px;line-height:1.8}.profile-guide .guide-questions,.form-grid,.repeat-row,.offer-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.profile-guide label,.field,.repeat-row label,.offer-form label{display:grid;gap:6px;font-size:14px;font-weight:600}.profile-guide select,.field select,.field input,.field textarea,.repeat-row input,.repeat-row select,.offer-form input{width:100%;min-width:0;border:1px solid #bddde9;border-radius:12px;padding:11px;background:#fff;color:#263a49;font:inherit;font-size:16px}.profile-sections details.panel{display:block;background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0}.profile-sections summary,.offer-panel summary{cursor:pointer;font-size:17px;color:#245579;font-weight:800}.profile-sections summary span{display:block;color:#5e7884;font-size:13px;font-weight:400}.profile-sections .wide{grid-column:1/-1}.profile-sections fieldset{border:1px solid #d9eaf2;border-radius:14px;padding:12px}.profile-sections fieldset label{display:inline-flex;align-items:center;gap:5px;margin:6px 10px;font-size:14px}.profile-sections input[type=checkbox]{accent-color:#d9639c;width:18px;height:18px}.repeat-row{border:1px solid #d6eaf4;padding:12px;border-radius:14px}.repeat-list{display:grid;gap:10px}.row-remove,.add-row{border:0;border-radius:10px;padding:10px;background:#e7f5fb;color:#23577a}.sticky-save{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:20px 0}.demo-profile-banner,.eye-info{background:#e8f6fb;border-radius:14px;padding:12px;font-size:14px}.demo-profile-banner span{display:block}.guide-note,.source-notes{font-size:13px;color:#56717e;margin:10px 0}.soft-card li{font-size:15px;line-height:1.9;margin:6px 0}.source-notes a{color:#276b95}.offer-panel{margin-top:22px;border-top:1px solid #d9eaf2;padding-top:12px}.offer-panel h3{font-size:19px}.offer-row{display:grid;gap:6px;border:1px solid #d7eaf4;border-radius:14px;padding:12px;margin:10px 0}.offer-row span{font-size:15px;font-weight:700}.offer-row small{font-size:13px;color:#5a7280;line-height:1.65}.offer-row a{color:#28688c;font-weight:700}.offer-row button{justify-self:start;border:0;background:#fff0f4;border-radius:8px;padding:7px}.offer-form{grid-template-columns:1fr}.nav-inner{grid-template-columns:repeat(6,1fr)}.nav-btn{font-size:12px}.privacy-note{background:#e8f6fb;color:#27536e;border-color:#cde8f4}@media(max-width:620px){.profile-guide .guide-questions,.form-grid,.repeat-row{grid-template-columns:1fr}.shell{padding:0 14px}.nav-btn{font-size:10px}.nav-btn i{font-size:17px}.sticky-save{align-items:flex-start;flex-direction:column}}
+</style><style>
+.regret-card{border:1px solid #d1e8f1!important;background:linear-gradient(155deg,#fff,#fff7fb)!important}.regret-heading{display:flex;gap:12px;align-items:center;margin-bottom:15px}.regret-heading h3{font-size:20px;margin:0;color:#254f70}.regret-heading p{font-size:14px;margin:4px 0 0;color:#526c7b}.regret-symbol{width:42px;height:42px;flex:none;display:grid;place-items:center;border-radius:13px;background:#ffebf4;color:#a7467c;font-size:25px}.regret-form{display:block}.regret-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.regret-form fieldset{margin:0;border:1px solid #d9eaf1;border-radius:16px;padding:13px;min-width:0;background:#fff}.regret-form legend{font-size:14px;font-weight:800;color:#275d7c;padding:0 4px}.regret-form label{display:grid;gap:5px;margin:9px 0;font-size:13px;font-weight:600;color:#39586a}.regret-form input,.regret-form select{width:100%;min-width:0;border:1px solid #c6e0ea;border-radius:11px;background:#fff;padding:10px;color:#263a49;font:inherit;font-size:16px}.regret-target{margin:16px 0 10px;padding:14px;border-radius:16px;background:#eff9fd}.regret-target h4{margin:0 0 6px;color:#25587a;font-size:15px}.regret-hint,.regret-photo-status{display:block;color:#657c85;font-size:12px;line-height:1.8}.regret-hint{margin:10px 0 14px}.regret-photo-status:not(:empty){display:flex;align-items:center;gap:8px}.regret-preview{width:45px;height:45px;object-fit:contain;border-radius:9px;border:1px solid #d4e6ec}.regret-form>button{margin:0 0 0 8px}.regret-result{margin-top:14px}.regret-verdict{padding:16px;border-radius:15px;border:1px solid #b8dfea;background:#f2fbfd;color:#25495e}.regret-verdict.repeat{background:#fff2f3;border-color:#f2ced6;color:#74344a}.regret-verdict.caution{background:#fff9ed;border-color:#ecdcae;color:#6a5125}.regret-verdict.missing{background:#f6f7fa;border-color:#d9dee8;color:#46546b}.regret-label{font-size:12px;font-weight:700}.regret-verdict h4{font-size:17px;margin:4px 0}.regret-confidence{display:block;opacity:.8}.regret-verdict ul{padding:0 18px 0 0;margin:12px 0;line-height:1.9;font-size:13px}.regret-verdict p{font-size:13px;line-height:1.8}.regret-disclaimer{border-top:1px solid rgba(70,90,110,.16);padding-top:9px}.regret-actions{display:flex;flex-wrap:wrap;gap:7px}.regret-actions a,.regret-actions button{font:inherit;border:0;cursor:pointer;text-decoration:none}
+.profile-first{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;background:linear-gradient(120deg,#e8f8ff,#fff0f7);border:1px solid #cce8f3;border-radius:20px;padding:15px;margin:16px 0}.profile-first .fresh-icon{width:48px;height:48px;border-radius:15px;background:#fff;display:grid;place-items:center;font-size:25px;color:#c64f88}.profile-first b{display:block;color:#245579}.profile-first span{font-size:13px;color:#55717f;line-height:1.7}.wallet-hub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-bottom:14px}.hub-link{border:1px solid #d4e9f2;border-radius:16px;background:linear-gradient(145deg,#fff,#f4fbfe);padding:14px;text-align:right;color:#274e66;font:inherit;cursor:pointer}.hub-link b,.hub-link small{display:block}.hub-link small{font-size:12px;color:#607985;margin-top:4px}.journey-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.journey-step{padding:13px;border-radius:15px;background:#f2fafe}.journey-step b{color:#245d7d}.journey-step span{display:block;font-size:12px;line-height:1.7;color:#56717e;margin-top:5px}.quick-form,.decision-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.quick-form label,.decision-form label{display:grid;gap:5px;font-size:13px;font-weight:700}.quick-form select,.decision-form input,.decision-form select,.decision-form textarea{width:100%;border:1px solid #c5e0eb;border-radius:11px;background:#fff;padding:10px;font:inherit}.quick-result{margin-top:12px;padding:14px;border-radius:14px;background:linear-gradient(135deg,#edf9fd,#fff3f8);line-height:1.9}.market-box{margin-top:14px;border:1px solid #cde6ef;border-radius:18px;padding:15px;background:linear-gradient(145deg,#f0faff,#fff8fb)}.market-list{display:grid;gap:9px}.market-offer{border:1px solid #d8eaf1;background:#fff;border-radius:13px;padding:11px}.market-offer b,.market-offer small{display:block}.market-offer small{color:#5f7783;line-height:1.6}.market-badges{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}.market-badge{font-size:11px;border-radius:999px;padding:4px 8px;background:#e7f7fc;color:#245b77}.market-badge.sale{background:#ffe8f3;color:#963c69}.decision-journal{margin-top:14px}.decision-list{display:grid;gap:9px;margin-top:12px}.decision-row{border:1px solid #d7e9f1;border-radius:13px;padding:12px;background:#fff}.decision-row small{display:block;color:#607985;line-height:1.7}.brand .logo{width:52px;height:52px;filter:drop-shadow(0 8px 13px rgba(69,139,170,.15))}.profile-return{margin-bottom:12px}.nav-inner{grid-template-columns:none}.nav-btn{min-width:84px;flex-basis:84px}@media(max-width:620px){.profile-first{grid-template-columns:42px 1fr}.profile-first button{grid-column:1/-1}.wallet-hub,.journey-grid,.quick-form,.decision-form{grid-template-columns:1fr}.nav-btn{min-width:76px;flex-basis:76px}}
+@media(max-width:620px){.regret-grid{grid-template-columns:1fr}.regret-form>button{margin:4px 0 4px 6px}}
+.supp-intro{background:linear-gradient(145deg,#e8f7fc,#fff1f7)!important;border-color:#c8e7f1!important}.supp-intro h3{color:#245579}.supp-catalog{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.supp-card{display:grid;grid-template-rows:150px auto;text-align:right;border:1px solid #d5e9f2;background:#fff;border-radius:18px;overflow:hidden;padding:0;color:#29485a}.supp-card.selected{border-color:#d8659d;box-shadow:0 0 0 3px #f8dcea}.supp-card img{width:100%;height:150px;object-fit:contain;background:#fff;padding:8px}.supp-card span{display:block;padding:10px 11px}.supp-card b{font-size:13px;line-height:1.6;display:block}.supp-card small{display:block;color:#5d7581;font-size:11px;margin-top:3px}.supp-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.supp-controls label,.supp-custom label{display:grid;gap:5px;font-size:13px;font-weight:700}.supp-controls select,.supp-controls input,.supp-custom input,.supp-custom select,.supp-custom textarea{width:100%;min-width:0;border:1px solid #bfdde9;border-radius:11px;background:#fff;padding:10px;color:#263a49;font:inherit;font-size:16px}.supp-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.supp-checks label{display:flex;align-items:flex-start;gap:8px;border:1px solid #d9eaf2;border-radius:12px;padding:10px;font-size:13px}.supp-checks input{width:18px;height:18px;accent-color:#d9639c;flex:none}.supp-list{display:grid;gap:9px}.supp-item{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:center;border:1px solid #d9eaf2;border-radius:14px;padding:9px;background:#fff}.supp-item img{width:52px;height:52px;object-fit:contain}.supp-item small{display:block;color:#607983;font-size:11px}.supp-alert{border-radius:13px;padding:12px 14px;margin:9px 0;font-size:13px;line-height:1.8}.supp-alert.warn{background:#fff2e8;color:#72451f}.supp-alert.info{background:#eaf6fb;color:#28556b}.supp-alert.good{background:#eaf6ef;color:#245e46}.supp-source{font-size:12px;color:#58727e;line-height:1.9}.supp-source a{color:#28688c}.supp-disclaimer{font-size:12px;border-right:3px solid #d9639c;padding:10px 12px;background:#fff8fb;border-radius:9px}.catalog-filter{width:100%;border:1px solid #bfdde9;border-radius:13px;padding:12px;background:#fff;font:inherit;font-size:16px;margin:0 0 12px}.section-kicker{display:inline-block;color:#a7467c;background:#ffebf4;border-radius:999px;padding:5px 9px;font-size:11px;margin-bottom:8px}@media(max-width:620px){.supp-controls,.supp-checks{grid-template-columns:1fr}.supp-catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.supp-card{grid-template-rows:125px auto}.supp-card img{height:125px}.nav-btn{min-width:68px;flex-basis:68px}}
+</style><style>.offer-form select{width:100%;min-width:0;border:1px solid #bddde9;border-radius:12px;padding:11px;background:#fff;color:#263a49;font:inherit;font-size:16px}</style><style>
+/* Mobile viewport hardening: keep the existing visual system, remove horizontal clipping. */
+html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;background:#f1faff}
+body{width:100%;max-width:100%;min-width:0;overflow-x:hidden;overscroll-behavior-x:none}
+main,.panel,.section,.shell,.topbar,.bottom-nav,.nav-inner{max-width:100%}
+.shell{width:100%;min-width:0}
+.topbar,.bottom-nav{left:0;right:0;width:100%}
+img,svg,video,canvas{max-width:100%}
+.brand,.brandtext,.soft-card,.account-card,.account-actions,.profile-sections,.form-grid,.repeat-row,.offer-form,.decision-form,.quick-form,.market-offer,.wallet-item,.wallet-item .meta{min-width:0}
+.brandtext,.soft-card,.account-card,.market-offer,.decision-row,.wallet-item{overflow-wrap:anywhere;word-break:normal}
+.account-actions>*{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+input,select,textarea,button{max-width:100%}
+@media(max-width:620px){
+  .shell{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+  .topbar .inner{height:auto;min-height:66px;padding-top:6px;padding-bottom:6px}
+  .brandtext b{font-size:15px}.brandtext small{font-size:11px;line-height:1.6}
+  .soft-card,.account-card{padding:15px;border-radius:19px}
+  .account-actions{display:grid;grid-template-columns:1fr;width:100%}
+  .account-actions button,.account-actions a,.phone-login,.phone-login button{width:100%;margin:3px 0;text-align:center}
+  .bottom-nav{padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right))}
+  .nav-inner{width:100%;direction:rtl;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+  .nav-btn{min-width:76px;flex:0 0 76px;padding-inline:5px;white-space:normal;line-height:1.35}
+  .profile-sections fieldset label{max-width:100%;margin-inline:4px}
+  .decision-form label[style]{grid-column:1!important}
+}
+@media(max-width:360px){
+  .shell{padding-left:10px;padding-right:10px}
+  .brand .logo{width:44px;height:44px;flex-basis:44px}
+  .brandtext b{font-size:14px}.brandtext small{font-size:10px}
+  .nav-btn{min-width:70px;flex-basis:70px;font-size:9.5px}
+  .supp-catalog,.catalog{gap:8px}
+}
+/* Stable controls and icons across iOS and Android. */
+.nav-btn svg{width:21px;height:21px;display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.fresh-icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+input[type="checkbox"]{-webkit-appearance:none;appearance:none;width:22px!important;height:22px!important;min-width:22px;flex:0 0 22px;margin:0;border:1.5px solid #9bc9da;border-radius:7px;background:#fff;display:grid;place-content:center}
+input[type="checkbox"]:before{content:"";width:10px;height:6px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg) scale(0);transform-origin:center;transition:transform .12s ease}
+input[type="checkbox"]:checked{background:#d9639c;border-color:#d9639c}
+input[type="checkbox"]:checked:before{transform:rotate(45deg) scale(1)}
+input[type="checkbox"]:focus-visible{outline:3px solid rgba(47,134,170,.25);outline-offset:2px}
+.check,.task,.profile-sections fieldset label,.supp-checks label{min-width:0;line-height:1.75;overflow-wrap:anywhere}
+.check{display:flex!important;align-items:flex-start!important;gap:10px!important;padding:11px!important;border:1px solid #d8eaf2;border-radius:13px;background:#fbfdff}
+.profile-sections{min-width:0}
+.profile-sections details.panel>summary{min-width:0;line-height:1.65}
+.profile-sections details.panel>summary b,.profile-sections details.panel>summary span{word-break:keep-all;overflow-wrap:normal}
+.profile-sections .field{min-width:0;width:100%}
+.profile-sections .field>span{line-height:1.75;word-break:keep-all;overflow-wrap:normal}
+.profile-sections select{min-height:48px;white-space:nowrap;text-overflow:ellipsis}
+.profile-sections fieldset.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;overflow:visible;padding:12px;margin:0;scrollbar-width:auto}
+.profile-sections fieldset.chips legend{padding:0 5px;font-size:14px;font-weight:800;line-height:1.8;word-break:keep-all}
+.profile-sections fieldset.chips label{display:flex;align-items:center;width:100%;min-height:46px;margin:0;padding:10px 11px;border:1px solid #d8eaf2;border-radius:12px;background:#fbfdff;font-size:14px;line-height:1.7;white-space:normal;word-break:keep-all;overflow-wrap:normal}
+.profile-sections fieldset.chips label:has(input:checked){border-color:#e497ba;background:#fff0f7;color:#713b58}
+.profile-register-card{position:relative;overflow:hidden;display:grid;grid-template-columns:72px minmax(0,1fr) auto;grid-template-areas:"icon copy button" "icon consent button";gap:6px 14px;align-items:center;margin:8px 0 14px;padding:18px;border:1px solid #f0a8ca;border-radius:24px;background:linear-gradient(135deg,#fff0f7 0%,#ffe1ef 52%,#edfaff 100%);box-shadow:0 18px 42px rgba(199,75,135,.15)}
+.profile-register-card:after{content:"";position:absolute;width:150px;height:150px;left:-55px;top:-75px;border-radius:50%;background:rgba(255,255,255,.42);pointer-events:none}
+.profile-register-icon{grid-area:icon;position:relative;z-index:1;width:72px;height:72px;display:grid;place-items:center;border-radius:23px;background:linear-gradient(145deg,#e85f9f,#f58fbd);color:#fff;box-shadow:0 12px 25px rgba(204,72,135,.26)}
+.profile-register-icon svg{width:38px;height:38px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.profile-register-copy{grid-area:copy;position:relative;z-index:1;min-width:0}.profile-register-copy h2{margin:0;color:#713653;font-size:21px}.profile-register-copy p{margin:5px 0 6px;color:#71566a;font-size:14px;line-height:1.8}
+.profile-register-consent{grid-area:consent;display:flex;align-items:flex-start;gap:9px;max-width:620px;color:#573b4c;font-size:14px;font-weight:700;line-height:1.75;word-break:keep-all}
+.profile-register-card .register-submit{grid-area:button;position:relative;z-index:1;min-width:176px;border:0;border-radius:16px;padding:14px 17px;background:linear-gradient(135deg,#cf4f8b,#ee83b5);color:#fff;font:inherit;font-weight:800;box-shadow:0 10px 24px rgba(193,66,126,.22)}
+.brand .logo{transform-origin:center;animation:beautyLogoAlive 4.8s ease-in-out infinite}
+@keyframes beautyLogoAlive{0%,100%{transform:translateY(0) rotate(0);filter:drop-shadow(0 8px 13px rgba(69,139,170,.15))}50%{transform:translateY(-2px) rotate(1.2deg);filter:drop-shadow(0 11px 18px rgba(215,92,150,.25))}}
+.jalali-input{direction:ltr!important;text-align:right!important;letter-spacing:.04em;font-variant-numeric:tabular-nums;-webkit-appearance:none;appearance:none;background-image:none!important}
+.jalali-help{display:block;font-size:12px;color:#617985;font-weight:400;line-height:1.7;margin-top:2px}
+.learn-path{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:13px}.learn-path article{border:1px solid #d8eaf2;border-radius:15px;padding:13px;background:#f6fcff}.learn-path b{display:block;color:#275f7d;margin-bottom:5px}.learn-path span{font-size:13px;line-height:1.8;color:#58727e}.learn-tip{border-right:4px solid #d9689f;background:#fff6fa;border-radius:13px;padding:12px 14px;margin-top:12px;font-size:13px;line-height:1.9;color:#654459}
+.sync-promise{background:linear-gradient(135deg,#eefaff,#fff3f8);border:1px solid #cde8f2;border-radius:15px;padding:13px;margin:10px 0}.sync-promise b,.sync-promise span{display:block}.sync-promise span{font-size:12px;color:#58727e;line-height:1.8;margin-top:4px}
+.product-card{contain:layout paint}.product-media{aspect-ratio:1/1}.product-media img{height:100%;width:100%}
+@media(max-width:620px){.learn-path{grid-template-columns:1fr}.profile-register-card{grid-template-columns:64px minmax(0,1fr);padding:15px;gap:12px}.profile-register-icon{width:64px;height:64px;border-radius:20px}.profile-register-copy h2{font-size:19px}.profile-register-copy p{font-size:13px}.profile-register-consent{grid-column:1/-1;background:rgba(255,255,255,.66);border-radius:13px;padding:10px;font-size:14px}.profile-register-card .register-submit{grid-column:1/-1;width:100%;min-height:50px}.profile-sections details.panel{padding:14px}.profile-sections .form-grid{grid-template-columns:minmax(0,1fr);gap:13px}.profile-sections fieldset.chips{grid-template-columns:minmax(0,1fr);gap:8px}.profile-sections fieldset.chips label{align-items:center;margin:0;min-height:48px;padding:11px 12px;font-size:15px}.profile-sections fieldset:not(.chips) label{display:flex;align-items:flex-start;width:100%;margin:5px 0}.profile-sections select,.profile-sections input,.profile-sections textarea{width:100%;min-width:0;font-size:16px}.profile-sections summary b{font-size:17px}.profile-sections summary span{font-size:13px;line-height:1.75;margin-top:3px}.repeat-row{padding:11px}.repeat-row label{width:100%}.jalali-input{min-height:46px}.task{font-size:13px}.signal-row{grid-template-columns:1fr}.signal{min-height:auto}.product-card{content-visibility:auto;contain-intrinsic-size:260px}}
+/* Mobile forms: keep Persian words intact and give every action the full screen width. */
+@media(max-width:620px){
+  body,button,input,textarea,select{font-family:'Estedad',Tahoma,Arial,sans-serif!important;text-rendering:optimizeLegibility}
+  .profile-register-card{display:flex;flex-direction:column;align-items:stretch;width:100%;min-width:0;padding:16px;gap:12px}
+  .profile-register-icon{align-self:center;flex:0 0 64px;width:64px;height:64px;grid-area:auto}
+  .profile-register-copy,.profile-register-consent,.profile-register-card .register-submit{grid-area:auto!important;grid-column:auto!important;width:100%!important;max-width:none!important;min-width:0!important}
+  .profile-register-copy{text-align:right}
+  .profile-register-copy h2,.profile-register-copy p{word-break:normal;overflow-wrap:normal;white-space:normal}
+  .profile-register-consent{display:flex;flex-direction:row;align-items:flex-start;gap:10px;padding:12px 13px;background:rgba(255,255,255,.76);border-radius:14px;font-size:14px;line-height:1.95;word-break:normal!important;overflow-wrap:normal!important;white-space:normal!important}
+  .profile-register-consent input{flex:0 0 22px;width:22px!important;height:22px;margin-top:3px}
+  .profile-register-card .register-submit{display:block;min-height:52px;margin:0;font-size:16px;line-height:1.5}
+  .check,.task,.profile-sections fieldset label,.supp-checks label,.profile-sections .field>span,.profile-sections summary b,.profile-sections summary span{word-break:normal!important;overflow-wrap:normal!important;white-space:normal!important}
+}
+.quick-start{margin:14px 0 12px}.quick-start-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:10px}.quick-start-head h2{margin:0;font-size:20px;color:#254f67}.quick-start-head span{font-size:13px;color:#607b88}.quick-start-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.quick-start-card{display:flex;align-items:center;gap:11px;min-width:0;border:1px solid #d1e8f2;border-radius:18px;background:#fff;padding:14px;text-align:right;color:#294e63;font:inherit;box-shadow:0 9px 24px rgba(46,120,154,.06)}.quick-start-card i{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:14px;background:#fff0f7;color:#c14e86;font-style:normal;font-weight:800;font-size:16px}.quick-start-card b,.quick-start-card small{display:block}.quick-start-card b{font-size:15px;line-height:1.55}.quick-start-card small{margin-top:3px;color:#617b87;font-size:12px;line-height:1.6}.why-card{padding:0!important;overflow:hidden}.why-card>summary,.catalog-disclosure>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;padding:15px 17px;color:#285a75;font-weight:800}.why-card>summary::-webkit-details-marker,.catalog-disclosure>summary::-webkit-details-marker{display:none}.why-card>summary:after,.catalog-disclosure>summary:after{content:"＋";display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:10px;background:#e8f6fb;color:#2b6c8e;font-size:19px}.why-card[open]>summary:after,.catalog-disclosure[open]>summary:after{content:"−"}.why-card .signal-row{margin:0;padding:0 14px 14px}.catalog-disclosure{margin:15px 0;border:1px solid #d4e9f2;border-radius:22px;background:rgba(255,255,255,.72);overflow:hidden}.catalog-disclosure>summary{padding:16px 18px}.catalog-summary-copy b,.catalog-summary-copy small{display:block}.catalog-summary-copy b{font-size:18px}.catalog-summary-copy small{margin-top:3px;color:#647d88;font-size:13px;font-weight:400}.catalog-disclosure>.section-head,.catalog-disclosure>.search-wrap,.catalog-disclosure>.chips,.catalog-disclosure>.catalog{margin-inline:16px}.catalog-disclosure>.catalog{margin-bottom:16px}.catalog-disclosure>.section-head{margin-top:4px}
+@media(max-width:620px){.hero{padding-top:14px}.hero-card{padding:22px 18px;border-radius:25px}.hero-card h1{font-size:31px;line-height:1.25;margin-top:7px}.hero p{font-size:15px;line-height:1.85}.hero-actions{display:grid;grid-template-columns:1fr;gap:9px}.hero-actions button{width:100%;min-height:48px}.profile-first{margin:12px 0}.profile-first span{font-size:14px}.quick-start-head{display:block}.quick-start-head span{display:block;margin-top:4px}.quick-start-grid{grid-template-columns:1fr}.quick-start-card{min-height:74px}.why-card .signal-row{grid-template-columns:1fr}.catalog-disclosure>.section-head{display:none}.catalog-disclosure>.search-wrap,.catalog-disclosure>.chips,.catalog-disclosure>.catalog{margin-inline:12px}.catalog-summary-copy b{font-size:17px}.catalog-summary-copy small{font-size:12px;line-height:1.6}}
+@media(prefers-reduced-motion:reduce){.brand .logo{animation:none!important}}
+</style>
+<style>
+.assistant-hub{margin:16px 0 18px;padding:18px;border:1px solid #c9e5ef;border-radius:25px;background:linear-gradient(145deg,#f1fbff 0%,#fff6fb 100%);box-shadow:0 16px 38px rgba(49,123,156,.10)}
+.assistant-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:13px}.assistant-head h2{margin:0;color:#245579;font-size:21px}.assistant-head p{margin:4px 0 0;color:#5a7582;font-size:14px;line-height:1.75}.assistant-spark{display:grid;place-items:center;flex:0 0 46px;width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#ef75aa,#4ca8c7);color:#fff;font-size:24px;box-shadow:0 10px 24px rgba(210,85,145,.22)}
+.assistant-memory{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}.assistant-memory article{display:flex;align-items:flex-start;gap:9px;min-width:0;padding:12px;border:1px solid #d6eaf2;border-radius:16px;background:rgba(255,255,255,.9)}.assistant-memory i{display:grid;place-items:center;flex:0 0 31px;width:31px;height:31px;border-radius:11px;color:#fff;font-style:normal;font-weight:800}.assistant-memory article:nth-child(1) i{background:#4f8fd7}.assistant-memory article:nth-child(2) i{background:#dd659c}.assistant-memory article:nth-child(3) i{background:#38a887}.assistant-memory b,.assistant-memory span{display:block}.assistant-memory b{color:#294f64;font-size:13px;line-height:1.6}.assistant-memory span{margin-top:3px;color:#607985;font-size:11px;line-height:1.65}
+.assistant-quick{display:flex;gap:7px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}.assistant-quick::-webkit-scrollbar{display:none}.assistant-quick button,.assistant-market-toggle{flex:0 0 auto;border:1px solid #cee4ed;border-radius:999px;background:#fff;color:#315e73;padding:8px 12px;font:inherit;font-size:12px}
+.assistant-chat{display:flex;flex-direction:column;gap:9px;min-height:150px;max-height:430px;overflow-y:auto;padding:12px;border:1px solid #d9eaf1;border-radius:18px;background:rgba(255,255,255,.72);overscroll-behavior:contain}.assistant-welcome{text-align:center;color:#607985;padding:24px 12px;font-size:14px;line-height:1.9}.assistant-message{max-width:88%;padding:11px 13px;border-radius:17px;font-size:14px;line-height:1.9;white-space:pre-wrap;overflow-wrap:anywhere}.assistant-message.user{align-self:flex-start;background:linear-gradient(135deg,#347f9d,#286987);color:#fff;border-bottom-right-radius:5px}.assistant-message.bot{align-self:flex-end;background:#fff;border:1px solid #dbeaf0;color:#294656;border-bottom-left-radius:5px}.assistant-message a{color:#176a91;font-weight:700;text-decoration:underline;text-underline-offset:3px}.assistant-loading{align-self:flex-end;color:#55717e;background:#edf8fc;border-radius:14px;padding:9px 12px;font-size:13px}
+.assistant-market{margin:10px 0;border:1px solid #ead4df;border-radius:17px;background:#fff9fc;padding:0 13px}.assistant-market summary{cursor:pointer;color:#8a3d64;font-weight:700;padding:12px 0;list-style:none}.assistant-market summary::-webkit-details-marker{display:none}.assistant-market p{font-size:12px;color:#667d88;line-height:1.8}.assistant-market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding-bottom:13px}.assistant-market-grid input{width:100%;min-width:0;border:1px solid #d4e5ec;border-radius:11px;background:#fff;padding:10px;font:inherit;font-size:14px}.assistant-market-grid .wide{grid-column:1/-1}
+.assistant-error{display:none;margin:10px 0 0;padding:10px 12px;border-radius:12px;background:#fff0f5;color:#9a2857;font-size:13px}.assistant-error.show{display:block}.assistant-compose{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}.assistant-compose textarea{min-height:62px;width:100%;border:1px solid #bddde9;border-radius:14px;background:#fff;padding:11px;font:inherit;font-size:16px;resize:vertical}.assistant-compose button{border:0;border-radius:13px;padding:0 19px;background:linear-gradient(135deg,#df669c,#397f9d);color:#fff;font:inherit;font-weight:800}.assistant-compose button:disabled{opacity:.5}.assistant-safety{margin:9px 2px 0;color:#687f89;font-size:11px;line-height:1.8}
+@media(max-width:620px){.assistant-hub{padding:14px 12px;border-radius:21px}.assistant-head h2{font-size:19px}.assistant-memory{grid-template-columns:1fr}.assistant-memory article{padding:10px 11px}.assistant-chat{max-height:390px}.assistant-market-grid{grid-template-columns:1fr}.assistant-market-grid .wide{grid-column:auto}.assistant-compose{grid-template-columns:1fr}.assistant-compose button{min-height:46px}.assistant-message{max-width:94%}}
+.install-app{border:1px solid #efb9d3;border-radius:999px;background:#fff0f7;color:#8f3c68;padding:9px 12px;font:700 12px inherit;white-space:nowrap}.install-app[hidden]{display:none}.install-dialog{width:min(430px,calc(100% - 28px));border:0;border-radius:24px;padding:0;background:#fff;color:#294656;box-shadow:0 28px 80px rgba(26,68,88,.24)}.install-dialog::backdrop{background:rgba(18,40,52,.48);backdrop-filter:blur(4px)}.install-dialog-card{padding:22px}.install-dialog-card h2{margin:0 0 8px;color:#245579;font-size:21px}.install-dialog-card p{font-size:14px;line-height:1.9;color:#58727f}.install-steps{margin:13px 0;padding:13px 32px 13px 13px;border-radius:15px;background:#eef9fd;color:#2d566c;font-size:14px;line-height:2}.install-dialog-actions{display:flex;justify-content:flex-end}.install-dialog-actions button{border:0;border-radius:12px;background:#286f91;color:#fff;padding:10px 16px;font:700 14px inherit}@media(max-width:420px){.brandtext small{display:none}.install-app{padding:8px 10px;font-size:11px}}
+.assistant-layers,.result-details,.market-disclosure{margin:10px 0;border:1px solid #d6eaf2;border-radius:16px;background:rgba(255,255,255,.72);overflow:hidden}.assistant-layers>summary,.result-details>summary,.market-disclosure>summary{cursor:pointer;list-style:none;padding:12px 14px;color:#285b75;font-size:13px;font-weight:800}.assistant-layers>summary::-webkit-details-marker,.result-details>summary::-webkit-details-marker,.market-disclosure>summary::-webkit-details-marker{display:none}.assistant-layers>summary:after,.result-details>summary:after,.market-disclosure>summary:after{content:'＋';float:left}.assistant-layers[open]>summary:after,.result-details[open]>summary:after,.market-disclosure[open]>summary:after{content:'−'}.assistant-layers .assistant-memory{padding:0 10px 10px;margin:0}.result-details #comparisonResult{padding:0 12px 12px}.market-disclosure .market-box{border:0;border-radius:0;margin:0;background:transparent}.active-verdict{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:13px 0}.active-card{display:flex;align-items:flex-start;gap:9px;min-width:0;padding:12px;border:1px solid #d8eaf2;border-radius:15px;background:#fff}.active-card b{display:block;color:#284f64;font-size:13px;line-height:1.6}.active-card p{margin:4px 0 0;color:#5b7480;font-size:12px;line-height:1.75}.active-dot{flex:0 0 11px;width:11px;height:11px;margin-top:5px;border-radius:50%;background:#38a887;box-shadow:0 0 0 4px #e8f7f2}.active-card.space .active-dot{background:#e0a13e;box-shadow:0 0 0 4px #fff4df}.active-card.pause .active-dot{background:#d9547f;box-shadow:0 0 0 4px #ffe8f0}.active-card.unknown .active-dot{background:#7c8a92;box-shadow:0 0 0 4px #edf1f3}.active-card.save .active-dot{background:#4f8fd7;box-shadow:0 0 0 4px #e8f1ff}.active-card.need .active-dot{background:#a05dc7;box-shadow:0 0 0 4px #f3eafb}.active-empty{grid-column:1/-1;margin:0;padding:13px;border-radius:14px;background:#eef9fd;color:#557480;font-size:13px}.quick-feedback{border-color:#efc3d8!important;background:linear-gradient(145deg,#fff,#fff4f9)!important}.quick-feedback h3{margin:2px 0 5px;color:#713b58}.quick-feedback>p{margin:0 0 12px}.quick-feedback-product{display:grid;gap:6px;color:#365d70;font-size:13px;font-weight:800}.quick-feedback-product select{width:100%;min-height:48px;border:1px solid #c9e2ec;border-radius:13px;background:#fff;padding:10px;font:inherit}.quick-feedback-options,.quick-feedback-followup>div{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.quick-feedback-options button,.quick-feedback-followup button{border:1px solid #d6e7ee;border-radius:999px;background:#fff;color:#315a70;padding:9px 12px;font:inherit;font-size:13px}.quick-feedback-options button.selected,.quick-feedback-followup button:active{border-color:#dc6b9e;background:#ffe8f3;color:#823b5d}.quick-feedback-followup{padding:11px 12px;border-radius:14px;background:#eef9fd;color:#315b70}.quick-feedback-followup b{font-size:13px}.quick-feedback-status{min-height:24px!important;margin:6px 0!important;color:#287162!important;font-weight:700}.advanced-regret[hidden],.regret-card[hidden]{display:none!important}
+@media(max-width:620px){.active-verdict{grid-template-columns:1fr}.active-card{padding:11px}.assistant-layers .assistant-memory{grid-template-columns:1fr}.quick-feedback-options,.quick-feedback-followup>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.quick-feedback-options button,.quick-feedback-followup button{white-space:normal;line-height:1.6}.result-details>summary,.market-disclosure>summary,.assistant-layers>summary{min-height:46px;display:block}.purchase-box{padding:14px}.market-box{padding:13px}.soft-card>p{max-width:68ch}}
+@media(max-width:360px){.quick-feedback-options,.quick-feedback-followup>div{grid-template-columns:1fr}.active-card p{font-size:12.5px}}
+/* Calm-water interface: quiet first screen, soft blue focus, preserved functionality. */
+:root{--paper:#f4fbfe;--card:#fff;--line:#d5edf4;--gold:#3f9fbe;--gold2:#86d2e5;--deep:#246a86;--ink:#234554;--muted:#66818c;--shadow:0 16px 42px rgba(47,126,156,.09)}
+body{background:radial-gradient(circle at 88% 0,#dff6fc 0,transparent 42%),linear-gradient(160deg,#f4fbfe,#fbfeff 78%);color:var(--ink)}
+.topbar,.bottom-nav{background:rgba(247,253,255,.94);border-color:#d8eef5}.hero{padding-top:14px}.hero-card{background:linear-gradient(140deg,#eafaff,#cceef6);color:#24566b;box-shadow:0 18px 46px rgba(50,137,171,.13);padding-block:24px}.hero-card:before{border-color:rgba(72,161,194,.16)}.hero-card h1{color:#24566b;margin:0}.hero-actions{margin-top:17px}.primary{background:linear-gradient(135deg,#3d9fbe,#79cbe0);color:#fff;box-shadow:0 9px 24px rgba(53,145,181,.18)}.ghost{border-color:#9ccfdf;color:#2b718d;background:rgba(255,255,255,.58)}
+.quick-start{margin-top:8px}.quick-start-card{border-color:#d5ebf3;background:rgba(255,255,255,.9);box-shadow:0 8px 22px rgba(45,120,150,.05)}.quick-start-card i{background:#e5f7fc;color:#2e88a8}.quick-start-card b{color:#285d71}
+.assistant-hub{padding:0;background:linear-gradient(145deg,#eefbff,#fff);border-color:#cce8f1;overflow:hidden}.assistant-hub>summary{list-style:none}.assistant-hub>summary::-webkit-details-marker{display:none}.assistant-entry{display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer}.assistant-entry:after{content:'＋';margin-right:auto;color:#3c93b1;font-size:22px}.assistant-hub[open]>.assistant-entry:after{content:'−'}.assistant-hub[open]>.assistant-entry{border-bottom:1px solid #d9eef5}.assistant-entry b,.assistant-entry small{display:block}.assistant-entry b{color:#275e75;font-size:17px}.assistant-entry small{margin-top:2px;color:#6a8590;font-size:12px}.assistant-body{padding:0 15px 15px}.assistant-spark{background:linear-gradient(145deg,#8ed9e9,#3f9fbe);box-shadow:0 9px 22px rgba(57,151,184,.18)}.assistant-spark svg{width:26px;height:26px;fill:#fff}.assistant-compose button{background:linear-gradient(135deg,#3d9fbe,#69c5dd)}
+.quick-feedback{border-color:#cfeaf3!important;background:linear-gradient(145deg,#fff,#eefaff)!important}.quick-feedback h3{color:#285d72}.section-kicker{color:#2e7896;background:#e4f6fc}.quick-feedback-options button.selected,.quick-feedback-followup button:active{border-color:#69bfd7;background:#e6f8fd;color:#265f76}.quick-feedback-followup{background:#eaf8fc}.product-comfort-log{margin-top:15px}.product-comfort-log .section-head{margin-bottom:8px}.nav-btn.active{background:#dff3fa;color:#266d89}.install-app{border-color:#b9e1ee;background:#eaf9fd;color:#2d718b}
+/* Guided entry: calm blue surfaces with pink icon rings and active accents. */
+.brand .logo{border-radius:23px;box-shadow:0 0 0 2px #ef9fc5,0 7px 20px rgba(76,151,181,.14)}
+.quick-skin-home{margin:13px 0}.quick-skin-home:empty{display:none}.quick-skin-home .profile-guide{margin:0;padding:20px;border:1px solid #cce8f2;border-radius:24px;background:linear-gradient(145deg,#fff,#edfaff);box-shadow:0 14px 34px rgba(47,127,158,.08)}
+.quick-skin-home .profile-guide h3{margin:0;color:#285d72;font-size:21px}.quick-skin-home .profile-guide>p:first-of-type{margin:5px 0 0;color:#637e89}.quick-skin-home .guide-questions label{padding:12px;border:1px solid #d7ecf4;border-radius:16px;background:#fff}.quick-skin-home #guideResult{margin:13px 0 0;padding:12px;border-radius:14px;background:#fff4f9;color:#713b58;font-weight:700}.quick-skin-home #guideResult:empty{display:none}
+.skin-onboarding-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}.skin-onboarding-actions[hidden]{display:none}.skin-onboarding-actions button{min-height:45px}.skin-onboarding-actions .secondary{border:1px solid #e9a9c8;border-radius:13px;background:#fff3f8;color:#823c61;padding:10px 14px;font:700 14px inherit}
+.returning-skin{display:flex;align-items:center;gap:12px;padding:15px 16px;border:1px solid #cce8f2;border-radius:21px;background:#fff}.returning-skin .returning-icon{display:grid;place-items:center;flex:0 0 45px;width:45px;height:45px;border:2px solid #ed9bc2;border-radius:15px;background:#e8f8fd;color:#2d89a9}.returning-skin b,.returning-skin small{display:block}.returning-skin b{color:#285c72}.returning-skin small{margin-top:3px;color:#66808b}.returning-skin button{margin-right:auto;border:1px solid #edabc9;border-radius:11px;background:#fff4f9;color:#80415f;padding:9px 12px;font:700 13px inherit}
+.quick-start-card i,.assistant-spark,.profile-register-icon,.section-kicker{border:2px solid #ed9bc2;box-shadow:0 0 0 3px #ffe8f3}.quick-start-card:focus-visible,.quick-start-card:hover{border-color:#ed9bc2}.nav-btn.active{box-shadow:inset 0 -3px 0 #e985b3}.choice.selected,.quick-feedback-options button.selected{border-color:#e37fad!important;background:#fff0f7!important;color:#7b3858!important}
+.profile-wizard{margin-top:12px}.profile-wizard-head{position:sticky;top:71px;z-index:4;margin-bottom:12px;padding:14px 15px;border:1px solid #d2eaf3;border-radius:19px;background:rgba(248,253,255,.96);backdrop-filter:blur(10px);box-shadow:0 8px 22px rgba(45,120,151,.07)}.profile-wizard-copy{display:flex;justify-content:space-between;gap:10px}.profile-wizard-copy b{color:#285d72}.profile-wizard-copy span{color:#7a6370;font-size:13px}.profile-wizard-progress{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}.profile-wizard-progress i{height:6px;border-radius:999px;background:#d8eef5}.profile-wizard-progress i.done{background:#e98bb7}.profile-wizard-stage[hidden]{display:none}.profile-wizard-stage>details.panel{display:block}.profile-wizard-stage>details.panel>summary{pointer-events:none}.profile-wizard-stage>details.panel>summary:after{display:none}.profile-wizard-actions{display:flex;justify-content:space-between;gap:10px;margin:16px 0}.profile-wizard-actions button{min-height:45px;border-radius:13px;padding:10px 17px;font:700 14px inherit}.profile-wizard-next{margin-right:auto;border:0;background:linear-gradient(135deg,#de6fa3,#f0a6c7);color:#fff}.profile-wizard-back{border:1px solid #cbe5ef;background:#fff;color:#2b6780}.profile-wizard-back[hidden],.profile-wizard-next[hidden]{display:none}.demo-profile-banner{display:none!important}
+@media(max-width:620px){.hero-card{padding:21px 17px}.hero-card h1{font-size:27px}.hero-actions{grid-template-columns:1fr}.hero-actions button{min-width:0}.quick-start-grid{gap:8px}.quick-start-card{min-height:60px;padding:11px}.quick-start-card i{width:36px;height:36px;flex-basis:36px}.assistant-entry{padding:14px 13px}.assistant-entry b{font-size:16px}.assistant-body{padding:0 11px 12px}.quick-skin-home .profile-guide{padding:16px 13px}.quick-skin-home .guide-questions{grid-template-columns:1fr}.skin-onboarding-actions{display:grid}.skin-onboarding-actions button{width:100%}.returning-skin{align-items:flex-start;flex-wrap:wrap}.returning-skin button{width:100%;margin:0}.profile-wizard-head{top:66px}.profile-wizard-actions{display:grid;grid-template-columns:1fr 1fr}.profile-wizard-actions button{width:100%}.profile-wizard-next{margin:0}.profile-register-icon{border-radius:18px}}
+</style><link rel="stylesheet" href="./beautywallet-blue-pink.css?v=69"><link rel="stylesheet" href="./routine-reminder.css?v=69"><link rel="stylesheet" href="./focus-path.css?v=69"><link rel="stylesheet" href="./install-app.css?v=69"><link rel="stylesheet" href="./decision-flow.css?v=69"><link rel="stylesheet" href="./purchase-first.css?v=69"><link rel="stylesheet" href="./motion-clarity.css?v=69">
+<link rel="stylesheet" href="./catalog-routine.css?v=69">
+<link rel="preload" as="script" href="./persian-date.js?v=69">
+<link rel="preload" as="script" href="./new-products.js?v=69">
+<link rel="preload" as="script" href="./routine-reminder.js?v=69">
+<link rel="preload" as="script" href="./check.js?v=69">
+<link rel="preload" as="script" href="./budget.js?v=69">
+<link rel="preload" as="script" href="./quick-routine-market.js?v=69">
+<link rel="preload" as="script" href="./account-and-purchase.js?v=69">
+<link rel="preload" as="script" href="./regret-engine.js?v=69">
+<link rel="preload" as="script" href="./regret-map.js?v=69">
+<link rel="preload" as="script" href="./supplements.js?v=69">
+<link rel="preload" as="script" href="./ux-refresh.js?v=69">
+<link rel="preload" as="script" href="./focus-path.js?v=69">
+<link rel="preload" as="script" href="./install-app.js?v=69">
+<link rel="preload" as="script" href="./decision-flow.js?v=69">
+<link rel="preload" as="script" href="./purchase-first.js?v=69">
+<link rel="preload" as="script" href="./app-core.js?v=69">
+<link rel="preload" as="script" href="./profile-online.js?v=69">
+<link rel="preload" as="script" href="./product-offers.js?v=69">
+<link rel="preload" as="script" href="./assistant-ui.js?v=69">
+<script>
+window.bwReady=false;
+window.addEventListener('error',function(e){if(e.target&&e.target.tagName==='SCRIPT'){var n=document.getElementById('appLoading');if(n){n.hidden=false;n.firstElementChild.textContent='دریافت فایل برنامه کامل نشد؛ نسخه تازه را باز کن';n.querySelector('button').hidden=false;}}},true);
+// Session counting is asynchronous and never gates page rendering.
+window.bwVisitReady=(async function(){var c=new AbortController(),t=setTimeout(function(){c.abort();},4000);try{await fetch('/api/visit',{method:'POST',signal:c.signal,credentials:'same-origin'});}catch{}finally{clearTimeout(t);}})();
+// Recover app files without deleting profiles, purchases or user storage.
+window.bwReloadApp=async function(){
+ var button=document.querySelector('#appLoading button');if(button){button.disabled=true;button.textContent='در حال بازکردن نسخه تازه…';}
+ var cleanup=(async function(){
+  if('serviceWorker' in navigator){var regs=await navigator.serviceWorker.getRegistrations();await Promise.all(regs.filter(function(r){return new URL(r.scope).pathname==='/legacy/';}).map(function(r){return r.unregister();}));}
+  if('caches' in window){var names=await caches.keys();await Promise.all(names.filter(function(n){return /^bw-(static|complete)-/.test(n);}).map(function(n){return caches.delete(n);}));}
+ })().catch(function(){});
+ await Promise.race([cleanup,new Promise(function(resolve){setTimeout(resolve,2500);})]);
+ location.replace('/legacy/?v=69&refresh='+Date.now());
+};
+setTimeout(function(){if(window.bwReady)return;var n=document.getElementById('appLoading');if(n){n.hidden=false;n.firstElementChild.textContent='آماده‌سازی کامل نشد؛ اتصال اینترنت را بررسی کن و دوباره تلاش کن';n.querySelector('button').hidden=false;}},8000);
+</script>
+<style>.bw-readable-answer{min-width:0;max-width:100%;overflow-wrap:anywhere;white-space:normal;line-height:1.9;color:#173e4a}.bw-readable-answer p{margin:0 0 12px}.bw-readable-answer details{margin-top:12px}.bw-readable-answer summary{cursor:pointer;font-weight:600;color:#235366}.bw-readable-answer a{display:inline-block;max-width:100%}</style><style>
+.bw-action-icon::before{content:'✓';display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;flex:none;margin-inline-end:8px;vertical-align:middle;border:2px solid #e8a6c3;border-radius:10px;background:#fff7fb;color:#9a6b18;font-size:23px;font-weight:800;line-height:1;box-shadow:0 2px 7px #d4a53c20}.bw-action-icon[data-bw-action="review"]::before{content:'⌕'}
+.bw-action-icon{min-height:48px;max-width:100%;white-space:normal}.bw-privacy-link{display:block;margin:14px auto;background:transparent;border:0;color:#365c6b;font:inherit;font-size:13px;text-decoration:underline;cursor:pointer}#bwPrivacyDialog{width:min(90vw,500px);max-height:80dvh;overflow:auto;border:1px solid #e8a6c3;border-radius:20px;padding:22px;background:#f1faff;color:#193e4b;font:inherit;line-height:1.9}#bwPrivacyDialog::backdrop{background:#14313c70}
+</style><style>.bw-routine-action{border:1px solid #e8b0c9;border-radius:14px;padding:12px;margin:10px 0;background:#f3fbff}.bw-routine-action b{color:#254b59}.bw-routine-action p{margin:5px 0}</style></head>
+<body>
+<div class="bw-opening" aria-hidden="true"><div class="bw-door bw-door-left"></div><div class="bw-door bw-door-right"></div><div class="bw-opening-mark"><svg viewBox="0 0 64 64"><path d="M32 8C29 16 15 29 15 41a17 17 0 0 0 34 0C49 29 35 16 32 8Z" fill="#3598ba"/><path d="M24 40c0 6 4 10 10 11" fill="none" stroke="#eafaff" stroke-width="4" stroke-linecap="round"/></svg><b>BeautyWallet</b></div></div>
+<header class="topbar"><div class="shell inner">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 72 72" aria-label="نشان قطره آب BeautyWallet" role="img"><defs><linearGradient id="dropBg" x1="10" y1="8" x2="62" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#e9fbff"/><stop offset="1" stop-color="#bfeaf5"/></linearGradient><linearGradient id="dropFill" x1="27" y1="16" x2="48" y2="57" gradientUnits="userSpaceOnUse"><stop stop-color="#78d2e7"/><stop offset="1" stop-color="#2f8fb7"/></linearGradient></defs><rect x="3" y="3" width="66" height="66" rx="22" fill="url(#dropBg)" stroke="#fff" stroke-width="3"/><path d="M36 13c-2.8 6.5-14.5 18.2-14.5 29.2A14.5 14.5 0 0 0 36 56.7a14.5 14.5 0 0 0 14.5-14.5C50.5 31.2 38.8 19.5 36 13Z" fill="url(#dropFill)"/><path d="M29 42c0 4.6 3.1 7.8 7.2 8.3" fill="none" stroke="#dffaff" stroke-width="3" stroke-linecap="round"/></svg>
+    <div class="brandtext"><b>BeautyWallet</b><small>کیف هوشمند زیبایی</small></div>
+  </div>
+  <button type="button" class="install-app" id="installAppButton">افزودن به صفحهٔ اصلی</button>
+</div></header>
+
+<div id="appLoading" class="shell pf-loading" role="status"><span>در حال آماده‌سازی BeautyWallet…</span><button type="button" class="source-link" hidden onclick="bwReloadApp()">تلاش دوباره</button></div>
+<noscript><p class="shell">برای استفاده از بررسی محصول، جاوااسکریپت مرورگر را فعال کن</p></noscript>
+<main class="shell">
+<section id="home" class="panel">
+  <div class="hero">
+    <div class="hero-card">
+      <h1>قبل از خرید، ببین این محصول به پوست، روتین و بودجه‌ات می‌خورد یا نه.</h1>
+      <p>یک بررسی کوتاه، با دلیل روشن و هزینهٔ واقعی خرید.</p>
+      <div class="hero-actions"><button class="primary" onclick="switchTab('check');document.getElementById('decisionProduct')?.focus()">محصولم را بررسی کن</button><button class="ghost" onclick="document.getElementById('quickSkinHome').scrollIntoView({behavior:'smooth',block:'start'})">شناخت سریع پوست</button></div>
+      <button type="button" class="install-home" id="installHomeButton" hidden><span class="install-home-icon" aria-hidden="true">＋</span>افزودن BeautyWallet به صفحهٔ اصلی</button>
+    </div>
+  </div>
+  <section class="entry-questions" aria-labelledby="entryQuestionsTitle"><h2 id="entryQuestionsTitle">با کدام سؤال آمدی؟</h2><div class="entry-question-grid">
+    <article class="entry-question"><button type="button" onclick="switchTab('check');document.getElementById('decisionProduct')?.focus()"><i aria-hidden="true">؟</i><span>این محصول به پوست من می‌خورد؟</span></button><a href="./topics/product-fit/">راهنمای عمومی تناسب محصول</a></article>
+    <article class="entry-question"><button type="button" onclick="switchTab('check');document.getElementById('checkCatalogDetails').open=true;document.getElementById('checkSearch')?.focus()"><i aria-hidden="true">⇄</i><span>این دو اکتیو با هم می‌سازند؟</span></button><a href="./topics/active-compatibility/">تداخل‌ها را ساده بفهمم</a></article>
+    <article class="entry-question"><button type="button" onclick="switchTab('check');document.getElementById('decisionProduct')?.focus()"><i aria-hidden="true">≈</i><span>هزینه واقعی خرید چقدر می‌شود؟</span></button><a href="./topics/real-cost/">نقد و اقساط را مقایسه کنم</a></article>
+  </div><p class="entry-question-note">اول سؤالت را انتخاب کن؛ شناخت پوست را فقط وقتی برای جواب دقیق‌تر نیاز شد انجام بده.</p></section>
+  <section id="quickSkinHome" class="quick-skin-home" aria-label="شناخت سریع پوست"></section>
+  <details class="assistant-hub" id="assistantHub">
+    <summary class="assistant-entry"><span class="assistant-spark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8C10.8 6 6.1 10.6 6.1 15a5.9 5.9 0 0 0 11.8 0C17.9 10.6 13.2 6 12 2.8Z"/></svg></span><span><b id="assistantTitle">دستیار هوشمند BeautyWallet</b></span></summary><div class="assistant-body">
+    <details class="assistant-layers"><summary>این پاسخ بر چه اطلاعاتی تکیه دارد؟</summary><div class="assistant-memory" aria-label="سه لایه دستیار">
+      <article><i>۱</i><div><b>دانش BeautyWallet</b><span id="assistantKnowledgeStatus">قوانین ایمنی، محصولات، ترکیبات و روتین‌ها</span></div></article>
+      <article><i>۲</i><div><b>اطلاعاتی که ثبت کرده‌ای</b><span id="assistantPersonalStatus">نوع پوست، حساسیت‌ها، بودجه، خریدها و اهداف</span></div></article>
+      <article><i>۳</i><div><b>قیمت و فروشنده</b><span id="assistantMarketStatus">قیمت، تخفیف، موجودی، اقساط و فروشنده</span></div></article>
+    </div></details>
+    <div class="assistant-quick" aria-label="پیشنهاد سؤال"><button type="button" data-assistant-prompt="روتین فعلی من را با توجه به پروفایلم بررسی کن و کوتاه‌ترین نسخه امن را بده.">روتینم را بررسی کن</button><button type="button" data-assistant-prompt="با توجه به بودجه و محصولاتی که دارم، خرید بعدی من چه باشد؟">خرید بعدی من</button><button type="button" data-assistant-prompt="قیمت و تخفیف فعلی یک ضدآفتاب مناسب پوست من را در بازار ایران با لینک مستقیم پیدا کن.">جست‌وجوی زنده بازار</button></div>
+    <div class="assistant-chat" id="assistantChat" aria-live="polite"><div class="assistant-welcome" id="assistantWelcome">سلام! سؤال یا نام محصولت را بنویس؛ اطلاعات پروفایل و بازار را کنار هم می‌گذارم.</div></div>
+    <details class="assistant-market" id="assistantMarketDetails"><summary>＋ قیمت یا فروشنده‌ای که دیده‌ام را هم ثبت کنم</summary><p>اختیاری است؛ فقط اطلاعاتی را وارد کن که همین حالا در صفحه فروشگاه دیده‌ای.</p><div class="assistant-market-grid"><input id="assistantProductName" placeholder="نام دقیق محصول"><input id="assistantSeller" placeholder="نام فروشگاه"><input id="assistantPrice" inputmode="numeric" placeholder="قیمت فعلی"><input id="assistantDiscount" placeholder="تخفیف"><input id="assistantAvailability" placeholder="موجودی"><input id="assistantInstallment" placeholder="شرایط اقساط"><input class="wide" id="assistantProductUrl" type="url" placeholder="https:// لینک مستقیم محصول"></div></details>
+    <p class="assistant-error" id="assistantError" role="alert"></p>
+    <form class="assistant-compose" id="assistantForm"><textarea id="assistantInput" maxlength="3000" rows="2" aria-label="پیام به دستیار" placeholder="مثلاً این سرم با روتین و حساسیت‌های من سازگار است؟" required></textarea><button id="assistantSend" type="submit">ارسال</button></form>
+    <p class="assistant-safety">متن گفتگو در سرور ذخیره و برای پاسخ به سرویس هوش مصنوعی ارسال می‌شود؛ اطلاعات حساس را بدون نیاز وارد نکن. جایگزین تشخیص یا درمان پزشکی نیست. قیمت و موجودی را در فروشگاه بررسی کن.</p>
+    </div>
+  </details>
+  <details class="section catalog-disclosure" id="catalogStart"><summary><span class="catalog-summary-copy"><b>دنبال یک محصول می‌گردی؟</b><small>کاتالوگ و جست‌وجوی محصولات را باز کن</small></span></summary>
+    <div class="section-head"><div><h2>محصولات</h2><small>تصویر محصولات موجود در کاتالوگ</small></div><small id="resultCount"></small></div>
+    <div class="search-wrap"><span class="search-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg></span><input id="search" class="search" placeholder="اسم محصول، برند یا دسته…" autocomplete="off"></div>
+    <div class="chips"><button class="chip active" data-filter="همه">همه</button><button class="chip" data-filter="میسلار واتر">میسلار واتر</button><button class="chip" data-filter="شوینده">شوینده</button><button class="chip" data-filter="آبرسان">آبرسان</button><button class="chip" data-filter="مرطوب‌کننده">مرطوب‌کننده</button><button class="chip" data-filter="ضد آفتاب">ضد آفتاب</button><button class="chip" data-filter="تونر">تونر</button><button class="chip" data-filter="ضد چروک">ضد چروک</button><button class="chip" data-filter="ضد جوش">ضد جوش</button><button class="chip" data-filter="ضد لک">ضد لک</button></div>
+    <div class="catalog" id="catalog"><button class="product-card" data-id="bioderma-sebium" data-cat="میسلار واتر" aria-label="باز کردن میسلار واتر بایودرما پوست چرب">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">میسلار واتر</span><strong>میسلار واتر بایودرما پوست چرب</strong><small>Bioderma Sébium H2O</small></div>
+    </button><button class="product-card" data-id="bioderma-dry" data-cat="میسلار واتر" aria-label="باز کردن میسلار واتر بایودرما پوست خشک">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">میسلار واتر</span><strong>میسلار واتر بایودرما پوست خشک</strong><small>Bioderma — مدل پوست خشک</small></div>
+    </button><button class="product-card" data-id="garnier-dry" data-cat="میسلار واتر" aria-label="باز کردن میسلار واتر گارنیه پوست خشک">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">میسلار واتر</span><strong>میسلار واتر گارنیه پوست خشک</strong><small>Garnier — مدل پوست خشک</small></div>
+    </button><button class="product-card" data-id="avene-oil" data-cat="شوینده" aria-label="باز کردن ژل شستشوی کنترل چربی اون">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">شوینده</span><strong>ژل شستشوی کنترل چربی اون</strong><small>Avène oil-control cleanser</small></div>
+    </button><button class="product-card" data-id="centella-teatree" data-cat="شوینده" aria-label="باز کردن فوم شستشوی درخت چای سنتلا">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">شوینده</span><strong>فوم شستشوی درخت چای سنتلا</strong><small>Centella tea-tree cleanser</small></div>
+    </button><button class="product-card" data-id="cerave-acne" data-cat="شوینده" aria-label="باز کردن ژل شستشوی ضد لک و ضد جوش سراوی">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">شوینده</span><strong>ژل شستشوی ضد لک و ضد جوش سراوی</strong><small>CeraVe acne cleanser variant</small></div>
+    </button><button class="product-card" data-id="anua-rice-powder" data-cat="شوینده" aria-label="باز کردن پودر شستشو و روشن‌کننده سرامید و برنج انوا">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">شوینده</span><strong>پودر شستشو و روشن‌کننده سرامید و برنج انوا</strong><small>Anua Rice Enzyme Brightening Cleansing Powder</small></div>
+    </button><button class="product-card" data-id="skin1004-pore-foam" data-cat="شوینده" aria-label="باز کردن فوم شستشوی عمیق منافذ سنتلا">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">شوینده</span><strong>فوم شستشوی عمیق منافذ سنتلا</strong><small>SKIN1004 Poremizing Deep Cleansing Foam</small></div>
+    </button><button class="product-card" data-id="cerave-sa" data-cat="شوینده" aria-label="باز کردن ژل شستشو سالیسیلیک اسید سراوی">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">شوینده</span><strong>ژل شستشو سالیسیلیک اسید سراوی</strong><small>CeraVe Renewing SA Cleanser</small></div>
+    </button><button class="product-card" data-id="permancy-sensitive" data-cat="شوینده" aria-label="باز کردن فوم شوینده پوست آسیب‌دیده و حساس پرمانسی">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">شوینده</span><strong>فوم شوینده پوست آسیب‌دیده و حساس پرمانسی</strong><small>Permancy sensitive cleanser</small></div>
+    </button><button class="product-card" data-id="anua-oily-cleanser" data-cat="شوینده" aria-label="باز کردن ژل شستشوی پوست چرب انوا">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">شوینده</span><strong>ژل شستشوی پوست چرب انوا</strong><small>Anua oily-skin cleanser variant</small></div>
+    </button><button class="product-card" data-id="dr-althea-aqua" data-cat="آبرسان" aria-label="باز کردن کرم آبرسان دکتر التیا مدل Aqua Watery">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">آبرسان</span><strong>کرم آبرسان دکتر التیا مدل Aqua Watery</strong><small>Dr. Althea Aqua Watery — نیاز به تطبیق مدل دقیق</small></div>
+    </button><button class="product-card" data-id="vichy-89" data-cat="آبرسان" aria-label="باز کردن سرم مینرال ۸۹ ویشی">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">آبرسان</span><strong>سرم مینرال ۸۹ ویشی</strong><small>Vichy Minéral 89</small></div>
+    </button><button class="product-card" data-id="dr-althea-345" data-cat="مرطوب‌کننده" aria-label="باز کردن کرم ۳۴۵ دکتر التیا">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">مرطوب‌کننده</span><strong>کرم ۳۴۵ دکتر التیا</strong><small>Dr. Althea 345 Relief Cream</small></div>
+    </button><button class="product-card" data-id="dr-althea-147" data-cat="مرطوب‌کننده" aria-label="باز کردن کرم ۱۴۷ دکتر التیا">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">مرطوب‌کننده</span><strong>کرم ۱۴۷ دکتر التیا</strong><small>Dr. Althea 147 Barrier Cream</small></div>
+    </button><button class="product-card" data-id="anaparla-hydrodermie" data-cat="مرطوب‌کننده" aria-label="باز کردن ژل هیدرودرمی اناپارلا">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">مرطوب‌کننده</span><strong>ژل هیدرودرمی اناپارلا</strong><small>Anaparla Hydrodermie Gel</small></div>
+    </button><button class="product-card" data-id="numbuzin-sun" data-cat="ضد آفتاب" aria-label="باز کردن اسنس ضد آفتاب نامبوزین">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">ضد آفتاب</span><strong>اسنس ضد آفتاب نامبوزین</strong><small>numbuzin sunscreen essence — exact No. check</small></div>
+    </button><button class="product-card" data-id="tocobo-stick" data-cat="ضد آفتاب" aria-label="باز کردن ضد آفتاب استیکی توکوبو">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">ضد آفتاب</span><strong>ضد آفتاب استیکی توکوبو</strong><small>TOCOBO Cotton Airy Sun Stick</small></div>
+    </button><button class="product-card" data-id="boj-relief" data-cat="ضد آفتاب" aria-label="باز کردن کرم ضد آفتاب بیوتی آف جوسان">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد آفتاب</span><strong>کرم ضد آفتاب بیوتی آف جوسان</strong><small>Beauty of Joseon Relief Sun</small></div>
+    </button><button class="product-card" data-id="boj-rice-bright" data-cat="ضد آفتاب" aria-label="باز کردن کرم ضد آفتاب شفاف‌کننده برنج بیوتی آف جوسان">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">ضد آفتاب</span><strong>کرم ضد آفتاب شفاف‌کننده برنج بیوتی آف جوسان</strong><small>Beauty of Joseon rice sunscreen — نیاز به تطبیق مدل دقیق</small></div>
+    </button><button class="product-card" data-id="skin1004-hyalucica" data-cat="ضد آفتاب" aria-label="باز کردن سرم ضد آفتاب هیالوسیکا سنتلا">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد آفتاب</span><strong>سرم ضد آفتاب هیالوسیکا سنتلا</strong><small>SKIN1004 Hyalu-Cica Water-Fit Sun Serum UV</small></div>
+    </button><button class="product-card" data-id="brightmax-physical" data-cat="ضد آفتاب" aria-label="باز کردن ضد آفتاب برایت مکس مدل فیزیکال">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">ضد آفتاب</span><strong>ضد آفتاب برایت مکس مدل فیزیکال</strong><small>Bright Max Physical Sunscreen</small></div>
+    </button><button class="product-card" data-id="anua-heartleaf" data-cat="تونر" aria-label="باز کردن تونر آبرسان و تسکین‌دهنده انوا">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">تونر</span><strong>تونر آبرسان و تسکین‌دهنده انوا</strong><small>Anua Heartleaf 77 Soothing Toner</small></div>
+    </button><button class="product-card" data-id="medik8-toner" data-cat="تونر" aria-label="باز کردن تونر ازالائیک اسید و نیاسینامید مدی کیوی">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">تونر</span><strong>تونر ازالائیک اسید و نیاسینامید مدی کیوی</strong><small>Azelaic + Niacinamide toner — exact brand/variant check</small></div>
+    </button><button class="product-card" data-id="clarins-double" data-cat="ضد چروک" aria-label="باز کردن سرم ضد چروک کلارنس مدل Double Serum">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد چروک</span><strong>سرم ضد چروک کلارنس مدل Double Serum</strong><small>Clarins Double Serum</small></div>
+    </button><button class="product-card" data-id="somebymi-retinol" data-cat="ضد چروک" aria-label="باز کردن رتینول سام بای می">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد چروک</span><strong>رتینول سام بای می</strong><small>SOME BY MI Retinol Intense Reactivating Serum</small></div>
+    </button><button class="product-card" data-id="ordinary-azelaic" data-cat="ضد جوش" aria-label="باز کردن ازالائیک اسید اوردینری">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد جوش</span><strong>ازالائیک اسید اوردینری</strong><small>The Ordinary Azelaic Acid Suspension 10%</small></div>
+    </button><button class="product-card" data-id="ordinary-niacinamide" data-cat="ضد جوش" aria-label="باز کردن نیاسینامید اوردینری">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد جوش</span><strong>نیاسینامید اوردینری</strong><small>The Ordinary Niacinamide 10% + Zinc 1%</small></div>
+    </button><button class="product-card" data-id="ordinary-salicylic" data-cat="ضد جوش" aria-label="باز کردن سرم ضد جوش سالیسیلیک اسید ۲٪ اوردینری">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد جوش</span><strong>سرم ضد جوش سالیسیلیک اسید ۲٪ اوردینری</strong><small>The Ordinary Salicylic Acid 2% Solution</small></div>
+    </button><button class="product-card" data-id="axisy-ahabha" data-cat="ضد لک" aria-label="باز کردن سرم ضد لک اسکیس وای مدل AHA+BHA">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">ضد لک</span><strong>سرم ضد لک اسکیس وای مدل AHA+BHA</strong><small>AHA+BHA serum — exact brand/variant check</small></div>
+    </button><button class="product-card" data-id="medicube-txa" data-cat="ضد لک" aria-label="باز کردن ژل کرم کپسولی ترانگزامیک اسید و نیاسینامید مدیکیوب">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد لک</span><strong>ژل کرم کپسولی ترانگزامیک اسید و نیاسینامید مدیکیوب</strong><small>Medicube TXA Niacinamide Capsule Cream</small></div>
+    </button><button class="product-card" data-id="medicube-vita-c" data-cat="ضد لک" aria-label="باز کردن ژل کرم کپسولی ویتامین C مدیکوب">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد لک</span><strong>ژل کرم کپسولی ویتامین C مدیکوب</strong><small>Medicube Deep Vita C Capsule Cream</small></div>
+    </button><button class="product-card" data-id="ordinary-arbutin" data-cat="ضد لک" aria-label="باز کردن سرم ضد لک آلفا آربوتین ۲٪ + HA اوردینری">
+      <div class="product-media"></div>
+      <div class="product-copy"><span class="eyebrow">ضد لک</span><strong>سرم ضد لک آلفا آربوتین ۲٪ + HA اوردینری</strong><small>The Ordinary Alpha Arbutin 2% + HA</small></div>
+    </button><button class="product-card" data-id="arencia-vitc" data-cat="ضد لک" aria-label="باز کردن بوستر شات ویتامین C آرنسیا">
+      <div class="product-media"><div class="placeholder-mark"><span>✧</span><small>نمای دسته محصول</small></div></div>
+      <div class="product-copy"><span class="eyebrow">ضد لک</span><strong>بوستر شات ویتامین C آرنسیا</strong><small>Arencia Vitamin C booster — نیاز به تطبیق مدل دقیق</small></div>
+    </button></div>
+  </details>
+  <div class="footer-note"><bdi dir="ltr" class="latin-inline">BeautyWallet</bdi> برای تصمیم بهتر در مراقبت پوست است — نه تشخیص یا درمان پزشکی</div>
+</section>
+
+<section id="wallet" class="panel">
+  <div class="section"><div class="section-head"><div><h2>بیوتی‌ولت من</h2><small>اطلاعات، محصولات و مسیر تغییرات تو</small></div></div><div class="wallet-hub"><button type="button" class="hub-link" onclick="switchTab('profile')"><b>پروفایل و اطلاعات من</b><small>اطلاعاتت را ببین، ویرایش کن یا بازیابی کن</small></button><button type="button" class="hub-link" onclick="switchTab('track')"><b>روند من</b><small>پیگیری روزانه و بازخوردهای ثبت‌شده</small></button><button type="button" class="hub-link" onclick="switchTab('supplements')"><b>مکمل‌های من</b><small>زمان مصرف و تداخل‌ها</small></button></div><button type="button" class="forum-link" onclick="switchTab('forum')">گپِ پوست؛ تجربه و پرسش کاربران</button><div id="walletContent"></div></div>
+</section>
+
+<section id="track" class="panel">
+  <div class="section"><div class="section-head"><div><h2>پیگیری</h2><small>تغییرات روزانه‌ات را ساده ثبت کن</small></div></div>
+    <div class="track-grid">
+      <div class="routine"><h3>☼ صبح</h3><label class="task"><input type="checkbox" data-track="am-cleanse"> شستشو</label><label class="task"><input type="checkbox" data-track="am-care"> مراقبت/آبرسانی</label><label class="task"><input type="checkbox" data-track="am-spf"> ضد آفتاب</label></div>
+      <div class="routine"><h3>◐ شب</h3><label class="task"><input type="checkbox" data-track="pm-cleanse"> پاکسازی و شستشو</label><label class="task"><input type="checkbox" data-track="pm-active"> اکتیو انتخاب‌شده</label><label class="task"><input type="checkbox" data-track="pm-moist"> مرطوب‌کننده</label></div>
+    </div>
+    <section class="soft-card routine-reminder" id="routineReminder" aria-labelledby="reminderTitle">
+      <h3 id="reminderTitle">یادآور روتین من</h3>
+      <p>ساعت‌های مناسب خودت را انتخاب کن؛ به وقت ایران.</p>
+      <div class="reminder-fields"><label>صبح <input id="reminderMorning" type="time" value="08:00"></label><label>شب <input id="reminderEvening" type="time" value="21:00"></label></div>
+      <label class="reminder-toggle"><input type="checkbox" id="reminderEnabled"> یادآور داخل سایت روشن باشد</label><div class="reminder-actions"><button type="button" id="saveReminder">ذخیره تنظیمات</button><button type="button" id="calendarReminder">افزودن به تقویم گوشی</button></div>
+      <p id="reminderStatus" role="status">اعلان مرورگر با اجازه تو، وقتی سایت باز است نمایش داده می‌شود. برای یادآوری در حالت بسته، رویدادهای تقویم را اضافه کن.</p>
+      <details><summary>پیگیری روزهای ۷، ۱۴ و ۲۱</summary><p>روز ۷: تحمل محصول یا تست محدود. روز ۱۴: نظم روتین و نشانه‌های تحریک. روز ۲۱: ثبت روند؛ نه حکم قطعی درباره اثربخشی. برای نتیجه درمانی آکنه معمولاً زمان بیشتری لازم است.</p>
+        <div class="reminder-fields"><label>نوبت پیگیری <select id="reviewDay"><option value="7">روز ۷</option><option value="14">روز ۱۴</option><option value="21">روز ۲۱</option></select></label><label>حال پوست <select id="reviewStatus"><option>خوب</option><option>نیاز به تغییر</option><option>هنوز نامشخص</option></select></label></div>
+        <textarea id="reviewNote" maxlength="300" placeholder="تجربه کوتاهت، بدون نیاز به فرم بلند"></textarea><button type="button" id="saveReview">ثبت بازخورد</button><div id="reviewHistory"></div>
+      </details>
+    </section>
+    <div class="soft-card scan-card">
+      <h3>عکس پوست برای مقایسهٔ روند</h3>
+      <p style="margin-bottom:12px">اگر دوست داشتی، یک عکس واضح ثبت کن تا تغییرات پوستت را در طول زمان راحت‌تر ببینی.</p>
+      <div class="face-upload">
+        <div class="face-preview" id="facePreview"><div class="placeholder">◌</div></div>
+        <div>
+          <div style="font-weight:700">عکس مرجع کاربر</div>
+          <div style="font-size:13px;color:#746a59;line-height:1.9;margin-top:4px">عکس فقط روی همین دستگاه می‌ماند و برای مقایسه روند پوست استفاده می‌شود</div>
+          <div class="upload-actions">
+            <label for="facePhotoInput">افزودن عکس</label>
+            <button type="button" id="removeFacePhoto">حذف عکس</button>
+          </div>
+          <input id="facePhotoInput" type="file" accept="image/*" capture="user" hidden>
+        </div>
+      </div>
+      <div class="scan-note">نور یکنواخت · روبه‌روی دوربین · بدون فیلتر</div>
+    </div>
+    <div class="soft-card"><h3>حال پوست امروز</h3><textarea id="trackNote" maxlength="500" placeholder="خشکی، سوزش، قرمزی، خارش یا جوش جدید…"></textarea></div>
+    <section class="product-comfort-log" id="productComfortLog" aria-labelledby="productComfortTitle"><div class="section-head"><div><h2 id="productComfortTitle">تجربه محصول</h2><small>اگر حال پوستت تغییر کرد</small></div></div></section>
+  </div>
+</section>
+
+<section id="check" class="panel active">
+  <div class="section"><div class="section-head"><div><span class="pf-eyebrow">بررسی رایگان</span><h1>قبل از خرید، ببین واقعاً بهش نیاز داری</h1></div></div>
+    <div class="pf-profile-start"><button type="button" id="pfStartProfile" class="pf-profile-cta">ثبت اطلاعات من و شروع بررسی</button><details class="bw-inline-note"><summary>حریم خصوصی</summary><p>ورود با شناسه ناشناس مرورگر شمرده می‌شود؛ ثبت آنلاین پروفایل با رضایت خودت است</p></details></div>
+<form id="decisionEntry" class="soft-card decision-entry"><label for="decisionProduct">اسم یا لینک محصولت را بنویس</label><div class="decision-entry-row"><input id="decisionProduct" type="text" maxlength="500" placeholder="نام روی بسته یا لینک فروشگاه" autocomplete="off"><button type="submit" class="primary">بررسی کن</button></div><details class="pf-optional-photo"><summary>عکس بسته را هم داشته باشم</summary><label class="decision-photo">عکس محصول، فقط روی این دستگاه<input id="decisionPhoto" type="file" accept="image/*"></label><small>در این نسخه، عکس خوانده یا ارسال نمی‌شود؛ نام دقیق را بنویس</small></details><details class="bw-inline-note"><summary>درباره بررسی آنلاین</summary><p>متن بررسی برای پاسخ‌گویی به سرور و سرویس هوش مصنوعی ارسال و در سابقه آنلاین ذخیره می‌شود؛ اطلاعات حساس را اینجا ننویس</p><p id="decisionEntryNote" role="status">عکس در این مسیر ارسال نمی‌شود</p></details></form><div id="decisionSummary" class="decision-summary" role="status" aria-live="polite"></div>
+    <details class="soft-card catalog-disclosure" id="checkCatalogDetails"><summary>جست‌وجوی فهرست و بررسی چند محصول</summary><div><h3>چند محصول را کنار هم بگذار</h3><p>تا ۸ محصول انتخاب کن. زمان استفاده را مشخص کن تا تکرار اکتیوها و فشار احتمالی روی پوست ساده دیده شود.</p><input id="checkSearch" type="search" placeholder="نام محصول را جست‌وجو کن…" aria-label="جست‌وجوی محصول برای بررسی"><div id="checkCatalog" class="check-options"></div><button class="source-link" id="checkWalletAdd" type="button">افزودن محصولات کیف من</button></div></details>
+    <div class="soft-card"><div class="compare-head"><h3>روتین انتخابی</h3><button id="clearComparison" type="button" class="source-link">پاک‌کردن</button></div><div id="selectedProducts" class="compare-selected"></div><div id="activeVerdict" class="active-verdict" role="status" aria-live="polite"></div><details class="decision-help" id="decisionHelp"><summary aria-label="کمک برای فهم نتیجه"><span class="help-icon" aria-hidden="true">؟</span><span>این نتیجه را بهتر بفهمم</span></summary><p id="decisionHelpText">ابتدا محصول را انتخاب کن؛ بعد دلیل نتیجه را همین‌جا به زبان ساده می‌بینی.</p><button type="button" class="source-link" onclick="switchTab('learn')">راهنمای کامل روتین</button><button type="button" class="source-link" onclick="switchTab('supplements')">پرسش درباره مکمل‌ها</button></details><div id="decisionHelpNudge" class="help-nudge" role="status" hidden>اگر نتیجه نامطمئن است، راهنمای صورتی کنار آن را باز کن.</div><details class="result-details"><summary>دلیل و جزئیات بررسی</summary><div id="comparisonResult" role="status" aria-live="polite"></div></details><div id="purchaseRecommendation" class="purchase-box" aria-live="polite"></div><details class="market-disclosure"><summary>قیمت و فروشگاه‌های ثبت‌شده</summary><div id="marketFinder" class="market-box" aria-live="polite"><h3>پیدا کردن همان محصول در بازار ایران</h3><p>بعد از انتخاب، لینک همان مدل را می‌بینی. تخفیف و خرید اقساطی فقط وقتی نمایش داده می‌شوند که فروشگاه برای همان پیشنهاد اعلام کرده باشد.</p><div id="marketList" class="market-list"><small>یک یا چند محصول را برای بررسی انتخاب کن.</small></div></div></details></div>
+    <div class="soft-card"><h3>چک سریع روتین</h3><p id="routineAdvice">پروفایل پوستت را کامل کن تا این بخش خلاصه‌تر و شخصی‌تر شود</p><button type="button" class="forum-link" onclick="switchTab('forum')">گپِ پوست درباره این محصول</button></div>
+  </div>
+</section>
+
+<section id="regrets" class="panel">
+  <div class="section"><div class="section-head"><div><h2>اشتباهات خرید من</h2></div></div>
+    <div class="soft-card quick-feedback" id="quickFeedback"><span class="section-kicker">ثبت در کمتر از ۱۰ ثانیه</span><h3>این خرید چطور بود؟</h3><label class="quick-feedback-product">محصول<select id="quickFeedbackProduct" aria-label="محصول برای ثبت تجربه"></select></label><div class="quick-feedback-options" id="quickFeedbackOptions" role="group" aria-label="نتیجه تجربه"><button type="button" data-feedback="good">خوب بود</button><button type="button" data-feedback="no-change">تغییری ندیدم</button><button type="button" data-feedback="not-compatible">با پوستم سازگار نبود</button><button type="button" data-feedback="poor-value">ارزش پولش را نداشت</button><button type="button" data-feedback="duplicate">مشابهش را داشتم</button></div><div id="quickFeedbackFollowup" class="quick-feedback-followup" hidden></div><p id="quickFeedbackStatus" class="quick-feedback-status" role="status" aria-live="polite"></p><button type="button" class="source-link" id="showAdvancedRegret">ثبت جزئیات بیشتر</button></div>
+    <div class="soft-card regret-card" id="regretStart" hidden><div class="regret-heading"><span class="regret-symbol" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 8V4m0 0h4M5 4l3.2 3.2A7 7 0 1 1 5 13"/></svg></span><div><h3>جزئیات تجربه‌های خرید</h3><p>اگر دوست داری، نسخه، فروشگاه و تجربه‌های قبلی را دقیق‌تر ثبت کن تا مقایسه‌های بعدی شخصی‌تر شوند.</p></div></div>
+      <form id="regretForm" class="regret-form"><div class="regret-grid"><fieldset><legend>خرید ناموفق اول</legend><label>نام دقیق محصول<input name="past1Name" list="regretProducts" placeholder="مثلاً نام روی بسته‌بندی" maxlength="120"></label><label>چرا پشیمان شدی؟<select name="past1Reason"><option value="">انتخاب کن</option><option value="irritation">سوزش، قرمزی یا تحریک</option><option value="texture">بافت یا حس استفاده را دوست نداشتم</option><option value="noresult">نتیجهٔ مورد انتظار را ندیدم</option><option value="duplicate">مشابهش را از قبل داشتم</option><option value="price">نسبت به هزینه‌اش ارزش نداشت</option></select></label><label>عکس بسته‌بندی (اختیاری)<input name="past1Photo" type="file" accept="image/*" capture="environment"></label><small class="regret-photo-status" id="past1PhotoStatus"></small></fieldset>
+      <fieldset><legend>خرید ناموفق دوم (اختیاری)</legend><label>نام دقیق محصول<input name="past2Name" list="regretProducts" placeholder="اگر یادت هست" maxlength="120"></label><label>چرا پشیمان شدی؟<select name="past2Reason"><option value="">انتخاب کن</option><option value="irritation">سوزش، قرمزی یا تحریک</option><option value="texture">بافت یا حس استفاده را دوست نداشتم</option><option value="noresult">نتیجهٔ مورد انتظار را ندیدم</option><option value="duplicate">مشابهش را از قبل داشتم</option><option value="price">نسبت به هزینه‌اش ارزش نداشت</option></select></label><label>عکس بسته‌بندی (اختیاری)<input name="past2Photo" type="file" accept="image/*" capture="environment"></label><small class="regret-photo-status" id="past2PhotoStatus"></small></fieldset></div>
+      <div class="regret-target"><h4>خریدی که الآن در فکرش هستی</h4><div class="regret-grid"><label>نام محصول<input name="targetName" list="regretProducts" placeholder="نام و مدل دقیق را بنویس" maxlength="120"></label><label>لینک همان محصول از هر فروشگاه (اختیاری)<input name="targetUrl" type="url" placeholder="https://..." maxlength="500" dir="ltr"></label><label>قیمت، به تومان (اختیاری)<input name="targetPrice" type="number" min="0" max="1000000000" placeholder="برای مقایسه با بودجه"></label><label>عکس محصول (اختیاری)<input name="targetPhoto" type="file" accept="image/*" capture="environment"></label></div><small class="regret-photo-status" id="targetPhotoStatus"></small></div>
+      <datalist id="regretProducts"></datalist><p class="regret-hint">نام، علت پشیمانی و نام خرید جدید را وارد کن. عکس فقط مرجع شخصی است؛ نوشته و ترکیبات از عکس به‌طور خودکار خوانده نمی‌شود.</p><button type="submit" class="primary">بررسی اشتباهِ تکراری</button><button type="button" class="source-link" id="clearRegret">پاک‌کردن این بررسی</button></form><div id="regretResult" class="regret-result" role="status" aria-live="polite"></div></div>
+    <div class="soft-card decision-journal"><span class="section-kicker">ثبت جزئیات</span><h3>از تصمیم تا نتیجه</h3><p>تصمیم، نسخهٔ دریافتی و نتیجه را ثبت کن.</p><form id="decisionForm" class="decision-form"><label>محصول<input name="product" maxlength="120" required placeholder="نام و مدل دقیق"></label><label>تصمیم<select name="decision" required><option value="">انتخاب کن</option><option value="bought">خریدم</option><option value="skipped">نخریدم</option><option value="waiting">هنوز تصمیم نگرفتم</option></select></label><label>فروشگاه یا لینک<input name="seller" maxlength="240" placeholder="نام یا لینک فروشگاه"></label><label>نسخه‌ای که تحویل گرفتم<input name="exactVersion" maxlength="160" placeholder="حجم، مدل یا نوشتهٔ بسته"></label><label>تاریخ تصمیم، شمسی<input name="decisionDate" type="text" inputmode="numeric" data-jalali-date placeholder="۱۴۰۵/۰۶/۲۹"><small class="jalali-help">نمونه: ۱۴۰۵/۰۶/۲۹</small></label><label>نتیجهٔ پیگیری<select name="outcome"><option value="pending">منتظر نتیجه</option><option value="satisfied">راضی بودم</option><option value="not-satisfied">راضی نبودم</option><option value="reaction">واکنش نامطلوب داشتم</option></select></label><label style="grid-column:1/-1">یادداشت نتیجه<textarea name="note" maxlength="500" rows="3" placeholder="بعد از چند بار استفاده، چه اتفاقی افتاد؟"></textarea></label><button class="primary" type="submit">ثبت این نقطه از مسیر</button></form><div id="decisionList" class="decision-list"></div></div>
+  </div>
+</section>
+
+<section id="supplements" class="panel">
+  <div class="section"><div class="section-head"><div><h2>مکمل‌های من</h2><small>برنامه‌ای ساده برای زمان مصرف و تداخل‌های مهم</small></div></div>
+    <div class="soft-card supp-intro"><span class="section-kicker">اول راهنما، بعد برنامهٔ من</span><h3>راهنمای مصرف و تداخل‌ها در بخش «آموزش» است</h3><p>پیش از افزودن مکمل، راهنمای کوتاه آموزش را ببین. زمان مصرف به نوع و برچسب محصول بستگی دارد؛ تداخل‌هایی مثل آهن با کلسیم یا بعضی مواد معدنی با داروها هم با احتیاط یادآوری می‌شوند.</p><button type="button" class="source-link" onclick="bwOpenSupplementGuide()">رفتن به آموزش مکمل‌ها</button></div>
+    <div id="supplementApp"></div>
+  </div>
+</section>
+
+<section id="profile" class="panel"><div class="section"><div class="soft-card account-card" id="accountCard"><h3>اطلاعات من</h3><p id="accountStatus">در حال آماده‌سازی…</p><p id="accountPrivacy">پروفایل و روتین روی همین دستگاه ذخیره می‌شوند. برای نگهداری و انتقال به دستگاه دیگر، فایل پشتیبان شخصی بگیر. عکس چهره در فایل پشتیبان قرار نمی‌گیرد.</p><div class="account-actions" id="accountActions"></div></div></div><div class="section"><div class="section-head"><div><h2>پروفایل پوست</h2><small>فرم کامل نسخهٔ ۱، قابل ذخیره روی دستگاه</small></div></div><div class="soft-card profile-guide"><h3>نوع پوستت را نمی‌دانی؟</h3><p>صورت را با شویندهٔ ملایم بشوی و بدون محصول تازه، پس از حدود یک ساعت در نور معمولی به پیشانی، بینی و گونه‌ها نگاه کن. این راهنما فقط برای انتخاب اولیه است و نتیجهٔ قطعی پزشکی نیست.</p><div class="guide-questions"><label>پیشانی و بینی بیشتر چه حسی دارند؟<select id="guideT"><option value="">انتخاب کن</option><option value="o">براق و چرب</option><option value="d">کشیدگی یا پوسته‌پوسته</option><option value="n">راحت و متعادل</option></select></label><label>گونه‌ها بیشتر چه حسی دارند؟<select id="guideC"><option value="">انتخاب کن</option><option value="o">براق و چرب</option><option value="d">کشیدگی یا پوسته‌پوسته</option><option value="n">راحت و متعادل</option></select></label><label>آیا با محصولات معمولی سوزش، خارش یا قرمزی تکراری داری؟<select id="guideS"><option value="">انتخاب کن</option><option value="yes">بله</option><option value="no">خیر</option></select></label></div><button type="button" class="primary" id="guideResultButton">دیدن برداشت اولیه</button><p id="guideResult" role="status" aria-live="polite"></p><p class="guide-note">حساسیت یا واکنش‌پذیری جدا از نوع پایهٔ پوست است. اگر امروز پوستت تحریک شده یا داروی پوستی مصرف می‌کنی، نتیجه را قطعی ندان.</p></div><form id="profile-form" class="profile-sections">
+<div class="profile-register-card"><span class="profile-register-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4h10a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"/><path d="M8 9h8M8 13h5M9 18l2 2 4-5"/></svg></span><div class="profile-register-copy"><h2>پروفایلم را ذخیره کن</h2><p>پاسخ‌هایت را کامل کن تا پیشنهادهای بعدی با شرایط خودت هماهنگ‌تر باشند.</p></div><label class="profile-register-consent"><input form="profile-form" name="cloudConsent" type="checkbox" required> اطلاعاتم را امن و آنلاین نگه دار.</label><button class="register-submit" form="profile-form" type="submit">ذخیره پروفایل من</button></div>
+<div class="demo-profile-banner">
+<div><b>فقط برای دیدن مسیر کامل</b><span>روتین فرضی «سارا در تهران» را بارگذاری کن؛ این داده در آمار ۱۵ جلسه حساب نمی‌شود.</span></div>
+<button type="button" class="secondary" id="load-demo-profile">بارگذاری دمو</button>
+</div>
+<details open class="panel">
+<summary>
+<b>پوست من</b>
+<span>پایه و وضعیت امروز</span>
+</summary>
+<div class="form-grid">
+<label class="field">
+<span>نوع پایه پوست *</span>
+<select name="skinBase" required>
+<option value="">انتخاب کن</option>
+<option>چرب</option>
+<option>خشک</option>
+<option>مختلط</option>
+<option>نرمال</option>
+<option>مطمئن نیستم</option>
+</select>
+</label>
+<label class="field">
+<span>وضعیت امروز *</span>
+<select name="skinToday" required>
+<option value="">انتخاب کن</option>
+<option>متعادل</option>
+<option>چرب‌تر از معمول</option>
+<option>خشک‌تر از معمول</option>
+<option>تحریک‌شده</option>
+<option>جوش فعال</option>
+<option>قرمز و حساس</option>
+</select>
+</label>
+<label class="field">
+<span>حساسیت امروز</span>
+<select name="sensitivity">
+<option>کم</option>
+<option>متوسط</option>
+<option>زیاد</option>
+</select>
+</label>
+<label class="field">
+<span>حالِ لایهٔ محافظ پوست</span>
+<select name="barrier">
+<option>سالم</option>
+<option>مشکوک</option>
+<option>احتمالاً آسیب‌دیده</option>
+<option>نمی‌دانم</option>
+</select>
+</label>
+<fieldset class="wide chips">
+<legend>علائم فعلی</legend>
+<label>
+<input type="checkbox" name="symptoms" value="جوش فعال">جوش فعال</label>
+<label>
+<input type="checkbox" name="symptoms" value="خشکی">خشکی</label>
+<label>
+<input type="checkbox" name="symptoms" value="قرمزی">قرمزی</label>
+<label>
+<input type="checkbox" name="symptoms" value="سوزش">سوزش</label>
+<label>
+<input type="checkbox" name="symptoms" value="خارش">خارش</label>
+<label>
+<input type="checkbox" name="symptoms" value="پوسته‌ریزی">پوسته‌ریزی</label>
+</fieldset>
+<label class="field wide">
+<span>آخرین تغییر مهم پوست</span>
+<input name="lastSkinChange" placeholder="مثلاً پس از شروع رتینول، سفر یا تغییر هوا">
+</label>
+</div>
+</details>
+
+<details class="panel">
+<summary>
+<b>هدف من</b>
+<span>اولویت و خط قرمز</span>
+</summary>
+<div class="form-grid">
+<label class="field">
+<span>هدف اول *</span>
+<select name="goal1" required>
+<option value="">انتخاب کن</option>
+<option>کاهش جوش التهابی</option>
+<option>کاهش لک پس از جوش</option>
+<option>آبرسانی و حمایت از لایهٔ محافظ پوست</option>
+<option>کاهش قرمزی</option>
+<option>کنترل چربی</option>
+<option>محافظت آفتاب</option>
+<option>بهبود بافت</option>
+<option>کاهش علائم پیری</option><option>بررسی تیرگی دور چشم</option>
+</select>
+</label>
+<label class="field">
+<span>هدف دوم</span>
+<select name="goal2">
+<option value="">فعلاً ندارم</option>
+<option>کاهش جوش التهابی</option>
+<option>کاهش لک پس از جوش</option>
+<option>آبرسانی و حمایت از لایهٔ محافظ پوست</option>
+<option>کاهش قرمزی</option>
+<option>کنترل چربی</option>
+<option>محافظت آفتاب</option>
+<option>بهبود بافت</option><option>بررسی تیرگی دور چشم</option>
+</select>
+</label>
+<label class="field">
+<span>بازه انتظار نتیجه</span>
+<select name="expectationWindow">
+<option>نمی‌دانم</option>
+<option>کمتر از ۲ هفته</option>
+<option>۲ تا ۶ هفته</option>
+<option>۶ تا ۱۲ هفته</option>
+<option>بیشتر از ۱۲ هفته</option>
+</select>
+</label>
+<label class="field">
+<span>عارضه غیرقابل‌قبول *</span>
+<select name="dealbreaker" required>
+<option value="">انتخاب کن</option>
+<option>خشکی و پوسته‌ریزی</option>
+<option>جوش جدید</option>
+<option>قرمزی و سوزش</option>
+<option>چسبندگی</option>
+<option>سفیدک</option>
+<option>پیل‌شدن زیر آرایش</option>
+<option>عطر زیاد</option>
+</select>
+</label>
+</div>
+</details>
+
+<details class="panel"><summary><b>تیرگی دور چشم</b><span>سرنخ، نه تشخیص</span></summary><div class="form-grid"><label class="field"><span>از چه زمانی دیده‌ای؟</span><select name="eyeDuration"><option value="">انتخاب کن</option><option>از نوجوانی یا خانوادگی</option><option>تازه ایجاد شده</option><option>نامشخص</option></select></label><label class="field"><span>بیشتر شبیه چیست؟</span><select name="eyeAppearance"><option value="">انتخاب کن</option><option>رنگ قهوه‌ای</option><option>آبی یا بنفش</option><option>سایهٔ گودی</option><option>پف و سایه</option><option>مطمئن نیستم</option></select></label><label class="field"><span>همراه با خارش چشم یا آلرژی؟</span><select name="eyeAllergy"><option value="">انتخاب کن</option><option>بله</option><option>خیر</option><option>نمی‌دانم</option></select></label><label class="field"><span>با نور یا خواب تغییر می‌کند؟</span><select name="eyeVariation"><option value="">انتخاب کن</option><option>بله</option><option>خیر</option><option>نمی‌دانم</option></select></label><div class="wide eye-info" id="eyeInsight">علت تیرگی با ظاهر تنها معلوم نمی‌شود. این پاسخ‌ها برای آموزش و پیگیری تغییرات‌اند.</div></div></details><details class="panel">
+<summary>
+<b>روتین فعلی</b>
+<span>ساختاریافته، نه متن آزاد</span>
+</summary>
+<div id="routine-list" class="repeat-list">
+</div>
+<button type="button" class="secondary add-row" data-add="routine">+ افزودن محصول روتین</button>
+</details>
+<details class="panel">
+<summary>
+<b>تجربه‌های قبلی</b>
+<span>نتیجه خوب، واکنش و خرید مجدد</span>
+</summary>
+<div id="history-list" class="repeat-list">
+</div>
+<button type="button" class="secondary add-row" data-add="history">+ افزودن تجربه محصول</button>
+</details>
+
+<details class="panel">
+<summary>
+<b>ترجیحات محصول</b>
+<span>حس استفاده و سازگاری با زندگی من</span>
+</summary>
+<div class="form-grid">
+<label class="field">
+<span>بافت ترجیحی</span>
+<select name="texture">
+<option>فرقی ندارد</option>
+<option>ژل سبک</option>
+<option>لوسیون</option>
+<option>کرم</option>
+<option>بالم</option>
+<option>سرم</option>
+</select>
+</label>
+<label class="field">
+<span>عطر</span>
+<select name="fragrance">
+<option>فرقی ندارد</option>
+<option>بدون عطر</option>
+<option>عطر ملایم قابل‌قبول</option>
+</select>
+</label>
+<label class="field">
+<span>زیر آرایش</span>
+<select name="makeupFit">
+<option>مهم نیست</option>
+<option>حتماً سازگار باشد</option>
+<option>روزانه آرایش می‌کنم</option>
+</select>
+</label>
+<label class="field">
+<span>مدت روتین</span>
+<select name="routineTime">
+<option>حداکثر ۳ دقیقه</option>
+<option>۳ تا ۷ دقیقه</option>
+<option>روتین کامل برایم مناسب است</option>
+</select>
+</label>
+<fieldset class="wide chips">
+<legend>موارد آزاردهنده</legend>
+<label>
+<input type="checkbox" name="sensoryAvoid" value="چسبندگی">چسبندگی</label>
+<label>
+<input type="checkbox" name="sensoryAvoid" value="برق">برق پوست</label>
+<label>
+<input type="checkbox" name="sensoryAvoid" value="سفیدک">سفیدک</label>
+<label>
+<input type="checkbox" name="sensoryAvoid" value="پیل‌شدن">پیل‌شدن</label>
+<label>
+<input type="checkbox" name="sensoryAvoid" value="بوی زیاد">بوی زیاد</label>
+</fieldset>
+</div>
+</details>
+
+<details class="panel">
+<summary>
+<b>سبک زندگی و خرید</b>
+<span>شرایط واقعی انتخاب</span>
+</summary>
+<div class="form-grid">
+<label class="field">
+<span>شهر</span>
+<select name="city" id="city-select">
+<option>تهران</option><option>کرج</option><option>مشهد</option><option>اصفهان</option><option>تبریز</option><option>شیراز</option><option>اهواز</option><option>بندرعباس</option><option>بوشهر</option><option>کیش</option><option>رشت</option><option>ساری</option><option>یزد</option><option>کرمان</option><option>قم</option><option>سایر / نامشخص</option>
+</select>
+</label>
+<div id="city-context" class="city-context wide">تهران · زمینهٔ محلی برای پیگیری حس پوست و تجربهٔ محصول استفاده می‌شود، نه نسخه‌نویسی.</div>
+<label class="field">
+<span>مواجهه روزانه با آفتاب</span>
+<select name="sun">
+<option>کم</option>
+<option>متوسط</option>
+<option>زیاد</option>
+</select>
+</label>
+<label class="field">
+<span>آرایش</span>
+<select name="makeup">
+<option>کم یا هیچ</option>
+<option>چند روز در هفته</option>
+<option>تقریباً روزانه</option>
+</select>
+</label>
+<label class="field">
+<span>ورزش و تعریق</span>
+<select name="sweat">
+<option>کم</option>
+<option>متوسط</option>
+<option>زیاد</option>
+</select>
+</label>
+<label class="field">
+<span>کل بودجه ماهانه زیبایی (تومان)</span>
+<input type="number" min="0" name="monthlyBudget" placeholder="مثلاً ۴۰۰۰۰۰۰">
+</label>
+<label class="field">
+<span>سقف قیمت هر محصول (تومان)</span>
+<input type="number" min="0" name="productBudget" placeholder="مثلاً ۸۰۰۰۰۰">
+</label>
+<label class="field">
+<span>هزینه ارسال معمول (تومان)</span>
+<input type="number" min="0" name="defaultShipping" placeholder="مثلاً ۷۰۰۰۰">
+</label>
+<label class="field">
+<span>اولویت خرید</span>
+<select name="purchasePriority">
+<option>نتیجه</option>
+<option>اصالت</option>
+<option>قیمت</option>
+<option>تجربه مصرف</option>
+<option>موجودی پایدار</option>
+</select>
+</label>
+<label class="field">
+<span>ترجیح برند</span>
+<select name="brandPreference">
+<option>فرقی ندارد</option>
+<option>ایرانی</option>
+<option>خارجی</option>
+<option>داروخانه‌ای</option>
+</select>
+</label>
+<label class="field">
+<span>جایگزین اقتصادی</span>
+<select name="economicAlternative">
+<option>بله، همیشه نشان بده</option>
+<option>فقط اگر اختلاف قیمت زیاد است</option>
+<option>خیر</option>
+</select>
+</label>
+</div>
+</details>
+
+<details class="panel">
+<summary>
+<b>سلامت، ایمنی و حریم خصوصی</b>
+<span>خط قرمزها و کنترل اطلاعات</span>
+</summary>
+<div class="form-grid">
+<fieldset class="wide chips safety">
+<legend>آیا موردی وجود دارد؟</legend>
+<label>
+<input type="checkbox" name="safetyFlags" value="بارداری یا شیردهی">بارداری یا شیردهی</label>
+<label>
+<input type="checkbox" name="safetyFlags" value="درمان پزشکی پوست">درمان پزشکی پوست</label>
+<label>
+<input type="checkbox" name="safetyFlags" value="داروی مؤثر بر پوست">داروی مؤثر بر پوست</label>
+<label>
+<input type="checkbox" name="safetyFlags" value="بیماری پوستی تشخیص‌داده‌شده">بیماری پوستی تشخیص‌داده‌شده</label>
+<label>
+<input type="checkbox" name="safetyFlags" value="اقدام کلینیکی اخیر">لیزر/پیلینگ/میکرونیدلینگ اخیر</label>
+<label>
+<input type="checkbox" name="safetyFlags" value="زخم یا عفونت فعال">زخم یا عفونت فعال</label>
+<label>
+<input type="checkbox" name="safetyFlags" value="واکنش شدید اخیر">واکنش شدید اخیر</label>
+</fieldset>
+<label class="field wide">
+<span>توضیح ضروری برای ایمنی</span>
+<textarea name="safetyNote" placeholder="نام دارو یا وضعیت مرتبط؛ فقط در صورت تمایل">
+</textarea>
+</label>
+<label class="check wide">
+<input name="photoConsent" type="checkbox"> رضایت جداگانه برای ذخیره عکس (اختیاری)</label>
+<label class="check wide">
+<input name="researchConsent" type="checkbox"> رضایت جداگانه برای استفاده پژوهشی ناشناس (اختیاری و قابل لغو)</label>
+</div>
+</details>
+<div class="sync-promise"><b>بعد از ذخیره چه می‌شود؟</b><span>اطلاعاتت روی این دستگاه و فضای امن قابل‌بازیابی نگه‌داری می‌شود. کد بازیابی را در جای امن نگه دار.</span></div>
+<div class="sticky-save">
+<span id="profile-completeness" role="status" aria-live="polite">آمادهٔ ذخیره</span>
+<button class="primary">ذخیره پروفایل و ثبت آنلاین</button>
+</div>
+</form><div class="privacy-note"><span>اطلاعات فرم در مرورگر همین دستگاه ذخیره می‌شود. عکس ارسالی فقط برای پیگیری است و نوع پوست یا علت تیرگی را تشخیص نمی‌دهد.</span></div></div></section>
+<section id="learn" class="panel"><div class="section"><div class="section-head"><div><h2>آموزش روتین</h2><small>ساده و قابل انجام</small></div><button type="button" class="source-link" onclick="switchTab('check')">بازگشت به بررسی</button></div><div class="soft-card"><h3>صبح، به ترتیب</h3><ol><li>شست‌وشوی ملایم در صورت نیاز؛ از ساییدن پوست پرهیز کن.</li><li>اگر محصول درمانی مناسب خودت داری، مطابق دستور همان محصول استفاده کن.</li><li>مرطوب‌کننده متناسب با حس پوست.</li><li>ضدآفتاب طیف‌گسترده SPF ۳۰ یا بیشتر؛ در مواجهه با آفتاب تمدید کن.</li></ol></div><div class="soft-card"><h3>شب، به ترتیب</h3><ol><li>آرایش و ضدآفتاب را پاک کن و با شویندهٔ ملایم بشوی.</li><li>درمان یا اکتیو را طبق برچسب و با شروع تدریجی اضافه کن؛ چند اکتیو قوی را یک‌باره وارد نکن.</li><li>مرطوب‌کننده بزن؛ اگر سوزش یا تحریک شدید رخ داد، مصرف محصول جدید را قطع کن.</li></ol><p>تونر، سرم و کرم دور چشم برای همه ضروری نیستند. محصول تازه را جداگانه امتحان کن تا واکنش احتمالی قابل‌پیگیری باشد.</p></div><div class="soft-card"><h3>تیرگی دور چشم؛ چه چیزهایی مهم‌اند؟</h3><p>ژنتیک، رنگدانه، نازکی پوست، گودی و سایه، آلرژی و مالیدن چشم، نور خورشید و خستگی می‌توانند نقش داشته باشند. رنگ ظاهری به‌تنهایی علت را ثابت نمی‌کند و هیچ کرمی برای همهٔ علت‌ها جواب یکسان ندارد.</p><p>اگر یک‌طرفه، ناگهانی یا همراه با درد و تورم است، برای ارزیابی پزشکی اقدام کن. دور چشم محصول فعال را بی‌دستور نزدیک خط مژه نزن.</p><button type="button" class="source-link" onclick="switchTab('profile')">ثبت سرنخ‌ها در پروفایل</button></div><div class="soft-card"><h3>روش پیگیری نتیجه</h3><p>هر بار فقط یک تغییر در روتین بده. تاریخ شروع، تعداد دفعات استفاده و واکنش پوست را ثبت کن. عکس‌ها را با نور و زاویهٔ مشابه مقایسه کن؛ تغییر نور می‌تواند تیرگی را متفاوت نشان دهد.</p></div>
+<div class="soft-card" id="supplementLearning"><span class="section-kicker">راهنمای مکمل</span><h3>زمان مصرف و تداخل‌های مهم</h3><ul><li><b>اول برچسب و دستور پزشک:</b> زمان و تعداد مصرف محصول واقعی از نوشتهٔ روی همان بسته یا نسخه می‌آید؛ BeautyWallet دوز تعیین نمی‌کند.</li><li><b>آهن و کلسیم:</b> هم‌زمان مصرف نکن؛ کلسیم ممکن است جذب آهن را کم کند. زمان فاصله را با داروساز یا دستور محصول هماهنگ کن.</li><li><b>آهن:</b> ویتامین C می‌تواند جذب آهن غیرهِم را بهتر کند. اگر آهن برایت تجویز نشده، فقط به‌خاطر خستگی یا ریزش مو خودسرانه شروع نکن؛ تشخیص کمبود با ارزیابی پزشکی است.</li><li><b>کلسیم:</b> کلسیم کربنات معمولاً همراه غذا و کلسیم سیترات با یا بدون غذا قابل مصرف است. مقدارهای بزرگ‌تر ممکن است طبق نظر متخصص به چند نوبت تقسیم شوند.</li><li><b>منیزیم و زینک:</b> با بعضی آنتی‌بیوتیک‌ها و داروها تداخل جذب دارند؛ فاصلهٔ دقیق وابسته به نام داروست و باید از داروساز پرسیده شود.</li><li><b>مکمل‌های مو، مولتی‌ویتامین و پریناتال:</b> ترکیبات هم‌پوشان را جمع نکن. «برای مو» بودن به معنی بی‌خطر بودن مصرف هم‌زمان با آهن، زینک یا مولتی‌ویتامین دیگر نیست.</li><li><b>بارداری، شیردهی، بیماری کلیه یا مصرف داروی تیروئید/رقیق‌کننده خون:</b> برنامهٔ مکمل را پیش از شروع با پزشک یا داروساز بررسی کن.</li></ul><p class="supp-disclaimer">این راهنما آموزشی است و جایگزین نسخه، آزمایش یا نظر پزشک و داروساز نیست. نام تجاری یا عکس محصول به معنی تأیید اثر یا اصالت آن نیست.</p><div class="supp-source">منابع: <a href="https://ods.od.nih.gov/factsheets/Iron-Consumer/" target="_blank" rel="noopener">NIH — آهن</a> · <a href="https://ods.od.nih.gov/factsheets/Calcium-Consumer/" target="_blank" rel="noopener">NIH — کلسیم</a> · <a href="https://ods.od.nih.gov/factsheets/Magnesium-Consumer/" target="_blank" rel="noopener">NIH — منیزیم</a> · <a href="https://ods.od.nih.gov/factsheets/Zinc-Consumer/" target="_blank" rel="noopener">NIH — زینک</a></div><button type="button" class="source-link" onclick="switchTab('supplements')">ثبت مکمل‌های من</button></div>
+<div class="source-notes">مبنای آموزشی پوست: <a href="https://www.aad.org/public/everyday-care/skin-care-basics/care" target="_blank" rel="noopener">اصول مراقبت، انجمن پوست آمریکا</a> · <a href="https://www.mayoclinic.org/symptoms/dark-circles-under-eyes/basics/causes/sym-20050624" target="_blank" rel="noopener">علل تیرگی، Mayo Clinic</a></div></div></section></main>
+
+<section id="forum" class="panel"><div class="section"><div class="section-head"><div><h2>گپِ پوست</h2><small>سؤال‌ها و تجربه‌های واقعی، قبل و بعد از خرید</small></div><button type="button" class="source-link" onclick="switchTab('check')">بازگشت به بررسی</button></div><p class="forum-notice">تجربه هر نفر شخصی است؛ نوع پوست، نسخه و مدت استفاده را کنار آن ببین. گفت‌وگوها پس از بررسی منتشر می‌شوند و جای توصیه پزشکی را نمی‌گیرند.</p><div id="forumPosts" class="forum-posts" role="status"></div><form id="forumForm" class="soft-card forum-form"><h3>گفت‌وگوی تازه</h3><input type="hidden" name="parentId" value=""><p id="forumReplyContext" role="status"></p><label>درباره چه محصولی؟<input name="productName" maxlength="120" required placeholder="نام و مدل دقیق محصول"></label><label>نوع گفت‌وگو<select name="kind"><option value="question">این محصول را کسی امتحان کرده؟</option><option value="compare">بین این دو کدام؟</option><option value="experience">نتیجه روتین من</option></select></label><div class="forum-fields"><label>نوع پوست (اختیاری)<input name="skinType" maxlength="40" placeholder="مثلاً خشک"></label><label>مدت استفاده (اختیاری)<input name="duration" maxlength="40" placeholder="مثلاً دو هفته"></label></div><label>سؤالت یا تجربه‌ات<textarea name="body" minlength="15" maxlength="800" required placeholder="نسخه دقیق، حس پوست و آنچه واقعاً تجربه کرده‌ای را بنویس"></textarea></label><button type="submit" class="primary">ثبت برای بررسی</button><p id="forumStatus" role="status"></p></form></div></section>
+<nav class="bottom-nav" aria-label="بخش‌های اصلی"><div class="nav-inner">
+<button class="nav-btn active" data-tab="check"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg>بررسی</button>
+<button class="nav-btn" data-tab="assistant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C10 7 6 11 6 15a6 6 0 0 0 12 0c0-4-4-8-6-12Z"/></svg>دستیار</button>
+<button class="nav-btn" data-tab="routine"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v17H5zM8 9h8M8 13h8M8 17h5"/></svg>روتین من</button>
+<button class="nav-btn" data-tab="wallet"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16v15H4zM14 11h6v5h-6z"/></svg>کیف من</button>
+<button class="nav-btn" data-tab="supplements"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4a5 5 0 0 1 7 7l-4 4a5 5 0 0 1-7-7zM6 6l7 7"/></svg>مکمل‌ها</button>
+<button class="nav-btn" data-tab="products"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8h10v13H7zM9 3h6v5H9z"/></svg>محصولات</button>
+</div></nav>
+
+<div class="sheet-backdrop" id="sheetBack" role="dialog" aria-modal="true" aria-label="جزئیات محصول"><div class="sheet" id="sheet"><div class="grab"></div><div id="sheetContent"></div></div></div>
+<div class="toast" id="toast"></div>
+<dialog class="install-dialog" id="installDialog" aria-labelledby="installDialogTitle"><div class="install-dialog-card"><span class="install-dialog-icon" aria-hidden="true">＋</span><h2 id="installDialogTitle">افزودن BeautyWallet به صفحهٔ اصلی</h2><p id="installGuideIntro">پس از افزودن، آیکون BeautyWallet روی گوشی دیده می‌شود.</p><ol class="install-steps" id="installGuideSteps"></ol><div class="install-dialog-actions"><button type="button" id="copyInstallLink" hidden>کپی لینک برای Safari</button><button type="button" id="closeInstallDialog">متوجه شدم</button></div></div></dialog>
+<script src="./persian-date.js?v=69" defer></script>
+<script src="./new-products.js?v=69" defer></script>
+<script src="./app-core.js?v=69" defer></script>
+<script src="./answer-view.js?v=69" defer></script>
+<script src="./review-context.js?v=69" defer></script>
+<script src="./profile-online.js?v=69" defer></script>
+<script src="./product-offers.js?v=69" defer></script>
+<script src="./assistant-ui.js?v=69" defer></script>
+<script src="./bw-review.js?v=69" defer></script>
+<script src="./catalog-routine.js?v=69" defer></script>
+<script src="./check.js?v=69" defer></script>
+<script src="./budget.js?v=69" defer></script>
+<script src="./quick-routine-market.js?v=69" defer></script>
+<script src="./account-and-purchase.js?v=69" defer></script>
+<script src="./regret-engine.js?v=69" defer></script>
+<script src="./regret-map.js?v=69" defer></script>
+<script src="./supplements.js?v=69" defer></script>
+<script src="./ux-refresh.js?v=69" defer></script>
+<script src="./focus-path.js?v=69" defer></script>
+<script src="./install-app.js?v=69" defer></script><script src="./decision-flow.js?v=69" defer></script><script src="./purchase-first.js?v=69" defer></script>
+<script src="./routine-reminder.js?v=69" defer></script>
+<script src="./action-polish.js?v=69" defer></script>
+<script src="./motion-clarity.js?v=69" defer></script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('/legacy/sw.js?v=69',{scope:'/legacy/',updateViaCache:'none'}).catch(function(){});}</script><link rel="stylesheet" href="./fresh.css?v=69">
+<link rel="stylesheet" href="./sweet.css?v=69">
+<script src="./fresh.js?v=69" defer></script>
+<script src="./sweet.js?v=69" defer></script>
+</body></html>

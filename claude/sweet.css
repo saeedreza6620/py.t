@@ -139,3 +139,9 @@ body.sw-on .bw-privacy-link{display:none!important}
 .sw-shop small{color:var(--sw-muted);font-size:12px;text-align:left}
 .sw-shop:first-child{background:linear-gradient(120deg,var(--sw-gold2),#fff);border-color:rgba(211,154,53,.45)}
 .sw-alt.sw-buy{border-color:var(--sw-pink);background:var(--sw-pink2)}
+
+.sw-hearts{display:flex;gap:6px;justify-content:center;margin:12px 0 4px}
+.sw-hearts button{appearance:none;border:0;background:#fff;border-radius:14px;width:52px;height:48px;font-size:26px;cursor:pointer;box-shadow:var(--sw-shadow);transition:transform .15s}
+.sw-hearts button:active{transform:scale(1.2)}
+.sw-chip[aria-pressed="true"]{background:var(--sw-pink2);border-color:var(--sw-pink)}
+.sw-tile.sw-love{background:linear-gradient(135deg,var(--sw-pink2),var(--sw-gold2))}

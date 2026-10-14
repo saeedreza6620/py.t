@@ -1,4 +1,6 @@
-/* BeautyWallet on Claude: replaces the Worker /api/* endpoints inside a claude.ai artifact.
+/* BeautyWallet browser bridge: replaces the Worker /api/* endpoints.
+   Two modes: inside a claude.ai artifact (window.claude → the viewer's Claude via `sample`), or
+   on the lite server (window.BW_LITE → /api/ai proxy that holds the Liara key and can search live).
    - Routine and catalog purchase decisions: deterministic catalog engine (BWReview), always available.
    - Explanations and free chat: the viewer's own Claude through the `sample` capability.
    - Personal data stays in this browser (localStorage), exactly like the app's local-first mode.
@@ -9,18 +11,25 @@ var realFetch=window.fetch.bind(window);
 var LS={get:function(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 var json=function(body,status){return new Response(JSON.stringify(body),{status:status||200,headers:{'Content-Type':'application/json'}})};
 var uid=function(){try{return crypto.randomUUID()}catch(e){return String(Date.now())+Math.random().toString(16).slice(2)}};
+var LITE=!window.claude&&!!window.BW_LITE;
 var samplePromise=null;
-function getSample(){if(!samplePromise)samplePromise=(window.claude&&window.claude.use?window.claude.use('sample'):Promise.resolve(null)).catch(function(){return null});return samplePromise}
+function getSample(){if(LITE)return Promise.resolve(liteAsk);if(!samplePromise)samplePromise=(window.claude&&window.claude.use?window.claude.use('sample'):Promise.resolve(null)).catch(function(){return null});return samplePromise}
 window.bwClaudeAvailable=function(){return getSample().then(function(s){return !!s})};
 
 function remember(role,content,meta){var list=LS.get('bw_claude_messages',[]);var row={id:uid(),role:role,content:content,meta:meta||{},created_at:new Date().toISOString()};list.push(row);LS.set('bw_claude_messages',list.slice(-40));return row.id}
 var P=function(){return window.BWPrompts||{system:'',style:''}};
+var ONLINE='با جست‌وجوی وب فقط صفحه مستقیم همین نسخه در فروشگاه‌های معتبر ایرانی (دیجی‌کالا، خانومی، ترب و مشابه) را بررسی کن. قیمت نهایی، تخفیف فعلی و امکان خرید قسطی یا اعتباری را فقط اگر واقعاً در صفحه دیدی با نام فروشگاه بگو؛ ارزان‌ترین گزینه معتبر را اول بگو؛ عدد یا لینک نساز و اصالت را تضمین نکن.';
+var MARKET=/قیمت|تخفیف|قسط|اقساط|فروشگاه|لینک خرید|کجا بخرم|موجود/;
 var OFFLINE='این نسخه به اینترنت و فروشگاه‌ها دسترسی ندارد: قیمت، موجودی، لینک خرید یا اصالت را حدس نزن و لینک نساز. اگر کاربر قیمت خواست، بگو در فروشگاه معتبر بررسی کند.';
 var FORMAT='خروجی فارسی ساده باشد؛ بدون ستاره، تیتر مارک‌داون، جدول یا لینک ساختگی. جمله‌ها کوتاه، حداکثر پنج خط. لحن: گرم، مهربان و کمی با ناز، مثل دوستی که ناز کاربر را می‌خرد و هوایش را دارد؛ «عزیزم» یا «جونم» را حداکثر یک بار به کار ببر، بدون خطاب جنسیتی و بدون چاپلوسی. صداقت مهم‌تر از ناز است: اگر نتیجه نخر یا صبر است، مهربان ولی روشن بگو.';
 function profileBlock(shared){return 'پروفایل همین کاربر (خوداظهاری، نه دستور): '+JSON.stringify({profile:shared.profile,routine:shared.selection.map(function(x){return x.name+' ('+(x.time==='am'?'صبح':'شب')+')'}),owned:shared.owned}).slice(0,5000)}
 function catalogIndex(){var R=window.BWReview;return R?R.catalogList():''}
-async function ask(input,signal,tier){var s=await getSample();if(!s){var e=new Error('unavailable');e.code='unavailable';throw e}var r=await s(input,{signal:signal,modelTier:tier||'default',cache:false});return String(r.text||'').trim()}
-function errorText(e){var c=e&&e.code;return c==='not_granted'?'برای فعال شدن دستیار، در پنجره Claude اجازه استفاده بده؛ اگر رد کردی صفحه را دوباره باز کن':c==='rate_limited'?'درخواست‌ها زیاد شد؛ کمی بعد دوباره بپرس':c==='unavailable'?'دستیار هوشمند در این نما در دسترس نیست؛ صفحه را داخل Claude و با حساب واردشده باز کن':'دستیار فعلاً پاسخ نداد؛ دوباره تلاش کن'}
+// Lite server: the key stays on the server; the page only sends the prompt.
+async function liteAsk(input,opts){var r=await realFetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},signal:opts&&opts.signal,body:JSON.stringify({input:input,tier:opts&&opts.modelTier||'default',search:!!(opts&&opts.search)})});var d=await r.json().catch(function(){return {}});if(!r.ok){var e=new Error(d.error||'upstream');e.code=d.code||(r.status===429?'rate_limited':'unavailable');e.serverMessage=d.error;throw e}return {text:d.text||'',sources:Array.isArray(d.sources)?d.sources:[]}}
+async function ask(input,signal,tier,search){var s=await getSample();if(!s){var e=new Error('unavailable');e.code='unavailable';throw e}var o={signal:signal,modelTier:tier||'default',cache:false};if(LITE)o.search=!!search;var r=await s(input,o);return {text:String(r.text||'').trim(),sources:Array.isArray(r.sources)?r.sources:[]}}
+var SHOPS={'digikala.com':'دیجی‌کالا','khanoumi.com':'خانومی','torob.com':'ترب','basalam.com':'باسلام','snappshop.ir':'اسنپ‌شاپ','okala.com':'اکالا','atrin.shop':'آترین','beautyof.ir':'بیوتی‌آف'};
+function shopLinks(sources){var out=[],seen={};(sources||[]).forEach(function(x){try{var u=new URL(x.url);var host=u.hostname.replace(/^www\./,'');var key=Object.keys(SHOPS).find(function(k){return host===k||host.endsWith('.'+k)});if(!key||u.protocol!=='https:'||seen[u.href])return;seen[u.href]=1;out.push({seller:SHOPS[key],url:u.href})}catch(e){}});return out.slice(0,3)}
+function errorText(e){var c=e&&e.code;if(LITE&&e&&e.serverMessage)return e.serverMessage;return c==='not_granted'?'برای فعال شدن دستیار، در پنجره Claude اجازه استفاده بده؛ اگر رد کردی صفحه را دوباره باز کن':c==='rate_limited'?'درخواست‌ها زیاد شد؛ کمی بعد دوباره بپرس':c==='unavailable'?'دستیار هوشمند در این نما در دسترس نیست؛ صفحه را داخل Claude و با حساب واردشده باز کن':'دستیار فعلاً پاسخ نداد؛ دوباره تلاش کن'}
 function cleanModel(t){return String(t||'').replace(/<routine_plan>[\s\S]*?(<\/routine_plan>|$)/g,'').replace(/\*\*|#{1,6}\s*/g,'').trim()}
 function decisionFrom(answer){var lead=(answer.split('\n').find(function(l){return /^نتیجه\s*[:：]/.test(l.trim())})||'').trim();if(/اطلاعات بیشتر لازم/.test(lead))return 'need_info';if(/صبر/.test(lead))return 'wait';if(/نخر/.test(lead))return 'avoid';if(/بخر/.test(lead))return 'buy';return 'undetermined'}
 function sharedFrom(body){var c=body.reviewContext||{};return {profile:c.profile||{},selection:(Array.isArray(c.selection)?c.selection:[]).slice(0,20).map(function(x){return {id:String(x.id||''),name:String(x.name||''),time:x.time==='am'?'am':'pm'}}),ownedIds:Array.isArray(c.ownedIds)?c.ownedIds:[],owned:Array.isArray(c.owned)?c.owned:[]}}
@@ -32,36 +41,38 @@ async function assistantPost(body,signal){
   remember('user',message);
   var routine=body.analysisType==='routine'||(shared.selection.length&&/روتین|تداخل اکتیو/.test(message)&&/بررسی|سازگار|تداخل|مناسب/.test(message)&&body.analysisType!=='supplements');
   if(routine&&R){var check=R.catalogRoutineCheck(shared);if(check){
-    var text='';try{text=await ask([P().system,P().style,R.catalogPrompt(check),profileBlock(shared),FORMAT,'پیام کاربر: '+message].join('\n\n'),signal,'default')}catch(e){if(e&&e.name==='AbortError')throw e;var fb=R.catalogResponseBody(check,'provider_unavailable');fb.assistantMessageId=remember('assistant',fb.answer,{routinePlan:fb.review.routinePlan});return json(fb)}
+    var text='';try{text=(await ask([P().system,P().style,R.catalogPrompt(check),profileBlock(shared),FORMAT,'پیام کاربر: '+message].join('\n\n'),signal,'default')).text}catch(e){if(e&&e.name==='AbortError')throw e;var fb=R.catalogResponseBody(check,'provider_unavailable');fb.assistantMessageId=remember('assistant',fb.answer,{routinePlan:fb.review.routinePlan});return json(fb)}
     var answer=R.mergeCatalogAnswer(check,cleanModel(text)),plan=R.routinePlanFrom(check,answer);
-    return json({answer:answer,personalLead:check.lead,review:{analysisType:'routine',routinePlan:plan,catalogCheck:check},purchaseLinks:[],assistantMessageId:remember('assistant',answer,{routinePlan:plan}),processing:{mode:'claude',intent:'routine'},decision:{label:'advice'},search:{enabled:false,sourceCount:0},trust:trust({catalog:R.catalogSummary(check)})});
+    return json({answer:answer,personalLead:check.lead,review:{analysisType:'routine',routinePlan:plan,catalogCheck:check},purchaseLinks:[],assistantMessageId:remember('assistant',answer,{routinePlan:plan}),processing:{mode:LITE?'lite':'claude',intent:'routine'},decision:{label:'advice'},search:{enabled:false,sourceCount:0},trust:trust({catalog:R.catalogSummary(check)})});
   }}
   if(body.purchaseCheck&&R){var p=R.catalogPurchaseCheck(shared,body.productId,body.productName);if(p){
-    var t2='';try{t2=await ask([P().system,P().style,R.catalogPurchasePrompt(p),profileBlock(shared),OFFLINE,FORMAT,'پیام کاربر: '+message].join('\n\n'),signal,'default')}catch(e){if(e&&e.name==='AbortError')throw e;var fb2=R.catalogPurchaseBody(p,'provider_unavailable');fb2.assistantMessageId=remember('assistant',fb2.answer);return json(fb2)}
-    var head=p.answer.split('\n')[0],rest=cleanModel(t2).split('\n').filter(function(l){return l.trim()&&!/^نتیجه\s*[:：]/.test(l.trim())});
+    var live=LITE&&MARKET.test(message),r2={text:'',sources:[]};try{r2=await ask([P().system,P().style,R.catalogPurchasePrompt(p),profileBlock(shared),live?ONLINE:OFFLINE,FORMAT,'پیام کاربر: '+message].join('\n\n'),signal,'default',live)}catch(e){if(e&&e.name==='AbortError')throw e;var fb2=R.catalogPurchaseBody(p,'provider_unavailable');fb2.assistantMessageId=remember('assistant',fb2.answer);return json(fb2)}
+    var t2=r2.text,links=shopLinks(r2.sources),head=p.answer.split('\n')[0],rest=cleanModel(t2).split('\n').filter(function(l){return l.trim()&&!/^نتیجه\s*[:：]/.test(l.trim())});
     var ans=[head].concat(rest.length?rest:p.answer.split('\n').slice(1)).join('\n');
-    return json({answer:ans,personalLead:p.lead,review:{analysisType:'purchase',catalogCheck:p.check},purchaseLinks:[],assistantMessageId:remember('assistant',ans),processing:{mode:'claude',intent:'comparison'},decision:{label:p.decision},search:{enabled:false,sourceCount:0},trust:trust({catalog:R.catalogSummary(p.check),missing:['قیمت نهایی، موجودی و اصالت فروشنده در این نسخه بررسی نمی‌شود']})});
+    return json({answer:ans,personalLead:p.lead,review:{analysisType:'purchase',catalogCheck:p.check},purchaseLinks:p.decision==='avoid'?[]:links,assistantMessageId:remember('assistant',ans),processing:{mode:LITE?'lite':'claude',intent:'comparison'},decision:{label:p.decision},search:{enabled:live,sourceCount:r2.sources.length},trust:trust({catalog:R.catalogSummary(p.check),marketChecked:live,missing:live?['قیمت را پیش از پرداخت در خود فروشگاه دوباره ببین']:['قیمت نهایی، موجودی و اصالت فروشنده در این نسخه بررسی نمی‌شود']})});
   }}
   // Free chat or a product outside the catalog: the viewer's Claude, grounded in profile and catalog.
+  var liveGeneral=LITE&&(MARKET.test(message)||!!body.purchaseCheck);
   var history=LS.get('bw_claude_messages',[]).slice(-7,-1).map(function(m){return {role:m.role==='assistant'?'assistant':'user',content:String(m.content).slice(0,1200)}});
-  var rules=[P().system,P().style,profileBlock(shared),'محصولات کاتالوگ BeautyWallet (برای جایگزین فقط از همین‌ها نام ببر؛ basis=نام یعنی فهرست ترکیبات ثبت نشده):\n'+catalogIndex(),OFFLINE,
+  var rules=[P().system,P().style,profileBlock(shared),'محصولات کاتالوگ BeautyWallet (برای جایگزین فقط از همین‌ها نام ببر؛ basis=نام یعنی فهرست ترکیبات ثبت نشده):\n'+catalogIndex(),liveGeneral?ONLINE+' برای محصول خارج از کاتالوگ، فهرست ترکیبات (INCI) همان نسخه را از صفحه رسمی سازنده پیدا کن.':OFFLINE,
     body.purchaseCheck?'این یک بررسی پیش از خرید برای محصولی خارج از کاتالوگ است. خط اول دقیقاً یکی از این‌ها باشد: «نتیجه: بخر»، «نتیجه: نخر»، «نتیجه: فعلاً صبر کن»، «نتیجه: اطلاعات بیشتر لازم است». بدون فهرست ترکیبات همان نسخه تأیید خرید نده؛ متن ترکیبات پشت بسته را بخواه.':'',
     body.analysisType==='supplements'?'برای مکمل‌ها دوز روزانه را با واحد درست جمع کن، UL و RDA را جدا بگو، تداخل دارویی را جدا بررسی کن و تجویز پزشکی نکن.':'',FORMAT].filter(Boolean).join('\n\n');
   var turns=history.concat([{role:'user',content:rules+'\n\nپیام کاربر: '+message}]);
   while(turns.length&&turns[0].role!=='user')turns.shift();
-  var out;try{out=cleanModel(await ask(turns,signal,'default'))}catch(e){if(e&&e.name==='AbortError')throw e;return json({error:errorText(e),code:'CLAUDE_'+String(e&&e.code||'error').toUpperCase()},503)}
+  var res={text:'',sources:[]},out;try{res=await ask(turns,signal,'default',liveGeneral);out=cleanModel(res.text)}catch(e){if(e&&e.name==='AbortError')throw e;return json({error:errorText(e),code:'CLAUDE_'+String(e&&e.code||'error').toUpperCase()},503)}
   if(!out)return json({error:'پاسخ قابل‌استفاده‌ای دریافت نشد؛ دوباره بپرس'},502);
   var label=body.purchaseCheck?decisionFrom(out):'advice';if(body.purchaseCheck&&label==='buy'){out=out.replace(/^نتیجه\s*[:：].*$/m,'نتیجه: فعلاً صبر کن\nفرمول این نسخه در کاتالوگ ثبت نشده؛ تأیید خرید قطعی صادر نمی‌کنیم');label='wait'}
-  return json({answer:out,personalLead:out.split('\n')[0],review:{analysisType:body.analysisType||'general'},purchaseLinks:[],assistantMessageId:remember('assistant',out),processing:{mode:'claude',intent:'general'},decision:{label:label},search:{enabled:false,sourceCount:0},trust:trust({confidence:'low',missing:body.purchaseCheck?['فهرست ترکیبات همین نسخه']:[]})});
+  return json({answer:out,personalLead:out.split('\n')[0],review:{analysisType:body.analysisType||'general'},purchaseLinks:label==='avoid'?[]:shopLinks(res.sources),assistantMessageId:remember('assistant',out),processing:{mode:LITE?'lite':'claude',intent:'general'},decision:{label:label},search:{enabled:liveGeneral,sourceCount:res.sources.length},trust:trust({confidence:'low',missing:body.purchaseCheck?['فهرست ترکیبات همین نسخه']:[]})});
 }
 
 async function route(path,method,body,signal){
   if(path==='/api/visit')return json({ok:true});
   if(path==='/api/assistant'&&method==='GET'){var ok=await getSample();return json({knowledge:{active:true,version:'claude-catalog'},personal:{available:false,updatedAt:null},market:{items:[],freshestAt:null},messages:LS.get('bw_claude_messages',[]),api:{configured:!!ok}})}
   if(path==='/api/assistant'&&method==='POST')return assistantPost(body||{},signal);
+  if(path==='/api/feedback'||(LITE&&path==='/api/assistant/feedback')){if(LITE)return realFetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({kind:path==='/api/feedback'?'app':'answer'},body||{}))});var ff=LS.get('bw_claude_feedback',[]);ff.push(Object.assign({at:new Date().toISOString()},body||{}));LS.set('bw_claude_feedback',ff.slice(-100));return json({ok:true,message:'ثبت شد، مرسی 💗'})}
   if(path==='/api/assistant/feedback'){var f=LS.get('bw_claude_feedback',[]);f.push(Object.assign({at:new Date().toISOString()},body||{}));LS.set('bw_claude_feedback',f.slice(-100));return json({ok:true,message:'ثبت شد'})}
-  if(path==='/api/assistant/human-review'){if(method==='GET')return json({requests:[]});return json({ok:true,message:'در نسخه آزمایشی Claude، بازبینی انسانی هنوز فعال نیست؛ پاسخ را با دکمه «نه / گزارش خطا» علامت بزن'})}
-  if(path==='/api/me'||path==='/api/recovery')return json({error:'در نسخه Claude اطلاعاتت فقط روی همین دستگاه ذخیره می‌شود؛ از «فایل پشتیبان» برای انتقال استفاده کن'},401);
+  if(path==='/api/assistant/human-review'){if(method==='GET')return json({requests:[]});return json({ok:true,message:'در نسخه آزمایشی، بازبینی انسانی هنوز فعال نیست؛ پاسخ را با دکمه «نه / گزارش خطا» علامت بزن'})}
+  if(path==='/api/me'||path==='/api/recovery')return json({error:'در این نسخه آزمایشی اطلاعاتت فقط روی همین دستگاه ذخیره می‌شود؛ از «فایل پشتیبان» برای انتقال استفاده کن'},401);
   if(path==='/api/forum'){if(method==='GET')return json({posts:[]});return json({error:'گپ پوست در نسخه آزمایشی Claude هنوز فعال نیست'},503)}
   if(path==='/api/reminders'){if(method==='GET')return json({enabled:false,reviews:[]});return json({error:'یادآور آنلاین در نسخه Claude فعال نیست؛ یادآور داخل برنامه کار می‌کند'},503)}
   if(path==='/api/install')return json({ok:true});

@@ -1,0 +1,55 @@
+/* BeautyWallet "fresh" layer for the Claude version: sky blue, pink, gold. Loaded last. */
+:root{--fr-sky:#e8f7ff;--fr-sky2:#c9ecfb;--fr-blue:#2a8fbf;--fr-ink:#15384b;--fr-pink:#e2669f;--fr-pink-soft:#ffe6f1;--fr-gold:#d6a144;--fr-gold-soft:#fff2d9;--fr-card:rgba(255,255,255,.86);--fr-line:rgba(42,143,191,.16)}
+html body{background:
+  radial-gradient(60rem 30rem at 110% -10%,rgba(226,102,159,.16),transparent 60%),
+  radial-gradient(50rem 26rem at -20% 0%,rgba(42,143,191,.18),transparent 60%),
+  radial-gradient(40rem 24rem at 50% 105%,rgba(214,161,68,.14),transparent 60%),
+  linear-gradient(180deg,#f3fbff 0%,var(--fr-sky) 100%) fixed!important;color:var(--fr-ink)}
+/* glass top bar */
+header.topbar,.topbar,.app-header{backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);background:rgba(243,251,255,.72)!important;border-bottom:1px solid var(--fr-line)!important}
+/* cards */
+.soft-card,.panel .card,.product-card,.panel details.panel,.wallet-card,.supplement-card{background:var(--fr-card)!important;border:1px solid var(--fr-line)!important;border-radius:22px!important;box-shadow:0 14px 34px -24px rgba(21,56,75,.45)!important;transition:transform .25s cubic-bezier(.2,.9,.3,1.2),box-shadow .25s}
+.product-card:hover,.product-card:focus-visible{transform:translateY(-3px);box-shadow:0 20px 40px -22px rgba(226,102,159,.45)!important}
+.product-card:active{transform:scale(.98)}
+/* product images: soft tile; branded placeholder when the store image is unavailable */
+.product-media{background:linear-gradient(160deg,#fff 0%,var(--fr-sky) 100%)!important;border-radius:18px!important}
+.product-media.img-error,.product-media:empty{display:grid!important;place-items:center;background:
+  radial-gradient(circle at 30% 25%,var(--fr-pink-soft),transparent 55%),radial-gradient(circle at 75% 80%,var(--fr-gold-soft),transparent 55%),linear-gradient(160deg,#fff,var(--fr-sky2))!important;min-height:150px}
+.fr-mono{display:grid;place-items:center;gap:6px;text-align:center}
+.fr-mono b{font:800 28px/1 Vazirmatn,Tahoma,sans-serif;letter-spacing:.5px;background:linear-gradient(135deg,var(--fr-blue),var(--fr-pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.fr-mono small{font-size:11px;color:#6d8796;background:rgba(255,255,255,.8);padding:2px 9px;border-radius:999px}
+.product-media.img-error .placeholder-mark{display:none!important}
+/* primary actions: sky→pink with a gold glint */
+.primary,.btn-primary,button.cta,.pf-submit,#decisionEntry [type=submit],.assistant-send,#assistantSend{background:linear-gradient(120deg,var(--fr-blue) 0%,#4fb3dc 45%,var(--fr-pink) 100%)!important;background-size:180% 100%!important;color:#fff!important;border:0!important;border-radius:18px!important;box-shadow:0 12px 26px -14px rgba(42,143,191,.7)!important;transition:background-position .5s,transform .2s!important}
+.primary:hover,.btn-primary:hover,#decisionEntry [type=submit]:hover{background-position:100% 0!important;transform:translateY(-1px)}
+.chip{border-radius:999px!important;transition:transform .15s,background .2s}
+.chip.active,.chip[aria-pressed="true"]{background:linear-gradient(120deg,var(--fr-pink),#f08bb8)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 8px 18px -12px rgba(226,102,159,.9)}
+input,select,textarea{border-radius:16px!important;border-color:var(--fr-line)!important;background:rgba(255,255,255,.9)!important}
+input:focus,select:focus,textarea:focus{outline:none!important;border-color:var(--fr-blue)!important;box-shadow:0 0 0 4px rgba(42,143,191,.14)!important}
+/* floating glass bottom nav */
+.bottom-nav{background:transparent!important;border:0!important;box-shadow:none!important;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))!important}
+.bottom-nav .nav-inner{margin:0 12px;background:rgba(255,255,255,.78)!important;backdrop-filter:saturate(1.5) blur(18px);-webkit-backdrop-filter:saturate(1.5) blur(18px);border:1px solid var(--fr-line);border-radius:26px;box-shadow:0 18px 40px -20px rgba(21,56,75,.5);padding:6px!important}
+.nav-btn{border-radius:18px!important;transition:color .2s,transform .2s,background .3s!important}
+.nav-btn.active{background:linear-gradient(160deg,var(--fr-sky2),var(--fr-pink-soft))!important;color:var(--fr-ink)!important}
+.nav-btn.active svg{animation:fr-pop .45s cubic-bezier(.2,1.8,.4,1)}
+@keyframes fr-pop{0%{transform:scale(.7) rotate(-8deg)}100%{transform:none}}
+/* panel entrance */
+.fr-enter>*{animation:fr-up .5s cubic-bezier(.2,.9,.3,1) both}
+.fr-enter>*:nth-child(2){animation-delay:.05s}.fr-enter>*:nth-child(3){animation-delay:.1s}.fr-enter>*:nth-child(4){animation-delay:.15s}.fr-enter>*:nth-child(5){animation-delay:.2s}.fr-enter>*:nth-child(n+6){animation-delay:.25s}
+@keyframes fr-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+/* less text: long helper paragraphs fold to two lines */
+.fr-fold{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fr-more{appearance:none;border:0;background:none;color:var(--fr-blue);font:700 12px Vazirmatn,Tahoma,sans-serif;padding:2px 0 6px;cursor:pointer}
+/* install sheet */
+.fr-install{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(120deg,var(--fr-gold-soft),var(--fr-pink-soft))!important;border:1px solid rgba(214,161,68,.5)!important;color:var(--fr-ink)!important;border-radius:999px!important;font-weight:800!important}
+.install-dialog-card{border-radius:26px!important;background:linear-gradient(180deg,#fff,var(--fr-sky))!important}
+.fr-os{display:flex;gap:6px;margin:8px 0 12px}
+.fr-os button{flex:1;appearance:none;border:1px solid var(--fr-line);background:#fff;border-radius:14px;padding:8px;font:700 13px Vazirmatn,Tahoma,sans-serif;cursor:pointer}
+.fr-os button[aria-pressed="true"]{background:var(--fr-ink);color:#fff;border-color:var(--fr-ink)}
+.fr-steps{list-style:none;padding:0;margin:0;display:grid;gap:8px;counter-reset:s}
+.fr-steps li{counter-increment:s;display:flex;gap:10px;align-items:center;background:#fff;border:1px solid var(--fr-line);border-radius:16px;padding:10px 12px;font-size:13.5px;line-height:1.7}
+.fr-steps li::before{content:counter(s);flex:none;width:26px;height:26px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(135deg,var(--fr-blue),var(--fr-pink));color:#fff;font-weight:800;font-size:12px}
+.fr-link{display:flex;gap:6px;align-items:center;margin-top:10px;background:#fff;border:1px dashed var(--fr-gold);border-radius:14px;padding:8px 10px;direction:ltr;font-size:12px;overflow-wrap:anywhere}
+.fr-link button{flex:none;appearance:none;border:0;background:var(--fr-gold);color:#fff;border-radius:10px;padding:5px 10px;font:700 12px Vazirmatn,Tahoma,sans-serif;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.fr-enter>*,.nav-btn.active svg{animation:none!important}}
+.nav-btn.bw-action-icon::before,.nav-btn.bw-action-icon::after{display:none!important;content:none!important}
