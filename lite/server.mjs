@@ -59,7 +59,7 @@ async function ai(body){
       if(r.ok||![400,404,422,503].includes(r.status))break;
       console.error('ai model failed, falling back',r.status,m);
     }
-    if(!r.ok){const code=String(d?.error?.code||d?.code||r.status).replace(/[^\w.-]/g,'').slice(0,60);console.error('ai upstream',r.status,code,model);
+    if(!r.ok){lastUpstream={status:r.status,message:String(d?.error?.message||d?.message||'').replace(/(sk-|eyJ)[\w.-]+/g,'[redacted]').slice(0,200)};const code=String(d?.error?.code||d?.code||r.status).replace(/[^\w.-]/g,'').slice(0,60);console.error('ai upstream',r.status,code,model);
       return {status:r.status===429?429:502,body:{error:r.status===401||r.status===403?'کلید یا دسترسی سرویس هوش مصنوعی مشکل دارد':r.status===402?'اعتبار سرویس هوش مصنوعی تمام شده':r.status===429?'سرویس شلوغه؛ یه کم بعد دوباره بزن':r.status===404?'نام مدل یا آدرس سرویس درست نیست':'دستیار الان جواب نداد؛ دوباره تلاش کن',code:'upstream_'+code}}}
     const msg=d?.choices?.[0]?.message;const text=typeof msg?.content==='string'?msg.content:Array.isArray(msg?.content)?msg.content.map(x=>x.text||'').join('\n'):'';
     if(!text.trim())return {status:502,body:{error:'پاسخ خالی بود؛ دوباره بپرس',code:'empty'}};
@@ -70,6 +70,8 @@ async function ai(body){
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
 const EVENTS=new Set(['site_open','app_open','app_open_installed','install','install_offer','install_click','check']);
 const evHits=new Map();let deepCache=null;
+function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
+let lastUpstream=null;
 function osOf(ua){ua=String(ua||'');return /iPhone|iPad|iPod/i.test(ua)?'ios':/Android/i.test(ua)?'android':'desktop'}
 function logUsage(row){fs.appendFile(path.join(DATA,'usage.jsonl'),JSON.stringify(row)+'\n',()=>{})}
 const admin=makeAdmin({E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
@@ -82,7 +84,7 @@ const server=http.createServer(async(req,res)=>{
       if(!deepCache||Date.now()-deepCache.t>(deepCache.ok?30*60e3:60e3)){
         const t0=Date.now();const a=await ai({tier:'default',input:'فقط بنویس: سلام'});const t1=Date.now();
         const b=await ai({search:true,input:'قیمت امروز میسلار واتر بایودرما سبیوم ۲۵۰ میل در دیجی‌کالا یا ترب چنده؟ خیلی کوتاه با منبع.'});
-        deepCache={t:Date.now(),ok:a.status===200&&b.status===200,r:{at:new Date().toISOString(),answer:{ok:a.status===200,model:a.body.model,fallback:!!a.body.fallback,seconds:Math.round((t1-t0)/100)/10,error:a.body.code||null},search:{ok:b.status===200,model:b.body.model,fallback:!!b.body.fallback,seconds:Math.round((Date.now()-t1)/100)/10,sources:(b.body.sources||[]).map(x=>new URL(x.url).hostname),sample:String(b.body.text||'').slice(0,300),error:b.body.code||null}}};
+        deepCache={t:Date.now(),ok:a.status===200&&b.status===200,r:{at:new Date().toISOString(),key:keyInfo(),upstream:a.status===200?null:lastUpstream,base:BASE.replace(/^https?:\/\//,''),answer:{ok:a.status===200,model:a.body.model,fallback:!!a.body.fallback,seconds:Math.round((t1-t0)/100)/10,error:a.body.code||null},search:{ok:b.status===200,model:b.body.model,fallback:!!b.body.fallback,seconds:Math.round((Date.now()-t1)/100)/10,sources:(b.body.sources||[]).map(x=>new URL(x.url).hostname),sample:String(b.body.text||'').slice(0,300),error:b.body.code||null}}};
         logUsage({at:new Date().toISOString(),test:true,status:b.status,model:b.body.model||'',search:true,sources:(b.body.sources||[]).length});
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
