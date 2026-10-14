@@ -1,8 +1,8 @@
 {
   "id": "./index.html",
-  "name": "BeautyWallet | کیف هوشمند زیبایی",
+  "name": "BeautyWallet | انتخاب آگاهانه، خرید مطمئن",
   "short_name": "BeautyWallet",
-  "description": "پروفایل پوست، روتین، خرید هوشمند و پیگیری نتیجه",
+  "description": "آگاهانه انتخاب کن، با خیال راحت بخر: تناسب محصول با پوست، روتین و بودجه، و بهترین قیمت",
   "lang": "fa",
   "dir": "rtl",
   "display": "standalone",
@@ -10,10 +10,10 @@
     "window-controls-overlay",
     "standalone"
   ],
-  "start_url": "/legacy/?v=69",
+  "start_url": "/legacy/?v=70",
   "scope": "./",
-  "background_color": "#f1faff",
-  "theme_color": "#e7f8ff",
+  "background_color": "#f6f8ff",
+  "theme_color": "#eef3ff",
   "orientation": "portrait-primary",
   "icons": [
     {

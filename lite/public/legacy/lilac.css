@@ -1,0 +1,23 @@
+/* BeautyWallet palette v70: light sky blue + lilac/violet (replaces pink & gold accents).
+   Loaded after fresh.css and sweet.css; only re-points colour tokens and a few hard-coded tints. */
+:root{
+  --sw-blue:#3d8bd9;--sw-sky:#eaf5ff;--sw-sky2:#d5ebff;--sw-pink:#7c5cf0;--sw-pink2:#efe9ff;--sw-gold:#5b7cf0;--sw-gold2:#e8eeff;--sw-line:rgba(91,124,240,.18);
+  --fr-blue:#3d8bd9;--fr-sky:#eaf5ff;--fr-sky2:#d5ebff;--fr-pink:#7c5cf0;--fr-pink-soft:#efe9ff;--fr-gold:#5b7cf0;--fr-gold-soft:#e8eeff;--fr-line:rgba(91,124,240,.18);
+  --gold:#7c5cf0;--gold2:#c4b2ff;--deep:#3d6fc4;--paper:#f2f6ff;--line:#dfe3fb
+}
+body{background:radial-gradient(700px 420px at 105% -5%,rgba(196,178,255,.45),transparent 60%),radial-gradient(700px 420px at -10% 0,rgba(176,215,255,.5),transparent 55%),#f6f8ff!important;background-attachment:fixed!important}
+/* decisions keep clear meaning: buy = mint, wait = amber, avoid = berry */
+.st-wait,.st-replace,.st-verify{color:#b7791f}
+.st-avoid,.st-pause,.st-professional{color:#c0396b}
+.sw-btn{background:linear-gradient(120deg,#3d8bd9,#6aa8ee 45%,#7c5cf0)!important;box-shadow:0 12px 24px -14px rgba(124,92,240,.8)!important}
+.sw-nudge{border-color:rgba(124,92,240,.25)!important}
+.sw-shop:first-child{border-color:rgba(91,124,240,.4)!important}
+.product-card:hover,.product-card:focus-visible{box-shadow:0 20px 40px -22px rgba(124,92,240,.45)!important}
+.chip.active,.chip[aria-pressed="true"]{background:linear-gradient(120deg,#7c5cf0,#a48bff)!important;box-shadow:0 8px 18px -12px rgba(124,92,240,.9)!important}
+.primary,.btn-primary,button.cta,.pf-submit,#decisionEntry [type=submit],.assistant-send,#assistantSend{background:linear-gradient(120deg,#3d8bd9 0%,#6aa8ee 45%,#7c5cf0 100%)!important}
+.fr-install{border-color:rgba(124,92,240,.4)!important}
+.sw-fab{box-shadow:0 14px 28px -12px rgba(124,92,240,.85)!important}
+.sw-slogan{display:inline-block;margin-top:2px;font-weight:800;background:linear-gradient(120deg,#3d8bd9,#7c5cf0);-webkit-background-clip:text;background-clip:text;color:transparent}
+html{background:#f6f8ff!important}
+html body,body.sw-on{min-height:100vh;background:radial-gradient(700px 420px at 105% -5%,rgba(196,178,255,.45),transparent 60%),radial-gradient(700px 420px at -10% 0,rgba(176,215,255,.5),transparent 55%),#f6f8ff!important;background-attachment:fixed!important}
+.brand .logo{box-shadow:0 0 0 2px #a48bff,0 7px 20px rgba(124,92,240,.22)!important;filter:none!important}

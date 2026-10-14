@@ -12,9 +12,11 @@ const load=f=>import('data:text/javascript;base64,'+Buffer.from(ts.transpile(fs.
 const {BEAUTYWALLET_SYSTEM_PROMPT:system}=await load('assistant/knowledge.ts');const {PERSONAL_RESPONSE_STYLE:style}=await load('assistant/personal-response.ts');
 fs.writeFileSync(path.join(dest,'bw-prompts.js'),'/* GENERATED */window.BWPrompts='+JSON.stringify({system:system.trim(),style:style.trim()})+';\n');
 fs.copyFileSync(path.join(src,'claude/claude-bridge.js'),path.join(dest,'claude-bridge.js'));
+fs.copyFileSync(path.join(src,'claude/lite-track.js'),path.join(dest,'lite-track.js'));
+fs.copyFileSync(path.join(src,'claude/landing.html'),path.join(out,'index.html'));
 const version=(fs.readFileSync(path.join(dest,'sw.js'),'utf8').match(/bw-static-v(\d+)/)||[])[1]||'0';
 let html=fs.readFileSync(path.join(dest,'index.html'),'utf8');
-if(!html.includes('window.BW_LITE'))html=html.replace(/<head>\s*(<base [^>]*>)?/,m=>m+`\n<script>window.BW_LITE=true</script>\n<script src="./claude-bridge.js?v=${version}"></script>\n<script src="./bw-prompts.js?v=${version}"></script>\n`);
+if(!html.includes('window.BW_LITE'))html=html.replace(/<head>\s*(<base [^>]*>)?/,m=>m+`\n<script>window.BW_LITE=true</script>\n<script src="./claude-bridge.js?v=${version}"></script>\n<script src="./bw-prompts.js?v=${version}"></script>\n<script src="./lite-track.js?v=${version}" defer></script>\n`);
 fs.writeFileSync(path.join(dest,'index.html'),html);
 let n=0,bytes=0;(function walk(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())walk(p);else{n++;bytes+=fs.statSync(p).size}}})(out);
 console.log('lite/public:',n,'files,',(bytes/1e6).toFixed(1),'MB, version',version);
