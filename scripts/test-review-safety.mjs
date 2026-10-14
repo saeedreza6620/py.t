@@ -1,0 +1,25 @@
+import fs from 'node:fs';import ts from 'typescript';import assert from 'node:assert/strict';
+const load=async p=>import('data:text/javascript;base64,'+Buffer.from(ts.transpile(fs.readFileSync(p,'utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022})).toString('base64'));
+const {reviewContext,fitChecks,analysisIntent}=await load('assistant/review-context.ts'),{calculateSupplementDose:calc}=await load('assistant/supplement-dose.ts');
+const ctx=reviewContext({profile:{skinBase:'چرب',barrier:'احتمالاً آسیب‌دیده',goal1:'جوش نزدن',facePhoto:'secret-photo',phone:'not-allowed'},selection:[{name:'کرم پوست نرمال تا خشک',time:'pm'}]},null);assert.ok(fitChecks(ctx).length===3);assert.equal(ctx.profile.facePhoto,undefined);assert.equal(ctx.profile.phone,undefined);
+assert.equal(reviewContext({profile:{}},{profile:{barrier:'احتمالاً آسیب‌دیده',skinBase:'چرب'}}).profile.barrier,'احتمالاً آسیب‌دیده');
+const item=(name,nutrient,amount,unit='mg',servingsPerDay=1)=>({name,status:'در حال مصرف',labelComplete:true,nutrients:[{nutrient,amount,unit,servingsPerDay}]});
+const pair=(a,b,age=30)=>calc({context:{ageYears:age},items:[a,b]});
+assert.equal(pair(item('one','zinc',5),item('two','zinc',5)).rows[0].knownDailyTotal,10);assert.equal(pair(item('one','zinc',5),item('two','zinc',5)).rows[0].status,'not_above_from_recorded_supplements_only');
+assert.equal(pair(item('one','zinc',25),item('two','zinc',20)).rows[0].status,'above_ul');
+assert.equal(pair(item('one','zinc',5000,'mcg'),item('two','zinc',5)).rows[0].knownDailyTotal,10);
+assert.equal(pair(item('one','vitaminD',2000,'IU'),item('two','vitaminD',60,'mcg')).rows[0].status,'above_ul');
+assert.equal(calc({context:{ageYears:30},items:[item('x','iron',50)]}).rows[0].status,'above_ul');
+assert.equal(calc({context:{ageYears:30},items:[item('x','magnesium',200)]}).rows[0].scope.includes('فقط'),true);
+assert.equal(calc({context:{ageYears:55},items:[item('x','calcium',2200)]}).rows[0].ul,2000);
+assert.equal(calc({context:{ageYears:16},items:[item('x','zinc',10)]}).rows[0].ul,null);
+assert.equal(calc({items:[item('x','zinc',10)]}).rows[0].ul,null);
+assert.equal(calc({context:{ageYears:30},items:[{...item('x','zinc',5),labelComplete:false}]}).rows[0].status,'partial_total');
+assert.equal(calc({context:{ageYears:30},items:[item('x','zinc',null)]}).rows.length,0);
+assert.equal(calc({context:{ageYears:30},items:[item('x','vitaminA',10,'IU')]}).rows.length,0);
+assert.equal(calc({context:{ageYears:30},items:[item('x','vitaminB12',100,'mcg')]}).rows[0].ul,null);
+assert.equal(calc({context:{ageYears:30},items:[{...item('x','zinc',999),status:'قطع کرده‌ام'}]}).rows.length,0);
+assert.equal(calc({context:{ageYears:30},items:[item('x','iron',10,'mg',2)]}).rows[0].knownDailyTotal,20);
+console.log('PASS: shared skin/barrier/goals, privacy field allowlist, 14 dose safety regressions; no model calls');
+
+assert.equal(analysisIntent(undefined,'مکمل های من را بررسی کن'),'supplements');assert.equal(analysisIntent(undefined,'روتین من را بررسی کن'),'routine');assert.equal(analysisIntent(undefined,'سرم ویتامین C خوب است؟'),'general');

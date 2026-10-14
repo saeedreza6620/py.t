@@ -1,0 +1,1988 @@
+{
+  "products": [
+    {
+      "product_id": "prd_ir_prime_cprime_fusion_water_spf50_40ml",
+      "name": "فلوئید ضدآفتاب بی‌رنگ پرایم C-Prime Fusion Water SPF50 حجم 40 میلی‌لیتر",
+      "brand": "پرایم",
+      "variant": "فلوئید ضدآفتاب بی‌رنگ پرایم C-Prime Fusion Water SPF50 حجم 40 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 40,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-8675816/",
+        "https://www.khanoumi.com/products/prime-spf-50-fusion-water-sun-protector-40-ml-67588",
+        "https://multikade.ir/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "blocked",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_dermatypique_sfm_spf50_50ml",
+      "name": "فلوئید ضدآفتاب بی‌رنگ درماتیپیک SFM SPF50 پوست چرب حجم 50 میلی‌لیتر",
+      "brand": "درماتیپیک",
+      "variant": "فلوئید ضدآفتاب بی‌رنگ درماتیپیک SFM SPF50 پوست چرب حجم 50 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 50,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-4010218/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_skinone_oily_fluid_spf50_40ml",
+      "name": "فلوئید ضدآفتاب اسکین وان SPF50 پوست چرب و مختلط حجم 40 میلی‌لیتر",
+      "brand": "اسکین وان",
+      "variant": "فلوئید ضدآفتاب اسکین وان SPF50 پوست چرب و مختلط حجم 40 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 40,
+      "inci_raw": "",
+      "sources": [
+        "https://www.khanoumi.com/products/skin-one-sunscreen-fluid-spf50-combination-to-oily-skin-40ml-68190"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_ardene_solaris_aqua_newgen_spf50_100ml",
+      "name": "فلوئید ضدآفتاب بی‌رنگ آردن سولاریس Aqua Newgen SPF50 حجم 100 میلی‌لیتر",
+      "brand": "آردن",
+      "variant": "فلوئید ضدآفتاب بی‌رنگ آردن سولاریس Aqua Newgen SPF50 حجم 100 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 100,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-9171060/",
+        "https://www.ardene.co/en/ardene-brands-en/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_lafarrerr_invisible_antispot_oily_spf50_40ml",
+      "name": "ضدآفتاب و ضدلک بی‌رنگ لافارر پوست چرب SPF50+ حجم 40 میلی‌لیتر",
+      "brand": "لافارر",
+      "variant": "ضدآفتاب و ضدلک بی‌رنگ لافارر پوست چرب SPF50+ حجم 40 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 40,
+      "inci_raw": "",
+      "sources": [
+        "https://lafarrerr.com/la-farrerr-invisible-anti-spot-sunscreen-for-oily-acne-prone-skin-spf-50/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_my_smart_defense_fluid_spf50_50ml",
+      "name": "فلوئید ضدآفتاب مای Smart Defense SPF50 حجم 50 میلی‌لیتر",
+      "brand": "مای",
+      "variant": "فلوئید ضدآفتاب مای Smart Defense SPF50 حجم 50 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 50,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-5715766/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_synskin_synshield_oily_spf50_50ml",
+      "name": "ژل‌کرم ضدآفتاب فاقد چربی ساین اسکین Syn Shield SPF50 حجم 50 میلی‌لیتر",
+      "brand": "ساین اسکین",
+      "variant": "ژل‌کرم ضدآفتاب فاقد چربی ساین اسکین Syn Shield SPF50 حجم 50 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 50,
+      "inci_raw": "",
+      "sources": [
+        "https://www.khanoumi.com/products/syn-skin-syn-shield-oil-free-sun-screen-cream-gel-spf50-28026"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_drjila_multi_protection_tinted_spf50_50ml",
+      "name": "کرم ضدآفتاب رنگی مولتی پروتکشن دکتر ژیلا SPF50 حجم 50 میلی‌لیتر",
+      "brand": "دکتر ژیلا",
+      "variant": "کرم ضدآفتاب رنگی مولتی پروتکشن دکتر ژیلا SPF50 حجم 50 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 50,
+      "inci_raw": "",
+      "sources": [
+        "https://poosteman.com/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "blocked",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_schon_double_shield_spf50_50ml",
+      "name": "کرم ضدآفتاب دابل شیلد شون SPF50 حجم 50 میلی‌لیتر",
+      "brand": "شون",
+      "variant": "کرم ضدآفتاب دابل شیلد شون SPF50 حجم 50 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 50,
+      "inci_raw": "",
+      "sources": [
+        "https://schon.ir/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_liesel_sunsel_invisible_oily_spf50_40ml",
+      "name": "کرم ضدآفتاب بی‌رنگ لایسل Sunsel SPF50 پوست چرب حجم 40 میلی‌لیتر",
+      "brand": "لایسل",
+      "variant": "کرم ضدآفتاب بی‌رنگ لایسل Sunsel SPF50 پوست چرب حجم 40 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 40,
+      "inci_raw": "",
+      "sources": [
+        "https://ordme.com/liesel-sunsel-invisible-sunscreen-for-oily-and-acne-prone-skin-spf50-40ml"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_vitalayer_activit_niacinamide_30ml",
+      "name": "سرم نیاسینامید اکتی‌ویت ویتالیر حجم 30 میلی‌لیتر",
+      "brand": "ویتالیر",
+      "variant": "سرم نیاسینامید اکتی‌ویت ویتالیر حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-12230709/",
+        "https://www.khanoumi.com/products/vitalayer-niacinamide-serum-30-ml-75002"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_vitalayer_hyaluronic_serum_30ml",
+      "name": "سرم هیالورونیک اسید ویتالیر حجم 30 میلی‌لیتر",
+      "brand": "ویتالیر",
+      "variant": "سرم هیالورونیک اسید ویتالیر حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-10149023/",
+        "https://sayateb.com/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_brightmax_tonebright_niacinamide10_30ml",
+      "name": "سرم نیاسینامید 10٪ تن برایت مکس حجم 30 میلی‌لیتر",
+      "brand": "برایت مکس",
+      "variant": "سرم نیاسینامید 10٪ تن برایت مکس حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://theskincafe.ir/product/%D8%B3%D8%B1%D9%85-%D9%86%DB%8C%D8%A7%D8%B3%DB%8C%D9%86%D8%A7%D9%85%DB%8C%D8%AF-%D8%A8%D8%B1%D8%A7%DB%8C%D8%AA-%D9%85%DA%A9%D8%B3-bright-max-%D8%AD%D8%AC%D9%85-30-%D9%85%DB%8C%D9%84/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_glamma_niacinamide_zinc_30ml",
+      "name": "سرم ضدجوش نیاسینامید و زینک گلاما حجم 30 میلی‌لیتر",
+      "brand": "گلاما",
+      "variant": "سرم ضدجوش نیاسینامید و زینک گلاما حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-20881048/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_noacne_niacinamide10_zinc1_30ml",
+      "name": "سرم نیاسینامید 10٪ و زینک PCA یک درصد نوآکنه حجم 30 میلی‌لیتر",
+      "brand": "نوآکنه",
+      "variant": "سرم نیاسینامید 10٪ و زینک PCA یک درصد نوآکنه حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-18173806/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_vitalayer_aha30_30ml",
+      "name": "سرم لایه‌بردار ویتالیر AHA 30% حجم 30 میلی‌لیتر",
+      "brand": "ویتالیر",
+      "variant": "سرم لایه‌بردار ویتالیر AHA 30% حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-16350252/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_vitalayer_glycolic7_30ml",
+      "name": "سرم گلایکولیک اسید 7٪ ویتالیر حجم 30 میلی‌لیتر",
+      "brand": "ویتالیر",
+      "variant": "سرم گلایکولیک اسید 7٪ ویتالیر حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-14194589/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_ginagen_liposomal_vitc_oily_30ml",
+      "name": "سرم ویتامین C لیپوزومال ژیناژن پوست چرب و مختلط حجم 30 میلی‌لیتر",
+      "brand": "ژیناژن",
+      "variant": "سرم ویتامین C لیپوزومال ژیناژن پوست چرب و مختلط حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://www.riiha.ir/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_dermalift_hydralift_ac_50ml",
+      "name": "کرم مرطوب‌کننده درمالیفت Hydralift AC پوست چرب حجم 50 میلی‌لیتر",
+      "brand": "درمالیفت",
+      "variant": "کرم مرطوب‌کننده درمالیفت Hydralift AC پوست چرب حجم 50 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 50,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-1518148/",
+        "https://www.khanoumi.com/products/dermalift-hydralift-ac-greasy-skin-moisturizing-cream-for-acneic-and-greasy-skin-50ml-34983",
+        "https://rojashop.com/shop/behdashti/%DA%A9%D8%B1%D9%85-%D9%85%D8%B1%D8%B7%D9%88%D8%A8-%DA%A9%D9%86%D9%86%D8%AF%D9%87-%D9%BE%D9%88%D8%B3%D8%AA-%D9%87%D8%A7%D9%8A-%DA%86%D8%B1%D8%A8-%D9%87%D9%8A%D8%AF%D8%B1%D8%A7%D9%84%D9%8A%D9%81%D8%AA-ac"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_ginagen_oily_moisturizer_50ml",
+      "name": "کرم آبرسان ژیناژن پوست چرب حجم 50 میلی‌لیتر",
+      "brand": "ژیناژن",
+      "variant": "کرم آبرسان ژیناژن پوست چرب حجم 50 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 50,
+      "inci_raw": "",
+      "sources": [
+        "https://poosteman.com/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_revival_three_in_one_oily_gelcream_40ml",
+      "name": "ژل‌کرم آبرسان سه‌کاره رویوال پوست چرب حجم 40 میلی‌لیتر",
+      "brand": "رویوال",
+      "variant": "ژل‌کرم آبرسان سه‌کاره رویوال پوست چرب حجم 40 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 40,
+      "inci_raw": "",
+      "sources": [
+        "https://gandishop.com/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_lafarrerr_sebum_regulating_01_75ml",
+      "name": "کرم کنترل‌کننده چربی و آبرسان لافارر مدل 01 حجم 75 میلی‌لیتر",
+      "brand": "لافارر",
+      "variant": "کرم کنترل‌کننده چربی و آبرسان لافارر مدل 01 حجم 75 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 75,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-708283/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_lafarrerr_cleanser_01_oily_150ml",
+      "name": "ژل شست‌وشو و لایه‌بردار لافارر مدل 01 پوست چرب حجم 150 میلی‌لیتر",
+      "brand": "لافارر",
+      "variant": "ژل شست‌وشو و لایه‌بردار لافارر مدل 01 پوست چرب حجم 150 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 150,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-515367/",
+        "https://www.khanoumi.com/products/lafarrerr-exfoliating-face-wash-for-oily--skin-25338",
+        "https://lafarrerr.com/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_deepsense_teatree_bamboo_oily_cleanser_250ml",
+      "name": "ژل شست‌وشوی دیپ سنس درخت چای و بامبو پوست چرب حجم 250 میلی‌لیتر",
+      "brand": "دیپ سنس",
+      "variant": "ژل شست‌وشوی دیپ سنس درخت چای و بامبو پوست چرب حجم 250 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 250,
+      "inci_raw": "",
+      "sources": [
+        "https://darukade.com/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_hydroderm_oily_facewash_150g",
+      "name": "ژل شست‌وشوی صورت هیدرودرم Oily Skin وزن 150 گرم",
+      "brand": "هیدرودرم",
+      "variant": "ژل شست‌وشوی صورت هیدرودرم Oily Skin وزن 150 گرم",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [
+        "https://multikade.ir/product/%DA%98%D9%84-%D8%B4%D8%B3%D8%AA%D9%88%D8%B4%D9%88%DB%8C-%D8%B5%D9%88%D8%B1%D8%AA-%D9%87%DB%8C%D8%AF%D8%B1%D9%88%D8%AF%D8%B1%D9%85-%D9%85%D8%AF%D9%84-oily-skin-%D9%88%D8%B2%D9%86-150-%DA%AF/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_cinere_ap_oily_facewash_200ml",
+      "name": "ژل شست‌وشوی صورت سینره AP پوست چرب حجم 200 میلی‌لیتر",
+      "brand": "سینره",
+      "variant": "ژل شست‌وشوی صورت سینره AP پوست چرب حجم 200 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 200,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-363707/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_medilann_foaming_wash_oily_200ml",
+      "name": "مایع شوینده فومی صورت و بدن مدیلن پوست چرب حجم 200 میلی‌لیتر",
+      "brand": "مدیلن",
+      "variant": "مایع شوینده فومی صورت و بدن مدیلن پوست چرب حجم 200 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 200,
+      "inci_raw": "",
+      "sources": [
+        "https://beautymarkets.ir/product/medilann-200-69"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_dermalift_melalift_cream_40ml",
+      "name": "کرم روشن‌کننده درمالیفت Melalift حجم 40 میلی‌لیتر",
+      "brand": "درمالیفت",
+      "variant": "کرم روشن‌کننده درمالیفت Melalift حجم 40 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 40,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-8799884/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_ginagen_antiacne_li_35ml",
+      "name": "کرم ضدجوش ژیناژن مدل Li حجم 35 میلی‌لیتر",
+      "brand": "ژیناژن",
+      "variant": "کرم ضدجوش ژیناژن مدل Li حجم 35 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 35,
+      "inci_raw": "",
+      "sources": [
+        "https://www.marketban.com/product/15871780"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "prd_ir_genobiotic_repogen_repair_30ml",
+      "name": "کرم ترمیم‌کننده ژنو بایوتیک RepoGen حجم 30 میلی‌لیتر",
+      "brand": "ژنو بایوتیک",
+      "variant": "کرم ترمیم‌کننده ژنو بایوتیک RepoGen حجم 30 میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": 30,
+      "inci_raw": "",
+      "sources": [
+        "https://www.digikala.com/product/dkp-16376738/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-cbright-tinted",
+      "name": "ضد آفتاب رنگی برایت‌مکس C-Bright SPF 50",
+      "brand": "",
+      "variant": "ضد آفتاب رنگی برایت‌مکس C-Bright SPF 50",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-acne-matt",
+      "name": "کرم آبرسان مات برایت‌مکس Acne-Bright",
+      "brand": "",
+      "variant": "کرم آبرسان مات برایت‌مکس Acne-Bright",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-tone-physical",
+      "name": "ضد آفتاب فیزیکال برایت‌مکس Tone-Bright SPF 50، بی‌رنگ",
+      "brand": "",
+      "variant": "ضد آفتاب فیزیکال برایت‌مکس Tone-Bright SPF 50، بی‌رنگ",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-hydra-light",
+      "name": "کرم آبرسان سبک برایت‌مکس Hydra-Bright",
+      "brand": "",
+      "variant": "کرم آبرسان سبک برایت‌مکس Hydra-Bright",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-acne-foam",
+      "name": "فوم پاک‌کننده برایت‌مکس Acne-Bright، سالیسیلیک اسید و نیاسینامید",
+      "brand": "",
+      "variant": "فوم پاک‌کننده برایت‌مکس Acne-Bright، سالیسیلیک اسید و نیاسینامید",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-cbright-night",
+      "name": "کرم شب ویتامین C برایت‌مکس C-Bright",
+      "brand": "",
+      "variant": "کرم شب ویتامین C برایت‌مکس C-Bright",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-cbright-foam",
+      "name": "فوم شست‌وشوی برایت‌مکس C-Bright",
+      "brand": "",
+      "variant": "فوم شست‌وشوی برایت‌مکس C-Bright",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-acne-spot",
+      "name": "ژل موضعی جوش برایت‌مکس Acne-Bright",
+      "brand": "",
+      "variant": "ژل موضعی جوش برایت‌مکس Acne-Bright",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-cbright-cream",
+      "name": "کرم ویتامین C برایت‌مکس C-Bright",
+      "brand": "",
+      "variant": "کرم ویتامین C برایت‌مکس C-Bright",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-hydra-sunfluid",
+      "name": "فلوئید ضد آفتاب برایت‌مکس Hydra-Bright SPF 50",
+      "brand": "",
+      "variant": "فلوئید ضد آفتاب برایت‌مکس Hydra-Bright SPF 50",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-hyaluronic",
+      "name": "سرم هیالورونیک اسید ۲٪ برایت‌مکس",
+      "brand": "",
+      "variant": "سرم هیالورونیک اسید ۲٪ برایت‌مکس",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-niacinamide",
+      "name": "سرم نیاسینامید ۱۰٪ برایت‌مکس",
+      "brand": "",
+      "variant": "سرم نیاسینامید ۱۰٪ برایت‌مکس",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-vitamin-c25",
+      "name": "سرم ویتامین C ۲۵٪ برایت‌مکس",
+      "brand": "",
+      "variant": "سرم ویتامین C ۲۵٪ برایت‌مکس",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-azelaic",
+      "name": "سوسپانسیون آزلائیک اسید برایت‌مکس",
+      "brand": "",
+      "variant": "سوسپانسیون آزلائیک اسید برایت‌مکس",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "cyspersa-eye",
+      "name": "فلوئید دور چشم سیسپرسا Eye Revive",
+      "brand": "",
+      "variant": "فلوئید دور چشم سیسپرسا Eye Revive",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "cyspersa-cysteamine",
+      "name": "کرم ضدلک سیسپرسا، سیستئامین ۵٪",
+      "brand": "",
+      "variant": "کرم ضدلک سیسپرسا، سیستئامین ۵٪",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "cyspersa-sun-untinted",
+      "name": "ضد آفتاب سیسپرسا Sun 50+ Defense، بی‌رنگ",
+      "brand": "",
+      "variant": "ضد آفتاب سیسپرسا Sun 50+ Defense، بی‌رنگ",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "revival-hyalusense-cream",
+      "name": "کرم آبرسان رویوال Hyalusense پوست نرمال تا خشک",
+      "brand": "",
+      "variant": "کرم آبرسان رویوال Hyalusense پوست نرمال تا خشک",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "revival-hyalusense-serum",
+      "name": "سرم آبرسان رویوال Hyalusense",
+      "brand": "",
+      "variant": "سرم آبرسان رویوال Hyalusense",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-activit-foam",
+      "name": "فوم شست‌وشوی ویتالیر Activit",
+      "brand": "",
+      "variant": "فوم شست‌وشوی ویتالیر Activit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-vitc-foam",
+      "name": "فوم شست‌وشوی ویتامین C ویتالیر",
+      "brand": "",
+      "variant": "فوم شست‌وشوی ویتامین C ویتالیر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-hydravit-foam",
+      "name": "فوم شست‌وشوی ویتالیر Hydravit",
+      "brand": "",
+      "variant": "فوم شست‌وشوی ویتالیر Hydravit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-hydravit-spray",
+      "name": "اسپری آبرسان ویتالیر Hydravit",
+      "brand": "",
+      "variant": "اسپری آبرسان ویتالیر Hydravit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-timevit-gel",
+      "name": "ژل شست‌وشوی ویتالیر Timevit",
+      "brand": "",
+      "variant": "ژل شست‌وشوی ویتالیر Timevit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-whitevit-foam",
+      "name": "فوم شست‌وشوی ویتالیر Whitevit",
+      "brand": "",
+      "variant": "فوم شست‌وشوی ویتالیر Whitevit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-sensivit-foam",
+      "name": "فوم شست‌وشوی ویتالیر Sensivit",
+      "brand": "",
+      "variant": "فوم شست‌وشوی ویتالیر Sensivit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-whitevit-gel",
+      "name": "ژل شست‌وشوی ویتالیر Whitevit",
+      "brand": "",
+      "variant": "ژل شست‌وشوی ویتالیر Whitevit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-hydravit-gel",
+      "name": "ژل شست‌وشوی ویتالیر Hydravit با برس سیلیکونی",
+      "brand": "",
+      "variant": "ژل شست‌وشوی ویتالیر Hydravit با برس سیلیکونی",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-timevit-micellar",
+      "name": "میسلار واتر ویتالیر Timevit",
+      "brand": "",
+      "variant": "میسلار واتر ویتالیر Timevit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "serycta-eyelash",
+      "name": "سرم تقویت مژه سریکتا",
+      "brand": "",
+      "variant": "سرم تقویت مژه سریکتا",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "veronique-eye-bright",
+      "name": "کرم دور چشم روشن‌کننده ورونیک",
+      "brand": "",
+      "variant": "کرم دور چشم روشن‌کننده ورونیک",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "veronique-red-cream",
+      "name": "کرم ضدقرمزی ورونیک",
+      "brand": "",
+      "variant": "کرم ضدقرمزی ورونیک",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "veronique-illuminating",
+      "name": "کرم روشن‌کننده ورونیک",
+      "brand": "",
+      "variant": "کرم روشن‌کننده ورونیک",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "veronique-eye-antioxidant",
+      "name": "کرم دور چشم آنتی‌اکسیدان ورونیک",
+      "brand": "",
+      "variant": "کرم دور چشم آنتی‌اکسیدان ورونیک",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "dermatypique-oily-sun",
+      "name": "ضد آفتاب آنتی‌آکنه درماتیپیک Phototypique SPF 50+",
+      "brand": "",
+      "variant": "ضد آفتاب آنتی‌آکنه درماتیپیک Phototypique SPF 50+",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "dermatypique-dry-sun",
+      "name": "ضد آفتاب درماتیپیک Phototypique پوست خشک SPF 50+",
+      "brand": "",
+      "variant": "ضد آفتاب درماتیپیک Phototypique پوست خشک SPF 50+",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "dermatypique-oily-moist",
+      "name": "فلوئید آبرسان درماتیپیک پوست مختلط و چرب",
+      "brand": "",
+      "variant": "فلوئید آبرسان درماتیپیک پوست مختلط و چرب",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "dermatypique-spot-sun",
+      "name": "ضد آفتاب ضدلک درماتیپیک SPF 50+",
+      "brand": "",
+      "variant": "ضد آفتاب ضدلک درماتیپیک SPF 50+",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "dermatypique-tinted-sun",
+      "name": "ضد آفتاب رنگی درماتیپیک پوست خشک SPF 50+",
+      "brand": "",
+      "variant": "ضد آفتاب رنگی درماتیپیک پوست خشک SPF 50+",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "dermatypique-dry-moist",
+      "name": "کرم آبرسان درماتیپیک پوست نرمال تا خشک",
+      "brand": "",
+      "variant": "کرم آبرسان درماتیپیک پوست نرمال تا خشک",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "dermatypique-red-sun",
+      "name": "ضد آفتاب ضدقرمزی درماتیپیک SPF 50+",
+      "brand": "",
+      "variant": "ضد آفتاب ضدقرمزی درماتیپیک SPF 50+",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "dermatypique-bright-cleanser",
+      "name": "ژل شست‌وشوی روشن‌کننده درماتیپیک",
+      "brand": "",
+      "variant": "ژل شست‌وشوی روشن‌کننده درماتیپیک",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "lafarrerr-multi-toner",
+      "name": "تونر مولتی‌اکتیو لافارر پوست چرب و مختلط",
+      "brand": "",
+      "variant": "تونر مولتی‌اکتیو لافارر پوست چرب و مختلط",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-vitc-toner",
+      "name": "تونر ویتامین C ویتالیر",
+      "brand": "",
+      "variant": "تونر ویتامین C ویتالیر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "vitalayer-whitevit-toner",
+      "name": "تونر پاک‌کننده ویتالیر Whitevit",
+      "brand": "",
+      "variant": "تونر پاک‌کننده ویتالیر Whitevit",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "simple-soothing-toner",
+      "name": "تونر آرام‌بخش سیمپل",
+      "brand": "",
+      "variant": "تونر آرام‌بخش سیمپل",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "genobiotic-charcoal",
+      "name": "ماسک زغال ژنوبایوتیک",
+      "brand": "",
+      "variant": "ماسک زغال ژنوبایوتیک",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "fycav-sea-mask",
+      "name": "ماسک لایه‌بردار و آبرسان دریایی فیکاو",
+      "brand": "",
+      "variant": "ماسک لایه‌بردار و آبرسان دریایی فیکاو",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-rich-hydrating",
+      "name": "کرم آبرسان غنی برایت‌مکس Rich Hydrating، ۵۰ میلی‌لیتر",
+      "brand": "",
+      "variant": "کرم آبرسان غنی برایت‌مکس Rich Hydrating، ۵۰ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [
+        "https://brightmax.ir/en/product/rich-hydrating-cream/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "brightmax-tone-tinted",
+      "name": "ضد آفتاب فیزیکال رنگی برایت‌مکس Tone Bright SPF 50، ۴۰ میلی‌لیتر",
+      "brand": "",
+      "variant": "ضد آفتاب فیزیکال رنگی برایت‌مکس Tone Bright SPF 50، ۴۰ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [
+        "https://arabira.com/product/bright-max-40ml-spf50-tinted-physical-sunscreen-tone-bright/"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "cyspersa-tinted-sun",
+      "name": "ضد آفتاب رنگی سیسپرسا SPF 50، ۵۰ میلی‌لیتر",
+      "brand": "",
+      "variant": "ضد آفتاب رنگی سیسپرسا SPF 50، ۵۰ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "cyspersa-cleanser",
+      "name": "شوینده روشن‌کننده سیسپرسا، ۱۵۰ میلی‌لیتر",
+      "brand": "",
+      "variant": "شوینده روشن‌کننده سیسپرسا، ۱۵۰ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "cerita-eyelash",
+      "name": "سرم تقویت مژه سریتا Eyelash Lotion، ۸ میلی‌لیتر",
+      "brand": "",
+      "variant": "سرم تقویت مژه سریتا Eyelash Lotion، ۸ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [
+        "https://www.khanoumi.com/products/cerita-eyelash-lotion-20209"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "cerita-lid-foam",
+      "name": "فوم شست‌وشوی پلک و مژه سریتا، ۶۰ میلی‌لیتر",
+      "brand": "",
+      "variant": "فوم شست‌وشوی پلک و مژه سریتا، ۶۰ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [
+        "https://genesabz.com/product/26788/cerita-eyelid-eyelash-foam-cleanser"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "cerita-eyebrow",
+      "name": "سرم تقویت ابرو سریتا Eyebrow Vitalize، ۸ میلی‌لیتر",
+      "brand": "",
+      "variant": "سرم تقویت ابرو سریتا Eyebrow Vitalize، ۸ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [
+        "https://www.khanoumi.com/products/cerita-eyebrow-vitalize-serum-8-ml-79353"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "revival-hydrating",
+      "name": "ژل‌کرم آبرسان پروبیوتیک رویوال، ۴۰ میلی‌لیتر",
+      "brand": "",
+      "variant": "ژل‌کرم آبرسان پروبیوتیک رویوال، ۴۰ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    },
+    {
+      "product_id": "konlamax-black-mask",
+      "name": "بلک ماسک کنلامکس روشن‌کننده، ۷۵ میلی‌لیتر",
+      "brand": "",
+      "variant": "بلک ماسک کنلامکس روشن‌کننده، ۷۵ میلی‌لیتر",
+      "market_version": "نامشخص",
+      "size_ml": null,
+      "inci_raw": "",
+      "sources": [
+        "https://rojashop.com/shop/behdashti/%D9%85%D8%A7%D8%B3%DA%A9-%D8%B5%D9%88%D8%B1%D8%AA-%D8%A8%D9%84%DA%A9"
+      ],
+      "verified_by": "",
+      "verified_date": "",
+      "status": "needs_check",
+      "source_match": false,
+      "notes": "نام و سرنخ منبع از کاتالوگ فعلی؛ فرمول بسته بازار ایران تأیید نشده"
+    }
+  ],
+  "ingredients": [
+    {
+      "ingredient_id": "I001",
+      "inci_name": "Aqua",
+      "aliases": [
+        "Water",
+        "Eau"
+      ],
+      "classes": [
+        "SOLVENT"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I002",
+      "inci_name": "Glycerin",
+      "aliases": [
+        "Glycerol"
+      ],
+      "classes": [
+        "HUMECTANT"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I003",
+      "inci_name": "Niacinamide",
+      "aliases": [
+        "Vitamin B3",
+        "Nicotinamide"
+      ],
+      "classes": [
+        "VITAMIN_B3"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I004",
+      "inci_name": "Zinc Oxide",
+      "aliases": [
+        "CI 77947"
+      ],
+      "classes": [
+        "UV_FILTER_PHYSICAL"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I005",
+      "inci_name": "Titanium Dioxide",
+      "aliases": [
+        "CI 77891"
+      ],
+      "classes": [
+        "UV_FILTER_PHYSICAL"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I006",
+      "inci_name": "Salicylic Acid",
+      "aliases": [
+        "BHA"
+      ],
+      "classes": [
+        "BHA"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I007",
+      "inci_name": "Glycolic Acid",
+      "aliases": [],
+      "classes": [
+        "AHA"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I008",
+      "inci_name": "Lactic Acid",
+      "aliases": [],
+      "classes": [
+        "AHA"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I009",
+      "inci_name": "Mandelic Acid",
+      "aliases": [],
+      "classes": [
+        "AHA"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I010",
+      "inci_name": "Gluconolactone",
+      "aliases": [],
+      "classes": [
+        "PHA"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I011",
+      "inci_name": "Azelaic Acid",
+      "aliases": [],
+      "classes": [
+        "AZELAIC"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I012",
+      "inci_name": "Retinol",
+      "aliases": [
+        "Vitamin A"
+      ],
+      "classes": [
+        "RETINOID"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I013",
+      "inci_name": "Retinal",
+      "aliases": [
+        "Retinaldehyde"
+      ],
+      "classes": [
+        "RETINOID"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I014",
+      "inci_name": "Retinyl Palmitate",
+      "aliases": [],
+      "classes": [
+        "RETINOID"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I015",
+      "inci_name": "Ascorbic Acid",
+      "aliases": [
+        "L-Ascorbic Acid",
+        "Vitamin C"
+      ],
+      "classes": [
+        "VITC_LAA",
+        "BRIGHTENER"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I016",
+      "inci_name": "Ascorbyl Glucoside",
+      "aliases": [],
+      "classes": [
+        "VITC_DERIV",
+        "BRIGHTENER"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I017",
+      "inci_name": "Sodium Ascorbyl Phosphate",
+      "aliases": [
+        "SAP"
+      ],
+      "classes": [
+        "VITC_DERIV"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I018",
+      "inci_name": "Tranexamic Acid",
+      "aliases": [],
+      "classes": [
+        "BRIGHTENER"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I019",
+      "inci_name": "Alpha-Arbutin",
+      "aliases": [
+        "Arbutin"
+      ],
+      "classes": [
+        "BRIGHTENER"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I020",
+      "inci_name": "Ceramide NP",
+      "aliases": [
+        "Ceramide 3"
+      ],
+      "classes": [
+        "CERAMIDE"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I021",
+      "inci_name": "Cholesterol",
+      "aliases": [],
+      "classes": [
+        "BARRIER_LIPID"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I022",
+      "inci_name": "Sodium Hyaluronate",
+      "aliases": [
+        "Hyaluronic Acid"
+      ],
+      "classes": [
+        "HUMECTANT"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I023",
+      "inci_name": "Panthenol",
+      "aliases": [
+        "Provitamin B5"
+      ],
+      "classes": [
+        "HUMECTANT",
+        "SOOTHING"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I024",
+      "inci_name": "Centella Asiatica Extract",
+      "aliases": [
+        "Cica",
+        "Gotu Kola"
+      ],
+      "classes": [
+        "SOOTHING"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I025",
+      "inci_name": "Madecassoside",
+      "aliases": [],
+      "classes": [
+        "SOOTHING"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I026",
+      "inci_name": "Benzoyl Peroxide",
+      "aliases": [
+        "BPO"
+      ],
+      "classes": [
+        "BPO"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I027",
+      "inci_name": "Parfum",
+      "aliases": [
+        "Fragrance",
+        "Aroma"
+      ],
+      "classes": [
+        "FRAGRANCE"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I028",
+      "inci_name": "Limonene",
+      "aliases": [],
+      "classes": [
+        "FRAGRANCE_ALLERGEN"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I029",
+      "inci_name": "Linalool",
+      "aliases": [],
+      "classes": [
+        "FRAGRANCE_ALLERGEN"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I030",
+      "inci_name": "Alcohol Denat.",
+      "aliases": [
+        "Denatured Alcohol",
+        "SD Alcohol"
+      ],
+      "classes": [
+        "DRYING_ALCOHOL"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I031",
+      "inci_name": "Phenoxyethanol",
+      "aliases": [],
+      "classes": [
+        "PRESERVATIVE"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I032",
+      "inci_name": "Butyl Methoxydibenzoylmethane",
+      "aliases": [
+        "Avobenzone"
+      ],
+      "classes": [
+        "UV_FILTER_CHEMICAL"
+      ],
+      "source": "",
+      "status": "draft"
+    },
+    {
+      "ingredient_id": "I033",
+      "inci_name": "Squalane",
+      "aliases": [],
+      "classes": [
+        "EMOLLIENT"
+      ],
+      "source": "",
+      "status": "draft"
+    }
+  ],
+  "rules": [
+    {
+      "rule_id": "R001",
+      "classes": [
+        "RETINOID"
+      ],
+      "message": "رتینوئید و لایه‌بردار را در یک شب با هم شروع نکن؛ احتمال تحریک بیشتر است. یکی را شب‌های جدا بگذار.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "احتیاط",
+      "conditions": {
+        "type": "تداخل",
+        "all": "RETINOID",
+        "any": "AHA|BHA",
+        "min": 1,
+        "none": null,
+        "time": "شب",
+        "user": null
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R002",
+      "classes": [],
+      "message": "چند لایه‌بردار هم‌زمان در روتین هست؛ فشار روی پوست بالا می‌رود. تعداد را کم کن.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "احتیاط",
+      "conditions": {
+        "type": "تداخل",
+        "all": null,
+        "any": "AHA|BHA|PHA",
+        "min": 2,
+        "none": null,
+        "time": "هر دو",
+        "user": null
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R003",
+      "classes": [
+        "VITAMIN_B3"
+      ],
+      "message": "نگرانی رایج درباره ویتامین C و نیاسینامید شواهد قوی ندارد. اگر پوستت واکنش نشان داد، جدا از هم استفاده کن.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "اطلاع",
+      "conditions": {
+        "type": "تداخل",
+        "all": "VITAMIN_B3",
+        "any": "VITC_LAA",
+        "min": 1,
+        "none": null,
+        "time": "هر دو",
+        "user": null
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R004",
+      "classes": [
+        "RETINOID"
+      ],
+      "message": "برای رتینوئید در بارداری/شیردهی حتماً با پزشک مشورت کن؛ این برنامه توصیه شخصی نمی‌دهد.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "اجتناب",
+      "conditions": {
+        "type": "هشدار ایمنی",
+        "all": "RETINOID",
+        "any": null,
+        "min": 1,
+        "none": null,
+        "time": "هر دو",
+        "user": "بارداری یا شیردهی"
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R005",
+      "classes": [],
+      "message": "در روتین صبح ضدآفتاب دیده نمی‌شود.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "احتیاط",
+      "conditions": {
+        "type": "کمبود",
+        "all": null,
+        "any": null,
+        "min": 1,
+        "none": "UV_FILTER_PHYSICAL|UV_FILTER_CHEMICAL",
+        "time": "صبح",
+        "user": null
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R006",
+      "classes": [],
+      "message": "محصول فعال داری ولی ضدآفتاب صبح نداری؛ ضدآفتاب اولویت اول است.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "اجتناب",
+      "conditions": {
+        "type": "کمبود",
+        "all": null,
+        "any": "RETINOID|AHA|BHA",
+        "min": 1,
+        "none": "UV_FILTER_PHYSICAL|UV_FILTER_CHEMICAL",
+        "time": "صبح",
+        "user": null
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R007",
+      "classes": [],
+      "message": "وقتی لایه محافظ آسیب دیده، اکتیو قوی را کنار بگذار و اول ترمیم و آبرسانی کن.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "اجتناب",
+      "conditions": {
+        "type": "هشدار ایمنی",
+        "all": null,
+        "any": "RETINOID|AHA|BHA|BPO",
+        "min": 1,
+        "none": null,
+        "time": "هر دو",
+        "user": "لایه محافظ آسیب‌دیده یا حساسیت زیاد"
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R008",
+      "classes": [],
+      "message": "این محصول عطر یا آلرژن عطر دارد و در خط قرمز تو بود.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "احتیاط",
+      "conditions": {
+        "type": "هشدار ایمنی",
+        "all": null,
+        "any": "FRAGRANCE|FRAGRANCE_ALLERGEN",
+        "min": 1,
+        "none": null,
+        "time": "هر دو",
+        "user": "خط قرمز: عطر"
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R009",
+      "classes": [],
+      "message": "برای هدف ضدلک، ترکیب ضدلک یا روشن‌کننده در روتین نیست.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "احتیاط",
+      "conditions": {
+        "type": "کمبود",
+        "all": null,
+        "any": "BRIGHTENER|AZELAIC|VITAMIN_B3",
+        "min": 1,
+        "none": null,
+        "time": "هر دو",
+        "user": "هدف: کاهش لک"
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R010",
+      "classes": [],
+      "message": "مرطوب‌کننده یا آبرسان در روتین دیده نمی‌شود.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "احتیاط",
+      "conditions": {
+        "type": "کمبود",
+        "all": null,
+        "any": "HUMECTANT|EMOLLIENT|CERAMIDE",
+        "min": 1,
+        "none": null,
+        "time": "هر دو",
+        "user": null
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    },
+    {
+      "rule_id": "R011",
+      "classes": [
+        "DRYING_ALCOHOL"
+      ],
+      "message": "الکل خشک‌کننده ممکن است برای پوست خشک یا حساس مناسب نباشد.",
+      "source": "",
+      "reviewed_by": "",
+      "status": "draft",
+      "severity": "اطلاع",
+      "conditions": {
+        "type": "هشدار ایمنی",
+        "all": "DRYING_ALCOHOL",
+        "any": null,
+        "min": 1,
+        "none": null,
+        "time": "هر دو",
+        "user": "پوست خشک یا حساس"
+      },
+      "notes": "قاعده پیش‌نویس فایل ورودی؛ منتشر نشده و نیازمند بازبینی شرط و شواهد"
+    }
+  ]
+}

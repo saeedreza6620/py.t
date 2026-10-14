@@ -1,0 +1,10 @@
+import fs from 'node:fs';import ts from 'typescript';import assert from 'node:assert/strict';
+const code=ts.transpile(fs.readFileSync('assistant/dataset-quality.ts','utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});const {parseINCI,productQuality,validateDataset}=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+const ingredients=[{ingredient_id:'water',inci_name:'Aqua',aliases:['Water'],classes:['solvent'],source:'https://example.org/reference',status:'verified'}];
+const base={product_id:'test',name:'test',brand:'test',variant:'same',formula_version:'1',market_version:'EU',size_ml:50,inci_raw:'Aqua',sources:['https://example.org/a','https://example.org/b'],verified_by:'test reviewer',verified_date:'2026-10-12',status:'verified',source_match:true};
+const now=Date.parse('2026-10-13');assert(productQuality(base,ingredients,now).ready);
+for(const change of [{inci_raw:''},{inci_raw:'Unknown'},{status:'needs_check'},{status:'blocked'},{verified_by:''},{verified_date:'2024-01-01'},{verified_date:'2030-01-01'},{source_match:false},{market_version:'نامشخص'},{sources:[base.sources[0],base.sources[0]]}])assert(!productQuality({...base,...change},ingredients,now).ready);
+assert.deepEqual(parseINCI('Caprylic/Capric Triglyceride, Aloe Barbadensis (Leaf) Extract'),['Caprylic/Capric Triglyceride','Aloe Barbadensis (Leaf) Extract']);assert.equal(parseINCI('Aqua (and) Glycerin').length,2);
+assert(!productQuality(base,[...ingredients,{...ingredients[0],ingredient_id:'wrong'}],now).ready);
+assert.throws(()=>validateDataset({products:[base,base],ingredients,rules:[]}));
+console.log('PASS dataset gate: exact variant, INCI, aliases, duplicate IDs, two sources, reviewer and dates; 15 cases');

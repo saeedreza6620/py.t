@@ -1,0 +1,13 @@
+import { env } from 'cloudflare:workers';
+import { database } from '../db/raw';
+const settings=()=>env as unknown as {KAVENEGAR_API_KEY?:string;KAVENEGAR_TEMPLATE?:string;AUTH_HASH_KEY?:string;OWNER_PHONE?:string};
+export function normalizePhone(value:unknown){const digits=String(value??'').replace(/[۰-۹]/g,c=>String('۰۱۲۳۴۵۶۷۸۹'.indexOf(c))).replace(/[٠-٩]/g,c=>String('٠١٢٣٤٥٦٧٨٩'.indexOf(c))).replace(/[\s-]/g,'');const phone=digits.startsWith('+98')?'0'+digits.slice(3):digits.startsWith('98')?'0'+digits.slice(2):digits;if(!/^09\d{9}$/.test(phone))throw Error('شماره موبایل ایران را درست وارد کنید.');return phone}
+export function configured(){const s=settings();return !!(s.KAVENEGAR_API_KEY&&s.KAVENEGAR_TEMPLATE&&s.AUTH_HASH_KEY&&s.OWNER_PHONE)}
+export function ownerPhone(){try{return normalizePhone(settings().OWNER_PHONE)}catch{return null}}
+export async function hash(value:string){const key=settings().AUTH_HASH_KEY;if(!key)throw Error('Auth not configured');const secret=await crypto.subtle.importKey('raw',new TextEncoder().encode(key),{name:'HMAC',hash:'SHA-256'},false,['sign']);const bytes=await crypto.subtle.sign('HMAC',secret,new TextEncoder().encode(value));return Array.from(new Uint8Array(bytes),x=>x.toString(16).padStart(2,'0')).join('')}
+export function validOrigin(request:Request){const origin=request.headers.get('origin');return !!origin&&origin===new URL(request.url).origin}
+export const response=(data:unknown,status=200)=>Response.json(data,{status,headers:{'Cache-Control':'no-store'}});
+export function cookie(request:Request){return request.headers.get('cookie')?.match(/(?:^|;\s*)bw_session=([^;]+)/)?.[1]||''}
+export async function sessionPhone(request:Request){const token=cookie(request);if(!settings().AUTH_HASH_KEY||!/^[a-f0-9]{64}$/.test(token))return null;const tokenHash=await hash('session:'+token);const row=await database().prepare('SELECT phone FROM phone_sessions WHERE token_hash=? AND expires_at>?').bind(tokenHash,Date.now()).first<{phone:string}>();return row?.phone||null}
+export function sessionCookie(token:string,maxAge:number){return `bw_session=${token}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${maxAge}`}
+export async function sendSms(phone:string,code:string){const s=settings();const url=`https://api.kavenegar.com/v1/${encodeURIComponent(s.KAVENEGAR_API_KEY!)}/verify/lookup.json`;const body=new URLSearchParams({receptor:phone,token:code,template:s.KAVENEGAR_TEMPLATE!});const result=await fetch(url,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});const data=await result.json() as {return?:{status?:number}};if(!result.ok||data.return?.status!==200)throw Error('SMS provider failure')}

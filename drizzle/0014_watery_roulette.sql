@@ -1,0 +1,1 @@
+ALTER TABLE `skin_forum_posts` ADD `parent_id` text;

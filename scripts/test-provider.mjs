@@ -1,0 +1,20 @@
+import fs from 'node:fs';import ts from 'typescript';import assert from 'node:assert/strict';
+const code=ts.transpile(fs.readFileSync('assistant/provider.ts','utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});
+const {provider}=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+let p=provider({AVALAI_API_KEY:'a'});assert.equal(p.name,'avalai');assert.equal(p.base,'https://api.avalai.ir/v1');assert.equal(p.key,'a');assert.equal(p.searchModel,'gpt-5.6-luna');
+p=provider({NETARZ_API_KEY:'n'});assert.equal(p.name,'netarz');assert.equal(p.base,'https://netarz.ir/api/ai/v1');
+p=provider({AI_PROVIDER:'avalai',NETARZ_API_KEY:'n'});assert.equal(p.key,'','explicit avalai never falls back to the netarz key');
+p=provider({AI_PROVIDER:'AvalAI',AVALAI_API_KEY:'a',AI_BASE_URL:'https://x.test/v1/',AI_MODEL_SEARCH:'m'});assert.equal(p.base,'https://x.test/v1');assert.equal(p.searchModel,'m');
+console.log('PASS provider: AvalAI default, Netarz legacy, no key cross-over, overrides');
+// Liara: project base URL required, chat-only, :online search
+const {onlineModel}=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+p=provider({LIARA_API_KEY:'l'});assert.equal(p.name,'liara');assert.equal(p.key,'','no base URL means not configured');
+p=provider({LIARA_API_KEY:'l',AI_BASE_URL:'https://ai.liara.ir/api/v1/abc123/chat/completions'});assert.equal(p.base,'https://ai.liara.ir/api/v1/abc123');assert.equal(p.key,'l');assert.equal(p.chatOnly,true);assert.equal(p.searchStyle,'online');assert.equal(p.searchModel,'openai/gpt-4.1-mini:online');
+assert.equal(onlineModel('openai/gpt-4.1-mini'),'openai/gpt-4.1-mini:online');assert.equal(onlineModel('x:online'),'x:online');
+const rc=ts.transpile(fs.readFileSync('assistant/chat-review.ts','utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});const {chatReview}=await import('data:text/javascript;base64,'+Buffer.from(rc).toString('base64'));
+const calls=[];const send=async(url,init)=>{const b=JSON.parse(init.body);calls.push({url,b});return Response.json({choices:[{message:{content:'یافته با منبع',annotations:[{type:'url_citation',url_citation:{url:'https://www.digikala.com/product/dkp-1/',title:'Digikala'}}]}}],usage:{prompt_tokens:10,completion_tokens:5}})};
+const base={base:'https://ai.liara.ir/api/v1/abc',key:'k',searchModel:'openai/gpt-4.1-mini:online',instructions:'i',messages:[{role:'user',content:'q'}],query:'q',liveSearch:true,maxTokens:800,parseSearch:()=>({text:'',sources:[],searched:false}),searchStyle:'online'};
+let r=await chatReview({...base,model:'openai/gpt-4.1-mini'},send);assert.equal(calls.length,1);assert.equal(calls[0].b.model,'openai/gpt-4.1-mini:online');assert.equal(calls[0].b.plugins,undefined);assert(calls[0].url.endsWith('/chat/completions'));assert.equal(r.sources[0].url,'https://www.digikala.com/product/dkp-1/');
+calls.length=0;r=await chatReview({...base,model:'google/gemini-2.5-flash'},send);assert.equal(calls.length,2,'evidence search then answer');assert.equal(calls[0].b.model,'openai/gpt-4.1-mini:online');assert(calls.every(c=>c.url.endsWith('/chat/completions')));assert.equal(calls[1].b.model,'google/gemini-2.5-flash');assert(calls[1].b.messages[0].content.includes('digikala'));assert.equal(r.searched,true);
+calls.length=0;await chatReview({...base,model:'openai/gpt-4.1-mini',liveSearch:false},send);assert.equal(calls[0].b.model,'openai/gpt-4.1-mini');
+console.log('PASS liara: base URL required, :online search on chat completions, gemini evidence step, no plugins');

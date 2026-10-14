@@ -1,0 +1,2299 @@
+{
+ "version": "2026-10-13.catalog.1",
+ "basisLegend": {
+  "inci_sourced": "فهرست ترکیبات از صفحه عمومی محصول کپی شده؛ هنوز با بسته بازار ایران تطبیق انسانی نشده",
+  "declared_name": "فقط ادعای نام/برچسب محصول؛ فهرست کامل ترکیبات ثبت نشده"
+ },
+ "products": [
+  {
+   "id": "bioderma-sebium",
+   "name": "میسلار واتر بایودرما پوست چرب",
+   "en": "Bioderma Sébium H2O",
+   "cat": "میسلار واتر",
+   "role": "micellar",
+   "rinseOff": true,
+   "texture": "water",
+   "actives": [
+    {
+     "cls": "ZINC",
+     "name": "Zinc Gluconate"
+    }
+   ],
+   "claims": [
+    "oily",
+    "combination"
+   ],
+   "flags": [
+    "fragrance"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.bioderma.us/en/p/sebium-h2o-micellar-water.html",
+    "https://skinsort.com/products/bioderma/sebium-h2o-purifying-micellar-cleansing-water-and-makeup-removing-solution"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, PEG-6 Caprylic/Capric Glycerides, Sodium Citrate, Zinc Gluconate, Copper Sulfate, Ginkgo Biloba Leaf Extract, Mannitol, Xylitol, Rhamnose, Fructooligosaccharides, Propylene Glycol, Citric Acid, Disodium EDTA, Cetrimonium Bromide, Parfum"
+  },
+  {
+   "id": "bioderma-dry",
+   "name": "میسلار واتر بایودرما Sensibio H2O پوست حساس",
+   "en": "Bioderma Sensibio H2O Micellar Water · 250 ml",
+   "cat": "میسلار واتر",
+   "role": "micellar",
+   "rinseOff": true,
+   "texture": "water",
+   "actives": [],
+   "claims": [
+    "sensitive",
+    "all"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.bioderma.jp/products/sensibio-h2o",
+    "https://well.ca/products/bioderma-sensibio-h2o-micellar-water_334280.html"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Aqua/Water/Eau, PEG-6 Caprylic/Capric Glycerides, Fructooligosaccharides, Mannitol, Xylitol, Rhamnose, Cucumis Sativus (Cucumber) Fruit Extract, Propylene Glycol, Cetrimonium Bromide, Disodium EDTA"
+  },
+  {
+   "id": "garnier-dry",
+   "name": "میسلار واتر گارنیه پوست خشک",
+   "en": "Garnier Micellar Cleansing Water — Dry & Sensitive Skin",
+   "cat": "میسلار واتر",
+   "role": "micellar",
+   "rinseOff": true,
+   "texture": "water",
+   "actives": [],
+   "claims": [
+    "dry",
+    "sensitive"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.garnier.no/hudpleie/micellar/cleansing-water-for-dry-skin",
+    "https://inkeedecoder.com/products/garnier-skin-active-micellar-cleansing-water-dry-sensitive-skin"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Aqua/Water, Glycerin, Hexylene Glycol, Poloxamer 184, Disodium Cocoamphodiacetate, Disodium EDTA",
+   "note": "برچسب پوست خشک دارد ولی فرمول ساده و بدون روغن است؛ برای پوست چرب منع ندارد"
+  },
+  {
+   "id": "avene-oil",
+   "name": "ژل شستشوی کنترل چربی اون",
+   "en": "Avène Cleanance Cleansing Gel · 400 ml",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "gel",
+   "actives": [],
+   "claims": [
+    "oily",
+    "acne",
+    "sensitive"
+   ],
+   "flags": [
+    "fragrance"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.eau-thermale-avene.ca/en_ca/p/cleanance-cleansing-gel-3282770207774-69716462",
+    "https://well.ca/products/avene-cleanance-cleansing-gel_312749.html"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Avene Thermal Spring Water (Avene Aqua), Water (Aqua), Zinc Coceth Sulfate, Lauryl Betaine, Decyl Glucoside, Ceteareth-60 Myristyl Glycol, PEG-7 Glyceryl Cocoate, Polysorbate 20, Citric Acid, Fragrance (Parfum), Green 5 (CI 61570), Isopropyl Alcohol, PEG-40 Hydrogenated Castor Oil, PEG-6, PPG-26-Buteth-26, Silybum Marianum Fruit Extract, Sodium Benzoate, Sodium Chloride, Sodium Hydroxide, Trisodium Ethylenediamine Disuccinate, Yellow 5 (CI 19140), Zinc Gluconate"
+  },
+  {
+   "id": "centella-teatree",
+   "name": "فوم شستشوی درخت چای سنتلا",
+   "en": "SKIN1004 Tea-Trica BHA Foam",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [
+    {
+     "cls": "BHA",
+     "name": "Salicylic Acid",
+     "pct": 0.45,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "oily",
+    "combination"
+   ],
+   "flags": [
+    "essential_oil",
+    "soap_base"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.skin1004.com/products/tea-trica-bha-foam",
+    "https://dermfnd.org/p/skin1004-tea-trica-bha-foam/"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Myristic Acid, Glycerin, Potassium Hydroxide, Stearic Acid, Glyceryl Monostearate, Propanediol, Lauryl Hydroxysultaine, Palmitic Acid, Sodium C14-16 Olefin Sulfonate, Potassium Benzoate, Salicylic Acid, Butylene Glycol, Sorbitol, 1,2-Hexanediol, Sodium Chloride, Centella Asiatica Extract, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Melaleuca Alternifolia Leaf Oil, Cetearyl Alcohol, Melaleuca Alternifolia (Tea Tree) Leaf Water, Melia Azadirachta Leaf Extract, Hydrogenated Polydecene, Arachidic Acid, Lauric Acid, Sodium Citrate, Melia Azadirachta Flower Extract, Trisodium Ethylenediamine Disuccinate, Oleic Acid, Theobroma Cacao Seed Extract, Dextrin, Citric Acid, Disodium EDTA, Pentylene Glycol, Caprylyl Glycol, Chamaecyparis Obtusa Water, Pinus Palustris Leaf Extract"
+  },
+  {
+   "id": "cerave-acne",
+   "name": "ژل شستشوی ضدجوش سراوی مدل Acne Control Cleanser",
+   "en": "CeraVe Acne Control Cleanser",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "gel-foam",
+   "actives": [
+    {
+     "cls": "BHA",
+     "name": "Salicylic Acid",
+     "pct": 2,
+     "declared": true
+    },
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    },
+    {
+     "cls": "PHA",
+     "name": "Gluconolactone"
+    },
+    {
+     "cls": "CERAMIDE",
+     "name": "Ceramides NP/AP/EOP"
+    }
+   ],
+   "claims": [
+    "oily",
+    "acne"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.cerave.ca/en-ca/skincare/cleansers/acne-control-cleanser"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Salicylic Acid 2%; Aqua/Water/Eau, Cocamidopropyl Hydroxysultaine, Glycerin, Sodium Lauroyl Sarcosinate, Niacinamide, Sodium Methyl Cocoyl Taurate, PEG-150 Pentaerythrityl Tetrastearate, Gluconolactone, Sodium Cocoyl Isethionate, Ceramide NP, Ceramide AP, Ceramide EOP, Carbomer, Calcium Gluconate, Triethyl Citrate, Sodium Hydroxide, Sodium Benzoate, Sodium Chloride, Sodium Lauroyl Lactylate, Cholesterol, Coconut Acid, Tetrasodium EDTA, Caprylyl Glycol, Hydrolyzed Hyaluronic Acid, Trisodium Ethylenediamine Disuccinate, Hectorite, Phytosphingosine, Xanthan Gum, Acrylates Copolymer, Benzoic Acid"
+  },
+  {
+   "id": "anua-rice-powder",
+   "name": "پودر شستشو و روشن‌کننده سرامید و برنج انوا",
+   "en": "Anua Rice Enzyme Brightening Cleansing Powder",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "powder",
+   "actives": [
+    {
+     "cls": "ENZYME",
+     "name": "Papain/Protease"
+    },
+    {
+     "cls": "ARBUTIN",
+     "name": "Alpha-Arbutin"
+    }
+   ],
+   "claims": [
+    "all"
+   ],
+   "flags": [
+    "enzyme_exfoliant"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://anua.com/products/rice-enzyme-brightening-cleansing-powder",
+    "https://skinsort.com/products/anua/rice-enzyme-brightening-cleansing-powder"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Zea Mays Starch, CI 77004, Sodium Bicarbonate, Sodium Cocoyl Isethionate, Sodium Lauroyl Glutamate, Citric Acid, Sodium Polyacrylate, Diglycerin, Allantoin, Water, Maltodextrin, Papain, Oryza Sativa Powder, Oryza Sativa Lees Extract, Oryza Sativa Bran Water, Butylene Glycol, 1,2-Hexanediol, Ceramide NP, Ascorbic Acid, Alpha-Arbutin, Glucose, Oryza Sativa Extract, Protease, Dipropylene Glycol, Glycerin, Tartaric Acid, Lactic Acid, Oryza Sativa Seed Protein, Hydrolyzed Rice Protein, Caprylyl Glycol"
+  },
+  {
+   "id": "skin1004-pore-foam",
+   "name": "فوم شستشوی عمیق منافذ سنتلا",
+   "en": "SKIN1004 Poremizing Deep Cleansing Foam",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [
+    {
+     "cls": "ENZYME",
+     "name": "Papain"
+    }
+   ],
+   "claims": [
+    "oily",
+    "combination"
+   ],
+   "flags": [
+    "essential_oil",
+    "soap_base"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.skin1004.com/products/poremizing-deep-cleansing-foam",
+    "https://skinsort.com/products/skin-1004/madagascar-centella-poremizing-deep-cleansing-foam"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Myristic Acid, Glycerin, Potassium Hydroxide, Stearic Acid, Glyceryl Stearate, Palmitic Acid, Cocamidopropyl Betaine, Sodium C14-16 Olefin Sulfonate, Butylene Glycol, Glucose, 1,2-Hexanediol, Sodium Chloride, Centella Asiatica Extract, Sorbitol, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Rosmarinus Officinalis Leaf Oil, Cetearyl Alcohol, Potassium Benzoate, Polyquaternium-67, Papain, Hydrogenated Polydecene, Arachidic Acid, Lauric Acid, Aloe Barbadensis Leaf Extract, Sodium Citrate, Propanediol, Citrus Limon Fruit Extract, Pyrus Malus Fruit Extract, Vinegar, Coccinia Indica Fruit Extract, Eclipta Prostrata Extract, Trisodium Ethylenediamine Disuccinate, Oleic Acid, CI 77004, Mineral Salts, Citric Acid, Oenothera Biennis Flower Extract, Pueraria Lobata Root Extract, Pinus Palustris Leaf Extract, Ulmus Davidiana Root Extract, Disodium EDTA"
+  },
+  {
+   "id": "cerave-sa",
+   "name": "ژل شستشوی سالیسیلیک اسید سراوی Renewing SA",
+   "en": "CeraVe Renewing SA Cleanser",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "gel",
+   "actives": [
+    {
+     "cls": "BHA",
+     "name": "Salicylic Acid"
+    },
+    {
+     "cls": "PHA",
+     "name": "Gluconolactone"
+    },
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    },
+    {
+     "cls": "CERAMIDE",
+     "name": "Ceramides NP/AP/EOP"
+    }
+   ],
+   "claims": [
+    "normal",
+    "rough_texture"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://incidecoder.com/products/cerave-renewing-sa-cleanser",
+    "https://www.cvs.com/shop/ingredients/cerave-renewing-sa-cleanser-16-oz-prodid-1140127"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Aqua/Water/Eau, Cocamidopropyl Hydroxysultaine, Glycerin, Sodium Lauroyl Sarcosinate, Niacinamide, Gluconolactone, PEG-150 Pentaerythrityl Tetrastearate, Sodium Methyl Cocoyl Taurate, Zea Mays Oil/Corn Oil, Ceramide NP, Ceramide AP, Ceramide EOP, Carbomer, Calcium Gluconate, Sodium Chloride, Salicylic Acid, Sodium Benzoate, Sodium Lauroyl Lactylate, Cholecalciferol, Cholesterol, Phenoxyethanol, Disodium EDTA, Tetrasodium EDTA, Hydrolyzed Hyaluronic Acid, Phytosphingosine, Xanthan Gum, Ethylhexylglycerin"
+  },
+  {
+   "id": "permancy-sensitive",
+   "name": "فوم شستشوی پوست آسیب‌دیده و حساس پرمانسی",
+   "en": "Permancy Repair Cleansing Foam · Damaged Skin · 150 ml",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [],
+   "claims": [
+    "sensitive",
+    "damaged"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام محصول: شوینده ترمیمی برای پوست آسیب‌دیده و حساس؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "anua-oily-cleanser",
+   "name": "فوم شستشوی عمیق منافذ انوا Heartleaf + BHA",
+   "en": "Anua Heartleaf Quercetinol Pore Deep Cleansing Foam",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [
+    {
+     "cls": "BHA",
+     "name": "Betaine Salicylate + Capryloyl Salicylic Acid"
+    }
+   ],
+   "claims": [
+    "oily",
+    "pores"
+   ],
+   "flags": [
+    "essential_oil"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://anua.com/products/heartleaf-quercetinol-pore-deep-cleansing-foam",
+    "https://skinsort.com/products/anua/heartleaf-quercetinol-pore-deep-cleansing-foam"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Houttuynia Cordata Flower/Leaf/Stem Water, Glycerin, Sodium Cocoyl Glycinate, Water, Sodium Lauroyl Glutamate, Disodium Cocoamphodiacetate, Coco-Glucoside, Decyl Glucoside, Hectorite, Sodium Chloride, 1,2-Hexanediol, Betaine Salicylate, Potassium Benzoate, Houttuynia Cordata Powder, Polyquaternium-67, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Butylene Glycol, Gardenia Florida Fruit Extract, Dextrin, Disodium EDTA, Eucalyptus Globulus Leaf Oil, Ethylhexylglycerin, Sodium Acetate, Isopropyl Alcohol, Pinus Palustris Leaf Extract, Ulmus Davidiana Root Extract, Oenothera Biennis Flower Extract, Pueraria Lobata Root Extract, Pentylene Glycol, Capryloyl Salicylic Acid, Tocopherol, Hydrolyzed Hyaluronic Acid, Hyaluronic Acid, Hydrolyzed Sodium Hyaluronate, Sodium Hyaluronate, Potassium Hyaluronate, Hydroxypropyltrimonium Hyaluronate, Sodium Hyaluronate Crosspolymer, Sodium Acetylated Hyaluronate, Quercetin"
+  },
+  {
+   "id": "dr-althea-aqua",
+   "name": "کرم آبرسان دکتر آلتیا Aqua Marine Watery Cream",
+   "en": "Dr. Althea Aqua Marine Watery Cream",
+   "cat": "آبرسان",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "watery-cream",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hyaluronic Acid"
+    },
+    {
+     "cls": "HUMECTANT",
+     "name": "Panthenol"
+    }
+   ],
+   "claims": [
+    "all",
+    "oily"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.skincarisma.com/products/dr-althea/aqua-marine-watery-cream/ingredient_list",
+    "https://www.vitacost.com/products/dr-althea-aqua-marine-watery-cream-for-all-skin-types-1-69-fl-oz-50-ml-156780"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Bambusa Vulgaris Water, 1,2-Hexanediol, Propanediol, Water, Glycerin, Hydrogenated Polydecene, C14-22 Alcohols, C12-20 Alkyl Glucoside, Caprylic/Capric Triglyceride, Codium Fragile Extract, Palmaria Palmata Extract, Chondrus Crispus Extract, Sargassum Pallidum Extract, Butylene Glycol, Hyaluronic Acid, Hydrolyzed Hyaluronic Acid, Sodium Hyaluronate, Panthenol, Vinyldimethicone, Cetyl Alcohol, Carbomer, Tromethamine, Sodium DNA, Hydrogenated Lecithin, Dextrin, Gardenia Florida Fruit Extract, Polyglutamic Acid, Hydrolyzed Sodium Hyaluronate, Hydroxypropyltrimonium Hyaluronate, Potassium Hyaluronate, Sodium Hyaluronate Crosspolymer, Pentylene Glycol, Sodium Acetylated Hyaluronate, Guaiazulene, Agave Tequilana Leaf Extract, Sodium Retinoyl Hyaluronate, Zinc Hydrolyzed Hyaluronate, Dimethylsilanol Hyaluronate, Sodium Benzoate, Ascorbyl Propyl Hyaluronate, Caulerpa Lentillifera Extract, Ethylhexylglycerin, Disodium EDTA"
+  },
+  {
+   "id": "vichy-89",
+   "name": "سرم مینرال ۸۹ ویشی",
+   "en": "Vichy Minéral 89",
+   "cat": "آبرسان",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "gel-serum",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Sodium Hyaluronate"
+    }
+   ],
+   "claims": [
+    "all",
+    "sensitive"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://www.vichyusa.com/skin-care/skin-care-product-type/face-serum/mineral-89-hyaluronic-acid-serum-3337875543248.html",
+    "https://skinsort.com/products/vichy/mineral-89-hyaluronic-acid-face-serum-for-stronger-skin"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Propanediol, Glycerin, PEG/PPG/Polybutylene Glycol-8/5/3 Glycerin, Methyl Gluceth-20, Citric Acid, Hydroxyacetophenone, Sodium Hyaluronate, Biosaccharide Gum-1, Butylene Glycol, Caprylyl Glycol, Carbomer, Maltodextrin",
+   "note": "فهرست نسخه فرانسه؛ نسخه‌های قدیمی‌تر آب معدنی ویشی در صدر فهرست داشتند"
+  },
+  {
+   "id": "dr-althea-345",
+   "name": "کرم ۳۴۵ دکتر التیا",
+   "en": "Dr. Althea 345 Relief Cream",
+   "cat": "مرطوب‌کننده",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "light-cream",
+   "actives": [
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    },
+    {
+     "cls": "HUMECTANT",
+     "name": "Panthenol"
+    },
+    {
+     "cls": "CERAMIDE",
+     "name": "Ceramide NP"
+    },
+    {
+     "cls": "SOOTHING",
+     "name": "Madecassoside"
+    }
+   ],
+   "claims": [
+    "all",
+    "sensitive"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://doctoraltheaglobal.com/products/345-relief-cream",
+    "https://ws.iherb.com/pr/dr-althea-345-relief-cream-for-all-skin-types-1-69-fl-oz-50-ml/160012"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Melaleuca Alternifolia (Tea Tree) Leaf Water, Propanediol, Glycerin, 1,2-Hexanediol, Hydrogenated Polydecene, Vinyl Dimethicone, C14-22 Alcohols, Caprylic/Capric Triglyceride, Niacinamide, Panthenol, Dicaprylyl Carbonate, Butylene Glycol, Ammonium Acryloyldimethyltaurate/VP Copolymer, Caprylyl Methicone, Polymethylsilsesquioxane, C12-20 Alkyl Glucoside, Hydroxyacetophenone, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Polyquaternium-51, Ethylhexylglycerin, Tromethamine, Sodium Hyaluronate, Sodium Stearoyl Glutamate, Coptis Japonica Root Extract, Centella Asiatica Leaf Water, Beta-Glucan, Resveratrol, Hydrolyzed Hyaluronic Acid, Camellia Sinensis Leaf Water, Tocopherol, Madecassoside, Sodium DNA, Centella Asiatica Extract, Ceramide NP, Tannic Acid, Disodium EDTA, Sodium Phytate"
+  },
+  {
+   "id": "dr-althea-147",
+   "name": "کرم ۱۴۷ دکتر آلتیا",
+   "en": "Dr. Althea 147 Barrier Cream",
+   "cat": "مرطوب‌کننده",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "CERAMIDE",
+     "name": "Ceramides + Cholesterol"
+    },
+    {
+     "cls": "HUMECTANT",
+     "name": "Hyaluronic Acid"
+    }
+   ],
+   "claims": [
+    "dry",
+    "damaged"
+   ],
+   "flags": [
+    "rich_oils"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://doctoraltheaglobal.com/products/dralthea-147_barrier_cream",
+    "https://skinsort.com/products/dr-althea/147-barrier-cream/south-korea"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Glycerin, Dipropylene Glycol, Cetearyl Alcohol, Caprylic/Capric Triglyceride, Methyl Trimethicone, Hydrogenated Polydecene, 1,2-Hexanediol, Phenyl Trimethicone, Vegetable Oil, Dimethicone/Vinyl Dimethicone Crosspolymer, Glyceryl Stearate SE, Coptis Japonica Root Extract, Artemisia Princeps Leaf Extract, Persea Gratissima Fruit Extract, Brassica Oleracea Acephala Leaf Extract, Hydrolyzed Gardenia Florida Extract, Paeonia Albiflora Flower Extract, Hydrogenated Lecithin, Sodium Hyaluronate, Cetearyl Olivate, Palmitic Acid, Sorbitan Olivate, C12-16 Alcohols, Behenyl Alcohol, Stearic Acid, Microcrystalline Cellulose, Cetearyl Glucoside, Butylene Glycol, Ethylhexylglycerin, Ammonium Acryloyldimethyltaurate/VP Copolymer, Polyglyceryl-10 Myristate, Glyceryl Polymethacrylate, Cellulose Gum, Cholesterol, Ceramide NP, Disodium EDTA, Glyceryl Stearate, Methylpropanediol, Maltodextrin, Guaiazulene, Ceramide AS, Ceramide AP, Arginine, Carbomer, Ceramide NS, Ceramide NG, Tocopherol, Dimethylsilanol Hyaluronate, Hydrolyzed Sodium Hyaluronate, Hydrolyzed Hyaluronic Acid, Potassium Hyaluronate, Hyaluronic Acid, Sodium Hyaluronate Crosspolymer, Hydroxypropyltrimonium Hyaluronate, Sodium Hyaluronate Dimethylsilanol, Sodium Acetylated Hyaluronate, Ceramide EOP"
+  },
+  {
+   "id": "anaparla-hydrodermie",
+   "name": "هیدروژل هیدرودرمی هیالوسراماید آناپارلا ۴۰۰ میل",
+   "en": "anaparla Hyaluceramide Hydrodermic Hydrogel 400 ml",
+   "cat": "مرطوب‌کننده",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "gel",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hyaluronic Acid"
+    },
+    {
+     "cls": "CERAMIDE",
+     "name": "Ceramide"
+    }
+   ],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام محصول: هیدروژل هیالورونیک و سرامید؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "numbuzin-sun",
+   "name": "اسنس ضدآفتاب نامبوزین شماره ۹+",
+   "en": "Numbuzin No.9+ NAD+ Peptide Dewy Sun Essence SPF50+ PA++++ · 50 ml",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "light-cream",
+   "actives": [
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    }
+   ],
+   "claims": [
+    "dry",
+    "mature",
+    "all"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://peachesandcremeshop.com/products/no-9-nad-9-peptides-dewy-sun-essence-spf50-pa"
+   ],
+   "checked": "2026-10-13",
+   "finish": "dewy",
+   "spf": 50,
+   "filters": "chemical",
+   "inci": "Water, Dibutyl Adipate, 2,3-Butanediol, Ethylhexyl Triazone, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Niacinamide, Drometrizole Trisiloxane, Terephthalylidene Dicamphor Sulfonic Acid, 1,2-Hexanediol, Behenyl Alcohol, Vinyl Dimethicone, Arachidyl Alcohol, Caprylyl Methicone, Diethylhexyl Butamido Triazone, Diisopropyl Sebacate, Tromethamine, Arachidyl Glucoside, Methyl Methacrylate Crosspolymer, Vinyl Dimethicone/Methicone Silsesquioxane Crosspolymer, Cetearyl Alcohol, Sodium Polyacryloyldimethyl Taurate, Polyacrylate Crosspolymer-6, Sodium Stearoyl Glutamate, Allantoin, C30-45 Alkyl Cetearyl Dimethicone Crosspolymer, Stearyl Alcohol, Ethylhexylglycerin, Xanthan Gum, Panthenol, Adenosine, Hydrolyzed Hyaluronic Acid, Pentylene Glycol, Glycerin, Hydrogenated Lecithin, Polyglyceryl-10 Oleate, Centella Asiatica Extract, Nicotinamide Adenine Dinucleotide, Soluble Collagen, Mannose, Copper Tripeptide-1, Palmitoyl Tripeptide-1, Acetyl Hexapeptide-8, Tripeptide-1, Palmitoyl Pentapeptide-4, Oligopeptide-6, Acetyl Octapeptide-3, Tripeptide-2, Tripeptide-3, Palmitoyl Tetrapeptide-7",
+   "note": "فروشنده آن را برای همه پوست‌ها و به‌ویژه پوست خشک و بالغ معرفی کرده و پایان براق (dewy) دارد"
+  },
+  {
+   "id": "tocobo-stick",
+   "name": "ضد آفتاب استیکی توکوبو Cotton Airy",
+   "en": "TOCOBO Cotton Airy Sun Stick",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "stick",
+   "actives": [],
+   "claims": [
+    "oily",
+    "sensitive"
+   ],
+   "flags": [
+    "fragrance",
+    "waxy_base"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://incidecoder.com/products/tocobo-cotton-soft-airy-sun-stick-spf50-pa"
+   ],
+   "checked": "2026-10-13",
+   "finish": "matte",
+   "spf": 50,
+   "filters": "hybrid",
+   "inci": "Synthetic Wax, Dibutyl Adipate, Butylene Glycol Dicaprylate/Dicaprate, Octocrylene, Methyl Methacrylate Crosspolymer, Vinyl Dimethicone/Methicone Silsesquioxane Crosspolymer, Ethylhexyl Methoxycinnamate, Dicaprylyl Carbonate, Cetyl Ethylhexanoate, Silica, Ethylhexyl Salicylate, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Bis-Ethylhexyloxyphenol Methoxyphenyl Triazine, Tocopheryl Acetate, Ozokerite, Melia Azadirachta Leaf Extract, Melia Azadirachta Flower Extract, Coccinia Indica Fruit Extract, Solanum Melongena (Eggplant) Fruit Extract, Aloe Barbadensis Flower Extract, Cardiospermum Halicacabum Flower/Leaf/Vine Extract, Curcuma Longa (Turmeric) Root Extract, Corallina Officinalis Extract, Ocimum Sanctum Leaf Extract, Gossypium Herbaceum (Cotton) Extract, Sophora Flavescens Root Extract, Rheum Palmatum Root/Stalk Extract, Scutellaria Baicalensis Root Extract, Phellodendron Amurense Bark Extract, Oenothera Biennis (Evening Primrose) Flower Extract, Ulmus Davidiana Root Extract, Pinus Palustris Leaf Extract, Pueraria Lobata Root Extract, Echium Plantagineum Seed Oil, Simmondsia Chinensis (Jojoba) Seed Oil, Caprylyl Glycol, Bisabolol, Triethoxycaprylylsilane, Titanium Dioxide, Polyglyceryl-2 Triisostearate, Octyldodecanol, Polyglyceryl-4 Diisostearate/Polyhydroxystearate/Sebacate, Helianthus Annuus (Sunflower) Seed Oil Unsaponifiables, Tocopherol, Purified Water, Butylene Glycol, 1,2-Hexanediol, Fragrance",
+   "note": "کاتالوگ Cotton Airy نوشته؛ فهرست مربوط به Cotton Soft Airy Sun Stick است و نسخه دقیق باید روی بسته تطبیق شود"
+  },
+  {
+   "id": "boj-relief",
+   "name": "کرم ضد آفتاب بیوتی آف جوسان",
+   "en": "Beauty of Joseon Relief Sun",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    }
+   ],
+   "claims": [
+    "dry"
+   ],
+   "flags": [
+    "moisture_rich"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://beautyofjoseon.com/products/relief-sun-rice-probiotics-spf50-pa",
+    "https://incidecoder.com/products/beauty-of-joseon-relief-sun-rice-probiotics-spf50-pa-2022"
+   ],
+   "checked": "2026-10-13",
+   "finish": "natural",
+   "spf": 50,
+   "filters": "chemical",
+   "inci": "Aqua, Dibutyl Adipate, Propanediol, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Polymethylsilsesquioxane, Ethylhexyl Triazone, Methylene Bis-Benzotriazolyl Tetramethylbutylphenol (Nano), Niacinamide, Coco-Caprylate/Caprate, Caprylyl Methicone, Diethylhexyl Butamido Triazone, Glycerin, 1,2-Hexanediol, Butylene Glycol, Pentylene Glycol, Behenyl Alcohol, Poly C10-30 Alkyl Acrylate, Polyglyceryl-3 Methylglucose Distearate, Decyl Glucoside, Oryza Sativa Extract, Tromethamine, Carbomer, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Sodium Stearoyl Glutamate, Polyacrylate Crosspolymer-6, Ethylhexylglycerin, Adenosine, Xanthan Gum, T-Butyl Alcohol, Tocopherol, Oryza Sativa Germ Extract, Camellia Sinensis Leaf Extract, Aspergillus Ferment, Bacillus/Soybean Ferment Extract, Cocos Nucifera Fruit Extract, Lactobacillus/Pumpkin Ferment Extract, Macrocystis Pyrifera Extract, Monascus/Rice Ferment, Panax Ginseng Root Extract, Saccharomyces/Rice Ferment Filtrate, Saccharum Officinarum Extract",
+   "note": "برند آن را ضدآفتاب کرمی و مرطوب‌کننده معرفی می‌کند که پوست خشک را تغذیه می‌کند؛ نسخه سبک‌تر همین برند Aqua-Fresh است"
+  },
+  {
+   "id": "boj-rice-bright",
+   "name": "ضد آفتاب سبک بیوتی آف جوسان Aqua-Fresh Rice + B5",
+   "en": "Beauty of Joseon Relief Sun Aqua-Fresh Rice + B5 SPF50+ PA++++",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "light-fluid",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Panthenol"
+    }
+   ],
+   "claims": [
+    "all",
+    "oily"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://inkeedecoder.com/products/beauty-of-joseon-relief-sun-aqua-fresh-rice-b5-spf50-pa",
+    "https://skinsort.com/products/beauty-of-joseon/relief-sun-aqua-fresh-rice-b5-spf-50-pa"
+   ],
+   "checked": "2026-10-13",
+   "finish": "natural",
+   "spf": 50,
+   "filters": "chemical",
+   "inci": "Water, Oryza Sativa (Rice) Seed Water, Dibutyl Adipate, Butyloctyl Salicylate, Ethylhexyl Triazone, Drometrizole Trisiloxane, Polyglyceryl-3 Distearate, Terephthalylidene Dicamphor Sulfonic Acid, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Polymethylsilsesquioxane, Tromethamine, 1,2-Hexanediol, Panthenol, Pentylene Glycol, Glyceryl Stearate, Silica, Caprylyl Methicone, Bis-Ethylhexyloxyphenol Methoxyphenyl Triazine, Propanediol, Potassium Cetyl Phosphate, Poly C10-30 Alkyl Acrylate, Methylpropanediol, Carbomer, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Ethylhexylglycerin, Xanthan Gum, Glycerin, Polyether-1, Avena Sativa (Oat) Kernel Extract, Cynara Scolymus (Artichoke) Leaf Extract, Polyquaternium-51, Camellia Sinensis Leaf Water, Hydrogenated Lecithin, Beta-Glucan, Biosaccharide Gum-1, Inositol, Tocopherol, Ferulic Acid, Oryza Sativa (Rice) Bran Oil, Citric Acid, Ceramide NP, Phytosphingosine, Sodium Hyaluronate, Rice Amino Acids, Rice SH-Oligopeptide-1",
+   "note": "توصیف رسمی: ضدآفتاب سبک با پایان آبرسان و غیرچرب"
+  },
+  {
+   "id": "skin1004-hyalucica",
+   "name": "سرم ضد آفتاب هیالوسیکا سنتلا",
+   "en": "SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum SPF50+ PA++++ · 50 ml",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    },
+    {
+     "cls": "SOOTHING",
+     "name": "Centella Asiatica Extract"
+    }
+   ],
+   "claims": [
+    "all",
+    "oily"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://incidecoder.com/products/skin1004-madagascar-centella-hyalu-cica-water-fit-sun-serum-spf50-pa"
+   ],
+   "checked": "2026-10-13",
+   "finish": "natural",
+   "spf": 50,
+   "filters": "chemical",
+   "inci": "Water, Dibutyl Adipate, Propanediol, Diethylamino Hydroxybenzoyl Hexyl Benzoate, Polymethylsilsesquioxane, Ethylhexyl Triazone, Methylene Bis-Benzotriazolyl Tetramethylbutylphenol, Niacinamide, Coco-Caprylate/Caprate, Caprylyl Methicone, Diethylhexyl Butamido Triazone, Glycerin, 1,2-Hexanediol, Butylene Glycol, Centella Asiatica Extract, Betula Platyphylla Japonica Bark Extract, Ginkgo Biloba Leaf Extract, Camellia Sinensis Leaf Extract, Triticum Vulgare (Wheat) Sprout Extract, Medicago Sativa (Alfalfa) Extract, Brassica Oleracea Italica (Broccoli) Sprout Extract, Eruca Sativa Leaf Extract, Camellia Japonica Leaf Extract, Sodium Hyaluronate, Behenyl Alcohol, Poly C10-30 Alkyl Acrylate, Polyglyceryl-3 Methylglucose Distearate, Decyl Glucoside, Tromethamine, Carbomer, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Sodium Stearoyl Glutamate, Polyacrylate Crosspolymer-6, Adenosine, Xanthan Gum, T-Butyl Alcohol, Tocopherol, Hydrolyzed Hyaluronic Acid, Inositol, Hyaluronic Acid, Pentylene Glycol, Ethylhexylglycerin"
+  },
+  {
+   "id": "brightmax-physical",
+   "name": "ضد آفتاب فیزیکال بی‌رنگ برایت مکس SPF50",
+   "en": "Bright Max Tone-Bright Physical Sunscreen SPF50 — Colorless",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [
+    "white_cast_possible"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "filters": "mineral",
+   "note": "از نام محصول: ضدآفتاب فیزیکال بی‌رنگ SPF50؛ همان کالای brightmax-tone-physical است و فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "anua-heartleaf",
+   "name": "تونر آبرسان و تسکین‌دهنده انوا",
+   "en": "Anua Heartleaf 77 Soothing Toner",
+   "cat": "تونر",
+   "role": "toner",
+   "rinseOff": false,
+   "texture": "water",
+   "actives": [
+    {
+     "cls": "SOOTHING",
+     "name": "Houttuynia Cordata Extract 77%",
+     "pct": 77,
+     "declared": true
+    },
+    {
+     "cls": "HUMECTANT",
+     "name": "Panthenol"
+    }
+   ],
+   "claims": [
+    "all",
+    "sensitive"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://anua.com/products/heartleaf-77-soothing-toner",
+    "https://skinsider.co.uk/anua-heartleaf-77-soothing-toner/"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Houttuynia Cordata Extract (77%), Water, 1,2-Hexanediol, Glycerin, Betaine, Panthenol, Saccharum Officinarum Extract, Portulaca Oleracea Extract, Butylene Glycol, Vitex Agnus-Castus Extract, Chamomilla Recutita Flower Extract, Arctium Lappa Root Extract, Phellinus Linteus Extract, Vitis Vinifera Fruit Extract, Pyrus Malus Fruit Extract, Centella Asiatica Extract, Isopentyldiol, Methylpropanediol, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Tromethamine, Disodium EDTA"
+  },
+  {
+   "id": "medik8-toner",
+   "name": "تونر آزالئیک اسید و نیاسینامید مدیکیوب",
+   "en": "Medicube Azelaic Acid Niacinamide Clarifying Toner",
+   "cat": "تونر",
+   "role": "toner",
+   "rinseOff": false,
+   "texture": "water",
+   "actives": [
+    {
+     "cls": "AZELAIC",
+     "name": "Azelaic Acid"
+    },
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    }
+   ],
+   "claims": [
+    "oily",
+    "acne"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://medicube.us/products/azelaic-acid-niacinamide-clarifying-toner",
+    "https://skinsort.com/products/medicube/azelaic-acid-niacinamide-clear-toner"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Propylene Glycol, Azelaic Acid, Niacinamide, Sodium Hydroxide, 1,2-Hexanediol, Diethoxyethyl Succinate, Trehalose, C12-14 Alketh-12, Ethylhexylglycerin, Melia Azadirachta Leaf Extract, Melia Azadirachta Flower Extract, Coccinia Indica Fruit Extract, Solanum Melongena Fruit Extract, Aloe Barbadensis Flower Extract, Curcuma Longa Root Extract, Ocimum Sanctum Leaf Extract, Coriandrum Sativum Leaf Extract, Citrullus Lanatus Fruit Extract, Cucumis Sativus Fruit Extract, Camellia Sinensis Leaf Extract, Lavandula Angustifolia Extract, Rosmarinus Officinalis Leaf Extract, Chamomilla Recutita Flower Extract, Chrysanthemum Morifolium Flower Extract, Dipotassium Glycyrrhizate, Panthenol, Glyceryl Caprylate, Caprylyl Glycol, Glycerin, Butylene Glycol, Hydrogenated Lecithin, Glycine, Caprylic/Capric Triglyceride, Hydrogenated Phosphatidylcholine, Serine, Glutamic Acid, Centella Asiatica Extract, Sodium Hyaluronate, Sucrose Stearate, Aloe Barbadensis Leaf Extract, Aspartic Acid, Leucine, Cetearyl Alcohol, Polyglyceryl-10 Stearate, Alanine, Lysine, Ceramide NP, Arginine, Tyrosine, Phenylalanine, Valine, Threonine, Proline, Isoleucine, Histidine, Methionine, Pyrus Malus Seed Extract, Ziziphus Jujuba Fruit Extract, Prunus Armeniaca Fruit Extract, Citrus Limon Fruit Extract, Hamamelis Virginiana Bark/Leaf Extract, Hippophae Rhamnoides Extract, Ceramide AP, Citrus Aurantium Dulcis Fruit Extract, Citrus Paradisi Seed Extract, Madecassoside, Madecassic Acid, Asiaticoside, Asiatic Acid",
+   "note": "شناسه کاتالوگ medik8-toner است ولی محصول مدیکیوب است؛ درصد آزلائیک در فهرست اعلام نشده"
+  },
+  {
+   "id": "clarins-double",
+   "name": "سرم ضد چروک کلارنس مدل Double Serum",
+   "en": "Clarins Double Serum · Hydric + Lipidic System",
+   "cat": "ضد چروک",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "serum-oil",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Sodium Acetylated Hyaluronate"
+    },
+    {
+     "cls": "PEPTIDE",
+     "name": "Palmitoyl Tripeptide-1"
+    }
+   ],
+   "claims": [
+    "all",
+    "aging"
+   ],
+   "flags": [
+    "fragrance",
+    "rich_oils"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://skinsort.com/products/clarins/double-serum-complete-age-defying-concentrate"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Squalane, Hexyl Laurate, Glycerin, Pentylene Glycol, Propanediol, Silybum Marianum Seed Oil, Butylene Glycol, Ethylene/Propylene/Styrene Copolymer, Parfum, Fructose, Tromethamine, Carbomer, Hydroxyacetophenone, Avena Sativa Kernel Extract, Escin, Tocopheryl Acetate, Ethylhexylglycerin, Aloe Barbadensis Leaf Juice Powder, Sodium Acetylated Hyaluronate, Theobroma Cacao Extract, Caprylic/Capric Triglyceride, Aesculus Hippocastanum Extract, Leontopodium Alpinum Flower/Leaf Extract, Disodium EDTA, Maltodextrin, Xanthan Gum, Butylene/Ethylene/Styrene Copolymer, Curcuma Longa Root Extract, Persea Gratissima Oil Unsaponifiables, Melissa Officinalis Leaf Extract, Caramel, Hippophae Rhamnoides Kernel Extract, Sodium Lactate, Musa Sapientum Fruit Extract, Oenothera Biennis Flower/Leaf/Stem Extract, Harungana Madagascariensis Extract, Kalanchoe Pinnata Leaf Extract, Mangifera Indica Leaf Extract, Sodium Benzoate, Citric Acid, Centaurea Cyanus Flower Extract, Tocopherol, Hedychium Coronarium Root Extract, Coco-Glucoside, Pentaerythrityl Tetra-Di-T-Butyl Hydroxyhydrocinnamate, Dipsacus Sylvestris Extract, Glycine Soja Oil, Arundo Donax Stem Extract, Jania Rubens Extract, Potassium Sorbate, Sodium Citrate, Malpighia Emarginata Seed Extract, Arbutus Unedo Fruit Extract, Palmitoyl Tripeptide-1, CI 14700, Palmitoyl Tetrapeptide-7",
+   "note": "فهرست از یک منبع؛ نسخه‌های مختلف Double Serum (نسل ۸ و ۹) فرمول متفاوت دارند"
+  },
+  {
+   "id": "somebymi-retinol",
+   "name": "رتینول سام بای می",
+   "en": "SOME BY MI Retinol Intense Reactivating Serum",
+   "cat": "ضد چروک",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "light-cream",
+   "actives": [
+    {
+     "cls": "RETINOID",
+     "name": "Retinol",
+     "pct": 0.1,
+     "declared": true
+    },
+    {
+     "cls": "RETINOID",
+     "name": "Retinal"
+    },
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    },
+    {
+     "cls": "HUMECTANT",
+     "name": "Panthenol"
+    },
+    {
+     "cls": "BAKUCHIOL",
+     "name": "Bakuchiol"
+    }
+   ],
+   "claims": [
+    "aging",
+    "texture"
+   ],
+   "flags": [
+    "fragrance"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://en.somebymi.com/product/retinol-intense-reactivating-serum-30ml/303/category/380/display/1/",
+    "https://skinsort.com/products/some-by-mi/retinol-intense-reactivating-serum"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Cyclohexasiloxane, Dicaprylyl Carbonate, Glycerin, Methylpropanediol, 1,2-Hexanediol, Niacinamide, Hydrogenated Poly(C6-14 Olefin), Panthenol, Tocopheryl Acetate, Piper Methysticum Leaf/Root/Stem Extract, Centella Asiatica Extract, Panax Ginseng Berry Extract, Glycyrrhiza Glabra Root Extract, Ficus Carica Fruit Extract, Centella Asiatica Leaf Extract, Centella Asiatica Root Extract, Melaleuca Alternifolia Leaf Extract, Artemisia Capillaris Extract, Eclipta Prostrata Extract, Melia Azadirachta Leaf Extract, Elaeis Guineensis Oil, Hydrogenated Lecithin, Glyceryl Stearate, Bakuchiol, Palmitic Acid, Sodium Polyacrylate, Stearic Acid, Xanthan Gum, Retinol 0.1%, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Butylene Glycol, Dipotassium Glycyrrhizate, Adenosine, Tromethamine, Polyquaternium-51, Beta-Glucan, Cetyl Alcohol, BHT, Collagen, Myristic Acid, BHA, Leuconostoc/Radish Root Ferment Filtrate, Tocopherol, Bifida Ferment Lysate, Ceramide NP, Saccharomyces Ferment, Retinal, Asiaticoside, Glyceryl Polymethacrylate, Madecassoside, Propylene Glycol, Polyglyceryl-10 Oleate, Glycolipids, Glycine Soja Peptide, Resveratrol, Sucrose Distearate, Asiatic Acid, Madecassic Acid, Palmitoyl Tripeptide-1, Moringa Oleifera Seed Oil, PEG-100 Stearate, Polysorbate 20, Parfum, Ethylhexylglycerin",
+   "note": "BHA در این فهرست آنتی‌اکسیدان (Butylated Hydroxyanisole) است، نه بتاهیدروکسی‌اسید"
+  },
+  {
+   "id": "ordinary-azelaic",
+   "name": "ازالائیک اسید اوردینری",
+   "en": "The Ordinary Azelaic Acid Suspension 10%",
+   "cat": "ضد جوش",
+   "role": "treatment",
+   "rinseOff": false,
+   "texture": "cream-gel",
+   "actives": [
+    {
+     "cls": "AZELAIC",
+     "name": "Azelaic Acid",
+     "pct": 10,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "acne",
+    "oily",
+    "pigmentation",
+    "texture"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://theordinary.com/en-us/azelaic-acid-suspension-10-exfoliator-100407.html",
+    "https://skinsort.com/products/the-ordinary/azelaic-acid-suspension-10"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Isodecyl Neopentanoate, Dimethicone, Azelaic Acid, Dimethicone/Bis-Isobutyl PPG-20 Crosspolymer, Dimethyl Isosorbide, Hydroxyethyl Acrylate/Sodium Acryloyldimethyl Taurate Copolymer, Polysilicone-11, Isohexadecane, Tocopherol, Trisodium Ethylenediamine Disuccinate, Isoceteth-20, Polysorbate 60, Triethanolamine, Ethoxydiglycol, Phenoxyethanol, Chlorphenesin"
+  },
+  {
+   "id": "ordinary-niacinamide",
+   "name": "نیاسینامید اوردینری",
+   "en": "The Ordinary Niacinamide 10% + Zinc 1%",
+   "cat": "ضد جوش",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide",
+     "pct": 10,
+     "declared": true
+    },
+    {
+     "cls": "ZINC",
+     "name": "Zinc PCA",
+     "pct": 1,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "oily",
+    "acne"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://theordinary.com/en-us/niacinamide-10-zinc-1-serum-100436.html",
+    "https://skinsort.com/products/the-ordinary/niacinamide-10-zinc-1"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Niacinamide, Pentylene Glycol, Zinc PCA, Dimethyl Isosorbide, Tamarindus Indica Seed Gum, Xanthan Gum, Isoceteth-20, Ethoxydiglycol, Phenoxyethanol, Chlorphenesin"
+  },
+  {
+   "id": "ordinary-salicylic",
+   "name": "سرم ضد جوش سالیسیلیک اسید ۲٪ اوردینری",
+   "en": "The Ordinary Salicylic Acid 2% Solution",
+   "cat": "ضد جوش",
+   "role": "treatment",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "BHA",
+     "name": "Salicylic Acid",
+     "pct": 2,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "acne",
+    "oily"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://theordinary.com/en-us/salicylic-acid-2-solution-exfoliator-100442.html",
+    "https://skinsort.com/products/the-ordinary/salicylic-acid-2-solution"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Salicylic Acid, Cocamidopropyl Dimethylamine, Hydroxyethylcellulose, Polysorbate 20, Saccharide Isomerate, Sodium Hydroxide, Citric Acid, Sodium Citrate, Phenoxyethanol, Chlorphenesin",
+   "note": "ترتیب فهرست از منبع ثانویه بازسازی شده؛ درصد ۲٪ اعلام برند است"
+  },
+  {
+   "id": "axisy-ahabha",
+   "name": "درمان موضعی ضدجوش و لک اکسیس وای Spot The Difference",
+   "en": "AXIS-Y AHA+BHA · exact product awaiting confirmation",
+   "cat": "ضد لک",
+   "role": "spot",
+   "rinseOff": false,
+   "texture": "gel",
+   "actives": [
+    {
+     "cls": "BHA",
+     "name": "Salicylic Acid"
+    },
+    {
+     "cls": "AHA",
+     "name": "Glycolic Acid"
+    },
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    }
+   ],
+   "claims": [
+    "acne"
+   ],
+   "flags": [
+    "essential_oil",
+    "variant_unconfirmed"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://skinsort.com/products/axis-y/spot-the-difference-blemish-treatment"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Glycerin, Propanediol, 1,2-Hexanediol, Glycereth-26, Niacinamide, Caprylic/Capric Triglyceride, Aloe Barbadensis Leaf Extract, Althaea Rosea Flower Extract, Laminaria Japonica Extract, Eclipta Prostrata Leaf Extract, Centella Asiatica Extract, Ficus Carica Fruit Extract, Ulmus Davidiana Root Extract, Amaranthus Caudatus Seed Extract, Camellia Sinensis Leaf Extract, Monarda Didyma Leaf Extract, Hydrangea Macrophylla Leaf Extract, Mentha Aquatica Extract, Sasa Quelpaertensis Extract, Melaleuca Alternifolia Leaf Extract, Melia Azadirachta Leaf Extract, Eclipta Prostrata Extract, Cinnamomum Camphora Leaf Extract, Cryptomeria Japonica Leaf Extract, Pinus Pinaster Bark/Bud Extract, Rosmarinus Officinalis Leaf Oil, Hydrogenated Lecithin, Chamaecyparis Obtusa Water, Trehalose, Octyldodeceth-16, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Tromethamine, C12-14 Pareth-12, Butylene Glycol, Xanthan Gum, Disodium EDTA, Ceramide NP, Fructooligosaccharides, Beta-Glucan, Hydrolyzed Hyaluronic Acid, 4-Terpineol, Glycyrrhiza Glabra Rhizome/Root, Moringa Oleifera Seed Oil, Glycolic Acid, Salicylic Acid, Ethylhexylglycerin",
+   "note": "کاتالوگ می‌گوید مدل دقیق در انتظار تأیید است؛ این فهرست مال Spot The Difference است و اسیدها در انتهای فهرست‌اند (غلظت پایین، اعلام‌نشده)"
+  },
+  {
+   "id": "medicube-txa",
+   "name": "ژل کرم کپسولی ترانگزامیک اسید و نیاسینامید مدیکیوب",
+   "en": "Medicube TXA Niacinamide Capsule Cream",
+   "cat": "ضد لک",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "gel-cream",
+   "actives": [
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide",
+     "pct": 5,
+     "declared": true
+    },
+    {
+     "cls": "TXA",
+     "name": "Tranexamic Acid"
+    },
+    {
+     "cls": "ARBUTIN",
+     "name": "Alpha-Arbutin"
+    },
+    {
+     "cls": "VITC_DERIV",
+     "name": "3-O-Ethyl Ascorbic Acid"
+    }
+   ],
+   "claims": [
+    "pigmentation",
+    "all"
+   ],
+   "flags": [
+    "essential_oil"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://medicube.us/products/txa-niacinamide-capsule-cream",
+    "https://skinsort.com/products/medicube/txa-niacinamide-capsule-cream-b90fbb31-f356-4cf2-bd02-e322b433ae8b"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Glycerin, Niacinamide, Methylpropanediol, Propanediol, 1,2-Hexanediol, Dipropylene Glycol, Caprylic/Capric Triglyceride, Glyceryl Glucoside, Butylene Glycol, Arginine, Ethylhexyl Palmitate, Carbomer, Cetearyl Alcohol, Cetearyl Olivate, Sorbitan Olivate, C12-14 Alketh-12, Ammonium Acryloyldimethyltaurate/VP Copolymer, Simethicone, Ethylhexylglycerin, Melia Azadirachta Flower Extract, Melia Azadirachta Leaf Extract, Adenosine, Polyacrylate-13, Disodium EDTA, Cyanocobalamin, Triethyl Citrate, Betaine, Polyisobutene, Glyceryl Stearate, Hydrolyzed Sclerotium Gum, Tranexamic Acid, Abelmoschus Esculentus Fruit Extract, Panthenol, Coccinia Indica Fruit Extract, Corallina Officinalis Extract, Polysorbate 20, Sorbitan Isostearate, Glutathione, Fragaria Vesca Fruit Extract, Castanea Crenata Shell Extract, Citrus Junos Peel Extract, Betula Platyphylla Japonica Bark, Ricinus Communis Seed Oil, Bisabolol, Ferulic Acid, Cymbopogon Citratus Leaf Oil, Illicium Verum Fruit/Seed Oil, Octyldodecanol, Hydrolyzed Hyaluronic Acid, 3-O-Ethyl Ascorbic Acid, Sodium Hyaluronate, Alpha-Arbutin, Hydrogenated Lecithin, Ceramide NP, Hydroxypropyltrimonium Hyaluronate, Caprylyl Glycol, Sodium Acetylated Hyaluronate, Hyaluronic Acid, Sodium Hyaluronate Crosspolymer, Hydrolyzed Sodium Hyaluronate, Potassium Hyaluronate"
+  },
+  {
+   "id": "medicube-vita-c",
+   "name": "ژل کرم کپسولی ویتامین C مدیکوب",
+   "en": "Medicube Deep Vita C Capsule Cream · 55 g",
+   "cat": "ضد لک",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "gel-cream",
+   "actives": [
+    {
+     "cls": "VITC_DERIV",
+     "name": "Ascorbyl Glucoside / SAP / Ethyl Ascorbic Acid"
+    },
+    {
+     "cls": "VITC_LAA",
+     "name": "Ascorbic Acid (low)"
+    },
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    },
+    {
+     "cls": "PHA",
+     "name": "Gluconolactone"
+    },
+    {
+     "cls": "ARBUTIN",
+     "name": "Alpha-Arbutin"
+    }
+   ],
+   "claims": [
+    "pigmentation",
+    "dull"
+   ],
+   "flags": [
+    "fragrance"
+   ],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://medicube.us/products/deep-vita-c-capsule-cream",
+    "https://skinsort.com/products/medicube/deep-vita-c-capsule-cream"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Hippophae Rhamnoides Water, Glycerin, Water, Niacinamide, Methylpropanediol, Propanediol, 1,2-Hexanediol, Butylene Glycol, Dipropylene Glycol, Caprylic/Capric Triglyceride, Glycereth-26, Ethylhexyl Palmitate, Cetearyl Alcohol, Arginine, Carbomer, Ammonium Acryloyldimethyltaurate/VP Copolymer, Cetearyl Olivate, Helianthus Annuus Seed Oil, Sorbitan Olivate, Simethicone, Polyglyceryl-10 Laurate, Ethylhexylglycerin, Adenosine, Parfum, Polyacrylate-13, Glycine Soja Oil, Disodium EDTA, Polyisobutene, Hydrolyzed Sclerotium Gum, Glyceryl Stearate, Gluconolactone, Polysorbate 20, Sorbitan Isostearate, Hydrogenated Lecithin, Bixa Orellana Seed Oil, Polyglyceryl-10 Stearate, Alpha-Arbutin, Panthenol, Sodium Ascorbyl Phosphate, Pentylene Glycol, Ferulic Acid, Tocopherol, Ascorbyl Glucoside, 3-O-Ethyl Ascorbic Acid, Bisabolol, Ascorbic Acid, Hydroxyphenyl Propamidobenzoic Acid, Pyridoxine, Ubiquinone, Biotin, Folic Acid, Sodium Hyaluronate, Ascorbyl Propyl Hyaluronate, Ascorbyl Palmitate, Cyanocobalamin, Thiamine HCl, Riboflavin, Linoleic Acid, Beta-Carotene, Rutin, Hydroxycinnamic Acid"
+  },
+  {
+   "id": "ordinary-arbutin",
+   "name": "سرم ضد لک آلفا آربوتین ۲٪ + HA اوردینری",
+   "en": "The Ordinary Alpha Arbutin 2% + HA",
+   "cat": "ضد لک",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "ARBUTIN",
+     "name": "Alpha-Arbutin",
+     "pct": 2,
+     "declared": true
+    },
+    {
+     "cls": "HUMECTANT",
+     "name": "Hydrolyzed Sodium Hyaluronate"
+    }
+   ],
+   "claims": [
+    "pigmentation",
+    "all"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://theordinary.com/en-us/alpha-arbutin-2-ha-serum-100401.html",
+    "https://skinsort.com/products/the-ordinary/alpha-arbutin-2-ha-old-YIvHW24"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Alpha-Arbutin, Polyacrylate Crosspolymer-6, Hydrolyzed Sodium Hyaluronate, Propanediol, PPG-26-Buteth-26, PEG-40 Hydrogenated Castor Oil, Lactic Acid, Trisodium Ethylenediamine Disuccinate, Ethoxydiglycol, Phenoxyethanol, Chlorphenesin",
+   "note": "منبع این فهرست صفحه نسخه قدیمی است؛ اسید لاکتیک برای تنظیم pH است نه لایه‌برداری"
+  },
+  {
+   "id": "arencia-vitc",
+   "name": "بوستر شات ویتامین C آرنسیا",
+   "en": "Arencia Vitamin C Booster Shot 30ml",
+   "cat": "ضد لک",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "VITC_DERIV",
+     "name": "3-O-Ethyl Ascorbic Acid",
+     "pct": 5,
+     "declared": true
+    },
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    }
+   ],
+   "claims": [
+    "all",
+    "dull"
+   ],
+   "flags": [],
+   "basis": "inci_sourced",
+   "sources": [
+    "https://thearencia.shop/products/vitamin-c-booster-shot-pure-vitamin-c-for-bright-healthy-skin-glow",
+    "https://peachesandcremeshop.com/products/vitamin-c-booster-shot"
+   ],
+   "checked": "2026-10-13",
+   "inci": "Water, Glycerin, Methylpropanediol, 3-O-Ethyl Ascorbic Acid (50,000ppm), Butylene Glycol, Caprylic/Capric Triglyceride, 1,2-Hexanediol, Niacinamide, Cetyl Ethylhexanoate, Cetearyl Olivate, Polyglyceryl-3 Methylglucose Distearate, Diisostearyl Malate, Sodium Polyacrylate, Acrylates/C10-30 Alkyl Acrylate Crosspolymer, Sorbitan Olivate, Arginine, Gardenia Florida Fruit Extract, Xanthan Gum, Ethylhexylglycerin, Dextrin, Adenosine, Allantoin, Ascorbic Acid (10ppm), Glutathione, Panthenol, Pyridoxine, Tocopherol, Ascorbyl Glucoside, Sodium Ascorbyl Phosphate"
+  },
+  {
+   "id": "brightmax-cbright-tinted",
+   "name": "ضد آفتاب رنگی برایت‌مکس C-Bright SPF 50",
+   "en": "Bright Max C-Bright Tinted SPF 50",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "VITC_DERIV",
+     "name": "Vitamin C (form not declared)"
+    }
+   ],
+   "claims": [
+    "all"
+   ],
+   "flags": [
+    "tinted"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-acne-matt",
+   "name": "کرم آبرسان مات برایت‌مکس Acne-Bright",
+   "en": "Bright Max Acne-Bright Matt Hydrating Cream",
+   "cat": "آبرسان",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "light-cream",
+   "actives": [],
+   "claims": [
+    "oily",
+    "acne"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "finish": "matte",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-tone-physical",
+   "name": "ضد آفتاب فیزیکال برایت‌مکس Tone-Bright SPF 50، بی‌رنگ",
+   "en": "Bright Max Tone-Bright Physical Sunscreen SPF 50 Invisible",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [
+    "white_cast_possible"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "filters": "mineral",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-hydra-light",
+   "name": "کرم آبرسان سبک برایت‌مکس Hydra-Bright",
+   "en": "Bright Max Hydra-Bright Light Hydrating Cream",
+   "cat": "آبرسان",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "light-cream",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hydrating agents"
+    }
+   ],
+   "claims": [
+    "all",
+    "normal"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-acne-foam",
+   "name": "فوم پاک‌کننده برایت‌مکس Acne-Bright، سالیسیلیک اسید و نیاسینامید",
+   "en": "Bright Max Acne-Bright Cleansing Foam",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [
+    {
+     "cls": "BHA",
+     "name": "Salicylic Acid"
+    },
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide"
+    }
+   ],
+   "claims": [
+    "oily",
+    "acne"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-cbright-night",
+   "name": "کرم شب ویتامین C برایت‌مکس C-Bright",
+   "en": "Bright Max C-Bright Night Cream",
+   "cat": "مرطوب‌کننده",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "VITC_DERIV",
+     "name": "Vitamin C (form not declared)"
+    }
+   ],
+   "claims": [
+    "dull",
+    "pigmentation"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-cbright-foam",
+   "name": "فوم شست‌وشوی برایت‌مکس C-Bright",
+   "en": "Bright Max C-Bright Cleansing Foam",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [],
+   "claims": [
+    "dull"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-acne-spot",
+   "name": "ژل موضعی جوش برایت‌مکس Acne-Bright",
+   "en": "Bright Max Acne-Bright Spot Acne Gel",
+   "cat": "ضد جوش",
+   "role": "spot",
+   "rinseOff": false,
+   "texture": "gel",
+   "actives": [],
+   "claims": [
+    "acne"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام محصول: ژل موضعی جوش؛ اکتیو و غلظت روی نام اعلام نشده است"
+  },
+  {
+   "id": "brightmax-cbright-cream",
+   "name": "کرم ویتامین C برایت‌مکس C-Bright",
+   "en": "Bright Max C-Bright Cream",
+   "cat": "مرطوب‌کننده",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "VITC_DERIV",
+     "name": "Vitamin C (form not declared)"
+    }
+   ],
+   "claims": [
+    "dull",
+    "pigmentation"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-hydra-sunfluid",
+   "name": "فلوئید ضد آفتاب برایت‌مکس Hydra-Bright SPF 50",
+   "en": "Bright Max Hydra-Bright Sunscreen Fluid SPF 50",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "fluid",
+   "actives": [],
+   "claims": [
+    "all",
+    "oily"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-hyaluronic",
+   "name": "سرم هیالورونیک اسید ۲٪ برایت‌مکس",
+   "en": "Bright Max Hyaluronic Acid 2% Serum",
+   "cat": "آبرسان",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hyaluronic Acid",
+     "pct": 2,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-niacinamide",
+   "name": "سرم نیاسینامید ۱۰٪ برایت‌مکس",
+   "en": "Bright Max Niacinamide 10% Serum",
+   "cat": "ضد جوش",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "VITAMIN_B3",
+     "name": "Niacinamide",
+     "pct": 10,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "oily",
+    "acne"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-vitamin-c25",
+   "name": "سرم ویتامین C ۲۵٪ برایت‌مکس",
+   "en": "Bright Max Vitamin C 25% Serum",
+   "cat": "ضد لک",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "VITC",
+     "name": "Vitamin C 25% (form not declared)",
+     "pct": 25,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "dull",
+    "pigmentation"
+   ],
+   "flags": [
+    "high_strength"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-azelaic",
+   "name": "سوسپانسیون آزلائیک اسید برایت‌مکس",
+   "en": "Bright Max Azelaic Acid 10% Suspension",
+   "cat": "ضد جوش",
+   "role": "treatment",
+   "rinseOff": false,
+   "texture": "cream-gel",
+   "actives": [
+    {
+     "cls": "AZELAIC",
+     "name": "Azelaic Acid",
+     "pct": 10,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "acne",
+    "oily",
+    "pigmentation"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "cyspersa-eye",
+   "name": "فلوئید دور چشم سیسپرسا Eye Revive",
+   "en": "Cyspersa Eye Revive Fluid",
+   "cat": "دور چشم",
+   "role": "eye",
+   "rinseOff": false,
+   "texture": "fluid",
+   "actives": [],
+   "claims": [
+    "eye"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "cyspersa-cysteamine",
+   "name": "کرم ضدلک سیسپرسا، سیستئامین ۵٪",
+   "en": "Cyspersa Liposomal 5% Cysteamine Cream",
+   "cat": "ضد لک",
+   "role": "treatment",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "CYSTEAMINE",
+     "name": "Cysteamine",
+     "pct": 5,
+     "declared": true
+    }
+   ],
+   "claims": [
+    "pigmentation"
+   ],
+   "flags": [
+    "short_contact"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام محصول: سیستئامین ۵٪؛ معمولاً تماس کوتاه و شست‌وشو طبق دستور بسته دارد"
+  },
+  {
+   "id": "cyspersa-sun-untinted",
+   "name": "ضد آفتاب سیسپرسا Sun 50+ Defense، بی‌رنگ",
+   "en": "Cyspersa Sun 50+ Defense",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "revival-hyalusense-cream",
+   "name": "کرم آبرسان رویوال Hyalusense پوست نرمال تا خشک",
+   "en": "Revival Hyalusense 24-Hour Hydrating Cream",
+   "cat": "آبرسان",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hyaluronic Acid"
+    }
+   ],
+   "claims": [
+    "normal",
+    "dry"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "revival-hyalusense-serum",
+   "name": "سرم آبرسان رویوال Hyalusense",
+   "en": "Revival Hyalusense Tri-Hyaluronic + B5 Serum",
+   "cat": "آبرسان",
+   "role": "serum",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Tri-Hyaluronic + B5"
+    }
+   ],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-activit-foam",
+   "name": "فوم شست‌وشوی ویتالیر Activit",
+   "en": "Vitalayer Activit Foaming Face Wash",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-hydravit-foam",
+   "name": "فوم شست‌وشوی ویتالیر Hydravit",
+   "en": "Vitalayer Hydravit Foaming Face Wash",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-whitevit-foam",
+   "name": "فوم شست‌وشوی ویتالیر Whitevit",
+   "en": "Vitalayer Whitevit Foaming Face Wash",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-sensivit-foam",
+   "name": "فوم شست‌وشوی ویتالیر Sensivit",
+   "en": "Vitalayer Sensivit Foaming Face Wash",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [],
+   "claims": [
+    "sensitive"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-vitc-foam",
+   "name": "فوم شست‌وشوی ویتامین C ویتالیر",
+   "en": "Vitalayer Vitamin C Foaming Face Wash",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [],
+   "claims": [
+    "dull"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-hydravit-spray",
+   "name": "اسپری آبرسان ویتالیر Hydravit",
+   "en": "Vitalayer Hydravit Refreshing Water Spray",
+   "cat": "آبرسان",
+   "role": "toner",
+   "rinseOff": false,
+   "texture": "water",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hydrating agents"
+    }
+   ],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-timevit-gel",
+   "name": "ژل شست‌وشوی ویتالیر Timevit",
+   "en": "Vitalayer Timevit Face Wash Gel",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "gel",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-whitevit-gel",
+   "name": "ژل شست‌وشوی ویتالیر Whitevit",
+   "en": "Vitalayer Whitevit Face Wash Gel",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "gel",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-hydravit-gel",
+   "name": "ژل شست‌وشوی ویتالیر Hydravit با برس سیلیکونی",
+   "en": "Vitalayer Hydravit Face Wash Gel",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "gel",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-timevit-micellar",
+   "name": "میسلار واتر ویتالیر Timevit",
+   "en": "Vitalayer Timevit Micellar Cleansing Water",
+   "cat": "میسلار واتر",
+   "role": "micellar",
+   "rinseOff": true,
+   "texture": "water",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "serycta-eyelash",
+   "name": "سرم تقویت مژه سریکتا",
+   "en": "Serycta Eyelashes Fortifying Serum",
+   "cat": "مژه و ابرو",
+   "role": "lash",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [],
+   "claims": [
+    "lash"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "veronique-eye-bright",
+   "name": "کرم دور چشم روشن‌کننده ورونیک",
+   "en": "Veronique Illuminating Eye Cream",
+   "cat": "دور چشم",
+   "role": "eye",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "eye"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "veronique-red-cream",
+   "name": "کرم ضدقرمزی ورونیک",
+   "en": "Veronique Anti-Redness Cream",
+   "cat": "مرطوب‌کننده",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "SOOTHING",
+     "name": "Anti-redness complex"
+    }
+   ],
+   "claims": [
+    "sensitive",
+    "redness"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "veronique-illuminating",
+   "name": "کرم روشن‌کننده ورونیک",
+   "en": "Veronique Illuminating Night Cream",
+   "cat": "ضد لک",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "pigmentation",
+    "dull"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "veronique-eye-antioxidant",
+   "name": "کرم دور چشم آنتی‌اکسیدان ورونیک",
+   "en": "Veronique Antioxidants Eye Cream",
+   "cat": "دور چشم",
+   "role": "eye",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "eye"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "dermatypique-oily-sun",
+   "name": "ضد آفتاب آنتی‌آکنه درماتیپیک Phototypique SPF 50+",
+   "en": "Dermatypique Anti-Acne Fluid SPF 50+",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "fluid",
+   "actives": [],
+   "claims": [
+    "oily",
+    "acne"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "finish": "matte",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "dermatypique-dry-sun",
+   "name": "ضد آفتاب درماتیپیک Phototypique پوست خشک SPF 50+",
+   "en": "Dermatypique Phototypique Dry Skin SPF 50+",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "dry"
+   ],
+   "flags": [
+    "moisture_rich"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "dermatypique-oily-moist",
+   "name": "فلوئید آبرسان درماتیپیک پوست مختلط و چرب",
+   "en": "Dermatypique Moisturizing Face Fluid",
+   "cat": "آبرسان",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "fluid",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hydrating agents"
+    }
+   ],
+   "claims": [
+    "oily",
+    "combination"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "dermatypique-spot-sun",
+   "name": "ضد آفتاب ضدلک درماتیپیک SPF 50+",
+   "en": "Dermatypique Anti-Spot Fluid SPF 50+",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "fluid",
+   "actives": [],
+   "claims": [
+    "pigmentation"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "dermatypique-tinted-sun",
+   "name": "ضد آفتاب رنگی درماتیپیک پوست خشک SPF 50+",
+   "en": "Dermatypique Tinted Sunscreen Cream SPF 50+",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "dry"
+   ],
+   "flags": [
+    "tinted",
+    "moisture_rich"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "dermatypique-dry-moist",
+   "name": "کرم آبرسان درماتیپیک پوست نرمال تا خشک",
+   "en": "Dermatypique Moisturizing Face Cream",
+   "cat": "آبرسان",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hydrating agents"
+    }
+   ],
+   "claims": [
+    "normal",
+    "dry"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "dermatypique-red-sun",
+   "name": "ضد آفتاب ضدقرمزی درماتیپیک SPF 50+",
+   "en": "Dermatypique Anti-Redness Fluid SPF 50+",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "fluid",
+   "actives": [],
+   "claims": [
+    "sensitive",
+    "redness"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "dermatypique-bright-cleanser",
+   "name": "ژل شست‌وشوی روشن‌کننده درماتیپیک",
+   "en": "Dermatypique Lightening Cleansing Gel",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "gel",
+   "actives": [],
+   "claims": [
+    "pigmentation"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "lafarrerr-multi-toner",
+   "name": "تونر مولتی‌اکتیو لافارر پوست چرب و مختلط",
+   "en": "Lafarrerr Multi Active Toner",
+   "cat": "تونر",
+   "role": "toner",
+   "rinseOff": false,
+   "texture": "water",
+   "actives": [],
+   "claims": [
+    "oily",
+    "combination"
+   ],
+   "flags": [
+    "actives_undeclared"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام محصول: تونر چنداکتیو برای پوست چرب؛ نوع و غلظت اکتیوها اعلام نشده و ممکن است لایه‌بردار داشته باشد"
+  },
+  {
+   "id": "vitalayer-vitc-toner",
+   "name": "تونر ویتامین C ویتالیر",
+   "en": "Vitalayer Vitamin C Face Toner",
+   "cat": "تونر",
+   "role": "toner",
+   "rinseOff": false,
+   "texture": "water",
+   "actives": [
+    {
+     "cls": "VITC_DERIV",
+     "name": "Vitamin C (form not declared)"
+    }
+   ],
+   "claims": [
+    "dull"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "vitalayer-whitevit-toner",
+   "name": "تونر پاک‌کننده ویتالیر Whitevit",
+   "en": "Vitalayer Whitevit Face Toner",
+   "cat": "تونر",
+   "role": "toner",
+   "rinseOff": false,
+   "texture": "water",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "simple-soothing-toner",
+   "name": "تونر آرام‌بخش سیمپل",
+   "en": "Simple Soothing Facial Toner",
+   "cat": "تونر",
+   "role": "toner",
+   "rinseOff": false,
+   "texture": "water",
+   "actives": [
+    {
+     "cls": "SOOTHING",
+     "name": "Soothing agents"
+    }
+   ],
+   "claims": [
+    "sensitive"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "genobiotic-charcoal",
+   "name": "ماسک زغال ژنوبایوتیک",
+   "en": "Genobiotic Charcoal Mask",
+   "cat": "ماسک",
+   "role": "mask",
+   "rinseOff": true,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "oily"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "fycav-sea-mask",
+   "name": "ماسک لایه‌بردار و آبرسان دریایی فیکاو",
+   "en": "Fycav Sea Mask",
+   "cat": "ماسک",
+   "role": "mask",
+   "rinseOff": true,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [
+    "exfoliating_undeclared"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام محصول: ماسک لایه‌بردار؛ نوع لایه‌بردار اعلام نشده"
+  },
+  {
+   "id": "brightmax-rich-hydrating",
+   "name": "کرم آبرسان غنی برایت‌مکس Rich Hydrating، ۵۰ میلی‌لیتر",
+   "en": "Bright Max Rich Hydrating Cream 50 ml",
+   "cat": "آبرسان",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "rich-cream",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hydrating agents"
+    }
+   ],
+   "claims": [
+    "dry"
+   ],
+   "flags": [
+    "rich_oils"
+   ],
+   "basis": "declared_name",
+   "sources": [
+    "https://brightmax.ir/en/product/rich-hydrating-cream/"
+   ],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "brightmax-tone-tinted",
+   "name": "ضد آفتاب فیزیکال رنگی برایت‌مکس Tone Bright SPF 50، ۴۰ میلی‌لیتر",
+   "en": "Bright Max Tone-Bright Physical Tinted SPF 50",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [
+    "tinted"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "filters": "mineral",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "cyspersa-tinted-sun",
+   "name": "ضد آفتاب رنگی سیسپرسا SPF 50، ۵۰ میلی‌لیتر",
+   "en": "Cyspersa Sun 50+ Defense Natural Tinted",
+   "cat": "ضد آفتاب",
+   "role": "sunscreen",
+   "rinseOff": false,
+   "texture": "cream",
+   "actives": [],
+   "claims": [
+    "all"
+   ],
+   "flags": [
+    "tinted"
+   ],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "spf": 50,
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "cyspersa-cleanser",
+   "name": "شوینده روشن‌کننده سیسپرسا، ۱۵۰ میلی‌لیتر",
+   "en": "Cyspersa Sulfate 0% Lightening Gentle Cleanser",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "gel",
+   "actives": [],
+   "claims": [
+    "pigmentation",
+    "sensitive"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "cerita-eyelash",
+   "name": "سرم تقویت مژه سریتا Eyelash Lotion، ۸ میلی‌لیتر",
+   "en": "Cerita Eyelash Lotion",
+   "cat": "مژه و ابرو",
+   "role": "lash",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [],
+   "claims": [
+    "lash"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "cerita-lid-foam",
+   "name": "فوم شست‌وشوی پلک و مژه سریتا، ۶۰ میلی‌لیتر",
+   "en": "Cerita Eyelid and Eyelash Cleansing Foam",
+   "cat": "شوینده",
+   "role": "cleanser",
+   "rinseOff": true,
+   "texture": "foam",
+   "actives": [],
+   "claims": [
+    "eye"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "شوینده پلک و مژه؛ شوینده صورت حساب نمی‌شود"
+  },
+  {
+   "id": "cerita-eyebrow",
+   "name": "سرم تقویت ابرو سریتا Eyebrow Vitalize، ۸ میلی‌لیتر",
+   "en": "Cerita Eyebrow Vitalize",
+   "cat": "مژه و ابرو",
+   "role": "lash",
+   "rinseOff": false,
+   "texture": "serum",
+   "actives": [],
+   "claims": [
+    "lash"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "revival-hydrating",
+   "name": "ژل‌کرم آبرسان پروبیوتیک رویوال، ۴۰ میلی‌لیتر",
+   "en": "Revival Probiotic Deep Hydrating Gel Cream",
+   "cat": "آبرسان",
+   "role": "moisturizer",
+   "rinseOff": false,
+   "texture": "gel-cream",
+   "actives": [
+    {
+     "cls": "HUMECTANT",
+     "name": "Hydrating agents"
+    }
+   ],
+   "claims": [
+    "all",
+    "oily"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  },
+  {
+   "id": "konlamax-black-mask",
+   "name": "بلک ماسک کنلامکس روشن‌کننده، ۷۵ میلی‌لیتر",
+   "en": "Konlamax Brightening Black Mask",
+   "cat": "ماسک",
+   "role": "mask",
+   "rinseOff": true,
+   "texture": "peel-off",
+   "actives": [],
+   "claims": [
+    "oily"
+   ],
+   "flags": [],
+   "basis": "declared_name",
+   "sources": [],
+   "checked": "2026-10-13",
+   "note": "از نام و برچسب محصول؛ فهرست ترکیبات بسته هنوز ثبت نشده"
+  }
+ ]
+}

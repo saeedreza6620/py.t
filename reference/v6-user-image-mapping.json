@@ -1,0 +1,37 @@
+[
+  {
+    "id": "avene-oil",
+    "file": "IMG_1656.PNG",
+    "sha256": "1209809f25f5eaa498143f3023835e8c3a7e7a92fd2f000954e352cb3d13cc85"
+  },
+  {
+    "id": "permancy-sensitive",
+    "file": "IMG_1662.PNG",
+    "sha256": "f102707d239b9f0cab0627232fc9aa031427247771eb114b3195df6f3bf42b08"
+  },
+  {
+    "id": "numbuzin-sun",
+    "file": "IMG_1657.PNG",
+    "sha256": "7da42971844dfed91af16b83f458211d38900c27e14729ba6f3b51c594c1fd5b"
+  },
+  {
+    "id": "skin1004-hyalucica",
+    "file": "IMG_1660.PNG",
+    "sha256": "e8a9dbbce64d45ffe2602425cd075b649e9565fa2ae4a7609fe33773ebd04d84"
+  },
+  {
+    "id": "brightmax-physical",
+    "file": "IMG_1658.PNG",
+    "sha256": "274a07ed8151a665e920a781f3ad3605d9563631d5e6a8834035cbdfa6e2fdcd"
+  },
+  {
+    "id": "clarins-double",
+    "file": "IMG_1655.PNG",
+    "sha256": "4d0327db3a30974121c2f1bc31bd24aa6549e26f853ef5a9f4995f253c318a40"
+  },
+  {
+    "id": "medicube-vita-c",
+    "file": "IMG_1661.PNG",
+    "sha256": "c8b3900b7fefe196cc31537c91a67379b30ee627fb014bb8276eebf38cb64f15"
+  }
+]

@@ -1,0 +1,20 @@
+# Names only. Copy into private ignored local environment and fill securely.
+LIARA_API_KEY=
+AVALAI_API_KEY=
+NETARZ_API_KEY=
+ADMIN_PASSWORD_HASH=
+ADMIN_SESSION_KEY=
+AUTH_HASH_KEY=
+KAVENEGAR_API_KEY=
+KAVENEGAR_TEMPLATE=
+OWNER_PHONE=
+AI_PROVIDER=liara
+# liara: AI_BASE_URL is REQUIRED (project URL from the Liara panel). avalai/netarz have defaults.
+AI_BASE_URL=
+AI_MODEL=gemini-3.8-flash
+AI_MODEL_LIGHT=gemini-3.1-flash-lite
+AI_MODEL_ECONOMY=gemini-3.1-flash-lite
+AI_MODEL_REVIEW=gemini-3.8-flash
+AI_MODEL_COMPLEX=gpt-5.6-sol
+AI_MODEL_SEARCH=openai/gpt-4.1-mini:online
+# Liara model IDs look like provider/model (copy exact IDs from your Liara panel)

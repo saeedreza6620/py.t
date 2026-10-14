@@ -1,0 +1,11 @@
+.routine-reminder{background:linear-gradient(135deg,#f0faff,#fff3f8);border:1px solid #d7eaf4;border-radius:20px;margin:16px 0;padding:18px;color:#294b60}
+.routine-reminder h3{margin:0 0 5px;font-size:20px}.routine-reminder p{font-size:14px;line-height:1.8;margin:7px 0 12px}
+.reminder-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.reminder-fields label{display:grid;gap:5px;font-size:14px}.reminder-fields input,.reminder-fields select,.routine-reminder textarea{width:100%;min-width:0;border:1px solid #bddde9;background:#fff;border-radius:12px;color:#263a49;padding:10px;font:inherit;font-size:16px}
+.routine-reminder textarea{min-height:75px;resize:vertical}.reminder-actions{display:flex;gap:8px;flex-wrap:wrap}
+.routine-reminder button{border:1px solid #e9a6c9;background:#fff3f8;color:#9b356c;border-radius:12px;padding:10px 14px;font:inherit;font-size:14px;font-weight:700}
+.routine-reminder button:first-child{background:#dd6ca2;color:#fff}.routine-reminder summary{cursor:pointer;color:#285a75;font-size:15px;font-weight:700}.routine-reminder details{border-top:1px solid #d7eaf4;padding-top:12px;margin-top:13px}
+.reminder-toggle{display:flex;align-items:center;gap:9px;margin:10px 0;font-size:14px}.reminder-toggle input{accent-color:#d9639c;width:20px;height:20px}
+#reviewHistory{font-size:13px;line-height:1.8;margin-top:10px}#reviewHistory div{border-top:1px solid #e2ecf2;padding:4px 0}
+@media(max-width:375px){.reminder-fields{grid-template-columns:1fr}.reminder-actions button{width:100%}}
+img[src$="/2065.jpg"]{transform:rotate(180deg)}

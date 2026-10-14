@@ -1,0 +1,15 @@
+{
+  "source_commit": "95585bb3fbee6b8172781c169863561cc10d3a8e",
+  "source_version": 68,
+  "site_url": "https://beautywallet-ir.saeedrezabarzkar6.chatgpt.site/",
+  "source_project_id": "appgprj_6ab3e527c7a88191b0331fbfbde686d0",
+  "export_date": "2026-10-13",
+  "production_database_rows_included": false,
+  "secrets_included": false,
+  "excluded_generated_files": [
+    "tsconfig.tsbuildinfo"
+  ],
+  "note": "v68 = local changes on top of published v66: catalog-first routine/purchase check (v67), sweet 4-tab UI, AvalAI provider (default) with Netarz fallback, Cloudflare Workers free deploy script (scripts/cf-deploy.mjs). Built and tested locally with a stub provider; NOT deployed. Claude artifact demo: https://claude.ai/artifact/W8fswnTudZWke1LEC3HCxs",
+  "based_on_published_version": 66,
+  "source_commit_note": "source_commit refers to published v66; v67 changes are uncommitted in this ZIP"
+}

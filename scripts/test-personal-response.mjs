@@ -1,0 +1,5 @@
+import fs from 'node:fs';import ts from 'typescript';import assert from 'node:assert/strict';
+const code=ts.transpile(fs.readFileSync('assistant/personal-response.ts','utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});const {personalLead,PERSONAL_RESPONSE_STYLE}=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+const lead=personalLead('نتیجه: فعلاً صبر کن\n\n- با توجه به پوست چربت و سوزشی که ثبت کردی، ابتدا تحمل این محصول را بررسی کنیم [منبع](https://example.com/a)');assert.ok(lead.startsWith('با توجه به پوست چربت'));assert.ok(!lead.includes('https://'));assert.ok(lead.length<=240);assert.ok(PERSONAL_RESPONSE_STYLE.includes('از نام «پوست خشک» به‌تنهایی منع'));assert.ok(PERSONAL_RESPONSE_STYLE.includes('داشته‌های کاربر'));console.log('PASS: visible personal rationale, bounded source-free lead, no skin-label-only rejection');
+
+assert.ok(PERSONAL_RESPONSE_STYLE.includes('ثبت‌شده ندیدی'));assert.ok(PERSONAL_RESPONSE_STYLE.includes('اولویت خرید')||PERSONAL_RESPONSE_STYLE.includes('اولویت نداره'));

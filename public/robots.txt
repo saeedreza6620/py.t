@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /legacy/
+Disallow: /admin
+Sitemap: https://beautywallet-ir.saeedrezabarzkar6.chatgpt.site/sitemap.xml

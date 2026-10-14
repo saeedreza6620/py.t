@@ -1,0 +1,15 @@
+/* Catalog-first routine result (catalog-routine.js). Uses the existing blue/pink/gold palette. */
+.bw-catalog-check{display:grid;gap:9px;margin:8px 0 10px}
+.bw-catalog-lead{margin:0;padding:12px 14px;border-radius:15px;background:#f3fbff;border:1px solid #d6eaf3;color:#173648;font-weight:700;line-height:1.9}
+.active-card.keep .active-dot{background:#2e806f;box-shadow:0 0 0 4px #e3f5f0}
+.bw-catalog-alts{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:7px}
+.bw-catalog-alts span{color:#657d89;font-size:12px}
+.bw-catalog-pick{appearance:none;border:1px solid #e8b0c9;background:#fff;color:#254b59;border-radius:12px;padding:7px 10px;font:inherit;font-size:12px;line-height:1.6;text-align:right;cursor:pointer;max-width:100%}
+.bw-catalog-pick small{color:#a66c24;font-size:11px}
+.bw-catalog-pick:focus-visible{outline:2px solid #2c7898;outline-offset:2px}
+.bw-catalog-gap{padding:11px 12px;border:1px dashed #dc5f99;border-radius:14px;background:#fff8fb}
+.bw-catalog-gap b{display:block;color:#254b59;font-size:13px;line-height:1.7}
+.bw-catalog-more{border:1px solid #d6eaf3;border-radius:14px;padding:8px 12px;background:#fff}
+.bw-catalog-more summary{cursor:pointer;color:#2c7898;font-weight:700;font-size:13px}
+.bw-catalog-more p{margin:6px 0;color:#5b7480;font-size:12px;line-height:1.8}
+.bw-catalog-note{margin:0;color:#657d89;font-size:11.5px;line-height:1.7}

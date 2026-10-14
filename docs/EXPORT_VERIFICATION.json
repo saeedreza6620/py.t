@@ -1,0 +1,22 @@
+{
+  "fresh_sqlite_schema_migrations_applied": [
+    "0000_moaning_lily_hollister.sql",
+    "0001_wonderful_marauders.sql",
+    "0002_dear_blizzard.sql",
+    "0003_good_morbius.sql",
+    "0004_fresh_roulette.sql",
+    "0005_cloudy_night_thrasher.sql",
+    "0006_blue_giant_girl.sql",
+    "0007_great_the_professor.sql",
+    "0008_overjoyed_george_stacy.sql",
+    "0009_green_harrier.sql",
+    "0010_nifty_bill_hollister.sql",
+    "0011_icy_plazm.sql",
+    "0012_silent_shaman.sql",
+    "0013_bumpy_lorna_dane.sql",
+    "0014_watery_roulette.sql",
+    "0015_smooth_shriek.sql"
+  ],
+  "table_count_after_migrations": 26,
+  "note": "Empty SQLite compatibility check only; not a production D1 restore or live provider test."
+}

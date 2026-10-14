@@ -1,0 +1,30 @@
+.shell {
+  --pink: #df76a7;
+  background: linear-gradient(155deg, #eefaff 0, #f8fdff 52%, #fff 100%);
+}
+
+.drop {
+  background: linear-gradient(135deg, #e6faff, #a9e4f2);
+  color: #2f8fb7;
+  border: 2px solid #d5ad64;
+  box-shadow: 0 0 0 4px #f2fbff, 0 10px 24px #3f9fbe33;
+}
+
+.drop svg {
+  width: 25px;
+  height: 25px;
+  fill: currentColor;
+}
+
+.personal {
+  background: #df76a7;
+}
+
+.marketForm {
+  border-color: #cfe9f2;
+  background: #f5fcff;
+}
+
+.send {
+  background: linear-gradient(135deg, #4ba9c6, #77cde1) !important;
+}

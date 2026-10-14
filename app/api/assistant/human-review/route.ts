@@ -1,0 +1,8 @@
+import {visitorId} from '../../../site-sessions';
+import {validOrigin} from '../../../phone-auth';
+import {database} from '../../../../db/raw';
+import {ensureHumanReviews} from '../../../../assistant/human-review';
+export const runtime='edge';
+const json=(b:unknown,s=200)=>Response.json(b,{status:s,headers:{'Cache-Control':'no-store'}});
+export async function GET(req:Request){const user=await visitorId(req);if(!user)return json({error:'ابتدا یک بررسی انجام بده'},401);await ensureHumanReviews();const rows=await database().prepare('SELECT id,message_id,status,reply,reviewer,created_at FROM bw_human_reviews WHERE user_id=? ORDER BY created_at DESC LIMIT 30').bind(user).all();return json({requests:rows.results});}
+export async function POST(req:Request){if(!validOrigin(req))return json({error:'درخواست نامعتبر'},403);const user=await visitorId(req);if(!user)return json({error:'ابتدا یک بررسی انجام بده'},401);let b;try{b=await req.json() as Record<string,unknown>}catch{return json({error:'درخواست نامعتبر'},400)}if(b.consent!==true||typeof b.messageId!=='string'||b.messageId.length>80)return json({error:'رضایت و پاسخ موردنظر لازم است'},400);const message=await database().prepare("SELECT content FROM assistant_messages WHERE id=? AND user_id=? AND role='assistant'").bind(b.messageId,user).first<{content:string}>();if(!message)return json({error:'پاسخ پیدا نشد'},404);await ensureHumanReviews();const now=new Date().toISOString();await database().prepare('INSERT OR IGNORE INTO bw_human_reviews(id,user_id,message_id,question,created_at,updated_at) VALUES(?,?,?,?,?,?)').bind(crypto.randomUUID(),user,b.messageId,message.content,now,now).run();return json({status:'queued',message:'درخواست ثبت شد؛ زمان پاسخ هنوز مشخص نیست. برای علائم فوری منتظر این صف نمان'});}

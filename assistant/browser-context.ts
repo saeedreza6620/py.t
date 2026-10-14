@@ -1,0 +1,2 @@
+import {reviewContext} from './review-context';
+export function browserReviewContext(){const read=(key:string,fallback:unknown)=>{try{return JSON.parse(localStorage.getItem(key)||'null')??fallback}catch{return fallback}};const full=read('bw_profile_v1_full',{}) as Record<string,unknown>,basic=read('bw_profile',{}) as Record<string,unknown>;return reviewContext({profile:{...full,skinBase:full.skinBase||basic.skin,concerns:basic.concerns},supplements:read('bw_supplements_v1',{}),owned:read('bw_wallet',[])},null);}
