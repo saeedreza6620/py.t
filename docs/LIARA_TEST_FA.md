@@ -21,7 +21,7 @@ node scripts/build-lite.mjs
    | نام | مقدار |
    |---|---|
    | `LIARA_API_KEY` | کلید لیارا AI (فقط همین‌جا) |
-   | `AI_BASE_URL` | `https://ai.liara.ir/api/v1/<شناسه پروژه>` |
+   | `AI_BASE_URL` | `https://ai.liara.ir/api/<شناسه پروژه>/v1` (اختیاری؛ پیش‌فرض همین پروژه است) |
    | `AI_MODEL` | `google/gemini-2.5-flash` |
    | `AI_MODEL_LIGHT` | `openai/gpt-4o-mini` |
    | `AI_MODEL_COMPLEX` | `openai/gpt-4.1` |

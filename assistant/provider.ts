@@ -15,7 +15,9 @@ export function provider(env:ProviderEnv){
   const requested=String(env.AI_PROVIDER||'').toLowerCase();
   const name:ProviderName=requested in DEFAULTS?requested as ProviderName:env.LIARA_API_KEY?'liara':env.AVALAI_API_KEY?'avalai':'netarz';
   const d=DEFAULTS[name];
-  const base=(env.AI_BASE_URL||d.base).trim().replace(/\/(chat\/completions|responses)\/?$/,'').replace(/\/$/,'');
+  const base=(env.AI_BASE_URL||d.base).trim().replace(/\/(chat\/completions|responses)\/?$/,'').replace(/\/$/,'')
+    // Liara's address is https://ai.liara.ir/api/<workspaceId>/v1; fix the older /api/v1/<id> form
+    .replace(/^(https:\/\/ai\.liara\.ir\/api)\/v1\/([0-9a-f]{24})$/i,'$1/$2/v1');
   // A provider without its own base URL (Liara) is not configured until AI_BASE_URL is set.
   const key=base?String(env[KEY[name]]||''):'';
   return {name,key,base,searchModel:env.AI_MODEL_SEARCH||d.search,chatOnly:d.chatOnly,searchStyle:d.searchStyle};
