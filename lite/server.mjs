@@ -23,7 +23,12 @@ const persistent=path.resolve(DATA)===path.resolve(E.DATA_DIR||'/data');
 const baseVar=Object.keys(E).find(k=>/^(AI_BASE_URL|AI_BASE|BASE_URL|LIARA_BASE_URL|LIARA_AI_BASE_URL)$/i.test(k.replace(/[\s\u200c\u200f\u200e]/g,''))&&/^https?:\/\//.test(String(E[k]).trim()));
 // Liara's address is https://ai.liara.ir/api/<workspaceId>/v1 (per Liara support); fix the old /api/v1/<id> form automatically
 const BASE=String((baseVar&&E[baseVar])||'https://ai.liara.ir/api/6acf72992688b05ae7bfe4e9/v1').trim().replace(/^(https:\/\/ai\.liara\.ir\/api)\/v1\/([0-9a-f]{24})\/?$/i,'$1/$2/v1').trim().replace(/\/(chat\/completions)\/?$/,'').replace(/\/$/,'');
-const KEY=E.LIARA_API_KEY||E.AI_API_KEY||'';
+// if a key was pasted twice / glued to an old one, use the newest complete key in the value
+function pickKey(v){v=String(v||'').replace(/^Bearer\s*/i,'');const all=v.match(/eyJ[\w-]+\.eyJ[\w-]+\.[\w-]{43}/g);if(!all||all.length<2)return v;
+  const iat=k=>{try{return JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString()).iat||0}catch{return 0}};
+  return all.map(k=>({k,t:iat(k)})).sort((a,b)=>b.t-a.t)[0].k}
+const RAW_KEY=E.LIARA_API_KEY||E.AI_API_KEY||'';
+const KEY=pickKey(RAW_KEY);
 const MODELS={light:E.AI_MODEL_LIGHT||E.AI_MODEL||'openai/gpt-4.1-mini',default:E.AI_MODEL||'google/gemini-2.5-pro',complex:E.AI_MODEL_COMPLEX||E.AI_MODEL||'openai/gpt-4.1-mini',search:E.AI_MODEL_SEARCH||'openai/gpt-4.1:online'};
 const FALLBACK=E.AI_MODEL_FALLBACK||'google/gemini-2.5-flash',FALLBACK_SEARCH=E.AI_MODEL_SEARCH_FALLBACK||'openai/gpt-4.1-mini:online';
 // reasoning models (Gemini Pro, GPT-5…) spend tokens on thinking first, so leave room for the answer
@@ -82,7 +87,7 @@ async function ai(body){
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
 const EVENTS=new Set(['site_open','app_open','app_open_installed','install','install_offer','install_click','check']);
 const evHits=new Map();let deepCache=null;
-function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
+function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,rawLength:String(RAW_KEY).length,keysInValue:(String(RAW_KEY).match(/eyJ[\w-]+\.eyJ/g)||[]).length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
 let lastUpstream=null;
 function osOf(ua){ua=String(ua||'');return /iPhone|iPad|iPod/i.test(ua)?'ios':/Android/i.test(ua)?'android':'desktop'}
 function logUsage(row){fs.appendFile(path.join(DATA,'usage.jsonl'),JSON.stringify(row)+'\n',()=>{})}
