@@ -63,6 +63,9 @@ async function ai(body){
   let messages=Array.isArray(body.input)?body.input:[{role:'user',content:String(body.input||'')}];
   messages=messages.filter(m=>m&&(m.role==='user'||m.role==='assistant')&&typeof m.content==='string').slice(-8).map(m=>({role:m.role,content:m.content.slice(0,24000)}));
   if(!messages.length||messages[messages.length-1].role!=='user')return {status:400,body:{error:'پیام نامعتبر است'}};
+  // models guess the date wrong (e.g. Gregorian day number with a Persian month): give them today's date
+  const today=new Date().toLocaleDateString('fa-IR-u-ca-persian',{timeZone:'Asia/Tehran',weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  messages=[{role:'system',content:'تاریخ امروز: '+today+' (به وقت تهران). اگر تاریخ می‌نویسی، همین را بنویس.'},...messages];
   let model=body.search?MODELS.search:MODELS[tier];if(body.search&&!/:online$/.test(model))model+=':online';
   const fallback=body.search?FALLBACK_SEARCH:FALLBACK;
   const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),body.search?110000:90000);
