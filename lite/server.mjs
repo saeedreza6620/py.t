@@ -73,7 +73,7 @@ const admin=makeAdmin({E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BAS
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
   try{
-    if(url.pathname==='/healthz')return send(res,200,{ok:true,ai:!!(KEY&&BASE)});
+    if(url.pathname==='/healthz')return send(res,200,{ok:true,ai:!!(KEY&&BASE),admin:Object.keys(E).some(k=>/ADMIN/i.test(k)&&String(E[k]).trim()),adminVars:Object.keys(E).filter(k=>/admin/i.test(k)).map(k=>JSON.stringify(k)),disk:persistent,version:'70'},'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});

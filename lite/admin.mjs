@@ -9,7 +9,9 @@ const faDay=day=>{try{return new Date(day+'T12:00:00Z').toLocaleDateString('fa-I
 export function readJsonl(file){try{return fs.readFileSync(file,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
 
 export function makeAdmin({E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin}){
-  const secret=String(E.ADMIN_TOKEN||'');
+  // tolerate stray spaces/case in the variable name or value as typed in the Liara console
+const adminKey=Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN');
+const secret=String(adminKey?E[adminKey]:'').trim();
   const sig=secret?crypto.createHmac('sha256',secret).update('bw-admin-v1').digest('hex'):'';
   const same=(a,b)=>{const x=Buffer.from(String(a)),y=Buffer.from(String(b));return x.length===y.length&&crypto.timingSafeEqual(x,y)};
   function cookie(req,name){const m=String(req.headers.cookie||'').split(/;\s*/).find(c=>c.startsWith(name+'='));return m?decodeURIComponent(m.slice(name.length+1)):''}
