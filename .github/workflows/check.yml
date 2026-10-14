@@ -1,4 +1,4 @@
-# Manual end-to-end check of the deployed test app (no secrets needed).
+# Manual end-to-end check of the deployed test app (no secrets needed). Results show as annotations.
 name: Check live app
 on: workflow_dispatch
 jobs:
@@ -7,7 +7,6 @@ jobs:
     steps:
       - name: Health
         run: |
-          curl -sS -m 30 https://beautywallet.liara.run/healthz; echo
-          curl -sS -m 30 -o /dev/null -w "legacy %{http_code}\n" https://beautywallet.liara.run/legacy/
-          curl -sS -m 30 -o /dev/null -w "site %{http_code}\n" https://beautywallet.liara.run/
-          curl -sS -m 200 https://beautywallet.liara.run/healthz/deep; echo
+          h=$(curl -sS -m 30 https://beautywallet.liara.run/healthz 2>&1 | tr -d '\n' | cut -c1-600); echo "::notice title=healthz::$h"
+          l=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" https://beautywallet.liara.run/legacy/ 2>&1); s=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" https://beautywallet.liara.run/ 2>&1); echo "::notice title=pages::legacy=$l site=$s"
+          d=$(curl -sS -m 200 https://beautywallet.liara.run/healthz/deep 2>&1 | tr -d '\n' | cut -c1-900); echo "::notice title=deep::$d"
