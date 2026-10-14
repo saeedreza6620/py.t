@@ -1,5 +1,5 @@
 # Deploys the test version (lite/) to Liara on every push to main.
-# Needs: repository secret LIARA_API_TOKEN, and optionally repository variable LIARA_APP_NAME (default: beautywallet).
+# Needs: repository secret LIARA_API_TOKEN; optional repository variables LIARA_APP_NAME (default: beautywallet) and LIARA_PLATFORM (node or docker, default: node).
 # AI keys (LIARA_API_KEY, ADMIN_TOKEN …) live only in the Liara app's environment variables, never here.
 name: Deploy lite to Liara
 on:
@@ -22,4 +22,5 @@ jobs:
         env:
           LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
           APP: ${{ vars.LIARA_APP_NAME || 'beautywallet' }}
-        run: npx --yes @liara/cli@latest deploy --app "$APP" --api-token "$LIARA_TOKEN" --port 3000 --platform node --detach
+          PLATFORM: ${{ vars.LIARA_PLATFORM || 'node' }}
+        run: npx --yes @liara/cli@latest deploy --app "$APP" --api-token "$LIARA_TOKEN" --port 3000 --platform "$PLATFORM" --detach
