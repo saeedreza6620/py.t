@@ -51,6 +51,28 @@ async function assistantPost(body,signal){
     var ans=[head].concat(rest.length?rest:p.answer.split('\n').slice(1)).join('\n');
     return json({answer:ans,personalLead:p.lead,review:{analysisType:'purchase',catalogCheck:p.check},purchaseLinks:p.decision==='avoid'?[]:links,assistantMessageId:remember('assistant',ans),processing:{mode:LITE?'lite':'claude',intent:'comparison'},decision:{label:p.decision},search:{enabled:live,sourceCount:r2.sources.length},trust:trust({catalog:R.catalogSummary(p.check),marketChecked:live,missing:live?['قیمت را پیش از پرداخت در خود فروشگاه دوباره ببین']:['قیمت نهایی، موجودی و اصالت فروشنده در این نسخه بررسی نمی‌شود']})});
   }}
+  // Product outside the catalog (lite server): find the exact product and its real INCI on the web ourselves,
+  // then decide with the strong model. Never ask the shopper for a photo or the back label.
+  if(LITE&&body.purchaseCheck){var pname=String(body.productName||message.replace(/^بررسی محصول پیش از خرید[:：]?\s*/,'')).slice(0,160);
+    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname})});rs=await rr.json().catch(function(){return null});if(!rr.ok)rs=null}catch(e){if(e&&e.name==='AbortError')throw e;rs=null}
+    var found=rs&&rs.found&&Array.isArray(rs.inci)&&rs.inci.length>=5,verified=!!(rs&&rs.verified);
+    var facts=rs?JSON.stringify({name:rs.name_en||pname,name_fa:rs.name_fa,brand:rs.brand,category:rs.category,inci:rs.inci,key_actives:rs.key_actives,spf:rs.spf,texture:rs.texture,fragrance:rs.fragrance,alcohol_denat:rs.alcohol_denat,essential_oils:rs.essential_oils,pore_clogging:rs.pore_clogging,claims:rs.claims_fa,skin_types:rs.skin_types_fa,sources:(rs.sources||[]).map(function(x){try{return new URL(x.url).hostname}catch(e){return ''}}).filter(Boolean)}).slice(0,6000):'';
+    var decide=[P().system,P().style,profileBlock(shared),
+      'محصولات کاتالوگ BeautyWallet (برای جایگزین فقط از همین‌ها نام ببر):\n'+catalogIndex(),
+      found?'فهرست ترکیبات واقعی همین محصول را خودمان از وب پیدا کرده‌ایم'+(verified?' و از منبع معتبر تأیید شده':' (اطمینان متوسط)')+'. فقط بر اساس همین داده و پروفایل و روتین کاربر قضاوت کن:\n'+facts
+           :'فهرست ترکیبات کامل این محصول در منابع آنلاین با اطمینان پیدا نشد'+(facts?'؛ داده جزئی پیدا شده: '+facts:'')+'. از شناخت عمومی خودت از همین محصول و خط تولیدش استفاده کن و اگر محصول را نمی‌شناسی صادقانه بگو.',
+      'این یک بررسی پیش از خرید است. خط اول دقیقاً یکی از این‌ها باشد: «نتیجه: بخر»، «نتیجه: نخر»، «نتیجه: فعلاً صبر کن». '+
+      'دلیل اصلی را با اشاره به ترکیبات مشخص (مثلاً اکتیو، عطر، الکل، روغن یا ماده منفذبند) و تناسب با نوع پوست، دغدغه و روتین فعلی کاربر بگو. تداخل با محصولات روتینش را بررسی کن. '+
+      'هرگز از کاربر عکس، متن پشت بسته یا فهرست ترکیبات نخواه؛ پیدا کردن این‌ها کار ماست. اگر محصول نسخه‌های مختلف دارد، فرض کن همان نسخه‌ای است که شناسایی شده.',
+      FORMAT].join('\n\n');
+    var rb={text:'',sources:[]},outp;try{rb=await ask(decide,signal,'default',false);outp=cleanModel(rb.text)}catch(e){if(e&&e.name==='AbortError')throw e;return json({error:errorText(e),code:'CLAUDE_'+String(e&&e.code||'error').toUpperCase()},503)}
+    if(!outp)return json({error:'پاسخ قابل‌استفاده‌ای دریافت نشد؛ دوباره بپرس'},502);
+    var lab=decisionFrom(outp);if(lab==='need_info'||lab==='undetermined'){lab='wait'}
+    // without a verified formula we never green-light a purchase
+    if(lab==='buy'&&!found){outp=outp.replace(/^نتیجه\s*[:：].*$/m,'نتیجه: فعلاً صبر کن');lab='wait'}
+    var srcs=(rs&&rs.sources||[]).slice(0,3);
+    return json({answer:outp,personalLead:outp.split('\n')[0],review:{analysisType:'purchase'},research:rs?{name:rs.name_en||'',nameFa:rs.name_fa||'',brand:rs.brand||'',verified:verified,found:found,variants:(rs.variants||[]).slice(0,4),sources:srcs,cached:!!rs.cached}:null,purchaseLinks:[],assistantMessageId:remember('assistant',outp),processing:{mode:'lite',intent:'research'},decision:{label:lab},search:{enabled:true,sourceCount:srcs.length},trust:trust({confidence:verified?'high':found?'medium':'low',confidenceMethod:'web_inci_research',missing:[]})});
+  }
   // Free chat or a product outside the catalog: the viewer's Claude, grounded in profile and catalog.
   var liveGeneral=LITE&&(MARKET.test(message)||!!body.purchaseCheck);
   var history=LS.get('bw_claude_messages',[]).slice(-7,-1).map(function(m){return {role:m.role==='assistant'?'assistant':'user',content:String(m.content).slice(0,1200)}});

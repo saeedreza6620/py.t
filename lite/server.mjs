@@ -87,6 +87,43 @@ async function ai(body){
   }catch(e){return {status:504,body:{error:e.name==='AbortError'?'جواب طول کشید؛ دوباره بزن':'اتصال به سرویس هوش مصنوعی برقرار نشد',code:'network'}}}finally{clearTimeout(timer)}
 }
 
+// ---------- product research: identify any product by name and fetch its real INCI list ----------
+// The shopper only types a name (Persian, transliterated, partial). We find the exact product and its
+// ingredient list on the web ourselves (brand site, INCIDecoder, Skinsort, big retailers) — never ask them for a photo.
+const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online','openai/gpt-5-mini:online','openai/gpt-4.1-mini:online'])];
+const RCACHE=path.join(DATA,'research-cache.json');let rcache={};try{rcache=JSON.parse(fs.readFileSync(RCACHE,'utf8'))}catch{}
+const normName=q=>String(q||'').toLowerCase().replace(/[ي]/g,'ی').replace(/[ك]/g,'ک').replace(/[‌\s\-_.,،()]+/g,' ').trim().slice(0,120);
+const RESEARCH_PROMPT=`You are a cosmetic-product researcher for an Iranian skincare app. A shopper typed the product name below the way people do in Iran: Persian, transliterated, partial or misspelled, often with the store's Persian title.
+Use web search to identify the EXACT product and read its FULL ingredient list (INCI).
+Search order: 1) the official brand website, 2) INCIDecoder / Skinsort / CosDNA / SkinCarisma, 3) large retailers (Sephora, Boots, Ulta, Lookfantastic, Digikala product specs).
+Search in English with the brand and product line (translate the Persian name first), and also the Persian name if needed.
+If several versions exist (oily/dry skin, old/new formula, SPF 30/50), choose the one that best matches the name and list the others in "variants".
+Never invent ingredients. Only fill "inci" with a list you actually saw on a page; otherwise use [].
+Answer with ONLY minified JSON, no prose, with exactly these keys:
+{"found":bool,"name_en":"","name_fa":"","brand":"","category":"cleanser|toner|serum|moisturizer|sunscreen|mask|exfoliant|eye|lip|body|other","confidence":"high|medium|low","inci":[""],"key_actives":[{"name":"","percent":null}],"spf":null,"texture":"","fragrance":null,"alcohol_denat":null,"essential_oils":[],"pore_clogging":[],"claims_fa":[""],"skin_types_fa":[""],"variants":[""],"source_note_fa":""}`;
+function parseJson(t){const s=String(t||'');const a=s.indexOf('{'),b=s.lastIndexOf('}');if(a<0||b<=a)return null;try{return JSON.parse(s.slice(a,b+1))}catch{return null}}
+async function research(name){
+  const key=normName(name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
+  const hit=rcache[key];if(hit&&Date.now()-hit.t<30*864e5)return {status:200,body:{...hit.data,cached:true}};
+  if(!KEY||!BASE)return {status:503,body:{error:'سرویس هوش مصنوعی تنظیم نشده',code:'not_configured'}};
+  let best=null;const tried=[];
+  for(const model of RESEARCH_MODELS){
+    let x;try{x=await chatCall(model,[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:'Product name typed by the shopper: '+String(name).slice(0,200)}])}catch(e){tried.push(model+':error');continue}
+    tried.push(model+':'+x.r.status);if(!x.r.ok){if([400,403,404,422,503].includes(x.r.status))continue;break}
+    const msg=x.d?.choices?.[0]?.message,j=parseJson(msg?.content);const sources=sourcesOf(msg);
+    if(!j)continue;
+    j.inci=Array.isArray(j.inci)?j.inci.map(v=>String(v).trim()).filter(Boolean).slice(0,80):[];
+    const cand={...j,sources,model,verified:!!j.found&&j.inci.length>=5&&sources.length>0&&j.confidence!=='low'};
+    if(!best||(cand.verified&&!best.verified)||(cand.inci.length>(best.inci||[]).length&&!best.verified))best=cand;
+    if(best.verified)break;
+  }
+  if(!best)return {status:502,body:{error:'الان نتونستم پیداش کنم؛ یه لحظه دیگه دوباره بزن',code:'research_failed',tried}};
+  const data={query:String(name).slice(0,120),...best,checkedAt:new Date().toISOString()};
+  if(best.verified){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
+  logUsage({at:new Date().toISOString(),research:true,status:200,model:best.model,verified:best.verified,sources:best.sources.length});
+  return {status:200,body:data};
+}
+
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
 const EVENTS=new Set(['site_open','app_open','app_open_installed','install','install_offer','install_click','check']);
 const evHits=new Map();let deepCache=null;
@@ -118,6 +155,11 @@ const server=http.createServer(async(req,res)=>{
       const body=await readBody(req,80000);const t0=Date.now();const r=await ai(body);
       logUsage({at:new Date().toISOString(),status:r.status,model:r.body.model||'',search:!!body.search,ms:Date.now()-t0,sources:(r.body.sources||[]).length,fallback:!!r.body.fallback||undefined,code:r.body.code||undefined,usage:r.body.usage||null});
       return send(res,r.status,r.body);
+    }
+    if(url.pathname==='/api/research'&&req.method==='POST'){
+      if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
+      const limited=allow(ip(req));if(limited)return send(res,429,{error:'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
+      const b=await readBody(req,4000);const r=await research(b.name);return send(res,r.status,r.body);
     }
     if(url.pathname==='/api/feedback'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});

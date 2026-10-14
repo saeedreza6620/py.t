@@ -1,6 +1,12 @@
 # Manual end-to-end check of the deployed test app (no secrets needed). Results show as annotations.
 name: Check live app
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      product:
+        description: 'Product name to research (optional)'
+        required: false
+        default: ''
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -8,6 +14,11 @@ jobs:
       - name: Health
         run: |
           h=$(curl -sS -m 30 https://beautywallet.liara.run/healthz 2>&1 | tr -d '\n' | cut -c1-600); echo "::notice title=healthz::$h"
-          l=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" https://beautywallet.liara.run/legacy/ 2>&1); s=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" https://beautywallet.liara.run/ 2>&1); echo "::notice title=pages::legacy=$l site=$s"
-          for u in https://ai.liara.ir/api/6acf72992688b05ae7bfe4e9/v1/chat/completions https://ai.liara.ir/api/v1/6acf72992688b05ae7bfe4e9/chat/completions; do r=$(curl -sS -m 20 -o /dev/null -X POST -H 'Authorization: Bearer x' -w "%{http_code} -> %{redirect_url}" "$u" 2>&1); echo "::notice title=redirect::$u => $r"; done
           d=$(curl -sS -m 200 https://beautywallet.liara.run/healthz/deep 2>&1 | tr -d '\n' | cut -c1-900); echo "::notice title=deep::$d"
+      - name: Research
+        if: ${{ inputs.product != '' }}
+        env: { P: '${{ inputs.product }}' }
+        run: |
+          body=$(jq -nc --arg n "$P" '{name:$n}')
+          r=$(curl -sS -m 200 -X POST -H 'Content-Type: application/json' -d "$body" https://beautywallet.liara.run/api/research 2>&1 | jq -c '{found,verified,confidence,name_en,brand,category,n_inci:(.inci|length),inci:(.inci[:12]),variants,sources:[.sources[]?.url],model,error,tried}' 2>&1 | cut -c1-1500)
+          echo "::notice title=research $P::$r"
