@@ -79,10 +79,10 @@ const server=http.createServer(async(req,res)=>{
   try{
     if(url.pathname==='/healthz/deep'){
       // real end-to-end check (plain answer + live search), cached 30 min so it can't be used to run up the bill
-      if(!deepCache||Date.now()-deepCache.t>30*60e3){
+      if(!deepCache||Date.now()-deepCache.t>(deepCache.ok?30*60e3:60e3)){
         const t0=Date.now();const a=await ai({tier:'default',input:'فقط بنویس: سلام'});const t1=Date.now();
         const b=await ai({search:true,input:'قیمت امروز میسلار واتر بایودرما سبیوم ۲۵۰ میل در دیجی‌کالا یا ترب چنده؟ خیلی کوتاه با منبع.'});
-        deepCache={t:Date.now(),r:{at:new Date().toISOString(),answer:{ok:a.status===200,model:a.body.model,fallback:!!a.body.fallback,seconds:Math.round((t1-t0)/100)/10,error:a.body.code||null},search:{ok:b.status===200,model:b.body.model,fallback:!!b.body.fallback,seconds:Math.round((Date.now()-t1)/100)/10,sources:(b.body.sources||[]).map(x=>new URL(x.url).hostname),sample:String(b.body.text||'').slice(0,300),error:b.body.code||null}}};
+        deepCache={t:Date.now(),ok:a.status===200&&b.status===200,r:{at:new Date().toISOString(),answer:{ok:a.status===200,model:a.body.model,fallback:!!a.body.fallback,seconds:Math.round((t1-t0)/100)/10,error:a.body.code||null},search:{ok:b.status===200,model:b.body.model,fallback:!!b.body.fallback,seconds:Math.round((Date.now()-t1)/100)/10,sources:(b.body.sources||[]).map(x=>new URL(x.url).hostname),sample:String(b.body.text||'').slice(0,300),error:b.body.code||null}}};
         logUsage({at:new Date().toISOString(),test:true,status:b.status,model:b.body.model||'',search:true,sources:(b.body.sources||[]).length});
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
