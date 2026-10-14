@@ -19,9 +19,11 @@ const E=process.env;
 for(const k of Object.keys(E)){const v=String(E[k]);const t=v.trim().replace(/^(["'])(.*)\1$/,'$2').trim();if(t!==v)E[k]=t}
 // /data is where the Liara disk is mounted (liara.json); DATA_DIR overrides it
 const persistent=path.resolve(DATA)===path.resolve(E.DATA_DIR||'/data');
-const BASE=String(E.AI_BASE_URL||'').trim().replace(/\/(chat\/completions)\/?$/,'').replace(/\/$/,'');
+// project endpoint is not a secret, so it is the default; AI_BASE_URL (or a near-miss name) overrides it
+const baseVar=Object.keys(E).find(k=>/^(AI_BASE_URL|AI_BASE|BASE_URL|LIARA_BASE_URL|LIARA_AI_BASE_URL)$/i.test(k.replace(/[\s\u200c\u200f\u200e]/g,''))&&/^https?:\/\//.test(String(E[k]).trim()));
+const BASE=String((baseVar&&E[baseVar])||'https://ai.liara.ir/api/v1/6acf72992688b05ae7bfe4e9').trim().replace(/\/(chat\/completions)\/?$/,'').replace(/\/$/,'');
 const KEY=E.LIARA_API_KEY||E.AI_API_KEY||'';
-const MODELS={light:E.AI_MODEL_LIGHT||E.AI_MODEL||'openai/gpt-4.1-mini',default:E.AI_MODEL||'openai/gpt-4.1-mini',complex:E.AI_MODEL_COMPLEX||E.AI_MODEL||'openai/gpt-4.1-mini',search:E.AI_MODEL_SEARCH||'openai/gpt-4.1-mini:online'};
+const MODELS={light:E.AI_MODEL_LIGHT||E.AI_MODEL||'openai/gpt-4.1-mini',default:E.AI_MODEL||'google/gemini-2.5-pro',complex:E.AI_MODEL_COMPLEX||E.AI_MODEL||'openai/gpt-4.1-mini',search:E.AI_MODEL_SEARCH||'openai/gpt-4.1:online'};
 const FALLBACK=E.AI_MODEL_FALLBACK||'google/gemini-2.5-flash',FALLBACK_SEARCH=E.AI_MODEL_SEARCH_FALLBACK||'openai/gpt-4.1-mini:online';
 // reasoning models (Gemini Pro, GPT-5…) spend tokens on thinking first, so leave room for the answer
 const MAX_TOKENS=Number(E.AI_MAX_TOKENS||8000);
