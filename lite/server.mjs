@@ -15,6 +15,8 @@ import os from 'node:os';import {makeAdmin} from './admin.mjs';
 function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
 const DATA=[process.env.DATA_DIR,'/data',path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
 const E=process.env;
+// values pasted from a .env file may keep quotes or stray spaces: clean them once
+for(const k of Object.keys(E)){const v=String(E[k]);const t=v.trim().replace(/^(["'])(.*)\1$/,'$2').trim();if(t!==v)E[k]=t}
 // /data is where the Liara disk is mounted (liara.json); DATA_DIR overrides it
 const persistent=path.resolve(DATA)===path.resolve(E.DATA_DIR||'/data');
 const BASE=String(E.AI_BASE_URL||'').trim().replace(/\/(chat\/completions)\/?$/,'').replace(/\/$/,'');
