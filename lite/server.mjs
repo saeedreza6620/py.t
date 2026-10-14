@@ -51,15 +51,16 @@ async function ai(body){
   const ctl=new AbortController(),timer=setTimeout(()=>ctl.abort(),body.search?110000:90000);
   try{
     let r,d;const first=model;
-    for(const m of model===fallback?[model]:[model,fallback]){
+    const chain=[...new Set([model,fallback,body.search?'openai/gpt-4o-mini:online':'openai/gpt-4o-mini'])];const tried=[];
+    for(const m of chain){
       model=m;
       r=await fetch(BASE+'/chat/completions',{method:'POST',signal:ctl.signal,headers:{'Content-Type':'application/json','Authorization':'Bearer '+KEY},body:JSON.stringify({model,messages,max_tokens:MAX_TOKENS,temperature:0.3})});
       d=await r.json().catch(()=>null);
       // unknown/unavailable model → try the safe fallback once instead of failing the user
-      if(r.ok||![400,404,422,503].includes(r.status))break;
+      tried.push(m+':'+r.status);if(r.ok||![400,401,403,404,422,503].includes(r.status))break;
       console.error('ai model failed, falling back',r.status,m);
     }
-    if(!r.ok){lastUpstream={status:r.status,message:String(d?.error?.message||d?.message||'').replace(/(sk-|eyJ)[\w.-]+/g,'[redacted]').slice(0,200)};const code=String(d?.error?.code||d?.code||r.status).replace(/[^\w.-]/g,'').slice(0,60);console.error('ai upstream',r.status,code,model);
+    if(!r.ok){lastUpstream={tried,status:r.status,message:String(d?.error?.message||d?.message||'').replace(/(sk-|eyJ)[\w.-]+/g,'[redacted]').slice(0,200)};const code=String(d?.error?.code||d?.code||r.status).replace(/[^\w.-]/g,'').slice(0,60);console.error('ai upstream',r.status,code,model);
       return {status:r.status===429?429:502,body:{error:r.status===401||r.status===403?'کلید یا دسترسی سرویس هوش مصنوعی مشکل دارد':r.status===402?'اعتبار سرویس هوش مصنوعی تمام شده':r.status===429?'سرویس شلوغه؛ یه کم بعد دوباره بزن':r.status===404?'نام مدل یا آدرس سرویس درست نیست':'دستیار الان جواب نداد؛ دوباره تلاش کن',code:'upstream_'+code}}}
     const msg=d?.choices?.[0]?.message;const text=typeof msg?.content==='string'?msg.content:Array.isArray(msg?.content)?msg.content.map(x=>x.text||'').join('\n'):'';
     if(!text.trim())return {status:502,body:{error:'پاسخ خالی بود؛ دوباره بپرس',code:'empty'}};
