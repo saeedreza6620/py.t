@@ -14,6 +14,7 @@ jobs:
       - name: Health
         run: |
           h=$(curl -sS -m 30 https://beautywallet.liara.run/healthz 2>&1 | tr -d '\n' | cut -c1-600); echo "::notice title=healthz::$h"
+          c=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" https://beautywallet.liara.run/config.json 2>&1); echo "::notice title=v73 config.json::$c"
           d=$(curl -sS -m 200 https://beautywallet.liara.run/healthz/deep 2>&1 | tr -d '\n' | cut -c1-900); echo "::notice title=deep::$d"
       - name: Research
         if: ${{ inputs.product != '' }}
