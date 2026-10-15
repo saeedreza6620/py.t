@@ -151,3 +151,4 @@ body.sw-on .bw-privacy-link{display:none!important}
 .sw-busy{animation:sw-pulse 1.4s ease-in-out infinite}@keyframes sw-pulse{50%{opacity:.55}}
 
 .sw-best{margin:4px 0 12px}.sw-best .sw-chips{display:flex;gap:6px;overflow-x:auto;padding:6px 0;scrollbar-width:none}.sw-best .sw-chip{white-space:nowrap;flex:none}
+.sw-refill{margin:8px 0}.sw-refill .sw-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}#swRefill>small{display:block;margin:12px 4px 2px}

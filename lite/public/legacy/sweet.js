@@ -58,7 +58,7 @@ document.addEventListener('click',function(e){var g=e.target.closest('[data-go]'
 
 /* ---------- onboarding: three tap-only cards ---------- */
 var STEPS=[{key:'skinBase',q:'پوستت چطوریه؟',hint:'همونی که بیشتر وقتا حسش می‌کنی',opts:[['چرب','💧'],['مختلط','🌗'],['نرمال','🌿'],['خشک','🍂'],['مطمئن نیستم','🤍']]},
- {key:'skinToday',q:'امروز چه حسی داره؟',hint:'راستشو بگو، قضاوت نمی‌کنم',opts:[['متعادل','😊'],['جوش فعال','🔴'],['تحریک‌شده','🔥'],['قرمز و حساس','🌹'],['خشک‌تر از معمول','🏜'],['چرب‌تر از معمول','✨']]},
+ {key:'skinToday',q:'امروز چه حسی داره؟',hint:'همونی که الان روی پوستت می‌بینی',opts:[['متعادل','😊'],['جوش فعال','🔴'],['تحریک‌شده','🔥'],['قرمز و حساس','🌹'],['خشک‌تر از معمول','🏜'],['چرب‌تر از معمول','✨']]},
  {key:'goal1',q:'دلت چی می‌خواد؟',hint:'یکی رو انتخاب کن، بقیه‌ش با من',opts:[['کاهش جوش التهابی','🎯'],['کاهش لک پس از جوش','🌤'],['آبرسانی و حمایت از لایهٔ محافظ پوست','💦'],['کاهش قرمزی','💜'],['کنترل چربی','🧊'],['کاهش علائم پیری','⏳']]}];
 var onb=document.createElement('div');onb.className='sw-onb';onb.hidden=true;document.body.append(onb);
 function openOnboarding(){var p=profile();onb.innerHTML='<div class="sw-dots">'+STEPS.map(function(){return '<i></i>'}).join('')+'</div><div class="sw-track" id="swTrack">'+STEPS.map(function(s,i){return '<section class="sw-slide" data-i="'+i+'"><small class="sw-hello">'+fa(i+1)+' از '+fa(STEPS.length)+'</small><h3>'+esc(s.q)+'</h3><p>'+esc(s.hint)+'</p><div class="sw-opts">'+s.opts.map(function(o){return '<button type="button" class="sw-opt" data-k="'+s.key+'" data-v="'+esc(o[0])+'" aria-pressed="'+(p[s.key]===o[0])+'"><span>'+o[1]+'</span>'+esc(o[0].replace('آبرسانی و حمایت از لایهٔ محافظ پوست','آبرسانی و ترمیم'))+'</button>'}).join('')+'</div></section>'}).join('')+'</div><div class="sw-onb-foot"><button class="sw-link" type="button" id="swSkip">بعداً</button><button class="sw-btn" type="button" id="swNext">بعدی</button></div>';
@@ -157,7 +157,7 @@ function pickSheet(slot){openSheet('<b>چی به روتین '+(slot==='am'?'صب
  box.onclick=function(e){var b=e.target.closest('[data-add]');if(b){addToRoutine(b.dataset.add,slot);closeSheet();toast('اضافه شد 💜')}}}
 
 /* ---------- feedback ---------- */
-function feedbackSheet(){var rating=0;openSheet('<b style="font-size:18px">بیوتی‌ولت چطور بود؟</b><p class="sw-sub">رک بگو، ناراحت نمی‌شم؛ همین نظرها بهترش می‌کنه</p><div class="sw-hearts" role="radiogroup" aria-label="امتیاز">'+[1,2,3,4,5].map(function(n){return '<button type="button" data-rate="'+n+'" aria-label="'+fa(n)+' از ۵">🤍</button>'}).join('')+'</div><div class="sw-chips" style="margin:10px 0" id="swFbTags">'+['جواب‌ها درست بود','گیج شدم','کند بود','قشنگ بود','محصول من نبود','قیمت می‌خواستم'].map(function(t){return '<button type="button" class="sw-chip" data-tag="'+t+'" aria-pressed="false">'+t+'</button>'}).join('')+'</div><textarea id="swFbText" rows="3" maxlength="1000" placeholder="هر چی دلت می‌خواد بگی… (اختیاری)" style="width:100%;padding:12px;font:inherit"></textarea><div class="sw-ractions"><button type="button" class="sw-btn" id="swFbSend">بفرست 💌</button><button type="button" class="sw-ghost" data-close="1">بعداً</button></div>');
+function feedbackSheet(){var rating=0;openSheet('<b style="font-size:18px">بیوتی‌ولت چطور بود؟</b><p class="sw-sub">نظرت کمک می‌کنه بیوتی‌ولت برای تو و بقیه بهتر بشه</p><div class="sw-hearts" role="radiogroup" aria-label="امتیاز">'+[1,2,3,4,5].map(function(n){return '<button type="button" data-rate="'+n+'" aria-label="'+fa(n)+' از ۵">🤍</button>'}).join('')+'</div><div class="sw-chips" style="margin:10px 0" id="swFbTags">'+['جواب‌ها درست بود','گیج شدم','کند بود','قشنگ بود','محصول من نبود','قیمت می‌خواستم'].map(function(t){return '<button type="button" class="sw-chip" data-tag="'+t+'" aria-pressed="false">'+t+'</button>'}).join('')+'</div><textarea id="swFbText" rows="3" maxlength="1000" placeholder="هر چی دلت می‌خواد بگی… (اختیاری)" style="width:100%;padding:12px;font:inherit"></textarea><div class="sw-ractions"><button type="button" class="sw-btn" id="swFbSend">بفرست 💌</button><button type="button" class="sw-ghost" data-close="1">بعداً</button></div>');
  var sh=$('#swSheet');sh.onclick=function(e){var r=e.target.closest('[data-rate]'),t=e.target.closest('[data-tag]');if(r){rating=+r.dataset.rate;$$('[data-rate]',sh).forEach(function(b){b.textContent=+b.dataset.rate<=rating?'💜':'🤍'})}if(t)t.setAttribute('aria-pressed',String(t.getAttribute('aria-pressed')!=='true'));if(e.target.closest('[data-close]'))closeSheet();if(e.target.id==='swFbSend')send()};
  async function send(){if(!rating){toast('اول یه امتیاز بده عزیزم');return}var btn=$('#swFbSend');btn.disabled=true;var tags=$$('[data-tag][aria-pressed="true"]',sh).map(function(b){return b.dataset.tag});var p=profile();try{var r=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rating:rating,tags:tags,text:$('#swFbText').value.trim(),skin:p.skinBase||'',routineSize:routineIds().length,app:'sweet'})});if(!r.ok)throw Error();write('bw_fb_sent',new Date().toISOString());closeSheet();toast('رسید، مرسی که وقت گذاشتی 💜')}catch(err){btn.disabled=false;toast('ارسال نشد؛ یه بار دیگه بزن')}}}
 // After a few real uses, ask once (never nag).
@@ -169,6 +169,41 @@ function renderMe(){var p=profile();if(!$('#swPriv',me)){var pv=document.createE
 /* ---------- start ---------- */
 document.body.classList.add('sw-on');
 window.addEventListener('storage',function(e){if(/^bw_/.test(e.key||''))renderRoutine()});
+
+/* ---------- on-time refill: products you already use and that worked, before they run out ---------- */
+var REFILL_DAYS={sunscreen:45,cleanser:60,moisturizer:60,serum:45,toner:75,micellar:75,exfoliant:90,mask:90,eye:90,treatment:60};
+function refillMeta(){var m=read('bw_refill',{});return m&&typeof m==='object'?m:{}}
+function setRefill(id,patch){var m=refillMeta();m[id]=Object.assign(m[id]||{},patch);write('bw_refill',m)}
+function lifeDays(id){var f=F(id)||{},p=P(id)||{},r=String(f.role||'')+' '+String(p.cat||'');for(var k in REFILL_DAYS)if(r.indexOf(k)>=0)return REFILL_DAYS[k];
+ if(/ضدآفتاب|ضد آفتاب/.test(r))return 45;if(/شوینده|ژل شستشو|فوم/.test(r))return 60;if(/میسلار/.test(r))return 75;if(/سرم/.test(r))return 45;if(/تونر/.test(r))return 75;if(/لایه|اسید/.test(r))return 90;return 60}
+function refillItems(){var ids=[];routineIds().concat(wallet()).forEach(function(id){if(P(id)&&ids.indexOf(id)<0)ids.push(id)});return ids}
+function daysLeft(id){var m=refillMeta()[id];if(!m||!m.since)return null;return Math.round(lifeDays(id)-(Date.now()-Date.parse(m.since))/864e5)}
+var refillBox=document.createElement('div');refillBox.id='swRefill';resultBox.after(refillBox);
+function renderRefill(){var m=refillMeta(),now=Date.now(),ids=refillItems(),html='';
+ var unknown=ids.filter(function(id){return !(m[id]&&m[id].since)}).slice(0,1);
+ var due=ids.filter(function(id){var d=daysLeft(id);return d!==null&&d<=10&&!(m[id].snooze&&Date.parse(m[id].snooze)>now)}).slice(0,2);
+ due.forEach(function(id){var p=P(id),d=daysLeft(id),w=m[id].worked;
+  html+='<article class="sw-card sw-refill" data-id="'+id+'"><div class="sw-rhead">'+thumb(p)+'<div class="sw-rname">'+esc(p.name)+'<br><small class="sw-sub">'+(d>0?'حدوداً '+fa(d)+' روز دیگه تموم می‌شه 💜':'احتمالاً دیگه ته کشیده')+'</small></div></div>'+
+  (w==='yes'?'<p class="sw-why">جواب داده؛ به‌موقع تمدیدش کن که روتینت قطع نشه.</p>'+shopHtml(p)+'<div class="sw-ractions"><button type="button" class="sw-ghost" data-rf="done">✓ تمدید کردم</button><button type="button" class="sw-ghost" data-rf="later">هنوز دارم</button></div>'
+   :w==='no'?'<p class="sw-why">پس به‌جای تمدید، یه گزینه‌ی بهتر برات پیدا کنیم.</p><div class="sw-ractions"><button type="button" class="sw-btn" data-rf="alt">🔎 جایگزین مناسب</button><button type="button" class="sw-ghost" data-rf="later">بعداً</button></div>'
+   :'<p class="sw-why">این مدت روی پوستت جواب داد؟</p><div class="sw-ractions"><button type="button" class="sw-btn" data-rf="yes">آره، همینو می‌خوام</button><button type="button" class="sw-ghost" data-rf="no">نه چندان</button></div>')+'</article>'});
+ unknown.forEach(function(id){var p=P(id);html+='<article class="sw-card sw-refill" data-id="'+id+'"><div class="sw-rhead">'+thumb(p)+'<div class="sw-rname">'+esc(p.name)+'<br><small class="sw-sub">کی شروعش کردی؟ تا قبل از تموم شدن یادت بندازم</small></div></div><div class="sw-chips"><button type="button" class="sw-chip" data-since="0">این هفته</button><button type="button" class="sw-chip" data-since="30">حدود یه ماه پیش</button><button type="button" class="sw-chip" data-since="60">دو ماه یا بیشتر</button><button type="button" class="sw-chip" data-since="x">ندارمش</button></div></article>'});
+ refillBox.innerHTML=html?'<small class="sw-sub">🔁 تمدید به‌موقع</small>'+html:'';
+ if(due.length&&window.bwTrack&&!renderRefill.seen){renderRefill.seen=1;window.bwTrack('refill_due')}}
+refillBox.addEventListener('click',function(e){var card=e.target.closest('[data-id]');if(!card)return;var id=card.dataset.id,b;
+ if((b=e.target.closest('[data-since]'))){if(b.dataset.since==='x'){write('bw_wallet',wallet().filter(function(x){return x!==id}));setRefill(id,{since:new Date(0).toISOString(),snooze:new Date(Date.now()+3650*864e5).toISOString()})}else setRefill(id,{since:new Date(Date.now()-Number(b.dataset.since)*864e5).toISOString()});renderRefill();return}
+ if((b=e.target.closest('[data-rf]'))){var a=b.dataset.rf;
+  if(a==='yes'||a==='no'){setRefill(id,{worked:a});if(window.bwTrack)window.bwTrack(a==='yes'?'refill_worked':'refill_not_worked')}
+  if(a==='later')setRefill(id,{snooze:new Date(Date.now()+7*864e5).toISOString()});
+  if(a==='done'){setRefill(id,{since:new Date().toISOString(),snooze:null});toast('عالیه 💜 دفعه‌ی بعد هم یادت می‌ندازم')}
+  if(a==='alt'){askInput.value=(P(id).cat||'');askInput.dispatchEvent(new Event('input'));askInput.focus();askInput.scrollIntoView({behavior:'smooth',block:'center'})}
+  renderRefill();return}
+ if(e.target.closest('.sw-shop')&&window.bwTrack)window.bwTrack('refill_buy')});
+// new products start their clock when added to the wallet or routine
+var _addR=addToRoutine;addToRoutine=function(id){if(!(refillMeta()[id]||{}).since)setRefill(id,{since:new Date().toISOString()});return _addR.apply(this,arguments)};
+document.addEventListener('click',function(e){var o=e.target.closest('[data-own]');if(o&&!(refillMeta()[o.dataset.own]||{}).since)setRefill(o.dataset.own,{since:new Date().toISOString()})},true);
+var _rh=renderHome;renderHome=function(){var r=_rh.apply(this,arguments);try{renderRefill()}catch(err){}return r};
+try{renderRefill()}catch(err){}
 function start(){window.switchTab('sw-home');if(!profile().skinBase&&!read('bw_sw_seen',false)){write('bw_sw_seen',true);setTimeout(openOnboarding,700)}}
 if(document.readyState==='complete')setTimeout(start,50);else window.addEventListener('load',function(){setTimeout(start,50)});
 })();
