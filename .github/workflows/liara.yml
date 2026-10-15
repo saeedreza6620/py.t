@@ -10,7 +10,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 16
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,6 +38,9 @@ jobs:
           PLATFORM: ${{ vars.LIARA_PLATFORM || 'node' }}
         run: |
           set -o pipefail
-          if ! timeout 420 npx --yes @liara/cli@9.5.1 deploy --app "$APP" --api-token "$LIARA_TOKEN" --port 3000 --platform "$PLATFORM" --detach 2>&1 | tee out.txt; then
-            msg=$(tail -c 900 out.txt | tr -d '\r' | tr '\n' ' ' | sed 's/[^[:print:]]//g'); echo "::error title=liara deploy::$msg"; exit 1
-          fi
+          # Liara's upload sometimes stalls after "Creating an archive"; one automatic retry
+          for try in 1 2; do
+            if timeout 300 npx --yes @liara/cli@9.5.1 deploy --app "$APP" --api-token "$LIARA_TOKEN" --port 3000 --platform "$PLATFORM" --detach 2>&1 | tee out.txt; then exit 0; fi
+            echo "::warning title=liara deploy::attempt $try failed"; sleep 20
+          done
+          msg=$(tail -c 900 out.txt | tr -d '\r' | tr '\n' ' ' | sed 's/[^[:print:]]//g'); echo "::error title=liara deploy::$msg"; exit 1
