@@ -32,7 +32,7 @@ const KEY=pickKey(RAW_KEY);
 const MODELS={light:E.AI_MODEL_LIGHT||E.AI_MODEL||'openai/gpt-4.1-mini',default:E.AI_MODEL||'google/gemini-2.5-pro',complex:E.AI_MODEL_COMPLEX||E.AI_MODEL||'openai/gpt-4.1-mini',search:E.AI_MODEL_SEARCH||'openai/gpt-4.1:online'};
 const FALLBACK=E.AI_MODEL_FALLBACK||'google/gemini-2.5-flash',FALLBACK_SEARCH=E.AI_MODEL_SEARCH_FALLBACK||'openai/gpt-4.1-mini:online';
 // reasoning models (Gemini Pro, GPT-5…) spend tokens on thinking first, so leave room for the answer
-const MAX_TOKENS=Number(E.AI_MAX_TOKENS||2000);
+const MAX_TOKENS=Number(E.AI_MAX_TOKENS||8000);
 const HOURLY=Number(E.HOURLY_LIMIT||40),DAILY=Number(E.DAILY_LIMIT||600);
 const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.PNG':'image/png','.JPG':'image/jpeg','.webp':'image/webp','.svg':'image/svg+xml','.ico':'image/x-icon','.woff2':'font/woff2','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.xml':'application/xml'};
 const SEC={'X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','X-Frame-Options':'DENY'};
@@ -98,7 +98,7 @@ async function ai(body){
 // ---------- product research: identify any product by name and fetch its real INCI list ----------
 // The shopper only types a name (Persian, transliterated, partial). We find the exact product and its
 // ingredient list on the web ourselves (brand site, INCIDecoder, Skinsort, big retailers) — never ask them for a photo.
-const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online','openai/gpt-4.1-mini:online'])];
+const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online','openai/gpt-5-mini:online','openai/gpt-4.1-mini:online'])];
 const RCACHE=path.join(DATA,'research-cache.json');let rcache={};try{rcache=JSON.parse(fs.readFileSync(RCACHE,'utf8'))}catch{}
 const normName=q=>String(q||'').toLowerCase().replace(/[ي]/g,'ی').replace(/[ك]/g,'ک').replace(/[‌\s\-_.,،()]+/g,' ').trim().slice(0,120);
 const RESEARCH_PROMPT=`You are a cosmetic-product researcher for an Iranian skincare app. A shopper typed the product name below the way people do in Iran: Persian, transliterated, partial or misspelled, often with the store's Persian title.
@@ -173,12 +173,12 @@ if(BEST_DAYS>0)setInterval(()=>{if(!best.at||Date.now()-Date.parse(best.at)>BEST
 
 // ---------- Negin pricing (editable in the admin panel) ----------
 const CFG=path.join(DATA,'config.json');
-const DEFAULT_CFG={aiDailyCalls:80,aiDailyOnline:30,registerGift:5,trialGift:5,welcome:10,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:20,price:49000},{n:60,price:119000}],subscription:{price:99000,monthly:50,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
+const DEFAULT_CFG={aiDailyCalls:1000,aiDailyOnline:400,registerGift:5,trialGift:5,welcome:10,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:20,price:49000},{n:60,price:119000}],subscription:{price:99000,monthly:50,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
 let cfg=DEFAULT_CFG;try{cfg={...DEFAULT_CFG,...JSON.parse(fs.readFileSync(CFG,'utf8'))}}catch{}
 function saveCfg(next){ // merges: a form only changes the fields it sends
   const has=k=>Object.prototype.hasOwnProperty.call(next,k)&&String(next[k]).trim()!=='';const num=(k,cur,min=0,max=1e9)=>has(k)?Math.max(min,Math.min(max,Number(String(next[k]).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))||0)):cur;
   const o=cfg||DEFAULT_CFG,oc=o.costs||DEFAULT_CFG.costs,op=o.packs||DEFAULT_CFG.packs,os=o.subscription||DEFAULT_CFG.subscription;
-  const c={aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??80,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??30,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
+  const c={aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
     costs:{research:num('research',oc.research),live:num('live',oc.live),gift:num('gift',oc.gift),pack:num('pack',oc.pack)},
     packs:[{n:num('p1n',op[0].n,1),price:num('p1p',op[0].price)},{n:num('p2n',op[1].n,1),price:num('p2p',op[1].price)}],
     subscription:{price:num('subp',os.price),monthly:num('subn',os.monthly),perks:has('perks')?String(next.perks).slice(0,200):os.perks},
@@ -221,7 +221,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,version:'74'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,version:'75'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
