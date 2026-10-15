@@ -67,7 +67,7 @@ function openOnboarding(){var p=profile();onb.innerHTML='<div class="sw-dots">'+
  function dots(){$$('.sw-dots i',onb).forEach(function(d,k){d.classList.toggle('on',k===i)});$('#swNext',onb).textContent=i===STEPS.length-1?'تموم شد 💜':'بعدی'}
  track.addEventListener('scroll',function(){var n=Math.round(Math.abs(track.scrollLeft)/track.clientWidth);if(n!==i){i=n;dots()}},{passive:true});
  onb.addEventListener('click',function(e){var o=e.target.closest('.sw-opt');if(o){var patch={};patch[o.dataset.k]=o.dataset.v;saveProfile(patch);$$('.sw-opt[data-k="'+o.dataset.k+'"]',onb).forEach(function(b){b.setAttribute('aria-pressed',String(b===o))});setTimeout(function(){go(i+1)},260)}if(e.target.id==='swNext')go(i+1);if(e.target.id==='swSkip')finish()});
- function finish(){onb.hidden=true;toast(profile().skinBase?'مرسی عزیزم، حالا دقیق‌تر کمکت می‌کنم 💜':'هر وقت خواستی از «من» کاملش کن');renderHome();renderRoutine();renderMe()}
+ function finish(){onb.hidden=true;if(PENDING&&profile().skinBase){var pq=PENDING;PENDING=null;setTimeout(function(){runQ(pq)},350)}toast(profile().skinBase?'مرسی عزیزم، حالا دقیق‌تر کمکت می‌کنم 💜':'هر وقت خواستی از «من» کاملش کن');renderHome();renderRoutine();renderMe()}
  dots()}
 $('#swEditSkin',me).onclick=openOnboarding;
 
@@ -216,9 +216,15 @@ function money(n){return fa(Number(n||0).toLocaleString('en-US')).replace(/,/g,'
 function neginSheet(need,go){if(!CFG)return;var c=CFG;openSheet('<b style="font-size:18px">💎 کیف نگین</b><p class="sw-sub">'+(need?'برای این کار '+fa(need)+' نگین لازمه؛ موجودی تو '+fa(negin())+' نگینه':'موجودی تو: '+fa(negin())+' نگین')+'</p>'+
  '<div class="sw-costs"><small>هر کار چند نگین؟</small><span>بررسی محصولات کاتالوگ و روتین: <b>رایگان</b></span><span>پیدا کردن و بررسی محصول تازه: <b>'+fa(c.costs.research)+'</b></span><span>قیمت، تخفیف و قسط زنده: <b>'+fa(c.costs.live)+'</b></span><span>هدیه‌ی مطمئن: <b>'+(c.costs.gift?fa(c.costs.gift):'رایگان')+'</b></span></div>'+
  '<div class="sw-packs">'+c.packs.map(function(p,i){return '<button type="button" class="sw-pack" data-pack="'+i+'"><b>'+fa(p.n)+' نگین</b><small>'+money(p.price)+'</small></button>'}).join('')+'<button type="button" class="sw-pack sw-sub-pack" data-subs="1"><b>اشتراک ماهانه</b><small>'+money(c.subscription.price)+' · هر ماه '+fa(c.subscription.monthly)+' نگین</small><small>'+esc(c.subscription.perks||'')+'</small></button></div>'+
- '<div class="sw-ractions"><button type="button" class="sw-ghost" data-close="1">بستن</button></div>');
- $('#swSheet').onclick=function(e){if(e.target.closest('[data-close]'))closeSheet();var pk=e.target.closest('[data-pack],[data-subs]');if(!pk)return;if(window.bwTrack)window.bwTrack(pk.dataset.subs?'sub_click':'negin_buy_click');
-  if(c.trial){closeSheet();toast('خرید هنوز فعال نشده؛ تو دوره‌ی آزمایشی این بار مهمون مایی 💜');if(need&&go)go()}}}
+ (need?'<div class="sw-ractions"><button type="button" class="sw-ghost" data-skip="1">فعلاً نه، با نگین هدیه ادامه می‌دم</button></div>':'<div class="sw-ractions"><button type="button" class="sw-ghost" data-close="1">بستن</button></div>'));
+ $('#swSheet').onclick=function(e){if(e.target.closest('[data-close]'))closeSheet();
+  if(e.target.closest('[data-skip]')){var key='bw_trial_gift_at',last=Date.parse(read(key,'')||0)||0;if(Date.now()-last>20*3600e3&&c.trialGift){write(key,new Date().toISOString());write('bw_negin',negin()+Number(c.trialGift));neginUI();if(window.bwTrack)window.bwTrack('trial_gift');toast(fa(c.trialGift)+' نگین هدیه گرفتی 💜')}closeSheet();if(need&&go){if(negin()>=need){write('bw_negin',negin()-need);neginUI()}go()}return}
+  var pk=e.target.closest('[data-pack],[data-subs]');if(!pk)return;if(window.bwTrack)window.bwTrack(pk.dataset.subs?'sub_click':'negin_buy_click');
+  var item=pk.dataset.subs?'اشتراک ماهانه ('+money(c.subscription.price)+')':fa(c.packs[pk.dataset.pack].n)+' نگین ('+money(c.packs[pk.dataset.pack].price)+')';
+  openSheet('<b style="font-size:18px">💎 '+esc(item)+'</b><p class="sw-sub">تا وقتی درگاه پرداخت راه بیفته، خریدت رو همکارای بیوتی‌ولت انجام می‌دن. شماره‌ت رو بذار، خیلی زود پیام می‌دیم 💜</p><label class="sw-field">اسمت<input id="bName" maxlength="40"></label><label class="sw-field">موبایل<input id="bPhone" inputmode="tel" dir="ltr" placeholder="09…" maxlength="14"></label><div class="sw-ractions"><button type="button" class="sw-btn" id="bSend">ثبت درخواست</button><button type="button" class="sw-ghost" data-close="1">بعداً</button></div>');
+  $('#swSheet').onclick=async function(ev){if(ev.target.closest('[data-close]'))closeSheet();if(ev.target.id!=='bSend')return;var bt=ev.target;bt.disabled=true;var d='';try{d=localStorage.getItem('bw_device')||''}catch(er){}
+   try{var r=await fetch('/buy-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:$('#bName').value.trim(),phone:$('#bPhone').value.trim(),item:item,d:d})});var j=await r.json().catch(function(){return {}});if(!r.ok)throw Error(j.error||'');
+    closeSheet();toast('درخواستت رسید 💜 به‌زودی پیام می‌دیم؛ این بار مهمون مایی');if(need&&go)go()}catch(er){bt.disabled=false;toast((er.message||'نرسید')+'؛ دوباره بزن')}}}}
 // expensive actions spend Negin; catalog checks and the routine stay free
 var _askOut=askOutside;askOutside=function(q){spend('research',function(){_askOut(q)})};
 var _live=livePrice;livePrice=function(n,b){spend('live',function(){_live(n,b)})};
@@ -258,6 +264,11 @@ async function giftAdvice(id){var r=await fetch('/gift/'+id);var g=await r.json(
     if(e.target.id==='gSend'){if(!ans.skinBase||!ans.skinToday||!ans.goal1){toast('هر سه تا رو انتخاب کن 💜');return}try{var r=await fetch('/gift/'+id,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(ans)});if(!r.ok)throw Error();if(!profile().skinBase)saveProfile(ans);write('bw_sw_seen',true);
      openSheet('<b style="font-size:18px">مرسی 💜</b><p class="sw-sub">جوابت رسید؛ یه چیز خوب تو راهه. تا اون موقع، اگه خواستی قبل از خرید هر محصول پوستی از من بپرس.</p><div class="sw-ractions"><button type="button" class="sw-btn" data-close="1">بزن بریم</button></div>');$('#swSheet').onclick=function(ev){if(ev.target.closest('[data-close]')){closeSheet();renderHome()}}}catch(err){toast('نرسید؛ دوباره بزن')}}}},1200)}).catch(function(){})})();
 document.addEventListener('click',function(e){if(e.target.closest('[data-act="gift"]'))giftSheet();if(e.target.closest('[data-act="negin"]'))neginSheet(0)});
-function start(){window.switchTab('sw-home');if(!/[?&]gift=/.test(location.search)&&!profile().skinBase&&!read('bw_sw_seen',false)){write('bw_sw_seen',true);setTimeout(openOnboarding,700)}}
+new MutationObserver(function(){var st=$('.sw-stamp.st-buy:not([data-fx])',resultBox);if(!st)return;st.dataset.fx=1;var r=st.getBoundingClientRect();for(var i=0;i<6;i++){var h=document.createElement('i');h.className='sw-heart';h.textContent='💜';h.style.left=(r.left+r.width/2+(Math.random()*80-40))+'px';h.style.top=(r.top+window.scrollY)+'px';h.style.animationDelay=(i*70)+'ms';document.body.append(h);setTimeout(function(x){x.remove()},1400,h)}}).observe(resultBox,{childList:true,subtree:true});
+var PENDING=null;
+function runQ(q){askInput.value=q;var m=matches(q);if(m[0]&&(m.length===1||norm(m[0].name)===norm(q)))checkProduct(m[0].id);else askOutside(q)}
+function start(){window.switchTab('sw-home');var qp='';try{qp=(new URLSearchParams(location.search).get('q')||'').trim().slice(0,120)}catch(e){}
+ if(qp){try{history.replaceState(null,'',location.pathname)}catch(e){}askInput.value=qp;if(!profile().skinBase){PENDING=qp;write('bw_sw_seen',true);setTimeout(function(){openOnboarding();toast('اول سه تا سؤال کوچولو، بعد «'+qp.slice(0,24)+'» رو می‌سنجم 💜')},500)}else setTimeout(function(){runQ(qp)},300);return}
+if(!/[?&]gift=/.test(location.search)&&!profile().skinBase&&!read('bw_sw_seen',false)){write('bw_sw_seen',true);setTimeout(openOnboarding,700)}}
 if(document.readyState==='complete')setTimeout(start,50);else window.addEventListener('load',function(){setTimeout(start,50)});
 })();
