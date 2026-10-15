@@ -13,11 +13,12 @@ export function makeAdmin({getSpend,getUsers,SMS_ON,getCfg,saveCfg,getGifts,chat
 const adminKey=Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN');
 // normalise what phones add: Persian/Arabic digits, invisible marks, stray spaces
 const norm=v=>String(v||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[\s\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]/g,'').replace(/^(["'])(.*)\1$/,'$2');
-const secret=norm(adminKey?E[adminKey]:'');
+const secret=norm(adminKey?E[adminKey]:'').replace(/^ADMIN_TOKEN=/i,'');
   const sig=secret?crypto.createHmac('sha256',secret).update('bw-admin-v1').digest('hex'):'';
   const same=(a,b)=>{const x=Buffer.from(String(a)),y=Buffer.from(String(b));return x.length===y.length&&crypto.timingSafeEqual(x,y)};
   function cookie(req,name){const m=String(req.headers.cookie||'').split(/;\s*/).find(c=>c.startsWith(name+'='));return m?decodeURIComponent(m.slice(name.length+1)):''}
-  function authed(req,url){if(!secret)return false;if(same(cookie(req,'bw_admin'),sig))return true;const t=url.searchParams.get('token');return !!t&&same(norm(t),secret)}
+  const okPass=t=>!!t&&same(norm(t).toLowerCase(),secret.toLowerCase()); // phones capitalise the first letter
+  function authed(req,url){if(!secret)return false;if(same(cookie(req,'bw_admin'),sig))return true;return okPass(url.searchParams.get('token'))}
   const origin=req=>(String(req.headers['x-forwarded-proto']||'').split(',')[0]||(req.socket.encrypted?'https':'http'))+'://'+req.headers.host;
 
   function stats(){
@@ -124,12 +125,14 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
   return async function handle(req,res,url){
     const p=url.pathname;
     if(p==='/admin/login'&&req.method==='POST'){
-      const f=await readForm(req);if(!secret||!same(norm(f.token),secret))return send(res,401,loginPage(true),'text/html; charset=utf-8');
+      const f=await readForm(req);if(!secret||!okPass(f.token))return send(res,401,loginPage(true),'text/html; charset=utf-8');
       const secure=String(req.headers['x-forwarded-proto']||'').startsWith('https')?'; Secure':'';
-      res.writeHead(303,{Location:'/admin','Set-Cookie':`bw_admin=${sig}; HttpOnly; SameSite=Strict; Path=/admin; Max-Age=2592000${secure}`});return res.end();
+      res.writeHead(303,{Location:'/admin','Set-Cookie':`bw_admin=${sig}; HttpOnly; SameSite=Lax; Path=/admin; Max-Age=31536000${secure}`});return res.end();
     }
     if(p==='/admin/logout'){res.writeHead(303,{Location:'/admin','Set-Cookie':'bw_admin=; HttpOnly; SameSite=Strict; Path=/admin; Max-Age=0'});return res.end()}
     if(!secret)return send(res,503,page('پنل مدیریت','<div class="login card"><h1>پنل مدیریت خاموش است</h1><p class="note">در لیارا متغیر <code>ADMIN_TOKEN</code> را بگذار.</p></div>'),'text/html; charset=utf-8');
+    if(secret&&okPass(url.searchParams.get('token'))&&(p==='/admin'||p==='/admin/')){const secure=String(req.headers['x-forwarded-proto']||'').startsWith('https')?'; Secure':'';
+      res.writeHead(303,{Location:'/admin','Set-Cookie':`bw_admin=${sig}; HttpOnly; SameSite=Lax; Path=/admin; Max-Age=31536000${secure}`,'Cache-Control':'no-store','Referrer-Policy':'no-referrer'});return res.end()}
     if(!authed(req,url))return send(res,p==='/admin'||p==='/admin/'?200:401,loginPage(false),'text/html; charset=utf-8',{'Cache-Control':'no-store'});
     if(p==='/admin/config'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,'forbidden','text/plain');saveCfg(await readForm(req));res.writeHead(303,{Location:'/admin'});return res.end()}
     if(p==='/admin/bestsellers'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,{error:'forbidden'});refreshBestsellers();return send(res,202,{started:true})}
@@ -150,7 +153,7 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
     if(p==='/admin/users.csv'){const cols=['name','phone','verified','installed','os','first','last'];const u=Object.values(getUsers());
       return send(res,200,'﻿'+cols.join(',')+'\n'+u.map(r=>cols.map(c=>{let v=String(r[c]??'');if(/^[=+\-@]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'}).join(',')).join('\n'),'text/csv; charset=utf-8',{'Content-Disposition':'attachment; filename="beautywallet-users.csv"','Cache-Control':'no-store'})}
     if(p==='/admin/feedback.csv'||(p==='/admin/feedback'&&url.searchParams.get('format')==='csv'))return send(res,200,csv(),'text/csv; charset=utf-8',{'Content-Disposition':'attachment; filename="beautywallet-feedback.csv"','Cache-Control':'no-store'});
-    if(p==='/admin'||p==='/admin/'||p==='/admin/feedback')return send(res,200,dashboard(req),'text/html; charset=utf-8',{'Cache-Control':'no-store'});
+    if(p==='/admin'||p==='/admin/'||p==='/admin/feedback'){let html;try{html=dashboard(req)}catch(e){console.error('admin dashboard',e);html=page('پنل مدیریت',`<div class="login card"><h1>یه بخش پنل خطا داد</h1><p class="note" dir="ltr">${esc(String(e&&e.message||e).slice(0,300))}</p></div>`)}return send(res,200,html,'text/html; charset=utf-8',{'Cache-Control':'no-store'})}
     return send(res,404,'پیدا نشد','text/plain; charset=utf-8');
   };
 }
