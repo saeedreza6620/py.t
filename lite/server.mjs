@@ -125,14 +125,44 @@ async function research(name){
 }
 
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
-const EVENTS=new Set(['site_open','app_open','app_open_installed','install','install_offer','install_click','check']);
+const EVENTS=new Set(['site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click']);
 const evHits=new Map();let deepCache=null;
 function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,rawLength:String(RAW_KEY).length,keysInValue:(String(RAW_KEY).match(/eyJ[\w-]+\.eyJ/g)||[]).length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
 let lastUpstream=null;
 function osOf(ua){ua=String(ua||'');return /iPhone|iPad|iPod/i.test(ua)?'ios':/Android/i.test(ua)?'android':'desktop'}
 function logUsage(row){fs.appendFile(path.join(DATA,'usage.jsonl'),JSON.stringify(row)+'\n',()=>{})}
-const admin=makeAdmin({chatCall,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 
+// ---------- affiliate (Digikala + Khanoumi only) ----------
+// AFF_DIGIKALA / AFF_KHANOUMI: link template from the affiliate panel with {url} (raw) or {url_enc} (encoded),
+// e.g. https://affiliate.example/r?to={url_enc}&id=123 . Without a template the plain store link is used.
+const AFF={dk:{host:/(^|\.)digikala\.com$/i,tpl:E.AFF_DIGIKALA||''},kh:{host:/(^|\.)khanoumi\.com$/i,tpl:E.AFF_KHANOUMI||''}};
+function affiliateUrl(shop,target){const a=AFF[shop];if(!a)return null;let u;try{u=new URL(target)}catch{return null}
+  if(u.protocol!=='https:'||!a.host.test(u.hostname))return null;
+  return {url:a.tpl?a.tpl.replace('{url_enc}',encodeURIComponent(u.href)).replace('{url}',u.href):u.href,aff:!!a.tpl}}
+
+// ---------- bestsellers of Digikala & Khanoumi, researched ahead of time ----------
+const BEST=path.join(DATA,'bestsellers.json');let best={at:null,items:[],running:false};try{best={...JSON.parse(fs.readFileSync(BEST,'utf8')),running:false}}catch{}
+const BEST_PROMPT=`Use web search on digikala.com and khanoumi.com right now. List the currently best-selling FACE SKINCARE products (sunscreen, cleanser, moisturizer, serum, toner, micellar water, acne care) from their bestseller / most-popular listings in skincare categories.
+Only include products you actually saw on those pages. Return ONLY minified JSON: {"items":[{"name_fa":"","name_en":"","brand":"","category":"","shop":"digikala|khanoumi","url":""}]} with up to 30 items, most popular first, no duplicates.`;
+async function refreshBestsellers(limit=Number(E.BESTSELLER_LIMIT||25)){
+  if(best.running||!KEY)return;best.running=true;
+  try{
+    const x=await chatCall(E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online',[{role:'system',content:BEST_PROMPT},{role:'user',content:'Persian skincare shoppers in Iran. Today: '+new Date().toISOString().slice(0,10)}]);
+    const j=x.r.ok?parseJson(x.d?.choices?.[0]?.message?.content):null;const list=Array.isArray(j?.items)?j.items:[];
+    const out=[],seen=new Set();
+    for(const it of list){if(out.length>=limit)break;const nm=String(it.name_en||it.name_fa||'').trim();const k=normName(nm);if(!nm||seen.has(k))continue;seen.add(k);
+      const r=await research(it.name_en?it.name_en+' '+(it.brand||''):it.name_fa).catch(()=>null);const d=r&&r.status===200?r.body:null;
+      out.push({name_fa:String(it.name_fa||d?.name_fa||'').slice(0,120),name_en:String(it.name_en||d?.name_en||'').slice(0,120),brand:String(it.brand||d?.brand||'').slice(0,60),category:String(d?.category||it.category||'').slice(0,30),shop:it.shop==='khanoumi'?'khanoumi':'digikala',url:(()=>{try{const u=new URL(it.url);return /(digikala|khanoumi)\.com$/i.test(u.hostname)?u.href:''}catch{return ''}})(),verified:!!d?.verified,query:nm})}
+    if(out.length){best={at:new Date().toISOString(),items:out,running:false};fs.writeFileSync(BEST,JSON.stringify(best))}
+    logUsage({at:new Date().toISOString(),bestsellers:true,status:x.r.status,found:list.length,kept:out.length});
+  }catch(e){console.error('bestsellers',e.message)}finally{best.running=false}
+}
+// refresh weekly in the background (BESTSELLER_DAYS=0 turns it off)
+const BEST_DAYS=Number(E.BESTSELLER_DAYS??7);
+if(BEST_DAYS>0)setInterval(()=>{if(!best.at||Date.now()-Date.parse(best.at)>BEST_DAYS*864e5)refreshBestsellers()},6*3600e3).unref?.();
+if(BEST_DAYS>0&&!best.at)setTimeout(()=>refreshBestsellers(),60e3).unref?.();
+
+const admin=makeAdmin({chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
   try{
@@ -156,6 +186,13 @@ const server=http.createServer(async(req,res)=>{
       logUsage({at:new Date().toISOString(),status:r.status,model:r.body.model||'',search:!!body.search,ms:Date.now()-t0,sources:(r.body.sources||[]).length,fallback:!!r.body.fallback||undefined,code:r.body.code||undefined,usage:r.body.usage||null});
       return send(res,r.status,r.body);
     }
+    if(url.pathname==='/go'){
+      const shop=url.searchParams.get('s')==='kh'?'kh':'dk';const t=affiliateUrl(shop,url.searchParams.get('u')||'');
+      if(!t)return send(res,400,'لینک نامعتبر','text/plain; charset=utf-8');
+      fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:new Date().toISOString(),t:'aff_click',d:String(url.searchParams.get('d')||'anon').replace(/[^a-z0-9]/g,'').slice(0,40)||'anon',shop,aff:t.aff,page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
+      res.writeHead(302,{Location:t.url,'Cache-Control':'no-store','Referrer-Policy':'no-referrer-when-downgrade'});return res.end();
+    }
+    if(url.pathname==='/api/bestsellers'||url.pathname==='/bestsellers.json'){return send(res,200,{at:best.at,items:best.items.map(({name_fa,name_en,brand,category,shop,verified,query})=>({name_fa,name_en,brand,category,shop,verified,query}))},'application/json',{'Cache-Control':'public, max-age=600'})}
     if(url.pathname==='/api/research'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
