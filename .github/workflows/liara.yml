@@ -18,6 +18,18 @@ jobs:
       - name: Check secret
         env: { T: '${{ secrets.LIARA_API_TOKEN }}' }
         run: test -n "$T" || { echo "::error::Add the LIARA_API_TOKEN repository secret first"; exit 1; }
+      # Gate: nothing reaches users unless answers are personal to the skin/routine and the server boots.
+      - name: Quality gate (personalised verdicts, fresh bundle, server boots)
+        run: |
+          npm i --no-save --no-audit --no-fund typescript@5.6.3 >/dev/null
+          node scripts/test-skin-fit.mjs
+          node scripts/test-catalog-review.mjs
+          node scripts/test-catalog-routine.mjs
+          node --input-type=module -e "import {bwReviewBundle} from './scripts/lib-bw-review.mjs';import fs from 'node:fs';if(bwReviewBundle(process.cwd()+'/')!==fs.readFileSync('lite/public/legacy/bw-review.js','utf8')){console.log('::error::lite/public/legacy/bw-review.js is stale; run node scripts/build-lite.mjs');process.exit(1)}"
+          node --check lite/server.mjs && node --check lite/admin.mjs
+          mkdir -p /tmp/bwd && (cd lite && PORT=3999 DATA_DIR=/tmp/bwd ADMIN_TOKEN=ci node server.mjs > /tmp/bw.log 2>&1 &) && sleep 3
+          curl -sf localhost:3999/healthz || { echo "::error title=server did not start::$(tail -c 600 /tmp/bw.log | tr '\n' ' ')"; exit 1; }
+          curl -sf -o /dev/null localhost:3999/legacy/ && curl -sf -o /dev/null localhost:3999/admin
       - name: Deploy
         working-directory: lite
         env:

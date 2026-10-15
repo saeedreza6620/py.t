@@ -13,7 +13,8 @@ export function makeAdmin({getSpend,getUsers,SMS_ON,getCfg,saveCfg,getGifts,chat
 const adminKeys=Object.keys(E).filter(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim());const adminKey=adminKeys[0];
 // normalise what phones add: Persian/Arabic digits, invisible marks, stray spaces
 const norm=v=>String(v||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[\s\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]/g,'').replace(/^(["'])(.*)\1$/,'$2');
-const clean=v=>{const x=norm(v).replace(/^ADMIN_TOKEN[:=]/i,'');const m=x.match(/^(.+?)[=:]?\1$/);return m?m[1]:x}; // a value pasted twice ("X=X") counts as Xconst secret=clean(adminKey?E[adminKey]:'');const secrets=adminKeys.map(k=>clean(E[k])).filter(Boolean);
+const clean=v=>{const x=norm(v).replace(/^ADMIN_TOKEN[:=]/i,'');const m=x.match(/^(.+?)[=:]?\1$/);return m?m[1]:x}; // a value pasted twice ("X=X") counts as X
+const secret=clean(adminKey?E[adminKey]:'');const secrets=adminKeys.map(k=>clean(E[k])).filter(Boolean);
   const sig=secret?crypto.createHmac('sha256',secret).update('bw-admin-v1').digest('hex'):'';
   const same=(a,b)=>{const x=Buffer.from(String(a)),y=Buffer.from(String(b));return x.length===y.length&&crypto.timingSafeEqual(x,y)};
   function cookie(req,name){const m=String(req.headers.cookie||'').split(/;\s*/).find(c=>c.startsWith(name+'='));return m?decodeURIComponent(m.slice(name.length+1)):''}

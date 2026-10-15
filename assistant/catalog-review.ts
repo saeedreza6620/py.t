@@ -1,6 +1,6 @@
 // Server glue for the deterministic catalog routine check.
 // The catalog result is the decision; the AI model (when reachable) only explains it.
-import {evaluateRoutine,CATALOG_ROUTINE_ENGINE,type CatalogFormulas,type RoutineCheck} from './catalog-routine';
+import {evaluateRoutine,skinState,purchaseFit,bestForSkin,CATALOG_ROUTINE_ENGINE,type CatalogFormulas,type RoutineCheck} from './catalog-routine';
 import data from './resources/catalog-formulas.json';
 
 export const CATALOG=data as unknown as CatalogFormulas;
@@ -72,12 +72,16 @@ export function catalogPurchaseCheck(shared:Shared,productId:unknown,productName
   const alreadyOwned=owned.includes(f.id);
   const related=check.interactions.filter(x=>x.ids.includes(f.id)).map(x=>x.text);
   const reasons:string[]=[];let decision:CatalogPurchase['decision'];let head:string;
+  const st=skinState(shared.profile||{});const fit=purchaseFit(f,st);
+  const better=()=>{const alt=bestForSkin(CATALOG,st,f.role,[f.id,...owned]);if(alt.length){own.alternatives=alt;reasons.push('به‌جاش: '+alt.map(a=>a.name).join(' یا '));}};
   if(alreadyOwned){decision='avoid';head='نتیجه: نخر';reasons.push('همین محصول در کیفت ثبت شده؛ اول همان را مصرف کن');}
+  else if(fit.verdict==='bad'){decision='avoid';head='نتیجه: نخر';reasons.push(fit.reason);better();}
+  else if(fit.verdict==='not_now'){decision='wait';head='نتیجه: فعلاً نخر';reasons.push(fit.reason);better();}
   else if(own.action==='pause'||own.action==='professional'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);}
   else if(own.action==='replace'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);if(own.alternatives?.length)reasons.push('گزینه مناسب‌تر از کاتالوگ: '+own.alternatives.map(x=>x.name+(x.owned?' (در کیفت داری)':'')).join(' یا '));}
   else if(sameRole.length){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push('در روتینت '+sameRole.map(a=>a.name).join('، ')+' همین نقش را دارد؛ خرید دوم فعلاً لازم نیست');}
   else if(f.basis==='declared_name'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);}
-  else{decision='buy';head='نتیجه: بخر، اگر قیمت و اصالت فروشنده را تأیید کردی';reasons.push(own.reason);}
+  else{decision='buy';head='نتیجه: بخر، اگر قیمت و اصالت فروشنده را تأیید کردی';if(fit.reason)reasons.push(fit.reason+'؛ '+own.reason);else reasons.push(own.reason);own.alternatives=[];}
   reasons.push(...related.slice(0,2));
   if(f.basis==='declared_name')reasons.push('فهرست ترکیبات این نسخه هنوز در کاتالوگ ثبت نشده');
   const lead=check.state.skinLabel?'برای پوست '+check.state.skinLabel+(check.state.acne?' با جوش فعال':'')+(check.state.compromised?' و لایه محافظ تحریک‌شده':''):'بر اساس پروفایل ثبت‌شده';

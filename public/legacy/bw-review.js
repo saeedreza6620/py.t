@@ -2474,6 +2474,64 @@ function whyGood(f, s) {
 }
 const normTime = (t) => t === 'am' || t === 'صبح' ? 'am' : 'pm';
 const slotFa = (t) => t === 'am' ? 'صبح' : 'شب';
+const GOALS = [
+    { re: /جوش/, label: 'کاهش جوش', cls: ['BHA', 'AZELAIC', 'VITAMIN_B3', 'ZINC', 'RETINOID'], claims: ['acne'] },
+    { re: /لک/, label: 'کاهش لک', cls: ['AZELAIC', 'VITC', 'VITC_LAA', 'VITC_DERIV', 'TXA', 'ARBUTIN', 'VITAMIN_B3', 'RETINOID', 'CYSTEAMINE'], claims: ['pigmentation', 'dull'] },
+    { re: /آبرسانی|محافظ/, label: 'آبرسانی', cls: ['HUMECTANT', 'CERAMIDE', 'SOOTHING'], claims: ['dry', 'damaged'] },
+    { re: /قرمزی/, label: 'کاهش قرمزی', cls: ['AZELAIC', 'SOOTHING', 'VITAMIN_B3'], claims: ['redness', 'sensitive'] },
+    { re: /چربی/, label: 'کنترل چربی', cls: ['VITAMIN_B3', 'BHA', 'ZINC'], claims: ['oily', 'pores'] },
+    { re: /پیری|چروک/, label: 'ضدپیری', cls: ['RETINOID', 'PEPTIDE', 'VITC', 'VITC_LAA', 'VITC_DERIV', 'BAKUCHIOL'], claims: ['aging', 'mature'] }
+];
+function purchaseFit(f, s) {
+    const c = f.claims, on = leaveOn(f);
+    const forOily = (c.includes('oily') || c.includes('acne')) && !c.includes('dry') && !c.includes('all') && !c.includes('normal');
+    const forDry = c.includes('dry') && !c.includes('oily') && !c.includes('all');
+    const g = GOALS.find(x => x.re.test(s.goal));
+    const goal = !!g && f.role !== 'sunscreen' && (f.actives.some(a => g.cls.includes(a.cls)) || c.some(x => g.claims.includes(x)));
+    const pureDry = s.dry && !s.oily, pureOily = s.oily && !s.dry, normal = /نرمال/.test(s.skinLabel);
+    const skin = s.skinLabel ? 'پوست ' + s.skinLabel + (s.skinLabel === 'مختلط' ? '' : 'ت') : 'پوستت';
+    const exf = has(f, 'RETINOID') || has(f, 'AHA') || has(f, 'BHA') || has(f, 'CYSTEAMINE');
+    const exfName = has(f, 'RETINOID') ? 'رتینوئید' : has(f, 'AHA') ? 'AHA' : has(f, 'BHA') ? 'سالیسیلیک اسید' : 'ماده‌ی لایه‌بردار';
+    const bad = (reason, v = 'bad') => ({ verdict: v, reason, goal, score: v === 'bad' ? -10 : -6 });
+    if (s.compromised && on && (exf || strength(f) >= 1.5))
+        return bad('پوستت الان تحریک‌شده‌ست و این ' + exfName + ' داره؛ اول بذار آروم بشه', 'not_now');
+    if ((s.compromised || s.sensitive || s.fragranceAvoid) && on && scented(f) && f.role !== 'sunscreen')
+        return bad('عطر داره و برای پوست حساس یا تحریک‌شده‌ت مناسب نیست');
+    if (pureDry) {
+        if (forOily)
+            return bad('برای پوست چرب ساخته شده و ' + skin + ' رو خشک‌تر و کشیده‌تر می‌کنه');
+        if (flag(f, 'soap_base'))
+            return bad('پایه‌ی صابونی داره و ' + skin + ' رو کشیده می‌کنه');
+        if (f.finish === 'matte')
+            return bad('پایان مات داره و ' + skin + ' رو کدر و کشیده نشون می‌ده');
+        if (has(f, 'BHA') && !s.acne)
+            return bad('سالیسیلیک اسید داره؛ پوست خشک بدون جوش لازمش نداره و خشک‌ترش می‌کنه');
+    }
+    if (pureOily && on) {
+        if (f.texture === 'rich-cream' || flag(f, 'rich_oils'))
+            return bad('بافت غنی و روغنی داره و روی ' + skin + ' سنگین می‌شه');
+        if (forDry && (f.role === 'moisturizer' || f.role === 'sunscreen'))
+            return bad('برای پوست خشک ساخته شده و روی ' + skin + ' براق و سنگین می‌شه');
+        if (f.finish === 'dewy' && (f.role === 'moisturizer' || f.role === 'sunscreen'))
+            return bad('پایان براق داره و ' + skin + ' رو براق‌تر می‌کنه');
+    }
+    if (pureOily && forDry && (f.role === 'cleanser' || f.role === 'micellar'))
+        return bad('مخصوص پوست خشک ساخته شده؛ برای ' + skin + ' نسخه‌ی مخصوص پوست چرب درست‌تره');
+    if (normal && !s.acne && forOily && (has(f, 'BHA') || f.finish === 'matte' || f.role === 'cleanser' || f.role === 'micellar'))
+        return bad('برای پوست چرب ساخته شده؛ پوست نرمالت لازمش نداره');
+    if (g && !goal && ['serum', 'treatment', 'spot'].includes(f.role) && exf && !(has(f, 'BHA') && s.acne))
+        return bad('برای هدف تو (' + g.label + ') ساخته نشده و بی‌دلیل پوستت رو درگیر ' + exfName + ' می‌کنه');
+    const skinGood = (pureDry && c.includes('dry')) || (s.oily && (c.includes('oily') || c.includes('acne') || c.includes('combination'))) || (normal && c.includes('normal')) || ((s.sensitive || s.compromised) && (c.includes('sensitive') || c.includes('damaged')));
+    const why = [skinGood ? 'برای ' + skin + ' ساخته شده' : '', goal && g ? 'به هدفت (' + g.label + ') کمک می‌کنه' : ''].filter(Boolean).join(' و ');
+    const score = (skinGood ? 4 : 0) + (goal ? 3 : 0) + (c.includes('all') ? 1 : 0) + (f.basis === 'inci_sourced' ? 2 : 0) - (scented(f) ? 1 : 0) - (strength(f) >= 2 ? 1 : 0);
+    return { verdict: skinGood || goal ? 'good' : 'ok', reason: why, goal, score };
+}
+function bestForSkin(catalog, s, role, exclude = [], max = 2) {
+    const roles = role === 'cleanser' || role === 'micellar' ? [role] : [role];
+    return catalog.products.filter(f => roles.includes(f.role) && !exclude.includes(f.id) && f.basis === 'inci_sourced')
+        .map(f => ({ f, fit: purchaseFit(f, s) })).filter(x => x.fit.verdict === 'good' || x.fit.verdict === 'ok')
+        .sort((a, b) => b.fit.score - a.fit.score).slice(0, max).map(x => ({ id: x.f.id, name: x.f.name, owned: false, why: x.fit.reason || whyGood(x.f, s) }));
+}
 function evaluateRoutine(input, catalog) {
     const formulas = catalog.products;
     const byId = new Map(formulas.map(f => [f.id, f]));
@@ -2767,10 +2825,28 @@ function catalogPurchaseCheck(shared, productId, productName) {
     const reasons = [];
     let decision;
     let head;
+    const st = skinState(shared.profile || {});
+    const fit = purchaseFit(f, st);
+    const better = () => { const alt = bestForSkin(CATALOG, st, f.role, [f.id, ...owned]); if (alt.length) {
+        own.alternatives = alt;
+        reasons.push('به‌جاش: ' + alt.map(a => a.name).join(' یا '));
+    } };
     if (alreadyOwned) {
         decision = 'avoid';
         head = 'نتیجه: نخر';
         reasons.push('همین محصول در کیفت ثبت شده؛ اول همان را مصرف کن');
+    }
+    else if (fit.verdict === 'bad') {
+        decision = 'avoid';
+        head = 'نتیجه: نخر';
+        reasons.push(fit.reason);
+        better();
+    }
+    else if (fit.verdict === 'not_now') {
+        decision = 'wait';
+        head = 'نتیجه: فعلاً نخر';
+        reasons.push(fit.reason);
+        better();
     }
     else if (own.action === 'pause' || own.action === 'professional') {
         decision = 'wait';
@@ -2797,7 +2873,11 @@ function catalogPurchaseCheck(shared, productId, productName) {
     else {
         decision = 'buy';
         head = 'نتیجه: بخر، اگر قیمت و اصالت فروشنده را تأیید کردی';
-        reasons.push(own.reason);
+        if (fit.reason)
+            reasons.push(fit.reason + '؛ ' + own.reason);
+        else
+            reasons.push(own.reason);
+        own.alternatives = [];
     }
     reasons.push(...related.slice(0, 2));
     if (f.basis === 'declared_name')
@@ -2821,5 +2901,5 @@ function catalogPurchaseBody(p, reason) {
 }
 
 function catalogList(){return CATALOG.products.map(p=>p.name+' ['+p.id+'] '+(p.basis==='inci_sourced'?'':'basis=نام ')).join('\n')}
-window.BWReview={catalogRoutineCheck,catalogCovers,catalogPrompt,catalogResponseBody,catalogSummary,mergeCatalogAnswer,routinePlanFrom,catalogPurchaseCheck,catalogPurchasePrompt,catalogPurchaseBody,catalogList};
+window.BWReview={catalogRoutineCheck,catalogCovers,catalogPrompt,catalogResponseBody,catalogSummary,mergeCatalogAnswer,routinePlanFrom,catalogPurchaseCheck,catalogPurchasePrompt,catalogPurchaseBody,catalogList,skinFit:function(profile,id){const f=CATALOG.products.find(p=>p.id===id);return f?purchaseFit(f,skinState(profile||{})):null}};
 })();
