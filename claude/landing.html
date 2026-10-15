@@ -7,7 +7,8 @@
 <meta name="description" content="قبل از خرید محصول پوستی، با پوستت می‌سنجیمش. آگاهانه انتخاب کن، با خیال راحت بخر.">
 <meta name="theme-color" content="#eef3ff">
 <link rel="icon" href="/legacy/bw-circle-192-v27.png">
-<link rel="apple-touch-icon" href="/legacy/apple-touch-icon-180-v27.png">
+<link rel="apple-touch-icon" href="/legacy/apple-touch-icon-gem-180.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 @font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-700.woff2) format("woff2");font-weight:700 900;font-display:swap}
@@ -19,7 +20,9 @@ body{font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);background:#f6f8ff
 .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;z-index:0;animation:drift 16s ease-in-out infinite alternate}
 @keyframes drift{to{transform:translate(30px,40px) scale(1.1)}}
 .slide>*:not(.blob){position:relative;z-index:1}
-.logo{width:64px;height:64px;margin-bottom:22px;filter:drop-shadow(0 12px 24px rgba(124,92,240,.35))}
+.logo{width:72px;height:72px;margin-bottom:22px;filter:drop-shadow(0 10px 26px rgba(90,175,245,.55));animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{0%,100%{filter:drop-shadow(0 10px 22px rgba(90,175,245,.4))}50%{filter:drop-shadow(0 10px 34px rgba(90,175,245,.85)) brightness(1.06)}}
+@media (prefers-reduced-motion:reduce){.logo{animation:none}}
 h1{font-size:clamp(34px,8vw,64px);line-height:1.3;margin:0;font-weight:900}
 h2{font-size:clamp(28px,6.5vw,48px);line-height:1.35;margin:0 0 10px;font-weight:900}
 .grad{background:linear-gradient(120deg,var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -60,7 +63,7 @@ h2{font-size:clamp(28px,6.5vw,48px);line-height:1.35;margin:0 0 10px;font-weight
 <section class="slide" id="s1">
   <div class="blob" style="width:380px;height:380px;background:#cdb9ff;top:-90px;left:-100px"></div>
   <div class="blob" style="width:340px;height:340px;background:#b9dcff;bottom:-80px;right:-90px;animation-delay:-6s"></div>
-  <svg class="logo reveal" viewBox="0 0 72 72" aria-hidden="true"><defs><linearGradient id="lb" x1="10" y1="8" x2="62" y2="66" gradientUnits="userSpaceOnUse"><stop stop-color="#eef6ff"/><stop offset="1" stop-color="#e3d9ff"/></linearGradient><linearGradient id="lf" x1="27" y1="16" x2="48" y2="57" gradientUnits="userSpaceOnUse"><stop stop-color="#6fb7f0"/><stop offset="1" stop-color="#7c5cf0"/></linearGradient></defs><rect width="72" height="72" rx="22" fill="url(#lb)"/><path d="M36 13c-2.8 6.5-14.5 18.2-14.5 29.2A14.5 14.5 0 0 0 36 56.7a14.5 14.5 0 0 0 14.5-14.5C50.5 31.2 38.8 19.5 36 13Z" fill="url(#lf)"/><path d="M29 42c0 4.6 3.1 7.8 7.2 8.3" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+  <svg class="logo reveal" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><defs><linearGradient id="Lbg" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse"><stop stop-color="#f4faff"/><stop offset="1" stop-color="#dcefff"/></linearGradient><radialGradient id="Lgl" cx="36" cy="38" r="30" gradientUnits="userSpaceOnUse"><stop stop-color="#8fd3ff" stop-opacity=".75"/><stop offset=".6" stop-color="#b9e4ff" stop-opacity=".25"/><stop offset="1" stop-color="#b9e4ff" stop-opacity="0"/></radialGradient><linearGradient id="Lcr" x1="20" y1="18" x2="50" y2="58" gradientUnits="userSpaceOnUse"><stop stop-color="#e3f6ff"/><stop offset=".45" stop-color="#7fcaf9"/><stop offset="1" stop-color="#55a8f0"/></linearGradient><linearGradient id="Lpv" x1="36" y1="29" x2="36" y2="59" gradientUnits="userSpaceOnUse"><stop stop-color="#8bd0fb"/><stop offset="1" stop-color="#4a9fec"/></linearGradient></defs><rect width="72" height="72" rx="22" fill="url(#Lbg)"/><circle cx="36" cy="38" r="30" fill="url(#Lgl)"/><path d="M17 29 26.5 18h19L55 29 36 59Z" fill="url(#Lcr)"/><path d="M17 29h38L36 59Z" fill="url(#Lpv)"/><path d="M26.5 18 31 29 36 18l5 11 4.5-11" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.3" stroke-linejoin="round"/><path d="M17 29h38" stroke="#fff" stroke-opacity=".8" stroke-width="1.3"/><path d="M31 29l5 30 5-30" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.2"/><path d="M26.5 18 31 29H17Z" fill="#fff" fill-opacity=".55"/><path d="M36 18l5 11h-10Z" fill="#fff" fill-opacity=".3"/><path d="M53 8.5c.7 4.2 2.4 5.9 6.6 6.6-4.2.7-5.9 2.4-6.6 6.6-.7-4.2-2.4-5.9-6.6-6.6 4.2-.7 5.9-2.4 6.6-6.6Z" fill="#fff" stroke="#9ad6ff" stroke-width=".8"/><path d="M19.5 46c.4 2 1.2 2.8 3.2 3.2-2 .4-2.8 1.2-3.2 3.2-.4-2-1.2-2.8-3.2-3.2 2-.4 2.8-1.2 3.2-3.2Z" fill="#fff" stroke="#b3e0ff" stroke-width=".6"/></svg>
   <h1 class="reveal">اومدیم برای<br><span class="grad">انتخاب آگاهانه</span></h1>
   <p class="sub reveal">قبل از خرید، با پوستت می‌سنجیمش</p>
   <a class="btn reveal" href="/legacy/">شروع 💜</a>
