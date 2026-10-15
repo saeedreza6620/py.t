@@ -114,10 +114,11 @@ async function research(name){
   const key=normName(name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
   const hit=rcache[key];if(hit&&Date.now()-hit.t<30*864e5)return {status:200,body:{...hit.data,cached:true}};
   if(!KEY||!BASE)return {status:503,body:{error:'سرویس هوش مصنوعی تنظیم نشده',code:'not_configured'}};
-  let best=null;const tried=[];
+  let best=null;const tried=[];const used=[];
   for(const model of RESEARCH_MODELS){
     let x;try{x=await chatCall(model,[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:'Product name typed by the shopper: '+String(name).slice(0,200)}])}catch(e){tried.push(model+':error');continue}
     if(x.d?.error?.code==='budget')return {status:429,body:{error:'بررسی زنده‌ی امروز به سقفش رسیده؛ فردا دوباره بزن 💜',code:'budget'}};
+    if(x.d?.usage)used.push({model,in:x.d.usage.prompt_tokens||0,out:x.d.usage.completion_tokens||0});
     tried.push(model+':'+x.r.status);if(!x.r.ok){if([400,403,404,422,503].includes(x.r.status))continue;break}
     const msg=x.d?.choices?.[0]?.message,j=parseJson(msg?.content);const sources=sourcesOf(msg);
     if(!j)continue;
@@ -126,10 +127,10 @@ async function research(name){
     if(!best||(cand.verified&&!best.verified)||(cand.inci.length>(best.inci||[]).length&&!best.verified))best=cand;
     if(best.verified)break;
   }
-  if(!best)return {status:502,body:{error:'الان نتونستم پیداش کنم؛ یه لحظه دیگه دوباره بزن',code:'research_failed',tried}};
+  if(!best){logUsage({at:new Date().toISOString(),research:true,status:502,calls:used});return {status:502,body:{error:'الان نتونستم پیداش کنم؛ یه لحظه دیگه دوباره بزن',code:'research_failed',tried}}}
   const data={query:String(name).slice(0,120),...best,checkedAt:new Date().toISOString()};
   if(best.verified){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
-  logUsage({at:new Date().toISOString(),research:true,status:200,model:best.model,verified:best.verified,sources:best.sources.length});
+  logUsage({at:new Date().toISOString(),research:true,status:200,model:best.model,verified:best.verified,sources:best.sources.length,calls:used});
   return {status:200,body:data};
 }
 
@@ -173,12 +174,12 @@ if(BEST_DAYS>0)setInterval(()=>{if(!best.at||Date.now()-Date.parse(best.at)>BEST
 
 // ---------- Negin pricing (editable in the admin panel) ----------
 const CFG=path.join(DATA,'config.json');
-const DEFAULT_CFG={aiDailyCalls:1000,aiDailyOnline:400,registerGift:5,trialGift:5,welcome:10,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:20,price:49000},{n:60,price:119000}],subscription:{price:99000,monthly:50,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
+const DEFAULT_CFG={dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:5,trialGift:5,welcome:10,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:20,price:49000},{n:60,price:119000}],subscription:{price:99000,monthly:50,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
 let cfg=DEFAULT_CFG;try{cfg={...DEFAULT_CFG,...JSON.parse(fs.readFileSync(CFG,'utf8'))}}catch{}
 function saveCfg(next){ // merges: a form only changes the fields it sends
   const has=k=>Object.prototype.hasOwnProperty.call(next,k)&&String(next[k]).trim()!=='';const num=(k,cur,min=0,max=1e9)=>has(k)?Math.max(min,Math.min(max,Number(String(next[k]).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))||0)):cur;
   const o=cfg||DEFAULT_CFG,oc=o.costs||DEFAULT_CFG.costs,op=o.packs||DEFAULT_CFG.packs,os=o.subscription||DEFAULT_CFG.subscription;
-  const c={aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
+  const c={dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
     costs:{research:num('research',oc.research),live:num('live',oc.live),gift:num('gift',oc.gift),pack:num('pack',oc.pack)},
     packs:[{n:num('p1n',op[0].n,1),price:num('p1p',op[0].price)},{n:num('p2n',op[1].n,1),price:num('p2p',op[1].price)}],
     subscription:{price:num('subp',os.price),monthly:num('subn',os.monthly),perks:has('perks')?String(next.perks).slice(0,200):os.perks},
@@ -208,7 +209,48 @@ async function sendOtp(phone,code){try{const u=`${SMS.base}/v1/${encodeURICompon
 function adminDiag(){const ks=Object.keys(E).filter(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim());
   const v=String(ks.length?E[ks[0]]:'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[\s\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]/g,'').replace(/^(["'])(.*)\1$/,'$2').replace(/^ADMIN_TOKEN[:=]/i,'').replace(/^(.+?)[=:]?\1$/,'$1');
   return {adminVars:ks.length,adminLen:v.length,adminFp:v?crypto.createHash('sha256').update(v.toLowerCase()).digest('hex').slice(0,6):''}}
-const admin=makeAdmin({getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
+// ---------- purchase requests: status + one-time Negin codes ----------
+const REQS=path.join(DATA,'request-status.json'),REDEEM=path.join(DATA,'redeem.json');const redeemFails=new Map();
+function readJ(f){try{return JSON.parse(fs.readFileSync(f,'utf8'))}catch{return {}}}
+function writeJ(f,v){try{fs.writeFileSync(f+'.tmp',JSON.stringify(v));fs.renameSync(f+'.tmp',f)}catch(e){console.error('save',f,e.message)}}
+const getReqStatus=()=>readJ(REQS),getRedeem=()=>readJ(REDEEM),saveRedeem=v=>writeJ(REDEEM,v);
+function setReqStatus(ref,patch){if(!ref)return;const all=getReqStatus();all[ref]={...(all[ref]||{}),...patch,at:new Date().toISOString()};writeJ(REQS,all)}
+function newRedeem(ref,n,sub){const all=getRedeem();let code;do{code=Array.from({length:6},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[crypto.randomInt(31)]).join('')}while(all[code]);all[code]={n,ref,sub:!!sub,at:new Date().toISOString(),usedAt:null};saveRedeem(all);return code}
+// ---------- real API cost → Negin price ----------
+// Prices come from Liara's own /models list (a free call, no tokens) and token counts from every logged call.
+let PRICES={at:0,unit:'',models:{},sample:null,error:''};
+function num(v){const n=Number(v);return Number.isFinite(n)&&n>=0?n:null}
+function pickPrice(o){ // finds input/output prices whatever the field names are
+  let pin=null,pout=null,req=null;(function walk(x,depth){if(!x||typeof x!=='object'||depth>3)return;for(const [k,v] of Object.entries(x)){const n=num(v);
+    if(n!==null&&/prompt|input/i.test(k)&&!/cache|audio|image/i.test(k)&&pin===null)pin=n;else if(n!==null&&/completion|output/i.test(k)&&!/reason|audio|image/i.test(k)&&pout===null)pout=n;else if(n!==null&&/^(request|web_search|search)$/i.test(k)&&req===null)req=n;else if(typeof v==='object')walk(v,depth+1)}})(o,0);
+  return {pin,pout,req}}
+async function loadPrices(){if(!KEY||!BASE)return;try{const r=await fetch(BASE+'/models',{headers:{Authorization:'Bearer '+KEY},signal:AbortSignal.timeout(15000)});const d=await r.json();const list=Array.isArray(d?.data)?d.data:Array.isArray(d)?d:[];
+  const models={};for(const m of list){const id=m.id||m.name;if(!id)continue;const p=pickPrice(m.pricing||m.price||m);if(p.pin===null&&p.pout===null)continue;models[id]=p}
+  // per-token values (e.g. 0.000002) are USD per token; turn everything into "per 1M tokens"
+  const vals=Object.values(models).flatMap(p=>[p.pin,p.pout]).filter(v=>v>0);const perToken=vals.length&&vals.sort((a,b)=>a-b)[Math.floor(vals.length/2)]<0.01;
+  if(perToken)for(const p of Object.values(models)){if(p.pin!==null)p.pin*=1e6;if(p.pout!==null)p.pout*=1e6}
+  const med=vals.length?vals[Math.floor(vals.length/2)]*(perToken?1e6:1):0;
+  PRICES={at:Date.now(),unit:med>1000?'toman':'usd',models,sample:list[0]?Object.keys(list[0]).slice(0,12):null,count:list.length,error:Object.keys(models).length?'':'no price fields in /models'}}catch(e){PRICES={...PRICES,at:Date.now(),error:String(e.message||e).slice(0,120)}}}
+setTimeout(loadPrices,5000).unref?.();setInterval(loadPrices,24*3600e3).unref?.();
+function priceFor(model){const m=PRICES.models[model]||PRICES.models[String(model).replace(/:online$/,'')];return m||null}
+function callCost(model,tin,tout){const p=priceFor(model);if(!p)return null;return ((p.pin||0)*tin+(p.pout||0)*tout)/1e6+(/:online$/.test(model)&&p.req?p.req:0)}
+function costs(){const since=Date.now()-30*864e5;const rows=readJsonlSafe(path.join(DATA,'usage.jsonl')).filter(u=>!u.test&&Date.parse(u.at)>=since);
+  const acc={};const add=(k,c,tin,tout)=>{const a=acc[k]||(acc[k]={n:0,cost:0,priced:0,tin:0,tout:0});a.n++;a.tin+=tin;a.tout+=tout;if(c!==null){a.cost+=c;a.priced++}};
+  for(const u of rows){if(u.research){let c=0,ok=true,ti=0,to=0;for(const x of u.calls||[]){const v=callCost(x.model,x.in,x.out);ti+=x.in;to+=x.out;if(v===null)ok=false;else c+=v}if((u.calls||[]).length)add('research',ok?c:null,ti,to);continue}
+    if(u.usage&&u.status===200){add(u.act||(u.search?'live':'chat'),callCost(u.model,u.usage.in||0,u.usage.out||0),u.usage.in||0,u.usage.out||0)}}
+  const avg=k=>{const a=acc[k];return a&&a.priced?a.cost/a.priced:null};
+  const per={research:avg('research')!==null||avg('decide')!==null?(avg('research')||0)+(avg('decide')||0):null,live:avg('live'),chat:avg('chat')};
+  const c=cfg||{};const toToman=v=>v===null?null:PRICES.unit==='toman'?v:(Number(c.dollarRate)>0?v*Number(c.dollarRate):null);
+  const worst=Math.max(...[per.research,per.live].filter(v=>v!==null),0)||null;const margin=Number(c.margin)||3;
+  const neginToman=toToman(worst)!==null?Math.max(1000,Math.ceil(toToman(worst)*margin/500)*500):null;
+  const round=v=>Math.ceil(v/1000)*1000;
+  const suggested=neginToman?{negin:neginToman,packs:[{n:20,price:round(20*neginToman)},{n:60,price:round(60*neginToman*0.85)}],subscription:{monthly:50,price:round(50*neginToman*0.8)}}:null;
+  return {pricesAt:PRICES.at?new Date(PRICES.at).toISOString():null,unit:PRICES.unit,priceError:PRICES.error,modelsPriced:Object.keys(PRICES.models).length,listKeys:PRICES.sample,
+    used:Object.fromEntries([...new Set(rows.map(u=>u.model).concat(rows.flatMap(u=>(u.calls||[]).map(x=>x.model))).filter(Boolean))].map(m=>[m,priceFor(m)])),
+    perAction:Object.fromEntries(Object.entries(acc).map(([k,a])=>[k,{calls:a.n,avgIn:Math.round(a.tin/a.n),avgOut:Math.round(a.tout/a.n),avgCost:a.priced?a.cost/a.priced:null}])),
+    perNeginAction:{research:per.research,live:per.live},perNeginToman:{research:toToman(per.research),live:toToman(per.live)},margin,dollarRate:Number(c.dollarRate)||0,suggested}}
+function readJsonlSafe(f){try{return fs.readFileSync(f,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
+const admin=makeAdmin({getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
   try{
@@ -225,12 +267,12 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'76'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'77'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
       const body=await readBody(req,80000);const t0=Date.now();const r=await ai(body);
-      logUsage({at:new Date().toISOString(),status:r.status,model:r.body.model||'',search:!!body.search,ms:Date.now()-t0,sources:(r.body.sources||[]).length,fallback:!!r.body.fallback||undefined,code:r.body.code||undefined,usage:r.body.usage||null});
+      logUsage({at:new Date().toISOString(),status:r.status,model:r.body.model||'',search:!!body.search,ms:Date.now()-t0,sources:(r.body.sources||[]).length,fallback:!!r.body.fallback||undefined,code:r.body.code||undefined,usage:r.body.usage||null,act:['decide','live','chat','explain','routine'].includes(body.act)?body.act:(body.search?'live':'chat')});
       return send(res,r.status,r.body);
     }
     if(url.pathname==='/register'&&req.method==='POST'){
@@ -249,16 +291,25 @@ const server=http.createServer(async(req,res)=>{
       if(code!==o.code){o.tries++;if(o.tries>=5)OTP.delete(phone);return send(res,400,{error:'کد درست نیست'})}
       OTP.delete(phone);saveUser(phone,o.info,true);return send(res,200,{ok:true,verified:true});
     }
+    if(url.pathname==='/redeem'&&req.method==='POST'){ // one-time Negin code that support sends after payment
+      if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const a=ip(req);const f=redeemFails.get(a)||{n:0,t:Date.now()};if(Date.now()-f.t>3600e3){f.n=0;f.t=Date.now()}if(f.n>=8)return send(res,429,{error:'چند بار اشتباه زدی؛ یه ساعت دیگه امتحان کن'});
+      const b=await readBody(req,500);const code=String(b.code||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).toUpperCase().replace(/[^A-Z0-9]/g,'');const all=getRedeem();const r=all[code];
+      if(!r){f.n++;redeemFails.set(a,f);return send(res,400,{error:'این کد درست نیست'})}if(r.usedAt)return send(res,400,{error:'این کد قبلاً استفاده شده'});
+      r.usedAt=new Date().toISOString();r.d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);saveRedeem(all);setReqStatus(r.ref,{status:'done'});
+      fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:r.usedAt,t:'redeem',d:r.d||'anon',page:'app'})+'\n',()=>{});return send(res,200,{ok:true,n:r.n,sub:!!r.sub});
+    }
     if(url.pathname==='/buy-request'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,2000);const phone=String(b.phone||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[^\d+]/g,'');
       if(!/^(\+98|0)?9\d{9}$/.test(phone))return send(res,400,{error:'شماره موبایل درست نیست'});
-      const row={at:new Date().toISOString(),name:String(b.name||'').slice(0,40),phone,item:String(b.item||'').slice(0,80),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40)};
+      const kind=['negin','sub','product'].includes(b.kind)?b.kind:'negin';const ref='BW-'+String(crypto.randomInt(10000,100000));
+      const row={at:new Date().toISOString(),ref,kind,n:Math.max(0,Math.min(1000,Number(b.n)||0)),price:Math.max(0,Number(b.price)||0),name:String(b.name||'').slice(0,40),phone,item:String(b.item||'').slice(0,120),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40)};
       fs.appendFileSync(path.join(DATA,'purchase-requests.jsonl'),JSON.stringify(row)+'\n');
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:row.at,t:'buy_request',d:row.d||'anon',page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
-      return send(res,200,{ok:true});
+      return send(res,200,{ok:true,ref});
     }
-    if(url.pathname==='/config.json')return send(res,200,cfg,'application/json',{'Cache-Control':'no-cache'});
+    if(url.pathname==='/costs.json')return send(res,200,costs(),'application/json',{'Cache-Control':'no-store'});
+    if(url.pathname==='/config.json')return send(res,200,{...cfg,aff:{dk:!!AFF.dk.tpl,kh:!!AFF.kh.tpl}},'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/gift'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,2000);const id=newId();

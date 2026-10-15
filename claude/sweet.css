@@ -185,3 +185,9 @@ body.sw-on .bw-privacy-link{display:none!important}
 .sw-reg{text-align:center}.sw-reg h3{margin:6px 0 2px}.sw-reg form{text-align:start;margin-top:8px}.sw-reg .sw-btn{width:100%;margin-top:6px}
 .sw-reg-tile i{filter:drop-shadow(0 0 6px rgba(120,200,255,.8))}
 @media (prefers-reduced-motion:reduce){.sw-vcard,.sw-gemload svg,.sw-gembig svg,.sw-spark,.sw-reveal *{animation:none!important}}
+/* support-led purchase + Negin code */
+.sw-support-buy{width:100%;border:0;cursor:pointer;font:inherit;background:linear-gradient(135deg,#eaf6ff,#f1ecff);box-shadow:0 0 0 1.5px #9ad6ff inset}
+.sw-order .sw-price{font-size:20px;font-weight:800;color:#3d8fe6;margin:4px 0 8px}
+.sw-steps{margin:8px 0 10px;padding-inline-start:20px;font-size:13px;line-height:1.9;color:#4a5170}
+.sw-done{text-align:center}.sw-ref{font:800 26px/1.2 ui-monospace,monospace;letter-spacing:3px;color:#3d8fe6;margin:2px 0 10px}
+.sw-support-buy{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
