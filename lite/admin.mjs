@@ -10,14 +10,14 @@ export function readJsonl(file){try{return fs.readFileSync(file,'utf8').split('\
 
 export function makeAdmin({getSpend,getUsers,SMS_ON,getCfg,saveCfg,getGifts,chatCall,refreshBestsellers,getBest,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin}){
   // tolerate stray spaces/case in the variable name or value as typed in the Liara console
-const adminKey=Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN');
+const adminKeys=Object.keys(E).filter(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim());const adminKey=adminKeys[0];
 // normalise what phones add: Persian/Arabic digits, invisible marks, stray spaces
 const norm=v=>String(v||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[\s\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff]/g,'').replace(/^(["'])(.*)\1$/,'$2');
-const secret=norm(adminKey?E[adminKey]:'').replace(/^ADMIN_TOKEN=/i,'');
+const clean=v=>norm(v).replace(/^ADMIN_TOKEN[:=]/i,'');const secret=clean(adminKey?E[adminKey]:'');const secrets=adminKeys.map(k=>clean(E[k])).filter(Boolean);
   const sig=secret?crypto.createHmac('sha256',secret).update('bw-admin-v1').digest('hex'):'';
   const same=(a,b)=>{const x=Buffer.from(String(a)),y=Buffer.from(String(b));return x.length===y.length&&crypto.timingSafeEqual(x,y)};
   function cookie(req,name){const m=String(req.headers.cookie||'').split(/;\s*/).find(c=>c.startsWith(name+'='));return m?decodeURIComponent(m.slice(name.length+1)):''}
-  const okPass=t=>!!t&&same(norm(t).toLowerCase(),secret.toLowerCase()); // phones capitalise the first letter
+  const okPass=t=>!!t&&secrets.some(x=>same(clean(t).toLowerCase(),x.toLowerCase())); // phones capitalise the first letter
   function authed(req,url){if(!secret)return false;if(same(cookie(req,'bw_admin'),sig))return true;return okPass(url.searchParams.get('token'))}
   const origin=req=>(String(req.headers['x-forwarded-proto']||'').split(',')[0]||(req.socket.encrypted?'https':'http'))+'://'+req.headers.host;
 
@@ -69,7 +69,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 6px;b
 .note{font-size:12px;color:var(--muted);line-height:1.9}`;
   const page=(title,body)=>`<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${esc(title)}</title><style>${CSS}</style><body><div class="wrap">${body}</div></body></html>`;
 
-  function loginPage(err){return page('ورود مدیریت',`<div class="login card"><div class="logo" style="margin:0 auto">BW</div><h1 style="margin-top:12px">پنل مدیریت بیوتی‌ولت</h1><form method="post" action="/admin/login"><input name="token" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" dir="ltr" placeholder="ADMIN_TOKEN" required autofocus>${err?'<p style="color:var(--bad)">رمز درست نیست</p>':''}<button class="btn" style="width:100%">ورود</button></form><p class="note">همان مقدار <code>ADMIN_TOKEN</code> که در متغیرهای لیارا گذاشتی.</p></div>`)}
+  function loginPage(err,typed){return page('ورود مدیریت',`<div class="login card"><div class="logo" style="margin:0 auto">BW</div><h1 style="margin-top:12px">پنل مدیریت بیوتی‌ولت</h1><form method="post" action="/admin/login"><input name="token" type="password" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" dir="ltr" placeholder="ADMIN_TOKEN" required autofocus>${err?`<p style="color:var(--bad)">رمز درست نیست</p><p class="note">رمزی که زدی ${fa(clean(typed||'').length)} حرف بود؛ رمز ذخیره‌شده روی سرور ${fa(secret.length)} حرف است${adminKeys.length>1?` و ${fa(adminKeys.length)} متغیر ADMIN_TOKEN روی سرور هست`:''}. ${clean(typed||'').length===secret.length?'طولش درسته، پس یکی از حروف فرق داره.':'طولش فرق داره؛ احتمالاً موقع کپی چیزی جا افتاده یا اضافه شده.'}</p>`:''}<button class="btn" style="width:100%">ورود</button></form><p class="note">همان مقدار <code>ADMIN_TOKEN</code> که در متغیرهای لیارا گذاشتی.</p></div>`)}
 
   function dashboard(req){
     const s=stats(),o=origin(req),max=Math.max(1,...s.days.map(d=>d.devices));
@@ -125,7 +125,7 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
   return async function handle(req,res,url){
     const p=url.pathname;
     if(p==='/admin/login'&&req.method==='POST'){
-      const f=await readForm(req);if(!secret||!okPass(f.token))return send(res,401,loginPage(true),'text/html; charset=utf-8');
+      const f=await readForm(req);if(!secret||!okPass(f.token))return send(res,401,loginPage(true,f.token),'text/html; charset=utf-8');
       const secure=String(req.headers['x-forwarded-proto']||'').startsWith('https')?'; Secure':'';
       res.writeHead(303,{Location:'/admin','Set-Cookie':`bw_admin=${sig}; HttpOnly; SameSite=Lax; Path=/admin; Max-Age=31536000${secure}`});return res.end();
     }
