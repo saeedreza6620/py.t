@@ -14,22 +14,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20 }
+        with: { node-version: 22 }
       - name: Check secret
         env: { T: '${{ secrets.LIARA_API_TOKEN }}' }
         run: test -n "$T" || { echo "::error::Add the LIARA_API_TOKEN repository secret first"; exit 1; }
       # Gate: nothing reaches users unless answers are personal to the skin/routine and the server boots.
       - name: Quality gate (personalised verdicts, fresh bundle, server boots)
         run: |
-          npm i --no-save --no-audit --no-fund typescript@5.6.3 >/dev/null
-          node scripts/test-skin-fit.mjs
-          node scripts/test-catalog-review.mjs
-          node scripts/test-catalog-routine.mjs
-          node --input-type=module -e "import {bwReviewBundle} from './scripts/lib-bw-review.mjs';import fs from 'node:fs';if(bwReviewBundle(process.cwd()+'/')!==fs.readFileSync('lite/public/legacy/bw-review.js','utf8')){console.log('::error::lite/public/legacy/bw-review.js is stale; run node scripts/build-lite.mjs');process.exit(1)}"
-          node --check lite/server.mjs && node --check lite/admin.mjs
+          npm i --no-save --no-audit --no-fund typescript@5.9.3 >/dev/null 2>&1
+          fail(){ echo "::error title=$1::$(tail -c 700 /tmp/g.log | tr '\n' ' ' | sed 's/[^[:print:]]//g')"; exit 1; }
+          for t in test-skin-fit test-catalog-review test-catalog-routine; do node scripts/$t.mjs > /tmp/g.log 2>&1 || fail "$t"; done
+          node --input-type=module -e "import {bwReviewBundle} from './scripts/lib-bw-review.mjs';import fs from 'node:fs';if(bwReviewBundle(process.cwd()+'/')!==fs.readFileSync('lite/public/legacy/bw-review.js','utf8')){console.log('lite/public/legacy/bw-review.js is stale: run node scripts/build-lite.mjs');process.exit(1)}" > /tmp/g.log 2>&1 || fail "stale bundle"
+          (node --check lite/server.mjs && node --check lite/admin.mjs) > /tmp/g.log 2>&1 || fail "syntax"
           mkdir -p /tmp/bwd && (cd lite && PORT=3999 DATA_DIR=/tmp/bwd ADMIN_TOKEN=ci node server.mjs > /tmp/bw.log 2>&1 &) && sleep 3
-          curl -sf localhost:3999/healthz || { echo "::error title=server did not start::$(tail -c 600 /tmp/bw.log | tr '\n' ' ')"; exit 1; }
-          curl -sf -o /dev/null localhost:3999/legacy/ && curl -sf -o /dev/null localhost:3999/admin
+          curl -sf localhost:3999/healthz > /tmp/g.log 2>&1 || { cp /tmp/bw.log /tmp/g.log; fail "server did not start"; }
+          (curl -sf -o /dev/null localhost:3999/legacy/ && curl -sf -o /dev/null localhost:3999/admin) > /tmp/g.log 2>&1 || fail "pages"
+          echo "::notice title=quality gate::passed"
       - name: Deploy
         working-directory: lite
         env:
