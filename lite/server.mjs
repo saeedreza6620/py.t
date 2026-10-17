@@ -267,7 +267,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'77'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'78'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -302,8 +302,8 @@ const server=http.createServer(async(req,res)=>{
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,2000);const phone=String(b.phone||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[^\d+]/g,'');
       if(!/^(\+98|0)?9\d{9}$/.test(phone))return send(res,400,{error:'شماره موبایل درست نیست'});
-      const kind=['negin','sub','product'].includes(b.kind)?b.kind:'negin';const ref='BW-'+String(crypto.randomInt(10000,100000));
-      const row={at:new Date().toISOString(),ref,kind,n:Math.max(0,Math.min(1000,Number(b.n)||0)),price:Math.max(0,Number(b.price)||0),name:String(b.name||'').slice(0,40),phone,item:String(b.item||'').slice(0,120),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40)};
+      const kind=['negin','sub','product','support'].includes(b.kind)?b.kind:'negin';const ref='BW-'+String(crypto.randomInt(10000,100000));
+      const row={at:new Date().toISOString(),ref,kind,n:Math.max(0,Math.min(1000,Number(b.n)||0)),price:Math.max(0,Number(b.price)||0),name:String(b.name||'').slice(0,40),phone,item:String(b.item||'').slice(0,kind==='support'?600:120),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40)};
       fs.appendFileSync(path.join(DATA,'purchase-requests.jsonl'),JSON.stringify(row)+'\n');
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:row.at,t:'buy_request',d:row.d||'anon',page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
       return send(res,200,{ok:true,ref});

@@ -99,15 +99,18 @@ async function assistantPost(body,signal){
   return json({answer:out,personalLead:out.split('\n')[0],review:{analysisType:body.analysisType||'general'},purchaseLinks:label==='avoid'?[]:shopLinks(res.sources),assistantMessageId:remember('assistant',out),processing:{mode:LITE?'lite':'claude',intent:'general'},decision:{label:label},search:{enabled:liveGeneral,sourceCount:res.sources.length},trust:trust({confidence:'low',missing:body.purchaseCheck?['فهرست ترکیبات همین نسخه']:[]})});
 }
 
+// hand a request to the BeautyWallet team (the form opens in the app; name, phone and text go to the admin panel)
+function support(topic,detail){try{window.dispatchEvent(new CustomEvent('bw:support',{detail:{topic:topic,detail:detail}}))}catch(e){}}
 async function route(path,method,body,signal){
   if(path==='/api/visit')return json({ok:true});
   if(path==='/api/assistant'&&method==='GET'){var ok=await getSample();return json({knowledge:{active:true,version:'claude-catalog'},personal:{available:false,updatedAt:null},market:{items:[],freshestAt:null},messages:LS.get('bw_claude_messages',[]),api:{configured:!!ok}})}
   if(path==='/api/assistant'&&method==='POST')return assistantPost(body||{},signal);
   if(path==='/api/feedback'||(LITE&&path==='/api/assistant/feedback')){if(LITE)return realFetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({kind:path==='/api/feedback'?'app':'answer'},body||{}))});var ff=LS.get('bw_claude_feedback',[]);ff.push(Object.assign({at:new Date().toISOString()},body||{}));LS.set('bw_claude_feedback',ff.slice(-100));return json({ok:true,message:'ثبت شد، مرسی 💜'})}
   if(path==='/api/assistant/feedback'){var f=LS.get('bw_claude_feedback',[]);f.push(Object.assign({at:new Date().toISOString()},body||{}));LS.set('bw_claude_feedback',f.slice(-100));return json({ok:true,message:'ثبت شد'})}
-  if(path==='/api/assistant/human-review'){if(method==='GET')return json({requests:[]});return json({ok:true,message:'در نسخه آزمایشی، بازبینی انسانی هنوز فعال نیست؛ پاسخ را با دکمه «نه / گزارش خطا» علامت بزن'})}
+  if(path==='/api/assistant/human-review'){if(method==='GET')return json({requests:[]});var hb=body||{};var ms=LS.get('bw_claude_messages',[]),ix=ms.findIndex(function(x){return x.id===hb.messageId}),q=ix>0?ms[ix-1]:ms.filter(function(x){return x.role==='user'}).pop();support('بازبینی پاسخ توسط تیم','سؤالم: '+String(q&&q.content||'').replace(/^بررسی محصول پیش از خرید[:：]?\s*/,'').slice(0,250));return json({ok:true,message:'فرمش باز شد؛ اسم و شماره‌ت رو بذار تا تیم بیوتی‌ولت بررسی کنه'})}
+  if(LITE&&path==='/api/me'&&(method==='PUT'||method==='POST')){try{window.dispatchEvent(new CustomEvent('bw:need-register'))}catch(e){}return json({ok:true})}
   if(path==='/api/me'||path==='/api/recovery')return json({error:'در این نسخه آزمایشی اطلاعاتت فقط روی همین دستگاه ذخیره می‌شود؛ از «فایل پشتیبان» برای انتقال استفاده کن'},401);
-  if(path==='/api/forum'){if(method==='GET')return json({posts:[]});return json({error:'گپ پوست در نسخه آزمایشی Claude هنوز فعال نیست'},503)}
+  if(path==='/api/forum'){if(method==='GET')return json({posts:[]});var fb=body||{};support('گپ پوست',String(fb.text||fb.body||fb.message||'').slice(0,300));return json({ok:true,message:'برای تیم بیوتی‌ولت فرستاده می‌شه'})}
   if(path==='/api/reminders'){if(method==='GET')return json({enabled:false,reviews:[]});return json({error:'یادآور آنلاین در نسخه Claude فعال نیست؛ یادآور داخل برنامه کار می‌کند'},503)}
   if(path==='/api/install')return json({ok:true});
   return json({error:'این بخش در نسخه Claude فعال نیست'},404);
