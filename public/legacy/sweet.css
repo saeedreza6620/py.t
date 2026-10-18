@@ -195,3 +195,4 @@ body.sw-on .bw-privacy-link{display:none!important}
 .sw-known{font-size:12.5px;font-weight:700;color:#3d8fe6;padding:6px 4px 2px}
 .sw-sitem-top{box-shadow:0 0 0 1.5px #9ad6ff inset,0 6px 16px rgba(80,170,240,.18)!important;background:linear-gradient(135deg,#f3faff,#f6f2ff)!important}
 .sw-fresh span{font-size:13px;color:#5a6280}
+.sw-weighed{font-size:12.5px;line-height:1.9;color:#5f6885;margin:6px 0 2px;background:#f5f9ff;border-radius:12px;padding:8px 10px}
