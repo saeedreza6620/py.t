@@ -81,7 +81,7 @@ async function assistantPost(body,signal){
   // Product outside the catalog (lite server): find the exact product and its real INCI on the web ourselves,
   // then decide with the strong model. Never ask the shopper for a photo or the back label.
   if(LITE&&body.purchaseCheck){var pname=String(body.productName||message.replace(/^بررسی محصول پیش از خرید[:：]?\s*/,'')).slice(0,160);
-    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname,d:dev()})});rs=await rr.json().catch(function(){return null});
+    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname,url:body.productUrl||undefined,d:dev()})});rs=await rr.json().catch(function(){return null});
       if(rs&&rs.wallet&&window.bwWallet)window.bwWallet(rs.wallet);
       if(rr.status===402||(rs&&rs.code==='need_negin'))return json({error:(rs&&rs.error)||'برای محصول تازه نگین لازمه 💎',code:'need_negin'},402);
       if(rs&&rs.code==='support')return json({error:rs.error,code:'support'},503);
@@ -91,7 +91,7 @@ async function assistantPost(body,signal){
       var bp=R.catalogPurchaseCheck(shared,rs.formula.id);if(bp){var srcs0=(rs.sources||[]).slice(0,3);
         return json({answer:bp.answer,personalLead:bp.lead,formula:rs.formula,fromBank:!!rs.fromBank,inBank:!!rs.inBank,review:{analysisType:'purchase',catalogCheck:bp.check},research:{name:rs.name_en||'',nameFa:rs.name_fa||'',brand:rs.brand||'',verified:true,found:true,variants:(rs.variants||[]).slice(0,4),sources:srcs0,cached:!!rs.cached},purchaseLinks:[],assistantMessageId:remember('assistant',bp.answer),processing:{mode:'catalog',intent:'purchase'},decision:{label:bp.decision},search:{enabled:!rs.fromBank,sourceCount:srcs0.length},trust:trust({confidence:'high',confidenceMethod:'web_inci_research+catalog_engine',missing:[]})})}}
     // not found with confidence: no guessing from memory (that costs money and can be wrong) — the team checks it by hand
-    if(!rs||!rs.found){var alts=similarFor(pname,rs,shared);return json({code:'not_found',query:pname,alternatives:alts,error:'این یکی رو با اطمینان پیدا نکردم'},200)}
+    if(!rs||!rs.found){var alts=similarFor(pname,rs,shared);return json({code:'not_found',query:pname,linkTried:!!body.productUrl,alternatives:alts,error:'این یکی رو با اطمینان پیدا نکردم'},200)}
     var found=rs&&rs.found&&Array.isArray(rs.inci)&&rs.inci.length>=5,verified=!!(rs&&rs.verified);
     var facts=rs?JSON.stringify({name:rs.name_en||pname,name_fa:rs.name_fa,brand:rs.brand,category:rs.category,inci:rs.inci,key_actives:rs.key_actives,spf:rs.spf,texture:rs.texture,fragrance:rs.fragrance,alcohol_denat:rs.alcohol_denat,essential_oils:rs.essential_oils,pore_clogging:rs.pore_clogging,claims:rs.claims_fa,skin_types:rs.skin_types_fa,sources:(rs.sources||[]).map(function(x){try{return new URL(x.url).hostname}catch(e){return ''}}).filter(Boolean)}).slice(0,6000):'';
     var decide=[P().system,P().style,profileBlock(shared),skinLine(shared.profile),

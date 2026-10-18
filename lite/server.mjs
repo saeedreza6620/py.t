@@ -113,18 +113,25 @@ Never invent ingredients. Only fill "inci" with a list you actually saw on a pag
 Answer with ONLY minified JSON, no prose, with exactly these keys:
 {"found":bool,"role":"","rinse_off":true,"texture":"","finish":null,"actives":[],"made_for":[],"flags":[],"name_en":"","name_fa":"","brand":"","category":"cleanser|toner|serum|moisturizer|sunscreen|mask|exfoliant|eye|lip|body|other","confidence":"high|medium|low","inci":[""],"key_actives":[{"name":"","percent":null}],"spf":null,"texture":"","fragrance":null,"alcohol_denat":null,"essential_oils":[],"pore_clogging":[],"claims_fa":[""],"skin_types_fa":[""],"variants":[""],"source_note_fa":""}`+RESEARCH_SCHEMA_HINT;
 function parseJson(t){const s=String(t||'');const a=s.indexOf('{'),b=s.lastIndexOf('}');if(a<0||b<=a)return null;try{return JSON.parse(s.slice(a,b+1))}catch{return null}}
-async function research(name){
-  const key=normName(name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
+// a product page link from the shopper: read its title ourselves (known shops only) and research from that exact page
+const PAGE_HOSTS=/(^|\.)(digikala\.com|khanoumi\.com|torob\.com|basalam\.com|snappshop\.ir|okala\.com|digistyle\.com|zarinsalamat\.com|amazon\.[a-z.]+|sephora\.com|lookfantastic\.com|incidecoder\.com|skinsort\.com)$/i;
+function cleanUrl(u){try{const x=new URL(String(u||'').trim());if(!/^https?:$/.test(x.protocol)||/^(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|0\.)/.test(x.hostname))return '';x.hash='';return x.href.slice(0,400)}catch{return ''}}
+async function pageTitle(u){try{if(!PAGE_HOSTS.test(new URL(u).hostname))return '';const r=await fetch(u,{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet','Accept-Language':'fa,en'},redirect:'follow'});const h=(await r.text()).slice(0,300000);
+  const m=h.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)/i)||h.match(/<title[^>]*>([^<]+)/i);return m?m[1].replace(/\s*[|\-–]\s*(دیجی‌کالا|دیجی کالا|خانومی|Digikala|Khanoumi).*$/i,'').replace(/&[a-z#0-9]+;/gi,' ').trim().slice(0,200):''}catch{return ''}}
+async function research(name,url){
+  if(url){const title=await pageTitle(url);name=(title||name||'')+' ';}
+  const key=normName(url||name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
   const hit=rcache[key];if(hit&&Date.now()-hit.t<(hit.miss?864e5:30*864e5))return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
   if(!KEY||!BASE)return {status:503,body:{error:'سرویس هوش مصنوعی تنظیم نشده',code:'not_configured'}};
   let best=null;const tried=[];const used=[];
   for(const model of RESEARCH_MODELS){
-    let x;try{x=await chatCall(model,[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:'Product name typed by the shopper: '+String(name).slice(0,200)}])}catch(e){tried.push(model+':error');continue}
+    let x;try{x=await chatCall(model,[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:(url?'Product page the shopper sent (identify the product on THIS page, then read its full INCI there or on the brand site / INCIDecoder): '+url+'\nPage title: '+String(name).trim().slice(0,200):'Product name typed by the shopper: '+String(name).slice(0,200))}])}catch(e){tried.push(model+':error');continue}
     if(x.d?.error?.code==='budget')return {status:503,body:{error:'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜',code:'support'}};
     if(x.d?.usage)used.push({model,in:x.d.usage.prompt_tokens||0,out:x.d.usage.completion_tokens||0});
     tried.push(model+':'+x.r.status);if(!x.r.ok){if([400,403,404,422,503].includes(x.r.status))continue;break}
     const msg=x.d?.choices?.[0]?.message,j=parseJson(msg?.content);const sources=sourcesOf(msg);
     if(!j)continue;
+    if(!j.found&&used.length>=2&&!best)break; // two strong searches said 'not found': ask for the product link instead of paying for a third
     j.inci=Array.isArray(j.inci)?j.inci.map(v=>String(v).trim()).filter(Boolean).slice(0,80):[];
     const cand={...j,sources,model,verified:!!j.found&&j.inci.length>=5&&sources.length>0&&j.confidence!=='low'};
     if(!best||(cand.verified&&!best.verified)||(cand.inci.length>(best.inci||[]).length&&!best.verified))best=cand;
@@ -278,7 +285,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'82'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'83'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -370,12 +377,12 @@ const server=http.createServer(async(req,res)=>{
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
       const b=await readBody(req,4000);const d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);
-      const known=BANK.find(b.name);if(known){BANK.hit(known,b.name);const f=pubF(known);
+      const known=!b.url&&BANK.find(b.name);if(known){BANK.hit(known,b.name);const f=pubF(known);
         return send(res,200,{fromBank:true,found:true,verified:true,name_en:f.en,name_fa:f.name,brand:f.brand,formula:f,sources:f.sources.map(u=>({url:u,title:''})),variants:f.variants||[],wallet:BANK.balance(d,cfg)})}
       const via=BANK.charge(d,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای بررسی یه محصول تازه نگین لازمه 💎',wallet:BANK.balance(d,cfg)});
-      const r=await research(b.name);
+      const link=cleanUrl(b.url);const r=await research(b.name,link);
       if(r.status!==200||!r.body.found||r.body.cached)BANK.refund(d,via); // no new cost → no charge
-      if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120)})+'\n',()=>{});
+      if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),url:link||undefined})+'\n',()=>{});
       let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);const row=BANK.add(formula,b.name);inBank=!!row;if(row)formula=pubF(row)}
       return send(res,r.status,{...r.body,formula,inBank,wallet:BANK.balance(d,cfg)});
     }

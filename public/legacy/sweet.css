@@ -198,3 +198,4 @@ body.sw-on .bw-privacy-link{display:none!important}
 .sw-weighed{font-size:12.5px;line-height:1.9;color:#5f6885;margin:6px 0 2px;background:#f5f9ff;border-radius:12px;padding:8px 10px}
 .sw-cardbox{display:grid;gap:4px;text-align:center;margin:10px 0;padding:14px;border-radius:18px;background:linear-gradient(135deg,#eaf6ff,#f1ecff);box-shadow:0 0 0 1.5px #9ad6ff inset}
 .sw-cardbox b{font:800 21px/1.4 ui-monospace,monospace;letter-spacing:1px;color:#2f6fbf}
+.sw-linkask{margin:10px 0 4px}.sw-linkask input{font-size:13px}
