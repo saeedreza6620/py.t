@@ -47,7 +47,7 @@
     catch{buttons.forEach(item=>item.disabled=false);setButtonLabels();openGuide()}
   }));
   window.addEventListener('appinstalled',()=>{setInstalled();reportInstall();if(typeof toast==='function')toast('BeautyWallet به صفحهٔ اصلی اضافه شد')});
-  copy?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.origin+'/legacy/?v=83');copy.textContent='لینک کپی شد؛ در Safari باز کن'}catch{copy.textContent='آدرس سایت را از بالای مرورگر کپی کن'}});
+  copy?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.origin+'/legacy/?v=84');copy.textContent='لینک کپی شد؛ در Safari باز کن'}catch{copy.textContent='آدرس سایت را از بالای مرورگر کپی کن'}});
   document.getElementById('closeInstallDialog')?.addEventListener('click',()=>{if(typeof dialog.close==='function')dialog.close();else dialog.removeAttribute('open')});
   dialog.addEventListener('click',event=>{if(event.target===dialog){if(typeof dialog.close==='function')dialog.close();else dialog.removeAttribute('open')}});
 })();
