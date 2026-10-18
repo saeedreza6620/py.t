@@ -191,7 +191,7 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
   const set=(id:string,action:Action,reason:string,extra:Partial<PlanAction>={})=>{const own=items.find(x=>x.id===id)!;const prev=plan.get(id);const rank={keep:0,verify:1,replace:2,pause:3,professional:4};if(prev&&rank[prev.action]>rank[action]){if(extra.schedule&&!prev.schedule)prev.schedule=extra.schedule;return;}plan.set(id,{id,name:own.name,action,reason,...(prev?.alternatives&&!extra.alternatives?{alternatives:prev.alternatives}:{}),...extra});};
 
   // 1. Unknown products: cannot be judged from the catalog.
-  for(const x of items)if(!x.f)set(x.id,'verify','این محصول در کاتالوگ BeautyWallet فرمول ندارد؛ نام کامل و فهرست ترکیبات پشت بسته لازم است');
+  for(const x of items)if(!x.f)set(x.id,'verify','این محصول هنوز در کاتالوگ BeautyWallet فرمول ثبت‌شده ندارد؛ بیوتی‌ولت خودش ترکیباتش را پیدا می‌کند');
   const known=items.filter(x=>x.f) as Array<{id:string;name:string;time:Slot;f:Formula}>;
 
   // 2. Safety context first.
@@ -281,7 +281,7 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
   for(const x of known){
     if(plan.has(x.id))continue;
     const why=keepReason(x.f,s);
-    if(x.f.basis==='declared_name')set(x.id,'verify',why+'؛ فرمول این نسخه فقط از روی نام ثبت شده، فهرست ترکیبات پشت بسته را ثبت کن تا تأیید شود');
+    if(x.f.basis==='declared_name')set(x.id,'verify',why+'؛ فرمول این نسخه فقط از روی نام ثبت شده و بیوتی‌ولت در حال تکمیل فهرست ترکیبات آن است تا تأیید شود');
     else set(x.id,'keep',why);
   }
   for(const a of plan.values()){const f=byId.get(a.id);if(a.action==='keep'&&f?.basis==='declared_name'){a.action='verify';a.reason+='؛ فهرست ترکیبات این نسخه هنوز ثبت نشده';}}
@@ -342,7 +342,7 @@ export function routineText(r:RoutineCheck){
   else lines.push(paused.length?'بین محصولاتی که می‌مانند تداخل مهمی دیده نشد':'بین اکتیوهای انتخاب‌شده تداخل مهمی دیده نشد');
   r.reintroduce.forEach(x=>lines.push(x));
   r.gaps.forEach(g=>lines.push(g.text+(g.suggestions.length?': '+g.suggestions.map(x=>x.name+(x.owned?' (در کیفت داری)':'')).join(' یا '):'')));
-  if(r.coverage.declared.length)lines.push('فرمول '+faDigits(r.coverage.declared.length)+' محصول فقط از روی نام ثبت شده؛ برای دقت بیشتر فهرست ترکیبات پشت بسته‌شان را ثبت کن');
+  if(r.coverage.declared.length)lines.push('فرمول '+faDigits(r.coverage.declared.length)+' محصول فقط از روی نام ثبت شده و بیوتی‌ولت در حال تکمیل ترکیباتشان است');
   return lines.join('\n');
 }
 export function actionLabel(a:Action){return ACTION_FA[a];}

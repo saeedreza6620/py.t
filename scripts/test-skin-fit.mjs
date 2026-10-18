@@ -28,4 +28,6 @@ const r2=m.catalogPurchaseCheck({...ctx('چرب'),selection:[{id:'avene-oil',nam
 if(C.find(x=>x.id==='cerave-sa-cleanser'))assert.notEqual(r2.decision,'buy','duplicate role in routine');
 // verdicts are decisive: only buy / wait / avoid
 for(const f of C)for(const s of ['خشک','چرب','مختلط','نرمال']){const r=m.catalogPurchaseCheck(ctx(s),f.id);assert(['buy','wait','avoid'].includes(r.decision))}
+// never ask the shopper for the ingredient list, a label photo or the back of the box
+for(const f of C)for(const s of ['خشک','چرب','مختلط','نرمال']){const r=m.catalogPurchaseCheck({...ctx(s),selection:[{id:'unknown-x',name:'x',time:'pm'}]},f.id);assert(!/پشت بسته|عکس|بفرست|ثبت کن/.test(r.answer+JSON.stringify(r.check.actions)),f.name+': must not ask the user for ingredients/photos')}
 console.log('PASS skin fit:',n,'skin-specific guards, alternatives fit the same skin, routine duplicates, decisive verdicts');

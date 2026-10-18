@@ -178,7 +178,7 @@ if(BEST_DAYS>0)setInterval(()=>{if(!best.at||Date.now()-Date.parse(best.at)>BEST
 
 // ---------- Negin pricing (editable in the admin panel) ----------
 const CFG=path.join(DATA,'config.json');
-const DEFAULT_CFG={priceVersion:2,freeChecks:2,freePerIpDay:6,tomanPer1k:900,dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:0,trialGift:0,welcome:0,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:5,price:125000},{n:15,price:330000}],subscription:{price:590000,monthly:30,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
+const DEFAULT_CFG={cardNumber:'',cardHolder:'',cardBank:'',payAdvance:1,priceVersion:2,freeChecks:2,freePerIpDay:6,tomanPer1k:900,dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:0,trialGift:0,welcome:0,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:5,price:125000},{n:15,price:330000}],subscription:{price:590000,monthly:30,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
 let cfg=DEFAULT_CFG;try{cfg={...DEFAULT_CFG,...JSON.parse(fs.readFileSync(CFG,'utf8'))}}catch{}
 function migrateCfg(){let raw=null;try{raw=JSON.parse(fs.readFileSync(CFG,'utf8'))}catch{}if(!raw||(raw.priceVersion||1)>=2)return; // only a config saved before v80
   try{if(fs.existsSync(CFG))fs.copyFileSync(CFG,path.join(DATA,'config.backup-v1-'+Date.now()+'.json'))}catch{}
@@ -186,7 +186,7 @@ function migrateCfg(){let raw=null;try{raw=JSON.parse(fs.readFileSync(CFG,'utf8'
 function saveCfg(next){ // merges: a form only changes the fields it sends
   const has=k=>Object.prototype.hasOwnProperty.call(next,k)&&String(next[k]).trim()!=='';const num=(k,cur,min=0,max=1e9)=>has(k)?Math.max(min,Math.min(max,Number(String(next[k]).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))||0)):cur;
   const o=cfg||DEFAULT_CFG,oc=o.costs||DEFAULT_CFG.costs,op=o.packs||DEFAULT_CFG.packs,os=o.subscription||DEFAULT_CFG.subscription;
-  const c={priceVersion:o.priceVersion??2,freeChecks:num('freeChecks',o.freeChecks??2,0,50),freePerIpDay:num('freePerIpDay',o.freePerIpDay??6,0,100),tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
+  const c={payAdvance:num('payAdvance',o.payAdvance??1,0,3),cardNumber:has('cardNumber')?String(next.cardNumber).replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'').slice(0,16):(o.cardNumber||''),cardHolder:has('cardHolder')?String(next.cardHolder).slice(0,60):(o.cardHolder||''),cardBank:has('cardBank')?String(next.cardBank).slice(0,30):(o.cardBank||''),priceVersion:o.priceVersion??2,freeChecks:num('freeChecks',o.freeChecks??2,0,50),freePerIpDay:num('freePerIpDay',o.freePerIpDay??6,0,100),tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
     costs:{research:num('research',oc.research),live:num('live',oc.live),gift:num('gift',oc.gift),pack:num('pack',oc.pack)},
     packs:[{n:num('p1n',op[0].n,1),price:num('p1p',op[0].price)},{n:num('p2n',op[1].n,1),price:num('p2p',op[1].price)}],
     subscription:{price:num('subp',os.price),monthly:num('subn',os.monthly),perks:has('perks')?String(next.perks).slice(0,200):os.perks},
@@ -261,7 +261,7 @@ function costs(){const since=Date.now()-30*864e5;const rows=readJsonlSafe(path.j
     perAction:Object.fromEntries(Object.entries(acc).map(([k,a])=>[k,{calls:a.n,avgIn:Math.round(a.tin/a.n),avgOut:Math.round(a.tout/a.n),avgCost:a.priced?a.cost/a.priced:null,toman:tpk?Math.round((a.tin+a.tout)/a.n*tpk/1000):null}])),
     perNeginAction:{research:per.research,live:per.live},perNeginToman:{research:tomanOf('research'),live:tomanOf('live')},tokensPerNegin:tokPer,tomanPer1k:tpk,margin,dollarRate:Number(c.dollarRate)||0,suggested}}
 function readJsonlSafe(f){try{return fs.readFileSync(f,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
-const admin=makeAdmin({BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
+const admin=makeAdmin({BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
   try{
@@ -278,7 +278,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'81'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'82'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -313,15 +313,31 @@ const server=http.createServer(async(req,res)=>{
       r.usedAt=new Date().toISOString();r.d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);saveRedeem(all);BANK.credit(r.d,r.n);setReqStatus(r.ref,{status:'done'});
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:r.usedAt,t:'redeem',d:r.d||'anon',page:'app'})+'\n',()=>{});return send(res,200,{ok:true,n:r.n,sub:!!r.sub,wallet:BANK.balance(r.d,cfg)});
     }
+    if(url.pathname==='/pay-proof'&&req.method==='POST'){ // the shopper says "I paid": tracking number + last 4 card digits → admin confirms
+      if(!sameOrigin(req))return send(res,403,{error:'forbidden'});if(allow(ip(req)))return send(res,429,{error:'یه کم بعد دوباره بزن'});
+      const b=await readBody(req,1000);const digits=v=>String(v||'').replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'');
+      const ref=String(b.ref||''),d=String(b.d||'').replace(/[^a-z0-9]/g,'');const row=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).find(r=>r.ref===ref&&r.d===d);
+      if(!row)return send(res,404,{error:'سفارش پیدا نشد'});const track=digits(b.track).slice(0,24),last4=digits(b.last4).slice(-4);
+      if(track.length<4&&last4.length<4)return send(res,400,{error:'شماره پیگیری یا ۴ رقم آخر کارتت رو بنویس'});
+      const prev=getReqStatus()[ref]||{};if(['done','rejected'].includes(prev.status))return send(res,400,{error:'این سفارش قبلاً بررسی شده'});
+      const adv=prev.advance!=null?prev.advance:Math.max(0,Math.min(3,Number(cfg.payAdvance??1),row.n||0));if(adv&&prev.advance==null)BANK.credit(d,adv);
+      setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv});return send(res,200,{ok:true,advance:adv,wallet:BANK.balance(d,cfg)});
+    }
+    if(url.pathname==='/order-status'){const d=String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'');const st=getReqStatus();
+      const mine=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>d&&r.d===d&&r.method==='card').slice(-5).map(r=>({ref:r.ref,n:r.n,price:r.price,kind:r.kind,status:(st[r.ref]&&st[r.ref].status)||'new'}));
+      return send(res,200,{orders:mine,wallet:BANK.balance(d,cfg)},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/buy-request'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,2000);const phone=String(b.phone||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[^\d+]/g,'');
-      if(!/^(\+98|0)?9\d{9}$/.test(phone))return send(res,400,{error:'شماره موبایل درست نیست'});
+      const card=b.method==='card'&&['negin','sub'].includes(b.kind)&&/^[a-z0-9]{12,40}$/.test(String(b.d||''));
+      if(!/^(\+98|0)?9\d{9}$/.test(phone)&&!(card&&!phone))return send(res,400,{error:'شماره موبایل درست نیست'});
       const kind=['negin','sub','product','support'].includes(b.kind)?b.kind:'negin';const ref='BW-'+String(crypto.randomInt(10000,100000));
-      const row={at:new Date().toISOString(),ref,kind,n:Math.max(0,Math.min(1000,Number(b.n)||0)),price:Math.max(0,Number(b.price)||0),name:String(b.name||'').slice(0,40),phone,item:String(b.item||'').slice(0,kind==='support'?600:120),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40)};
+      // card-to-card orders take amount and Negin count from the server's own price list, never from the page
+      const pk=card&&kind==='negin'?(cfg.packs||[])[Number(b.pack)||0]:null;
+      const row={at:new Date().toISOString(),ref,kind,method:card?'card':'contact',n:card?(kind==='sub'?Number(cfg.subscription.monthly)||0:Number(pk&&pk.n)||0):Math.max(0,Math.min(1000,Number(b.n)||0)),price:card?(kind==='sub'?Number(cfg.subscription.price)||0:Number(pk&&pk.price)||0):Math.max(0,Number(b.price)||0),name:String(b.name||'').slice(0,40),phone,item:String(b.item||'').slice(0,kind==='support'?600:120),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40)};
       fs.appendFileSync(path.join(DATA,'purchase-requests.jsonl'),JSON.stringify(row)+'\n');
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:row.at,t:'buy_request',d:row.d||'anon',page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
-      return send(res,200,{ok:true,ref});
+      return send(res,200,{ok:true,ref,n:row.n,price:row.price});
     }
     if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/wallet')return send(res,200,BANK.balance(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40),cfg),'application/json',{'Cache-Control':'no-store'});
@@ -359,6 +375,7 @@ const server=http.createServer(async(req,res)=>{
       const via=BANK.charge(d,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای بررسی یه محصول تازه نگین لازمه 💎',wallet:BANK.balance(d,cfg)});
       const r=await research(b.name);
       if(r.status!==200||!r.body.found||r.body.cached)BANK.refund(d,via); // no new cost → no charge
+      if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120)})+'\n',()=>{});
       let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);const row=BANK.add(formula,b.name);inBank=!!row;if(row)formula=pubF(row)}
       return send(res,r.status,{...r.body,formula,inBank,wallet:BANK.balance(d,cfg)});
     }

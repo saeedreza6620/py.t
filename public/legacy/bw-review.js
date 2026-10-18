@@ -2551,7 +2551,7 @@ function evaluateRoutine(input, catalog) {
     } plan.set(id, { id, name: own.name, action, reason, ...((prev === null || prev === void 0 ? void 0 : prev.alternatives) && !extra.alternatives ? { alternatives: prev.alternatives } : {}), ...extra }); };
     for (const x of items)
         if (!x.f)
-            set(x.id, 'verify', 'این محصول در کاتالوگ BeautyWallet فرمول ندارد؛ نام کامل و فهرست ترکیبات پشت بسته لازم است');
+            set(x.id, 'verify', 'این محصول هنوز در کاتالوگ BeautyWallet فرمول ثبت‌شده ندارد؛ بیوتی‌ولت خودش ترکیباتش را پیدا می‌کند');
     const known = items.filter(x => x.f);
     for (const x of known) {
         if (s.pregnancy && (has(x.f, 'RETINOID') || has(x.f, 'CYSTEAMINE')))
@@ -2673,7 +2673,7 @@ function evaluateRoutine(input, catalog) {
             continue;
         const why = keepReason(x.f, s);
         if (x.f.basis === 'declared_name')
-            set(x.id, 'verify', why + '؛ فرمول این نسخه فقط از روی نام ثبت شده، فهرست ترکیبات پشت بسته را ثبت کن تا تأیید شود');
+            set(x.id, 'verify', why + '؛ فرمول این نسخه فقط از روی نام ثبت شده و بیوتی‌ولت در حال تکمیل فهرست ترکیبات آن است تا تأیید شود');
         else
             set(x.id, 'keep', why);
     }
@@ -2758,7 +2758,7 @@ function routineText(r) {
     r.reintroduce.forEach(x => lines.push(x));
     r.gaps.forEach(g => lines.push(g.text + (g.suggestions.length ? ': ' + g.suggestions.map(x => x.name + (x.owned ? ' (در کیفت داری)' : '')).join(' یا ') : '')));
     if (r.coverage.declared.length)
-        lines.push('فرمول ' + faDigits(r.coverage.declared.length) + ' محصول فقط از روی نام ثبت شده؛ برای دقت بیشتر فهرست ترکیبات پشت بسته‌شان را ثبت کن');
+        lines.push('فرمول ' + faDigits(r.coverage.declared.length) + ' محصول فقط از روی نام ثبت شده و بیوتی‌ولت در حال تکمیل ترکیباتشان است');
     return lines.join('\n');
 }
 function actionLabel(a) { return ACTION_FA[a]; }
