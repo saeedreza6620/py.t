@@ -54,13 +54,14 @@ const SPEND=path.join(DATA,'spend.json');let spend={day:'',calls:0,online:0};try
 const tday=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Tehran'});
 function budgetOk(online){if(spend.day!==tday())spend={day:tday(),calls:0,online:0};const c=cfg||{};return spend.calls<(Number(c.aiDailyCalls)||0)&&(!online||spend.online<(Number(c.aiDailyOnline)||0))}
 function countCall(online){if(spend.day!==tday())spend={day:tday(),calls:0,online:0};spend.calls++;if(online)spend.online++;fs.writeFile(SPEND,JSON.stringify(spend),()=>{})}
+let NO_WEB_OPT=false; // set once if the provider rejects the web-result limit
 async function chatCall(model,messages,signal,key){
   const online=/:online$/.test(model);
   if(!key){if(!budgetOk(online))return {r:{ok:false,status:429},d:{error:{message:'daily_budget',code:'budget'}}};countCall(online)}
-  const params={model,messages};
+  const params={model,messages};const webN=Number(E.WEB_RESULTS||3);if(online&&webN>0&&!NO_WEB_OPT)params.plugins=[{id:'web',max_results:webN}];
   // gpt-5 family rejects custom temperature / max_tokens; others get a roomy budget for reasoning
   if(!/gpt-5/.test(model)){params.max_tokens=MAX_TOKENS;params.temperature=0.3}
-  try{const c=await (await sdk(key)).chat.completions.create(params,{signal,timeout:110000});return {r:{ok:true,status:200},d:c}}
+  try{let c;try{c=await (await sdk(key)).chat.completions.create(params,{signal,timeout:110000})}catch(e){if(params.plugins&&Number(e?.status)===400){NO_WEB_OPT=true;console.error('web result limit not supported; sending without it');delete params.plugins;c=await (await sdk(key)).chat.completions.create(params,{signal,timeout:110000})}else throw e}return {r:{ok:true,status:200},d:c}}
   catch(e){if(e?.name==='AbortError'||e?.constructor?.name==='APIUserAbortError')throw Object.assign(new Error('aborted'),{name:'AbortError'});
     const status=Number(e?.status)||0;if(!status)throw e;return {r:{ok:false,status},d:{error:{message:e?.error?.message||e?.message||'',code:e?.code||e?.error?.code||status}}}}
 }
@@ -99,6 +100,7 @@ async function ai(body){
 // The shopper only types a name (Persian, transliterated, partial). We find the exact product and its
 // ingredient list on the web ourselves (brand site, INCIDecoder, Skinsort, big retailers) — never ask them for a photo.
 const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online','openai/gpt-5-mini:online','openai/gpt-4.1-mini:online'])];
+const pcache=new Map(); // live price answers, 6 hours
 const RCACHE=path.join(DATA,'research-cache.json');let rcache={};try{rcache=JSON.parse(fs.readFileSync(RCACHE,'utf8'))}catch{}
 const normName=q=>String(q||'').toLowerCase().replace(/[ي]/g,'ی').replace(/[ك]/g,'ک').replace(/[‌\s\-_.,،()]+/g,' ').trim().slice(0,120);
 const RESEARCH_PROMPT=`You are a cosmetic-product researcher for an Iranian skincare app. A shopper typed the product name below the way people do in Iran: Persian, transliterated, partial or misspelled, often with the store's Persian title.
@@ -112,7 +114,7 @@ Answer with ONLY minified JSON, no prose, with exactly these keys:
 function parseJson(t){const s=String(t||'');const a=s.indexOf('{'),b=s.lastIndexOf('}');if(a<0||b<=a)return null;try{return JSON.parse(s.slice(a,b+1))}catch{return null}}
 async function research(name){
   const key=normName(name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
-  const hit=rcache[key];if(hit&&Date.now()-hit.t<30*864e5)return {status:200,body:{...hit.data,cached:true}};
+  const hit=rcache[key];if(hit&&Date.now()-hit.t<(hit.miss?864e5:30*864e5))return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
   if(!KEY||!BASE)return {status:503,body:{error:'سرویس هوش مصنوعی تنظیم نشده',code:'not_configured'}};
   let best=null;const tried=[];const used=[];
   for(const model of RESEARCH_MODELS){
@@ -125,11 +127,12 @@ async function research(name){
     j.inci=Array.isArray(j.inci)?j.inci.map(v=>String(v).trim()).filter(Boolean).slice(0,80):[];
     const cand={...j,sources,model,verified:!!j.found&&j.inci.length>=5&&sources.length>0&&j.confidence!=='low'};
     if(!best||(cand.verified&&!best.verified)||(cand.inci.length>(best.inci||[]).length&&!best.verified))best=cand;
-    if(best.verified)break;
+    if(best.verified||(best.found&&best.inci.length>=5))break; // a usable formula: don't pay for another web search
   }
+  if(!best||(!best.found&&!(best.inci||[]).length)){rcache[key]={t:Date.now(),miss:true};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   if(!best){logUsage({at:new Date().toISOString(),research:true,status:502,calls:used});return {status:502,body:{error:'الان نتونستم پیداش کنم؛ یه لحظه دیگه دوباره بزن',code:'research_failed',tried}}}
   const data={query:String(name).slice(0,120),...best,checkedAt:new Date().toISOString()};
-  if(best.verified){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
+  if(best.verified||(best.found&&(best.inci||[]).length>=5)){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   logUsage({at:new Date().toISOString(),research:true,status:200,model:best.model,verified:best.verified,sources:best.sources.length,calls:used});
   return {status:200,body:data};
 }
@@ -174,12 +177,12 @@ if(BEST_DAYS>0)setInterval(()=>{if(!best.at||Date.now()-Date.parse(best.at)>BEST
 
 // ---------- Negin pricing (editable in the admin panel) ----------
 const CFG=path.join(DATA,'config.json');
-const DEFAULT_CFG={dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:5,trialGift:5,welcome:10,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:20,price:49000},{n:60,price:119000}],subscription:{price:99000,monthly:50,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
+const DEFAULT_CFG={tomanPer1k:900,dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:5,trialGift:5,welcome:10,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:20,price:49000},{n:60,price:119000}],subscription:{price:99000,monthly:50,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
 let cfg=DEFAULT_CFG;try{cfg={...DEFAULT_CFG,...JSON.parse(fs.readFileSync(CFG,'utf8'))}}catch{}
 function saveCfg(next){ // merges: a form only changes the fields it sends
   const has=k=>Object.prototype.hasOwnProperty.call(next,k)&&String(next[k]).trim()!=='';const num=(k,cur,min=0,max=1e9)=>has(k)?Math.max(min,Math.min(max,Number(String(next[k]).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))||0)):cur;
   const o=cfg||DEFAULT_CFG,oc=o.costs||DEFAULT_CFG.costs,op=o.packs||DEFAULT_CFG.packs,os=o.subscription||DEFAULT_CFG.subscription;
-  const c={dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
+  const c={tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
     costs:{research:num('research',oc.research),live:num('live',oc.live),gift:num('gift',oc.gift),pack:num('pack',oc.pack)},
     packs:[{n:num('p1n',op[0].n,1),price:num('p1p',op[0].price)},{n:num('p2n',op[1].n,1),price:num('p2p',op[1].price)}],
     subscription:{price:num('subp',os.price),monthly:num('subn',os.monthly),perks:has('perks')?String(next.perks).slice(0,200):os.perks},
@@ -240,15 +243,18 @@ function costs(){const since=Date.now()-30*864e5;const rows=readJsonlSafe(path.j
     if(u.usage&&u.status===200){add(u.act||(u.search?'live':'chat'),callCost(u.model,u.usage.in||0,u.usage.out||0),u.usage.in||0,u.usage.out||0)}}
   const avg=k=>{const a=acc[k];return a&&a.priced?a.cost/a.priced:null};
   const per={research:avg('research')!==null||avg('decide')!==null?(avg('research')||0)+(avg('decide')||0):null,live:avg('live'),chat:avg('chat')};
-  const c=cfg||{};const toToman=v=>v===null?null:PRICES.unit==='toman'?v:(Number(c.dollarRate)>0?v*Number(c.dollarRate):null);
-  const worst=Math.max(...[per.research,per.live].filter(v=>v!==null),0)||null;const margin=Number(c.margin)||3;
-  const neginToman=toToman(worst)!==null?Math.max(1000,Math.ceil(toToman(worst)*margin/500)*500):null;
+  const c=cfg||{};const tk=k=>{const a=acc[k];return a&&a.n?(a.tin+a.tout)/a.n:null};const tpk=Number(c.tomanPer1k)||0;
+  const tokPer={research:tk('research')!==null||tk('decide')!==null?(tk('research')||0)+(tk('decide')||0):null,live:tk('live')};
+  const toToman0=v=>v===null?null:PRICES.unit==='toman'?v:(Number(c.dollarRate)>0?v*Number(c.dollarRate):null);
+  const tomanOf=k=>tpk&&tokPer[k]!==null?tokPer[k]*tpk/1000:toToman0(per[k]);const toToman=v=>v;
+  const worstT=Math.max(...['research','live'].map(tomanOf).filter(v=>v!==null),0)||null;const margin=Number(c.margin)||3;
+  const neginToman=worstT!==null?Math.max(1000,Math.ceil(worstT*margin/500)*500):null;
   const round=v=>Math.ceil(v/1000)*1000;
   const suggested=neginToman?{negin:neginToman,packs:[{n:20,price:round(20*neginToman)},{n:60,price:round(60*neginToman*0.85)}],subscription:{monthly:50,price:round(50*neginToman*0.8)}}:null;
   return {pricesAt:PRICES.at?new Date(PRICES.at).toISOString():null,unit:PRICES.unit,priceError:PRICES.error,modelsPriced:Object.keys(PRICES.models).length,listKeys:PRICES.sample,
     used:Object.fromEntries([...new Set(rows.map(u=>u.model).concat(rows.flatMap(u=>(u.calls||[]).map(x=>x.model))).filter(Boolean))].map(m=>[m,priceFor(m)])),
-    perAction:Object.fromEntries(Object.entries(acc).map(([k,a])=>[k,{calls:a.n,avgIn:Math.round(a.tin/a.n),avgOut:Math.round(a.tout/a.n),avgCost:a.priced?a.cost/a.priced:null}])),
-    perNeginAction:{research:per.research,live:per.live},perNeginToman:{research:toToman(per.research),live:toToman(per.live)},margin,dollarRate:Number(c.dollarRate)||0,suggested}}
+    perAction:Object.fromEntries(Object.entries(acc).map(([k,a])=>[k,{calls:a.n,avgIn:Math.round(a.tin/a.n),avgOut:Math.round(a.tout/a.n),avgCost:a.priced?a.cost/a.priced:null,toman:tpk?Math.round((a.tin+a.tout)/a.n*tpk/1000):null}])),
+    perNeginAction:{research:per.research,live:per.live},perNeginToman:{research:tomanOf('research'),live:tomanOf('live')},tokensPerNegin:tokPer,tomanPer1k:tpk,margin,dollarRate:Number(c.dollarRate)||0,suggested}}
 function readJsonlSafe(f){try{return fs.readFileSync(f,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
 const admin=makeAdmin({getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const server=http.createServer(async(req,res)=>{
@@ -267,11 +273,13 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'78'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'79'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
-      const body=await readBody(req,80000);const t0=Date.now();const r=await ai(body);
+      const body=await readBody(req,80000);const t0=Date.now();const ck=typeof body.cacheKey==='string'&&body.search?normName(body.cacheKey).slice(0,120):'';
+      const ph=ck&&pcache.get(ck);if(ph&&Date.now()-ph.t<6*3600e3)return send(res,200,{...ph.body,cached:true});
+      const r=await ai(body);if(ck&&r.status===200){pcache.set(ck,{t:Date.now(),body:r.body});if(pcache.size>500)pcache.delete(pcache.keys().next().value)}
       logUsage({at:new Date().toISOString(),status:r.status,model:r.body.model||'',search:!!body.search,ms:Date.now()-t0,sources:(r.body.sources||[]).length,fallback:!!r.body.fallback||undefined,code:r.body.code||undefined,usage:r.body.usage||null,act:['decide','live','chat','explain','routine'].includes(body.act)?body.act:(body.search?'live':'chat')});
       return send(res,r.status,r.body);
     }
