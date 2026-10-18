@@ -466,5 +466,5 @@ function routineText(r) {
 function actionLabel(a) { return ACTION_FA[a]; }
 
 const index=new Map(CATALOG.products.map(p=>[p.id,p]));
-window.BWCatalog={version:CATALOG.version,engine:CATALOG_ROUTINE_ENGINE,formula:id=>index.get(id),caption:id=>captionFor(index.get(id)),evaluate:input=>evaluateRoutine(input,CATALOG),actionLabel};
+window.BWCatalog={version:CATALOG.version,engine:CATALOG_ROUTINE_ENGINE,add:list=>{for(const f of list||[])if(f&&f.id&&!index.has(f.id)){CATALOG.products.push(f);index.set(f.id,f)}},formula:id=>index.get(id),caption:id=>captionFor(index.get(id)),evaluate:input=>evaluateRoutine(input,CATALOG),actionLabel};
 })();

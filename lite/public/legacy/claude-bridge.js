@@ -34,12 +34,15 @@ function skinClash(p,rs){var skin=String(p&&p.skinBase||''),t=String(rs&&[].conc
   if(/چرب/.test(skin)&&/خشک/.test(t)&&!/چرب|مختلط/.test(t)&&!all&&/مرطوب|کرم|ضدآفتاب|ضد آفتاب|moistur|sunscreen/i.test(String(rs.category||'')+' '+String(rs.name_fa||'')))return 'برای پوست خشک ساخته شده و روی پوست چربت سنگین و براق می‌شه';
   return ''}
 // Lite server: the key stays on the server; the page only sends the prompt.
-async function liteAsk(input,opts){var r=await realFetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},signal:opts&&opts.signal,body:JSON.stringify({input:input,tier:opts&&opts.modelTier||'default',search:!!(opts&&opts.search),act:opts&&opts.act||undefined,cacheKey:opts&&opts.cacheKey||undefined})});var d=await r.json().catch(function(){return {}});if(!r.ok){var e=new Error(d.error||'upstream');e.code=d.code||(r.status===429?'rate_limited':'unavailable');e.serverMessage=d.error;throw e}return {text:d.text||'',sources:Array.isArray(d.sources)?d.sources:[]}}
+async function liteAsk(input,opts){var r=await realFetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json'},signal:opts&&opts.signal,body:JSON.stringify({input:input,tier:opts&&opts.modelTier||'default',search:!!(opts&&opts.search),act:opts&&opts.act||undefined,cacheKey:opts&&opts.cacheKey||undefined,d:dev()})});var d=await r.json().catch(function(){return {}});if(!r.ok){var e=new Error(d.error||'upstream');e.code=d.code||(r.status===429?'rate_limited':'unavailable');if(d.wallet&&window.bwWallet)window.bwWallet(d.wallet);e.serverMessage=d.error;throw e}return {text:d.text||'',sources:Array.isArray(d.sources)?d.sources:[]}}
 async function ask(input,signal,tier,search,act,cacheKey){var s=await getSample();if(!s){var e=new Error('unavailable');e.code='unavailable';throw e}var o={signal:signal,modelTier:tier||'default',cache:false};if(LITE){o.search=!!search;o.act=act;o.cacheKey=cacheKey}var r=await s(input,o);return {text:String(r.text||'').trim(),sources:Array.isArray(r.sources)?r.sources:[]}}
 // purchase links only go to our affiliate partners (Digikala, Khanoumi); ranking between them is commission-blind
 var SHOPS={'digikala.com':'دیجی‌کالا','khanoumi.com':'خانومی'};
 function shopLinks(sources){var out=[],seen={};(sources||[]).forEach(function(x){try{var u=new URL(x.url);var host=u.hostname.replace(/^www\./,'');var key=Object.keys(SHOPS).find(function(k){return host===k||host.endsWith('.'+k)});if(!key||u.protocol!=='https:'||seen[u.href])return;seen[u.href]=1;out.push({seller:SHOPS[key],url:u.href})}catch(e){}});return out.slice(0,3)}
 function errorText(e){var c=e&&e.code;if(LITE&&e&&e.serverMessage)return e.serverMessage;return c==='not_granted'?'برای فعال شدن دستیار، در پنجره Claude اجازه استفاده بده؛ اگر رد کردی صفحه را دوباره باز کن':c==='rate_limited'?'درخواست‌ها زیاد شد؛ کمی بعد دوباره بپرس':c==='unavailable'?'دستیار هوشمند در این نما در دسترس نیست؛ صفحه را داخل Claude و با حساب واردشده باز کن':'دستیار فعلاً پاسخ نداد؛ دوباره تلاش کن'}
+function dev(){try{return localStorage.getItem('bw_device')||''}catch(e){return ''}}
+// a paid action the shopper has no Negin for, or something the team should handle: never an AI/cost error
+function errJson(e){if(e&&e.code==='need_negin')return json({error:e.serverMessage||'برای این کار نگین لازمه 💎',code:'need_negin'},402);if(e&&e.code==='support')return json({error:e.serverMessage||'این یکی رو تیم بیوتی‌ولت برات بررسی می‌کنه',code:'support'},503);return json({error:errorText(e),code:'CLAUDE_'+String(e&&e.code||'error').toUpperCase()},503)}
 function cleanModel(t){return String(t||'').replace(/<routine_plan>[\s\S]*?(<\/routine_plan>|$)/g,'').replace(/\*\*|#{1,6}\s*/g,'').trim()}
 function decisionFrom(answer){var lead=(answer.split('\n').find(function(l){return /^نتیجه\s*[:：]/.test(l.trim())})||'').trim();if(/اطلاعات بیشتر لازم/.test(lead))return 'need_info';if(/صبر/.test(lead))return 'wait';if(/نخر/.test(lead))return 'avoid';if(/بخر/.test(lead))return 'buy';return 'undetermined'}
 function sharedFrom(body){var c=body.reviewContext||{};return {profile:c.profile||{},selection:(Array.isArray(c.selection)?c.selection:[]).slice(0,20).map(function(x){return {id:String(x.id||''),name:String(x.name||''),time:x.time==='am'?'am':'pm'}}),ownedIds:Array.isArray(c.ownedIds)?c.ownedIds:[],owned:Array.isArray(c.owned)?c.owned:[]}}
@@ -58,7 +61,7 @@ async function assistantPost(body,signal){
   // live price: a short, dedicated prompt (no knowledge base, catalog or INCI) — same answer for everyone, cached on the server for 6 hours
   if(LITE&&body.livePrice){var pn=String(body.livePrice).slice(0,120);
     var pq='قیمت نهایی امروز، تخفیف فعلی و امکان خرید قسطی «'+pn+'» را فقط در digikala.com و khanoumi.com زنده جست‌وجو کن. حداکثر ۴ خط کوتاه فارسی: ارزان‌ترین گزینه‌ی معتبر اول (فروشنده، قیمت به تومان)، بعد تخفیف و قسط. اگر موجود نیست صادقانه بگو. لینک صفحه‌ی محصول را بیاور. بدون مقدمه.';
-    var lr={text:'',sources:[]};try{lr=await ask(pq,signal,'default',true,'live','price:'+pn)}catch(e){if(e&&e.name==='AbortError')throw e;return json({error:errorText(e),code:'CLAUDE_'+String(e&&e.code||'error').toUpperCase()},503)}
+    var lr={text:'',sources:[]};try{lr=await ask(pq,signal,'default',true,'live','price:'+pn)}catch(e){if(e&&e.name==='AbortError')throw e;return errJson(e)}
     var lo=cleanModel(lr.text);if(!lo)return json({error:'پاسخ قابل‌استفاده‌ای دریافت نشد؛ دوباره بپرس'},502);
     return json({answer:lo,personalLead:lo.split('\n')[0],review:{analysisType:'price'},purchaseLinks:shopLinks(lr.sources),assistantMessageId:remember('assistant',lo),processing:{mode:'lite',intent:'price'},decision:{label:'advice'},search:{enabled:true,sourceCount:lr.sources.length},trust:trust({confidence:'medium',missing:[]})});
   }
@@ -71,7 +74,15 @@ async function assistantPost(body,signal){
   // Product outside the catalog (lite server): find the exact product and its real INCI on the web ourselves,
   // then decide with the strong model. Never ask the shopper for a photo or the back label.
   if(LITE&&body.purchaseCheck){var pname=String(body.productName||message.replace(/^بررسی محصول پیش از خرید[:：]?\s*/,'')).slice(0,160);
-    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname})});rs=await rr.json().catch(function(){return null});if(!rr.ok)rs=null}catch(e){if(e&&e.name==='AbortError')throw e;rs=null}
+    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname,d:dev()})});rs=await rr.json().catch(function(){return null});
+      if(rs&&rs.wallet&&window.bwWallet)window.bwWallet(rs.wallet);
+      if(rr.status===402||(rs&&rs.code==='need_negin'))return json({error:(rs&&rs.error)||'برای محصول تازه نگین لازمه 💎',code:'need_negin'},402);
+      if(rs&&rs.code==='support')return json({error:rs.error,code:'support'},503);
+      if(!rr.ok)rs=null}catch(e){if(e&&e.name==='AbortError')throw e;rs=null}
+    // the product is now a structured formula (new or from the bank): judge it with the catalog engine against THIS skin and routine
+    if(rs&&rs.formula&&R&&R.addFormulas){R.addFormulas([rs.formula]);if(window.BWCatalog&&window.BWCatalog.add)window.BWCatalog.add([rs.formula]);
+      var bp=R.catalogPurchaseCheck(shared,rs.formula.id);if(bp){var srcs0=(rs.sources||[]).slice(0,3);
+        return json({answer:bp.answer,personalLead:bp.lead,formula:rs.formula,fromBank:!!rs.fromBank,inBank:!!rs.inBank,review:{analysisType:'purchase',catalogCheck:bp.check},research:{name:rs.name_en||'',nameFa:rs.name_fa||'',brand:rs.brand||'',verified:true,found:true,variants:(rs.variants||[]).slice(0,4),sources:srcs0,cached:!!rs.cached},purchaseLinks:[],assistantMessageId:remember('assistant',bp.answer),processing:{mode:'catalog',intent:'purchase'},decision:{label:bp.decision},search:{enabled:!rs.fromBank,sourceCount:srcs0.length},trust:trust({confidence:'high',confidenceMethod:'web_inci_research+catalog_engine',missing:[]})})}}
     var found=rs&&rs.found&&Array.isArray(rs.inci)&&rs.inci.length>=5,verified=!!(rs&&rs.verified);
     var facts=rs?JSON.stringify({name:rs.name_en||pname,name_fa:rs.name_fa,brand:rs.brand,category:rs.category,inci:rs.inci,key_actives:rs.key_actives,spf:rs.spf,texture:rs.texture,fragrance:rs.fragrance,alcohol_denat:rs.alcohol_denat,essential_oils:rs.essential_oils,pore_clogging:rs.pore_clogging,claims:rs.claims_fa,skin_types:rs.skin_types_fa,sources:(rs.sources||[]).map(function(x){try{return new URL(x.url).hostname}catch(e){return ''}}).filter(Boolean)}).slice(0,6000):'';
     var decide=[P().system,P().style,profileBlock(shared),skinLine(shared.profile),
@@ -83,7 +94,7 @@ async function assistantPost(body,signal){
       'دلیل اصلی را با اشاره به ترکیبات مشخص (مثلاً اکتیو، عطر، الکل، روغن یا ماده منفذبند) و تناسب با نوع پوست، دغدغه و روتین فعلی کاربر بگو. تداخل با محصولات روتینش را بررسی کن. '+
       'هرگز از کاربر عکس، متن پشت بسته یا فهرست ترکیبات نخواه؛ پیدا کردن این‌ها کار ماست. اگر محصول نسخه‌های مختلف دارد، فرض کن همان نسخه‌ای است که شناسایی شده. فقط سه خط کوتاه: خط اول نتیجه، خط دوم دلیل اصلی با نام یک ترکیب مشخص و ربطش به پوست کاربر، خط سوم یک نکته‌ی مصرف یا جایگزین. بدون مقدمه و توضیح طولانی.',
       FORMAT].join('\n\n');
-    var rb={text:'',sources:[]},outp;try{rb=await ask(decide,signal,'default',false,'decide');outp=cleanModel(rb.text)}catch(e){if(e&&e.name==='AbortError')throw e;return json({error:errorText(e),code:'CLAUDE_'+String(e&&e.code||'error').toUpperCase()},503)}
+    var rb={text:'',sources:[]},outp;try{rb=await ask(decide,signal,'default',false,'decide');outp=cleanModel(rb.text)}catch(e){if(e&&e.name==='AbortError')throw e;return errJson(e)}
     if(!outp)return json({error:'پاسخ قابل‌استفاده‌ای دریافت نشد؛ دوباره بپرس'},502);
     var lab=decisionFrom(outp);if(lab==='need_info'||lab==='undetermined'){lab='wait'}
     var clash=skinClash(shared.profile,rs);if(clash&&lab!=='avoid'){outp='نتیجه: نخر\n'+clash+'\n'+outp.split('\n').slice(2).join('\n');lab='avoid'}
@@ -100,7 +111,7 @@ async function assistantPost(body,signal){
     body.analysisType==='supplements'?'برای مکمل‌ها دوز روزانه را با واحد درست جمع کن، UL و RDA را جدا بگو، تداخل دارویی را جدا بررسی کن و تجویز پزشکی نکن.':'',FORMAT].filter(Boolean).join('\n\n');
   var turns=history.concat([{role:'user',content:rules+'\n\nپیام کاربر: '+message}]);
   while(turns.length&&turns[0].role!=='user')turns.shift();
-  var res={text:'',sources:[]},out;try{res=await ask(turns,signal,'default',liveGeneral);out=cleanModel(res.text)}catch(e){if(e&&e.name==='AbortError')throw e;return json({error:errorText(e),code:'CLAUDE_'+String(e&&e.code||'error').toUpperCase()},503)}
+  var res={text:'',sources:[]},out;try{res=await ask(turns,signal,'default',liveGeneral);out=cleanModel(res.text)}catch(e){if(e&&e.name==='AbortError')throw e;return errJson(e)}
   if(!out)return json({error:'پاسخ قابل‌استفاده‌ای دریافت نشد؛ دوباره بپرس'},502);
   var label=body.purchaseCheck?decisionFrom(out):'advice';if(body.purchaseCheck&&label==='buy'){out=out.replace(/^نتیجه\s*[:：].*$/m,'نتیجه: فعلاً صبر کن\nفرمول این نسخه در کاتالوگ ثبت نشده؛ تأیید خرید قطعی صادر نمی‌کنیم');label='wait'}
   return json({answer:out,personalLead:out.split('\n')[0],review:{analysisType:body.analysisType||'general'},purchaseLinks:label==='avoid'?[]:shopLinks(res.sources),assistantMessageId:remember('assistant',out),processing:{mode:LITE?'lite':'claude',intent:'general'},decision:{label:label},search:{enabled:liveGeneral,sourceCount:res.sources.length},trust:trust({confidence:'low',missing:body.purchaseCheck?['فهرست ترکیبات همین نسخه']:[]})});

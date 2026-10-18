@@ -10,7 +10,7 @@
 import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC=path.join(here,'public');
-import os from 'node:os';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';
+import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';
 // Liara app filesystems are read-only unless a disk is mounted: pick the first writable folder, never crash.
 function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
 const DATA=[process.env.DATA_DIR,'/data',path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
@@ -87,9 +87,9 @@ async function ai(body){
       tried.push(m+':'+r.status);if(r.ok||![400,401,403,404,422,503].includes(r.status))break;
       console.error('ai model failed, falling back',r.status,m);
     }
-    if(!r.ok&&d?.error?.code==='budget')return {status:429,body:{error:'بررسی زنده‌ی امروز به سقفش رسیده؛ فعلاً از کاتالوگ جواب می‌دم 💜',code:'budget'}};
+    if(!r.ok&&d?.error?.code==='budget')return {status:503,body:{error:'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜',code:'support'}};
     if(!r.ok){lastUpstream={tried,status:r.status,message:String(d?.error?.message||d?.message||'').replace(/(sk-|eyJ)[\w.-]+/g,'[redacted]').slice(0,200)};const code=String(d?.error?.code||d?.code||r.status).replace(/[^\w.-]/g,'').slice(0,60);console.error('ai upstream',r.status,code,model);
-      return {status:r.status===429?429:502,body:{error:r.status===401||r.status===403?'کلید یا دسترسی سرویس هوش مصنوعی مشکل دارد':r.status===402?'اعتبار سرویس هوش مصنوعی تمام شده':r.status===429?'سرویس شلوغه؛ یه کم بعد دوباره بزن':r.status===404?'نام مدل یا آدرس سرویس درست نیست':'دستیار الان جواب نداد؛ دوباره تلاش کن',code:'upstream_'+code}}}
+      return {status:r.status===429?429:502,body:{error:[401,402,403,404].includes(r.status)?'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜':r.status===429?'الان شلوغه؛ یه کم بعد دوباره بزن':'الان جواب نگرفتم؛ دوباره بزن',code:[401,402,403,404].includes(r.status)?'support':'upstream_'+code}}}
     const msg=d?.choices?.[0]?.message;const text=typeof msg?.content==='string'?msg.content:Array.isArray(msg?.content)?msg.content.map(x=>x.text||'').join('\n'):'';
     if(!text.trim())return {status:502,body:{error:'پاسخ خالی بود؛ دوباره بپرس',code:'empty'}};
     return {status:200,body:{text,sources:sourcesOf(msg),model,fallback:model!==first,searched:!!body.search,usage:d.usage?{in:d.usage.prompt_tokens,out:d.usage.completion_tokens}:null}};
@@ -100,6 +100,7 @@ async function ai(body){
 // The shopper only types a name (Persian, transliterated, partial). We find the exact product and its
 // ingredient list on the web ourselves (brand site, INCIDecoder, Skinsort, big retailers) — never ask them for a photo.
 const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online','openai/gpt-5-mini:online','openai/gpt-4.1-mini:online'])];
+const BANK=makeBank(DATA);const pubF=({aliases,query,hits,lastHit,model,addedAt,...f})=>f;
 const pcache=new Map(); // live price answers, 6 hours
 const RCACHE=path.join(DATA,'research-cache.json');let rcache={};try{rcache=JSON.parse(fs.readFileSync(RCACHE,'utf8'))}catch{}
 const normName=q=>String(q||'').toLowerCase().replace(/[ي]/g,'ی').replace(/[ك]/g,'ک').replace(/[‌\s\-_.,،()]+/g,' ').trim().slice(0,120);
@@ -110,7 +111,7 @@ Search in English with the brand and product line (translate the Persian name fi
 If several versions exist (oily/dry skin, old/new formula, SPF 30/50), choose the one that best matches the name and list the others in "variants".
 Never invent ingredients. Only fill "inci" with a list you actually saw on a page; otherwise use [].
 Answer with ONLY minified JSON, no prose, with exactly these keys:
-{"found":bool,"name_en":"","name_fa":"","brand":"","category":"cleanser|toner|serum|moisturizer|sunscreen|mask|exfoliant|eye|lip|body|other","confidence":"high|medium|low","inci":[""],"key_actives":[{"name":"","percent":null}],"spf":null,"texture":"","fragrance":null,"alcohol_denat":null,"essential_oils":[],"pore_clogging":[],"claims_fa":[""],"skin_types_fa":[""],"variants":[""],"source_note_fa":""}`;
+{"found":bool,"role":"","rinse_off":true,"texture":"","finish":null,"actives":[],"made_for":[],"flags":[],"name_en":"","name_fa":"","brand":"","category":"cleanser|toner|serum|moisturizer|sunscreen|mask|exfoliant|eye|lip|body|other","confidence":"high|medium|low","inci":[""],"key_actives":[{"name":"","percent":null}],"spf":null,"texture":"","fragrance":null,"alcohol_denat":null,"essential_oils":[],"pore_clogging":[],"claims_fa":[""],"skin_types_fa":[""],"variants":[""],"source_note_fa":""}`+RESEARCH_SCHEMA_HINT;
 function parseJson(t){const s=String(t||'');const a=s.indexOf('{'),b=s.lastIndexOf('}');if(a<0||b<=a)return null;try{return JSON.parse(s.slice(a,b+1))}catch{return null}}
 async function research(name){
   const key=normName(name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
@@ -119,7 +120,7 @@ async function research(name){
   let best=null;const tried=[];const used=[];
   for(const model of RESEARCH_MODELS){
     let x;try{x=await chatCall(model,[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:'Product name typed by the shopper: '+String(name).slice(0,200)}])}catch(e){tried.push(model+':error');continue}
-    if(x.d?.error?.code==='budget')return {status:429,body:{error:'بررسی زنده‌ی امروز به سقفش رسیده؛ فردا دوباره بزن 💜',code:'budget'}};
+    if(x.d?.error?.code==='budget')return {status:503,body:{error:'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜',code:'support'}};
     if(x.d?.usage)used.push({model,in:x.d.usage.prompt_tokens||0,out:x.d.usage.completion_tokens||0});
     tried.push(model+':'+x.r.status);if(!x.r.ok){if([400,403,404,422,503].includes(x.r.status))continue;break}
     const msg=x.d?.choices?.[0]?.message,j=parseJson(msg?.content);const sources=sourcesOf(msg);
@@ -177,18 +178,22 @@ if(BEST_DAYS>0)setInterval(()=>{if(!best.at||Date.now()-Date.parse(best.at)>BEST
 
 // ---------- Negin pricing (editable in the admin panel) ----------
 const CFG=path.join(DATA,'config.json');
-const DEFAULT_CFG={tomanPer1k:900,dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:5,trialGift:5,welcome:10,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:20,price:49000},{n:60,price:119000}],subscription:{price:99000,monthly:50,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
+const DEFAULT_CFG={priceVersion:2,freeChecks:2,freePerIpDay:6,tomanPer1k:900,dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:0,trialGift:0,welcome:0,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:5,price:125000},{n:15,price:330000}],subscription:{price:590000,monthly:30,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
 let cfg=DEFAULT_CFG;try{cfg={...DEFAULT_CFG,...JSON.parse(fs.readFileSync(CFG,'utf8'))}}catch{}
+function migrateCfg(){let raw=null;try{raw=JSON.parse(fs.readFileSync(CFG,'utf8'))}catch{}if(!raw||(raw.priceVersion||1)>=2)return; // only a config saved before v80
+  try{if(fs.existsSync(CFG))fs.copyFileSync(CFG,path.join(DATA,'config.backup-v1-'+Date.now()+'.json'))}catch{}
+  cfg={...cfg,priceVersion:2,freeChecks:2,freePerIpDay:6,welcome:0,trialGift:0,registerGift:0,packs:DEFAULT_CFG.packs,subscription:DEFAULT_CFG.subscription};try{fs.writeFileSync(CFG,JSON.stringify(cfg))}catch{}}
 function saveCfg(next){ // merges: a form only changes the fields it sends
   const has=k=>Object.prototype.hasOwnProperty.call(next,k)&&String(next[k]).trim()!=='';const num=(k,cur,min=0,max=1e9)=>has(k)?Math.max(min,Math.min(max,Number(String(next[k]).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))||0)):cur;
   const o=cfg||DEFAULT_CFG,oc=o.costs||DEFAULT_CFG.costs,op=o.packs||DEFAULT_CFG.packs,os=o.subscription||DEFAULT_CFG.subscription;
-  const c={tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
+  const c={priceVersion:o.priceVersion??2,freeChecks:num('freeChecks',o.freeChecks??2,0,50),freePerIpDay:num('freePerIpDay',o.freePerIpDay??6,0,100),tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
     costs:{research:num('research',oc.research),live:num('live',oc.live),gift:num('gift',oc.gift),pack:num('pack',oc.pack)},
     packs:[{n:num('p1n',op[0].n,1),price:num('p1p',op[0].price)},{n:num('p2n',op[1].n,1),price:num('p2p',op[1].price)}],
     subscription:{price:num('subp',os.price),monthly:num('subn',os.monthly),perks:has('perks')?String(next.perks).slice(0,200):os.perks},
     trial:has('welcome')?(next.trial==='on'||next.trial===true):o.trial};
   cfg=c;try{fs.writeFileSync(CFG,JSON.stringify(c))}catch(e){console.error('config save',e.code)}return c}
 
+migrateCfg();
 // ---------- safe gift: the giver sends a link, the receiver answers 3 skin questions privately ----------
 const GIFTS=path.join(DATA,'gifts.json');let gifts={};try{gifts=JSON.parse(fs.readFileSync(GIFTS,'utf8'))}catch{}
 const saveGifts=()=>{try{fs.writeFileSync(GIFTS,JSON.stringify(gifts))}catch{}};
@@ -256,7 +261,7 @@ function costs(){const since=Date.now()-30*864e5;const rows=readJsonlSafe(path.j
     perAction:Object.fromEntries(Object.entries(acc).map(([k,a])=>[k,{calls:a.n,avgIn:Math.round(a.tin/a.n),avgOut:Math.round(a.tout/a.n),avgCost:a.priced?a.cost/a.priced:null,toman:tpk?Math.round((a.tin+a.tout)/a.n*tpk/1000):null}])),
     perNeginAction:{research:per.research,live:per.live},perNeginToman:{research:tomanOf('research'),live:tomanOf('live')},tokensPerNegin:tokPer,tomanPer1k:tpk,margin,dollarRate:Number(c.dollarRate)||0,suggested}}
 function readJsonlSafe(f){try{return fs.readFileSync(f,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
-const admin=makeAdmin({getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
+const admin=makeAdmin({BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
   try{
@@ -273,13 +278,15 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'79'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'80'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
       const body=await readBody(req,80000);const t0=Date.now();const ck=typeof body.cacheKey==='string'&&body.search?normName(body.cacheKey).slice(0,120):'';
       const ph=ck&&pcache.get(ck);if(ph&&Date.now()-ph.t<6*3600e3)return send(res,200,{...ph.body,cached:true});
-      const r=await ai(body);if(ck&&r.status===200){pcache.set(ck,{t:Date.now(),body:r.body});if(pcache.size>500)pcache.delete(pcache.keys().next().value)}
+      const dd=String(body.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);let via=null;
+      if(body.search&&body.act==='live'){via=BANK.charge(dd,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای قیمت زنده نگین لازمه 💎',wallet:BANK.balance(dd,cfg)})}
+      const r=await ai(body);if(via&&r.status!==200)BANK.refund(dd,via);if(via)r.body.wallet=BANK.balance(dd,cfg);if(ck&&r.status===200){pcache.set(ck,{t:Date.now(),body:r.body});if(pcache.size>500)pcache.delete(pcache.keys().next().value)}
       logUsage({at:new Date().toISOString(),status:r.status,model:r.body.model||'',search:!!body.search,ms:Date.now()-t0,sources:(r.body.sources||[]).length,fallback:!!r.body.fallback||undefined,code:r.body.code||undefined,usage:r.body.usage||null,act:['decide','live','chat','explain','routine'].includes(body.act)?body.act:(body.search?'live':'chat')});
       return send(res,r.status,r.body);
     }
@@ -303,8 +310,8 @@ const server=http.createServer(async(req,res)=>{
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const a=ip(req);const f=redeemFails.get(a)||{n:0,t:Date.now()};if(Date.now()-f.t>3600e3){f.n=0;f.t=Date.now()}if(f.n>=8)return send(res,429,{error:'چند بار اشتباه زدی؛ یه ساعت دیگه امتحان کن'});
       const b=await readBody(req,500);const code=String(b.code||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).toUpperCase().replace(/[^A-Z0-9]/g,'');const all=getRedeem();const r=all[code];
       if(!r){f.n++;redeemFails.set(a,f);return send(res,400,{error:'این کد درست نیست'})}if(r.usedAt)return send(res,400,{error:'این کد قبلاً استفاده شده'});
-      r.usedAt=new Date().toISOString();r.d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);saveRedeem(all);setReqStatus(r.ref,{status:'done'});
-      fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:r.usedAt,t:'redeem',d:r.d||'anon',page:'app'})+'\n',()=>{});return send(res,200,{ok:true,n:r.n,sub:!!r.sub});
+      r.usedAt=new Date().toISOString();r.d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);saveRedeem(all);BANK.credit(r.d,r.n);setReqStatus(r.ref,{status:'done'});
+      fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:r.usedAt,t:'redeem',d:r.d||'anon',page:'app'})+'\n',()=>{});return send(res,200,{ok:true,n:r.n,sub:!!r.sub,wallet:BANK.balance(r.d,cfg)});
     }
     if(url.pathname==='/buy-request'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
@@ -316,6 +323,8 @@ const server=http.createServer(async(req,res)=>{
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:row.at,t:'buy_request',d:row.d||'anon',page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
       return send(res,200,{ok:true,ref});
     }
+    if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});
+    if(url.pathname==='/wallet')return send(res,200,BANK.balance(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40),cfg),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/costs.json')return send(res,200,costs(),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/config.json')return send(res,200,{...cfg,aff:{dk:!!AFF.dk.tpl,kh:!!AFF.kh.tpl}},'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/gift'&&req.method==='POST'){
@@ -344,7 +353,14 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname==='/api/research'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
-      const b=await readBody(req,4000);const r=await research(b.name);return send(res,r.status,r.body);
+      const b=await readBody(req,4000);const d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);
+      const known=BANK.find(b.name);if(known){BANK.hit(known,b.name);const f=pubF(known);
+        return send(res,200,{fromBank:true,found:true,verified:true,name_en:f.en,name_fa:f.name,brand:f.brand,formula:f,sources:f.sources.map(u=>({url:u,title:''})),variants:f.variants||[],wallet:BANK.balance(d,cfg)})}
+      const via=BANK.charge(d,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای بررسی یه محصول تازه نگین لازمه 💎',wallet:BANK.balance(d,cfg)});
+      const r=await research(b.name);
+      if(r.status!==200||!r.body.found||r.body.cached)BANK.refund(d,via); // no new cost → no charge
+      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);const row=BANK.add(formula,b.name);inBank=!!row;if(row)formula=pubF(row)}
+      return send(res,r.status,{...r.body,formula,inBank,wallet:BANK.balance(d,cfg)});
     }
     if(url.pathname==='/api/feedback'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});

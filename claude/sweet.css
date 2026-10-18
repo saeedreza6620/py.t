@@ -191,3 +191,7 @@ body.sw-on .bw-privacy-link{display:none!important}
 .sw-steps{margin:8px 0 10px;padding-inline-start:20px;font-size:13px;line-height:1.9;color:#4a5170}
 .sw-done{text-align:center}.sw-ref{font:800 26px/1.2 ui-monospace,monospace;letter-spacing:3px;color:#3d8fe6;margin:2px 0 10px}
 .sw-support-buy{display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+/* "already checked by BeautyWallet" one-tap suggestions */
+.sw-known{font-size:12.5px;font-weight:700;color:#3d8fe6;padding:6px 4px 2px}
+.sw-sitem-top{box-shadow:0 0 0 1.5px #9ad6ff inset,0 6px 16px rgba(80,170,240,.18)!important;background:linear-gradient(135deg,#f3faff,#f6f2ff)!important}
+.sw-fresh span{font-size:13px;color:#5a6280}

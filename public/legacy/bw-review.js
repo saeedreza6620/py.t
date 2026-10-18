@@ -2901,5 +2901,5 @@ function catalogPurchaseBody(p, reason) {
 }
 
 function catalogList(){return CATALOG.products.map(p=>p.name+' ['+p.id+'] '+(p.basis==='inci_sourced'?'':'basis=نام ')).join('\n')}
-window.BWReview={catalogRoutineCheck,catalogCovers,catalogPrompt,catalogResponseBody,catalogSummary,mergeCatalogAnswer,routinePlanFrom,catalogPurchaseCheck,catalogPurchasePrompt,catalogPurchaseBody,catalogList,skinFit:function(profile,id){const f=CATALOG.products.find(p=>p.id===id);return f?purchaseFit(f,skinState(profile||{})):null}};
+window.BWReview={catalogRoutineCheck,catalogCovers,catalogPrompt,catalogResponseBody,catalogSummary,mergeCatalogAnswer,routinePlanFrom,catalogPurchaseCheck,catalogPurchasePrompt,catalogPurchaseBody,catalogList,addFormulas:function(list){(list||[]).forEach(function(f){if(f&&f.id&&!CATALOG.products.some(function(p){return p.id===f.id}))CATALOG.products.push(f)})},skinFit:function(profile,id){const f=CATALOG.products.find(p=>p.id===id);return f?purchaseFit(f,skinState(profile||{})):null}};
 })();
