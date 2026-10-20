@@ -294,6 +294,10 @@ function checkOrders(){var mine=read('bw_card_orders',[]).filter(function(o){ret
  fetch('/order-status?d='+encodeURIComponent(devId())).then(function(r){return r.json()}).then(function(d){if(d.wallet)setWallet(d.wallet);var all=read('bw_card_orders',[]);(d.orders||[]).forEach(function(o){var me=all.find(function(x){return x.ref===o.ref});if(!me||me.status===o.status)return;
   if(o.status==='done')toast('💎 واریزت تأیید شد؛ الماس‌هات اضافه شد');if(o.status==='rejected')toast('واریزت رو پیدا نکردیم؛ اگه مطمئنی، از «بررسی با پشتیبانی» بهمون بگو');me.status=o.status});write('bw_card_orders',all)}).catch(function(){})}
 setTimeout(checkOrders,2500);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkOrders()});
+// installed apps (no refresh button on iPhone): when a newer release is live, reload once
+var APP_V=(function(){var s=document.querySelector('script[src*="sweet.js"]');var m=s&&s.src.match(/[?&]v=(\d+)/);return m?Number(m[1]):0})();
+function checkRelease(){if(!LIVE||!APP_V)return;fetch('/healthz',{cache:'no-store'}).then(function(r){return r.json()}).then(function(h){var v=Number(h&&h.version)||0;var k='bw_reload_for';if(v>APP_V&&read(k,0)!==v){write(k,v);location.reload()}}).catch(function(){})}
+setTimeout(checkRelease,1500);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkRelease()});
 /* ---------- diamond assistant: reads skin + routine in half a second, then offers exactly what to check ---------- */
 function routineBrief(){var ids=routineIds(),p=profile(),am=ids.filter(function(id){return timeOf(id)==='am'}).length;
  return {ids:ids,am:am,pm:ids.length-am,skin:p.skinBase&&p.skinBase!=='مطمئن نیستم'?p.skinBase:'',today:p.skinToday||'',goal:String(p.goal1||'').replace('آبرسانی و حمایت از لایهٔ محافظ پوست','آبرسانی')}}
