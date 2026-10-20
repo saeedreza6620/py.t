@@ -230,3 +230,10 @@ body.sw-on .bw-privacy-link{display:none!important}
 .sw-pcard{display:flex;gap:10px;align-items:center;width:100%;text-align:start;border:0;cursor:pointer;font:inherit;margin:6px 0;padding:8px 10px;border-radius:14px;background:#f7fbff;box-shadow:0 0 0 1px #dcecff inset}
 .sw-pcard b{display:block;font-size:13px}.sw-pcard small{display:block;font-size:11.5px;color:#5f6885;line-height:1.7}
 @media (max-width:360px){.sw-gchips{grid-template-columns:1fr}}
+/* minimal home: diamond + one line + title; the assistant opens on tap */
+button.sw-hero-gem{border:0;background:none;padding:6px;cursor:pointer;margin:2px auto 0;display:grid;place-items:center;border-radius:50%;-webkit-tap-highlight-color:transparent}
+button.sw-hero-gem svg{width:74px;height:74px}
+button.sw-hero-gem:active svg{transform:scale(.94)}
+button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(80,170,240,.85))}
+.sw-hero-say{display:inline-block;margin:2px auto 6px;padding:7px 14px;border-radius:16px 16px 16px 4px;background:#fff;box-shadow:0 4px 14px rgba(80,140,220,.14),0 0 0 1px #e1efff inset;font-size:12.5px;line-height:1.8;color:#2f6fbf;font-weight:700}
+.sw-guide[hidden]{display:none}.sw-guide{animation:sw-rise .28s both}
