@@ -185,15 +185,16 @@ if(BEST_DAYS>0)setInterval(()=>{if(!best.at||Date.now()-Date.parse(best.at)>BEST
 
 // ---------- Negin pricing (editable in the admin panel) ----------
 const CFG=path.join(DATA,'config.json');
-const DEFAULT_CFG={cardNumber:'',cardHolder:'',cardBank:'',payAdvance:1,priceVersion:2,freeChecks:2,freePerIpDay:6,tomanPer1k:900,dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:0,trialGift:0,welcome:0,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:5,price:125000},{n:15,price:330000}],subscription:{price:590000,monthly:30,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
+const DEFAULT_CFG={cardNumber:'',cardHolder:'',cardBank:'',payAdvance:1,priceVersion:3,freeChecks:3,freePerIpDay:6,tomanPer1k:900,dollarRate:0,margin:3,aiDailyCalls:1000,aiDailyOnline:400,registerGift:0,trialGift:0,welcome:0,costs:{research:1,live:1,gift:0,pack:2},packs:[{n:5,price:125000},{n:15,price:330000}],subscription:{price:590000,monthly:30,perks:'هشدار تمدید و افت قیمت، تحقیق محصول نامحدود منصفانه'},trial:true};
 let cfg=DEFAULT_CFG;try{cfg={...DEFAULT_CFG,...JSON.parse(fs.readFileSync(CFG,'utf8'))}}catch{}
-function migrateCfg(){let raw=null;try{raw=JSON.parse(fs.readFileSync(CFG,'utf8'))}catch{}if(!raw||(raw.priceVersion||1)>=2)return; // only a config saved before v80
+function migrateCfg(){let raw=null;try{raw=JSON.parse(fs.readFileSync(CFG,'utf8'))}catch{}if(!raw||(raw.priceVersion||1)>=3)return; // configs saved before v85
+  if((raw.priceVersion||1)===2){try{fs.copyFileSync(CFG,path.join(DATA,'config.backup-v2-'+Date.now()+'.json'))}catch{}cfg={...cfg,priceVersion:3,freeChecks:Math.max(3,Number(raw.freeChecks)||0)};try{fs.writeFileSync(CFG,JSON.stringify(cfg))}catch{}return}
   try{if(fs.existsSync(CFG))fs.copyFileSync(CFG,path.join(DATA,'config.backup-v1-'+Date.now()+'.json'))}catch{}
-  cfg={...cfg,priceVersion:2,freeChecks:2,freePerIpDay:6,welcome:0,trialGift:0,registerGift:0,packs:DEFAULT_CFG.packs,subscription:DEFAULT_CFG.subscription};try{fs.writeFileSync(CFG,JSON.stringify(cfg))}catch{}}
+  cfg={...cfg,priceVersion:3,freeChecks:3,freePerIpDay:6,welcome:0,trialGift:0,registerGift:0,packs:DEFAULT_CFG.packs,subscription:DEFAULT_CFG.subscription};try{fs.writeFileSync(CFG,JSON.stringify(cfg))}catch{}}
 function saveCfg(next){ // merges: a form only changes the fields it sends
   const has=k=>Object.prototype.hasOwnProperty.call(next,k)&&String(next[k]).trim()!=='';const num=(k,cur,min=0,max=1e9)=>has(k)?Math.max(min,Math.min(max,Number(String(next[k]).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))||0)):cur;
   const o=cfg||DEFAULT_CFG,oc=o.costs||DEFAULT_CFG.costs,op=o.packs||DEFAULT_CFG.packs,os=o.subscription||DEFAULT_CFG.subscription;
-  const c={payAdvance:num('payAdvance',o.payAdvance??1,0,3),cardNumber:has('cardNumber')?String(next.cardNumber).replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'').slice(0,16):(o.cardNumber||''),cardHolder:has('cardHolder')?String(next.cardHolder).slice(0,60):(o.cardHolder||''),cardBank:has('cardBank')?String(next.cardBank).slice(0,30):(o.cardBank||''),priceVersion:o.priceVersion??2,freeChecks:num('freeChecks',o.freeChecks??2,0,50),freePerIpDay:num('freePerIpDay',o.freePerIpDay??6,0,100),tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
+  const c={priceVersion:o.priceVersion??3,payAdvance:num('payAdvance',o.payAdvance??1,0,3),cardNumber:has('cardNumber')?String(next.cardNumber).replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'').slice(0,16):(o.cardNumber||''),cardHolder:has('cardHolder')?String(next.cardHolder).slice(0,60):(o.cardHolder||''),cardBank:has('cardBank')?String(next.cardBank).slice(0,30):(o.cardBank||''),freeChecks:num('freeChecks',o.freeChecks??3,0,50),freePerIpDay:num('freePerIpDay',o.freePerIpDay??6,0,100),tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
     costs:{research:num('research',oc.research),live:num('live',oc.live),gift:num('gift',oc.gift),pack:num('pack',oc.pack)},
     packs:[{n:num('p1n',op[0].n,1),price:num('p1p',op[0].price)},{n:num('p2n',op[1].n,1),price:num('p2p',op[1].price)}],
     subscription:{price:num('subp',os.price),monthly:num('subn',os.monthly),perks:has('perks')?String(next.perks).slice(0,200):os.perks},
@@ -285,14 +286,14 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'84'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'85'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
       const body=await readBody(req,80000);const t0=Date.now();const ck=typeof body.cacheKey==='string'&&body.search?normName(body.cacheKey).slice(0,120):'';
       const ph=ck&&pcache.get(ck);if(ph&&Date.now()-ph.t<6*3600e3)return send(res,200,{...ph.body,cached:true});
       const dd=String(body.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);let via=null;
-      if(body.search&&body.act==='live'){via=BANK.charge(dd,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای قیمت زنده نگین لازمه 💎',wallet:BANK.balance(dd,cfg)})}
+      if((body.search&&body.act==='live')||body.act==='chat'){via=BANK.charge(dd,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:body.act==='chat'?'برای سؤال از دستیار یه الماس لازمه 💎':'برای قیمت زنده یه الماس لازمه 💎',wallet:BANK.balance(dd,cfg)})}
       const r=await ai(body);if(via&&r.status!==200)BANK.refund(dd,via);if(via)r.body.wallet=BANK.balance(dd,cfg);if(ck&&r.status===200){pcache.set(ck,{t:Date.now(),body:r.body});if(pcache.size>500)pcache.delete(pcache.keys().next().value)}
       logUsage({at:new Date().toISOString(),status:r.status,model:r.body.model||'',search:!!body.search,ms:Date.now()-t0,sources:(r.body.sources||[]).length,fallback:!!r.body.fallback||undefined,code:r.body.code||undefined,usage:r.body.usage||null,act:['decide','live','chat','explain','routine'].includes(body.act)?body.act:(body.search?'live':'chat')});
       return send(res,r.status,r.body);
@@ -379,7 +380,7 @@ const server=http.createServer(async(req,res)=>{
       const b=await readBody(req,4000);const d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);
       const known=!b.url&&BANK.find(b.name);if(known){BANK.hit(known,b.name);const f=pubF(known);
         return send(res,200,{fromBank:true,found:true,verified:true,name_en:f.en,name_fa:f.name,brand:f.brand,formula:f,sources:f.sources.map(u=>({url:u,title:''})),variants:f.variants||[],wallet:BANK.balance(d,cfg)})}
-      const via=BANK.charge(d,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای بررسی یه محصول تازه نگین لازمه 💎',wallet:BANK.balance(d,cfg)});
+      const via=BANK.charge(d,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای بررسی یه محصول تازه الماس لازمه 💎',wallet:BANK.balance(d,cfg)});
       const link=cleanUrl(b.url);const r=await research(b.name,link);
       if(r.status!==200||!r.body.found||r.body.cached)BANK.refund(d,via); // no new cost → no charge
       if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),url:link||undefined})+'\n',()=>{});

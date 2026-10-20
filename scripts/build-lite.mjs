@@ -22,7 +22,7 @@ const brand=path.join(src,'claude/brand'),gem=fs.readFileSync(path.join(brand,'g
 const gemSvg=(pre,attrs)=>gem.replace(/id="g/g,`id="${pre}`).replace(/url\(#g/g,`url(#${pre}`).replace('<svg ',`<svg ${attrs} `);
 for(const f of fs.readdirSync(brand))if(f.endsWith('.png'))fs.copyFileSync(path.join(brand,f),path.join(dest,f));
 fs.copyFileSync(path.join(brand,'favicon.ico'),path.join(out,'favicon.ico'));fs.copyFileSync(path.join(brand,'gem.svg'),path.join(out,'favicon.svg'));fs.copyFileSync(path.join(brand,'apple-touch-icon-gem-180.png'),path.join(out,'apple-touch-icon.png'));
-html=html.replace(/<svg class="logo"[\s\S]*?<\/svg>/,gemSvg('lg','class="logo" role="img" aria-label="نگین بیوتی‌ولت"'));
+html=html.replace(/<svg class="logo"[\s\S]*?<\/svg>/,gemSvg('lg','class="logo" role="img" aria-label="الماس بیوتی‌ولت"'));
 html=html.replace(/(<div class="bw-opening-mark">)<svg[\s\S]*?<\/svg>/,(m,a)=>a+gemSvg('og','aria-hidden="true"'));
 html=html.replace(/apple-touch-icon-180-v\d+\.png/g,'apple-touch-icon-gem-180.png');
 const mf=path.join(dest,'manifest.webmanifest');fs.writeFileSync(mf,fs.readFileSync(mf,'utf8').replace(/bw-circle-192-v\d+\.png/g,'bw-gem-192.png').replace(/bw-circle-maskable-512-v\d+\.png/g,'bw-gem-maskable-512.png').replace(/bw-circle-512-v\d+\.png/g,'bw-gem-512.png'));
