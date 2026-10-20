@@ -116,6 +116,14 @@ function parseJson(t){const s=String(t||'');const a=s.indexOf('{'),b=s.lastIndex
 // a product page link from the shopper: read its title ourselves (known shops only) and research from that exact page
 const PAGE_HOSTS=/(^|\.)(digikala\.com|khanoumi\.com|torob\.com|basalam\.com|snappshop\.ir|okala\.com|digistyle\.com|zarinsalamat\.com|amazon\.[a-z.]+|sephora\.com|lookfantastic\.com|incidecoder\.com|skinsort\.com)$/i;
 function cleanUrl(u){try{const x=new URL(String(u||'').trim());if(!/^https?:$/.test(x.protocol)||/^(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|0\.)/.test(x.hostname))return '';x.hash='';return x.href.slice(0,400)}catch{return ''}}
+const IMGDIR=path.join(DATA,'bank-img');try{fs.mkdirSync(IMGDIR,{recursive:true})}catch{}
+const PRIVATE=/^(localhost|127\.|10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.|0\.|169\.254\.|\[)/;
+function smallImageUrl(u){try{const x=new URL(u);if(/dkstatics|digikala/i.test(x.hostname)){x.search='?x-oss-process=image/resize,m_lfit,h_300,w_300/format,webp/quality,q_75'}return x.href}catch{return ''}}
+async function fetchBankImage(id,u){try{const x=new URL(u);if(x.protocol!=='https:'||PRIVATE.test(x.hostname))return;
+  const r=await fetch(smallImageUrl(u),{signal:AbortSignal.timeout(8000),redirect:'follow',headers:{'User-Agent':'Mozilla/5.0 BeautyWallet','Accept':'image/webp,image/*'}});const ct=String(r.headers.get('content-type')||'');
+  if(!r.ok||!/^image\/(jpeg|png|webp)/.test(ct))return;const buf=Buffer.from(await r.arrayBuffer());if(buf.length<1500||buf.length>180000)return; // tiny = placeholder, big = would slow the page
+  const ext=ct.includes('png')?'png':ct.includes('webp')?'webp':'jpg';const file=id.replace(/[^a-z0-9-]/g,'')+'.'+ext;fs.writeFileSync(path.join(IMGDIR,file),buf);BANK.setImage(id,'/bank-img/'+file)}catch{}}
+async function pageImage(u){try{if(!PAGE_HOSTS.test(new URL(u).hostname))return '';const r=await fetch(u,{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet'},redirect:'follow'});const h=(await r.text()).slice(0,300000);const m=h.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)/i);return m?m[1]:''}catch{return ''}}
 async function pageTitle(u){try{if(!PAGE_HOSTS.test(new URL(u).hostname))return '';const r=await fetch(u,{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet','Accept-Language':'fa,en'},redirect:'follow'});const h=(await r.text()).slice(0,300000);
   const m=h.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)/i)||h.match(/<title[^>]*>([^<]+)/i);return m?m[1].replace(/\s*[|\-–]\s*(دیجی‌کالا|دیجی کالا|خانومی|Digikala|Khanoumi).*$/i,'').replace(/&[a-z#0-9]+;/gi,' ').trim().slice(0,200):''}catch{return ''}}
 async function research(name,url){
@@ -287,7 +295,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'89'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'90'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -348,6 +356,7 @@ const server=http.createServer(async(req,res)=>{
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:row.at,t:'buy_request',d:row.d||'anon',page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
       return send(res,200,{ok:true,ref,n:row.n,price:row.price});
     }
+    if(url.pathname.startsWith('/bank-img/')){const f=path.join(IMGDIR,path.basename(url.pathname));return fs.stat(f,(e,st)=>{if(e||!st.isFile())return send(res,404,'','text/plain');const ext=path.extname(f).slice(1);res.writeHead(200,{'Content-Type':ext==='png'?'image/png':ext==='webp'?'image/webp':'image/jpeg','Cache-Control':'public, max-age=2592000, immutable'});fs.createReadStream(f).pipe(res)})}
     if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/wallet')return send(res,200,BANK.balance(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40),cfg),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/costs.json')return send(res,200,costs(),'application/json',{'Cache-Control':'no-store'});
@@ -385,7 +394,9 @@ const server=http.createServer(async(req,res)=>{
       const link=cleanUrl(b.url);const r=await research(b.name,link);
       if(r.status!==200||!r.body.found||r.body.cached)BANK.refund(d,via); // no new cost → no charge
       if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),url:link||undefined})+'\n',()=>{});
-      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);const row=BANK.add(formula,b.name);inBank=!!row;if(row)formula=pubF(row)}
+      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);const row=BANK.add(formula,b.name);inBank=!!row;if(row)formula=pubF(row)
+        // photo in the background: never delays the answer
+        if(row&&!row.image){const img=r.body.image_url||'';(img?Promise.resolve(img):link?pageImage(link):Promise.resolve('')).then(u=>u&&fetchBankImage(row.id,u))}}
       return send(res,r.status,{...r.body,formula,inBank,wallet:BANK.balance(d,cfg)});
     }
     if(url.pathname==='/api/feedback'&&req.method==='POST'){

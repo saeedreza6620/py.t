@@ -22,6 +22,7 @@ Also classify the product for BeautyWallet's skin engine, using ONLY these value
 "actives": [{"cls": one of ${CLS.join('|')}, "name": INCI name, "pct": number or null}] — only ingredients that are in the INCI list; pct only if the brand states it
 "made_for": skin types / concerns the brand itself targets, from ${CLAIMS.join('|')} ("all" only if the brand says all skin types)
 "flags": from ${FLAGS.join('|')} — fragrance if Parfum/Fragrance is listed, essential_oil if essential oils are listed, soap_base for soap/sodium tallowate bases, rich_oils for heavy oils/butters high in the list, moisture_rich for rich occlusive creams, white_cast_possible for mineral sunscreens, high_strength for strong exfoliant/retinoid strengths
+"image_url": the https URL of the official product photo (brand site or a big retailer), or null
 Add these keys to the same JSON object.`;
 
 export const normName=q=>String(q||'').toLowerCase().replace(/[ي]/g,'ی').replace(/[ك]/g,'ک').replace(/[‌\s\-_.,،()\/+]+/g,' ').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).trim().slice(0,160);
@@ -66,6 +67,7 @@ export function makeBank(DATA){
     const old=bank.products.find(p=>p.id===f.id);if(old){old.aliases=[...new Set([...(old.aliases||[]),...aliases])].slice(0,20);bump();return old}
     const row={...f,aliases,query:String(query).slice(0,120),addedAt:new Date().toISOString(),hits:0};bank.products.push(row);bump();return row}
   function hit(p,query){p.hits=(p.hits||0)+1;p.lastHit=new Date().toISOString();const q=normName(query);if(q&&!(p.aliases||[]).includes(q))p.aliases=[...(p.aliases||[]),q].slice(0,20);bump()}
+  function setImage(id,url){const p=bank.products.find(x=>x.id===id);if(!p)return;p.image=url;bump()}
   function remove(id){const n=bank.products.length;bank.products=bank.products.filter(p=>p.id!==id);if(bank.products.length!==n)bump();return n!==bank.products.length}
   // what the browser needs: formula + names (no aliases/queries of other shoppers)
   function publicBank(){if(!pub)pub={version:bank.products.length,products:bank.products.map(({aliases,query,hits,lastHit,model,addedAt,...f})=>f)};return pub}
@@ -83,5 +85,5 @@ export function makeBank(DATA){
   function credit(d,n){if(!d)return;const w=wallet(d);w.negin+=n;w.bought=(w.bought||0)+n;save(WAL,wallets)}
   function walletStats(){const v=Object.values(wallets);return {devices:v.length,freeUsed:v.reduce((a,w)=>a+(w.free||0),0),neginSpent:v.reduce((a,w)=>a+(w.spent||0),0),neginBought:v.reduce((a,w)=>a+(w.bought||0),0),neginLeft:v.reduce((a,w)=>a+(w.negin||0),0)}}
 
-  return {find,toFormula,add,hit,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats};
+  return {find,toFormula,add,hit,setImage,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats};
 }
