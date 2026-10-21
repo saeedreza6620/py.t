@@ -266,3 +266,7 @@ button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(
 .sw-pstep .nm{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:32px}
 .sw-pstep small{color:var(--sw-muted);font-weight:600;font-size:10.5px;min-height:15px}
 .sw-parrow{align-self:center;font-style:normal;color:#b79cf0}
+/* v92: the bubble itself opens the assistant */
+#swHeroSay{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s,box-shadow .15s}
+#swHeroSay:active{transform:scale(.97)}
+#swHeroSay:focus-visible{outline:2px solid #b79cf0;outline-offset:3px}
