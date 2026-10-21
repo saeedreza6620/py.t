@@ -10,10 +10,10 @@
   if(!targetName)return {kind:'missing',title:'نام خرید جدید هنوز مشخص نیست',points:['عکس یا لینک به‌تنهایی در این نسخه برای شناسایی قطعی محصول تحلیل نمی‌شود. نام و مدل روی بسته را وارد کن.'],confidence:'نامشخص'};
   const target=resolve(targetName,products),wallet=Array.isArray(input.wallet)?input.wallet:[],routine=Array.isArray(input.routine)?input.routine:[],notes=[],cautions=[],strong=[];
   const exactTarget=target?.id||norm(targetName);
-  if(target&&wallet.includes(target.id)||routine.some(x=>norm(x.name)===norm(targetName))){strong.push('این محصول در کیف یا روتین ثبت‌شدهٔ تو دیده می‌شود؛ پیش از خرید دوباره، مقدار باقی‌مانده را بررسی کن.')}
+  if(target&&wallet.includes(target.id)||routine.some(x=>norm(x.name)===norm(targetName))){strong.push('این محصول در ولت یا روتین ثبت‌شدهٔ تو دیده می‌شود؛ پیش از خرید دوباره، مقدار باقی‌مانده را بررسی کن.')}
   for(const p of past){const found=resolve(p.name,products),same=found&&target?found.id===target.id:norm(p.name)===norm(targetName),sameRole=!!(found&&target&&found.cat===target.cat&&!same);
    if(same){strong.push('نام خرید جدید با «'+p.name+'» یکسان است. شاید نسخه یا فرمول فرق کرده باشد؛ برچسب و دلیل پشیمانی قبلی را پیش از خرید بررسی کن.');if(p.reason==='irritation')strong.push('واکنش قبلی را جدی بگیر؛ از روی این فرم علت پزشکی آن مشخص نمی‌شود.');}
-   else if(sameRole){if(p.reason==='duplicate'&&wallet.some(id=>products.some(q=>q.id===id&&q.cat===target.cat))){cautions.push('خرید قبلی از نقش «'+target.cat+'» برایت تکراری بود و اکنون هم محصولی در همین دسته در کیف داری؛ تفاوت واقعی دو محصول را بررسی کن.');}
+   else if(sameRole){if(p.reason==='duplicate'&&wallet.some(id=>products.some(q=>q.id===id&&q.cat===target.cat))){cautions.push('خرید قبلی از نقش «'+target.cat+'» برایت تکراری بود و اکنون هم محصولی در همین دسته در ولت داری؛ تفاوت واقعی دو محصول را بررسی کن.');}
     else if(p.reason==='irritation')notes.push('«'+p.name+'» و خرید جدید در یک دسته‌اند، ولی هم‌دسته بودن هیچ چیز دربارهٔ مادهٔ تحریک‌کننده یا واکنش مجدد ثابت نمی‌کند.');
     else if(p.reason==='texture')notes.push('خرید قبلی و جدید نقش مشابه دارند؛ از روی دستهٔ محصول نمی‌شود بافت یا حس استفادهٔ این نسخه را پیش‌بینی کرد.');
     else if(p.reason==='noresult')notes.push('خرید قبلی در همین دسته نتیجهٔ دلخواهت را نداد؛ هدف، مدت مصرف و نسخهٔ دقیق را پیش از خرید دوباره بررسی کن.');

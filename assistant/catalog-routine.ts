@@ -341,7 +341,7 @@ export function routineText(r:RoutineCheck){
   else if(r.reintroduce.length)lines.push('چون اکتیوهای قوی فعلاً کنار رفته‌اند، تداخل فعالی باقی نمانده؛ بعد از برگرداندن هم آن‌ها را در یک شب روی هم نزن');
   else lines.push(paused.length?'بین محصولاتی که می‌مانند تداخل مهمی دیده نشد':'بین اکتیوهای انتخاب‌شده تداخل مهمی دیده نشد');
   r.reintroduce.forEach(x=>lines.push(x));
-  r.gaps.forEach(g=>lines.push(g.text+(g.suggestions.length?': '+g.suggestions.map(x=>x.name+(x.owned?' (در کیفت داری)':'')).join(' یا '):'')));
+  r.gaps.forEach(g=>lines.push(g.text+(g.suggestions.length?': '+g.suggestions.map(x=>x.name+(x.owned?' (در ولتت داری)':'')).join(' یا '):'')));
   if(r.coverage.declared.length)lines.push('فرمول '+faDigits(r.coverage.declared.length)+' محصول فقط از روی نام ثبت شده و بیوتی‌ولت در حال تکمیل ترکیباتشان است');
   return lines.join('\n');
 }

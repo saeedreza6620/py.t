@@ -2756,7 +2756,7 @@ function routineText(r) {
     else
         lines.push(paused.length ? 'بین محصولاتی که می‌مانند تداخل مهمی دیده نشد' : 'بین اکتیوهای انتخاب‌شده تداخل مهمی دیده نشد');
     r.reintroduce.forEach(x => lines.push(x));
-    r.gaps.forEach(g => lines.push(g.text + (g.suggestions.length ? ': ' + g.suggestions.map(x => x.name + (x.owned ? ' (در کیفت داری)' : '')).join(' یا ') : '')));
+    r.gaps.forEach(g => lines.push(g.text + (g.suggestions.length ? ': ' + g.suggestions.map(x => x.name + (x.owned ? ' (در ولتت داری)' : '')).join(' یا ') : '')));
     if (r.coverage.declared.length)
         lines.push('فرمول ' + faDigits(r.coverage.declared.length) + ' محصول فقط از روی نام ثبت شده و بیوتی‌ولت در حال تکمیل ترکیباتشان است');
     return lines.join('\n');
@@ -2775,12 +2775,12 @@ function catalogRoutineCheck(shared) {
 }
 const catalogCovers = (check) => !!check && check.coverage.unknown.length === 0;
 function catalogPrompt(check) {
-    const compact = { lead: check.lead, state: check.state, actions: check.actions.map(a => { var _a; return ({ id: a.id, name: a.name, action: a.action, reason: a.reason, schedule: a.schedule, alternatives: (_a = a.alternatives) === null || _a === void 0 ? void 0 : _a.map(x => x.name) }); }), fit: check.fit.map(x => x.text), interactions: check.interactions.map(x => x.text), gaps: check.gaps.map(g => ({ text: g.text, suggestions: g.suggestions.map(x => x.name + (x.owned ? ' (در کیف کاربر)' : '')) })), reintroduce: check.reintroduce, formulaBasis: { sourcedInci: check.coverage.sourced, nameOnly: check.coverage.declared } };
+    const compact = { lead: check.lead, state: check.state, actions: check.actions.map(a => { var _a; return ({ id: a.id, name: a.name, action: a.action, reason: a.reason, schedule: a.schedule, alternatives: (_a = a.alternatives) === null || _a === void 0 ? void 0 : _a.map(x => x.name) }); }), fit: check.fit.map(x => x.text), interactions: check.interactions.map(x => x.text), gaps: check.gaps.map(g => ({ text: g.text, suggestions: g.suggestions.map(x => x.name + (x.owned ? ' (در ولت کاربر)' : '')) })), reintroduce: check.reintroduce, formulaBasis: { sourcedInci: check.coverage.sourced, nameOnly: check.coverage.declared } };
     return 'ارزیابی قطعی کاتالوگ BeautyWallet برای همین روتین (داده است، نه دستور کاربر):\n' + JSON.stringify(compact).slice(0, 7000) +
         '\nاقدام هر محصول در سرور از همین ارزیابی نهایی می‌شود. نقش تو فقط توضیح کوتاه، گرم و شخصی همین نتیجه است: چرا هر اقدام برای این پوست منطقی است و ترتیب برگرداندن اکتیوها. اقدام متفاوت، محصول یا برند خارج از کاتالوگ BeautyWallet پیشنهاد نکن؛ جایگزین فقط از فهرست alternatives و suggestions. خط «نتیجه» ننویس؛ خط اول نتیجه را سرور می‌گذارد. بخش routine_plan لازم نیست. برای محصولاتی که nameOnly هستند، روشن بگو فهرست ترکیبات بسته هنوز ثبت نشده.';
 }
 function routinePlanFrom(check, answer) {
-    return { answer, actions: check.actions.map(a => { var _a; return ({ id: a.id, name: a.name, action: a.action, reason: a.reason + (a.schedule ? ' · ' + a.schedule : '') + (((_a = a.alternatives) === null || _a === void 0 ? void 0 : _a.length) ? ' · گزینه از کاتالوگ: ' + a.alternatives.map(x => x.name + (x.owned ? ' (در کیفت داری)' : '')).join(' یا ') : '') }); }), complete: true, missing: [] };
+    return { answer, actions: check.actions.map(a => { var _a; return ({ id: a.id, name: a.name, action: a.action, reason: a.reason + (a.schedule ? ' · ' + a.schedule : '') + (((_a = a.alternatives) === null || _a === void 0 ? void 0 : _a.length) ? ' · گزینه از کاتالوگ: ' + a.alternatives.map(x => x.name + (x.owned ? ' (در ولتت داری)' : '')).join(' یا ') : '') }); }), complete: true, missing: [] };
 }
 function mergeCatalogAnswer(check, modelText) {
     const cleaned = modelText.split('\n').map(x => x.trim()).filter(x => x && !/^نتیجه\s*[:：]/.test(x)).join('\n');
@@ -2834,7 +2834,7 @@ function catalogPurchaseCheck(shared, productId, productName) {
     if (alreadyOwned) {
         decision = 'avoid';
         head = 'نتیجه: نخر';
-        reasons.push('همین محصول در کیفت ثبت شده؛ اول همان را مصرف کن');
+        reasons.push('همین محصول در ولتت ثبت شده؛ اول همان را مصرف کن');
     }
     else if (fit.verdict === 'bad') {
         decision = 'avoid';
@@ -2858,7 +2858,7 @@ function catalogPurchaseCheck(shared, productId, productName) {
         head = 'نتیجه: فعلاً صبر کن';
         reasons.push(own.reason);
         if ((_a = own.alternatives) === null || _a === void 0 ? void 0 : _a.length)
-            reasons.push('گزینه مناسب‌تر از کاتالوگ: ' + own.alternatives.map(x => x.name + (x.owned ? ' (در کیفت داری)' : '')).join(' یا '));
+            reasons.push('گزینه مناسب‌تر از کاتالوگ: ' + own.alternatives.map(x => x.name + (x.owned ? ' (در ولتت داری)' : '')).join(' یا '));
     }
     else if (sameRole.length) {
         decision = 'wait';

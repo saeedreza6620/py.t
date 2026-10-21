@@ -270,3 +270,16 @@ button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(
 #swHeroSay{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s,box-shadow .15s}
 #swHeroSay:active{transform:scale(.97)}
 #swHeroSay:focus-visible{outline:2px solid #b79cf0;outline-offset:3px}
+/* v93: «+ روتینم» in search and vitrine; snack that points to «ولت» */
+.sw-srow{display:flex;align-items:stretch;gap:6px}
+.sw-srow .sw-sitem{flex:1;min-width:0}
+.sw-radd{flex:none;appearance:none;border:1px solid #d9c9f5;background:#f7f2ff;color:#5b3c99;border-radius:14px;padding:0 10px;font:700 12px var(--sw-font);cursor:pointer;white-space:nowrap}
+.sw-radd:disabled,.sw-vadd:disabled{opacity:.7;cursor:default}
+.sw-vwrap{position:relative;flex:none;scroll-snap-align:start}
+.sw-vadd{position:absolute;top:6px;left:6px;width:30px;height:30px;border-radius:50%;border:1px solid #d9c9f5;background:#fff;color:#5b3c99;font:800 16px/1 var(--sw-font);display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 10px rgba(80,140,220,.18);padding:0}
+.sw-snack{position:fixed;z-index:96;left:0;right:0;margin:0 auto;bottom:calc(100px + env(safe-area-inset-bottom,0px));width:min(92vw,420px);display:flex;align-items:center;gap:10px;background:var(--sw-ink);color:#fff;padding:10px 12px 10px 10px;border-radius:18px;box-shadow:var(--sw-shadow);font:700 13px/1.6 var(--sw-font);animation:sw-rise .3s both}
+.sw-snack span{flex:1;min-width:0}
+.sw-snack small{display:block;font-weight:500;color:#e9ddff!important;font-size:11.5px}
+.sw-snack button{flex:none;appearance:none;border:0;border-radius:12px;background:#fff;color:#5b3c99;font:800 12.5px var(--sw-font);padding:8px 12px;cursor:pointer}
+#swWalletRtn{margin:0 0 12px}
+#wallet.sw-has-rtn #walletContent .empty{display:none}

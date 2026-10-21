@@ -132,7 +132,7 @@
       return window.BWCatalog.evaluate({profile:ctx.profile||{},selection,owned:ctx.ownedIds||[]});
     }catch{return null}
   }
-  function productButtons(list){return (list||[]).map(item=>'<button type="button" class="bw-catalog-pick" data-open-product="'+safe(item.id)+'">'+safe(item.name)+(item.owned?' <small>در کیفت داری</small>':'')+'</button>').join('')}
+  function productButtons(list){return (list||[]).map(item=>'<button type="button" class="bw-catalog-pick" data-open-product="'+safe(item.id)+'">'+safe(item.name)+(item.owned?' <small>در ولتت داری</small>':'')+'</button>').join('')}
   function catalogHtml(check){
     const actions=check.actions.map(item=>{
       const extra=(item.schedule?' · '+item.schedule:'');

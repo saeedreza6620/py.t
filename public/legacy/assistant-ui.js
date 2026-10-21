@@ -18,7 +18,7 @@
    await window.bwVisitReady;
    try{const response=await fetch('/api/assistant',{cache:'no-store'}),data=await response.json();if(!response.ok)throw Error();
      document.getElementById('assistantKnowledgeStatus').textContent=data.knowledge?.active?'فعال · قوانین، ترکیبات و روتین‌ها':'در حال بررسی دانش';
-     document.getElementById('assistantPersonalStatus').textContent=data.personal?.available?'همگام با پروفایل و کیف تو':'پس از ثبت آنلاین پروفایل، این حافظه شخصی می‌شود';
+     document.getElementById('assistantPersonalStatus').textContent=data.personal?.available?'همگام با پروفایل و ولت تو':'پس از ثبت آنلاین پروفایل، این حافظه شخصی می‌شود';
      document.getElementById('assistantMarketStatus').textContent=data.market?.freshestAt?'بازار ثبت‌شده تا '+new Date(data.market.freshestAt).toLocaleDateString('fa-IR'):'جست‌وجوی زنده و ثبت اطلاعات فروشنده';
      if(Array.isArray(data.messages)&&!chat.querySelector('.assistant-message'))data.messages.forEach(message=>appendMessage(message.role,message.content,message.meta,message.id));
    }catch{document.getElementById('assistantKnowledgeStatus').textContent='اتصال موقتاً در دسترس نیست'}

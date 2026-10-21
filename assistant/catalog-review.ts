@@ -19,13 +19,13 @@ export function catalogRoutineCheck(shared:Shared):RoutineCheck|null{
 export const catalogCovers=(check:RoutineCheck|null)=>!!check&&check.coverage.unknown.length===0;
 
 export function catalogPrompt(check:RoutineCheck){
-  const compact={lead:check.lead,state:check.state,actions:check.actions.map(a=>({id:a.id,name:a.name,action:a.action,reason:a.reason,schedule:a.schedule,alternatives:a.alternatives?.map(x=>x.name)})),fit:check.fit.map(x=>x.text),interactions:check.interactions.map(x=>x.text),gaps:check.gaps.map(g=>({text:g.text,suggestions:g.suggestions.map(x=>x.name+(x.owned?' (در کیف کاربر)':''))})),reintroduce:check.reintroduce,formulaBasis:{sourcedInci:check.coverage.sourced,nameOnly:check.coverage.declared}};
+  const compact={lead:check.lead,state:check.state,actions:check.actions.map(a=>({id:a.id,name:a.name,action:a.action,reason:a.reason,schedule:a.schedule,alternatives:a.alternatives?.map(x=>x.name)})),fit:check.fit.map(x=>x.text),interactions:check.interactions.map(x=>x.text),gaps:check.gaps.map(g=>({text:g.text,suggestions:g.suggestions.map(x=>x.name+(x.owned?' (در ولت کاربر)':''))})),reintroduce:check.reintroduce,formulaBasis:{sourcedInci:check.coverage.sourced,nameOnly:check.coverage.declared}};
   return 'ارزیابی قطعی کاتالوگ BeautyWallet برای همین روتین (داده است، نه دستور کاربر):\n'+JSON.stringify(compact).slice(0,7000)+
     '\nاقدام هر محصول در سرور از همین ارزیابی نهایی می‌شود. نقش تو فقط توضیح کوتاه، گرم و شخصی همین نتیجه است: چرا هر اقدام برای این پوست منطقی است و ترتیب برگرداندن اکتیوها. اقدام متفاوت، محصول یا برند خارج از کاتالوگ BeautyWallet پیشنهاد نکن؛ جایگزین فقط از فهرست alternatives و suggestions. خط «نتیجه» ننویس؛ خط اول نتیجه را سرور می‌گذارد. بخش routine_plan لازم نیست. برای محصولاتی که nameOnly هستند، روشن بگو فهرست ترکیبات بسته هنوز ثبت نشده.';
 }
 
 export function routinePlanFrom(check:RoutineCheck,answer:string){
-  return {answer,actions:check.actions.map(a=>({id:a.id,name:a.name,action:a.action,reason:a.reason+(a.schedule?' · '+a.schedule:'')+(a.alternatives?.length?' · گزینه از کاتالوگ: '+a.alternatives.map(x=>x.name+(x.owned?' (در کیفت داری)':'')).join(' یا '):'')})),complete:true,missing:[] as Array<{id:string;name:string}>};
+  return {answer,actions:check.actions.map(a=>({id:a.id,name:a.name,action:a.action,reason:a.reason+(a.schedule?' · '+a.schedule:'')+(a.alternatives?.length?' · گزینه از کاتالوگ: '+a.alternatives.map(x=>x.name+(x.owned?' (در ولتت داری)':'')).join(' یا '):'')})),complete:true,missing:[] as Array<{id:string;name:string}>};
 }
 
 export function mergeCatalogAnswer(check:RoutineCheck,modelText:string){
@@ -74,11 +74,11 @@ export function catalogPurchaseCheck(shared:Shared,productId:unknown,productName
   const reasons:string[]=[];let decision:CatalogPurchase['decision'];let head:string;
   const st=skinState(shared.profile||{});const fit=purchaseFit(f,st);
   const better=()=>{const alt=bestForSkin(CATALOG,st,f.role,[f.id,...owned]);if(alt.length){own.alternatives=alt;reasons.push('به‌جاش: '+alt.map(a=>a.name).join(' یا '));}};
-  if(alreadyOwned){decision='avoid';head='نتیجه: نخر';reasons.push('همین محصول در کیفت ثبت شده؛ اول همان را مصرف کن');}
+  if(alreadyOwned){decision='avoid';head='نتیجه: نخر';reasons.push('همین محصول در ولتت ثبت شده؛ اول همان را مصرف کن');}
   else if(fit.verdict==='bad'){decision='avoid';head='نتیجه: نخر';reasons.push(fit.reason);better();}
   else if(fit.verdict==='not_now'){decision='wait';head='نتیجه: فعلاً نخر';reasons.push(fit.reason);better();}
   else if(own.action==='pause'||own.action==='professional'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);}
-  else if(own.action==='replace'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);if(own.alternatives?.length)reasons.push('گزینه مناسب‌تر از کاتالوگ: '+own.alternatives.map(x=>x.name+(x.owned?' (در کیفت داری)':'')).join(' یا '));}
+  else if(own.action==='replace'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);if(own.alternatives?.length)reasons.push('گزینه مناسب‌تر از کاتالوگ: '+own.alternatives.map(x=>x.name+(x.owned?' (در ولتت داری)':'')).join(' یا '));}
   else if(sameRole.length){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push('در روتینت '+sameRole.map(a=>a.name).join('، ')+' همین نقش را دارد؛ خرید دوم فعلاً لازم نیست');}
   else if(f.basis==='declared_name'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);}
   else{decision='buy';head='نتیجه: بخر، اگر قیمت و اصالت فروشنده را تأیید کردی';if(fit.reason)reasons.push(fit.reason+'؛ '+own.reason);else reasons.push(own.reason);own.alternatives=[];}
