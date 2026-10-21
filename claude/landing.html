@@ -3,121 +3,458 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>بیوتی‌ولت — انتخاب آگاهانه</title>
-<meta name="description" content="قبل از خرید محصول پوستی، با پوستت می‌سنجیمش. آگاهانه انتخاب کن، با خیال راحت بخر.">
-<meta name="theme-color" content="#eef3ff">
+<title>بیوتی‌ولت — قبل از خرید، با پوستت بسنج</title>
+<meta name="description" content="بیوتی‌ولت قبل از خرید محصول مراقبت پوست، اون رو با پوست و روتین خودت می‌سنجه و می‌گه بخری، با احتیاط بخری یا نخری؛ تا پولت هدر نره و پوستت آسیب نبینه.">
+<meta property="og:title" content="بیوتی‌ولت — قبل از خرید، با پوستت بسنج">
+<meta property="og:description" content="جلوی ضرر مالی و آسیب پوست رو قبل از خرید بگیر.">
+<meta property="og:image" content="/legacy/bw-gem-512.png">
+<meta name="theme-color" content="#f7f5ff">
 <link rel="icon" href="/legacy/bw-circle-192-v27.png">
 <link rel="apple-touch-icon" href="/legacy/apple-touch-icon-gem-180.png">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 @font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-400.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-700.woff2) format("woff2");font-weight:700 900;font-display:swap}
-:root{--ink:#1d2550;--muted:#6a6f96;--blue:#3d8bd9;--violet:#7c5cf0;--violet2:#efe9ff;--line:rgba(124,92,240,.16);--mint:#1f8a6c}
-*{box-sizing:border-box}html,body{margin:0;height:100%}
-body{font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);background:#f6f8ff;overflow:hidden}
-.deck{height:100svh;overflow-y:auto;scroll-snap-type:y mandatory;scroll-behavior:smooth}
-.slide{height:100svh;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 20px;position:relative;overflow:hidden}
-.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.55;z-index:0;animation:drift 16s ease-in-out infinite alternate}
-@keyframes drift{to{transform:translate(30px,40px) scale(1.1)}}
-.slide>*:not(.blob){position:relative;z-index:1}
-.logo{width:72px;height:72px;margin-bottom:22px;filter:drop-shadow(0 10px 26px rgba(90,175,245,.55));animation:shine 3.2s ease-in-out infinite}
-@keyframes shine{0%,100%{filter:drop-shadow(0 10px 22px rgba(90,175,245,.4))}50%{filter:drop-shadow(0 10px 34px rgba(90,175,245,.85)) brightness(1.06)}}
-@media (prefers-reduced-motion:reduce){.logo{animation:none}}
-h1{font-size:clamp(34px,8vw,64px);line-height:1.3;margin:0;font-weight:900}
-h2{font-size:clamp(28px,6.5vw,48px);line-height:1.35;margin:0 0 10px;font-weight:900}
-.grad{background:linear-gradient(120deg,var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--muted);font-size:clamp(15px,3.6vw,19px);margin:14px 0 0}
-.btn{display:inline-flex;align-items:center;gap:8px;margin-top:30px;text-decoration:none;border:0;cursor:pointer;font:800 17px Vazirmatn,Tahoma,sans-serif;border-radius:20px;padding:15px 30px;color:#fff;background:linear-gradient(120deg,var(--blue),#6aa8ee 45%,var(--violet));box-shadow:0 18px 34px -16px rgba(124,92,240,.9);transition:transform .15s}
-.btn:active{transform:scale(.96)}
-.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);box-shadow:none;margin-top:12px;font-size:15px;padding:11px 22px}
-.hint{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:13px;animation:bob 1.8s ease-in-out infinite}
-@keyframes bob{50%{transform:translate(-50%,6px)}}
-/* product picker */
-.picker{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:520px;margin-top:22px}
-.chip{appearance:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 16px;font:700 14px Vazirmatn,Tahoma;color:var(--ink);cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 10px 20px -16px rgba(29,37,80,.5)}
-.chip:hover{transform:translateY(-2px)}
-.chip.go{animation:pick .7s cubic-bezier(.2,1.4,.4,1) forwards;background:linear-gradient(120deg,var(--blue),var(--violet));color:#fff;border-color:transparent}
-@keyframes pick{40%{transform:scale(1.12)}100%{transform:scale(1) translateY(-6px)}}
-.stamp{display:inline-block;margin-top:26px;font-weight:900;font-size:22px;border:3px solid currentColor;border-radius:16px;padding:6px 16px;color:var(--violet);transform:rotate(-7deg);opacity:0}
-.stamp.on{animation:stamp .55s cubic-bezier(.2,1.7,.4,1) forwards}
-@keyframes stamp{0%{opacity:0;transform:rotate(-7deg) scale(2.2)}100%{opacity:1;transform:rotate(-7deg) scale(1)}}
-.trio{display:flex;flex-direction:column;gap:14px;margin-top:20px;width:min(360px,92vw)}
-.trio div{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.85);border:1px solid var(--line);border-radius:20px;padding:14px 16px;font-weight:800;font-size:16px;text-align:right}
-.trio i{font-style:normal;font-size:26px}
-.trio small{display:block;font-weight:400;color:var(--muted);font-size:13px}
-.os{display:flex;gap:8px;justify-content:center;margin-top:20px}.os button{font:800 14px Vazirmatn,Tahoma;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;cursor:pointer;color:var(--ink)}.os button[aria-pressed="true"]{background:linear-gradient(120deg,var(--blue),var(--violet));color:#fff;border-color:transparent}
-.steps{margin:16px auto 0;padding:0;list-style:none;width:min(340px,90vw);text-align:right;color:var(--muted);font-size:15px;line-height:2.1;counter-reset:s}
-.steps li{counter-increment:s}.steps li::before{content:counter(s) ". ";color:var(--violet);font-weight:900}
-.dots{position:fixed;left:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:9px;z-index:5}
-.dots a{width:8px;height:8px;border-radius:5px;background:rgba(124,92,240,.25);transition:height .3s,background .3s}
-.dots a.on{height:22px;background:var(--violet)}
-.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s cubic-bezier(.2,.9,.3,1)}
-.in .reveal{opacity:1;transform:none}.in .reveal:nth-child(2){transition-delay:.08s}.in .reveal:nth-child(3){transition-delay:.16s}.in .reveal:nth-child(4){transition-delay:.24s}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.stamp{opacity:1}}
+@font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-700.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-800.woff2) format("woff2");font-weight:800 900;font-display:swap}
+:root{
+  --ink:#241a4f;--ink2:#5d5788;--paper:#f7f5ff;--card:#ffffff;--gem:#4aa8f0;--violet:#7c5cf0;--violet-soft:#ece6ff;
+  --buy:#1f9d6f;--care:#c97a10;--stop:#cf3d61;--line:#e3dcfb;--focus:#7c5cf0;
+  --r-lg:26px;--r-md:16px;--r-sm:10px;--shadow:0 14px 40px -18px rgba(60,40,140,.35);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);background:var(--paper);line-height:1.85;font-size:16px}
+a{color:inherit}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(247,245,255,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.bar.scrolled{border-bottom-color:var(--line)}
+.bar-in{display:flex;align-items:center;gap:10px;height:62px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;font-size:17px;letter-spacing:-.2px}
+.brand img{width:30px;height:30px}
+.bar .open{margin-inline-start:auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font-weight:800;border-radius:14px;padding:11px 18px;font-size:15px;background:var(--ink);color:#fff;transition:transform .12s}
+.btn:active{transform:scale(.97)}
+.btn.soft{background:var(--violet-soft);color:var(--ink)}
+.btn.big{padding:15px 24px;font-size:17px;border-radius:18px}
+.btn.green{background:var(--buy)}
+.btn[disabled]{opacity:.6;cursor:default}
+
+/* hero */
+.hero{padding:34px 0 18px}
+.hero h1{font-size:clamp(34px,9vw,58px);line-height:1.22;font-weight:900;margin:0;letter-spacing:-1px}
+.hero p.lead{font-size:clamp(16px,4.2vw,19px);color:var(--ink2);margin:16px 0 0;max-width:34em}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+
+/* the signature moment: a product label getting its verdict stamp */
+.label{position:relative;margin:30px 0 6px;background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:20px 20px 22px;overflow:hidden}
+.label .row{display:flex;gap:14px;align-items:center}
+.label .bottle{width:58px;height:86px;flex:none;border-radius:16px 16px 12px 12px;background:linear-gradient(180deg,#dff0ff,#c9b9ff);position:relative}
+.label .bottle:before{content:"";position:absolute;top:-12px;right:17px;width:24px;height:14px;border-radius:5px 5px 0 0;background:#9a86f5}
+.label .name{font-weight:800;font-size:17px;line-height:1.5}
+.label .meta{color:var(--ink2);font-size:13.5px}
+.label .inci{margin-top:14px;font-size:12.5px;line-height:1.9;color:var(--ink2);direction:ltr;text-align:left;letter-spacing:.1px}
+.label .inci b{color:var(--stop);font-weight:700}
+.label .checks{margin-top:12px;display:grid;gap:4px;font-size:14px}
+.label .checks span:before{content:"✓";color:var(--buy);font-weight:900;margin-inline-end:6px}
+.stamp{position:absolute;top:112px;left:14px;border:4px solid currentColor;color:var(--care);border-radius:14px;padding:4px 14px;font-weight:900;font-size:24px;transform:rotate(-9deg);opacity:0;background:rgba(255,255,255,.75)}
+.stamp.on{animation:stamp .55s cubic-bezier(.2,1.6,.4,1) .9s forwards}
+@keyframes stamp{0%{opacity:0;transform:rotate(-9deg) scale(2.4)}100%{opacity:1;transform:rotate(-9deg) scale(1)}}
+.label .why{margin:14px 0 0;font-size:14.5px;background:#fff7ea;border-radius:var(--r-sm);padding:10px 12px;opacity:0}
+.label .why.on{animation:fade .4s ease 1.5s forwards}
+@keyframes fade{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.stamp.on,.label .why.on{animation:none;opacity:1}}
+
+/* section switcher */
+.tabs{position:sticky;top:62px;z-index:15;background:var(--paper);padding:10px 0 8px;margin-top:22px}
+.tabs-in{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 18px;margin:0 -18px;scroll-snap-type:x proximity}
+.tabs-in::-webkit-scrollbar{display:none}
+.tab{flex:none;scroll-snap-align:start;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.pane{display:none;padding:14px 0 40px}
+.pane.on{display:block}
+.pane h2{font-size:clamp(25px,6.4vw,34px);line-height:1.35;margin:6px 0 6px;font-weight:900;letter-spacing:-.5px}
+.pane>p.intro{color:var(--ink2);margin:0 0 18px;max-width:36em}
+h3{font-size:18px;margin:0 0 4px;font-weight:800}
+
+/* three things we protect — a ledger, not cards */
+.ledger{display:grid;gap:0;background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.ledger>div{padding:16px 18px;border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start}
+.ledger>div:first-child{border-top:0}
+.ledger .ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-size:20px;grid-row:span 2}
+.ledger p{margin:0;color:var(--ink2);font-size:15px}
+
+/* real sequences get numbers */
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;position:relative;padding:4px 52px 4px 0;min-height:40px}
+.steps li:before{content:counter(s,persian);position:absolute;right:0;top:2px;width:38px;height:38px;border-radius:50%;background:var(--violet-soft);display:grid;place-items:center;font-weight:900;color:var(--violet)}
+.steps li p{margin:2px 0 0;color:var(--ink2);font-size:15px}
+
+.verdicts{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+.v{border:2.5px solid currentColor;border-radius:12px;padding:3px 12px;font-weight:900;transform:rotate(-4deg);background:#fff}
+.v.buy{color:var(--buy)}.v.care{color:var(--care)}.v.stop{color:var(--stop)}
+.note{background:var(--violet-soft);border-radius:var(--r-md);padding:12px 14px;font-size:15px;margin:18px 0 0}
+
+/* learning: accordions */
+details.acc{background:var(--card);border-radius:var(--r-md);margin:0 0 8px;border:1px solid var(--line)}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:800;display:flex;align-items:center;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary:after{content:"+";margin-inline-start:auto;font-size:22px;line-height:1;color:var(--violet);transition:transform .2s}
+details.acc[open] summary:after{transform:rotate(45deg)}
+details.acc .body{padding:0 16px 14px;color:var(--ink2);font-size:15.5px}
+details.acc .body p{margin:0 0 8px}
+details.acc .body ul{margin:0;padding-inline-start:18px}
+.simple{display:block;margin-top:8px;background:#fff7ea;border-radius:var(--r-sm);padding:8px 10px;color:var(--ink);font-size:14.5px}
+.disclaim{font-size:13.5px;color:var(--ink2);margin-top:14px}
+
+/* app guide: a phone-tab map */
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--ink);border-radius:20px;padding:6px;margin:0 0 14px}
+.map button{border:0;background:transparent;color:#cfc6ff;border-radius:14px;padding:10px 4px;font-weight:800;font-size:14px;cursor:pointer}
+.map button[aria-pressed="true"]{background:#fff;color:var(--ink)}
+.mapbody{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:18px}
+.mapbody ul{margin:8px 0 0;padding-inline-start:18px;color:var(--ink2)}
+.mapbody li{margin-bottom:4px}
+
+/* checklist */
+.check{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.check label{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--buy);flex:none}
+.check small{display:block;color:var(--ink2);font-size:14px}
+.prog{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin:4px 0 14px}
+.prog i{display:block;height:100%;width:0;background:var(--buy);transition:width .3s}
+
+/* diamonds */
+.packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:8px 0 18px}
+.pack{background:var(--card);border-radius:var(--r-md);border:1px solid var(--line);padding:14px}
+.pack b{font-size:20px;font-weight:900;display:block}
+.pack span{color:var(--ink2);font-size:14px}
+.costs{display:grid;gap:0;background:var(--card);border-radius:var(--r-md);border:1px solid var(--line)}
+.costs div{display:flex;justify-content:space-between;gap:10px;padding:10px 14px;border-top:1px solid var(--line);font-size:15px}
+.costs div:first-child{border-top:0}
+.costs b{white-space:nowrap}
+
+/* forms */
+.form{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:18px;display:grid;gap:12px}
+.field{display:grid;gap:4px;font-weight:700;font-size:14.5px}
+.field input,.field textarea{border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;font-weight:400;font-size:16px;width:100%}
+.field input:focus,.field textarea:focus{border-color:var(--violet);outline:0}
+.hearts{display:flex;gap:6px}
+.hearts button{border:0;background:var(--violet-soft);width:46px;height:46px;border-radius:12px;font-size:22px;cursor:pointer}
+.hearts button[aria-pressed="true"]{background:#ffe3ec}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.consent{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--ink2);font-weight:400}
+.consent input{margin-top:5px;accent-color:var(--violet)}
+.msg{font-size:15px;font-weight:700;min-height:1px}
+.msg.ok{color:var(--buy)}.msg.err{color:var(--stop)}
+
+/* install */
+.install{display:grid;gap:16px}
+.qr{display:none;background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:18px;text-align:center}
+.qr img{width:220px;height:220px}
+@media (min-width:820px){.qr{display:block}.install{grid-template-columns:1fr 280px;align-items:start}}
+.os{display:flex;gap:6px;margin:0 0 10px}
+
+footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--ink2);font-size:14px}
+footer a{font-weight:700}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
 <body>
-<nav class="dots" aria-hidden="true"></nav>
-<main class="deck" id="deck">
-
-<section class="slide" id="s1">
-  <div class="blob" style="width:380px;height:380px;background:#cdb9ff;top:-90px;left:-100px"></div>
-  <div class="blob" style="width:340px;height:340px;background:#b9dcff;bottom:-80px;right:-90px;animation-delay:-6s"></div>
-  <svg class="logo reveal" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><defs><linearGradient id="Lbg" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse"><stop stop-color="#f4faff"/><stop offset="1" stop-color="#dcefff"/></linearGradient><radialGradient id="Lgl" cx="36" cy="38" r="30" gradientUnits="userSpaceOnUse"><stop stop-color="#8fd3ff" stop-opacity=".75"/><stop offset=".6" stop-color="#b9e4ff" stop-opacity=".25"/><stop offset="1" stop-color="#b9e4ff" stop-opacity="0"/></radialGradient><linearGradient id="Lcr" x1="20" y1="18" x2="50" y2="58" gradientUnits="userSpaceOnUse"><stop stop-color="#e3f6ff"/><stop offset=".45" stop-color="#7fcaf9"/><stop offset="1" stop-color="#55a8f0"/></linearGradient><linearGradient id="Lpv" x1="36" y1="29" x2="36" y2="59" gradientUnits="userSpaceOnUse"><stop stop-color="#8bd0fb"/><stop offset="1" stop-color="#4a9fec"/></linearGradient></defs><rect width="72" height="72" rx="22" fill="url(#Lbg)"/><circle cx="36" cy="38" r="30" fill="url(#Lgl)"/><path d="M17 29 26.5 18h19L55 29 36 59Z" fill="url(#Lcr)"/><path d="M17 29h38L36 59Z" fill="url(#Lpv)"/><path d="M26.5 18 31 29 36 18l5 11 4.5-11" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="1.3" stroke-linejoin="round"/><path d="M17 29h38" stroke="#fff" stroke-opacity=".8" stroke-width="1.3"/><path d="M31 29l5 30 5-30" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.2"/><path d="M26.5 18 31 29H17Z" fill="#fff" fill-opacity=".55"/><path d="M36 18l5 11h-10Z" fill="#fff" fill-opacity=".3"/><path d="M53 8.5c.7 4.2 2.4 5.9 6.6 6.6-4.2.7-5.9 2.4-6.6 6.6-.7-4.2-2.4-5.9-6.6-6.6 4.2-.7 5.9-2.4 6.6-6.6Z" fill="#fff" stroke="#9ad6ff" stroke-width=".8"/><path d="M19.5 46c.4 2 1.2 2.8 3.2 3.2-2 .4-2.8 1.2-3.2 3.2-.4-2-1.2-2.8-3.2-3.2 2-.4 2.8-1.2 3.2-3.2Z" fill="#fff" stroke="#b3e0ff" stroke-width=".6"/></svg>
-  <h1 class="reveal">اومدیم برای<br><span class="grad">انتخاب آگاهانه</span></h1>
-  <p class="sub reveal">قبل از خرید، با پوستت می‌سنجیمش</p>
-  <a class="btn reveal" href="/legacy/">شروع 💜</a>
-  <span class="hint">↓</span>
-</section>
-
-<section class="slide" id="s2">
-  <div class="blob" style="width:360px;height:360px;background:#d9ccff;top:10%;right:-140px"></div>
-  <h2 class="reveal">چی می‌خوای بخری؟</h2>
-  <p class="sub reveal">یکی رو بزن تا با پوستت بسنجیمش</p>
-  <div class="picker reveal" id="picker"></div>
-  <span class="stamp" id="stamp">بسنجیمش ✨</span>
-</section>
-
-<section class="slide" id="s3">
-  <div class="blob" style="width:360px;height:360px;background:#c3e1ff;bottom:-60px;left:-120px"></div>
-  <h2 class="reveal">گاهی می‌گیم <span class="grad">نخر</span></h2>
-  <p class="sub reveal">چون پولت فقط باید جایی خرج بشه که جواب بده</p>
-</section>
-
-<section class="slide" id="s4">
-  <div class="blob" style="width:340px;height:340px;background:#ddd0ff;top:-60px;left:-80px"></div>
-  <h2 class="reveal">همراهت می‌مونیم</h2>
-  <div class="trio reveal">
-    <div><i>🔁</i><span>تمدید به‌موقع<small>قبل از تموم شدن، یادت می‌ندازیم</small></span></div>
-    <div><i>🎁</i><span>هدیه‌ی مطمئن<small>هدیه‌ای که به پوستش بخوره</small></span></div>
-    <div><i>💸</i><span>قیمت زنده<small>تخفیف و قسط، همون لحظه</small></span></div>
+<header class="bar" id="bar">
+  <div class="wrap bar-in">
+    <a class="brand" href="#home" data-go="home"><img src="/legacy/bw-gem-192.png" alt="">بیوتی‌ولت</a>
+    <a class="btn open" href="/legacy/">باز کردن اپ</a>
   </div>
-</section>
+</header>
 
-<section class="slide" id="s5">
-  <div class="blob" style="width:380px;height:380px;background:#c9b6ff;bottom:-120px;right:-100px"></div>
-  <h2 class="reveal">رو گوشیت نصبش کن</h2>
-  <div class="os reveal"><button type="button" data-os="ios">آیفون</button><button type="button" data-os="android">اندروید</button></div>
-  <ol class="steps reveal" id="steps"></ol>
-  <a class="btn reveal" href="/legacy/" data-install>باز کردن اپ 💜</a>
-</section>
+<main class="wrap">
+  <section class="hero" aria-labelledby="h1">
+    <h1 id="h1">قبل از خرید، با پوستت بسنج.</h1>
+    <p class="lead">بیوتی‌ولت هر محصول مراقبت پوست رو با نوع پوست، حال امروز پوست و روتینی که الان داری کنار هم می‌ذاره و یه جواب روشن می‌ده؛ تا پولت پای محصول اشتباه نره و پوستت آسیب نبینه.</p>
+    <div class="ctas">
+      <a class="btn big" href="/legacy/">همین الان یه محصول رو بسنج</a>
+      <button class="btn big soft" type="button" data-go="install">نصب روی گوشی</button>
+    </div>
 
+    <div class="label" aria-label="نمونه‌ی یک بررسی">
+      <div class="row">
+        <div class="bottle" aria-hidden="true"></div>
+        <div>
+          <div class="name">سرم ویتامین C ده درصد</div>
+          <div class="meta">برای: پوست حساس · روتین شب: رتینول</div>
+        </div>
+      </div>
+      <div class="inci" aria-hidden="true">Aqua, <b>Ascorbic Acid</b>, Propylene Glycol, Ferulic Acid, Tocopherol, Sodium Hyaluronate, <b>Parfum</b> …</div>
+      <div class="checks"><span>ترکیبات خود محصول</span><span>نوع و حال امروز پوستت</span><span>محصولاتی که الان می‌زنی</span></div>
+      <div class="stamp" id="stamp">با احتیاط</div>
+      <p class="why" id="why">کنار رتینول شبت، این سرم پوست حساس رو تحریک می‌کنه. فقط صبح بزن، یا اول یه نسخه‌ی ملایم‌تر رو امتحان کن.</p>
+    </div>
+  </section>
+
+  <nav class="tabs" aria-label="بخش‌های سایت">
+    <div class="tabs-in" role="tablist" id="tabs">
+      <button class="tab" role="tab" data-tab="home">چرا بیوتی‌ولت</button>
+      <button class="tab" role="tab" data-tab="how">چطور کار می‌کنه</button>
+      <button class="tab" role="tab" data-tab="learn">آموزش پوست</button>
+      <button class="tab" role="tab" data-tab="guide">راهنمای اپ</button>
+      <button class="tab" role="tab" data-tab="results">نتیجه‌ی بهتر</button>
+      <button class="tab" role="tab" data-tab="diamonds">الماس و پرداخت</button>
+      <button class="tab" role="tab" data-tab="join">عضویت</button>
+      <button class="tab" role="tab" data-tab="feedback">نظرت</button>
+      <button class="tab" role="tab" data-tab="faq">سؤال‌ها</button>
+      <button class="tab" role="tab" data-tab="install">نصب</button>
+    </div>
+  </nav>
+
+  <!-- چرا -->
+  <section class="pane" id="p-home" role="tabpanel" aria-labelledby="t-home">
+    <h2>خرید اشتباه دیگه ارزون نیست</h2>
+    <p class="intro">بیشتر خریدهای مراقبت پوست بر اساس تبلیغ و توصیه‌ی دیگرانه، نه نیاز پوست خود آدم. نتیجه‌ش یه کمد پر از محصولی که استفاده نمی‌شه، یا پوستی که بدتر شده.</p>
+    <div class="ledger">
+      <div><span class="ico" style="background:#e6f7ef">💸</span><h3>جلوی هدر رفتن پولت رو می‌گیره</h3><p>قبل از پرداخت می‌فهمی این محصول به درد پوستت می‌خوره یا نه.</p></div>
+      <div><span class="ico" style="background:#ffe9ef">🩹</span><h3>جلوی آسیب پوست رو می‌گیره</h3><p>دو محصول خوب گاهی کنار هم پوست رو تحریک می‌کنن؛ اینو قبل از خرید بهت می‌گیم، نه بعد از سوختن پوست.</p></div>
+      <div><span class="ico" style="background:#ece6ff">🧭</span><h3>جواب مخصوص خودت</h3><p>نه توصیه‌ی عمومی؛ جواب با پوست، هدف و روتین خودت ساخته می‌شه.</p></div>
+    </div>
+    <p class="note">بیوتی‌ولت طرف خریداره. اگه محصولی برای پوستت مناسب نباشه، می‌گیم نخر؛ هیچ درآمدی روی این جواب اثر نمی‌ذاره.</p>
+  </section>
+
+  <!-- چطور -->
+  <section class="pane" id="p-how" role="tabpanel">
+    <h2>از اسم محصول تا یه تصمیم مطمئن</h2>
+    <p class="intro">چهار قدم، که دو قدم اولش فقط یک بار لازمه.</p>
+    <ol class="steps">
+      <li><h3>پوستت رو معرفی کن</h3><p>سه سؤال کوتاه: نوع پوست، حال امروزش و هدفت.</p></li>
+      <li><h3>روتین فعلیت رو بگو</h3><p>هر چی الان روی پوستت می‌زنی؛ هر محصولی رو با همین روتین می‌سنجیم.</p></li>
+      <li><h3>اسم یا لینک محصول رو بده</h3><p>از ویترین انتخاب کن، اسمش رو بنویس یا لینک صفحه‌ی فروشگاه رو بذار.</p></li>
+      <li><h3>جواب و دلیلش رو ببین</h3><p>یکی از این سه جواب، همراه دلیل و اگه لازم باشه یه جایگزین مناسب:</p>
+        <div class="verdicts"><span class="v buy">بخر</span><span class="v care">با احتیاط</span><span class="v stop">نخر</span></div></li>
+    </ol>
+    <p class="note">بعد از خرید هم کنارتیم: بگو محصول جواب داد یا نه، و قبل از تموم شدنش یادت می‌ندازیم.</p>
+  </section>
+
+  <!-- آموزش -->
+  <section class="pane" id="p-learn" role="tabpanel">
+    <h2>آموزش پوست، کوتاه و کاربردی</h2>
+    <p class="intro">چیزهایی که دونستنشون جلوی بیشتر خریدهای اشتباه رو می‌گیره.</p>
+    <details class="acc"><summary>🧪 نوع پوستت رو بشناس</summary><div class="body">
+      <p>صورتت رو با یه شوینده‌ی ملایم بشور و یک ساعت هیچی نزن. بعد یه دستمال کاغذی روی پیشونی، بینی و گونه بذار.</p>
+      <ul><li>همه‌جا چرب: پوست چرب</li><li>فقط پیشونی و بینی چرب: پوست مختلط</li><li>کشیده و بی‌حالت: پوست خشک</li><li>زود قرمز می‌شه و می‌سوزه: پوست حساس (کنار هر نوع دیگه)</li></ul>
+      <span class="simple">نوع پوست مثل سایز کفشه: بهترین محصول دنیا هم اگه سایزت نباشه، اذیتت می‌کنه.</span></div></details>
+    <details class="acc"><summary>🧴 روتین پایه از کجا شروع کنم؟</summary><div class="body">
+      <p>سه محصول کافیه: یه <b>شوینده‌ی ملایم</b>، یه <b>آبرسان یا مرطوب‌کننده</b> و <b>ضدآفتاب</b> برای صبح. محصولات «فعال» مثل سرم‌ها رو بعد از اینکه این سه تا جا افتاد اضافه کن.</p></div></details>
+    <details class="acc"><summary>↕️ ترتیب زدن محصولات</summary><div class="body">
+      <p>از رقیق به غلیظ: شوینده، تونر، سرم، دور چشم، مرطوب‌کننده و در آخر صبح‌ها ضدآفتاب. بین لایه‌ها یکی دو دقیقه صبر کن.</p></div></details>
+    <details class="acc"><summary>☀️ ضدآفتاب؛ مهم‌ترین محصول روتین</summary><div class="body">
+      <p>هر روز صبح، حتی تو خونه و روزهای ابری. اندازه‌ی کافی برای صورت و گردن حدوداً دو بند انگشته. اگه بیرونی، هر دو ساعت تمدیدش کن.</p>
+      <span class="simple">بدون ضدآفتاب، اثر بیشتر سرم‌های ضدلک و ضدچروک از بین می‌ره.</span></div></details>
+    <details class="acc"><summary>⚠️ ترکیب‌هایی که نباید با هم بزنی</summary><div class="body">
+      <ul><li>رتینول با اسیدهای لایه‌بردار (AHA و BHA) در یک شب</li><li>دو لایه‌بردار قوی پشت هم</li><li>چند محصول فعال جدید با هم؛ هر بار فقط یکی رو اضافه کن</li></ul>
+      <span class="simple">مثل دو تا دارو که نباید با هم خورده بشن: هر کدوم تنها مفیدن، با هم پوست رو اذیت می‌کنن. بیوتی‌ولت این تداخل‌ها رو خودش چک می‌کنه.</span></div></details>
+    <details class="acc"><summary>🧷 تست حساسیت قبل از استفاده</summary><div class="body">
+      <p>یه مقدار کم از محصول جدید رو دو سه شب پشت گوش یا کنار فک بزن. اگه قرمزی، خارش یا سوزش ندیدی، روی کل صورت استفاده کن.</p></div></details>
+    <details class="acc"><summary>⏳ نتیجه کی معلوم می‌شه؟</summary><div class="body">
+      <p>آبرسان‌ها از همون روزهای اول حس می‌شن، اما برای جوش و لک معمولاً شش تا دوازده هفته لازمه. زود محصول عوض نکن؛ و اگه بدتر شدی، زود قطعش کن.</p></div></details>
+    <details class="acc"><summary>🩺 کی باید پیش پزشک بری؟</summary><div class="body">
+      <ul><li>جوش‌های دردناک و عمیق یا جوشی که جای زخم می‌ذاره</li><li>خالی که شکل، رنگ یا اندازه‌ش تغییر کرده</li><li>قرمزی، تورم یا سوزشی که با قطع محصول خوب نمی‌شه</li><li>دوران بارداری و شیردهی، قبل از شروع هر محصول فعال</li></ul></div></details>
+    <p class="disclaim">این آموزش‌ها و جواب‌های بیوتی‌ولت جای معاینه‌ی پزشک رو نمی‌گیرن؛ برای بیماری پوستی حتماً به متخصص پوست مراجعه کن.</p>
+  </section>
+
+  <!-- راهنمای اپ -->
+  <section class="pane" id="p-guide" role="tabpanel">
+    <h2>هر بخش اپ به چه کاری میاد؟</h2>
+    <p class="intro">پایین اپ چهار بخش داری. روی هر کدوم بزن تا ببینی چی توشه.</p>
+    <div class="map" role="group" aria-label="بخش‌های اپ">
+      <button type="button" data-m="check" aria-pressed="true">بررسی</button>
+      <button type="button" data-m="routine" aria-pressed="false">روتین</button>
+      <button type="button" data-m="wallet" aria-pressed="false">ولت</button>
+      <button type="button" data-m="me" aria-pressed="false">من</button>
+    </div>
+    <div class="mapbody" id="mapbody" aria-live="polite"></div>
+    <p class="note">💎 دستیار: روی الماس بالای صفحه‌ی اول یا جمله‌ی «من بیوتی‌ولتم» بزن. اونجا روتینت رو کامل می‌کنی، نتیجه‌ی محصولاتت رو ثبت می‌کنی و سؤالت رو می‌پرسی.</p>
+  </section>
+
+  <!-- نتیجه بهتر -->
+  <section class="pane" id="p-results" role="tabpanel">
+    <h2>چطور بهترین نتیجه رو بگیری</h2>
+    <p class="intro">هر کدوم رو انجام دادی تیک بزن؛ روی همین گوشی یادمون می‌مونه.</p>
+    <div class="prog" aria-hidden="true"><i id="progbar"></i></div>
+    <ul class="check" id="checklist">
+      <li><label><input type="checkbox" data-k="profile"><span>پروفایل پوستت رو کامل کن<small>هر چی دقیق‌تر، جواب‌ها شخصی‌تر.</small></span></label></li>
+      <li><label><input type="checkbox" data-k="routine"><span>روتین فعلیت رو ثبت کن<small>بدون روتین، تداخل‌ها دیده نمی‌شن.</small></span></label></li>
+      <li><label><input type="checkbox" data-k="one"><span>هر بار فقط یک محصول جدید اضافه کن<small>اگه پوستت واکنش داد، می‌دونی از کدومه.</small></span></label></li>
+      <li><label><input type="checkbox" data-k="spf"><span>ضدآفتاب هر روز صبح<small>بدون اون، نتیجه‌ی بقیه‌ی محصولات کم می‌شه.</small></span></label></li>
+      <li><label><input type="checkbox" data-k="result"><span>بعد از چند هفته بگو جواب داد یا نه<small>از ولت، زیر هر محصول 👍 یا 👎 بزن.</small></span></label></li>
+      <li><label><input type="checkbox" data-k="start"><span>تاریخ شروع هر محصول رو بزن<small>قبل از تموم شدن یادت می‌ندازیم تا روتینت قطع نشه.</small></span></label></li>
+      <li><label><input type="checkbox" data-k="photo"><span>هفته‌ای یه عکس در نور یکسان بگیر<small>تغییرات آروم پوست با چشم دیده نمی‌شه؛ با عکس دیده می‌شه.</small></span></label></li>
+      <li><label><input type="checkbox" data-k="stop"><span>اگه سوخت یا قرمز شد، قطع کن<small>و تو اپ ثبتش کن تا دفعه‌ی بعد جایگزین بهتری پیشنهاد بدیم.</small></span></label></li>
+    </ul>
+  </section>
+
+  <!-- الماس -->
+  <section class="pane" id="p-diamonds" role="tabpanel">
+    <h2>الماس چیه و چطور می‌خرمش؟</h2>
+    <p class="intro">هر کاربر با ۵ الماس هدیه شروع می‌کنه. محصولات کاتالوگ، روتین و هر محصولی که قبلاً بررسی شده الماس نمی‌خوان؛ الماس فقط برای کارهایی خرج می‌شه که پشتشون جستجوی تازه است.</p>
+    <div class="costs" id="costs" aria-label="هر کار چند الماس"></div>
+    <h3 style="margin-top:22px">بسته‌ها</h3>
+    <div class="packs" id="packs"><div class="pack"><span>در حال گرفتن قیمت‌ها…</span></div></div>
+    <h3>پرداخت با بله</h3>
+    <ol class="steps" style="margin-top:10px">
+      <li><h3>تو اپ بسته رو انتخاب کن و «پرداخت با بله» رو بزن</h3></li>
+      <li><h3>تو بله «شروع» رو بزن و صورتحساب رو پرداخت کن</h3><p>بدون وارد کردن شماره کارت تو سایت.</p></li>
+      <li><h3>برگرد به اپ</h3><p>الماس‌ها خودشون به ولتت اضافه می‌شن.</p></li>
+    </ol>
+    <p class="note" id="payNote">پرداخت انجام شد ولی الماس نیومد؟ از «سؤال‌ها» یا داخل اپ به پشتیبانی بگو؛ با شماره‌ی تراکنش بررسیش می‌کنیم.</p>
+  </section>
+
+  <!-- عضویت -->
+  <section class="pane" id="p-join" role="tabpanel">
+    <h2>عضو بیوتی‌ولت شو</h2>
+    <p class="intro">با عضویت، اگه گوشیت عوض شد یا خواستی با پشتیبانی حرف بزنی، شناخته می‌شی. اطلاعات پوستت همچنان فقط روی گوشی خودته.</p>
+    <form class="form" id="joinForm" novalidate>
+      <label class="field">اسمت<input name="name" maxlength="40" autocomplete="given-name" placeholder="مثلاً سارا"></label>
+      <label class="field">شماره موبایل<input name="phone" inputmode="tel" dir="ltr" autocomplete="tel" maxlength="14" placeholder="09…" required></label>
+      <label class="field" id="otpField" hidden>کدی که پیامک شد<input name="code" inputmode="numeric" dir="ltr" maxlength="6" autocomplete="one-time-code"></label>
+      <label class="consent"><input type="checkbox" name="ok" required> <span>با <a href="#faq" data-go="faq">حریم خصوصی بیوتی‌ولت</a> موافقم.</span></label>
+      <button class="btn big" type="submit" id="joinBtn">عضو شو</button>
+      <p class="msg" id="joinMsg" role="status"></p>
+    </form>
+  </section>
+
+  <!-- نظر -->
+  <section class="pane" id="p-feedback" role="tabpanel">
+    <h2>نظرت بیوتی‌ولت رو می‌سازه</h2>
+    <p class="intro">هر پیام رو خود تیم می‌خونه. اگه چیزی گیجت کرد، محصولت پیدا نشد یا ایده‌ای داری، همین‌جا بگو.</p>
+    <form class="form" id="fbForm" novalidate>
+      <div class="field">چقدر راضی بودی؟<div class="hearts" id="hearts" role="radiogroup" aria-label="امتیاز">
+        <button type="button" data-r="1" aria-pressed="false" aria-label="۱ از ۵">🤍</button><button type="button" data-r="2" aria-pressed="false" aria-label="۲ از ۵">🤍</button><button type="button" data-r="3" aria-pressed="false" aria-label="۳ از ۵">🤍</button><button type="button" data-r="4" aria-pressed="false" aria-label="۴ از ۵">🤍</button><button type="button" data-r="5" aria-pressed="false" aria-label="۵ از ۵">🤍</button></div></div>
+      <div class="field">درباره‌ی چی؟<div class="chips" id="fbTags">
+        <button type="button" class="chip" aria-pressed="false">جواب‌ها درست بود</button><button type="button" class="chip" aria-pressed="false">گیج شدم</button><button type="button" class="chip" aria-pressed="false">محصولم پیدا نشد</button><button type="button" class="chip" aria-pressed="false">پرداخت</button><button type="button" class="chip" aria-pressed="false">نصب</button><button type="button" class="chip" aria-pressed="false">ایده دارم</button></div></div>
+      <label class="field">بنویس (اختیاری)<textarea name="text" rows="4" maxlength="1000" placeholder="مثلاً: اسم محصولی که پیدا نشد، یا جایی که گیر کردی"></textarea></label>
+      <button class="btn big" type="submit" id="fbBtn">بفرست</button>
+      <p class="msg" id="fbMsg" role="status"></p>
+    </form>
+  </section>
+
+  <!-- سؤال‌ها -->
+  <section class="pane" id="p-faq" role="tabpanel">
+    <h2>سؤال‌هایی که زیاد می‌پرسن</h2>
+    <details class="acc"><summary>بیوتی‌ولت جای پزشک رو می‌گیره؟</summary><div class="body"><p>نه. بیوتی‌ولت برای انتخاب محصول کمکت می‌کنه، نه تشخیص بیماری. برای جوش‌های شدید، حساسیت‌های طولانی یا هر تغییر نگران‌کننده، پیش متخصص پوست برو.</p></div></details>
+    <details class="acc"><summary>اطلاعات پوستم کجا ذخیره می‌شه؟</summary><div class="body"><p>پروفایل پوست و روتینت روی گوشی خودت می‌مونه. فقط اگه خودت ذخیره‌ی آنلاین رو روشن کنی، یه نسخه‌ی امن روی سرور ما نگه داشته می‌شه. اطلاعاتت رو به هیچ فروشگاه یا تبلیغ‌کننده‌ای نمی‌دیم.</p></div></details>
+    <details class="acc"><summary>از فروش محصولات پول می‌گیرید؟ پس بی‌طرفید؟</summary><div class="body"><p>اگه بعد از تصمیم از فروشگاه همکار بخری، ممکنه سهم کوچکی بگیریم؛ اما جواب «بخر یا نخر» رو فقط ترکیبات محصول و پوست خودت تعیین می‌کنه و درآمد هیچ نقشی توش نداره.</p></div></details>
+    <details class="acc"><summary>محصولم تو اپ پیدا نشد، چیکار کنم؟</summary><div class="body"><p>لینک صفحه‌ی محصول رو از هر فروشگاهی بده؛ ترکیباتش رو پیدا می‌کنیم و بعد از اون برای همه آماده است. اگه باز هم پیدا نشد، تیم بیوتی‌ولت خودش بررسیش می‌کنه.</p></div></details>
+    <details class="acc"><summary>چرا گاهی می‌گه «نخر»؟</summary><div class="body"><p>چون ترکیبات اون محصول با نوع پوستت، حال امروزش یا محصولی که الان می‌زنی جور نیست. دلیلش همیشه زیر جواب نوشته شده و اگه بشه، یه جایگزین مناسب هم پیشنهاد می‌دیم.</p></div></details>
+    <details class="acc"><summary>پرداخت کردم ولی الماس نیومد</summary><div class="body"><p>اپ رو یه بار ببند و باز کن. اگه باز هم نیومد، از داخل اپ «بررسی با پشتیبانی» رو بزن و زمان پرداخت رو بنویس؛ بررسی می‌کنیم و الماس‌ها رو اضافه می‌کنیم.</p></div></details>
+    <details class="acc"><summary>اپ رو چطور نصب کنم؟</summary><div class="body"><p>از بخش <a href="#install" data-go="install">نصب</a> راهنمای آیفون و اندروید رو ببین. نیازی به بازار یا اپ‌استور نیست.</p></div></details>
+  </section>
+
+  <!-- نصب -->
+  <section class="pane" id="p-install" role="tabpanel">
+    <h2>بیوتی‌ولت رو روی گوشیت نصب کن</h2>
+    <p class="intro">مثل یه اپ معمولی روی صفحه‌ی اصلی گوشیت میاد، بدون بازار و اپ‌استور، و با هر به‌روزرسانی خودش تازه می‌شه.</p>
+    <div class="install">
+      <div>
+        <div class="os" role="group" aria-label="نوع گوشی"><button type="button" class="chip" data-os="ios" aria-pressed="false">آیفون</button><button type="button" class="chip" data-os="android" aria-pressed="false">اندروید</button></div>
+        <ol class="steps" id="osSteps"></ol>
+        <a class="btn big green" style="margin-top:18px" href="/legacy/?install=1">برو به اپ و نصبش کن</a>
+      </div>
+      <div class="qr"><img src="/qr.png" alt="کد QR برای باز کردن بیوتی‌ولت روی گوشی" width="220" height="220"><p style="margin:8px 0 0;font-size:14px;color:var(--ink2)">با دوربین گوشی اسکن کن</p></div>
+    </div>
+  </section>
 </main>
-<script src="/legacy/lite-track.js"></script>
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0 0 6px"><b>بیوتی‌ولت</b> · همراه تصمیم آگاهانه برای مراقبت از پوست</p>
+    <p style="margin:0">جواب‌های بیوتی‌ولت جای پزشک رو نمی‌گیرن. <a href="#faq" data-go="faq">حریم خصوصی و سؤال‌ها</a> · <a href="#feedback" data-go="feedback">پیام به تیم</a></p>
+  </div>
+</footer>
+
 <script>
 (function(){
-var deck=document.getElementById('deck'),slides=[].slice.call(document.querySelectorAll('.slide')),dots=document.querySelector('.dots');
-slides.forEach(function(s,i){var a=document.createElement('a');a.href='#'+s.id;a.onclick=function(e){e.preventDefault();s.scrollIntoView({behavior:'smooth'})};dots.append(a)});
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&e.intersectionRatio>.55){e.target.classList.add('in');var i=slides.indexOf(e.target);[].forEach.call(dots.children,function(d,k){d.classList.toggle('on',k===i)})}})},{root:deck,threshold:[.55]});
-slides.forEach(function(s){io.observe(s)});
-document.addEventListener('keydown',function(e){var i=[].indexOf.call(dots.children,dots.querySelector('.on'));if(e.key==='ArrowDown'||e.key==='PageDown')slides[Math.min(i+1,slides.length-1)].scrollIntoView({behavior:'smooth'});if(e.key==='ArrowUp'||e.key==='PageUp')slides[Math.max(i-1,0)].scrollIntoView({behavior:'smooth'})});
-// real product names: this week's bestsellers (fallback to a few common picks)
-var FALLBACK=['ژل شستشوی فومی سراوی','ضدآفتاب فلوئید لاروش پوزای','میسلار واتر بایودرما','سرم نیاسینامید اوردینری'];
-function chips(names){var p=document.getElementById('picker');p.innerHTML='';names.slice(0,5).forEach(function(n){var b=document.createElement('button');b.type='button';b.className='chip';b.textContent=n.length>30?n.slice(0,28)+'…':n;b.onclick=function(){b.classList.add('go');var st=document.getElementById('stamp');st.classList.remove('on');void st.offsetWidth;st.classList.add('on');setTimeout(function(){location.href='/legacy/?q='+encodeURIComponent(n)},800)};p.append(b)})}
-chips(FALLBACK);fetch('/bestsellers.json').then(function(r){return r.json()}).then(function(d){var n=(d.items||[]).map(function(x){return x.name_fa||x.name_en}).filter(Boolean);if(n.length>=3)chips(n)}).catch(function(){});
-var S={ios:['لینک رو تو Safari باز کن','دکمه‌ی اشتراک ⬆︎ رو بزن','Add to Home Screen'],android:['لینک رو تو Chrome باز کن','منوی ⋮ یا «نصب روی گوشی»','تأیید نصب']};
-var ol=document.getElementById('steps');function render(os){document.querySelectorAll('[data-os]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.os===os))});ol.innerHTML='';S[os].forEach(function(t){var li=document.createElement('li');li.textContent=t;ol.append(li)})}
-document.querySelector('.os').addEventListener('click',function(e){var b=e.target.closest('[data-os]');if(b)render(b.dataset.os)});render(/android/i.test(navigator.userAgent)?'android':'ios');
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var fa=function(n){return String(n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})};
+var money=function(t){return fa(Number(t||0).toLocaleString('en'))+' تومان'};
+var store={get:function(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function dev(){var id='';try{id=localStorage.getItem('bw_device')||'';if(!/^[a-z0-9]{12,40}$/.test(id)){id=(Date.now().toString(36)+Math.random().toString(36).slice(2,12)).slice(0,24);localStorage.setItem('bw_device',id)}}catch(e){}return id}
+function post(u,b){return fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw Error(j.error||'نرسید؛ دوباره بزن');return j})})}
+
+/* hero stamp: one moment, once */
+$('#stamp').classList.add('on');$('#why').classList.add('on');
+var bar=$('#bar');addEventListener('scroll',function(){bar.classList.toggle('scrolled',scrollY>8)},{passive:true});
+
+/* sections, one at a time */
+var NAMES=$$('.tab').map(function(t){return t.dataset.tab});
+function show(name,scroll){if(NAMES.indexOf(name)<0)name='home';
+  $$('.tab').forEach(function(t){var on=t.dataset.tab===name;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;if(on&&t.scrollIntoView)t.scrollIntoView({block:'nearest',inline:'center'})});
+  $$('.pane').forEach(function(p){p.classList.toggle('on',p.id==='p-'+name)});
+  if(history.replaceState)history.replaceState(null,'','#'+name);
+  if(scroll){var t=$('.tabs');scrollTo({top:t.offsetTop-62,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})}}
+$('#tabs').addEventListener('click',function(e){var t=e.target.closest('.tab');if(t)show(t.dataset.tab,true)});
+$('#tabs').addEventListener('keydown',function(e){if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;var tabs=$$('.tab'),i=tabs.indexOf(document.activeElement);if(i<0)return;var n=tabs[(i+(e.key==='ArrowLeft'?1:-1)+tabs.length)%tabs.length];n.focus();show(n.dataset.tab,false)});
+document.addEventListener('click',function(e){var g=e.target.closest('[data-go]');if(!g)return;e.preventDefault();show(g.dataset.go,true)});
+var start=(location.hash||'').slice(1);if(/[?&]from=qr/.test(location.search)&&!start)start='install';show(start||'home',!!start);
+
+/* app guide */
+var MAP={
+  check:['بررسی','صفحه‌ی اول؛ جایی که محصول رو می‌سنجی.',['اسم محصول رو بنویس یا از ویترین انتخاب کن','کنار هر محصول «＋ روتینم» رو بزن اگه همین الان می‌زنیش','اگه پیدا نشد، لینک صفحه‌ی محصول رو بده','الماس بالای صفحه دستیارته؛ روش بزن']],
+  routine:['روتین','برنامه‌ی صبح و شبت، به ترتیب درست.',['ببین کدوم محصول کِی زده بشه','تداخل‌ها با خط قرمز بین دو محصول نشون داده می‌شن','اگه چیزی کم داری، پیشنهاد مناسب پوستت رو می‌بینی','هر روز با یه تیک کوچیک پیگیریش کن']],
+  wallet:['ولت','هر چی داری و الان می‌زنی، یه‌جا.',['روتین فعلیت با صبح و شب','برای هر محصول بگو جواب داد یا نه','تاریخ شروع رو بزن تا قبل از تموم شدن یادت بندازیم','الماس‌هات و خریدهات']],
+  me:['من','پروفایل پوست و تنظیمات.',['نوع پوست، حساسیت‌ها و هدفت رو کامل کن','ذخیره‌ی امن آنلاین رو اگه خواستی روشن کن','حریم خصوصی و داده‌هات','پیام به تیم بیوتی‌ولت']]};
+function map(k){var m=MAP[k];$$('.map button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.m===k))});
+  $('#mapbody').innerHTML='<h3>'+m[0]+'</h3><p style="margin:0;color:var(--ink2)">'+m[1]+'</p><ul>'+m[2].map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>'}
+$('.map').addEventListener('click',function(e){var b=e.target.closest('[data-m]');if(b)map(b.dataset.m)});map('check');
+
+/* checklist */
+var done=store.get('bw_site_check',{});
+function prog(){var all=$$('#checklist input'),n=all.filter(function(i){return i.checked}).length;$('#progbar').style.width=Math.round(n/all.length*100)+'%'}
+$$('#checklist input').forEach(function(i){i.checked=!!done[i.dataset.k];i.addEventListener('change',function(){done[i.dataset.k]=i.checked;store.set('bw_site_check',done);prog()})});prog();
+
+/* diamonds: live prices from the app's own config */
+fetch('/config.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(c){
+  var k=c.costs||{};$('#costs').innerHTML=[['بررسی محصول کاملاً تازه',k.research],['قیمت، تخفیف و قسط زنده',k.live],['سؤال آزاد از دستیار',1]].filter(function(x){return x[1]!=null}).map(function(x){return '<div><span>'+x[0]+'</span><b>'+fa(x[1])+' الماس</b></div>'}).join('')+'<div><span>محصولات کاتالوگ، روتین و چک تداخل‌ها</span><b>بدون الماس</b></div>';
+  var p=(c.packs||[]).map(function(x){return '<div class="pack"><b>'+fa(x.n)+' الماس</b><span>'+money(x.price)+'</span></div>'});
+  if(c.subscription&&c.subscription.price)p.push('<div class="pack"><b>اشتراک ماهانه</b><span>'+money(c.subscription.price)+' · هر ماه '+fa(c.subscription.monthly)+' الماس</span></div>');
+  $('#packs').innerHTML=p.join('')||'<div class="pack"><span>قیمت‌ها داخل اپ نشون داده می‌شن.</span></div>';
+  if(!c.bale)$('#payNote').insertAdjacentHTML('beforebegin','<p class="note">پرداخت با بله به‌زودی فعال می‌شه؛ تا اون موقع داخل اپ روش کارت‌به‌کارت رو می‌بینی.</p>')
+}).catch(function(){$('#packs').innerHTML='<div class="pack"><span>قیمت‌ها داخل اپ نشون داده می‌شن.</span></div>'});
+
+/* membership — same storage as the app, so the app knows you */
+var otp=false;
+$('#joinForm').addEventListener('submit',function(e){e.preventDefault();var f=e.target,m=$('#joinMsg'),b=$('#joinBtn');m.className='msg';
+  var phone=f.phone.value.trim(),name=f.name.value.trim();if(!f.ok.checked){m.className='msg err';m.textContent='برای عضویت، تیک حریم خصوصی رو بزن.';return}
+  if(!/^(\+98|0)?9[0-9۰-۹]{9}$/.test(phone.replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}))){m.className='msg err';m.textContent='شماره موبایل رو به شکل ۰۹… بنویس.';return}
+  b.disabled=true;var p=otp?post('/register/verify',{phone:phone,code:f.code.value.trim()}):post('/register',{name:name,phone:phone,d:dev(),sa:false});
+  p.then(function(j){if(j.otp){otp=true;$('#otpField').hidden=false;f.code.focus();b.textContent='تأیید کد';m.textContent='کد پیامک‌شده رو بنویس.';return}
+    store.set('bw_reg',{at:new Date().toISOString(),name:name,phone:phone,verified:!!j.verified});m.className='msg ok';m.textContent='خوش اومدی'+(name?' '+name:'')+' 💜 حالا اپ رو باز کن و اولین محصولت رو بسنج.';b.textContent='عضو شدی ✓';b.disabled=true;return true})
+   .catch(function(er){m.className='msg err';m.textContent=er.message})
+   .then(function(ok){if(!ok)b.disabled=false})});
+var reg=store.get('bw_reg',null);if(reg&&reg.phone){$('#joinMsg').className='msg ok';$('#joinMsg').textContent='تو قبلاً عضو شدی'+(reg.name?'، '+reg.name:'')+' 💜'}
+
+/* feedback */
+var rating=0;
+$('#hearts').addEventListener('click',function(e){var b=e.target.closest('[data-r]');if(!b)return;rating=+b.dataset.r;$$('#hearts button').forEach(function(x){var on=+x.dataset.r<=rating;x.textContent=on?'💜':'🤍';x.setAttribute('aria-pressed',String(+x.dataset.r===rating))})});
+$('#fbTags').addEventListener('click',function(e){var c=e.target.closest('.chip');if(c)c.setAttribute('aria-pressed',String(c.getAttribute('aria-pressed')!=='true'))});
+$('#fbForm').addEventListener('submit',function(e){e.preventDefault();var m=$('#fbMsg'),b=$('#fbBtn'),text=e.target.text.value.trim();m.className='msg';
+  if(!rating&&!text){m.className='msg err';m.textContent='یه امتیاز بده یا چند کلمه بنویس.';return}b.disabled=true;
+  var tags=$$('#fbTags [aria-pressed="true"]').map(function(c){return c.textContent});
+  post('/api/feedback',{kind:'site',rating:rating,tags:tags,text:text,app:'site'}).then(function(){m.className='msg ok';m.textContent='رسید دست تیم 💜 ممنون که وقت گذاشتی.';e.target.reset();b.textContent='فرستاده شد ✓'})
+   .catch(function(er){m.className='msg err';m.textContent=er.message;b.disabled=false})});
+
+/* install steps per phone */
+var OS={ios:[['با Safari باز کن','اگه از اینستاگرام یا تلگرام اومدی، اول «Open in Safari» رو بزن.'],['دکمه‌ی اشتراک‌گذاری رو بزن','مربع با فلش رو به بالا، پایین صفحه.'],['«Add to Home Screen» رو بزن','بعد بالا سمت راست «Add».'],['از صفحه‌ی اصلی بازش کن','آیکون الماس بیوتی‌ولت رو می‌بینی.']],
+  android:[['با Chrome باز کن','اگه داخل اپ دیگه‌ای هستی، از منو «باز کردن در مرورگر» رو بزن.'],['«برو به اپ و نصبش کن» رو بزن','پایین همین صفحه.'],['«نصب» یا «Install» رو تأیید کن','اگه پیامی نیومد، از منوی سه‌نقطه «Add to Home screen» رو بزن.'],['از صفحه‌ی اصلی بازش کن','آیکون الماس بیوتی‌ولت رو می‌بینی.']]};
+function os(k){$$('[data-os]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.os===k))});$('#osSteps').innerHTML=OS[k].map(function(s){return '<li><h3>'+s[0]+'</h3><p>'+s[1]+'</p></li>'}).join('')}
+$('.os').addEventListener('click',function(e){var b=e.target.closest('[data-os]');if(b)os(b.dataset.os)});
+os(/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)?'ios':'android');
+
+/* visit count for the team (same anonymous device id as the app) */
+try{post('/api/event',{type:'site_open',d:dev(),page:'site'}).catch(function(){})}catch(e){}
 })();
 </script>
 </body>

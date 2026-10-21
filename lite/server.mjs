@@ -10,7 +10,7 @@
 import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC=path.join(here,'public');
-import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';
+import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';import {makeBale} from './bale.mjs';
 // Liara app filesystems are read-only unless a disk is mounted: pick the first writable folder, never crash.
 function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
 const DATA=[process.env.DATA_DIR,'/data',path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
@@ -154,7 +154,7 @@ async function research(name,url){
 }
 
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
-const EVENTS=new Set(['site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip']);
+const EVENTS=new Set(['site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
 const evHits=new Map();let deepCache=null;
 function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,rawLength:String(RAW_KEY).length,keysInValue:(String(RAW_KEY).match(/eyJ[\w-]+\.eyJ/g)||[]).length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
 let lastUpstream=null;
@@ -278,7 +278,10 @@ function costs(){const since=Date.now()-30*864e5;const rows=readJsonlSafe(path.j
     perAction:Object.fromEntries(Object.entries(acc).map(([k,a])=>[k,{calls:a.n,avgIn:Math.round(a.tin/a.n),avgOut:Math.round(a.tout/a.n),avgCost:a.priced?a.cost/a.priced:null,toman:tpk?Math.round((a.tin+a.tout)/a.n*tpk/1000):null}])),
     perNeginAction:{research:per.research,live:per.live},perNeginToman:{research:tomanOf('research'),live:tomanOf('live')},tokensPerNegin:tokPer,tomanPer1k:tpk,margin,dollarRate:Number(c.dollarRate)||0,suggested}}
 function readJsonlSafe(f){try{return fs.readFileSync(f,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
-const admin=makeAdmin({BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
+const PUBLIC_URL=String(E.PUBLIC_URL||'https://beautywallet.liara.run').replace(/\/$/,'');
+const BALE=makeBale({DATA,BANK,getCfg:()=>cfg,setReqStatus,env:E,publicUrl:PUBLIC_URL,log:(...a)=>console.error(...a)});
+if(BALE.on){setTimeout(()=>BALE.ensureWebhook().then(s=>console.log('bale webhook',s.webhook,s.error||'')),4000);setInterval(()=>BALE.ensureWebhook(),6*3600e3).unref()}
+const admin=makeAdmin({BALE,BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
   try{
@@ -295,7 +298,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'93'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'94'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -330,6 +333,16 @@ const server=http.createServer(async(req,res)=>{
       r.usedAt=new Date().toISOString();r.d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);saveRedeem(all);BANK.credit(r.d,r.n);setReqStatus(r.ref,{status:'done'});
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:r.usedAt,t:'redeem',d:r.d||'anon',page:'app'})+'\n',()=>{});return send(res,200,{ok:true,n:r.n,sub:!!r.sub,wallet:BANK.balance(r.d,cfg)});
     }
+    if(BALE.on&&url.pathname===BALE.hookPath&&req.method==='POST'){const u=await readBody(req,20000);send(res,200,{ok:true});BALE.handle(u);return}
+    if(url.pathname==='/bale/order'&&req.method==='POST'){
+      if(!BALE.on)return send(res,503,{error:'پرداخت با بله هنوز فعال نشده'});if(!sameOrigin(req))return send(res,403,{error:'forbidden'});if(allow(ip(req)))return send(res,429,{error:'یه کم بعد دوباره بزن'});
+      const b=await readBody(req,1000);const d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);if(!/^[a-z0-9]{12,40}$/.test(d))return send(res,400,{error:'یه بار صفحه رو رفرش کن و دوباره بزن'});
+      const kind=b.kind==='sub'?'sub':'negin';const ref='BW-'+String(crypto.randomInt(10000,100000));const o=BALE.createOrder({kind,pack:b.pack,d,ref});if(!o)return send(res,400,{error:'این بسته پیدا نشد'});
+      const row={at:new Date().toISOString(),ref,kind,method:'bale',n:o.n,price:o.price,name:'',phone:'',item:(kind==='sub'?'اشتراک ماهانه':o.n+' الماس')+' (بله)',d};
+      fs.appendFileSync(path.join(DATA,'purchase-requests.jsonl'),JSON.stringify(row)+'\n');
+      fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:row.at,t:'bale_order',d,page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
+      return send(res,200,{ok:true,ref,n:o.n,price:o.price,link:o.link,test:BALE.test});
+    }
     if(url.pathname==='/pay-proof'&&req.method==='POST'){ // the shopper says "I paid": tracking number + last 4 card digits → admin confirms
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});if(allow(ip(req)))return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,1000);const digits=v=>String(v||'').replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'');
@@ -341,7 +354,7 @@ const server=http.createServer(async(req,res)=>{
       setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv});return send(res,200,{ok:true,advance:adv,wallet:BANK.balance(d,cfg)});
     }
     if(url.pathname==='/order-status'){const d=String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'');const st=getReqStatus();
-      const mine=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>d&&r.d===d&&r.method==='card').slice(-5).map(r=>({ref:r.ref,n:r.n,price:r.price,kind:r.kind,status:(st[r.ref]&&st[r.ref].status)||'new'}));
+      const mine=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>d&&r.d===d&&(r.method==='card'||r.method==='bale')).slice(-5).map(r=>({ref:r.ref,n:r.n,price:r.price,kind:r.kind,status:(st[r.ref]&&st[r.ref].status)||'new'}));
       return send(res,200,{orders:mine,wallet:BANK.balance(d,cfg)},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/buy-request'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
@@ -360,7 +373,7 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/wallet')return send(res,200,BANK.balance(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40),cfg),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/costs.json')return send(res,200,costs(),'application/json',{'Cache-Control':'no-store'});
-    if(url.pathname==='/config.json')return send(res,200,{...cfg,aff:{dk:!!AFF.dk.tpl,kh:!!AFF.kh.tpl}},'application/json',{'Cache-Control':'no-cache'});
+    if(url.pathname==='/config.json')return send(res,200,{...cfg,aff:{dk:!!AFF.dk.tpl,kh:!!AFF.kh.tpl},bale:BALE.on,baleTest:BALE.on&&BALE.test},'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/gift'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,2000);const id=newId();

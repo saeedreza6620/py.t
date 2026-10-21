@@ -14,6 +14,7 @@ fs.writeFileSync(path.join(dest,'bw-prompts.js'),'/* GENERATED */window.BWPrompt
 fs.copyFileSync(path.join(src,'claude/claude-bridge.js'),path.join(dest,'claude-bridge.js'));
 fs.copyFileSync(path.join(src,'claude/lite-track.js'),path.join(dest,'lite-track.js'));
 fs.copyFileSync(path.join(src,'claude/landing.html'),path.join(out,'index.html'));
+if(fs.existsSync(path.join(src,'claude/qr-beautywallet.png')))fs.copyFileSync(path.join(src,'claude/qr-beautywallet.png'),path.join(out,'qr.png'));
 const version=(fs.readFileSync(path.join(dest,'sw.js'),'utf8').match(/bw-static-v(\d+)/)||[])[1]||'0';
 let html=fs.readFileSync(path.join(dest,'index.html'),'utf8');
 if(!html.includes('window.BW_LITE'))html=html.replace(/<head>\s*(<base [^>]*>)?/,m=>m+`\n<script>window.BW_LITE=true</script>\n<script src="./claude-bridge.js?v=${version}"></script>\n<script src="./bw-prompts.js?v=${version}"></script>\n<script src="./lite-track.js?v=${version}" defer></script>\n`);
