@@ -302,11 +302,11 @@ footer a{font-weight:700}
     <div class="costs" id="costs" aria-label="هر کار چند الماس"></div>
     <h3 style="margin-top:22px">بسته‌ها</h3>
     <div class="packs" id="packs"><div class="pack"><span>در حال گرفتن قیمت‌ها…</span></div></div>
-    <h3>پرداخت با بله</h3>
+    <h3>چطور الماس بخرم؟</h3>
     <ol class="steps" style="margin-top:10px">
-      <li><h3>تو اپ بسته رو انتخاب کن و «پرداخت با بله» رو بزن</h3></li>
-      <li><h3>تو بله «شروع» رو بزن و صورتحساب رو پرداخت کن</h3><p>بدون وارد کردن شماره کارت تو سایت.</p></li>
-      <li><h3>برگرد به اپ</h3><p>الماس‌ها خودشون به ولتت اضافه می‌شن.</p></li>
+      <li><h3>تو اپ بسته رو انتخاب کن</h3><p>شماره کارت و مبلغ با یک دکمه کپی می‌شن.</p></li>
+      <li><h3>از اپ بانکت کارت‌به‌کارت کن</h3></li>
+      <li><h3>شماره پیگیری رو تو اپ بنویس و «واریز کردم» رو بزن</h3><p>یه الماس همون لحظه میاد و بقیه به‌محض دیدن واریز، معمولاً ظرف چند دقیقه.</p></li>
     </ol>
     <p class="note" id="payNote">پرداخت انجام شد ولی الماس نیومد؟ از «سؤال‌ها» یا داخل اپ به پشتیبانی بگو؛ با شماره‌ی تراکنش بررسیش می‌کنیم.</p>
   </section>
@@ -421,7 +421,6 @@ fetch('/config.json',{cache:'no-store'}).then(function(r){return r.json()}).then
   var p=(c.packs||[]).map(function(x){return '<div class="pack"><b>'+fa(x.n)+' الماس</b><span>'+money(x.price)+'</span></div>'});
   if(c.subscription&&c.subscription.price)p.push('<div class="pack"><b>اشتراک ماهانه</b><span>'+money(c.subscription.price)+' · هر ماه '+fa(c.subscription.monthly)+' الماس</span></div>');
   $('#packs').innerHTML=p.join('')||'<div class="pack"><span>قیمت‌ها داخل اپ نشون داده می‌شن.</span></div>';
-  if(!c.bale)$('#payNote').insertAdjacentHTML('beforebegin','<p class="note">پرداخت با بله به‌زودی فعال می‌شه؛ تا اون موقع داخل اپ روش کارت‌به‌کارت رو می‌بینی.</p>')
 }).catch(function(){$('#packs').innerHTML='<div class="pack"><span>قیمت‌ها داخل اپ نشون داده می‌شن.</span></div>'});
 
 /* membership — same storage as the app, so the app knows you */

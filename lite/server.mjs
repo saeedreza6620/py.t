@@ -10,7 +10,7 @@
 import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC=path.join(here,'public');
-import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';import {makeBale} from './bale.mjs';
+import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';
 // Liara app filesystems are read-only unless a disk is mounted: pick the first writable folder, never crash.
 function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
 const DATA=[process.env.DATA_DIR,'/data',path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
@@ -203,7 +203,7 @@ function migrateCfg(){let raw=null;try{raw=JSON.parse(fs.readFileSync(CFG,'utf8'
 function saveCfg(next){ // merges: a form only changes the fields it sends
   const has=k=>Object.prototype.hasOwnProperty.call(next,k)&&String(next[k]).trim()!=='';const num=(k,cur,min=0,max=1e9)=>has(k)?Math.max(min,Math.min(max,Number(String(next[k]).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)))||0)):cur;
   const o=cfg||DEFAULT_CFG,oc=o.costs||DEFAULT_CFG.costs,op=o.packs||DEFAULT_CFG.packs,os=o.subscription||DEFAULT_CFG.subscription;
-  const c={priceVersion:o.priceVersion??4,payAdvance:num('payAdvance',o.payAdvance??1,0,3),cardNumber:has('cardNumber')?String(next.cardNumber).replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'').slice(0,16):(o.cardNumber||''),cardHolder:has('cardHolder')?String(next.cardHolder).slice(0,60):(o.cardHolder||''),cardBank:has('cardBank')?String(next.cardBank).slice(0,30):(o.cardBank||''),freeChecks:num('freeChecks',o.freeChecks??5,0,50),freePerIpDay:num('freePerIpDay',o.freePerIpDay??30,0,500),tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
+  const c={priceVersion:o.priceVersion??4,payAdvance:num('payAdvance',o.payAdvance??1,0,50),cardNumber:has('cardNumber')?String(next.cardNumber).replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'').slice(0,16):(o.cardNumber||''),cardHolder:has('cardHolder')?String(next.cardHolder).slice(0,60):(o.cardHolder||''),cardBank:has('cardBank')?String(next.cardBank).slice(0,30):(o.cardBank||''),freeChecks:num('freeChecks',o.freeChecks??5,0,50),freePerIpDay:num('freePerIpDay',o.freePerIpDay??30,0,500),tomanPer1k:num('tomanPer1k',o.tomanPer1k??900,0,1e6),dollarRate:num('dollarRate',o.dollarRate??0,0,1e8),margin:num('margin',o.margin??3,1,20),aiDailyCalls:num('aiDailyCalls',o.aiDailyCalls??1000,0,5000),aiDailyOnline:num('aiDailyOnline',o.aiDailyOnline??400,0,5000),registerGift:num('registerGift',o.registerGift??5),trialGift:num('trialGift',o.trialGift??5),welcome:num('welcome',o.welcome??10),
     costs:{research:num('research',oc.research),live:num('live',oc.live),gift:num('gift',oc.gift),pack:num('pack',oc.pack)},
     packs:[{n:num('p1n',op[0].n,1),price:num('p1p',op[0].price)},{n:num('p2n',op[1].n,1),price:num('p2p',op[1].price)}],
     subscription:{price:num('subp',os.price),monthly:num('subn',os.monthly),perks:has('perks')?String(next.perks).slice(0,200):os.perks},
@@ -278,10 +278,7 @@ function costs(){const since=Date.now()-30*864e5;const rows=readJsonlSafe(path.j
     perAction:Object.fromEntries(Object.entries(acc).map(([k,a])=>[k,{calls:a.n,avgIn:Math.round(a.tin/a.n),avgOut:Math.round(a.tout/a.n),avgCost:a.priced?a.cost/a.priced:null,toman:tpk?Math.round((a.tin+a.tout)/a.n*tpk/1000):null}])),
     perNeginAction:{research:per.research,live:per.live},perNeginToman:{research:tomanOf('research'),live:tomanOf('live')},tokensPerNegin:tokPer,tomanPer1k:tpk,margin,dollarRate:Number(c.dollarRate)||0,suggested}}
 function readJsonlSafe(f){try{return fs.readFileSync(f,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
-const PUBLIC_URL=String(E.PUBLIC_URL||'https://beautywallet.liara.run').replace(/\/$/,'');
-const BALE=makeBale({DATA,BANK,getCfg:()=>cfg,setReqStatus,env:E,publicUrl:PUBLIC_URL,log:(...a)=>console.error(...a)});
-if(BALE.on){setTimeout(()=>BALE.ensureWebhook().then(s=>console.log('bale webhook',s.webhook,s.error||'')),4000);setInterval(()=>BALE.ensureWebhook(),6*3600e3).unref()}
-const admin=makeAdmin({BALE,BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
+const admin=makeAdmin({BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
   try{
@@ -298,7 +295,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'94'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'95'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -333,16 +330,6 @@ const server=http.createServer(async(req,res)=>{
       r.usedAt=new Date().toISOString();r.d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);saveRedeem(all);BANK.credit(r.d,r.n);setReqStatus(r.ref,{status:'done'});
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:r.usedAt,t:'redeem',d:r.d||'anon',page:'app'})+'\n',()=>{});return send(res,200,{ok:true,n:r.n,sub:!!r.sub,wallet:BANK.balance(r.d,cfg)});
     }
-    if(BALE.on&&url.pathname===BALE.hookPath&&req.method==='POST'){const u=await readBody(req,20000);send(res,200,{ok:true});BALE.handle(u);return}
-    if(url.pathname==='/bale/order'&&req.method==='POST'){
-      if(!BALE.on)return send(res,503,{error:'پرداخت با بله هنوز فعال نشده'});if(!sameOrigin(req))return send(res,403,{error:'forbidden'});if(allow(ip(req)))return send(res,429,{error:'یه کم بعد دوباره بزن'});
-      const b=await readBody(req,1000);const d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);if(!/^[a-z0-9]{12,40}$/.test(d))return send(res,400,{error:'یه بار صفحه رو رفرش کن و دوباره بزن'});
-      const kind=b.kind==='sub'?'sub':'negin';const ref='BW-'+String(crypto.randomInt(10000,100000));const o=BALE.createOrder({kind,pack:b.pack,d,ref});if(!o)return send(res,400,{error:'این بسته پیدا نشد'});
-      const row={at:new Date().toISOString(),ref,kind,method:'bale',n:o.n,price:o.price,name:'',phone:'',item:(kind==='sub'?'اشتراک ماهانه':o.n+' الماس')+' (بله)',d};
-      fs.appendFileSync(path.join(DATA,'purchase-requests.jsonl'),JSON.stringify(row)+'\n');
-      fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:row.at,t:'bale_order',d,page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
-      return send(res,200,{ok:true,ref,n:o.n,price:o.price,link:o.link,test:BALE.test});
-    }
     if(url.pathname==='/pay-proof'&&req.method==='POST'){ // the shopper says "I paid": tracking number + last 4 card digits → admin confirms
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});if(allow(ip(req)))return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,1000);const digits=v=>String(v||'').replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'');
@@ -350,11 +337,11 @@ const server=http.createServer(async(req,res)=>{
       if(!row)return send(res,404,{error:'سفارش پیدا نشد'});const track=digits(b.track).slice(0,24),last4=digits(b.last4).slice(-4);
       if(track.length<4&&last4.length<4)return send(res,400,{error:'شماره پیگیری یا ۴ رقم آخر کارتت رو بنویس'});
       const prev=getReqStatus()[ref]||{};if(['done','rejected'].includes(prev.status))return send(res,400,{error:'این سفارش قبلاً بررسی شده'});
-      const adv=prev.advance!=null?prev.advance:Math.max(0,Math.min(3,Number(cfg.payAdvance??1),row.n||0));if(adv&&prev.advance==null)BANK.credit(d,adv);
+      const adv=prev.advance!=null?prev.advance:Math.max(0,Math.min(Number(cfg.payAdvance??1),row.n||0));if(adv&&prev.advance==null)BANK.credit(d,adv);
       setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv});return send(res,200,{ok:true,advance:adv,wallet:BANK.balance(d,cfg)});
     }
     if(url.pathname==='/order-status'){const d=String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'');const st=getReqStatus();
-      const mine=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>d&&r.d===d&&(r.method==='card'||r.method==='bale')).slice(-5).map(r=>({ref:r.ref,n:r.n,price:r.price,kind:r.kind,status:(st[r.ref]&&st[r.ref].status)||'new'}));
+      const mine=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>d&&r.d===d&&r.method==='card').slice(-5).map(r=>({ref:r.ref,n:r.n,price:r.price,kind:r.kind,status:(st[r.ref]&&st[r.ref].status)||'new'}));
       return send(res,200,{orders:mine,wallet:BANK.balance(d,cfg)},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/buy-request'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
@@ -373,7 +360,7 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/wallet')return send(res,200,BANK.balance(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40),cfg),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/costs.json')return send(res,200,costs(),'application/json',{'Cache-Control':'no-store'});
-    if(url.pathname==='/config.json')return send(res,200,{...cfg,aff:{dk:!!AFF.dk.tpl,kh:!!AFF.kh.tpl},bale:BALE.on,baleTest:BALE.on&&BALE.test},'application/json',{'Cache-Control':'no-cache'});
+    if(url.pathname==='/config.json')return send(res,200,{...cfg,aff:{dk:!!AFF.dk.tpl,kh:!!AFF.kh.tpl}},'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/gift'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,2000);const id=newId();
