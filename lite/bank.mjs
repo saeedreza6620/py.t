@@ -81,9 +81,15 @@ export function makeBank(DATA){
     if(w.negin>0){w.negin--;w.spent=(w.spent||0)+1;save(WAL,wallets);return 'negin'}
     return null}
   function refund(d,via){if(!d||!via)return;const w=wallet(d);if(via==='free')w.free=Math.max(0,w.free-1);else{w.negin++;w.spent=Math.max(0,(w.spent||0)-1)}save(WAL,wallets)}
+  // the shopper's own routine products are researched for free (they already own them); capped against abuse
+  const ipRoutine=new Map();
+  function routineFree(d,ip,cfg){if(!d)return false;const w=wallet(d);const day=new Date().toISOString().slice(0,10);const k=ip+'|'+day;
+    if((w.routine||0)>=(Number(cfg.freeRoutine)||40)||(ipRoutine.get(k)||0)>=(Number(cfg.freeRoutinePerIpDay)||25))return false;
+    w.routine=(w.routine||0)+1;ipRoutine.set(k,(ipRoutine.get(k)||0)+1);save(WAL,wallets);return true}
+  function routineBack(d){if(!d)return;const w=wallet(d);w.routine=Math.max(0,(w.routine||0)-1);save(WAL,wallets)}
   function adjust(d,delta){if(!d)return;const w=wallet(d);w.negin+=delta;save(WAL,wallets)}
   function credit(d,n){if(!d)return;const w=wallet(d);w.negin+=n;w.bought=(w.bought||0)+n;save(WAL,wallets)}
   function walletStats(){const v=Object.values(wallets);return {devices:v.length,freeUsed:v.reduce((a,w)=>a+(w.free||0),0),neginSpent:v.reduce((a,w)=>a+(w.spent||0),0),neginBought:v.reduce((a,w)=>a+(w.bought||0),0),neginLeft:v.reduce((a,w)=>a+(w.negin||0),0)}}
 
-  return {find,toFormula,add,hit,setImage,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats};
+  return {find,toFormula,add,hit,setImage,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack};
 }
