@@ -1,5 +1,5 @@
-# Manual repair of the Liara app's public address: reads the app state, turns the default *.liara.run subdomain
-# back on and makes sure the app is running. Uses the repository secret LIARA_API_TOKEN (never printed).
+# Manual repair of the Liara app's public address: reads the app state and domains, and tries to turn the default
+# *.liara.run subdomain back on. Uses the repository secret LIARA_API_TOKEN (never printed).
 name: Liara app repair
 on: workflow_dispatch
 jobs:
@@ -13,13 +13,16 @@ jobs:
       - name: Repair
         run: |
           [ -n "$T" ] || { echo "::error title=token::LIARA_API_TOKEN is empty"; exit 1; }
-          s=$(curl -sS -m 30 -H "Authorization: Bearer $T" "$API/v1/projects/$APP" | jq -c '.project|{name:.project_id,scale,status,defaultSubdomain,planID,isDeployed,frozen,network:(.network.name)}' 2>&1 | cut -c1-500)
-          echo "::notice title=before::$s"
-          r=$(curl -sS -m 30 -X POST -H "Authorization: Bearer $T" -w " HTTP %{http_code}" "$API/v1/projects/$APP/default-subdomain/enable" 2>&1 | cut -c1-300)
-          echo "::notice title=enable-subdomain::$r"
-          sc=$(curl -sS -m 30 -H "Authorization: Bearer $T" "$API/v1/projects/$APP" | jq -r '.project.scale' 2>/dev/null)
-          if [ "$sc" = "0" ]; then r2=$(curl -sS -m 30 -X POST -H "Authorization: Bearer $T" -H 'Content-Type: application/json' -d '{"scale":1}' -w " HTTP %{http_code}" "$API/v1/projects/$APP/actions/scale" 2>&1 | cut -c1-300); echo "::notice title=start-app::$r2"; fi
-          sleep 25
-          a=$(curl -sS -m 30 -H "Authorization: Bearer $T" "$API/v1/projects/$APP" | jq -c '.project|{scale,status,defaultSubdomain}' 2>&1 | cut -c1-300)
+          H="Authorization: Bearer $T"
+          s=$(curl -sS -m 30 -H "$H" "$API/v1/projects/$APP" | jq -c '.project|{scale,status,defaultSubdomain,planID,network:(.network.name),keys:(keys)}' 2>&1 | cut -c1-900)
+          echo "::notice title=app::$s"
+          d=$(curl -sS -m 30 -H "$H" "$API/v1/domains?project=$APP" | jq -c '[.domains[]?|{name,status,certificatesStatus,type}]' 2>&1 | cut -c1-500)
+          echo "::notice title=domains::$d"
+          try(){ r=$(curl -sS -m 30 -X "$1" -H "$H" -H 'Content-Type: application/json' ${3:+-d "$3"} -w " HTTP %{http_code}" "$API$2" 2>&1 | tr -d '\n' | cut -c1-200); echo "::notice title=$1 $2 ${3}::$r"; }
+          try POST "/v1/projects/$APP/default-subdomain/enable"
+          try POST "/v1/projects/$APP/default-subdomain" '{"defaultSubdomain":true}'
+          try PUT "/v1/projects/$APP/default-subdomain" '{"defaultSubdomain":true}'
+          try PATCH "/v1/projects/$APP/default-subdomain" '{"defaultSubdomain":true}'
+          try POST "/v1/projects/$APP/default-subdomain/active"
+          a=$(curl -sS -m 30 -H "$H" "$API/v1/projects/$APP" | jq -c '.project|{scale,status,defaultSubdomain}' 2>&1 | cut -c1-300)
           echo "::notice title=after::$a"
-          h=$(curl -sS -m 30 https://$APP.liara.run/healthz 2>&1 | tr -d '\n' | cut -c1-300); echo "::notice title=healthz::$h"
