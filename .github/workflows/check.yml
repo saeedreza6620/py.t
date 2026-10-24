@@ -14,7 +14,7 @@ jobs:
       - name: Health
         run: |
           h=$(curl -sS -m 30 https://beautywallet.liara.run/healthz 2>&1 | tr -d '\n' | cut -c1-600); echo "::notice title=healthz::$h"
-          e=$(curl -sS -m 30 https://beautywallet.liara.run/healthz 2>&1 | grep -o 'error-pages[^"]*' | head -1); [ -n "$e" ] && echo "::notice title=liara-error::$e"; s=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" https://beautywallet.liara.run/legacy/); echo "::notice title=app-status::$s"
+          e=$(curl -sS -m 30 https://beautywallet.liara.run/healthz 2>&1 | grep -o 'error-pages[^"]*' | head -1); [ -n "$e" ] && echo "::notice title=liara-error::$e"; s=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" https://beautywallet.liara.run/legacy/); echo "::notice title=app-status::$s"; r=$(curl -sS -m 30 -D - https://beautywallet.liara.run/ 2>&1 | grep -io "^location:.*\|<title>[^<]*\|id=\"story\"\|bw_profile_v1_full" | tr "\n" " " | cut -c1-300); echo "::notice title=root::$r"
           k=$(curl -sS -m 30 https://beautywallet.liara.run/costs.json 2>&1 | tr -d '\n' | cut -c1-1800); echo "::notice title=costs::$k"
           c=$(curl -sS -m 30 -o /dev/null -w "%{http_code}" https://beautywallet.liara.run/config.json 2>&1); echo "::notice title=config.json::$c"
       - name: Research
