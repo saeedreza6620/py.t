@@ -2,11 +2,13 @@
 @font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-400.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-700.woff2) format("woff2");font-weight:700;font-display:swap}
 @font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-800.woff2) format("woff2");font-weight:800 900;font-display:swap}
+@font-face{font-family:Naskh;src:url(/naskh-700.woff2) format("woff2");font-weight:700;font-display:swap}
 :root{
   --ink:#22184d;--ink2:#5c5785;--paper:#f6f9ff;--card:#fff;
   --sky:#4aa8f0;--sky-soft:#e6f3ff;--gold:#c9952f;--gold-soft:#fbf1dc;--pink:#e8799f;--pink-soft:#fde8ef;
   --buy:#1d9a6c;--care:#c27a12;--stop:#cf3d61;--line:#dfe6f7;--focus:#4aa8f0;
-  --r-lg:26px;--r-md:16px;--shadow:0 18px 44px -22px rgba(40,60,140,.38);
+  --r-lg:26px;--r-md:16px;--shadow:0 1px 2px rgba(34,24,77,.06),0 14px 34px -16px rgba(40,60,140,.30);
+  --display:Naskh,Vazirmatn,Tahoma,serif;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -86,3 +88,15 @@ details.acc .body ul{margin:0;padding-inline-start:18px}
 footer{border-top:1px solid var(--line);margin-top:48px;padding:22px 0 40px;color:var(--ink2);font-size:14px}
 footer nav{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:8px}
 footer a{font-weight:700;text-decoration:none}
+
+/* v2: display type — calligraphic Naskh for headlines, Vazirmatn for reading */
+h1,h2,.page-head h1,.display{font-family:var(--display);font-weight:700;letter-spacing:0}
+.page-head h1{line-height:1.55}
+h2{line-height:1.6}
+.chip,.btn,.menu a,.hearts button,.burger{min-height:44px}
+.chip{display:inline-flex;align-items:center}
+.ico{width:22px;height:22px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+details.acc summary .ico{color:var(--sky)}
+.hearts button{display:grid;place-items:center;color:#c2557f}
+.hearts button svg{width:24px;height:24px}
+.hearts button[aria-pressed="true"],.hearts button.on{background:#ffd9e6}

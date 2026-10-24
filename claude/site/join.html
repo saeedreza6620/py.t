@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#f6f9ff">
 <link rel="icon" href="/legacy/bw-circle-192-v27.png">
 <link rel="apple-touch-icon" href="/legacy/apple-touch-icon-gem-180.png">
-<link rel="stylesheet" href="/site.css?v=1">
+<link rel="stylesheet" href="/site.css?v=2">
 <style></style>
 </head>
 <body>
@@ -31,7 +31,7 @@
     <p class="intro">هر پیام رو خود تیم می‌خونه. اگه چیزی گیجت کرد، محصولت پیدا نشد یا ایده‌ای داری، همین‌جا بگو.</p>
     <form class="form" id="fbForm" novalidate>
       <div class="field">چقدر راضی بودی؟<div class="hearts" id="hearts" role="radiogroup" aria-label="امتیاز">
-        <button type="button" data-r="1" aria-pressed="false" aria-label="۱ از ۵">🤍</button><button type="button" data-r="2" aria-pressed="false" aria-label="۲ از ۵">🤍</button><button type="button" data-r="3" aria-pressed="false" aria-label="۳ از ۵">🤍</button><button type="button" data-r="4" aria-pressed="false" aria-label="۴ از ۵">🤍</button><button type="button" data-r="5" aria-pressed="false" aria-label="۵ از ۵">🤍</button></div></div>
+        <button type="button" data-r="1" aria-pressed="false" aria-label="۱ از ۵"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button type="button" data-r="2" aria-pressed="false" aria-label="۲ از ۵"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button type="button" data-r="3" aria-pressed="false" aria-label="۳ از ۵"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button type="button" data-r="4" aria-pressed="false" aria-label="۴ از ۵"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><button type="button" data-r="5" aria-pressed="false" aria-label="۵ از ۵"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.2 5.2 3 1.6-1.8 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button></div></div>
       <div class="field">درباره‌ی چی؟<div class="chips" id="fbTags">
         <button type="button" class="chip" aria-pressed="false">جواب‌ها درست بود</button><button type="button" class="chip" aria-pressed="false">گیج شدم</button><button type="button" class="chip" aria-pressed="false">محصولم پیدا نشد</button><button type="button" class="chip" aria-pressed="false">پرداخت</button><button type="button" class="chip" aria-pressed="false">نصب</button><button type="button" class="chip" aria-pressed="false">ایده دارم</button></div></div>
       <label class="field">بنویس (اختیاری)<textarea name="text" rows="4" maxlength="1000" placeholder="مثلاً: اسم محصولی که پیدا نشد، یا جایی که گیر کردی"></textarea></label>
@@ -40,7 +40,7 @@
     </form>
   
 </main>
-<script src="/site.js?v=1"></script>
+<script src="/site.js?v=2"></script>
 <script>
 (function(){'use strict';
 var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
@@ -59,7 +59,7 @@ var reg=store.get('bw_reg',null);if(reg&&reg.phone){$('#joinMsg').className='msg
 
 /* feedback */
 var rating=0;
-$('#hearts').addEventListener('click',function(e){var b=e.target.closest('[data-r]');if(!b)return;rating=+b.dataset.r;$$('#hearts button').forEach(function(x){var on=+x.dataset.r<=rating;x.textContent=on?'💜':'🤍';x.setAttribute('aria-pressed',String(+x.dataset.r===rating))})});
+$('#hearts').addEventListener('click',function(e){var b=e.target.closest('[data-r]');if(!b)return;rating=+b.dataset.r;$$('#hearts button').forEach(function(x){var on=+x.dataset.r<=rating;x.classList.toggle('on',on);x.querySelector('path').setAttribute('fill',on?'currentColor':'none');x.setAttribute('aria-pressed',String(+x.dataset.r===rating))})});
 $('#fbTags').addEventListener('click',function(e){var c=e.target.closest('.chip');if(c)c.setAttribute('aria-pressed',String(c.getAttribute('aria-pressed')!=='true'))});
 $('#fbForm').addEventListener('submit',function(e){e.preventDefault();var m=$('#fbMsg'),b=$('#fbBtn'),text=e.target.text.value.trim();m.className='msg';
   if(!rating&&!text){m.className='msg err';m.textContent='یه امتیاز بده یا چند کلمه بنویس.';return}b.disabled=true;

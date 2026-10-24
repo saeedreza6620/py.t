@@ -18,21 +18,28 @@
  var app=false;try{app=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
  if(app)location.replace('/legacy/')})();
 </script>
-<link rel="stylesheet" href="/site.css?v=1">
+<link rel="stylesheet" href="/site.css?v=2">
 <style>
-.hero{padding:40px 0 8px;text-align:center}
-.hero h1{font-size:clamp(36px,10vw,64px);line-height:1.2;font-weight:900;margin:0;letter-spacing:-1.2px}
+.hero{padding:40px 18px 24px;text-align:center}
+.hero h1{font-family:var(--display);font-size:clamp(36px,10vw,72px);line-height:1.45;font-weight:700;margin:0}
 .hero p{color:var(--ink2);font-size:clamp(16px,4.4vw,19px);margin:14px auto 0;max-width:30em}
 .hint{display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:26px;color:var(--ink2);font-size:14px}
 .hint i{width:22px;height:34px;border:2px solid var(--ink2);border-radius:12px;position:relative;opacity:.6}
 .hint i:after{content:"";position:absolute;top:6px;left:50%;width:4px;height:7px;margin-left:-2px;border-radius:2px;background:var(--ink2);animation:wheel 1.6s ease-in-out infinite}
 @keyframes wheel{50%{transform:translateY(9px);opacity:.2}}
 
-/* the story: one sticky stage driven by scroll */
-.story{position:relative;height:560vh}
-.stage{position:sticky;top:60px;height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center;gap:12px;max-width:560px;margin:0 auto;padding:10px 18px 14px}
+/* the story: one sticky stage driven by scroll; each chapter has its own tint */
+.story{position:relative;height:560vh;overflow-x:clip;--tint:#fff3ee;background:linear-gradient(180deg,var(--paper),var(--tint) 12%,var(--tint) 88%,var(--paper));transition:--tint .6s}
+.story[data-ch="1"]{--tint:#fde9f1}.story[data-ch="2"]{--tint:#e7f2ff}.story[data-ch="3"]{--tint:#fbf1dc}
+@property --tint{syntax:'<color>';inherits:true;initial-value:#fff3ee}
+.rail{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;max-width:420px}
+.rail li{height:4px;border-radius:4px;background:rgba(34,24,77,.12);position:relative;overflow:hidden}
+.rail li:after{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(var(--f,0));transform-origin:right;transition:transform .25s linear}
+.chlabel{text-align:center;font-size:13px;color:var(--ink2);font-weight:700;margin-top:-4px}
+.stage{position:sticky;top:60px;height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:flex-start;gap:10px;padding-top:max(12px,3vh)!important;max-width:560px;margin:0 auto;padding:10px 18px 14px}
+.stage>*{flex-shrink:0}
 .cap{min-height:78px;text-align:center}
-.cap b{display:block;font-size:clamp(19px,5.4vw,25px);line-height:1.45;font-weight:900}
+.cap b{display:block;font-family:var(--display);font-size:clamp(21px,5.8vw,28px);line-height:1.6;font-weight:700}
 .cap span{display:block;color:var(--ink2);font-size:15px;margin-top:2px}
 .cap.swap{animation:cap .45s ease}
 @keyframes cap{from{opacity:0;transform:translateY(8px)}}
@@ -41,7 +48,7 @@
 .skin.on span{opacity:1;transform:none}
 .skin.on span:nth-child(2){transition-delay:.12s}.skin.on span:nth-child(3){transition-delay:.24s}
 
-.basket{position:relative;background:var(--card);border-radius:22px 22px 30px 30px;box-shadow:var(--shadow);padding:20px 12px 10px;border:2px solid var(--line)}
+.basket{margin-top:30px;position:relative;background:var(--card);border-radius:22px 22px 30px 30px;box-shadow:var(--shadow);padding:20px 12px 10px;border:2px solid var(--line)}
 .basket:before{content:"";position:absolute;top:-26px;left:50%;width:46%;height:40px;margin-left:-23%;border:4px solid #c9d8f2;border-bottom:0;border-radius:40px 40px 0 0}
 .item{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;padding:7px 6px;border-radius:14px;max-height:90px;opacity:0;transform:translateY(-60px) rotate(-4deg);transition:transform .5s cubic-bezier(.2,1.3,.4,1),opacity .35s,max-height .45s .25s,padding .45s .25s,background .3s}
 .item.in{opacity:1;transform:none}
@@ -67,12 +74,15 @@
 .meter .saved b{color:var(--buy)}
 .end{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(10px);transition:.4s;pointer-events:none}
 .end.on{opacity:1;transform:none;pointer-events:auto}
-@media (max-height:640px){.cap{min-height:64px}.cap span{display:none}.item{padding:4px 6px}.btl{height:30px}}
+.end .btn.big{padding:12px 16px;font-size:15px;border-radius:14px}
+@media (max-height:820px){.cap{min-height:0}.cap span{display:none}.item{padding:4px 6px}.btl{height:30px;width:22px}.skin span{font-size:13px;padding:2px 10px}.meter div{padding:6px 10px}.basket{padding-top:16px}}
+@media (max-height:640px){.chlabel{display:none}.nm small{font-size:12px}}
 
 /* below the story: quiet and short */
 .after{padding-top:20px}
 .three{display:grid;gap:0;background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;margin-top:6px}
 .three div{padding:16px 18px;border-top:1px solid var(--line)}
+.three h3{display:flex;align-items:center;gap:8px}.three .ico{color:var(--sky)}
 .three div:first-child{border-top:0}
 .three p{margin:2px 0 0;color:var(--ink2);font-size:15px}
 .go{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
@@ -100,6 +110,8 @@
 
   <section class="story" id="story" aria-label="داستان یک سبد خرید">
     <div class="stage">
+      <ol class="rail" id="rail" aria-hidden="true"><li></li><li></li><li></li><li></li></ol>
+      <div class="chlabel" id="chlabel" aria-hidden="true"></div>
       <div class="cap" id="cap" aria-live="polite"><b></b><span></span></div>
       <div class="skin" id="skin" aria-label="پوست سارا"><span>پوست حساس</span><span>شب‌ها رتینول می‌زنه</span><span>هدف: کم شدن لک</span></div>
       <div class="basket" id="basket" aria-label="سبد خرید"></div>
@@ -114,9 +126,9 @@
   <section class="after wrap">
     <h2>سه چیز رو کنار هم می‌ذاریم</h2>
     <div class="three">
-      <div><h3>ترکیبات خود محصول</h3><p>نه اسم و تبلیغش؛ موادی که واقعاً توشه.</p></div>
-      <div><h3>پوست تو</h3><p>نوعش، حال امروزش و هدفی که داری.</p></div>
-      <div><h3>روتینی که الان داری</h3><p>دو محصول خوب گاهی کنار هم پوست رو اذیت می‌کنن؛ اینو قبل از خرید می‌گیم.</p></div>
+      <div><h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L5 19a1.5 1.5 0 0 0 1.3 2h11.4A1.5 1.5 0 0 0 19 19l-5-10V3"/></svg> ترکیبات خود محصول</h3><p>نه اسم و تبلیغش؛ موادی که واقعاً توشه.</p></div>
+      <div><h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg> پوست تو</h3><p>نوعش، حال امروزش و هدفی که داری.</p></div>
+      <div><h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/><path d="M19 5a8 8 0 0 1 0 14"/></svg> روتینی که الان داری</h3><p>دو محصول خوب گاهی کنار هم پوست رو اذیت می‌کنن؛ اینو قبل از خرید می‌گیم.</p></div>
     </div>
     <p class="note">بیوتی‌ولت طرف خریداره. اگه محصولی به پوستت نمی‌خوره، می‌گیم نخر؛ هیچ درآمدی روی این جواب اثر نداره.</p>
 
@@ -134,7 +146,7 @@
     </div>
   </section>
 </main>
-<script src="/site.js?v=1"></script>
+<script src="/site.js?v=2"></script>
 <script>
 (function(){
 'use strict';
@@ -153,7 +165,7 @@ var CAPS=[
 var basket=document.getElementById('basket'),cap=document.getElementById('cap'),skin=document.getElementById('skin'),totalEl=document.getElementById('total'),savedEl=document.getElementById('saved'),end=document.getElementById('end'),story=document.getElementById('story');
 basket.innerHTML=ITEMS.map(function(it,i){return '<div class="item" data-i="'+i+'"><span class="btl" style="background:'+it.c+'" aria-hidden="true"></span><span class="nm">'+it.n+'<small></small></span><span class="pr">'+fa((it.p/1000).toLocaleString('en'))+' هزار</span><span class="st '+it.v+'">'+it.s+'</span></div>'}).join('');
 var rows=[].slice.call(basket.children);
-var lastCap=-1,shown={tot:0,sav:0};
+var lastCap=-1,shown={tot:0,sav:0},rail=[].slice.call(document.querySelectorAll('#rail li')),chl=document.getElementById('chlabel'),CH=['فصل ۱ از ۴ · خرید از روی تبلیغ','فصل ۲ از ۴ · پوست خودش','فصل ۳ از ۴ · سنجش','فصل ۴ از ۴ · تصمیم درست'],BOUNDS=[0,0.22,0.36,0.8,1];
 function setCap(k){if(k===lastCap)return;lastCap=k;cap.querySelector('b').textContent=CAPS[k][0];cap.querySelector('span').textContent=CAPS[k][1];cap.classList.remove('swap');void cap.offsetWidth;cap.classList.add('swap')}
 function count(el,key,to){var from=shown[key];if(from===to)return;shown[key]=to;var t0=performance.now();(function step(t){var k=Math.min(1,(t-t0)/450),v=Math.round(from+(to-from)*k);el.textContent=money(v);if(k<1)requestAnimationFrame(step)})(t0)}
 function render(p){
@@ -166,7 +178,8 @@ function render(p){
     if(isIn)tot+=it.p;if(out)sav+=it.p});
   count(totalEl,'tot',tot-sav);count(savedEl,'sav',sav);
   skin.classList.toggle('on',p>=0.22);
-  setCap(p<0.22?0:p<0.36?1:p<0.8?2:3);
+  var ch=p<0.22?0:p<0.36?1:p<0.8?2:3;setCap(ch);story.dataset.ch=ch;chl.textContent=CH[ch];
+  rail.forEach(function(li,i){var f=Math.max(0,Math.min(1,(p-BOUNDS[i])/(BOUNDS[i+1]-BOUNDS[i])));li.style.setProperty('--f',f)});
   end.classList.toggle('on',p>=0.86);
 }
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
