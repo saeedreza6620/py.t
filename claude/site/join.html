@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>عضویت و نظر — بیوتی‌ولت</title>
+<meta name="description" content="عضو بیوتی‌ولت شو یا نظرت رو مستقیم برای تیم بفرست.">
+<meta name="theme-color" content="#f6f9ff">
+<link rel="icon" href="/legacy/bw-circle-192-v27.png">
+<link rel="apple-touch-icon" href="/legacy/apple-touch-icon-gem-180.png">
+<link rel="stylesheet" href="/site.css?v=1">
+<style></style>
+</head>
+<body>
+<main class="wrap">
+<section class="page-head"><h1>عضویت و نظرت</h1><p>عضویت چند ثانیه طول می‌کشه و هر پیامی که بفرستی رو خود تیم می‌خونه.</p></section>
+
+    <h2>عضو بیوتی‌ولت شو</h2>
+    <p class="intro">با عضویت، اگه گوشیت عوض شد یا خواستی با پشتیبانی حرف بزنی، شناخته می‌شی. اطلاعات پوستت همچنان فقط روی گوشی خودته.</p>
+    <form class="form" id="joinForm" novalidate>
+      <label class="field">اسمت<input name="name" maxlength="40" autocomplete="given-name" placeholder="مثلاً سارا"></label>
+      <label class="field">شماره موبایل<input name="phone" inputmode="tel" dir="ltr" autocomplete="tel" maxlength="14" placeholder="09…" required></label>
+      <label class="field" id="otpField" hidden>کدی که پیامک شد<input name="code" inputmode="numeric" dir="ltr" maxlength="6" autocomplete="one-time-code"></label>
+      <label class="consent"><input type="checkbox" name="ok" required> <span>با <a href="/faq.html">حریم خصوصی بیوتی‌ولت</a> موافقم.</span></label>
+      <button class="btn big" type="submit" id="joinBtn">عضو شو</button>
+      <p class="msg" id="joinMsg" role="status"></p>
+    </form>
+  
+
+    <h2>نظرت بیوتی‌ولت رو می‌سازه</h2>
+    <p class="intro">هر پیام رو خود تیم می‌خونه. اگه چیزی گیجت کرد، محصولت پیدا نشد یا ایده‌ای داری، همین‌جا بگو.</p>
+    <form class="form" id="fbForm" novalidate>
+      <div class="field">چقدر راضی بودی؟<div class="hearts" id="hearts" role="radiogroup" aria-label="امتیاز">
+        <button type="button" data-r="1" aria-pressed="false" aria-label="۱ از ۵">🤍</button><button type="button" data-r="2" aria-pressed="false" aria-label="۲ از ۵">🤍</button><button type="button" data-r="3" aria-pressed="false" aria-label="۳ از ۵">🤍</button><button type="button" data-r="4" aria-pressed="false" aria-label="۴ از ۵">🤍</button><button type="button" data-r="5" aria-pressed="false" aria-label="۵ از ۵">🤍</button></div></div>
+      <div class="field">درباره‌ی چی؟<div class="chips" id="fbTags">
+        <button type="button" class="chip" aria-pressed="false">جواب‌ها درست بود</button><button type="button" class="chip" aria-pressed="false">گیج شدم</button><button type="button" class="chip" aria-pressed="false">محصولم پیدا نشد</button><button type="button" class="chip" aria-pressed="false">پرداخت</button><button type="button" class="chip" aria-pressed="false">نصب</button><button type="button" class="chip" aria-pressed="false">ایده دارم</button></div></div>
+      <label class="field">بنویس (اختیاری)<textarea name="text" rows="4" maxlength="1000" placeholder="مثلاً: اسم محصولی که پیدا نشد، یا جایی که گیر کردی"></textarea></label>
+      <button class="btn big" type="submit" id="fbBtn">بفرست</button>
+      <p class="msg" id="fbMsg" role="status"></p>
+    </form>
+  
+</main>
+<script src="/site.js?v=1"></script>
+<script>
+(function(){'use strict';
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var fa=BW.fa,money=BW.money,post=BW.post,dev=BW.dev,store={get:BW.get,set:BW.set};
+/* membership — same storage as the app, so the app knows you */
+var otp=false;
+$('#joinForm').addEventListener('submit',function(e){e.preventDefault();var f=e.target,m=$('#joinMsg'),b=$('#joinBtn');m.className='msg';
+  var phone=f.phone.value.trim(),name=f.name.value.trim();if(!f.ok.checked){m.className='msg err';m.textContent='برای عضویت، تیک حریم خصوصی رو بزن.';return}
+  if(!/^(\+98|0)?9[0-9۰-۹]{9}$/.test(phone.replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}))){m.className='msg err';m.textContent='شماره موبایل رو به شکل ۰۹… بنویس.';return}
+  b.disabled=true;var p=otp?post('/register/verify',{phone:phone,code:f.code.value.trim()}):post('/register',{name:name,phone:phone,d:dev(),sa:false});
+  p.then(function(j){if(j.otp){otp=true;$('#otpField').hidden=false;f.code.focus();b.textContent='تأیید کد';m.textContent='کد پیامک‌شده رو بنویس.';return}
+    store.set('bw_reg',{at:new Date().toISOString(),name:name,phone:phone,verified:!!j.verified});m.className='msg ok';m.textContent='خوش اومدی'+(name?' '+name:'')+' 💜 حالا اپ رو باز کن و اولین محصولت رو بسنج.';b.textContent='عضو شدی ✓';b.disabled=true;return true})
+   .catch(function(er){m.className='msg err';m.textContent=er.message})
+   .then(function(ok){if(!ok)b.disabled=false})});
+var reg=store.get('bw_reg',null);if(reg&&reg.phone){$('#joinMsg').className='msg ok';$('#joinMsg').textContent='تو قبلاً عضو شدی'+(reg.name?'، '+reg.name:'')+' 💜'}
+
+/* feedback */
+var rating=0;
+$('#hearts').addEventListener('click',function(e){var b=e.target.closest('[data-r]');if(!b)return;rating=+b.dataset.r;$$('#hearts button').forEach(function(x){var on=+x.dataset.r<=rating;x.textContent=on?'💜':'🤍';x.setAttribute('aria-pressed',String(+x.dataset.r===rating))})});
+$('#fbTags').addEventListener('click',function(e){var c=e.target.closest('.chip');if(c)c.setAttribute('aria-pressed',String(c.getAttribute('aria-pressed')!=='true'))});
+$('#fbForm').addEventListener('submit',function(e){e.preventDefault();var m=$('#fbMsg'),b=$('#fbBtn'),text=e.target.text.value.trim();m.className='msg';
+  if(!rating&&!text){m.className='msg err';m.textContent='یه امتیاز بده یا چند کلمه بنویس.';return}b.disabled=true;
+  var tags=$$('#fbTags [aria-pressed="true"]').map(function(c){return c.textContent});
+  post('/api/feedback',{kind:'site',rating:rating,tags:tags,text:text,app:'site'}).then(function(){m.className='msg ok';m.textContent='رسید دست تیم 💜 ممنون که وقت گذاشتی.';e.target.reset();b.textContent='فرستاده شد ✓'})
+   .catch(function(er){m.className='msg err';m.textContent=er.message;b.disabled=false})});
+
+
+})();
+</script>
+</body>
+</html>

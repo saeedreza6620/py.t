@@ -1,0 +1,88 @@
+/* BeautyWallet site — shared tokens and chrome for every page */
+@font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-700.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:Vazirmatn;src:url(/legacy/vazirmatn-800.woff2) format("woff2");font-weight:800 900;font-display:swap}
+:root{
+  --ink:#22184d;--ink2:#5c5785;--paper:#f6f9ff;--card:#fff;
+  --sky:#4aa8f0;--sky-soft:#e6f3ff;--gold:#c9952f;--gold-soft:#fbf1dc;--pink:#e8799f;--pink-soft:#fde8ef;
+  --buy:#1d9a6c;--care:#c27a12;--stop:#cf3d61;--line:#dfe6f7;--focus:#4aa8f0;
+  --r-lg:26px;--r-md:16px;--shadow:0 18px 44px -22px rgba(40,60,140,.38);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:Vazirmatn,Tahoma,sans-serif;color:var(--ink);background:var(--paper);line-height:1.85;font-size:16px}
+a{color:inherit}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:8px}
+[hidden]{display:none!important}
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+
+/* header + menu */
+.bar{position:sticky;top:0;z-index:30;background:rgba(246,249,255,.88);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .2s}
+.bar.scrolled{border-bottom-color:var(--line)}
+.bar-in{display:flex;align-items:center;gap:8px;height:60px;max-width:1080px;margin:0 auto;padding:0 18px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;font-size:17px}
+.brand img{width:30px;height:30px}
+.menu{display:flex;gap:2px;margin-inline-start:14px}
+.menu a{text-decoration:none;font-weight:700;font-size:14.5px;padding:7px 11px;border-radius:10px;color:var(--ink2)}
+.menu a[aria-current="page"]{color:var(--ink);background:var(--sky-soft)}
+.bar .open{margin-inline-start:auto}
+.burger{display:none;margin-inline-start:6px;border:0;background:var(--sky-soft);width:42px;height:42px;border-radius:12px;cursor:pointer;font-size:19px}
+@media (max-width:760px){
+  .menu{display:none;position:absolute;top:60px;inset-inline:0;flex-direction:column;background:var(--paper);border-bottom:1px solid var(--line);padding:8px 14px 14px;margin:0}
+  .menu.open{display:flex}
+  .menu a{font-size:16px;padding:12px 10px}
+  .burger{display:block}
+}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;text-decoration:none;font-weight:800;border-radius:14px;padding:10px 16px;font-size:15px;background:var(--ink);color:#fff;transition:transform .12s}
+.btn:active{transform:scale(.97)}
+.btn.soft{background:var(--sky-soft);color:var(--ink)}
+.btn.big{padding:15px 24px;font-size:17px;border-radius:18px}
+.btn.gold{background:var(--gold);color:#fff}
+.btn[disabled]{opacity:.6;cursor:default}
+
+/* page headers on inner pages */
+.page-head{padding:34px 0 10px}
+.page-head h1{font-size:clamp(30px,8vw,46px);line-height:1.25;margin:0;font-weight:900;letter-spacing:-.6px}
+.page-head p{color:var(--ink2);margin:10px 0 0;max-width:36em;font-size:17px}
+h2{font-size:clamp(23px,6vw,30px);line-height:1.35;margin:34px 0 8px;font-weight:900;letter-spacing:-.4px}
+h3{font-size:18px;margin:0 0 4px;font-weight:800}
+.intro{color:var(--ink2);margin:0 0 16px;max-width:36em}
+.note{background:var(--sky-soft);border-radius:var(--r-md);padding:12px 14px;font-size:15px;margin:18px 0 0}
+
+/* accordions */
+details.acc{background:var(--card);border-radius:var(--r-md);margin:0 0 8px;border:1px solid var(--line)}
+details.acc summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:800;display:flex;align-items:center;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary:after{content:"+";margin-inline-start:auto;font-size:22px;line-height:1;color:var(--sky);transition:transform .2s}
+details.acc[open] summary:after{transform:rotate(45deg)}
+details.acc .body{padding:0 16px 14px;color:var(--ink2);font-size:15.5px}
+details.acc .body p{margin:0 0 8px}
+details.acc .body ul{margin:0;padding-inline-start:18px}
+.simple{display:block;margin-top:8px;background:var(--gold-soft);border-radius:10px;padding:8px 10px;color:var(--ink);font-size:14.5px}
+.disclaim{font-size:13.5px;color:var(--ink2);margin-top:14px}
+
+/* sequences */
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;position:relative;padding:4px 52px 4px 0;min-height:40px}
+.steps li:before{content:counter(s,persian);position:absolute;right:0;top:2px;width:38px;height:38px;border-radius:50%;background:var(--sky-soft);display:grid;place-items:center;font-weight:900;color:var(--sky)}
+.steps li p{margin:2px 0 0;color:var(--ink2);font-size:15px}
+
+/* forms */
+.form{background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:18px;display:grid;gap:12px}
+.field{display:grid;gap:4px;font-weight:700;font-size:14.5px}
+.field input,.field textarea{border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;background:#fff;font-weight:400;font-size:16px;width:100%}
+.field input:focus,.field textarea:focus{border-color:var(--sky);outline:0}
+.hearts{display:flex;gap:6px}
+.hearts button{border:0;background:var(--pink-soft);width:46px;height:46px;border-radius:12px;font-size:22px;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.consent{display:flex;gap:8px;align-items:flex-start;font-size:14px;color:var(--ink2);font-weight:400}
+.consent input{margin-top:5px;accent-color:var(--sky)}
+.msg{font-size:15px;font-weight:700}
+.msg.ok{color:var(--buy)}.msg.err{color:var(--stop)}
+
+footer{border-top:1px solid var(--line);margin-top:48px;padding:22px 0 40px;color:var(--ink2);font-size:14px}
+footer nav{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:8px}
+footer a{font-weight:700;text-decoration:none}

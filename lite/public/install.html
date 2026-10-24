@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>نصب — بیوتی‌ولت</title>
+<meta name="description" content="بیوتی‌ولت رو بدون اپ‌استور و بازار روی گوشیت نصب کن.">
+<meta name="theme-color" content="#f6f9ff">
+<link rel="icon" href="/legacy/bw-circle-192-v27.png">
+<link rel="apple-touch-icon" href="/legacy/apple-touch-icon-gem-180.png">
+<link rel="stylesheet" href="/site.css?v=1">
+<style>/* install */
+.install{display:grid;gap:16px}
+.qr{display:none;background:var(--card);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:18px;text-align:center}
+.qr img{width:220px;height:220px}
+@media (min-width:820px){.qr{display:block}.install{grid-template-columns:1fr 280px;align-items:start}}
+.os{display:flex;gap:6px;margin:0 0 10px}
+
+.btn.green{background:var(--buy)}</style>
+</head>
+<body>
+<main class="wrap">
+<section class="page-head"><h1>بیوتی‌ولت رو روی گوشیت نصب کن</h1><p>یک دقیقه طول می‌کشه؛ بعدش مثل یه اپ معمولی از صفحه‌ی اصلی گوشی بازش می‌کنی.</p></section>
+    <div class="install">
+      <div>
+        <div class="os" role="group" aria-label="نوع گوشی"><button type="button" class="chip" data-os="ios" aria-pressed="false">آیفون</button><button type="button" class="chip" data-os="android" aria-pressed="false">اندروید</button></div>
+        <ol class="steps" id="osSteps"></ol>
+        <a class="btn big green" style="margin-top:18px" href="/legacy/?install=1">برو به اپ و نصبش کن</a>
+      </div>
+      <div class="qr"><img src="/qr.png" alt="کد QR برای باز کردن بیوتی‌ولت روی گوشی" width="220" height="220"><p style="margin:8px 0 0;font-size:14px;color:var(--ink2)">با دوربین گوشی اسکن کن</p></div>
+    </div>
+  
+</main>
+<script src="/site.js?v=1"></script>
+<script>
+(function(){'use strict';
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var fa=BW.fa,money=BW.money,post=BW.post,dev=BW.dev,store={get:BW.get,set:BW.set};
+/* install steps per phone */
+var OS={ios:[['با Safari باز کن','اگه از اینستاگرام یا تلگرام اومدی، اول «Open in Safari» رو بزن.'],['دکمه‌ی اشتراک‌گذاری رو بزن','مربع با فلش رو به بالا، پایین صفحه.'],['«Add to Home Screen» رو بزن','بعد بالا سمت راست «Add».'],['از صفحه‌ی اصلی بازش کن','آیکون الماس بیوتی‌ولت رو می‌بینی.']],
+  android:[['با Chrome باز کن','اگه داخل اپ دیگه‌ای هستی، از منو «باز کردن در مرورگر» رو بزن.'],['«برو به اپ و نصبش کن» رو بزن','پایین همین صفحه.'],['«نصب» یا «Install» رو تأیید کن','اگه پیامی نیومد، از منوی سه‌نقطه «Add to Home screen» رو بزن.'],['از صفحه‌ی اصلی بازش کن','آیکون الماس بیوتی‌ولت رو می‌بینی.']]};
+function os(k){$$('[data-os]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.os===k))});$('#osSteps').innerHTML=OS[k].map(function(s){return '<li><h3>'+s[0]+'</h3><p>'+s[1]+'</p></li>'}).join('')}
+$('.os').addEventListener('click',function(e){var b=e.target.closest('[data-os]');if(b)os(b.dataset.os)});
+os(/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)?'ios':'android');
+
+
+})();
+</script>
+</body>
+</html>
