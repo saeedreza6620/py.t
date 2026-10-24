@@ -14,8 +14,8 @@
 <script>
 (function(){var q=location.search;if(/[?&]from=qr/.test(q)){location.replace('/install.html?from=qr');return}
  if(/[?&]site=1/.test(q))return;
- // installed app, or someone who already set up their skin in the app → straight to the app, not the site
- var app=false;try{app=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true||!!localStorage.getItem('bw_profile_v1_full')||!!localStorage.getItem('bw_sw_seen')}catch(e){}
+ // only the installed app goes straight to the app; in a browser everyone sees the site
+ var app=false;try{app=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
  if(app)location.replace('/legacy/')})();
 </script>
 <link rel="stylesheet" href="/site.css?v=1">
