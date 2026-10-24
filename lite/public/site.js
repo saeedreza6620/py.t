@@ -1,18 +1,18 @@
 /* BeautyWallet site — shared header, menu and helpers */
 (function(){
 'use strict';
-var PAGES=[['/','داستان'],['/learn.html','آموزش پوست'],['/faq.html','سؤال‌ها و الماس'],['/join.html','عضویت و نظر'],['/install.html','نصب']];
-var here=location.pathname.replace(/index\.html$/,'');
+var PAGES=[['/?site=1','داستان'],['/learn.html','آموزش پوست'],['/faq.html','سؤال‌ها و الماس'],['/join.html','عضویت و نظر'],['/install.html','نصب']];
+var here=location.pathname.replace(/index\.html$/,'');if(here==='/')here='/?site=1';
 var head=document.createElement('header');head.className='bar';head.id='bar';
-head.innerHTML='<div class="bar-in"><a class="brand" href="/"><img src="/legacy/bw-gem-192.png" alt="">بیوتی‌ولت</a>'+
+head.innerHTML='<div class="bar-in"><a class="brand" href="/?site=1"><img src="/legacy/bw-gem-192.png" alt="">بیوتی‌ولت</a>'+
   '<nav class="menu" id="menu" aria-label="صفحه‌های سایت">'+PAGES.map(function(p){return '<a href="'+p[0]+'"'+(p[0]===here?' aria-current="page"':'')+'>'+p[1]+'</a>'}).join('')+'</nav>'+
-  '<a class="btn open" href="/legacy/">باز کردن اپ</a><button class="burger" type="button" aria-label="منو" aria-expanded="false" aria-controls="menu">☰</button></div>';
+  '<a class="btn open" href="/app">باز کردن اپ</a><button class="burger" type="button" aria-label="منو" aria-expanded="false" aria-controls="menu">☰</button></div>';
 document.body.prepend(head);
 var menu=head.querySelector('#menu'),burger=head.querySelector('.burger');
 burger.addEventListener('click',function(){var o=menu.classList.toggle('open');burger.setAttribute('aria-expanded',String(o));burger.textContent=o?'✕':'☰'});
 addEventListener('scroll',function(){head.classList.toggle('scrolled',scrollY>8)},{passive:true});
 var foot=document.createElement('footer');
-foot.innerHTML='<div class="wrap"><nav>'+PAGES.map(function(p){return '<a href="'+p[0]+'">'+p[1]+'</a>'}).join('')+'<a href="/legacy/">اپ بیوتی‌ولت</a></nav><p style="margin:0">جواب‌های بیوتی‌ولت جای معاینه‌ی پزشک رو نمی‌گیرن. بیوتی‌ولت طرف خریداره و درآمد روی جواب «بخر یا نخر» اثر نداره.</p></div>';
+foot.innerHTML='<div class="wrap"><nav>'+PAGES.map(function(p){return '<a href="'+p[0]+'">'+p[1]+'</a>'}).join('')+'<a href="/app">اپ بیوتی‌ولت</a></nav><p style="margin:0">جواب‌های بیوتی‌ولت جای معاینه‌ی پزشک رو نمی‌گیرن. بیوتی‌ولت طرف خریداره و درآمد روی جواب «بخر یا نخر» اثر نداره.</p></div>';
 document.body.append(foot);
 window.BW={
   fa:function(n){return String(n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})},

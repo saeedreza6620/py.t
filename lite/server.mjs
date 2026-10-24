@@ -420,6 +420,7 @@ const server=http.createServer(async(req,res)=>{
     // static files
     let p=decodeURIComponent(url.pathname);if((p==='/'||p==='/index.html')&&!fs.existsSync(path.join(PUBLIC,'index.html'))){res.writeHead(302,{Location:'/legacy/'});return res.end()}
     if(p==='/legacy'){res.writeHead(301,{Location:'/legacy/'});return res.end()}
+    if(p==='/app'||p==='/app/'){res.writeHead(302,{Location:'/legacy/'+url.search,'Cache-Control':'no-store'});return res.end()} // the app's own short address; the site lives at /
     if(p.endsWith('/'))p+='index.html';
     const file=path.normalize(path.join(PUBLIC,p));if(!file.startsWith(PUBLIC))return send(res,403,'','text/plain');
     fs.stat(file,(err,st)=>{if(err||!st.isFile())return send(res,404,'پیدا نشد','text/plain; charset=utf-8');const ext=path.extname(file);const html=ext==='.html'||/sw\.js$/.test(file);res.writeHead(200,{'Content-Type':TYPES[ext]||'application/octet-stream',...SEC,'Cache-Control':html?'no-cache':'public, max-age=604800'});fs.createReadStream(file).pipe(res)});
