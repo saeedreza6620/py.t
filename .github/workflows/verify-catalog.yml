@@ -44,7 +44,7 @@ jobs:
               o['src_inci_n']=len(page);o['sheet_inci_n']=len(sheet)
               if page:
                 hit=sum(1 for x in sheet if x in pn);o['match_sheet_in_page']=round(hit/max(1,len(sheet)),2);o['page_in_sheet']=round(sum(1 for x in pn if x in sheet)/max(1,len(pn)),2)
-                o['first5_page']=page[:5]
+                o['page_inci']=page
             elif s2==200:
               low=b2.lower();o['src_mentions']=round(sum(1 for x in sheet if x and x in norm(re.sub(r'<[^>]+>',' ',low)))/max(1,len(sheet)),2)
             out.append(o)
