@@ -1,0 +1,55 @@
+# Checks a submitted catalog: does each product link open the right product, does each ingredient source
+# exist, and does its ingredient list match the INCI in the sheet. Result: artifact verify-result.json.
+name: Verify catalog
+on:
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch and compare
+        run: |
+          python3 - <<'PY'
+          import json,re,urllib.request,html,time
+          rows=json.load(open('claude/verify-catalog.json'))
+          UA={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36','Accept-Language':'fa,en;q=0.8'}
+          cache={}
+          def get(u):
+            if u in cache: return cache[u]
+            try:
+              r=urllib.request.urlopen(urllib.request.Request(u,headers=UA),timeout=25);b=r.read(800000).decode('utf8','ignore');res=(r.status,r.geturl(),b)
+            except urllib.error.HTTPError as e: res=(e.code,u,'')
+            except Exception as e: res=(0,u,str(e)[:120])
+            cache[u]=res;time.sleep(0.4);return res
+          def title(b):
+            m=re.search(r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)',b) or re.search(r'<title[^>]*>([^<]+)',b)
+            return html.unescape(m.group(1)).strip()[:160] if m else ''
+          norm=lambda s:re.sub(r'[^a-z0-9]+',' ',s.lower()).strip()
+          def inci_from(b):
+            # INCIDecoder: ingredient names are links /ingredients/...
+            names=re.findall(r'href="/ingredients/[^"]+"[^>]*>([^<]+)</a>',b)
+            seen=[];[seen.append(html.unescape(n).strip()) for n in names if html.unescape(n).strip() not in seen]
+            return seen
+          out=[]
+          for r in rows:
+            o={'row':r['row']}
+            s,u,b=get(r['link']);o['link_status']=s;o['link_final']=u;o['link_title']=title(b) if s==200 else ''
+            s2,u2,b2=get(r['src']);o['src_status']=s2;o['src_title']=title(b2) if s2==200 else ''
+            sheet=[norm(x) for x in re.split(r',\s*',r['inci']) if x.strip()]
+            if s2==200 and 'incidecoder.com/products/' in r['src']:
+              page=inci_from(b2);pn=[norm(x) for x in page]
+              o['src_inci_n']=len(page);o['sheet_inci_n']=len(sheet)
+              if page:
+                hit=sum(1 for x in sheet if x in pn);o['match_sheet_in_page']=round(hit/max(1,len(sheet)),2);o['page_in_sheet']=round(sum(1 for x in pn if x in sheet)/max(1,len(pn)),2)
+                o['first5_page']=page[:5]
+            elif s2==200:
+              low=b2.lower();o['src_mentions']=round(sum(1 for x in sheet if x and x in norm(re.sub(r'<[^>]+>',' ',low)))/max(1,len(sheet)),2)
+            out.append(o)
+          json.dump(out,open('verify-result.json','w'),ensure_ascii=False,indent=1)
+          ok=sum(1 for o in out if o.get('link_status')==200);print('::notice title=links ok::%d/%d'%(ok,len(out)))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: verify-result
+          path: verify-result.json
