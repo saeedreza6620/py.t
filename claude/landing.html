@@ -18,14 +18,16 @@
  var app=false;try{app=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
  if(app)location.replace('/legacy/')})();
 </script>
-<link rel="stylesheet" href="/site.css?v=4">
+<link rel="stylesheet" href="/site.css?v=5">
 <style>
 .hero{padding:34px 18px 24px;text-align:center;position:relative;overflow:hidden}
 .hero>*{position:relative;z-index:1}
 .hero:before{content:"";position:absolute;z-index:0;left:50%;top:40px;width:min(560px,120%);height:420px;transform:translateX(-50%);background:radial-gradient(closest-side at 35% 45%,rgba(152,206,255,.55),transparent),radial-gradient(closest-side at 68% 55%,rgba(255,190,214,.55),transparent),radial-gradient(closest-side at 50% 80%,rgba(255,226,170,.45),transparent);filter:blur(10px);pointer-events:none}
-.mirror{width:clamp(118px,30vw,150px);margin:0 auto -4px;position:relative;display:block}
-.mirror img{display:block;width:100%;height:auto;position:relative;z-index:1;filter:drop-shadow(0 6px 10px rgba(60,40,20,.18))}
-.mirror:after{content:"";position:absolute;left:8%;right:2%;bottom:14px;height:16px;border-radius:50%;background:radial-gradient(closest-side,rgba(40,30,20,.32),transparent);filter:blur(3px)}
+.photo{display:block;width:min(100%,400px);margin:0 auto 18px;position:relative;border-radius:28px;padding:5px;background:linear-gradient(135deg,#7cc0ff,#a58bff 50%,#ff9cc4);box-shadow:0 26px 50px -22px rgba(130,90,230,.55),0 0 0 1px rgba(255,255,255,.6) inset}
+.photo:before{content:"";position:absolute;inset:-26px;z-index:-1;border-radius:50%;background:radial-gradient(closest-side at 25% 40%,rgba(124,192,255,.55),transparent),radial-gradient(closest-side at 75% 45%,rgba(255,156,196,.5),transparent),radial-gradient(closest-side at 50% 85%,rgba(165,139,255,.45),transparent);filter:blur(14px)}
+.photo span{display:block;position:relative;border-radius:23px;overflow:hidden;aspect-ratio:1}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo span:after{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(90,170,255,.38),rgba(160,120,255,.22) 48%,rgba(255,130,180,.36));mix-blend-mode:soft-light;pointer-events:none}
 @keyframes halo{50%{transform:scale(1.12);opacity:.7}}
 .hero .leaf.l1{top:-8px;right:-40px;width:170px;transform:rotate(18deg);--r2:12deg}
 .hero .leaf.l2{bottom:10px;left:-50px;width:150px;transform:scaleX(-1) rotate(10deg);animation-delay:-3s}
@@ -131,9 +133,7 @@
 <body>
 <main>
   <section class="hero wrap" aria-labelledby="h1">
-    <img class="leaf l1" src="/leaf.svg?v=4" alt=""><img class="leaf l2" src="/leaf2.svg?v=4" alt="">
-    <span class="drop d1"></span><span class="drop d2"></span><span class="drop d3"></span>
-    <span class="mirror"><img src="/mirror.webp" alt="آینه‌ی رومیزی؛ نشانه‌ی روتین روزانه‌ی پوست" width="360" height="616" decoding="async"></span>
+    <figure class="photo" style="margin-top:0"><span><img src="/hero-mirror.webp" alt="آینه‌های رومیزی روی سنگ، با شاخه‌ی اکالیپتوس؛ روتین هر روز جلوی آینه شروع می‌شه" width="720" height="720" decoding="async" fetchpriority="high"></span></figure>
     <h1 id="h1">قبل از خرید، با پوستت بسنج.</h1>
     <p>بیوتی‌ولت هر محصول مراقبت پوست رو با پوست و روتین خودت می‌سنجه و یه جواب روشن می‌ده: بخر، با احتیاط بخر، یا نخر.</p>
     <div class="hint" aria-hidden="true"><i></i>اسکرول کن و ببین سر یه سبد خرید معمولی چی میاد</div>
