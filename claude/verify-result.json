@@ -1,0 +1,1324 @@
+[
+ {
+  "row": 2,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/simple-refreshing-facial-wash-gel-150ml-56153",
+  "link_title": "ژل شستشوی صورت سیمپل مدل Refreshing حجم 150 میلی لیتر",
+  "src_status": 200,
+  "src_title": "Simple Kind To Skin Refreshing Facial Wash ingredients (Explained)",
+  "src_inci_n": 15,
+  "sheet_inci_n": 10,
+  "match_sheet_in_page": 0.8,
+  "page_in_sheet": 0.53,
+  "first5_page": [
+   "Aqua",
+   "Cocamidopropyl Betaine",
+   "Propylene Glycol",
+   "Hydroxypropyl Methylcellulose",
+   "Panthenol"
+  ]
+ },
+ {
+  "row": 3,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/simple-purifying-facial-wash-gel-daily-skin-detox-150ml-56152",
+  "link_title": "ژل شستشوی سیمپل پوست چرب و مختلط مدل Purifying حجم 150 میلیلیتر",
+  "src_status": 200,
+  "src_title": "Simple Daily Skin Detox Purifying Facial Wash ingredients (Explained)",
+  "src_inci_n": 28,
+  "sheet_inci_n": 10,
+  "match_sheet_in_page": 1.0,
+  "page_in_sheet": 0.39,
+  "first5_page": [
+   "Aqua",
+   "Hamamelis Virginiana Leaf Water",
+   "Cocamidopropyl Betaine",
+   "Glycerin",
+   "Sodium Laureth Sulfate"
+  ]
+ },
+ {
+  "row": 4,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/neutrogena-hydro-boost-water-gel-cleanser-milk-200ml-34439",
+  "link_title": "ژل شست و شوی صورت نوتروژینا مدل Hydro Boost مناسب انوع پوست حجم 200 میلی لیتر",
+  "src_status": 200,
+  "src_title": "Neutrogena Hydro Boost Water Gel Cleanser ingredients (Explained)",
+  "src_inci_n": 27,
+  "sheet_inci_n": 9,
+  "match_sheet_in_page": 1.0,
+  "page_in_sheet": 0.33,
+  "first5_page": [
+   "Aqua",
+   "Glycerin",
+   "Cocamidopropyl Hydroxysultaine",
+   "Sodium Cocoyl Isethionate",
+   "Sodium Methyl Cocoyl Taurate"
+  ]
+ },
+ {
+  "row": 5,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-6733384",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 6,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/neutrogena-oil-balancing-with-lime-facial-wash-200-ml-67786",
+  "link_title": "ژل شستشوی صورت مناسب پوستهای چرب حجم 200 میل نوتروژینا",
+  "src_status": 200,
+  "src_title": "Neutrogena Oil Balancing Facial Wash ingredients (Explained)",
+  "src_inci_n": 21,
+  "sheet_inci_n": 10,
+  "match_sheet_in_page": 0.8,
+  "page_in_sheet": 0.43,
+  "first5_page": [
+   "Aqua",
+   "Glycerin",
+   "Sodium Laureth Sulfate",
+   "Lauryl Glucoside",
+   "Acrylates/​C10-30 Alkyl Acrylate Crosspolymer"
+  ]
+ },
+ {
+  "row": 7,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/cerave-foaming-cleanser-for-normal-to-dry-skin-236ml-68650",
+  "link_title": "شوینده سراوی پوست چرب و نرمال مدل فوم حجم 236 میل",
+  "src_status": 200,
+  "src_title": "CeraVe Foaming Facial Cleanser ingredients (Explained)",
+  "src_inci_n": 26,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.33,
+  "page_in_sheet": 0.15,
+  "first5_page": [
+   "Purified Water",
+   "Glycerin",
+   "Behentrimonium Methosulfate",
+   "Cetearyl Alcohol",
+   "Ceramide 3"
+  ]
+ },
+ {
+  "row": 8,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/cerave-hydrating-cleanser-normal-to-dry-skin-236ml-68652",
+  "link_title": "ژل شستشو و آبرسان سراوی مناسب پوست نرمال تا خشک حجم 236 میلی لیتر",
+  "src_status": 200,
+  "src_title": "CeraVe Hydrating Cleanser ingredients (Explained)",
+  "src_inci_n": 28,
+  "sheet_inci_n": 13,
+  "match_sheet_in_page": 0.92,
+  "page_in_sheet": 0.43,
+  "first5_page": [
+   "Aqua/​Water",
+   "Glycerin",
+   "Cetearyl Alcohol",
+   "PEG-40 Stearate",
+   "Stearyl Alcohol"
+  ]
+ },
+ {
+  "row": 9,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/cera-ve-sa-smoothing-cleanser-236-ml-101914",
+  "link_title": "ژل شستشو مناسب پوست خشک و زبر سراوی",
+  "src_status": 200,
+  "src_title": "CeraVe SA Smoothing Cleanser ingredients (Explained)",
+  "src_inci_n": 30,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 0.82,
+  "page_in_sheet": 0.3,
+  "first5_page": [
+   "Aqua/​Water",
+   "Sodium Lauroyl Sarcosinate",
+   "Cocamidopropyl Hydroxysultaine",
+   "Glycerin",
+   "Niacinamide"
+  ]
+ },
+ {
+  "row": 10,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/cinere-anti-pollution-daily-face-wash-19406",
+  "link_title": "خرید ژل شستشوی صورت سینره پوست چرب ضد آلودگی هوا",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 11,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/lafarrerr-exfoliating-face-wash-for-oily--skin-25338",
+  "link_title": "ژل شستشو صورت لافارر مناسب پوست چرب، مدل لایه بردار",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 12,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/vitalayer-vitamin-c-foaming-face-wash-150ml-32407",
+  "link_title": "فوم شستشو ویتامین سی ویتالیر حجم 200 میلی لیتر",
+  "src_status": 200,
+  "src_title": "",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 13,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/vitalayer-sensivit-fece-foaming-wash-for-sensitive-skins-150ml-51920",
+  "link_title": "فوم پاک کننده صورت ویتالیر مدل Sensivit مناسب پوست حساس حجم 150 میلیلیتر",
+  "src_status": 200,
+  "src_title": "",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 14,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/garnier-micellar-cleansing-water-18302",
+  "link_title": "پاک کننده صورت میسلار واتر 125 میلی  لیتر گارنیر",
+  "src_status": 200,
+  "src_title": "Garnier SkinActive Micellar Cleansing Water ingredients (Explained)",
+  "src_inci_n": 10,
+  "sheet_inci_n": 7,
+  "match_sheet_in_page": 0.86,
+  "page_in_sheet": 0.6,
+  "first5_page": [
+   "Aqua/​Water",
+   "Hexylene Glycol",
+   "Glycerin",
+   "Poloxamer 184",
+   "Disodium Cocoamphodiacetate"
+  ]
+ },
+ {
+  "row": 15,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/garnier-skin-ardirici-kusursuz-temizleme-suyu-400ml-79285",
+  "link_title": "میسلار واتر گارنیر مناسب پوست چرب حجم 400 میلی لیتر",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 16,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/bioderma-make-up-removing-micelle-solution-sensibio-h2o-2125",
+  "link_title": "میسلار واتر بایودرما مدل Sensibio H2O حجم 250 میلی لیتر",
+  "src_status": 200,
+  "src_title": "Bioderma Sensibio H2O Micellar Water ingredients (Explained)",
+  "src_inci_n": 14,
+  "sheet_inci_n": 10,
+  "match_sheet_in_page": 0.8,
+  "page_in_sheet": 0.64,
+  "first5_page": [
+   "Aqua/​Water/​Eau",
+   "Peg-6 Caprylic/​Capric Glycerides",
+   "Fructooligosaccharides",
+   "Mannitol",
+   "Xylitol"
+  ]
+ },
+ {
+  "row": 17,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/bioderma-sebium-h2o-purifying-cleansing-micelle-solution-500ml-30075",
+  "link_title": "محلول پاک کننده Sebium H2O مناسب پوست چرب و مختلط 500میل بایودرما",
+  "src_status": 200,
+  "src_title": "Bioderma Sébium H2O ingredients (Explained)",
+  "src_inci_n": 19,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.83,
+  "page_in_sheet": 0.58,
+  "first5_page": [
+   "Aqua/​Water/​Eau",
+   "PEG-6 Caprylic/​Capric Glycerides",
+   "Sodium Citrate",
+   "Zinc Gluconate",
+   "Copper Sulfate"
+  ]
+ },
+ {
+  "row": 18,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/simple-makeup-remover-for-all-skin-types-200-ml-76123",
+  "link_title": "میسلار واتر سیمپل حاوی ویتامین C و B3 مناسب انواع پوست حجم 200 میلی لیتر",
+  "src_status": 200,
+  "src_title": "Simple Kind To Skin Micellar Cleansing Water ingredients (Explained)",
+  "src_inci_n": 22,
+  "sheet_inci_n": 13,
+  "match_sheet_in_page": 1.0,
+  "page_in_sheet": 0.64,
+  "first5_page": [
+   "Aqua",
+   "Hexylene Glycol",
+   "Glycerin",
+   "Cetrimonium Chloride",
+   "Cetylpyridinium Chloride"
+  ]
+ },
+ {
+  "row": 19,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/neutrogena-hydra-boost-micellar-water-400ml-34438",
+  "link_title": "میسلار واتر نوتروژینا مدل Hydro Boost مناسب انواع پوست حجم 400 میلی لیتر",
+  "src_status": 200,
+  "src_title": "Neutrogena Hydro Boost Triple Micellar Water ingredients (Explained)",
+  "src_inci_n": 14,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 1.0,
+  "page_in_sheet": 0.93,
+  "first5_page": [
+   "Aqua",
+   "PEG-6 Caprylic/​Capric Glycerides",
+   "Polysorbate 20",
+   "Butylene Glycol",
+   "PEG-8"
+  ]
+ },
+ {
+  "row": 20,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-8017780",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 21,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-15074803",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 200,
+  "src_title": "Simple Kind To Skin Soothing Facial Toner ingredients (Explained)",
+  "src_inci_n": 15,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 1.0,
+  "page_in_sheet": 0.73,
+  "first5_page": [
+   "Aqua",
+   "Hydrogenated Starch Hydrolysate",
+   "Sodium PCA",
+   "Allantoin",
+   "Phenoxyethanol"
+  ]
+ },
+ {
+  "row": 22,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-15074803",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 200,
+  "src_title": "The Ordinary Glycolic Acid 7% Toning Solution ingredients (Explained)",
+  "src_inci_n": 46,
+  "sheet_inci_n": 10,
+  "match_sheet_in_page": 0.9,
+  "page_in_sheet": 0.2,
+  "first5_page": [
+   "Aqua (Water)",
+   "Glycolic Acid",
+   "Rosa Damascena Flower Water",
+   "Centaurea Cyanus Flower Water",
+   "Aloe Barbadensis Leaf Water"
+  ]
+ },
+ {
+  "row": 23,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-15074803",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 200,
+  "src_title": "COSRX Aha/Bha Clarifying Treatment Toner ingredients (Explained)",
+  "src_inci_n": 14,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.58,
+  "page_in_sheet": 0.5,
+  "first5_page": [
+   "Mineral Water",
+   "Salix Alba (Willow) Bark Water",
+   "Pyrus Malus (Apple) Fruit Water",
+   "Butylene Glycol",
+   "1,2-Hexanediol"
+  ]
+ },
+ {
+  "row": 24,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/vitalayer-vitamin-c-face-wash-200ml-32411",
+  "link_title": "ژل شست و شوی صورت ویتالیر مدل Vitamin C حجم 200 میلی لیتر",
+  "src_status": 200,
+  "src_title": "",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 25,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/the-ordinary-niacinamide-10-percent-plus-zinc-1-percent-30-ml-77640",
+  "link_title": "سرم نیاسینامید اوردینری 10% + زینک 1% - حجم 30 میلی لیتر",
+  "src_status": 200,
+  "src_title": "The Ordinary Niacinamide 10%+ Zinc 1% Serum ingredients (Explained)",
+  "src_inci_n": 14,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 0.73,
+  "page_in_sheet": 0.57,
+  "first5_page": [
+   "Aqua (Water)",
+   "Niacinamide",
+   "Pentylene Glycol",
+   "Zinc Pca",
+   "Tamarindus Indica Seed Gum"
+  ]
+ },
+ {
+  "row": 26,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/the-ordinary-hyaluronic-acid-percent-plus-b5-30-ml-77639",
+  "link_title": "سرم آبرسان د اوردینری مدل Hyaluronic Acid 2% + B5 حجم 30 میلی لیتر",
+  "src_status": 200,
+  "src_title": "The Ordinary Hyaluronic Acid 2% + B5 ingredients (Explained)",
+  "src_inci_n": 19,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 0.91,
+  "page_in_sheet": 0.53,
+  "first5_page": [
+   "Aqua (Water)",
+   "Sodium Hyaluronate",
+   "Pentylene Glycol",
+   "Propanediol",
+   "Sodium Hyaluronate Crosspolymer"
+  ]
+ },
+ {
+  "row": 27,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/the-ordinary-alpha-arbutin-2percent-and-ha-serum-30ml-69863",
+  "link_title": "سرم ضد لک آلفا آربوتین 2% و هیالورونیک اسید د اوردینری حجم 30 میلی لیتر",
+  "src_status": 200,
+  "src_title": "The Ordinary Alpha Arbutin 2% + Ha ingredients (Explained)",
+  "src_inci_n": 14,
+  "sheet_inci_n": 9,
+  "match_sheet_in_page": 0.89,
+  "page_in_sheet": 0.57,
+  "first5_page": [
+   "Aqua (Water)",
+   "Alpha-Arbutin",
+   "Polyacrylate Crosspolymer-6",
+   "Hydrolyzed Sodium Hyaluronate",
+   "Propanediol"
+  ]
+ },
+ {
+  "row": 28,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/ordinary-salicylic-acid-2-percent-anhydrous-solution-pore-clearing-serum-30-ml-77637",
+  "link_title": "سرم د اوردینری مدل Salicylic Acid 2% بدون آب حجم 30 میلی لیتر",
+  "src_status": 200,
+  "src_title": "The Ordinary Salicylic Acid 2% Solution ingredients (Explained)",
+  "src_inci_n": 13,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 0.91,
+  "page_in_sheet": 0.77,
+  "first5_page": [
+   "Aqua (Water)",
+   "Saccharide Isomerate",
+   "Cocamidopropyl Dimethylamine",
+   "Salicylic Acid",
+   "Hydroxyethylcellulose"
+  ]
+ },
+ {
+  "row": 29,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-15074803",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 200,
+  "src_title": "The Ordinary Retinol 0.5% In Squalane ingredients (Explained)",
+  "src_inci_n": 12,
+  "sheet_inci_n": 8,
+  "match_sheet_in_page": 0.62,
+  "page_in_sheet": 0.5,
+  "first5_page": [
+   "Squalane",
+   "Caprylic/​Capric Triglyceride",
+   "Simmondsia Chinensis (Jojoba) Seed Oil",
+   "Retinol 0.5%",
+   "Solanum Lycopersicum (Tomato) Fruit Extract"
+  ]
+ },
+ {
+  "row": 30,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-15074803",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 200,
+  "src_title": "The Ordinary Buffet ingredients (Explained)",
+  "src_inci_n": 53,
+  "sheet_inci_n": 10,
+  "match_sheet_in_page": 0.9,
+  "page_in_sheet": 0.17,
+  "first5_page": [
+   "Aqua (Water)",
+   "Glycerin",
+   "Lactococcus Ferment Lysate",
+   "Acetyl Hexapeptide-8",
+   "Pentapeptide-18"
+  ]
+ },
+ {
+  "row": 31,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/balance-niacinamide-serum-15-percent-30ml-59362",
+  "link_title": "سرم روشن کننده بالانس مدل نیاسینامید 15 درصد حجم 30 میلی لیتر",
+  "src_status": 200,
+  "src_title": "BALANCE active formula Niacinamide Blemish Recovery Serum ingredients (Explained)",
+  "src_inci_n": 16,
+  "sheet_inci_n": 13,
+  "match_sheet_in_page": 1.0,
+  "page_in_sheet": 0.81,
+  "first5_page": [
+   "Aqua",
+   "Niacinamide",
+   "Propylene Glycol",
+   "Butylene Glycol",
+   "Betaine"
+  ]
+ },
+ {
+  "row": 32,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/balance-niacinamide-serum-15-percent-30ml-59362",
+  "link_title": "سرم روشن کننده بالانس مدل نیاسینامید 15 درصد حجم 30 میلی لیتر",
+  "src_status": 200,
+  "src_title": "BALANCE active formula Vitamin C Brightening Serum ingredients (Explained)",
+  "src_inci_n": 19,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.67,
+  "page_in_sheet": 0.42,
+  "first5_page": [
+   "Aqua (Water)",
+   "Glycerin",
+   "Sodium Ascorbyl Phosphate",
+   "Phenoxyethanol",
+   "Carrageenan"
+  ]
+ },
+ {
+  "row": 33,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/balance-niacinamide-serum-15-percent-30ml-59362",
+  "link_title": "سرم روشن کننده بالانس مدل نیاسینامید 15 درصد حجم 30 میلی لیتر",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 34,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/vitalayer-vitamin-c-face-wash-200ml-32411",
+  "link_title": "ژل شست و شوی صورت ویتالیر مدل Vitamin C حجم 200 میلی لیتر",
+  "src_status": 200,
+  "src_title": "",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 35,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/vitalayer-vitamin-c-face-wash-200ml-32411",
+  "link_title": "ژل شست و شوی صورت ویتالیر مدل Vitamin C حجم 200 میلی لیتر",
+  "src_status": 200,
+  "src_title": "",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 36,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-6733384",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 200,
+  "src_title": "",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 37,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/balance-niacinamide-serum-15-percent-30ml-59362",
+  "link_title": "سرم روشن کننده بالانس مدل نیاسینامید 15 درصد حجم 30 میلی لیتر",
+  "src_status": 0,
+  "src_title": ""
+ },
+ {
+  "row": 38,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/cinere-anti-pollution-daily-face-wash-19406",
+  "link_title": "خرید ژل شستشوی صورت سینره پوست چرب ضد آلودگی هوا",
+  "src_status": 200,
+  "src_title": "ژل‌کرم ضد جوش سینره - سینره",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 39,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-15074803",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 200,
+  "src_title": "COSRX Advanced Snail 96 Mucin Power Essence ingredients (Explained)",
+  "src_inci_n": 13,
+  "sheet_inci_n": 13,
+  "match_sheet_in_page": 0.85,
+  "page_in_sheet": 0.85,
+  "first5_page": [
+   "Snail Secretion Filtrate",
+   "Betaine",
+   "Butylene Glycol",
+   "1,2-Hexanediol",
+   "Sodium Polyacrylate"
+  ]
+ },
+ {
+  "row": 40,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/neutrogena-new-packaging-face-hydro-boost-water-gel-50-ml-75821",
+  "link_title": "واتر ژل آبرسان صورت نوتروژینا مدل Hydro Boost حجم 50 میلی لیتر با بسته بندی جدید",
+  "src_status": 200,
+  "src_title": "Neutrogena Hydro Boost Water Gel ingredients (Explained)",
+  "src_inci_n": 23,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.75,
+  "page_in_sheet": 0.43,
+  "first5_page": [
+   "Water",
+   "Dimethicone",
+   "Glycerin",
+   "Dimethicone/​Vinyl Dimethicone Crosspolymer",
+   "Phenoxyethanol"
+  ]
+ },
+ {
+  "row": 41,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/neutrogena-hydro-boost-face-gel-cream-50ml-56667",
+  "link_title": "ژل کرم آبرسان صورت مدل Hydra Boost حجم 50میل نوتروژینا",
+  "src_status": 200,
+  "src_title": "Neutrogena Hydro Boost Gel Cream ingredients (Explained)",
+  "src_inci_n": 23,
+  "sheet_inci_n": 13,
+  "match_sheet_in_page": 0.77,
+  "page_in_sheet": 0.43,
+  "first5_page": [
+   "Water (Eau)",
+   "Dimethicone",
+   "Glycerin",
+   "Dimethicone/​Vinyl Dimethicone Crosspolymer",
+   "Phenoxyethanol"
+  ]
+ },
+ {
+  "row": 42,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/neutrogena-soothing-clear-moisturizer-gel-75ml-53322",
+  "link_title": "آبرسان زردچوبه نیتروژنا مناسب پوست های مستعد جوش 75 میل",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 43,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/simple-hydrating-light-moisturiser-125ml-67361",
+  "link_title": "آبرسان و مرطوب کننده سیمپل مدل Light حجم 125میلی لیتر",
+  "src_status": 200,
+  "src_title": "Simple Kind To Skin Hydrating Light Moisturiser ingredients (Explained)",
+  "src_inci_n": 31,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 0.82,
+  "page_in_sheet": 0.29,
+  "first5_page": [
+   "Aqua",
+   "Glycerin",
+   "Paraffinum Liquidum",
+   "Polyglyceryl-3 Methylglucose Distearate",
+   "Dimethicone"
+  ]
+ },
+ {
+  "row": 44,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/simple-replenishing-rich-moisturiser-62321",
+  "link_title": "آبرسان سیمپل مدل ریچ برای پوست خشک حجم 125 میلی لیتر",
+  "src_status": 200,
+  "src_title": "Simple Kind To Skin Replenishing Rich Moisturiser ingredients (Explained)",
+  "src_inci_n": 35,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 1.0,
+  "page_in_sheet": 0.34,
+  "first5_page": [
+   "Aqua",
+   "Glycerin",
+   "Coco-Caprylate/​Caprate",
+   "Polyglyceryl-3 Methylglucose Distearate",
+   "Ethylhexyl Methoxycinnamate"
+  ]
+ },
+ {
+  "row": 45,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/clinique-moisture-surge-100h-75ml-76243",
+  "link_title": "کرم آبرسان 100 ساعته حجم 75 میل کلینیک",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 46,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/cerave-lait-hydratant-lotion-88ml-69318",
+  "link_title": "لوسیون مرطوب کننده پوست خشک حجم 88میل سراوی",
+  "src_status": 200,
+  "src_title": "CeraVe Moisturizing Cream ingredients (Explained)",
+  "src_inci_n": 28,
+  "sheet_inci_n": 13,
+  "match_sheet_in_page": 0.92,
+  "page_in_sheet": 0.46,
+  "first5_page": [
+   "Aqua",
+   "Glycerin",
+   "Cetearyl Alcohol",
+   "Caprylic/​Capric Triglyceride",
+   "Cetyl Alcohol"
+  ]
+ },
+ {
+  "row": 47,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-5486046",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 48,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-15074803",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 49,
+  "link_status": 200,
+  "link_final": "https://www.digikala.com/product/dkp-15074803",
+  "link_title": "فروشگاه اینترنتی دیجی‌کالا",
+  "src_status": 200,
+  "src_title": "The Ordinary Caffeine Solution 5% + Egcg ingredients (Explained)",
+  "src_inci_n": 29,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.83,
+  "page_in_sheet": 0.34,
+  "first5_page": [
+   "Aqua (Water)",
+   "Caffeine",
+   "Maltodextrin",
+   "Glycerin",
+   "Propanediol"
+  ]
+ },
+ {
+  "row": 50,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/lafarrerr-anti-spot-spf50-sunscreen-cream-for-oily-and-acne-prone-skin-25318",
+  "link_title": "ضد آفتاب بی رنگ لافارر پوست چرب و آکنه دار با SPF50",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 51,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/my-sunscreen-cream-spf50-fluid-50ml-56204",
+  "link_title": "ضد آفتاب فلوئید مای مدل هیالورونیک اسید SPF50 حجم 50ml",
+  "src_status": 200,
+  "src_title": "ضد آفتاب فلوئید مای مدل هیالورونیک اسید SPF50 حجم 50ml",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 52,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/facets/fluid-sun-block-sun-protecter",
+  "link_title": "ضد آفتاب فلوئید",
+  "src_status": 200,
+  "src_title": "ISDIN Fotoprotector Isdin Fusion Water SPF 50 ingredients (Explained)",
+  "src_inci_n": 34,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.83,
+  "page_in_sheet": 0.29,
+  "first5_page": [
+   "Aqua (Water)",
+   "Octocrylene",
+   "Propanediol",
+   "Butyl Methoxydibenzoylmethane",
+   "Ethylhexyl Salicylate"
+  ]
+ },
+ {
+  "row": 53,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 54,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 55,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/hydroderm",
+  "link_title": "هیدرودرم | خرید محصولات هیدرودرم با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "هیدرودرم | خرید محصولات هیدرودرم با بهترین قیمت",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 56,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/ardene",
+  "link_title": "محصولات آردن Ardene با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات آردن Ardene با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 57,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/blog/arden-c-factor-for-blemishes-and-dark-spots/",
+  "link_title": "آردن سی فکتور؛ فرمولاسیون غنی از ویتامین C برای لک و تیرگی",
+  "src_status": 200,
+  "src_title": "آردن سی فکتور؛ فرمولاسیون غنی از ویتامین C برای لک و تیرگی",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 58,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/cosrx",
+  "link_title": "خرید محصولات کوزارکس با تضمین اصالت و کیفیت با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "COSRX Low pH Good Morning Gel Cleanser ingredients (Explained)",
+  "src_inci_n": 27,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 0.82,
+  "page_in_sheet": 0.37,
+  "first5_page": [
+   "Water",
+   "Cocamidopropyl Betaine",
+   "Sodium Lauroyl Methyl Isethionate",
+   "Sodium Chloride",
+   "Polysorbate 20"
+  ]
+ },
+ {
+  "row": 59,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/cosrx",
+  "link_title": "خرید محصولات کوزارکس با تضمین اصالت و کیفیت با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "COSRX Salicylic Acid Daily Gentle Cleanser ingredients (Explained)",
+  "src_inci_n": 26,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.75,
+  "page_in_sheet": 0.35,
+  "first5_page": [
+   "Water",
+   "Glycerin",
+   "Myristic Acid",
+   "Stearic Acid",
+   "Potassium Hydroxide"
+  ]
+ },
+ {
+  "row": 60,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/bioderma",
+  "link_title": "محصولات بایودرما (bioderma) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "Bioderma Sebium Gel Moussant ingredients (Explained)",
+  "src_inci_n": 24,
+  "sheet_inci_n": 14,
+  "match_sheet_in_page": 0.86,
+  "page_in_sheet": 0.5,
+  "first5_page": [
+   "Aqua/​Water/​Eau",
+   "Sodium Cocoamphoacetate",
+   "Sodium Laureth Sulfate",
+   "Methylpropanediol",
+   "Disodium EDTA"
+  ]
+ },
+ {
+  "row": 61,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/simple",
+  "link_title": "محصولات سیمپل (Simple) با بهترین قیمت خرید",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 62,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/geno-biotic",
+  "link_title": "خرید محصولات ژنوبایوتیک با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "خرید محصولات ژنوبایوتیک با بهترین قیمت",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 63,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/syn-skin",
+  "link_title": "ساین اسکین | خرید محصولات ساین اسکین با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "ساین اسکین | خرید محصولات ساین اسکین با بهترین قیمت",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 64,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/lafarrerr",
+  "link_title": "محصولات لافارر (lafarrerr) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات لافارر (lafarrerr) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 65,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 66,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/categories/skincare/cleanser/makeup-remover",
+  "link_title": "میسلار واتر و پاک کننده آرایش با بهترین قیمت مناسب برای انواع پوست",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 67,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/hydroderm",
+  "link_title": "هیدرودرم | خرید محصولات هیدرودرم با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "هیدرودرم | خرید محصولات هیدرودرم با بهترین قیمت",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 68,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/dermatypique",
+  "link_title": "محصولات درماتیپیک (Dermatypique) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات درماتیپیک (Dermatypique) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 69,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/bioderma",
+  "link_title": "محصولات بایودرما (bioderma) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "Bioderma Hydrabio H2O ingredients (Explained)",
+  "src_inci_n": 21,
+  "sheet_inci_n": 15,
+  "match_sheet_in_page": 0.73,
+  "page_in_sheet": 0.57,
+  "first5_page": [
+   "Aqua/​Water/​Eau",
+   "Glycerin",
+   "PEG-6 Caprylic/​Capric Glycerides",
+   "Disodium EDTA",
+   "Mannitol"
+  ]
+ },
+ {
+  "row": 70,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 71,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/lafarrerr",
+  "link_title": "محصولات لافارر (lafarrerr) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات لافارر (lafarrerr) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 72,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/blog/arden-c-factor-for-blemishes-and-dark-spots/",
+  "link_title": "آردن سی فکتور؛ فرمولاسیون غنی از ویتامین C برای لک و تیرگی",
+  "src_status": 200,
+  "src_title": "آردن سی فکتور؛ فرمولاسیون غنی از ویتامین C برای لک و تیرگی",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 73,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/neutrogena",
+  "link_title": "نوتروژینا | خرید محصولات نوتروژینا با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "Neutrogena Blackhead Eliminating Cleansing Toner ingredients (Explained)",
+  "src_inci_n": 13,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.58,
+  "page_in_sheet": 0.54,
+  "first5_page": [
+   "Aqua",
+   "Alcohol Denat",
+   "PPG-5-Ceteth-20",
+   "Glycerin",
+   "Citric Acid"
+  ]
+ },
+ {
+  "row": 74,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/garnier",
+  "link_title": "محصولات گارنیر (garnier) با بهترین قیمت خرید",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 75,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/geno-biotic",
+  "link_title": "خرید محصولات ژنوبایوتیک با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "خرید محصولات ژنوبایوتیک با بهترین قیمت",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 76,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/dermatypique",
+  "link_title": "محصولات درماتیپیک (Dermatypique) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات درماتیپیک (Dermatypique) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 77,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/categories/skincare",
+  "link_title": "محصولات مراقبت پوست اصل با بهترین قیمت خرید و تنوع بالا",
+  "src_status": 200,
+  "src_title": "Axis-Y Dark Spot Correcting Glow Serum ingredients (Explained)",
+  "src_inci_n": 28,
+  "sheet_inci_n": 13,
+  "match_sheet_in_page": 0.77,
+  "page_in_sheet": 0.36,
+  "first5_page": [
+   "Water",
+   "Glycerin",
+   "Niacinamide",
+   "Sodium Hyaluronate",
+   "Propanediol"
+  ]
+ },
+ {
+  "row": 78,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 79,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 80,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/the-ordinary",
+  "link_title": "محصولات د اوردینری (The Ordinary) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "The Ordinary Retinol 0.2% In Squalane ingredients (Explained)",
+  "src_inci_n": 11,
+  "sheet_inci_n": 8,
+  "match_sheet_in_page": 0.62,
+  "page_in_sheet": 0.55,
+  "first5_page": [
+   "Squalane",
+   "Caprylic/​Capric Triglyceride",
+   "Simmondsia Chinensis (Jojoba) Seed Oil",
+   "Retinol",
+   "Solanum Lycopersicum (Tomato) Fruit Extract"
+  ]
+ },
+ {
+  "row": 81,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/garnier",
+  "link_title": "محصولات گارنیر (garnier) با بهترین قیمت خرید",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 82,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/cosrx",
+  "link_title": "خرید محصولات کوزارکس با تضمین اصالت و کیفیت با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "COSRX Hyaluronic Acid Hydra Power Essence ingredients (Explained)",
+  "src_inci_n": 9,
+  "sheet_inci_n": 8,
+  "match_sheet_in_page": 0.75,
+  "page_in_sheet": 0.67,
+  "first5_page": [
+   "Hippophae Rhamnoides Water",
+   "Butylene Glycol",
+   "Glycerin",
+   "1,2-Hexanediol",
+   "Sodium Hyaluronate"
+  ]
+ },
+ {
+  "row": 83,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/cosrx",
+  "link_title": "خرید محصولات کوزارکس با تضمین اصالت و کیفیت با بهترین قیمت",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 84,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/simple",
+  "link_title": "محصولات سیمپل (Simple) با بهترین قیمت خرید",
+  "src_status": 404,
+  "src_title": ""
+ },
+ {
+  "row": 85,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/lafarrerr",
+  "link_title": "محصولات لافارر (lafarrerr) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات لافارر (lafarrerr) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 86,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/syn-skin",
+  "link_title": "ساین اسکین | خرید محصولات ساین اسکین با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "ساین اسکین | خرید محصولات ساین اسکین با بهترین قیمت",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 87,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/mq",
+  "link_title": "محصولات ام کیو (MQ) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ام کیو (MQ) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 88,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/ardene",
+  "link_title": "محصولات آردن Ardene با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات آردن Ardene با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 89,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/mq",
+  "link_title": "محصولات ام کیو (MQ) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ام کیو (MQ) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 90,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/categories/skincare",
+  "link_title": "محصولات مراقبت پوست اصل با بهترین قیمت خرید و تنوع بالا",
+  "src_status": 200,
+  "src_title": "Dr. Althea 345 Relief Cream ingredients (Explained)",
+  "src_inci_n": 63,
+  "sheet_inci_n": 15,
+  "match_sheet_in_page": 0.73,
+  "page_in_sheet": 0.19,
+  "first5_page": [
+   "Water",
+   "Propanediol",
+   "Glycerin",
+   "Cyclohexasiloxane",
+   "1,2-Hexanediol"
+  ]
+ },
+ {
+  "row": 91,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/cosrx",
+  "link_title": "خرید محصولات کوزارکس با تضمین اصالت و کیفیت با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "COSRX Advanced Snail 92 All In One Cream ingredients (Explained)",
+  "src_inci_n": 24,
+  "sheet_inci_n": 13,
+  "match_sheet_in_page": 1.0,
+  "page_in_sheet": 0.58,
+  "first5_page": [
+   "Snail Secretion Filtrate",
+   "Betaine",
+   "Caprylic/​Capric Triglyceride",
+   "Butylene Glycol",
+   "Cetearyl Olivate"
+  ]
+ },
+ {
+  "row": 92,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 93,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/lafarrerr",
+  "link_title": "محصولات لافارر (lafarrerr) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات لافارر (lafarrerr) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 94,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/dermatypique",
+  "link_title": "محصولات درماتیپیک (Dermatypique) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات درماتیپیک (Dermatypique) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 95,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/syn-skin",
+  "link_title": "ساین اسکین | خرید محصولات ساین اسکین با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "ساین اسکین | خرید محصولات ساین اسکین با بهترین قیمت",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 96,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/prime",
+  "link_title": "پرایم | خرید محصولات برند پرایم با بهترین قیمت",
+  "src_status": 200,
+  "src_title": "پرایم | خرید محصولات برند پرایم با بهترین قیمت",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 97,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 98,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/simple",
+  "link_title": "محصولات سیمپل (Simple) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "Simple Kind To Eyes Soothing Eye Balm ingredients (Explained)",
+  "src_inci_n": 20,
+  "sheet_inci_n": 11,
+  "match_sheet_in_page": 0.45,
+  "page_in_sheet": 0.25,
+  "first5_page": [
+   "Aqua",
+   "Glyceryl Stearate",
+   "Butyrospermum Parkii",
+   "Cyclotetrasiloxane",
+   "Cetearyl Alcohol"
+  ]
+ },
+ {
+  "row": 99,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/categories/skincare/face-care",
+  "link_title": "محصولات مراقبت صورت اصل با بهترین قیمت خرید و تنوع بالا",
+  "src_status": 200,
+  "src_title": "Skin1004 Madagascar Centella Hyalu-cica Water-fit Sun Serum SPF50+ Pa++++ ingredients (Explained)",
+  "src_inci_n": 50,
+  "sheet_inci_n": 12,
+  "match_sheet_in_page": 0.75,
+  "page_in_sheet": 0.18,
+  "first5_page": [
+   "Water",
+   "Dibutyl Adipate",
+   "Propanediol",
+   "Diethylamino Hydroxybenzoyl Hexyl Benzoate",
+   "Polymethylsilsesquioxane"
+  ]
+ },
+ {
+  "row": 100,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/products/prime-spf-50-fusion-water-sun-protector-40-ml-67588",
+  "link_title": "فلوئید ضد آفتاب پرایم مدل فیوژن واتر حاوی ویتامین سی با SPF50 حجم 40 میلی لیتر",
+  "src_status": 200,
+  "src_title": "فلوئید ضد آفتاب پرایم مدل فیوژن واتر حاوی ویتامین سی با SPF50 حجم 40 میلی لیتر",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 101,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/vitalayer",
+  "link_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات ویتالیر (Vitalayer) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ },
+ {
+  "row": 102,
+  "link_status": 200,
+  "link_final": "https://www.khanoumi.com/brands/dermatypique",
+  "link_title": "محصولات درماتیپیک (Dermatypique) با بهترین قیمت خرید",
+  "src_status": 200,
+  "src_title": "محصولات درماتیپیک (Dermatypique) با بهترین قیمت خرید",
+  "src_mentions": 0.0
+ }
+]
