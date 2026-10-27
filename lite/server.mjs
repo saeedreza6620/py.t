@@ -99,7 +99,8 @@ async function ai(body){
 // ---------- product research: identify any product by name and fetch its real INCI list ----------
 // The shopper only types a name (Persian, transliterated, partial). We find the exact product and its
 // ingredient list on the web ourselves (brand site, INCIDecoder, Skinsort, big retailers) — never ask them for a photo.
-const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online','openai/gpt-5-mini:online','openai/gpt-4.1-mini:online'])];
+const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online','openai/gpt-5-mini:online'])];
+const rsDay={day:'',n:0};function researchBudgetOk(){const d=new Date().toISOString().slice(0,10);if(rsDay.day!==d){rsDay.day=d;rsDay.n=0}const cap=Number((cfg||{}).researchDailyMax??30);return cap<=0?false:rsDay.n<cap}
 const BANK=makeBank(DATA);const pubF=({aliases,query,hits,lastHit,model,addedAt,...f})=>f;
 const pcache=new Map(); // live price answers, 6 hours
 const RCACHE=path.join(DATA,'research-cache.json');let rcache={};try{rcache=JSON.parse(fs.readFileSync(RCACHE,'utf8'))}catch{}
@@ -140,7 +141,7 @@ async function ensureImage(row,first){if(!row||row.image)return;imgTried.set(row
 const PREFILL=(()=>{try{return JSON.parse(fs.readFileSync(path.join(here,'prefill.json'),'utf8'))}catch{return []}})();
 const PFS=path.join(DATA,'prefill-state.json');let pfs={};try{pfs=JSON.parse(fs.readFileSync(PFS,'utf8'))}catch{}
 let pfPause=0,pfBusy=false;
-async function prefillTick(){if(pfBusy||!KEY||!BASE||Date.now()<pfPause||String((cfg||{}).prefill)==='off')return;const it=PREFILL.find(x=>x&&x.key&&!pfs[x.key]);if(!it)return;pfBusy=true;
+async function prefillTick(){if(pfBusy||!KEY||!BASE||Date.now()<pfPause||String((cfg||{}).prefill)!=='on')return;const it=PREFILL.find(x=>x&&x.key&&!pfs[x.key]);if(!it)return;pfBusy=true;
   try{const r=await research(it.name,'');let st='not_found',id='';
     if(r.status===503){pfPause=Date.now()+60*60e3;return}
     if(r.status===200&&r.body.found&&r.body.sourceVerified){const f=BANK.toFormula(r.body,it.name,r.body.sources,r.body.model);
@@ -166,8 +167,10 @@ async function checkSources(inci,sources){const items=(inci||[]).map(incNorm).fi
 async function research(name,url){
   if(url){const title=await pageTitle(url);name=(title||name||'')+' ';}
   const key=normName(url||name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
-  const hit=rcache[key];if(hit&&Date.now()-hit.t<(hit.miss?864e5:30*864e5))return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
+  const hit=rcache[key];if(hit&&Date.now()-hit.t<30*864e5)return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
   if(!KEY||!BASE)return {status:503,body:{error:'سرویس هوش مصنوعی تنظیم نشده',code:'not_configured'}};
+  if(!researchBudgetOk())return {status:503,body:{error:'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜',code:'support',daily_cap:true}};
+  rsDay.n++;
   let best=null;const tried=[];const used=[];
   for(const model of RESEARCH_MODELS){
     let x;try{x=await chatCall(model,[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:(url?'Product page the shopper sent (identify the product on THIS page, then read its full INCI there or on the brand site / INCIDecoder): '+url+'\nPage title: '+String(name).trim().slice(0,200):'Product name typed by the shopper: '+String(name).slice(0,200))}])}catch(e){tried.push(model+':error');continue}
