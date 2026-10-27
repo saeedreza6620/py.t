@@ -3,6 +3,8 @@
 name: Verify catalog
 on:
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -49,7 +51,8 @@ jobs:
           json.dump(out,open('verify-result.json','w'),ensure_ascii=False,indent=1)
           ok=sum(1 for o in out if o.get('link_status')==200);print('::notice title=links ok::%d/%d'%(ok,len(out)))
           PY
-      - uses: actions/upload-artifact@v4
-        with:
-          name: verify-result
-          path: verify-result.json
+      - name: Save result
+        run: |
+          cp verify-result.json claude/verify-result.json
+          git config user.name "beautywallet-bot";git config user.email "bot@users.noreply.github.com"
+          git add claude/verify-result.json && git commit -m "catalog check result" && git push || echo same
