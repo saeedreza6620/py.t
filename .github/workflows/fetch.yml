@@ -1,0 +1,26 @@
+# Generic fetcher for catalog research: reads claude/fetch/<job>.job.json, saves extracted results
+# to the "data" branch as fetch/<job>.out.json (keeps main and the deploy clean).
+name: Fetch for catalog
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: 'job name (claude/fetch/<job>.job.json)'
+        required: true
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch
+        run: python3 scripts/fetch-extract.py "claude/fetch/${{ inputs.job }}.job.json" /tmp/out.json
+      - name: Save to data branch
+        run: |
+          git config user.name "beautywallet-bot";git config user.email "bot@users.noreply.github.com"
+          git fetch origin data || true
+          git checkout -B data origin/data 2>/dev/null || git checkout --orphan data
+          git rm -rq --cached . 2>/dev/null || true
+          mkdir -p fetch && cp /tmp/out.json "fetch/${{ inputs.job }}.out.json"
+          git add "fetch/${{ inputs.job }}.out.json" && git commit -qm "fetch ${{ inputs.job }}" && git push -q origin data

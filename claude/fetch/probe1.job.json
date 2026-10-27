@@ -1,0 +1,10 @@
+{"urls":[
+"https://api.digikala.com/v1/search/?q=%D8%B6%D8%AF%20%D8%A2%D9%81%D8%AA%D8%A7%D8%A8",
+"https://api.digikala.com/v1/categories/sun-protection/search/?sort=7",
+"https://api.digikala.com/v2/product/6733384/",
+"https://www.khanoumi.com/products/simple-refreshing-facial-wash-gel-150ml-56153",
+"https://www.khanoumi.com/search?q=sunscreen",
+"https://www.khanoumi.com/categories/sunscreen",
+"https://incidecoder.com/search?query=la+roche+posay+anthelios",
+"https://www.digikala.com/search/category-sun-protection/"
+],"keep_json":400000}
