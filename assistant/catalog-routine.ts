@@ -12,13 +12,13 @@ export type SelectionItem={id:string;name?:string;time?:string};
 export type Action='keep'|'pause'|'replace'|'verify'|'professional';
 export type PlanAction={id:string;name:string;action:Action;reason:string;schedule?:string;alternatives?:Suggestion[]};
 export type Suggestion={id:string;name:string;owned:boolean;why:string};
-export type Finding={severity:'info'|'caution'|'avoid';text:string;ids:string[]};
+export type Finding={severity:'info'|'caution'|'avoid';text:string;ids:string[];kind?:string};
 export type RoutineCheck={
   engine:string;catalogVersion:string;state:SkinState;lead:string;reasons:string[];
   fit:Finding[];interactions:Finding[];actions:PlanAction[];gaps:Array<{role:string;text:string;suggestions:Suggestion[]}>;
   reintroduce:string[];purchaseNeeded:boolean;coverage:{sourced:string[];declared:string[];unknown:string[]};text:string;
 };
-type SkinState={oily:boolean;dry:boolean;compromised:boolean;suspectBarrier:boolean;sensitive:boolean;acne:boolean;pregnancy:boolean;medical:boolean;fragranceAvoid:boolean;whiteCastAvoid:boolean;skinLabel:string;goal:string};
+export type SkinState={oily:boolean;dry:boolean;compromised:boolean;suspectBarrier:boolean;sensitive:boolean;acne:boolean;pregnancy:boolean;medical:boolean;fragranceAvoid:boolean;whiteCastAvoid:boolean;skinLabel:string;goal:string};
 
 export const CATALOG_ROUTINE_ENGINE='catalog-routine-2026-10-13.1';
 
@@ -134,13 +134,15 @@ const normTime=(t:unknown):Slot=>t==='am'||t==='صبح'?'am':'pm';
 const slotFa=(t:Slot)=>t==='am'?'صبح':'شب';
 
 // ---------- purchase fit: does THIS product suit THIS skin and goal? (decisive, product-level) ----------
+// Which actives serve which goal: only links stated by the sources in ingredient-guide.ts
+// (DermNet, British Skin Foundation, JCAD). A brand's own claim still counts through `claims`.
 const GOALS:Array<{re:RegExp;label:string;cls:string[];claims:string[]}>=[
-  {re:/جوش/,label:'کاهش جوش',cls:['BHA','AZELAIC','VITAMIN_B3','ZINC','RETINOID'],claims:['acne']},
-  {re:/لک/,label:'کاهش لک',cls:['AZELAIC','VITC','VITC_LAA','VITC_DERIV','TXA','ARBUTIN','VITAMIN_B3','RETINOID','CYSTEAMINE'],claims:['pigmentation','dull']},
-  {re:/آبرسانی|محافظ/,label:'آبرسانی',cls:['HUMECTANT','CERAMIDE','SOOTHING'],claims:['dry','damaged']},
-  {re:/قرمزی/,label:'کاهش قرمزی',cls:['AZELAIC','SOOTHING','VITAMIN_B3'],claims:['redness','sensitive']},
-  {re:/چربی/,label:'کنترل چربی',cls:['VITAMIN_B3','BHA','ZINC'],claims:['oily','pores']},
-  {re:/پیری|چروک/,label:'ضدپیری',cls:['RETINOID','PEPTIDE','VITC','VITC_LAA','VITC_DERIV','BAKUCHIOL'],claims:['aging','mature']}];
+  {re:/جوش/,label:'کاهش جوش',cls:['BHA','AZELAIC','RETINOID'],claims:['acne']},
+  {re:/لک/,label:'کاهش لک',cls:['AZELAIC','VITC','VITC_LAA','VITC_DERIV','VITAMIN_B3'],claims:['pigmentation','dull']},
+  {re:/آبرسانی|محافظ/,label:'آبرسانی',cls:['HUMECTANT','CERAMIDE'],claims:['dry','damaged']},
+  {re:/قرمزی/,label:'کاهش قرمزی',cls:['AZELAIC'],claims:['redness','sensitive']},
+  {re:/چربی/,label:'کنترل چربی',cls:[],claims:['oily','pores']},
+  {re:/پیری|چروک/,label:'ضدپیری',cls:['RETINOID','VITC','VITC_LAA','VITC_DERIV'],claims:['aging','mature']}];
 export type PurchaseFit={verdict:'good'|'ok'|'bad'|'not_now';reason:string;goal:boolean;score:number};
 export function purchaseFit(f:Formula,s:SkinState):PurchaseFit{
   const c=f.claims,on=leaveOn(f);
@@ -234,8 +236,8 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
 
   // 5. Chemistry and timing for actives that remain in use.
   const active=(x:typeof known[number])=>{const a=plan.get(x.id);return !a||a.action==='keep'||a.action==='verify';};
-  for(const x of known)if(x.time==='am'&&has(x.f,'RETINOID')&&active(x)){interactions.push({severity:'caution',text:x.name+' رتینوئید دارد؛ آن را به روتین شب منتقل کن',ids:[x.id]});set(x.id,'keep','رتینوئید است؛ فقط شب استفاده شود',{schedule:'فقط شب'});x.time='pm';}
-  for(const x of known)if(x.time==='pm'&&x.f.role==='sunscreen')interactions.push({severity:'info',text:x.name+' ضدآفتاب است و جایش در روتین صبح است',ids:[x.id]});
+  for(const x of known)if(x.time==='am'&&has(x.f,'RETINOID')&&active(x)){interactions.push({severity:'caution',text:x.name+' رتینوئید دارد؛ آن را به روتین شب منتقل کن',ids:[x.id],kind:'ret_am'});set(x.id,'keep','رتینوئید است؛ فقط شب استفاده شود',{schedule:'فقط شب'});x.time='pm';}
+  for(const x of known)if(x.time==='pm'&&x.f.role==='sunscreen')interactions.push({severity:'info',text:x.name+' ضدآفتاب است و جایش در روتین صبح است',ids:[x.id],kind:'sun_pm'});
   for(const slot of ['am','pm'] as Slot[]){
     const inSlot=known.filter(x=>x.time===slot&&active(x));
     const retinoid=inSlot.filter(x=>leaveOn(x.f)&&has(x.f,'RETINOID'));
@@ -245,25 +247,25 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
     const cyst=inSlot.filter(x=>has(x.f,'CYSTEAMINE'));
     const careful=s.suspectBarrier||s.sensitive;
     if(retinoid.length&&acids.length){
-      interactions.push({severity:'caution',text:retinoid.map(x=>x.name).join('، ')+' و '+acids.map(x=>x.name).join('، ')+' در یک '+slotFa(slot)+'؛ تداخل شیمیایی مطلق نیست ولی تحریک تجمعی بالا می‌رود',ids:[...retinoid,...acids].map(x=>x.id)});
+      interactions.push({severity:'caution',text:retinoid.map(x=>x.name).join('، ')+' و '+acids.map(x=>x.name).join('، ')+' در یک '+slotFa(slot)+'؛ تداخل شیمیایی مطلق نیست ولی تحریک تجمعی بالا می‌رود',ids:[...retinoid,...acids].map(x=>x.id),kind:'ret_acid'});
       retinoid.forEach(x=>set(x.id,'keep','رتینوئید را نگه دار ولی با لایه‌بردار هم‌شب نکن',{schedule:'شب‌های زوج'}));
       acids.forEach(x=>set(x.id,'keep','لایه‌بردار را با رتینوئید در یک شب نزن',{schedule:'شب‌های فرد'}));
     }
     if(acids.length>1){
-      interactions.push({severity:'caution',text:'چند لایه‌بردار ماندگار در یک '+slotFa(slot)+': '+acids.map(x=>x.name).join('، '),ids:acids.map(x=>x.id)});
+      interactions.push({severity:'caution',text:'چند لایه‌بردار ماندگار در یک '+slotFa(slot)+': '+acids.map(x=>x.name).join('، '),ids:acids.map(x=>x.id),kind:'acid_acid'});
       acids.slice(1).forEach(x=>set(x.id,'pause','با '+acids[0].name+' هم‌پوشانی دارد؛ یک لایه‌بردار ماندگار کافی است'));
     }
     if(retinoid.length&&azelaic.length){
-      interactions.push({severity:careful?'caution':'info',text:retinoid.map(x=>x.name).join('، ')+' و '+azelaic.map(x=>x.name).join('، ')+' تداخل شیمیایی ندارند'+(careful?'؛ ولی با لایه محافظ مشکوک یا پوست حساس، شب‌ها را جدا کن':'؛ اگر سوزش دیدی شب‌ها را جدا کن'),ids:[...retinoid,...azelaic].map(x=>x.id)});
+      interactions.push({severity:careful?'caution':'info',text:retinoid.map(x=>x.name).join('، ')+' و '+azelaic.map(x=>x.name).join('، ')+' تداخل شیمیایی ندارند'+(careful?'؛ ولی با لایه محافظ مشکوک یا پوست حساس، شب‌ها را جدا کن':'؛ اگر سوزش دیدی شب‌ها را جدا کن'),ids:[...retinoid,...azelaic].map(x=>x.id),kind:'ret_aze'});
       if(careful){retinoid.forEach(x=>{if(!plan.get(x.id)?.schedule)set(x.id,'keep','با آزلائیک در یک شب نزن',{schedule:'شب‌های زوج'});});azelaic.forEach(x=>set(x.id,'keep','با رتینوئید در یک شب نزن',{schedule:'شب‌های فرد'}));}
     }
-    if(vitc.length&&acids.length)interactions.push({severity:'caution',text:'ویتامین C قوی و لایه‌بردار در یک '+slotFa(slot)+'؛ برای کم کردن سوزش در دو نوبت جدا استفاده کن',ids:[...vitc,...acids].map(x=>x.id)});
-    if(cyst.length&&inSlot.length>cyst.length)interactions.push({severity:'caution',text:cyst.map(x=>x.name).join('، ')+' تماس کوتاه دارد؛ طبق زمان روی بسته بشوی و هم‌زمان اکتیو دیگری نزن',ids:cyst.map(x=>x.id)});
+    if(vitc.length&&acids.length)interactions.push({severity:'caution',text:'ویتامین C قوی و لایه‌بردار در یک '+slotFa(slot)+'؛ برای کم کردن سوزش در دو نوبت جدا استفاده کن',ids:[...vitc,...acids].map(x=>x.id),kind:'vitc_acid'});
+    if(cyst.length&&inSlot.length>cyst.length)interactions.push({severity:'caution',text:cyst.map(x=>x.name).join('، ')+' تماس کوتاه دارد؛ طبق زمان روی بسته بشوی و هم‌زمان اکتیو دیگری نزن',ids:cyst.map(x=>x.id),kind:'cyst'});
     const bhaWash=inSlot.filter(x=>x.f.rinseOff&&has(x.f,'BHA')),bhaLeave=inSlot.filter(x=>leaveOn(x.f)&&has(x.f,'BHA')&&strength(x.f)>=1.5);
-    if(bhaWash.length&&bhaLeave.length)interactions.push({severity:'info',text:bhaWash[0].name+' آبکشی می‌شود ولی کنار '+bhaLeave[0].name+' برای پوست حساس زیاد است',ids:[bhaWash[0].id,bhaLeave[0].id]});
+    if(bhaWash.length&&bhaLeave.length)interactions.push({severity:'info',text:bhaWash[0].name+' آبکشی می‌شود ولی کنار '+bhaLeave[0].name+' برای پوست حساس زیاد است',ids:[bhaWash[0].id,bhaLeave[0].id],kind:'bha_wash'});
     const vit=inSlot.filter(x=>has(x.f,'VITAMIN_B3')),c=inSlot.filter(x=>has(x.f,'VITC')||has(x.f,'VITC_LAA')||has(x.f,'VITC_DERIV'));
-    if(vit.length&&c.length&&vit.some(v=>!c.includes(v)))interactions.push({severity:'info',text:'نیاسینامید و ویتامین C با هم مشکل ثابت‌شده‌ای ندارند؛ فقط اگر قرمزی دیدی جدا کن',ids:[...vit,...c].map(x=>x.id)});
-    for(const role of ['sunscreen','cleanser']){const same=inSlot.filter(x=>x.f.role===role&&!(role==='cleanser'&&x.f.claims.includes('eye')));if(same.length>1)interactions.push({severity:'info',text:'دو '+ROLE_FA[role]+' در '+slotFa(slot)+': '+same.map(x=>x.name).join('، ')+'؛ در یک نوبت یکی کافی است',ids:same.map(x=>x.id)});}
+    if(vit.length&&c.length&&vit.some(v=>!c.includes(v)))interactions.push({severity:'info',text:'نیاسینامید و ویتامین C با هم مشکل ثابت‌شده‌ای ندارند؛ فقط اگر قرمزی دیدی جدا کن',ids:[...vit,...c].map(x=>x.id),kind:'niac_vitc'});
+    for(const role of ['sunscreen','cleanser']){const same=inSlot.filter(x=>x.f.role===role&&!(role==='cleanser'&&x.f.claims.includes('eye')));if(same.length>1)interactions.push({severity:'info',text:'دو '+ROLE_FA[role]+' در '+slotFa(slot)+': '+same.map(x=>x.name).join('، ')+'؛ در یک نوبت یکی کافی است',ids:same.map(x=>x.id),kind:'dup_role'});}
   }
 
   // 6. Gaps: what the routine is missing. Prefer what the user already owns.
@@ -304,7 +306,7 @@ function keepReason(f:Formula,s:SkinState){
   if(f.role==='sunscreen')return 'ضدآفتاب صبح'+(f.spf?' با SPF'+f.spf:'')+(s.oily&&(f.claims.includes('oily')||/light|serum|fluid/.test(f.texture))?' و بافت سبک، برای پوست چرب مناسب است':'')+'؛ هر روز و کافی بزن';
   if(gentleCleanser(f))return 'شوینده ملایم'+(scented(f)?'':' بدون عطر')+'؛ پایه روتین است';
   if(f.role==='moisturizer')return 'مرطوب‌کننده'+(/watery|gel|light|fluid/.test(f.texture)?' سبک':'')+(has(f,'CERAMIDE')?' با سرامید':'')+'؛ از لایه محافظ حمایت می‌کند';
-  if(actives)return actives+(s.acne&&(has(f,'AZELAIC')||has(f,'BHA')||has(f,'VITAMIN_B3'))?' با هدف کنترل جوش تو هم‌راستاست':'')+'؛ با تحمل پوست ادامه بده';
+  if(actives)return actives+(s.acne&&(has(f,'AZELAIC')||has(f,'BHA')||has(f,'RETINOID'))?' با هدف کنترل جوش تو هم‌راستاست':'')+'؛ با تحمل پوست ادامه بده';
   return (ROLE_FA[f.role]||'محصول')+' بدون اکتیو قوی؛ تداخلی با بقیه ندارد';
 }
 

@@ -51,5 +51,20 @@ for d,_,fs in os.walk(root):
     except Exception as e: pass
 print('images shrunk by %.1f MB'%(saved/1e6))
 `,dest],{encoding:'utf8'});console.log((r.stdout||r.stderr||'').trim())}
+// small webp thumbnails for catalog photos: lists show 44–96px images, so the app never downloads full photos just to draw a row
+{const {spawnSync}=await import('node:child_process');const r=spawnSync('python3',['-c',`
+import os,sys
+from PIL import Image
+src=os.path.join(sys.argv[1],'assets');dst=os.path.join(sys.argv[1],'t');n=0;size=0
+for d,_,fs in os.walk(src):
+  for f in fs:
+    if not f.lower().endswith(('.png','.jpg','.jpeg','.webp')): continue
+    p=os.path.join(d,f);rel=os.path.relpath(p,src);out=os.path.join(dst,os.path.splitext(rel)[0]+'.webp')
+    try:
+      im=Image.open(p);im.thumbnail((192,192));os.makedirs(os.path.dirname(out),exist_ok=True)
+      (im.convert('RGBA') if im.mode in ('P','LA','RGBA') else im.convert('RGB')).save(out,'WEBP',quality=72,method=6);n+=1;size+=os.path.getsize(out)
+    except Exception as e: pass
+print('thumbs: %d files, %.0f KB'%(n,size/1e3))
+`,dest],{encoding:'utf8'});console.log((r.stdout||r.stderr||'').trim())}
 let n=0,bytes=0;(function walk(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())walk(p);else{n++;bytes+=fs.statSync(p).size}}})(out);
 console.log('lite/public:',n,'files,',(bytes/1e6).toFixed(1),'MB, version',version);

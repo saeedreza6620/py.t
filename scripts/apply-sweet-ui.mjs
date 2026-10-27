@@ -4,6 +4,10 @@ import fs from 'node:fs';import path from 'node:path';import {bwReviewBundle} fr
 const src=new URL('../',import.meta.url).pathname,legacy=path.join(src,'public/legacy');
 const VERSION=process.argv[2]||'68';
 for(const f of ['fresh.css','fresh.js','sweet.css','sweet.js','lilac.css'])fs.copyFileSync(path.join(src,'claude',f),path.join(legacy,f));
+// light thumbnails of catalog photos hosted elsewhere (made by .github/workflows/thumbs.yml)
+{const tdir=path.join(src,'claude/thumbs-ext'),ids=fs.existsSync(tdir)?fs.readdirSync(tdir).filter(f=>f.endsWith('.webp')).map(f=>f.slice(0,-5)):[];
+ const out=path.join(legacy,'t/ext');fs.mkdirSync(out,{recursive:true});ids.forEach(id=>fs.copyFileSync(path.join(tdir,id+'.webp'),path.join(out,id+'.webp')));
+ const sj=path.join(legacy,'sweet.js');fs.writeFileSync(sj,fs.readFileSync(sj,'utf8').replace('/*EXT_THUMBS*/[]','/*EXT_THUMBS*/'+JSON.stringify(ids)));}
 fs.writeFileSync(path.join(legacy,'bw-review.js'),bwReviewBundle(src));
 let html=fs.readFileSync(path.join(legacy,'index.html'),'utf8');
 html=html.replace(/\?v=\d+/g,'?v='+VERSION);

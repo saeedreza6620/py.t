@@ -25,6 +25,32 @@ Also classify the product for BeautyWallet's skin engine, using ONLY these value
 "image_url": the https URL of the official product photo (brand site or a big retailer), or null
 Add these keys to the same JSON object.`;
 
+// ---------- INCI cross-check: an active counts only if it is really on the ingredient list ----------
+export const INCI_RULES=[
+ ['RETINOID',/\b(retinol|retinal|retinaldehyde|retinyl (palmitate|propionate|acetate)|hydroxypinacolone retinoate|adapalene|tretinoin|tazarotene)\b/i],
+ ['BHA',/\bsalicylic acid\b|\bbetaine salicylate\b|\bwillow bark extract\b/i],
+ ['AHA',/\b(glycolic|lactic|mandelic|malic|tartaric) acid\b/i],
+ ['PHA',/\b(gluconolactone|lactobionic acid)\b/i],
+ ['AZELAIC',/\b(azelaic acid|potassium azeloyl diglycinate)\b/i],
+ ['VITAMIN_B3',/\bniacinamide\b/i],
+ ['VITC_LAA',/(^|,\s*)ascorbic acid\b/i],
+ ['VITC_DERIV',/\b(ascorbyl glucoside|3-o-ethyl ascorbic acid|ethyl ascorbic acid|sodium ascorbyl phosphate|magnesium ascorbyl phosphate|ascorbyl tetraisopalmitate|tetrahexyldecyl ascorbate|ascorbyl palmitate)\b/i],
+ ['TXA',/\btranexamic acid\b/i],
+ ['ARBUTIN',/\b(alpha-arbutin|arbutin)\b/i],
+ ['CYSTEAMINE',/\bcysteamine\b/i],
+ ['CERAMIDE',/\bceramide\b/i],
+ ['HUMECTANT',/\b(sodium hyaluronate|hyaluronic acid|hydrolyzed hyaluronic acid)\b/i],
+ ['SOOTHING',/\b(centella asiatica|madecassoside|asiaticoside|panthenol|allantoin)\b/i],
+ ['ZINC',/\bzinc (pca|gluconate|sulfate)\b/i],
+ ['BAKUCHIOL',/\bbakuchiol\b/i],
+ ['PEPTIDE',/\b(palmitoyl|acetyl hexapeptide|copper tripeptide|peptide)\b/i],
+ ['ENZYME',/\b(papain|bromelain|subtilisin|protease)\b/i]];
+// exfoliating acids low in the list are often pH adjusters, not actives
+const POS_LIMIT={AHA:0.66};
+export function inciClasses(inci){const items=String(inci||'').split(/,\s*/).map(s=>s.trim()).filter(Boolean);const out=new Set();
+ items.forEach((it,i)=>{for(const [cls,rx] of INCI_RULES){if(!rx.test(it))continue;if(POS_LIMIT[cls]&&items.length>8&&i/items.length>POS_LIMIT[cls])continue;out.add(cls)}});return out}
+export const inciFragrance=inci=>/(^|,\s*)(parfum|fragrance|aroma)\b/i.test(String(inci||''));
+
 export const normName=q=>String(q||'').toLowerCase().replace(/[ي]/g,'ی').replace(/[ك]/g,'ک').replace(/[‌\s\-_.,،()\/+]+/g,' ').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).trim().slice(0,160);
 const tokens=s=>normName(s).split(' ').filter(t=>t.length>=2);
 
@@ -52,6 +78,11 @@ export function makeBank(DATA){
     const actives=(Array.isArray(j.actives)?j.actives:[]).filter(a=>a&&CLS.includes(a.cls)).slice(0,12).map(a=>({cls:a.cls,name:String(a.name||a.cls).slice(0,60),...(Number.isFinite(Number(a.pct))&&a.pct!==null?{pct:Number(a.pct),declared:true}:{})}));
     const flags=list(j.flags,FLAGS);if(j.fragrance===true&&!flags.includes('fragrance'))flags.push('fragrance');if((j.essential_oils||[]).length&&!flags.includes('essential_oil'))flags.push('essential_oil');
     const inci=(j.inci||[]).map(v=>String(v).trim()).filter(Boolean);
+    // with a real INCI list, the list decides: drop actives the model named but the list doesn't have, add the ones it missed
+    if(inci.length>=5){const got=inciClasses(inci.join(', '));const kept=actives.filter(a=>got.has(a.cls)||(a.cls==='VITC'&&(got.has('VITC_LAA')||got.has('VITC_DERIV'))));
+      for(const c of got)if(!kept.some(a=>a.cls===c||(a.cls==='VITC'&&c.startsWith('VITC'))))kept.push({cls:c,name:(inci.find(x=>INCI_RULES.find(r=>r[0]===c)[1].test(x))||c).slice(0,60)});
+      actives.splice(0,actives.length,...kept.slice(0,12));
+      if(inciFragrance(inci.join(', '))){if(!flags.includes('fragrance'))flags.push('fragrance')}else{const k=flags.indexOf('fragrance');if(k>=0)flags.splice(k,1)}}
     const urls=(sources||[]).map(s=>s&&s.url).filter(u=>/^https:\/\//.test(u||'')).slice(0,4);
     const name_en=String(j.name_en||'').slice(0,120),brand=String(j.brand||'').slice(0,60);
     const id='bank-'+crypto.createHash('sha1').update(normName(brand+' '+(name_en||j.name_fa||query))).digest('hex').slice(0,10);

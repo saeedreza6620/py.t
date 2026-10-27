@@ -2,9 +2,9 @@
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import ts from 'typescript';import assert from 'node:assert/strict';
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),'bw-catalog-'));
 const t=f=>ts.transpile(fs.readFileSync(f,'utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});
-fs.writeFileSync(path.join(dir,'catalog-routine.mjs'),t('assistant/catalog-routine.ts'));
+fs.writeFileSync(path.join(dir,'catalog-routine.mjs'),t('assistant/catalog-routine.ts'));fs.writeFileSync(path.join(dir,'ingredient-guide.mjs'),t('assistant/ingredient-guide.ts'));
 fs.copyFileSync('assistant/resources/catalog-formulas.json',path.join(dir,'catalog-formulas.json'));
-fs.writeFileSync(path.join(dir,'catalog-review.mjs'),t('assistant/catalog-review.ts').replace("'./catalog-routine'","'./catalog-routine.mjs'").replace(/from '\.\/resources\/catalog-formulas\.json';/,"from './catalog-formulas.json' with {type:'json'};"));
+fs.writeFileSync(path.join(dir,'catalog-review.mjs'),t('assistant/catalog-review.ts').replace("'./catalog-routine'","'./catalog-routine.mjs'").replace("'./ingredient-guide'","'./ingredient-guide.mjs'").replace(/from '\.\/resources\/catalog-formulas\.json';/,"from './catalog-formulas.json' with {type:'json'};"));
 const m=await import(path.join(dir,'catalog-review.mjs'));
 const oily={profile:{skinBase:'چرب',skinToday:'جوش فعال',barrier:'احتمالاً آسیب‌دیده',symptoms:['سوزش']},selection:[{id:'boj-relief',name:'',time:'am'},{id:'somebymi-retinol',name:'',time:'pm'}],ownedIds:[],owned:[]};
 const check=m.catalogRoutineCheck(oily);assert(m.catalogCovers(check));

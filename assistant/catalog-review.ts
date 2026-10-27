@@ -2,6 +2,7 @@
 // The catalog result is the decision; the AI model (when reachable) only explains it.
 import {evaluateRoutine,skinState,purchaseFit,bestForSkin,CATALOG_ROUTINE_ENGINE,type CatalogFormulas,type RoutineCheck} from './catalog-routine';
 import data from './resources/catalog-formulas.json';
+import {explainPurchase,type Explain} from './ingredient-guide';
 
 export const CATALOG=data as unknown as CatalogFormulas;
 export type CatalogFallbackReason='api_not_configured'|'provider_unavailable'|'rate_limited'|'no_answer'|'ungrounded';
@@ -59,7 +60,7 @@ export function findCatalogProduct(productId:unknown,productName:unknown){
   const id=typeof productId==='string'?productId.trim():'',name=typeof productName==='string'?productName.trim():'';
   return CATALOG.products.find(p=>id&&p.id===id)||CATALOG.products.find(p=>name&&(p.name===name||p.en===name))||null;
 }
-export type CatalogPurchase={productId:string;name:string;decision:'buy'|'wait'|'avoid';answer:string;lead:string;check:RoutineCheck;basis:string};
+export type CatalogPurchase={productId:string;name:string;decision:'buy'|'wait'|'avoid';answer:string;lead:string;check:RoutineCheck;basis:string;explain:Explain};
 export function catalogPurchaseCheck(shared:Shared,productId:unknown,productName:unknown):CatalogPurchase|null{
   const f=findCatalogProduct(productId,productName);if(!f)return null;
   const ownedNames=Array.isArray(shared.owned)?shared.owned.filter((x):x is string=>typeof x==='string'):[];
@@ -86,7 +87,10 @@ export function catalogPurchaseCheck(shared:Shared,productId:unknown,productName
   if(f.basis==='declared_name')reasons.push('فهرست ترکیبات این نسخه هنوز در کاتالوگ ثبت نشده');
   const lead=check.state.skinLabel?'برای پوست '+check.state.skinLabel+(check.state.acne?' با جوش فعال':'')+(check.state.compromised?' و لایه محافظ تحریک‌شده':''):'بر اساس پروفایل ثبت‌شده';
   const answer=[head,...reasons.slice(0,3),lead+'؛ این نتیجه از فرمول ثبت‌شده همین محصول در کاتالوگ BeautyWallet است'].join('\n');
-  return {productId:f.id,name:f.name,decision,answer,lead:reasons[0]||head,check,basis:f.basis};
+  const byId=new Map(CATALOG.products.map(p=>[p.id,p]));
+  const items=shared.selection.filter(x=>x.id!==f.id&&byId.has(x.id)).map(x=>({id:x.id,name:byId.get(x.id)!.name,time:(x.time==='am'||x.time==='صبح'?'am':'pm') as 'am'|'pm',f:byId.get(x.id)!}));
+  const explain=explainPurchase(f,st,items,{decision,inRoutine:shared.selection.some(x=>x.id===f.id)});
+  return {productId:f.id,name:f.name,decision,answer,lead:reasons[0]||head,check,basis:f.basis,explain};
 }
 export function catalogPurchasePrompt(p:CatalogPurchase){
   const f=CATALOG.products.find(x=>x.id===p.productId)!;
