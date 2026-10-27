@@ -1,0 +1,33 @@
+# Makes small local webp thumbnails for catalog photos that live on other sites (claude/ext-images.json),
+# so the app never downloads an 800px foreign photo just to draw a 56px row. Commits them to claude/thumbs-ext/.
+name: Catalog thumbnails
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  thumbs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and shrink
+        run: |
+          pip install --quiet pillow
+          python3 - <<'PY'
+          import json,os,io,urllib.request
+          from PIL import Image
+          src=json.load(open('claude/ext-images.json'));os.makedirs('claude/thumbs-ext',exist_ok=True);ok=0
+          for pid,url in src.items():
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36','Accept':'image/avif,image/webp,image/*,*/*'})
+              data=urllib.request.urlopen(req,timeout=30).read();im=Image.open(io.BytesIO(data));im.thumbnail((192,192))
+              im=im.convert('RGBA') if im.mode in ('P','LA','RGBA') else im.convert('RGB')
+              im.save('claude/thumbs-ext/%s.webp'%pid,'WEBP',quality=72,method=6);ok+=1
+              print('::notice title=%s::%d bytes'%(pid,os.path.getsize('claude/thumbs-ext/%s.webp'%pid)))
+            except Exception as e: print('::warning title=%s::%s'%(pid,str(e)[:200]))
+          print('::notice title=thumbs::%d of %d'%(ok,len(src)))
+          PY
+      - name: Commit
+        run: |
+          git config user.name "beautywallet-bot";git config user.email "bot@users.noreply.github.com"
+          git add claude/thumbs-ext && git commit -m "catalog: local thumbnails for external photos" && git push || echo "nothing new"
