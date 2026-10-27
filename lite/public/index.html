@@ -18,22 +18,28 @@
  var app=false;try{app=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
  if(app)location.replace('/legacy/')})();
 </script>
-<link rel="stylesheet" href="/site.css?v=3">
+<link rel="stylesheet" href="/site.css?v=4">
 <style>
 .hero{padding:34px 18px 24px;text-align:center;position:relative;overflow:hidden}
 .hero>*{position:relative;z-index:1}
 .hero:before{content:"";position:absolute;z-index:0;left:50%;top:40px;width:min(560px,120%);height:420px;transform:translateX(-50%);background:radial-gradient(closest-side at 35% 45%,rgba(152,206,255,.55),transparent),radial-gradient(closest-side at 68% 55%,rgba(255,190,214,.55),transparent),radial-gradient(closest-side at 50% 80%,rgba(255,226,170,.45),transparent);filter:blur(10px);pointer-events:none}
-.gem{width:92px;height:92px;margin:0 auto 6px;position:relative;display:block}
-.gem img{width:100%;height:100%;filter:drop-shadow(0 10px 24px rgba(74,168,240,.55));animation:glint 4s ease-in-out infinite}
-.gem:after{content:"";position:absolute;inset:-18px;border-radius:50%;background:radial-gradient(circle,rgba(152,206,255,.55),transparent 65%);z-index:-1;animation:halo 4s ease-in-out infinite}
-@keyframes glint{50%{transform:translateY(-4px) rotate(-3deg);filter:drop-shadow(0 14px 28px rgba(232,121,159,.5)) brightness(1.08)}}
+.mirror{width:132px;height:170px;margin:0 auto 4px;position:relative;display:block}
+.mirror svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 14px 22px rgba(120,90,40,.28))}
+.mirror:after{content:"";position:absolute;left:-10px;right:-10px;top:-6px;height:150px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,236,190,.75),rgba(152,206,255,.35) 60%,transparent);z-index:-1;animation:halo 4s ease-in-out infinite}
+.mirror .gm{animation:glint 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.mirror .sweep{animation:sweep 5s ease-in-out infinite}
+.mirror .bulb{animation:tw 2.4s ease-in-out infinite}
+.mirror .bulb:nth-child(2n){animation-delay:-1.2s}
+@keyframes sweep{0%,55%{transform:translateX(-90px)}85%,100%{transform:translateX(90px)}}
+@keyframes tw{50%{opacity:.55}}
+@keyframes glint{50%{transform:translateY(-3px) rotate(-3deg)}}
 @keyframes halo{50%{transform:scale(1.12);opacity:.7}}
 .hero .leaf.l1{top:-8px;right:-40px;width:170px;transform:rotate(18deg);--r2:12deg}
 .hero .leaf.l2{bottom:10px;left:-50px;width:150px;transform:scaleX(-1) rotate(10deg);animation-delay:-3s}
 .hero .drop.d1{width:22px;height:22px;top:120px;left:12%}
 .hero .drop.d2{width:14px;height:14px;top:60px;right:22%;animation-delay:-2s}
 .hero .drop.d3{width:30px;height:30px;bottom:70px;right:8%;animation-delay:-4s}
-@media (prefers-reduced-motion:reduce){.gem img,.gem:after{animation:none}}
+@media (prefers-reduced-motion:reduce){.mirror *,.mirror:after{animation:none!important}}
 .hero h1{font-family:var(--display);font-size:clamp(36px,10vw,72px);line-height:1.45;font-weight:700;margin:0}
 .hero p{color:var(--ink2);font-size:clamp(16px,4.4vw,19px);margin:14px auto 0;max-width:30em}
 .hint{display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:26px;color:var(--ink2);font-size:14px}
@@ -133,9 +139,33 @@
 <body>
 <main>
   <section class="hero wrap" aria-labelledby="h1">
-    <img class="leaf l1" src="/leaf.svg" alt=""><img class="leaf l2" src="/leaf.svg" alt="">
+    <img class="leaf l1" src="/leaf.svg?v=4" alt=""><img class="leaf l2" src="/leaf2.svg?v=4" alt="">
     <span class="drop d1"></span><span class="drop d2"></span><span class="drop d3"></span>
-    <span class="gem"><img src="/legacy/bw-gem-512.png" alt="" width="92" height="92"></span>
+    <span class="mirror" role="img" aria-label="آینه‌ی روتین صبح و شب">
+      <svg viewBox="0 0 120 155" aria-hidden="true">
+        <defs>
+          <linearGradient id="mf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dc9a"/><stop offset=".45" stop-color="#c9952f"/><stop offset=".7" stop-color="#f3d58c"/><stop offset="1" stop-color="#a87520"/></linearGradient>
+          <linearGradient id="mg" x1="0" y1="0" x2=".6" y2="1"><stop offset="0" stop-color="#eef8ff"/><stop offset=".55" stop-color="#d9ecff"/><stop offset="1" stop-color="#ffe3ee"/></linearGradient>
+          <radialGradient id="mb"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#fff6d8"/><stop offset="1" stop-color="#ffd98a" stop-opacity=".2"/></radialGradient>
+          <clipPath id="mc"><ellipse cx="60" cy="62" rx="38" ry="48"/></clipPath>
+        </defs>
+        <rect x="56.5" y="110" width="7" height="30" rx="3" fill="url(#mf)"/>
+        <ellipse cx="60" cy="142" rx="30" ry="7" fill="url(#mf)"/>
+        <ellipse cx="60" cy="140.5" rx="22" ry="3.2" fill="#fff" opacity=".35"/>
+        <ellipse cx="60" cy="62" rx="47" ry="57" fill="url(#mf)"/>
+        <ellipse cx="60" cy="62" rx="42" ry="52" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.2"/>
+        <ellipse cx="60" cy="62" rx="38" ry="48" fill="url(#mg)"/>
+        <g clip-path="url(#mc)">
+          <path d="M14 70 54 8h10L24 76zM30 104 82 24h6L38 110z" fill="#fff" opacity=".55"/>
+          <g class="sweep"><path d="M44 120 76 0h14L58 120z" fill="#fff" opacity=".7"/></g>
+          <image class="gm" href="/legacy/bw-gem-512.png" x="33" y="36" width="54" height="54"/>
+        </g>
+        <ellipse cx="60" cy="62" rx="38" ry="48" fill="none" stroke="#8a6420" stroke-opacity=".35"/>
+        <g><circle class="bulb" cx="74.5" cy="7.8" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="98.0" cy="28.5" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="107.0" cy="62.0" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="98.0" cy="95.5" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="74.5" cy="116.2" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="45.5" cy="116.2" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="22.0" cy="95.5" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="13.0" cy="62.0" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="22.0" cy="28.5" r="2.6" fill="url(#mb)"/><circle class="bulb" cx="45.5" cy="7.8" r="2.6" fill="url(#mb)"/></g>
+        <g transform="translate(14 128)"><circle r="8" fill="#fff4cc"/><circle r="4.2" fill="#f4b740"/><g stroke="#f4b740" stroke-width="1.4" stroke-linecap="round"><path d="M0-7.5v-2M0 7.5v2M-7.5 0h-2M7.5 0h2M-5.3-5.3l-1.4-1.4M5.3 5.3l1.4 1.4M5.3-5.3l1.4-1.4M-5.3 5.3l-1.4 1.4"/></g></g>
+        <g transform="translate(106 128)"><circle r="8" fill="#e6e4ff"/><path d="M2.6-4.8a5.2 5.2 0 1 0 2.4 7.6 4.2 4.2 0 0 1-2.4-7.6z" fill="#7a6be0"/></g>
+      </svg>
+    </span>
     <h1 id="h1">قبل از خرید، با پوستت بسنج.</h1>
     <p>بیوتی‌ولت هر محصول مراقبت پوست رو با پوست و روتین خودت می‌سنجه و یه جواب روشن می‌ده: بخر، با احتیاط بخر، یا نخر.</p>
     <div class="hint" aria-hidden="true"><i></i>اسکرول کن و ببین سر یه سبد خرید معمولی چی میاد</div>
@@ -143,7 +173,7 @@
 
   <section class="story" id="story" aria-label="داستان یک سبد خرید">
     <div class="stage">
-      <img class="leaf s1" src="/leaf.svg" alt=""><img class="leaf s2" src="/leaf.svg" alt="">
+      <img class="leaf s1" src="/leaf.svg?v=4" alt=""><img class="leaf s2" src="/leaf2.svg?v=4" alt="">
       <ol class="rail" id="rail" aria-hidden="true"><li></li><li></li><li></li><li></li></ol>
       <div class="chlabel" id="chlabel" aria-hidden="true"></div>
       <div class="cap" id="cap" aria-live="polite"><b></b><span></span></div>
@@ -174,7 +204,7 @@
     </ul>
 
     <div class="final">
-      <img class="leaf" src="/leaf.svg" alt="">
+      <img class="leaf" src="/leaf.svg?v=4" alt="">
       <h2 style="margin-top:0">پولت پای محصول درست، پوستت در امان.</h2>
       <a class="btn big" href="/app">همین الان یه محصول رو بسنج</a>
       <a class="btn big soft" href="/install.html">نصب روی گوشی</a>
