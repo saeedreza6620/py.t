@@ -23,7 +23,7 @@ jobs:
         run: |
           npm i --no-save --no-audit --no-fund typescript@5.9.3 >/dev/null 2>&1
           fail(){ echo "::error title=$1::$(tail -c 700 /tmp/g.log | tr '\n' ' ' | sed 's/[^[:print:]]//g')"; exit 1; }
-          for t in test-skin-fit test-catalog-review test-catalog-routine test-bank test-explain; do node scripts/$t.mjs > /tmp/g.log 2>&1 || fail "$t"; done
+          for t in test-skin-fit test-catalog-review test-catalog-routine test-bank test-explain test-catalog-quality; do node scripts/$t.mjs > /tmp/g.log 2>&1 || fail "$t"; done
           node --input-type=module -e "import {bwReviewBundle} from './scripts/lib-bw-review.mjs';import fs from 'node:fs';if(bwReviewBundle(process.cwd()+'/')!==fs.readFileSync('lite/public/legacy/bw-review.js','utf8')){console.log('lite/public/legacy/bw-review.js is stale: run node scripts/build-lite.mjs');process.exit(1)}" > /tmp/g.log 2>&1 || fail "stale bundle"
           (node --check lite/server.mjs && node --check lite/admin.mjs) > /tmp/g.log 2>&1 || fail "syntax"
           mkdir -p /tmp/bwd && (cd lite && PORT=3999 DATA_DIR=/tmp/bwd ADMIN_TOKEN=ci node server.mjs > /tmp/bw.log 2>&1 &) && sleep 3
