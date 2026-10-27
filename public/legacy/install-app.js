@@ -47,7 +47,7 @@
     catch{buttons.forEach(item=>item.disabled=false);setButtonLabels();openGuide()}
   }));
   window.addEventListener('appinstalled',()=>{setInstalled();reportInstall();if(typeof toast==='function')toast('BeautyWallet به صفحهٔ اصلی اضافه شد')});
-  copy?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.origin+'/legacy/?v=98');copy.textContent='لینک کپی شد؛ در Safari باز کن'}catch{copy.textContent='آدرس سایت را از بالای مرورگر کپی کن'}});
+  copy?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.origin+'/legacy/?v=99');copy.textContent='لینک کپی شد؛ در Safari باز کن'}catch{copy.textContent='آدرس سایت را از بالای مرورگر کپی کن'}});
   // arriving from the site / QR code with ?install=1: show how to install right away
   if(/[?&]install=1/.test(location.search)&&!standalone())setTimeout(()=>{const b=buttons.find(x=>!x.hidden);if(deferredPrompt&&b){b.scrollIntoView({block:'center'});b.classList.add('bw-pulse')}else openGuide()},1600);
   document.getElementById('closeInstallDialog')?.addEventListener('click',()=>{if(typeof dialog.close==='function')dialog.close();else dialog.removeAttribute('open')});

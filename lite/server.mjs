@@ -136,21 +136,6 @@ async function digikalaImage(row){try{const q=(row.brand?row.brand+' ':'')+(row.
 async function ensureImage(row,first){if(!row||row.image)return;imgTried.set(row.id,Date.now());
   if(first)await fetchBankImage(row.id,first);const now=BANK.list().find(x=>x.id===row.id);if(now&&now.image)return;
   const u=await digikalaImage(row);if(u)await fetchBankImage(row.id,u)}
-// catalog prefill: the owner's list (lite/prefill.json) is researched slowly in the background with the same
-// web search + source check as a shopper's search. Results wait in /admin for the owner's approval.
-const PREFILL=(()=>{try{return JSON.parse(fs.readFileSync(path.join(here,'prefill.json'),'utf8'))}catch{return []}})();
-const PFS=path.join(DATA,'prefill-state.json');let pfs={};try{pfs=JSON.parse(fs.readFileSync(PFS,'utf8'))}catch{}
-let pfPause=0,pfBusy=false;
-async function prefillTick(){if(pfBusy||!KEY||!BASE||Date.now()<pfPause||String((cfg||{}).prefill)!=='on')return;const it=PREFILL.find(x=>x&&x.key&&!pfs[x.key]);if(!it)return;pfBusy=true;
-  try{const r=await research(it.name,'');let st='not_found',id='';
-    if(r.status===503){pfPause=Date.now()+60*60e3;return}
-    if(r.status===200&&r.body.found&&r.body.sourceVerified){const f=BANK.toFormula(r.body,it.name,r.body.sources,r.body.model);
-      if(f){if(it.replaces)f.replaces=it.replaces;const row=BANK.add(f,it.name,{pending:true,source:'prefill'});if(row){st='pending';id=row.id;ensureImage(row,it.image||r.body.image_url||'').catch(()=>{})}}}
-    else if(r.status===200&&r.body.found)st='unverified';else if(r.status!==200)st='error_'+r.status;
-    pfs[it.key]={at:new Date().toISOString(),status:st,id};try{fs.writeFileSync(PFS,JSON.stringify(pfs))}catch{}}
-  catch(e){pfPause=Date.now()+10*60e3}finally{pfBusy=false}}
-function prefillStats(){const c={total:PREFILL.length,done:0,pending:0,not_found:0,unverified:0,error:0};for(const v of Object.values(pfs)){c.done++;if(v.status==='pending')c.pending++;else if(v.status==='not_found')c.not_found++;else if(v.status==='unverified')c.unverified++;else c.error++}return c}
-setInterval(()=>{prefillTick().catch(()=>{})},2*60e3).unref?.();
 // backfill: a few products without a photo every 10 minutes (each retried at most once a week)
 setInterval(()=>{const wk=7*864e5,now=Date.now();BANK.list().filter(p=>!p.image&&now-(imgTried.get(p.id)||0)>wk).slice(0,3).reduce((a,p)=>a.then(()=>ensureImage(p,'')),Promise.resolve()).catch(()=>{})},10*60e3).unref?.();
 async function pageImage(u){try{if(!PAGE_HOSTS.test(new URL(u).hostname))return '';const r=await fetch(u,{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet'},redirect:'follow'});const h=(await r.text()).slice(0,300000);const m=h.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)/i);return m?m[1]:''}catch{return ''}}
@@ -337,7 +322,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'98'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'99'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -399,7 +384,6 @@ const server=http.createServer(async(req,res)=>{
       return send(res,200,{ok:true,ref,n:row.n,price:row.price});
     }
     if(url.pathname.startsWith('/bank-img/')){const f=path.join(IMGDIR,path.basename(url.pathname));return fs.stat(f,(e,st)=>{if(e||!st.isFile())return send(res,404,'','text/plain');const ext=path.extname(f).slice(1);res.writeHead(200,{'Content-Type':ext==='png'?'image/png':ext==='webp'?'image/webp':'image/jpeg','Cache-Control':'public, max-age=2592000, immutable'});fs.createReadStream(f).pipe(res)})}
-    if(url.pathname==='/prefill-status.json')return send(res,200,prefillStats(),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/wallet')return send(res,200,BANK.balance(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40),cfg),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/costs.json')return send(res,200,costs(),'application/json',{'Cache-Control':'no-store'});
