@@ -119,7 +119,7 @@ export function makeBank(DATA){
   // the shopper's own routine products are researched for free (they already own them); capped against abuse
   const ipRoutine=new Map();
   function routineFree(d,ip,cfg){if(!d)return false;const w=wallet(d);const day=new Date().toISOString().slice(0,10);const k=ip+'|'+day;
-    if((w.routine||0)>=(Number(cfg.freeRoutine)||40)||(ipRoutine.get(k)||0)>=(Number(cfg.freeRoutinePerIpDay)||25))return false;
+    if((w.routine||0)>=(Number(cfg.freeRoutine??5))||(ipRoutine.get(k)||0)>=(Number(cfg.freeRoutinePerIpDay)||25))return false;
     w.routine=(w.routine||0)+1;ipRoutine.set(k,(ipRoutine.get(k)||0)+1);save(WAL,wallets);return true}
   function routineBack(d){if(!d)return;const w=wallet(d);w.routine=Math.max(0,(w.routine||0)-1);save(WAL,wallets)}
   function adjust(d,delta){if(!d)return;const w=wallet(d);w.negin+=delta;save(WAL,wallets)}
