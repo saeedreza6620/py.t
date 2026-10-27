@@ -135,11 +135,34 @@ async function digikalaImage(row){try{const q=(row.brand?row.brand+' ':'')+(row.
 async function ensureImage(row,first){if(!row||row.image)return;imgTried.set(row.id,Date.now());
   if(first)await fetchBankImage(row.id,first);const now=BANK.list().find(x=>x.id===row.id);if(now&&now.image)return;
   const u=await digikalaImage(row);if(u)await fetchBankImage(row.id,u)}
+// catalog prefill: the owner's list (lite/prefill.json) is researched slowly in the background with the same
+// web search + source check as a shopper's search. Results wait in /admin for the owner's approval.
+const PREFILL=(()=>{try{return JSON.parse(fs.readFileSync(path.join(here,'prefill.json'),'utf8'))}catch{return []}})();
+const PFS=path.join(DATA,'prefill-state.json');let pfs={};try{pfs=JSON.parse(fs.readFileSync(PFS,'utf8'))}catch{}
+let pfPause=0,pfBusy=false;
+async function prefillTick(){if(pfBusy||!KEY||!BASE||Date.now()<pfPause||String((cfg||{}).prefill)==='off')return;const it=PREFILL.find(x=>x&&x.key&&!pfs[x.key]);if(!it)return;pfBusy=true;
+  try{const r=await research(it.name,'');let st='not_found',id='';
+    if(r.status===503){pfPause=Date.now()+60*60e3;return}
+    if(r.status===200&&r.body.found&&r.body.sourceVerified){const f=BANK.toFormula(r.body,it.name,r.body.sources,r.body.model);
+      if(f){if(it.replaces)f.replaces=it.replaces;const row=BANK.add(f,it.name,{pending:true,source:'prefill'});if(row){st='pending';id=row.id;ensureImage(row,it.image||r.body.image_url||'').catch(()=>{})}}}
+    else if(r.status===200&&r.body.found)st='unverified';else if(r.status!==200)st='error_'+r.status;
+    pfs[it.key]={at:new Date().toISOString(),status:st,id};try{fs.writeFileSync(PFS,JSON.stringify(pfs))}catch{}}
+  catch(e){pfPause=Date.now()+10*60e3}finally{pfBusy=false}}
+function prefillStats(){const c={total:PREFILL.length,done:0,pending:0,not_found:0,unverified:0,error:0};for(const v of Object.values(pfs)){c.done++;if(v.status==='pending')c.pending++;else if(v.status==='not_found')c.not_found++;else if(v.status==='unverified')c.unverified++;else c.error++}return c}
+setInterval(()=>{prefillTick().catch(()=>{})},2*60e3).unref?.();
 // backfill: a few products without a photo every 10 minutes (each retried at most once a week)
 setInterval(()=>{const wk=7*864e5,now=Date.now();BANK.list().filter(p=>!p.image&&now-(imgTried.get(p.id)||0)>wk).slice(0,3).reduce((a,p)=>a.then(()=>ensureImage(p,'')),Promise.resolve()).catch(()=>{})},10*60e3).unref?.();
 async function pageImage(u){try{if(!PAGE_HOSTS.test(new URL(u).hostname))return '';const r=await fetch(u,{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet'},redirect:'follow'});const h=(await r.text()).slice(0,300000);const m=h.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)/i);return m?m[1]:''}catch{return ''}}
 async function pageTitle(u){try{if(!PAGE_HOSTS.test(new URL(u).hostname))return '';const r=await fetch(u,{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet','Accept-Language':'fa,en'},redirect:'follow'});const h=(await r.text()).slice(0,300000);
   const m=h.match(/<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']+)/i)||h.match(/<title[^>]*>([^<]+)/i);return m?m[1].replace(/\s*[|\-–]\s*(دیجی‌کالا|دیجی کالا|خانومی|Digikala|Khanoumi).*$/i,'').replace(/&[a-z#0-9]+;/gi,' ').trim().slice(0,200):''}catch{return ''}}
+// The ingredient list counts only if a cited page really shows it: fetch up to 3 sources and require
+// that at least 80% of the listed ingredients appear on one of them. Otherwise nothing is stored.
+const incNorm=x=>String(x||'').toLowerCase().replace(/\([^)]*\)/g,' ').replace(/[\u200b-\u200f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+async function pageText(u){try{const x=new URL(u);if(x.protocol!=='https:'||PRIVATE.test(x.hostname))return '';const r=await fetch(x.href,{signal:AbortSignal.timeout(9000),redirect:'follow',headers:{'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124 Safari/537.36','Accept-Language':'en,fa'}});if(!r.ok)return '';
+  return incNorm((await r.text()).slice(0,1500000).replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi,' ').replace(/<[^>]+>/g,' ').replace(/&[a-z#0-9]+;/gi,' '))}catch{return ''}}
+async function checkSources(inci,sources){const items=(inci||[]).map(incNorm).filter(x=>x.length>=3);if(items.length<5)return {ok:false,coverage:0};
+  const urls=[...new Set((sources||[]).map(s=>s&&s.url).filter(Boolean))].slice(0,3);let best={ok:false,coverage:0,url:''};
+  const texts=await Promise.all(urls.map(pageText));texts.forEach((t,i)=>{if(!t)return;const pad=' '+t+' ';const c=items.filter(x=>pad.includes(' '+x+' ')).length/items.length;if(c>best.coverage)best={ok:c>=0.8,coverage:Math.round(c*100)/100,url:urls[i]}});return best}
 async function research(name,url){
   if(url){const title=await pageTitle(url);name=(title||name||'')+' ';}
   const key=normName(url||name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
@@ -161,8 +184,10 @@ async function research(name,url){
   }
   if(!best||(!best.found&&!(best.inci||[]).length)){rcache[key]={t:Date.now(),miss:true};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   if(!best){logUsage({at:new Date().toISOString(),research:true,status:502,calls:used});return {status:502,body:{error:'الان نتونستم پیداش کنم؛ یه لحظه دیگه دوباره بزن',code:'research_failed',tried}}}
+  if(best.found&&(best.inci||[]).length>=5){const sc=await checkSources(best.inci,best.sources);best.sourceCheck=sc;best.sourceVerified=sc.ok;if(!sc.ok)best.verified=false}
   const data={query:String(name).slice(0,120),...best,checkedAt:new Date().toISOString()};
-  if(best.verified||(best.found&&(best.inci||[]).length>=5)){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
+  if(best.sourceVerified){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
+  else if(best.found){rcache[key]={t:Date.now(),miss:true};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   logUsage({at:new Date().toISOString(),research:true,status:200,model:best.model,verified:best.verified,sources:best.sources.length,calls:used});
   return {status:200,body:data};
 }
@@ -309,7 +334,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'96'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'97'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -371,6 +396,7 @@ const server=http.createServer(async(req,res)=>{
       return send(res,200,{ok:true,ref,n:row.n,price:row.price});
     }
     if(url.pathname.startsWith('/bank-img/')){const f=path.join(IMGDIR,path.basename(url.pathname));return fs.stat(f,(e,st)=>{if(e||!st.isFile())return send(res,404,'','text/plain');const ext=path.extname(f).slice(1);res.writeHead(200,{'Content-Type':ext==='png'?'image/png':ext==='webp'?'image/webp':'image/jpeg','Cache-Control':'public, max-age=2592000, immutable'});fs.createReadStream(f).pipe(res)})}
+    if(url.pathname==='/prefill-status.json')return send(res,200,prefillStats(),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/wallet')return send(res,200,BANK.balance(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40),cfg),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/costs.json')return send(res,200,costs(),'application/json',{'Cache-Control':'no-store'});
@@ -402,16 +428,19 @@ const server=http.createServer(async(req,res)=>{
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
       const b=await readBody(req,4000);const d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);
-      const known=!b.url&&BANK.find(b.name);if(known){BANK.hit(known,b.name);const f=pubF(known);
+      const known=!b.url&&BANK.find(b.name);if(known){BANK.hit(known,b.name);if(/^[a-z0-9][a-z0-9-]{1,79}$/.test(String(b.replaces||'')))BANK.setReplaces(known,String(b.replaces));const f=pubF(known);
         return send(res,200,{fromBank:true,found:true,verified:true,name_en:f.en,name_fa:f.name,brand:f.brand,formula:f,sources:f.sources.map(u=>({url:u,title:''})),variants:f.variants||[],wallet:BANK.balance(d,cfg)})}
       // a product the shopper already uses (added to «روتین من»): free, never a diamond
       const own=b.routine===true;
       if(own&&!BANK.routineFree(d,ip(req),cfg)){fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),routine:true,queued:true})+'\n',()=>{});return send(res,200,{found:false,queued:true,wallet:BANK.balance(d,cfg)})}
       const via=own?'routine':BANK.charge(d,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای بررسی یه محصول تازه الماس لازمه 💎',wallet:BANK.balance(d,cfg)});
       const link=cleanUrl(b.url);const r=await research(b.name,link);
+      // only an ingredient list that a cited page really shows counts as found (and is worth a diamond)
+      if(r.status===200&&r.body.found&&!r.body.sourceVerified){r.body={...r.body,found:false,unverified:true}}
+      const replaces=/^[a-z0-9][a-z0-9-]{1,79}$/.test(String(b.replaces||''))?String(b.replaces):'';
       if(r.status!==200||!r.body.found||r.body.cached){if(own)BANK.routineBack(d);else BANK.refund(d,via)} // no new cost → no charge
       if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),url:link||undefined,routine:own||undefined})+'\n',()=>{});
-      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);const row=BANK.add(formula,b.name);inBank=!!row;if(row)formula=pubF(row)
+      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);if(formula&&replaces)formula.replaces=replaces;const row=BANK.add(formula,b.name);inBank=!!row;if(row)formula=pubF(row)
         // photo in the background: never delays the answer
         if(row&&!row.image){const img=r.body.image_url||'';(img?Promise.resolve(img):link?pageImage(link):Promise.resolve('')).then(u=>ensureImage(row,u)).catch(()=>{})}}
       return send(res,r.status,{...r.body,formula,inBank,wallet:BANK.balance(d,cfg)});

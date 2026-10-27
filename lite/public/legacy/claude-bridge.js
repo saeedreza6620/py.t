@@ -82,14 +82,14 @@ async function assistantPost(body,signal){
   // Product outside the catalog (lite server): find the exact product and its real INCI on the web ourselves,
   // then decide with the strong model. Never ask the shopper for a photo or the back label.
   if(LITE&&body.purchaseCheck){var pname=String(body.productName||message.replace(/^بررسی محصول پیش از خرید[:：]?\s*/,'')).slice(0,160);
-    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname,url:body.productUrl||undefined,d:dev()})});rs=await rr.json().catch(function(){return null});
+    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname,url:body.productUrl||undefined,d:dev(),replaces:body.replaces||undefined})});rs=await rr.json().catch(function(){return null});
       if(rs&&rs.wallet&&window.bwWallet)window.bwWallet(rs.wallet);
       if(rr.status===402||(rs&&rs.code==='need_negin'))return json({error:(rs&&rs.error)||'برای محصول تازه الماس لازمه 💎',code:'need_negin'},402);
       if(rs&&rs.code==='support')return json({error:rs.error,code:'support'},503);
       if(!rr.ok)rs=null}catch(e){if(e&&e.name==='AbortError')throw e;rs=null}
     // the product is now a structured formula (new or from the bank): judge it with the catalog engine against THIS skin and routine
-    if(rs&&rs.formula&&R&&R.addFormulas){R.addFormulas([rs.formula]);if(window.BWCatalog&&window.BWCatalog.add)window.BWCatalog.add([rs.formula]);
-      var bp=R.catalogPurchaseCheck(shared,rs.formula.id);if(bp){var srcs0=(rs.sources||[]).slice(0,3);
+    if(rs&&rs.formula&&R&&R.addFormulas){if(body.replaces&&!rs.formula.replaces)rs.formula.replaces=body.replaces;R.addFormulas([rs.formula]);if(window.BWCatalog&&window.BWCatalog.add)window.BWCatalog.add([rs.formula]);
+      var bp=R.catalogPurchaseCheck(shared,rs.formula.replaces||rs.formula.id);if(bp){var srcs0=(rs.sources||[]).slice(0,3);
         return json({answer:bp.answer,personalLead:bp.lead,formula:rs.formula,fromBank:!!rs.fromBank,inBank:!!rs.inBank,review:{analysisType:'purchase',catalogCheck:bp.check},research:{name:rs.name_en||'',nameFa:rs.name_fa||'',brand:rs.brand||'',verified:true,found:true,variants:(rs.variants||[]).slice(0,4),sources:srcs0,cached:!!rs.cached},purchaseLinks:[],assistantMessageId:remember('assistant',bp.answer),processing:{mode:'catalog',intent:'purchase'},decision:{label:bp.decision},search:{enabled:!rs.fromBank,sourceCount:srcs0.length},trust:trust({confidence:'high',confidenceMethod:'web_inci_research+catalog_engine',missing:[]})})}}
     // not found with confidence: no guessing from memory (that costs money and can be wrong) — the team checks it by hand
     if(!rs||!rs.found){var alts=similarFor(pname,rs,shared);return json({code:'not_found',query:pname,linkTried:!!body.productUrl,alternatives:alts,error:'این یکی رو با اطمینان پیدا نکردم'},200)}

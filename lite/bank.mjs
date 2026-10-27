@@ -63,10 +63,11 @@ export function makeBank(DATA){
 
   // ---------- lookup ----------
   function find(query){const q=normName(query);if(q.length<2)return null;
-    const exact=bank.products.find(p=>(p.aliases||[]).includes(q));if(exact)return exact;
+    const live=bank.products.filter(p=>!p.pending);
+    const exact=live.find(p=>(p.aliases||[]).includes(q));if(exact)return exact;
     const qt=tokens(q);if(qt.length<2)return null;
     // every word the shopper typed must be in the stored product (name, English name, brand, earlier queries)
-    let best=null,bestScore=0;for(const p of bank.products){const hay=new Set(tokens([p.name,p.en,p.brand,...(p.aliases||[])].join(' ')));
+    let best=null,bestScore=0;for(const p of live){const hay=new Set(tokens([p.name,p.en,p.brand,...(p.aliases||[])].join(' ')));
       const hit=qt.filter(t=>hay.has(t)).length;if(hit===qt.length&&hit>bestScore){best=p;bestScore=hit}}
     return best}
 
@@ -93,15 +94,18 @@ export function makeBank(DATA){
       variants:(j.variants||[]).slice(0,4).map(v=>String(v).slice(0,80)),model}}
 
   // only well-sourced formulas join the bank: the next shopper must get an answer as good as the first
-  function add(f,query){if(!f||f.basis!=='inci_sourced')return null;
+  // pending: found by the catalog prefill job, waits for the owner's approval in /admin before anyone sees it
+  function add(f,query,opts={}){if(!f||f.basis!=='inci_sourced')return null;
     const q=normName(query),aliases=[...new Set([q,normName(f.name),normName(f.en),normName(f.brand+' '+f.en)].filter(x=>x&&x.length>=2))];
-    const old=bank.products.find(p=>p.id===f.id);if(old){old.aliases=[...new Set([...(old.aliases||[]),...aliases])].slice(0,20);bump();return old}
-    const row={...f,aliases,query:String(query).slice(0,120),addedAt:new Date().toISOString(),hits:0};bank.products.push(row);bump();return row}
+    const old=bank.products.find(p=>p.id===f.id);if(old){if(!opts.pending&&old.pending)delete old.pending;if(f.replaces&&!old.replaces)old.replaces=f.replaces;old.aliases=[...new Set([...(old.aliases||[]),...aliases])].slice(0,20);bump();return old}
+    const row={...f,aliases,query:String(query).slice(0,120),addedAt:new Date().toISOString(),hits:0,...(opts.pending?{pending:true,source:opts.source||'prefill'}:{})};bank.products.push(row);bump();return row}
   function hit(p,query){p.hits=(p.hits||0)+1;p.lastHit=new Date().toISOString();const q=normName(query);if(q&&!(p.aliases||[]).includes(q))p.aliases=[...(p.aliases||[]),q].slice(0,20);bump()}
+  function setReplaces(p,id){if(p&&id&&!p.replaces){p.replaces=id;bump()}}
   function setImage(id,url){const p=bank.products.find(x=>x.id===id);if(!p)return;p.image=url;bump()}
+  function approve(id){const p=bank.products.find(x=>x.id===id);if(!p||!p.pending)return false;delete p.pending;p.approvedAt=new Date().toISOString();bump();return true}
   function remove(id){const n=bank.products.length;bank.products=bank.products.filter(p=>p.id!==id);if(bank.products.length!==n)bump();return n!==bank.products.length}
   // what the browser needs: formula + names (no aliases/queries of other shoppers)
-  function publicBank(){if(!pub)pub={version:bank.products.length,products:bank.products.map(({aliases,query,hits,lastHit,model,addedAt,...f})=>f)};return pub}
+  function publicBank(){if(!pub)pub={version:bank.products.length,products:bank.products.filter(p=>!p.pending).map(({aliases,query,hits,lastHit,model,addedAt,pending,source,approvedAt,...f})=>f)};return pub}
 
   // ---------- wallets: free checks + Negin, kept on the server ----------
   const ipFree=new Map();
@@ -122,5 +126,5 @@ export function makeBank(DATA){
   function credit(d,n){if(!d)return;const w=wallet(d);w.negin+=n;w.bought=(w.bought||0)+n;save(WAL,wallets)}
   function walletStats(){const v=Object.values(wallets);return {devices:v.length,freeUsed:v.reduce((a,w)=>a+(w.free||0),0),neginSpent:v.reduce((a,w)=>a+(w.spent||0),0),neginBought:v.reduce((a,w)=>a+(w.bought||0),0),neginLeft:v.reduce((a,w)=>a+(w.negin||0),0)}}
 
-  return {find,toFormula,add,hit,setImage,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack};
+  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack};
 }

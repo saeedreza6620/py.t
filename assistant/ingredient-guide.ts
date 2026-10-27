@@ -168,6 +168,6 @@ export function explainPurchase(f:F,s:St,items:Item[],extra:{decision?:string;in
   if(!['treatment','serum','spot'].includes(f.role)){const dup=same.filter(x=>x.f.role===f.role&&!(f.role==='cleanser'&&x.f.claims.includes('eye')));add('dup_role',dup,'دو '+(ROLE_ONE[f.role]||'محصول هم‌نقش')+' در یک نوبت');}
   const flagged=new Set(pairs.flatMap(p=>p.with));
   const fine=others.filter(x=>!flagged.has(x.name)).map(x=>q(x.name));
-  const clean=!others.length?(extra.inRoutine?'به‌جز خود همین محصول، چیز دیگه‌ای تو روتینت ثبت نشده.':'روتینت هنوز خالیه؛ فقط با پوست و هدفت سنجیدمش.'):fine.length?'کنار '+joinFa(fine.slice(0,4))+(fine.length>4?' و '+String(fine.length-4).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)])+' محصول دیگه‌ی روتینت':'')+' تداخل شناخته‌شده‌ای نداره.':'';
+  const clean=f.basis==='declared_name'&&others.length?'چون فهرست کامل ترکیباتش هنوز ثبت نشده، درباره‌ی تداخلش با روتینت نمی‌تونم قطعی چیزی بگم.':!others.length?(extra.inRoutine?'به‌جز خود همین محصول، چیز دیگه‌ای تو روتینت ثبت نشده.':'روتینت هنوز خالیه؛ فقط با پوست و هدفت سنجیدمش.'):fine.length?'کنار '+joinFa(fine.slice(0,4))+(fine.length>4?' و '+String(fine.length-4).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)])+' محصول دیگه‌ی روتینت':'')+' تداخل شناخته‌شده‌ای نداره.':'';
   return {you:you.slice(0,4),actives:actives.slice(0,6),pairs,clean,notes,sources:[...used.values()]};
 }

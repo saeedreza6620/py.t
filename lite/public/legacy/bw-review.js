@@ -2494,7 +2494,7 @@ function explainPurchase(f, s, items, extra = {}) {
     }
     const flagged = new Set(pairs.flatMap(p => p.with));
     const fine = others.filter(x => !flagged.has(x.name)).map(x => q(x.name));
-    const clean = !others.length ? (extra.inRoutine ? 'به‌جز خود همین محصول، چیز دیگه‌ای تو روتینت ثبت نشده.' : 'روتینت هنوز خالیه؛ فقط با پوست و هدفت سنجیدمش.') : fine.length ? 'کنار ' + joinFa(fine.slice(0, 4)) + (fine.length > 4 ? ' و ' + String(fine.length - 4).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]) + ' محصول دیگه‌ی روتینت' : '') + ' تداخل شناخته‌شده‌ای نداره.' : '';
+    const clean = f.basis === 'declared_name' && others.length ? 'چون فهرست کامل ترکیباتش هنوز ثبت نشده، درباره‌ی تداخلش با روتینت نمی‌تونم قطعی چیزی بگم.' : !others.length ? (extra.inRoutine ? 'به‌جز خود همین محصول، چیز دیگه‌ای تو روتینت ثبت نشده.' : 'روتینت هنوز خالیه؛ فقط با پوست و هدفت سنجیدمش.') : fine.length ? 'کنار ' + joinFa(fine.slice(0, 4)) + (fine.length > 4 ? ' و ' + String(fine.length - 4).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]) + ' محصول دیگه‌ی روتینت' : '') + ' تداخل شناخته‌شده‌ای نداره.' : '';
     return { you: you.slice(0, 4), actives: actives.slice(0, 6), pairs, clean, notes, sources: [...used.values()] };
 }
 
@@ -3029,7 +3029,7 @@ function catalogPurchaseCheck(shared, productId, productName) {
     const fit = purchaseFit(f, st);
     const better = () => { const alt = bestForSkin(CATALOG, st, f.role, [f.id, ...owned]); if (alt.length) {
         own.alternatives = alt;
-        reasons.push('به‌جاش: ' + alt.map(a => a.name).join(' یا '));
+        reasons.push('گزینه‌های جورتر برای مقایسه: ' + alt.map(a => a.name).join(' یا '));
     } };
     if (alreadyOwned) {
         decision = 'avoid';
@@ -3104,5 +3104,5 @@ function catalogPurchaseBody(p, reason) {
 }
 
 function catalogList(){return CATALOG.products.map(p=>p.name+' ['+p.id+'] '+(p.basis==='inci_sourced'?'':'basis=نام ')).join('\n')}
-window.BWReview={catalogRoutineCheck,catalogCovers,catalogPrompt,catalogResponseBody,catalogSummary,mergeCatalogAnswer,routinePlanFrom,catalogPurchaseCheck,catalogPurchasePrompt,catalogPurchaseBody,catalogList,pairInfo,addFormulas:function(list){(list||[]).forEach(function(f){if(f&&f.id&&!CATALOG.products.some(function(p){return p.id===f.id}))CATALOG.products.push(f)})},skinFit:function(profile,id){const f=CATALOG.products.find(p=>p.id===id);return f?purchaseFit(f,skinState(profile||{})):null}};
+window.BWReview={catalogRoutineCheck,catalogCovers,catalogPrompt,catalogResponseBody,catalogSummary,mergeCatalogAnswer,routinePlanFrom,catalogPurchaseCheck,catalogPurchasePrompt,catalogPurchaseBody,catalogList,pairInfo,addFormulas:function(list){(list||[]).forEach(function(f){if(!f||!f.id)return;var old=f.replaces&&CATALOG.products.find(function(p){return p.id===f.replaces});if(old){if(old.basis!=='inci_sourced'){var keep=old.id;Object.keys(old).forEach(function(k){delete old[k]});Object.assign(old,f,{id:keep,upgradedFrom:f.id})}return}if(!CATALOG.products.some(function(p){return p.id===f.id}))CATALOG.products.push(f)})},skinFit:function(profile,id){const f=CATALOG.products.find(p=>p.id===id);return f?purchaseFit(f,skinState(profile||{})):null}};
 })();

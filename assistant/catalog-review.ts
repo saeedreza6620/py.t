@@ -74,7 +74,7 @@ export function catalogPurchaseCheck(shared:Shared,productId:unknown,productName
   const related=check.interactions.filter(x=>x.ids.includes(f.id)).map(x=>x.text);
   const reasons:string[]=[];let decision:CatalogPurchase['decision'];let head:string;
   const st=skinState(shared.profile||{});const fit=purchaseFit(f,st);
-  const better=()=>{const alt=bestForSkin(CATALOG,st,f.role,[f.id,...owned]);if(alt.length){own.alternatives=alt;reasons.push('به‌جاش: '+alt.map(a=>a.name).join(' یا '));}};
+  const better=()=>{const alt=bestForSkin(CATALOG,st,f.role,[f.id,...owned]);if(alt.length){own.alternatives=alt;reasons.push('گزینه‌های جورتر برای مقایسه: '+alt.map(a=>a.name).join(' یا '));}};
   if(alreadyOwned){decision='avoid';head='نتیجه: نخر';reasons.push('همین محصول در ولتت ثبت شده؛ اول همان را مصرف کن');}
   else if(fit.verdict==='bad'){decision='avoid';head='نتیجه: نخر';reasons.push(fit.reason);better();}
   else if(fit.verdict==='not_now'){decision='wait';head='نتیجه: فعلاً نخر';reasons.push(fit.reason);better();}
