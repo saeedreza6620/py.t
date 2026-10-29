@@ -120,7 +120,7 @@ return `<div class="card"><form method="post" action="/admin/config" class="cfg"
 <p class="note" style="margin-top:0">کل درخواست‌ها: <b>${fa(sp.calls)}</b> از ${fa(c.aiDailyCalls)}${bar(sp.calls,c.aiDailyCalls)}</p><p class="note">جست‌وجوی وب (گران‌تر): <b>${fa(sp.online)}</b> از ${fa(c.aiDailyOnline)}${bar(sp.online,c.aiDailyOnline)}</p>
 <label>سقف کل درخواست‌های روزانه <input name="aiDailyCalls" type="number" min="0" value="${esc(c.aiDailyCalls)}"></label><label>سقف جست‌وجوی وب روزانه <input name="aiDailyOnline" type="number" min="0" value="${esc(c.aiDailyOnline)}"></label><button class="btn">ذخیره سقف</button></form>
 <p class="note">هوش مصنوعی فقط وقتی مصرف می‌شود که کاربری چیزی بپرسد یا محصولی بیرون از کاتالوگ را بسنجد؛ هیچ کار خودکار روزانه‌ای اعتبار مصرف نمی‌کند. نتیجه‌ی هر محصول ۳۰ روز ذخیره می‌شود و دفعه‌ی بعد رایگان است. وقتی سقف پر شود، اپ تا فردا فقط از کاتالوگ جواب می‌دهد. مبلغ واقعی را در کنسول لیارا، بخش هوش مصنوعی ببین.</p></div>`})()}
-<h2>نصب و استفاده</h2><div class="grid">
+${(()=>{const v=globalThis.BW_VAULT_STATS?globalThis.BW_VAULT_STATS():null;return v?`<h2>فضای امن عکس‌ها (رمزنگاری‌شده)</h2><div class="card" style="margin-bottom:12px"><p class="note">کاربر: ${fa(v.vaults)} · حجم: ${fa(v.mb)} از ${fa(v.capMb)} مگابایت. محتوای این فایل‌ها برای سرور قابل خواندن نیست.</p></div>`:''})()}<h2>نصب و استفاده</h2><div class="grid">
 ${k(s.installed,'نصب روی گوشی','از آیکن صفحه اصلی باز شده یا نصب اندروید')}
 ${k(s.devices,'دستگاه یکتا',`امروز: ${fa(s.today)}`)}
 ${k(s.appUsers,'کاربر اپ',`بازدید سایت: ${fa(s.siteVisitors)}`)}
