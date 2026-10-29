@@ -68,7 +68,7 @@ function keysFor(code){if(keyCache[code])return keyCache[code];var raw=codeBytes
     return Promise.all([bits('vault-id',16),bits('vault-auth',32),crypto.subtle.deriveKey({name:'HKDF',hash:'SHA-256',salt:salt,info:te.encode('vault-enc')},base,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])])
       .then(function(r){return {id:hex(r[0]),token:b64url(r[1]),key:r[2]}})});return keyCache[code]}
 function vault(){var v=readJ(VK,null);return v&&typeof v.code==='string'&&codeBytes(v.code)?v:null}
-function ensureVault(){var v=vault();if(v||!canVault())return v;v={code:newCode(),saved:false,on:true,created:new Date().toISOString()};writeJ(VK,v);return v}
+function ensureVault(){var v=vault();if(v||!canVault())return v;v={code:newCode(),saved:true,on:true,escrow:true,share:false,created:new Date().toISOString()};writeJ(VK,v);return v}
 function meta(e){return {id:e.id,date:e.date,w:e.w,h:e.h,type:e.type,bare:e.bare,sameLight:e.sameLight,tags:e.tags||[],note:e.note||'',routine:e.routine||[],migrated:!!e.migrated}}
 function seal(k,e){var m=te.encode(JSON.stringify(meta(e))),img=new Uint8Array(e.data),plain=new Uint8Array(4+m.length+img.length);
   new DataView(plain.buffer).setUint32(0,m.length);plain.set(m,4);plain.set(img,4+m.length);var iv=crypto.getRandomValues(new Uint8Array(12));
@@ -77,6 +77,17 @@ function open_(k,buf){var b=new Uint8Array(buf);if(b[0]!==1||b.length<40)return 
   return crypto.subtle.decrypt({name:'AES-GCM',iv:b.slice(1,13)},k.key,b.slice(13)).then(function(p){var u=new Uint8Array(p),n=new DataView(u.buffer).getUint32(0),m=JSON.parse(td.decode(u.slice(4,4+n)));
     return {id:String(m.id).slice(0,40),date:m.date,data:u.slice(4+n).buffer,type:'image/jpeg',w:+m.w||0,h:+m.h||0,bare:!!m.bare,sameLight:!!m.sameLight,tags:(m.tags||[]).map(String).slice(0,7),note:String(m.note||'').slice(0,300),routine:(m.routine||[]).map(String).slice(0,12),migrated:!!m.migrated,synced:true,v:1}})}
 function api(k,method,pid,body){return fetch('/api/vault/'+k.id+(pid?'/'+pid:''),{method:method,headers:Object.assign({'X-Vault-Auth':k.token},body?{'Content-Type':'application/octet-stream'}:{}),body:body,cache:'no-store',credentials:'same-origin'})}
+function myPhone(v){var r=readJ('bw_reg',null);return (v&&v.phone)||(r&&r.phone)||''}
+function unb64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a.buffer}
+var pubKey=null;
+function escrowNow(k,v){ // consent: the code, wrapped with BeautyWallet's public key, so the phone number can bring photos back
+  if(v.escrow===false){if(!v.escrowSig)return Promise.resolve();return api(k,'DELETE','escrow').then(function(r){if(r.ok){v.escrowSig='';writeJ(VK,v)}})}
+  var sig=myPhone(v)+'|'+(v.share?1:0);if(v.escrowSig===sig)return Promise.resolve();
+  return (pubKey||(pubKey=fetch('/api/vault-pub',{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){return crypto.subtle.importKey('spki',unb64(j.spki),{name:'RSA-OAEP',hash:'SHA-256'},false,['encrypt'])}))).then(function(pk){
+    return crypto.subtle.encrypt({name:'RSA-OAEP'},pk,te.encode(v.code))}).then(function(w){var a=new Uint8Array(w),s='';for(var i=0;i<a.length;i++)s+=String.fromCharCode(a[i]);
+    var dev='';try{dev=localStorage.getItem('bw_device')||''}catch(e){}
+    return fetch('/api/vault/'+k.id+'/escrow',{method:'PUT',headers:{'X-Vault-Auth':k.token,'Content-Type':'application/json'},body:JSON.stringify({wrapped:btoa(s),phone:myPhone(v),d:dev,share:!!v.share}),cache:'no-store'})})
+    .then(function(r){if(r.ok){var cur=vault();if(cur&&cur.code===v.code){cur.escrowSig=sig;writeJ(VK,cur)}}}).catch(function(){pubKey=null})}
 var sync={state:'idle',left:0,err:''},syncing=null;
 function syncNow(){if(syncing)return syncing;var v=vault();if(!v||v.on===false||!canVault())return Promise.resolve();
   syncing=keysFor(v.code).then(function(k){
@@ -85,6 +96,7 @@ function syncNow(){if(syncing)return syncing;var v=vault();if(!v||v.on===false||
       return todo.reduce(function(c,e){return c.then(function(){if(sync.err)return;return seal(k,e).then(function(blob){return api(k,'PUT',e.id,blob)}).then(function(r){
         if(r.ok){e.synced=true;return put(e).then(function(){sync.left--;paintSync()})}
         sync.err=r.status===409?'full':r.status===507?'space':'server'})})},Promise.resolve())})})
+  .then(function(){if(sync.err)return;var cur=vault();return cur&&keysFor(cur.code).then(function(k){return escrowNow(k,cur)})})
   .catch(function(){sync.err=navigator.onLine===false?'offline':'server'})
   .then(function(){if(!sync.err)sync={state:'ok',left:0,err:''};else sync.state='wait';paintSync();syncing=null});return syncing}
 function paintSync(){var el=root&&$('.sj-lock',root);if(!el)return;var v=vault();
@@ -95,7 +107,7 @@ function paintSync(){var el=root&&$('.sj-lock',root);if(!el)return;var v=vault()
     sync.err==='offline'?'🔒 اینترنت وصل نیست؛ وقتی وصل شوی خودکار ارسال می‌شود.':
     sync.err==='full'?'🔒 فضای امن تو پر است ('+fa(MAX_PHOTOS)+' عکس). یک عکس قدیمی را حذف کن.':
     sync.err?'🔒 ارسال امن فعلاً انجام نشد؛ عکس‌ها روی گوشی هستند و بعداً دوباره امتحان می‌شود.':
-    '🔒 همه‌ی عکس‌ها قفل‌شده در فضای امن پشتیبان دارند.'}
+    '🔒 همه‌ی عکس‌ها رمزشده در فضای امن پشتیبان دارند'+(v.escrow===false?'؛ بازیابی فقط با کد بازیابی.':myPhone(v)?'؛ با شماره‌ی '+fa(myPhone(v).slice(-4))+'… قابل بازیابی است.':'. برای بازیابی با موبایل، شماره‌ات را در «امنیت عکس‌ها» ثبت کن.')}
 
 /* ---------- routine context (what was in use when the photo was taken) ---------- */
 function routineNames(){try{var ids=JSON.parse(localStorage.getItem('bw_check_products')||'[]');if(!Array.isArray(ids)||typeof PRODUCTS==='undefined')return [];
@@ -123,12 +135,12 @@ function todayMissing(){var k=ticked(tehranDay(Date.now())),am=k.some(function(x
 var CSS='.sj h3{margin:0 0 4px}.sj .sj-sub{font-size:13px;color:#5d6b80;line-height:1.9;margin:0 0 10px}.sj-next{border-radius:16px;padding:11px 13px;margin:8px 0 12px;font-size:14px;line-height:1.9;background:#eef6ff;color:#23476b}.sj-next.due{background:#fff1f6;color:#7a2950}.sj-next b{display:block}.sj-row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}.sj button,.sj label.sj-btn{border:0;border-radius:14px;padding:10px 14px;font:inherit;font-size:14px;cursor:pointer;background:#f2f4fb;color:#2b3550}.sj .sj-main{background:linear-gradient(135deg,#7aa7ff,#c08cff 60%,#ff9cc7);color:#fff;font-weight:700}.sj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;margin-top:10px}.sj-item{position:relative;border-radius:14px;overflow:hidden;background:#f4f2fa;border:0;padding:0;cursor:pointer;text-align:right}.sj-item img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}.sj-item span{display:block;font-size:11px;padding:4px 6px;color:#3b3f55;line-height:1.6}.sj-item i{position:absolute;top:5px;right:5px;font-style:normal;font-size:10px;background:rgba(255,255,255,.9);border-radius:8px;padding:1px 6px}.sj-cmp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.sj-cmp figure{margin:0}.sj-cmp img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px;display:block}.sj-cmp figcaption{font-size:12px;text-align:center;color:#4d5670;margin-top:4px;line-height:1.7}.sj-form{border:1px solid #e3e6f3;border-radius:16px;padding:12px;margin-top:10px;background:#fff}.sj-form img{max-width:140px;border-radius:12px;display:block;margin-bottom:8px}.sj-form label{display:flex;gap:6px;align-items:center;font-size:13px;line-height:2}.sj-tags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}.sj-tags label{background:#f3f1fb;border-radius:12px;padding:2px 10px}.sj-form textarea{width:100%;box-sizing:border-box;min-height:56px;border-radius:12px;border:1px solid #dde1ef;padding:8px;font:inherit;font-size:13px}.sj-msg{font-size:13px;line-height:1.9;margin-top:8px;color:#29506f}.sj-msg.bad{color:#9b2d3c}.sj details{margin-top:10px;font-size:13px;line-height:2;color:#46506a}.sj details summary{cursor:pointer;font-weight:700}.sj-view{position:fixed;inset:0;background:rgba(20,22,35,.86);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:10px}.sj-view img{max-width:100%;max-height:70vh;border-radius:14px}.sj-view p{color:#fff;font-size:13px;line-height:1.9;margin:0;text-align:center;max-width:520px}.sj-streak{font-size:13px;color:#4c3a74;margin:4px 0 0}.sj-lock{font-size:12.5px;line-height:1.9;color:#2f5a4a;background:#eef8f3;border-radius:12px;padding:7px 11px;margin:0 0 8px}.sj-lock:empty{display:none}.sj-lock button{padding:3px 10px!important;font-size:12px!important}.sj-code{border-radius:16px;padding:12px 13px;margin:8px 0;background:#fff6e9;color:#5b4119;font-size:13px;line-height:2}.sj-code code{display:block;direction:ltr;text-align:center;font-size:15px;font-weight:700;letter-spacing:.5px;background:#fff;border-radius:10px;padding:8px;margin:6px 0;user-select:all;word-break:break-all}.sj-restore input{width:100%;box-sizing:border-box;direction:ltr;text-align:center;border-radius:12px;border:1px solid #dde1ef;padding:9px;font:inherit;margin:6px 0}.sj-nudge{position:fixed;left:12px;right:12px;bottom:84px;z-index:9998;background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(60,60,120,.22);padding:12px 14px;display:flex;gap:10px;align-items:center;font-size:14px;line-height:1.8;max-width:520px;margin:auto}.sj-nudge b{flex:1}.sj-nudge button{border:0;border-radius:12px;padding:8px 12px;font:inherit;font-size:13px;background:#f2f4fb}.sj-nudge .go{background:linear-gradient(135deg,#7aa7ff,#c08cff);color:#fff}';
 var root,pending=null,msgT,showCode=false;
 function msg(t,bad){var m=$('.sj-msg',root);if(!m)return;m.textContent=t;m.className='sj-msg'+(bad?' bad':'');clearTimeout(msgT);if(!bad)msgT=setTimeout(function(){m.textContent=''},8000)}
-function codeCard(v){return '<div class="sj-code"><b>کد بازیابی عکس‌هایت</b><code>'+esc(v.code)+'</code>این کد کلید قفل عکس‌هاست. اگر گوشی عوض شد یا مرورگر پاک شد، با همین کد عکس‌ها برمی‌گردند. ما این کد را نداریم و بدون آن هیچ‌کس، حتی تیم بیوتی‌ولت، نمی‌تواند عکس‌ها را باز کند؛ پس جای امن نگهش دار و به کسی نده.'+
-  '<div class="sj-row"><button type="button" data-sj="copy">کپی کد</button><button type="button" data-sj="tg">ذخیره در تلگرام</button>'+(v.saved?'<button type="button" data-sj="hide-code">بستن</button>':'<button type="button" class="sj-main" data-sj="saved">کد را ذخیره کردم</button>')+'</div></div>'}
+function codeCard(v){return '<div class="sj-code"><b>کد بازیابی عکس‌هایت</b><code>'+esc(v.code)+'</code>این کد کلید عکس‌هاست و راه دوم بازیابی است (راه اول: شماره‌ی موبایل). به کسی نده.'+
+  '<div class="sj-row"><button type="button" data-sj="copy">کپی کد</button><button type="button" data-sj="tg">ذخیره در تلگرام</button>'+'<button type="button" data-sj="hide-code">بستن</button>'+'</div></div>'}
 function render(){if(!root)return Promise.resolve();return all().then(function(list){
   var p=plan(list),s=streak(),v=vault(),h='';
-  h+='<h3>دفترچه‌ی عکس پوست من</h3><p class="sj-sub">عکس‌ها روی گوشی خودت قفل (رمز) می‌شوند و فقط نسخه‌ی قفل‌شده برای پشتیبان به فضای امن ما می‌رود. کلیدش فقط دست توست؛ هیچ‌کس، حتی تیم بیوتی‌ولت، نمی‌تواند عکس‌هایت را ببیند. عکس برای مقایسه است، نه تشخیص.</p><div class="sj-lock" role="status"></div>';
-  if(v&&list.length&&(!v.saved||showCode))h+=codeCard(v);
+  h+='<h3>دفترچه‌ی عکس پوست من</h3><p class="sj-sub">عکس‌ها روی گوشی‌ات رمز می‌شوند و نسخه‌ی رمزشده در فضای امن بیوتی‌ولت پشتیبان می‌ماند؛ اگر گوشی را عوض کنی، با شماره‌ی موبایلت برمی‌گردند. تیم بیوتی‌ولت فقط وقتی عکس‌هایت را می‌بیند که خودت اجازه بدهی، و هر بار دیدن ثبت می‌شود. عکس برای مقایسه است، نه تشخیص.</p><div class="sj-lock" role="status"></div>';
+  if(v&&list.length&&showCode)h+=codeCard(v);
   if(p.state==='empty')h+='<div class="sj-next"><b>اولین عکس، نقطه‌ی شروع توست.</b>قبل از شروع یک محصول یا روتین تازه ثبتش کن تا بعداً منصفانه مقایسه کنی.</div>';
   else if(p.state==='due')h+='<div class="sj-next due"><b>امروز وقت عکس '+p.label+' است.</b>همان نور و همان فاصله‌ی عکس شروع را رعایت کن تا مقایسه درست باشد.</div>';
   else if(p.state==='wait')h+='<div class="sj-next"><b>عکس بعدی: '+p.label+' ('+(p.left<=1?'فردا':fa(p.left)+' روز دیگر')+')</b>مقایسه‌ی روزبه‌روز گمراه‌کننده است؛ لایه‌ی سطحی پوست حدود ۴ تا ۶ هفته طول می‌کشد تا نو شود.</div>';
@@ -138,9 +150,13 @@ function render(){if(!root)return Promise.resolve();return all().then(function(l
   h+='<div class="sj-slot"></div><div class="sj-msg" role="status" aria-live="polite"></div>';
   if(list.length>1){var a=list[0],b=list[list.length-1];h+='<div class="sj-cmp"><figure><img src="'+urlOf(a)+'" alt="عکس شروع"><figcaption>شروع · '+esc(faDate(a.date))+'</figcaption></figure><figure><img src="'+urlOf(b)+'" alt="آخرین عکس"><figcaption>'+esc(dayLabel(b,a))+' · '+esc(faDate(b.date))+'</figcaption></figure></div>'}
   if(list.length)h+='<div class="sj-grid">'+list.slice().reverse().map(function(e){return '<button type="button" class="sj-item" data-sj-open="'+e.id+'"><img loading="lazy" src="'+urlOf(e)+'" alt=""><i>'+esc(dayLabel(e,list[0]))+'</i><span>'+esc(faDate(e.date))+(e.tags&&e.tags.length?'<br>'+esc(e.tags.slice(0,2).join('، ')):'')+'</span></button>'}).join('')+'</div>';
-  h+='<details class="sj-restore"'+(list.length?'':' open')+'><summary>'+(list.length?'گوشی را عوض کرده‌ای؟ بازگردانی با کد':'قبلاً عکس ثبت کرده‌ای؟ بازگردانی با کد')+'</summary>کد بازیابی را وارد کن تا عکس‌های قفل‌شده‌ات از فضای امن برگردند و همین‌جا باز شوند.<input id="sjCode" placeholder="BW-XXXX-XXXX-…" autocomplete="off" autocapitalize="characters" spellcheck="false"><button type="button" data-sj="restore-code">بازگردانی عکس‌ها</button></details>';
+  h+='<details class="sj-restore"'+(list.length?'':' open')+'><summary>'+(list.length?'گوشی را عوض کرده‌ای؟ بازگردانی عکس‌ها':'قبلاً عکس ثبت کرده‌ای؟ بازگردانی عکس‌ها')+'</summary>شماره‌ی موبایلی را که با آن ثبت کرده بودی بنویس:<input id="sjPhone" inputmode="tel" placeholder="09xxxxxxxxx" autocomplete="tel"><div id="sjOtpBox" hidden>کدی که پیامک شد:<input id="sjOtp" inputmode="numeric" maxlength="6" autocomplete="one-time-code"></div><button type="button" data-sj="recover-phone">بازگردانی با موبایل</button>'+
+    '<div style="margin-top:10px">یا اگر کد بازیابی داری:<input id="sjCode" placeholder="BW-XXXX-XXXX-…" autocomplete="off" autocapitalize="characters" spellcheck="false"><button type="button" data-sj="restore-code">بازگردانی با کد</button></div></details>';
   h+='<details><summary>چطور عکس قابل‌مقایسه بگیرم؟</summary>هر بار در یک جا و یک نور بایست؛ بهترین نور، نور روز روبه‌روی پنجره است. صورت شسته و بدون آرایش و کرم باشد (حدود ۱۵ دقیقه بعد از شستشو). حالت زیبایی و فیلتر دوربین را خاموش کن. گوشی را به فاصله‌ی یک دست و هم‌سطح چشم نگه دار و مستقیم به دوربین نگاه کن. اگر بخش خاصی مثل گونه یا چانه مهم است، یک عکس نیم‌رخ هم بگیر.<br>اگر سوزش، قرمزی شدید یا تورم دیدی، مصرف محصول تازه را متوقف کن و با پزشک مشورت کن.</details>';
-  h+='<details><summary>امنیت عکس‌ها و گزینه‌های بیشتر</summary>۱. عکس روی گوشی کوچک و ذخیره می‌شود. ۲. روی همین گوشی با کلیدی که از کد بازیابی ساخته شده قفل می‌شود (رمزنگاری AES-256). ۳. فقط نسخه‌ی قفل‌شده به فضای امن بیوتی‌ولت می‌رود؛ کلید هرگز ارسال نمی‌شود. ۴. با کد بازیابی، روی هر گوشی باز می‌شود. سقف فضای امن '+fa(MAX_PHOTOS)+' عکس است.'+
+  h+='<details><summary>امنیت عکس‌ها و اجازه‌ها</summary>۱. عکس روی گوشی کوچک و ذخیره می‌شود. ۲. روی همین گوشی رمزنگاری می‌شود (AES-256) و فقط نسخه‌ی رمزشده به فضای امن بیوتی‌ولت می‌رود. ۳. کلید با رضایت تو، خودش هم رمزشده، نزد بیوتی‌ولت نگه داشته می‌شود تا با شماره‌ی موبایلت قابل بازیابی باشد. ۴. کارشناس بیوتی‌ولت فقط با اجازه‌ی تو عکس‌ها را می‌بیند و هر بار دیدن ثبت می‌شود. سقف: '+fa(MAX_PHOTOS)+' عکس.'+
+    (v?'<div class="sj-form" style="margin-top:8px"><label>شماره‌ی موبایل برای بازیابی<input id="sjMyPhone" inputmode="tel" value="'+esc(myPhone(v))+'" placeholder="09xxxxxxxxx" style="flex:1;border:1px solid #dde1ef;border-radius:10px;padding:6px"></label>'+
+    '<label><input type="checkbox" id="sjEscrow"'+(v.escrow!==false?' checked':'')+'> اگر گوشی عوض شد یا اطلاعات پاک شد، بیوتی‌ولت بتواند عکس‌هایم را با شماره‌ی موبایلم برگرداند</label>'+
+    '<label><input type="checkbox" id="sjShare"'+(v.share?' checked':'')+(v.escrow===false?' disabled':'')+'> کارشناس بیوتی‌ولت برای بررسی روند پوستم عکس‌ها را ببیند (هر وقت بخواهی لغو می‌شود)</label><button type="button" data-sj="perm">ذخیره‌ی اجازه‌ها</button></div>':'')+
     '<div class="sj-row">'+(v&&list.length?'<button type="button" data-sj="show-code">نمایش کد بازیابی</button>':'')+(list.length?'<button type="button" data-sj="backup">فایل پشتیبان روی گوشی</button>':'')+'<label class="sj-btn" for="sjRestore">بازگردانی از فایل</label><input id="sjRestore" type="file" accept=".bwjournal,.json,application/json" hidden>'+(v&&v.on!==false?'<button type="button" data-sj="vault-off">حذف عکس‌ها از فضای امن</button>':'')+'</div></details>';
   revokeUnused(list);root.innerHTML=h;paintSync();window.dispatchEvent(new CustomEvent('bw-journal',{detail:p}))}).catch(function(){root.innerHTML='<h3>دفترچه‌ی عکس پوست من</h3><p class="sj-sub">این مرورگر اجازه‌ی ذخیره‌ی عکس روی گوشی را نمی‌دهد (مثلاً در حالت خصوصی). در مرورگر معمولی یا نسخه‌ی نصب‌شده باز کن.</p>'})}
 function revokeUnused(list){var keep={};list.forEach(function(e){keep[e.id]=1});Object.keys(urls).forEach(function(id){if(!keep[id])dropUrl(id)})}
@@ -154,15 +170,16 @@ function pick(file){if(!file)return;if(!/^image\//.test(file.type||'image/'))ret
     '<label><input type="checkbox" name="c1"> بدون آرایش، کرم و فیلتر</label><label><input type="checkbox" name="c2"> همان نور و جای عکس‌های قبلی</label>'+
     '<div style="font-size:13px;margin-top:6px">حال پوست (اختیاری):</div><div class="sj-tags">'+TAGS.map(function(t){return '<label><input type="checkbox" name="tag" value="'+esc(t)+'"> '+esc(t)+'</label>'}).join('')+'</div>'+
     '<textarea name="note" maxlength="300" placeholder="یادداشت کوتاه؛ مثلاً از کدام شب رتینول را شروع کردی"></textarea>'+
-    '<label><input type="checkbox" name="consent" required> موافقم این عکس روی گوشی‌ام ذخیره شود و نسخه‌ی قفل‌شده‌اش (که فقط با کد من باز می‌شود) در فضای امن پشتیبان بماند</label>'+
+    '<label><input type="checkbox" name="consent" required> موافقم این عکس روی گوشی‌ام ذخیره شود و نسخه‌ی رمزشده‌اش در فضای امن بیوتی‌ولت بماند تا اگر گوشی عوض شد، با شماره‌ی موبایلم برگردد</label>'+
+    '<label><input type="checkbox" name="share"'+((vault()||{}).share?' checked':'')+'> اجازه می‌دهم کارشناس بیوتی‌ولت برای بررسی روند پوستم عکس‌ها را ببیند (اختیاری)</label>'+
     '<div class="sj-row"><button type="submit" class="sj-main">ذخیره</button><button type="button" data-sj="cancel">انصراف</button></div></form>';
     $('#sjForm img',root).onload=function(){setTimeout(function(){URL.revokeObjectURL(u)},500)};msg('')}).catch(function(){msg('این عکس باز نشد؛ یک عکس JPG یا PNG دیگر امتحان کن.',true)})})}
 function save(form){if(!pending)return;var fd=new FormData(form);if(!fd.has('consent'))return msg('برای ذخیره، تیک رضایت را بزن.',true);
   var btn=form.querySelector('button[type=submit]');btn.disabled=true;msg('در حال ذخیره و بررسی…');
   var e={id:'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),date:new Date().toISOString(),data:pending.data,type:pending.type,w:pending.w,h:pending.h,
     bare:fd.has('c1'),sameLight:fd.has('c2'),tags:fd.getAll('tag').map(String).slice(0,7),note:String(fd.get('note')||'').trim().slice(0,300),routine:routineNames(),synced:false,v:1};
-  askPersist().then(function(){return put(e)}).then(function(){pending=null;ensureVault();try{window.bwTrack&&window.bwTrack('journal_photo')}catch(x){}
-    return render().then(function(){msg('عکس روی گوشی ذخیره و بازخوانی شد ✓ ('+faDate(e.date)+'). حالا نسخه‌ی قفل‌شده‌اش به فضای امن می‌رود.');syncNow()})})
+  askPersist().then(function(){return put(e)}).then(function(){pending=null;var vv=ensureVault();if(vv&&vv.share!==fd.has('share')){vv.share=fd.has('share');if(vv.share)vv.escrow=true;writeJ(VK,vv)}try{window.bwTrack&&window.bwTrack('journal_photo')}catch(x){}
+    return render().then(function(){msg('عکس روی گوشی ذخیره و بازخوانی شد ✓ ('+faDate(e.date)+'). حالا نسخه‌ی رمزشده‌اش به فضای امن می‌رود.');syncNow()})})
   .catch(function(err){btn.disabled=false;var full=err&&(err.name==='QuotaExceededError'||/quota/i.test(err.message||''));
     msg(full?'فضای ذخیره‌ی گوشی پر است؛ عکس ذخیره نشد. چند عکس قدیمی را حذف کن.':'عکس ذخیره نشد. دوباره امتحان کن؛ اگر باز نشد، مرورگر را از حالت خصوصی خارج کن.',true)})}
 function view(id){get(id).then(function(e){if(!e)return;all().then(function(list){var v=document.createElement('div');v.className='sj-view';v.setAttribute('role','dialog');
@@ -172,14 +189,27 @@ function view(id){get(id).then(function(e){if(!e)return;all().then(function(list
       del(e.id).then(function(){dropUrl(e.id);if(e.synced){var t=readJ(VDEL,[]);if(t.indexOf(e.id)<0)t.push(e.id);writeJ(VDEL,t.slice(-200))}v.remove();return render().then(function(){msg('عکس حذف شد.');syncNow()})})}});
   document.body.appendChild(v)})})}
 
+/* ---------- restore with the mobile number (code kept by BeautyWallet with consent) ---------- */
+var otpStage=false;
+function recoverPhone(){var ph=(($('#sjPhone',root)||{}).value||'').trim();if(!ph)return msg('شماره‌ی موبایلت را بنویس.',true);
+  var dev='';try{dev=localStorage.getItem('bw_device')||''}catch(e){}
+  if(!otpStage){msg('در حال ارسال…');fetch('/api/vault-recover',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:ph,d:dev})}).then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})}).then(function(x){
+    if(!x.ok)return msg(x.j.error||'ارسال نشد؛ دوباره امتحان کن.',true);
+    if(x.j.otp){otpStage=true;$('#sjOtpBox',root).hidden=false;msg('اگر برای این شماره عکسی ثبت شده باشد، کد پیامک می‌شود. کد را بنویس و دوباره «بازگردانی با موبایل» را بزن.');return}
+    msg('درخواستت ثبت شد ✓ پشتیبانی بیوتی‌ولت بعد از اطمینان از اینکه این شماره مال خودت است، کد بازیابی را برایت می‌فرستد؛ بعد آن را در «بازگردانی با کد» بزن.')}).catch(function(){msg('ارتباط برقرار نشد؛ دوباره امتحان کن.',true)});return}
+  var code=(($('#sjOtp',root)||{}).value||'').trim();if(!code)return msg('کد پیامک‌شده را بنویس.',true);
+  fetch('/api/vault-recover/verify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:ph,code:code})}).then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})}).then(function(x){
+    if(!x.ok)return msg(x.j.error||'کد درست نیست.',true);otpStage=false;var codes=x.j.codes||[];if(!codes.length)return msg('برای این شماره عکسی در فضای امن پیدا نشد.',true);
+    restoreCode(codes[0],'0'+ph.replace(/[۰-۹]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x)}).replace(/\D/g,'').slice(-10))}).catch(function(){msg('ارتباط برقرار نشد؛ دوباره امتحان کن.',true)})}
+
 /* ---------- restore with the recovery code ---------- */
-function restoreCode(code){if(!canVault())return msg('این مرورگر رمزنگاری را پشتیبانی نمی‌کند.',true);if(!codeBytes(code))return msg('کد درست نیست؛ باید شبیه BW-XXXX-XXXX-… با ۳۲ حرف و عدد باشد.',true);
+function restoreCode(code,phone){if(!canVault())return msg('این مرورگر رمزنگاری را پشتیبانی نمی‌کند.',true);if(!codeBytes(code))return msg('کد درست نیست؛ باید شبیه BW-XXXX-XXXX-… با ۳۲ حرف و عدد باشد.',true);
   msg('در حال دریافت و باز کردن عکس‌های قفل‌شده…');var norm='BW-'+codeChars(code).match(/.{4}/g).join('-'),got=0;
   keysFor(norm).then(function(k){return api(k,'GET').then(function(r){if(!r.ok)throw Error('net');return r.json()}).then(function(j){var ids=(j.photos||[]).map(function(p){return p.id});
     if(!ids.length)throw Error('none');return all().then(function(have){var own={};have.forEach(function(e){own[e.id]=1});
       return ids.filter(function(id){return !own[id]}).reduce(function(c,id){return c.then(function(){return api(k,'GET',id).then(function(r){if(!r.ok)throw Error('net');return r.arrayBuffer()}).then(function(buf){return open_(k,buf)}).then(function(e){got++;return put(e)})})},askPersist())})})
-    .then(function(){var cur=vault();if(cur&&cur.code===norm)return render();
-      writeJ(VK,{code:norm,saved:true,on:true,created:new Date().toISOString()});writeJ(VDEL,[]);
+    .then(function(){var cur=vault();if(cur&&cur.code===norm){if(phone&&!cur.phone){cur.phone=phone;writeJ(VK,cur)}return render()}
+      writeJ(VK,{code:norm,saved:true,on:true,escrow:true,share:!!(cur&&cur.share),phone:phone||(cur&&cur.phone)||'',created:new Date().toISOString()});writeJ(VDEL,[]);
       // photos that were only in the previous vault now go to this one too (one code for everything)
       return all().then(function(list){return Promise.all(list.map(function(e){if(!e.synced||!cur)return;e.synced=false;return put(e)}))}).then(render)})})
   .then(function(){try{window.bwTrack&&window.bwTrack('vault_restore')}catch(x){}msg(got?fa(got)+' عکس برگشت و باز شد ✓':'همه‌ی عکس‌های این کد از قبل روی گوشی بودند ✓');syncNow()})
@@ -187,7 +217,6 @@ function restoreCode(code){if(!canVault())return msg('این مرورگر رمز
 
 /* ---------- file backup (extra, optional) ---------- */
 function b64(buf){var s='',a=new Uint8Array(buf);for(var i=0;i<a.length;i+=32768)s+=String.fromCharCode.apply(null,a.subarray(i,i+32768));return btoa(s)}
-function unb64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a.buffer}
 function backup(){all().then(function(list){if(!list.length)return;var out={app:'BeautyWallet',kind:'skin-journal',version:1,exported:new Date().toISOString(),photos:list.map(function(e){var c={};for(var k in e)if(k!=='data'&&k!=='synced')c[k]=e[k];c.data=b64(e.data);return c})};
   var blob=new Blob([JSON.stringify(out)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='BeautyWallet-skin-photos-'+tehranDay(Date.now())+'.bwjournal';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},30000);
   msg('فایل پشتیبان روی گوشی‌ات ذخیره شد. این فایل قفل نیست؛ آن را جای امن نگه دار.')}).catch(function(){msg('پشتیبان ساخته نشد؛ دوباره امتحان کن.',true)})}
@@ -208,8 +237,7 @@ function nudge(text,go){var k=SEEN+tehranDay(Date.now())+'-'+go;try{if(localStor
   var n=document.createElement('div');n.className='sj-nudge';n.setAttribute('role','status');n.innerHTML='<b>'+esc(text)+'</b><button type="button" class="go">برو</button><button type="button" aria-label="بستن">✕</button>';
   n.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;n.remove();if(b.classList.contains('go')&&typeof window.switchTab==='function'){window.switchTab('track');setTimeout(function(){var t=go==='routine'?document.querySelector('#track .track-grid'):root;t&&t.scrollIntoView({behavior:'smooth',block:'start'})},250)}});
   document.body.appendChild(n);setTimeout(function(){n.remove()},14000)}
-function nudges(){all().then(function(list){var v=vault();if(list.length&&v&&!v.saved)return nudge('کد بازیابی عکس‌هایت را هنوز ذخیره نکرده‌ای؛ بدون آن، عکس‌ها روی گوشی دیگر باز نمی‌شوند.','code');
-  var p=plan(list);if(p.state==='due')return nudge('امروز وقت عکس '+p.label+' پوستت است؛ یک دقیقه طول می‌کشد.','photo');
+function nudges(){all().then(function(list){var p=plan(list);if(p.state==='due')return nudge('امروز وقت عکس '+p.label+' پوستت است؛ یک دقیقه طول می‌کشد.','photo');
   var miss=todayMissing();if(miss)nudge('روتین '+miss+' امروز هنوز ثبت نشده؛ فقط تیکش را بزن.','routine')}).catch(function(){})}
 
 /* ---------- public API (used by the calendar export in routine-reminder.js) ---------- */
@@ -231,6 +259,11 @@ function init(){root=document.getElementById('skinJournal');if(!root)return;root
     if(a==='show-code'){showCode=true;render()}
     if(a==='hide-code'){showCode=false;render()}
     if(a==='restore-code')restoreCode(($('#sjCode',root)||{}).value||'');
+    if(a==='recover-phone')recoverPhone();
+    if(a==='perm'&&v){var ph=($('#sjMyPhone',root)||{}).value||'';ph=ph.replace(/[۰-۹]/g,function(x){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(x)}).replace(/\D/g,'');
+      if(ph&&!/^(?:98|0)?9\d{9}$/.test(ph))return msg('شماره‌ی موبایل درست نیست.',true);if(ph)ph='0'+ph.slice(-10);
+      v.phone=ph;v.escrow=!!($('#sjEscrow',root)||{}).checked;v.share=v.escrow&&!!($('#sjShare',root)||{}).checked;writeJ(VK,v);
+      keysFor(v.code).then(function(k){return escrowNow(k,v)}).then(function(){return render()}).then(function(){msg(v.escrow?'اجازه‌ها ذخیره شد ✓'+(v.share?' کارشناس می‌تواند روندت را ببیند.':' کارشناس عکس‌هایت را نمی‌بیند.'):'بازیابی با موبایل خاموش شد؛ فقط با کد بازیابی برمی‌گردند.')})}
     if(a==='vault-on'&&v){v.on=true;writeJ(VK,v);all().then(function(list){return Promise.all(list.map(function(e){e.synced=false;return put(e)}))}).then(function(){paintSync();syncNow()})}
     if(a==='vault-off'&&v){if(!confirm('نسخه‌های قفل‌شده از فضای امن حذف شوند؟ عکس‌ها روی همین گوشی می‌مانند، ولی اگر گوشی عوض شود یا مرورگر پاک شود، دیگر برنمی‌گردند.'))return;
       keysFor(v.code).then(function(k){return api(k,'DELETE')}).then(function(r){if(!r.ok)throw Error();v.on=false;writeJ(VK,v);writeJ(VDEL,[]);return all().then(function(list){return Promise.all(list.map(function(e){e.synced=false;return put(e)}))})}).then(function(){render().then(function(){msg('عکس‌ها از فضای امن حذف شدند؛ فقط روی همین گوشی هستند.')})}).catch(function(){msg('حذف از فضای امن انجام نشد؛ دوباره امتحان کن.',true)})}});

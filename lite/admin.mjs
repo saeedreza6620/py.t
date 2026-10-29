@@ -120,7 +120,7 @@ return `<div class="card"><form method="post" action="/admin/config" class="cfg"
 <p class="note" style="margin-top:0">کل درخواست‌ها: <b>${fa(sp.calls)}</b> از ${fa(c.aiDailyCalls)}${bar(sp.calls,c.aiDailyCalls)}</p><p class="note">جست‌وجوی وب (گران‌تر): <b>${fa(sp.online)}</b> از ${fa(c.aiDailyOnline)}${bar(sp.online,c.aiDailyOnline)}</p>
 <label>سقف کل درخواست‌های روزانه <input name="aiDailyCalls" type="number" min="0" value="${esc(c.aiDailyCalls)}"></label><label>سقف جست‌وجوی وب روزانه <input name="aiDailyOnline" type="number" min="0" value="${esc(c.aiDailyOnline)}"></label><button class="btn">ذخیره سقف</button></form>
 <p class="note">هوش مصنوعی فقط وقتی مصرف می‌شود که کاربری چیزی بپرسد یا محصولی بیرون از کاتالوگ را بسنجد؛ هیچ کار خودکار روزانه‌ای اعتبار مصرف نمی‌کند. نتیجه‌ی هر محصول ۳۰ روز ذخیره می‌شود و دفعه‌ی بعد رایگان است. وقتی سقف پر شود، اپ تا فردا فقط از کاتالوگ جواب می‌دهد. مبلغ واقعی را در کنسول لیارا، بخش هوش مصنوعی ببین.</p></div>`})()}
-${(()=>{const v=globalThis.BW_VAULT_STATS?globalThis.BW_VAULT_STATS():null;return v?`<h2>فضای امن عکس‌ها (رمزنگاری‌شده)</h2><div class="card" style="margin-bottom:12px"><p class="note">کاربر: ${fa(v.vaults)} · حجم: ${fa(v.mb)} از ${fa(v.capMb)} مگابایت. محتوای این فایل‌ها برای سرور قابل خواندن نیست.</p></div>`:''})()}<h2>نصب و استفاده</h2><div class="grid">
+${(()=>{const v=globalThis.BW_VAULT_STATS?globalThis.BW_VAULT_STATS():null;return v?`<h2>فضای امن عکس‌ها (رمزنگاری‌شده)</h2><div class="card" style="margin-bottom:12px"><p class="note">کاربر: ${fa(v.vaults)} · حجم: ${fa(v.mb)} از ${fa(v.capMb)} مگابایت. عکس‌ها رمزشده‌اند؛ بازیابی با اجازه: ${fa(v.escrow)} · اجازه‌ی بررسی کارشناس: ${fa(v.share)}. <a href=\"/admin/vault\">مدیریت</a></p></div>`:''})()}<h2>نصب و استفاده</h2><div class="grid">
 ${k(s.installed,'نصب روی گوشی','از آیکن صفحه اصلی باز شده یا نصب اندروید')}
 ${k(s.devices,'دستگاه یکتا',`امروز: ${fa(s.today)}`)}
 ${k(s.appUsers,'کاربر اپ',`بازدید سایت: ${fa(s.siteVisitors)}`)}
@@ -181,6 +181,7 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
     if(secret&&okPass(url.searchParams.get('token'))&&(p==='/admin'||p==='/admin/')){const secure=String(req.headers['x-forwarded-proto']||'').startsWith('https')?'; Secure':'';
       res.writeHead(303,{Location:'/admin','Set-Cookie':`bw_admin=${sig}; HttpOnly; SameSite=Lax; Path=/admin; Max-Age=31536000${secure}`,'Cache-Control':'no-store','Referrer-Policy':'no-referrer'});return res.end()}
     if(!authed(req,url))return send(res,p==='/admin'||p==='/admin/'?200:401,loginPage(false),'text/html; charset=utf-8',{'Cache-Control':'no-store'});
+    if(p.startsWith('/admin/vault')&&globalThis.BW_VAULT_ADMIN)return await globalThis.BW_VAULT_ADMIN(req,res,url,{page,readForm});
     if(p==='/admin/config'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,'forbidden','text/plain');saveCfg(await readForm(req));res.writeHead(303,{Location:'/admin'});return res.end()}
     if(p==='/admin/bank-approve'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const f=await readForm(req);return send(res,BANK.approve(String(f.id||''))?200:404,{ok:true})}
     if(p==='/admin/bank-remove'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const f=await readForm(req);return send(res,BANK.remove(String(f.id||''))?200:404,{ok:true})}

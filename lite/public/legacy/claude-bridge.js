@@ -147,7 +147,7 @@ window.fetch=function(input,init){
   var url=typeof input==='string'?input:input&&input.url||'';
   var m=/^(?:https?:\/\/[^/]+)?(\/api\/[A-Za-z/_-]+)/.exec(url);
   if(!m||(/^https?:/.test(url)&&url.indexOf(location.origin)!==0))return realFetch(input,init);
-  if(LITE&&m[1].indexOf('/api/vault/')===0)return realFetch(input,init); // encrypted photo backup: binary, straight to the lite server
+  if(LITE&&m[1].indexOf('/api/vault')===0)return realFetch(input,init); // encrypted photo backup: binary, straight to the lite server
   init=init||{};var method=String(init.method||'GET').toUpperCase(),body=null;
   try{body=init.body?JSON.parse(init.body):null}catch(e){body=null}
   return route(m[1],method,body,init.signal).catch(function(e){if(e&&e.name==='AbortError')throw e;return json({error:'دستیار فعلاً در دسترس نیست'},503)});
