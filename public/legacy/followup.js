@@ -136,14 +136,13 @@ var iosVer=(function(){var m=UA.match(/OS (\d+)_(\d+)/);return m?Number(m[1])+Nu
 function chromeLink(){return 'intent://'+location.host+'/legacy/?from=perm#Intent;scheme=https;package=com.android.chrome;end'}
 function permHelp(state){ // state: 'denied' (blocked before) or 'default' (window closed / never shown)
   var t,steps=[],btn='';
-  if(inApp){t='اینجا اعلان کار نمی‌کنه';steps=['الان بیوتی‌ولت داخل اینستاگرام یا تلگرام باز شده و این‌ها اجازه‌ی اعلان نمی‌دن.',ios?'سه‌نقطه‌ی بالای صفحه ← «Open in Safari» (باز کردن در Safari).':'دکمه‌ی زیر رو بزن تا در Chrome باز بشه.','بعد از اونجا «روشنش کن» رو بزن.'];if(android)btn='<a class="fu-a" href="'+chromeLink()+'">باز کردن در Chrome</a>'}
+  if(inApp){t='اینجا اعلان کار نمی‌کنه';steps=['الان بیوتی‌ولت داخل اینستاگرام یا تلگرام باز شده و این‌ها اجازه‌ی اعلان نمی‌دن.',ios?'سه‌نقطه‌ی بالای صفحه ← «Open in Safari» (باز کردن در Safari).':'دکمه‌ی زیر رو بزن تا در Chrome باز بشه.','بعد از اونجا «روشنش کن» رو بزن.'];}
   else if(ios&&iosVer&&iosVer<16.4){t='آیفونت باید به‌روز بشه';steps=['اعلان وب‌اپ از iOS نسخه‌ی ۱۶٫۴ به بعد کار می‌کنه.','Settings ← General ← Software Update، بعد دوباره امتحان کن.']}
   else if(ios&&!standalone){t='اول اپ رو به صفحه‌ی اصلی اضافه کن';steps=['در Safari دکمه‌ی اشتراک‌گذاری (مربع با فلش رو به بالا) ← «Add to Home Screen».','بیوتی‌ولت رو از آیکن خودش در صفحه‌ی اصلی باز کن.','اینجا «روشنش کن» رو بزن و «Allow» رو انتخاب کن.']}
   else if(ios){t=state==='default'?'هنوز اجازه نگرفتم':'اجازه‌ی اعلان بسته شده';steps=state==='default'?['«روشنش کن» رو بزن و در پنجره‌ای که میاد «Allow» رو انتخاب کن.']:['Settings گوشی ← Notifications ← در فهرست برنامه‌ها «BeautyWallet» رو پیدا کن ← «Allow Notifications» رو روشن کن.','اگه BeautyWallet توی فهرست نبود: آیکن اپ رو از صفحه‌ی اصلی حذف کن، از Safari دوباره «Add to Home Screen» بزن و از آیکن جدید «روشنش کن» رو بزن.']}
   else if(android){t=state==='default'?'هنوز اجازه نگرفتم':'اجازه‌ی اعلان بسته شده';
     if(state==='default')steps=['«روشنش کن» رو بزن و در پنجره‌ای که میاد «اجازه» (Allow) رو انتخاب کن.','اگه پنجره‌ای نیومد، از راه دکمه‌ی «باز کردن در Chrome» پایین همین کارت اجازه رو بده.'];
-    else steps=['دکمه‌ی آبی «باز کردن در Chrome» رو بزن (همین صفحه در Chrome معمولی باز می‌شه، با نوار آدرس).','کنار آدرس بالای صفحه، روی آیکن قفل 🔒 یا ⚙ بزن.','«اجازه‌ها» (Permissions) ← «اعلان‌ها» (Notifications) ← روشن.','Chrome رو ببند و بیوتی‌ولت رو دوباره از آیکن خودش باز کن و «دوباره امتحان کن» رو بزن.','اگه باز هم نشد: تنظیمات گوشی ← برنامه‌ها ← Chrome ← اعلان‌ها ← روشن باشه.'];
-    btn='<a class="fu-a" href="'+chromeLink()+'" target="_blank" rel="noopener">باز کردن در Chrome</a>'}
+    else steps=standalone?['برنامه‌ی Chrome رو جدا باز کن (همون آیکن Chrome گوشی) و آدرس beautywallet.liara.run رو بزن.','کنار آدرس روی قفل 🔒 بزن ← «اجازه‌ها» ← «اعلان‌ها» ← روشن.','برگرد به بیوتی‌ولت و «دوباره امتحان کن» رو بزن. این کار فقط یک بار لازمه.']:['کنار آدرس بالای صفحه روی قفل 🔒 بزن ← «اجازه‌ها» ← «اعلان‌ها» ← روشن.','بعد «دوباره امتحان کن» رو بزن.'];}
   else{t='اجازه‌ی اعلان بسته شده';steps=['روی قفل 🔒 کنار آدرس بزن، «Notifications» رو روی «Allow» بذار و صفحه رو رفرش کن.']}
   return '<div class="fu"><small class="k">یادآور روی گوشی 🔔</small><b>'+t+'</b><ol style="margin:4px 18px 0 0;padding:0">'+steps.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol><div class="o" style="margin-top:8px">'+btn+'<button type="button" class="m" data-fu-on="1">دوباره امتحان کن</button><button type="button" data-fu-later="1">بعداً</button></div><span class="note">وضعیت فعلی: '+(typeof Notification==='undefined'?'اعلان پشتیبانی نمی‌شه':Notification.permission==='denied'?'مسدود':Notification.permission==='granted'?'مجاز':'پرسیده نشده')+(standalone?' · از آیکن صفحه‌ی اصلی':' · در مرورگر')+'</span></div>'}
 var permFail='';
@@ -206,5 +205,5 @@ function init(){if(!document.getElementById('sw-home'))return setTimeout(init,50
   if(/[?&]from=notif/.test(location.search))track('notif_open');
   try{navigator.serviceWorker&&navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.bw==='notif-open'){track('notif_open');render()}})}catch(e){}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-window.BWFollowup={tasks:tasks,plan:planDays,render:render,life:life,careful:careful};
+window.BWFollowup={tasks:tasks,plan:planDays,render:render,life:life,careful:careful,enable:function(){permFail='';var n=notif();if(!(canPush&&!(ios&&!standalone)))return render();return enable(n,false)}};
 })();

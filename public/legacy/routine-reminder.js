@@ -32,7 +32,8 @@
     const next=$('reminderEnabled').checked;
     if(!writeJ(SET,{enabled:next,morning:$('reminderMorning').value,evening:$('reminderEvening').value}))return setStatus('ذخیره نشد؛ فضای مرورگر در دسترس نیست.');
     enabled=next;
-    try{if(enabled&&'Notification' in window&&Notification.permission==='default')await Notification.requestPermission();}catch{}
+    // one shared, guided flow for phone notifications (asks once, at a tap, and helps if it was blocked)
+    try{if(enabled&&window.BWFollowup&&window.BWFollowup.enable)window.BWFollowup.enable();}catch{}
     setStatus(enabled?'ذخیره شد. اعلان مرورگر فقط وقتی اپ باز است و با اجازه‌ی تو کار می‌کند؛ برای یادآوری وقتی اپ بسته است «افزودن به تقویم گوشی» را بزن.':'یادآور خاموش شد.');
   });
   $('saveReview').addEventListener('click',()=>{
