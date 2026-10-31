@@ -386,8 +386,18 @@ function checkOrders(){var mine=read('bw_card_orders',[]).filter(function(o){ret
 setTimeout(checkOrders,2500);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkOrders()});
 // installed apps (no refresh button on iPhone): when a newer release is live, reload once
 var APP_V=(function(){var s=document.querySelector('script[src*="sweet.js"]');var m=s&&s.src.match(/[?&]v=(\d+)/);return m?Number(m[1]):0})();
-function checkRelease(){if(!LIVE||!APP_V)return;fetch('/healthz',{cache:'no-store'}).then(function(r){return r.json()}).then(function(h){var v=Number(h&&h.version)||0;var k='bw_reload_for';if(v>APP_V&&read(k,0)!==v){write(k,v);location.reload()}}).catch(function(){})}
-setTimeout(checkRelease,1500);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkRelease()});
+function checkRelease(){if(!LIVE||!APP_V)return;fetch('/healthz',{cache:'no-store'}).then(function(r){return r.json()}).then(function(h){var v=Number(h&&h.version)||0;if(!(v>APP_V))return;
+  // a newer release is live: refresh in place (no link for the shopper). Never in the middle of typing or an open form/sheet — then a small bar asks.
+  var k='bw_reload_for',tries=read(k,{});if(tries.v!==v)tries={v:v,n:0};if(tries.n>=3)return;
+  var busy=function(){var a=document.activeElement;return !!(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))||!!document.querySelector('#sjForm,.sw-sheet.open,#swSheet.open,dialog[open]')};
+  var go=function(){tries.n++;write(k,tries);var done=function(){location.replace('/legacy/?v='+v+'&r='+Date.now())};
+    Promise.resolve().then(function(){return navigator.serviceWorker&&navigator.serviceWorker.getRegistration?navigator.serviceWorker.getRegistration('/legacy/'):null}).then(function(r){return r&&r.update()}).catch(function(){})
+    .then(function(){return window.caches?caches.keys().then(function(n){return Promise.all(n.filter(function(x){return /^bw-(static|complete)-/.test(x)}).map(function(x){return caches.delete(x)}))}):null}).catch(function(){}).then(done)};
+  if(!busy())return go();
+  if(document.getElementById('bwUpd'))return;var b=document.createElement('div');b.id='bwUpd';b.setAttribute('role','status');b.style.cssText='position:fixed;left:12px;right:12px;bottom:84px;z-index:9999;max-width:520px;margin:auto;background:#fff;border-radius:16px;box-shadow:0 10px 28px rgba(60,60,120,.22);padding:11px 14px;display:flex;gap:10px;align-items:center;font-size:14px';
+  b.innerHTML='<span style="flex:1">نسخه‌ی تازه‌ی بیوتی‌ولت آماده است 💎</span><button type="button" style="border:0;border-radius:12px;padding:8px 12px;font:inherit;background:linear-gradient(135deg,#7aa7ff,#c08cff);color:#fff">به‌روزرسانی</button>';
+  b.querySelector('button').onclick=go;document.body.appendChild(b)}).catch(function(){})}
+setTimeout(checkRelease,1500);document.addEventListener('visibilitychange',function(){if(!document.hidden)checkRelease()});setInterval(function(){if(!document.hidden)checkRelease()},30*60e3);
 /* ---------- diamond assistant: reads skin + routine in half a second, then offers exactly what to check ---------- */
 function routineBrief(){var ids=routineIds(),p=profile(),am=ids.filter(function(id){return timeOf(id)==='am'}).length;
  return {ids:ids,am:am,pm:ids.length-am,skin:p.skinBase&&p.skinBase!=='مطمئن نیستم'?p.skinBase:'',today:p.skinToday||'',goal:String(p.goal1||'').replace('آبرسانی و حمایت از لایهٔ محافظ پوست','آبرسانی')}}
