@@ -118,9 +118,10 @@ function saveNotif(n){wj(K_NOTIF,n);var r={enabled:!!(n.amOn||n.pmOn),morning:n.
 var mirror='';
 function granted(){return typeof Notification!=='undefined'&&Notification.permission==='granted'}
 function notifBlock(){var n=notif(),has=ids().length>0;if(!has||(n.on&&granted()))return '';
-  if(n.hide&&Date.now()-n.hide<14*DAY)return '';
+  if(n.hide&&Date.now()-n.hide<14*DAY&&!permFail)return '';
   if(ios&&!standalone)return '<div class="fu"><b>یادآور روی گوشی 🔔</b>برای اینکه روزای مهم روتینت رو روی گوشیت یادت بندازم، اول بیوتی‌ولت رو از دکمه‌ی اشتراک‌گذاری Safari «به صفحه‌ی اصلی» اضافه کن و از آیکن خودش باز کن.<div class="o" style="margin-top:6px"><button type="button" data-fu-later="1">بعداً</button></div></div>';
-  if(!canPush||(typeof Notification!=='undefined'&&Notification.permission==='denied'))return '';
+  if(!canPush&&!inApp)return '';if(inApp)return permHelp('denied');
+  if(permFail||(typeof Notification!=='undefined'&&Notification.permission==='denied'))return permHelp(permFail||'denied');
   return '<div class="fu"><b>یادآور روی گوشی 🔔</b>روزای مهم روتینت (روز ۳ هر محصول، عکس هفته‌ی ۴ و ۸) رو هر ساعتی که دوست داری روی گوشیت یادت بندازم؟'+timeRows(n)+'<div class="o" style="margin-top:8px"><button type="button" class="m" data-fu-on="1">روشنش کن</button><button type="button" data-fu-later="1">بعداً</button></div></div>'}
 function timeRows(n){return '<div class="row2"><label><input type="checkbox" id="fuAmOn"'+(n.amOn?' checked':'')+'> صبح‌ها</label><input type="time" id="fuAm" value="'+n.am+'" step="60"></div><div class="row2"><label><input type="checkbox" id="fuPmOn"'+(n.pmOn?' checked':'')+'> شب‌ها هم یادم بنداز</label><input type="time" id="fuPm" value="'+n.pm+'" step="60"></div><span class="note">ساعت رو هر چی بخوای بذار (به وقت ایران). روزهایی که کار مهمی داری، پیامش همون ساعت میاد؛ بقیه‌ی روزها فقط اگه تیک زده باشی.</span>'}
 function readTimes(n){var a=($('#fuAm')||{}).value,p=($('#fuPm')||{}).value;if(TIME.test(a||''))n.am=a;if(TIME.test(p||''))n.pm=p;var ao=$('#fuAmOn'),po=$('#fuPmOn');if(ao)n.amOn=ao.checked;if(po)n.pmOn=po.checked;return n}
@@ -129,6 +130,17 @@ function settingsHtml(){var n=notif(),l=life(),c=l.cycle||{},st;
   return '<div class="fu" id="fuSettings"><button type="button" class="x" data-set-close="1" aria-label="بستن">✕</button><small class="k">⚙️ تنظیمات من</small><b>یادآور روی گوشی: '+st+'</b>'+timeRows(n)+'<hr><b>شرایط من</b><div class="row2"><select id="fuLife"><option value="">انتخاب کن</option>'+LIFE_OPTS.map(function(o){return '<option value="'+o[0]+'"'+(l.state===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+(l.state==='pb'?'<option value="pb" selected>بارداری یا شیردهی (از پروفایل)</option>':'')+'</select></div>'+
     '<div class="row2"><label><input type="checkbox" id="fuCycOn"'+(c.on?' checked':'')+'> چرخه‌ی ماهانه‌م رو در نظر بگیر</label></div><div class="row2"><label>آخرین شروع <input type="date" id="fuCycLast2" max="'+tday()+'" value="'+esc(c.last||'')+'"></label><label>هر<select id="fuCycLen2">'+[21,24,26,28,30,32,35].map(function(x){return '<option value="'+x+'"'+((Number(c.len)||28)===x?' selected':'')+'>'+fa(x)+'</option>'}).join('')+'</select>روز</label></div><span class="note">این‌ها فقط روی همین گوشی ذخیره می‌شن و هیچ‌جا فرستاده نمی‌شن.</span>'+
     '<div class="o" style="margin-top:8px"><button type="button" class="m" data-set-save="1">ذخیره</button></div></div>'}
+var UA=navigator.userAgent||'',inApp=/Instagram|FBAN|FBAV|Telegram|; wv\)|WebView/i.test(UA),android=/Android/i.test(UA),samsung=/SamsungBrowser/i.test(UA);
+function permHelp(state){ // state: 'denied' (blocked before) or 'default' (window closed without choosing)
+  var steps;
+  if(inApp)steps='الان بیوتی‌ولت داخل اینستاگرام یا تلگرام باز شده و این‌ها اجازه‌ی اعلان نمی‌دن. لینک رو در '+(ios?'Safari':'Chrome')+' باز کن، اپ رو به صفحه‌ی اصلی اضافه کن و از آیکن خودش دوباره امتحان کن.';
+  else if(state==='default')steps='پنجره‌ی اجازه بسته شد بدون اینکه انتخابی بشه. دوباره «روشنش کن» رو بزن و این بار «اجازه» یا «Allow» رو انتخاب کن.';
+  else if(ios)steps='اجازه قبلاً بسته شده. برو به «Settings» گوشی ← «Notifications» ← «BeautyWallet» و «Allow Notifications» رو روشن کن. بعد برگرد و «روشنش کن» رو دوباره بزن.';
+  else if(android&&standalone)steps='اجازه قبلاً بسته شده. انگشتت رو روی آیکن بیوتی‌ولت در صفحه‌ی اصلی نگه دار ← «اطلاعات برنامه» (App info) ← «اعلان‌ها» ← روشن. بعد اپ رو ببند، باز کن و «روشنش کن» رو بزن.';
+  else if(android)steps='اجازه قبلاً بسته شده. در '+(samsung?'Samsung Internet':'Chrome')+' روی قفل 🔒 کنار آدرس بزن ← «مجوزها» یا «Permissions» ← «اعلان‌ها» ← «اجازه». بعد صفحه رو رفرش کن و «روشنش کن» رو بزن. (بهتره اول اپ رو به صفحه‌ی اصلی اضافه کنی.)';
+  else steps='اجازه قبلاً بسته شده. روی قفل 🔒 کنار آدرس بزن، «Notifications» رو روی «Allow» بذار و صفحه رو رفرش کن.';
+  return '<div class="fu"><small class="k">یادآور روی گوشی 🔔</small><b>'+(state==='default'&&!inApp?'هنوز اجازه نگرفتم':'گوشیت اجازه‌ی اعلان رو بسته')+'</b><p>'+steps+'</p><div class="o" style="margin-top:8px"><button type="button" class="m" data-fu-on="1">دوباره امتحان کن</button><button type="button" data-fu-later="1">بعداً</button></div></div>'}
+var permFail='';
 function b64u(s){var p=(s+'===').slice(0,s.length+(4-s.length%4)%4).replace(/-/g,'+').replace(/_/g,'/'),b=atob(p),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
 function subscribe(){return Notification.requestPermission().then(function(p){if(p!=='granted')throw Error('denied');return navigator.serviceWorker.ready})
   .then(function(reg){return fetch('/api/push/key',{cache:'no-store'}).then(function(r){return r.json()}).then(function(k){return reg.pushManager.getSubscription().then(function(s){return s||reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(k.key)})})}).then(function(sub){
@@ -137,7 +149,7 @@ function enable(n,quiet){n=n||readTimes(notif());
   return subscribe().then(function(sub){n.on=true;n.endpoint=sub.endpoint;n.sig='';saveNotif(n);track('notif_on');return syncSub(sub,true).then(function(ok){if(!ok)throw Error('server');return sub})})
   .then(function(){if(quiet)return true;return fetch('/api/push/test',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:notif().endpoint})}).then(function(r){return r.ok},function(){return false})})
   .then(function(ok){settingsOpen=false;render(quiet?'تنظیمات یادآورت ذخیره شد 🔔 '+whenText():ok?'یادآور روشن شد 🔔 یه اعلان آزمایشی هم فرستادم. '+whenText():'یادآور روشن شد، ولی اعلان آزمایشی نرسید؛ تیم بیوتی‌ولت بررسی می‌کنه. یادآورهای داخل اپ همچنان کار می‌کنن.')})
-  .catch(function(e){settingsOpen=false;render(e&&e.message==='denied'?'اجازه‌ی اعلان داده نشد. اگه خواستی بعداً از تنظیمات گوشی برای بیوتی‌ولت روشنش کن.':'فعلاً ذخیره نشد؛ اینترنت رو چک کن و دوباره امتحان کن.')})}
+  .catch(function(e){settingsOpen=false;if(e&&e.message==='denied'){permFail=(typeof Notification!=='undefined'&&Notification.permission==='denied')?'denied':'default';track('notif_denied');return render()}render('فعلاً روشن نشد؛ اینترنت رو چک کن و دوباره امتحان کن.')})}
 function whenText(){var n=notif();return n.amOn&&n.pmOn?'صبح‌ها ساعت '+fa(n.am)+' و شب‌ها ساعت '+fa(n.pm)+'.':n.pmOn&&!n.amOn?'شب‌ها ساعت '+fa(n.pm)+'.':'صبح‌ها ساعت '+fa(n.am)+'.'}
 function taskSlot(n){return n.amOn||!n.pmOn?'am':'pm'}
 var lastSig='';
@@ -172,8 +184,8 @@ function init(){if(!document.getElementById('sw-home'))return setTimeout(init,50
     if(d.cycYes){cycleForm=true;return render()}
     if(d.cycNo){var l2=life();l2.cycle={asked:true,on:false};wj(K_LIFE,l2);cycleForm=false;return render('باشه عزیزم، دیگه نمی‌پرسم 🌸')}
     if(d.cycSave){var last=($('#fuCycLast')||{}).value,len=Number(($('#fuCycLen')||{}).value)||28;if(!/^\d{4}-\d\d-\d\d$/.test(last||''))return;var l3=life();l3.cycle={asked:true,on:true,last:last,len:len};wj(K_LIFE,l3);cycleForm=false;track('cycle_set');return render('ثبت شد 🌙 از این به بعد عکس‌ها و جوش‌های هورمونی رو با در نظر گرفتن چرخه‌ت می‌سنجم.')}
-    if(d.fuOn)return enable();
-    if(d.fuLater){var n=notif();n.hide=Date.now();saveNotif(n);return render()}
+    if(d.fuOn){permFail='';return enable()}
+    if(d.fuLater){var n=notif();n.hide=Date.now();saveNotif(n);permFail='';return render()}
     if(d.setOpen){settingsOpen=true;return render()}
     if(d.setClose){settingsOpen=false;return render()}
     if(d.setSave){var n2=readTimes(notif()),lv=($('#fuLife')||{}).value;if(lv&&lv!==life().state)setLife(lv);
