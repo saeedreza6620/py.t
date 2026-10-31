@@ -1,4 +1,4 @@
-const CACHE = 'bw-static-v107';
+const CACHE = 'bw-static-v108';
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(name=>/^bw-(static|complete)-/.test(name)&&name!==CACHE).map(name=>caches.delete(name)));await self.clients.claim();})()));
 
@@ -25,7 +25,7 @@ self.addEventListener('fetch', event => {
     } catch {
       if (cached) return cached;
       // Never combine JavaScript from different releases.
-      if (navigation) return new Response('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeautyWallet</title><body style="font-family:Tahoma;background:#f2faff;padding:24px;line-height:2"><h1>BeautyWallet</h1><p>اتصال برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن</p><a href="/legacy/?v=107">تلاش دوباره</a></body></html>', {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
+      if (navigation) return new Response('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeautyWallet</title><body style="font-family:Tahoma;background:#f2faff;padding:24px;line-height:2"><h1>BeautyWallet</h1><p>اتصال برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن</p><a href="/legacy/?v=108">تلاش دوباره</a></body></html>', {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
       return Response.error();
     } finally { clearTimeout(timeout); }
   })());
@@ -44,7 +44,7 @@ async function showToday(force){
   const day=tehranDay(),plan=await fuRead('plan'),shown=await fuRead('shown');
   if(!force&&shown===day)return;
   const item=plan&&Array.isArray(plan.days)?plan.days.find(x=>x.date===day):null;
-  const msg=item||(plan&&plan.daily?plan.daily:null)||{title:'بیوتی‌ولت 💎',body:'روتین امروزت یادت نره؛ یک تیک کوچیک کافیه.'};
+  const msg=item||(plan&&plan.daily?plan.daily:null)||{title:'بیوتی‌ولت 💎',body:'یه لحظه برای پوست قشنگت 🌸 روتین امروزت منتظرته.'};
   await fuWrite('shown',day);
   return self.registration.showNotification(msg.title,{body:msg.body,tag:'bw-today',renotify:false,icon:'/legacy/bw-gem-192.png',badge:'/legacy/bw-gem-192.png',lang:'fa',dir:'rtl',data:{url:'/legacy/?from=notif'}});
 }

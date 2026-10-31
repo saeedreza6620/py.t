@@ -237,8 +237,8 @@ function nudge(text,go){var k=SEEN+tehranDay(Date.now())+'-'+go;try{if(localStor
   var n=document.createElement('div');n.className='sj-nudge';n.setAttribute('role','status');n.innerHTML='<b>'+esc(text)+'</b><button type="button" class="go">برو</button><button type="button" aria-label="بستن">✕</button>';
   n.addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;n.remove();if(b.classList.contains('go')&&typeof window.switchTab==='function'){window.switchTab('track');setTimeout(function(){var t=go==='routine'?document.querySelector('#track .track-grid'):root;t&&t.scrollIntoView({behavior:'smooth',block:'start'})},250)}});
   document.body.appendChild(n);setTimeout(function(){n.remove()},14000)}
-function nudges(){all().then(function(list){var p=plan(list);if(p.state==='due')return nudge('امروز وقت عکس '+p.label+' پوستت است؛ یک دقیقه طول می‌کشد.','photo');
-  var miss=todayMissing();if(miss)nudge('روتین '+miss+' امروز هنوز ثبت نشده؛ فقط تیکش را بزن.','routine')}).catch(function(){})}
+function nudges(){all().then(function(list){var p=plan(list);if(p.state==='due')return nudge('امروز وقت عکس '+p.label+'ـه قشنگم 🌷 فقط یک دقیقه.','photo');
+  var miss=todayMissing();if(miss)nudge('روتین '+miss+'ت منتظرته عزیزم 🌸 یه تیک کوچولو بزن.','routine')}).catch(function(){})}
 
 /* ---------- public API (used by the calendar export in routine-reminder.js) ---------- */
 window.BWSkinJournal={plan:function(){return all().then(plan)},upcoming:function(){return all().then(function(list){if(!list.length)return [];var d0=dayIndex(list[0].date),last=dayIndex(list[list.length-1].date)-d0;

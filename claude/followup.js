@@ -29,13 +29,13 @@ function info(id){var f=null;try{f=window.BWCatalog&&BWCatalog.formula(id)}catch
   var pig=cls.some(function(c){return PIG.indexOf(c)>=0});
   return {id:id,name:short,kind:kind,days:kind==='retinoid'||(kind==='active'&&pig)?[3,14,28,56,84]:kind==='acid'||kind==='active'?[3,14,28,56]:[3,14]}}
 function ask(i,c){var n=i.name,last=i.days[i.days.length-1]===c;
-  if(c===3)return {k:'tol',title:'روز ۳ '+n,q:'پوستت با '+n+' چطوره؟',opts:[['ok','خوبه 😊'],['mild','یه کم می‌سوزه'],['bad','قرمز یا ملتهب شده']]};
-  if(c===14&&(i.kind==='acid'||i.kind==='retinoid'))return {k:'purge',title:'هفته‌ی ۲ '+n,q:'از وقتی '+n+' رو شروع کردی، جوش تازه داشتی؟',opts:[['none','نه'],['same','آره، همون جاهایی که همیشه جوش می‌زنم'],['new','آره، جاهای تازه یا با سوزش']]};
-  if(c===14&&i.kind==='spf')return {k:'habit',title:'هفته‌ی ۲ ضدآفتاب',q:'این دو هفته '+n+' رو چند روز زدی؟',opts:[['most','تقریباً هر روز'],['some','بعضی روزا'],['rare','کم']]};
-  if(c===14&&i.kind==='basic')return {k:'verdict',title:'هفته‌ی ۲ '+n,q:n+' بعد از دو هفته برای پوستت چطوره؟',opts:[['good','راحتم، نگهش می‌دارم'],['meh','فرقی حس نکردم'],['bad','اذیتم می‌کنه']]};
-  if(c===14)return {k:'tol2',title:'هفته‌ی ۲ '+n,q:'هنوز با '+n+' راحتی؟',opts:[['ok','آره'],['mild','گاهی می‌سوزه'],['bad','نه، اذیتم می‌کنه']]};
-  if(!last)return {k:'photo',title:'هفته‌ی '+fa(c/7)+' '+n,q:'هفته‌ی '+fa(c/7)+' '+n+' شد؛ با همون نور عکس شروع، یه عکس بگیر.',photo:true,opts:[['done','عکس گرفتم'],['later','فردا']]};
-  return {k:'final',title:'هفته‌ی '+fa(c/7)+' — حکم '+n,q:'عکس امروز رو کنار عکس شروعت ببین. '+n+' جواب داد؟',photo:true,opts:[['good','جواب داد'],['meh','فرقی نکرد'],['bad','بدتر شد']]}}
+  if(c===3)return {k:'tol',title:'روز سوم '+n,q:'عزیزم، پوستت این سه روز با '+n+' چطور بوده؟ 🌸',opts:[['ok','خوبه 😊'],['mild','یه کم می‌سوزه'],['bad','قرمز یا ملتهب شده']]};
+  if(c===14&&(i.kind==='acid'||i.kind==='retinoid'))return {k:'purge',title:'هفته‌ی ۲ '+n,q:'قشنگم، از وقتی '+n+' رو شروع کردی جوش تازه‌ای دیدی؟',opts:[['none','نه'],['same','آره، همون جاهایی که همیشه جوش می‌زنم'],['new','آره، جاهای تازه یا با سوزش']]};
+  if(c===14&&i.kind==='spf')return {k:'habit',title:'هفته‌ی ۲ ضدآفتاب',q:'این دو هفته چند روز ضدآفتابت رو زدی؟ 🌤',opts:[['most','تقریباً هر روز'],['some','بعضی روزا'],['rare','کم']]};
+  if(c===14&&i.kind==='basic')return {k:'verdict',title:'هفته‌ی ۲ '+n,q:'دو هفته با '+n+' گذشت؛ پوستت باهاش راحته؟ 💜',opts:[['good','راحتم، نگهش می‌دارم'],['meh','فرقی حس نکردم'],['bad','اذیتم می‌کنه']]};
+  if(c===14)return {k:'tol2',title:'هفته‌ی ۲ '+n,q:'هنوز با '+n+' حس خوبی داری عزیزم؟',opts:[['ok','آره'],['mild','گاهی می‌سوزه'],['bad','نه، اذیتم می‌کنه']]};
+  if(!last)return {k:'photo',title:'هفته‌ی '+fa(c/7)+' '+n,q:'هفته‌ی '+fa(c/7)+' با '+n+' شد 🌷 یه عکس با همون نور همیشگی بگیر تا تغییرت رو کنار هم ببینیم.',photo:true,opts:[['done','عکس گرفتم'],['later','فردا']]};
+  return {k:'final',title:'هفته‌ی '+fa(c/7)+' — حکم '+n,q:'وقت دیدن نتیجه‌ست ✨ عکس امروزت رو کنار عکس شروع ببین؛ '+n+' برات جواب داد؟',photo:true,opts:[['good','جواب داد'],['meh','فرقی نکرد'],['bad','بدتر شد']]}}
 var REPLY={tol:{ok:'عالیه 💜 همین‌طور ادامه بده.',mild:'سوزش کم در روزهای اول برای بعضی محصولات پیش میاد؛ یک شب در میان مصرف کن و مرطوب‌کننده‌ی ساده کنارش بزن. اگر بیشتر شد، قطعش کن.',bad:'مصرفش رو همین حالا متوقف کن و فقط شوینده‌ی ملایم و مرطوب‌کننده‌ی ساده بزن. اگر تا دو سه روز بهتر نشد یا تورم و خارش داری، حتماً به پزشک نشون بده.'},
   tol2:{ok:'عالیه 💜',mild:'تعداد شب‌های مصرف رو کم کن (یک شب در میان) تا پوستت عادت کنه.',bad:'فعلاً کنارش بذار و بعد از آروم شدن پوست، با پزشک یا داروساز درباره‌ی ادامه‌اش مشورت کن.'},
   purge:{none:'خیلی خوب 💜',same:'این احتمالاً «جوش گذرا»ست: اکتیو داره چرخه‌ی پوست رو تند می‌کنه. معمولاً تا هفته‌ی ۴ تا ۶ کم می‌شه؛ ادامه بده مگر اینکه دردناک یا زیاد شد.',new:'جوش در جاهای تازه یا همراه سوزش بیشتر شبیه تحریکه، نه جوش گذرا. مصرف رو کم کن یا قطع کن؛ اگر ادامه داشت با پزشک مشورت کن.'},
@@ -96,9 +96,9 @@ function syncSub(sub,force){var n=rj(K_NOTIF,{});if(!n.on)return Promise.resolve
 
 /* next 30 days of messages, written on the phone for the service worker */
 function planDays(){var out=[],t0=dnum(tday());for(var k=0;k<30;k++){var d=dstr(t0+k),t=tasks(d).filter(function(x){return dnum(d)===dnum(starts()[x.id])+x.c});
-  out.push({date:d,task:t.length>0,title:t.length?'بیوتی‌ولت · '+t[0].q.title:'',body:t.length?t[0].q.q:''})}return out}
+  out.push({date:d,task:t.length>0,title:t.length?'بیوتی‌ولت 💎 '+t[0].q.title:'',body:t.length?t[0].q.q:''})}return out}
 function morning(){var tm=rj('bw_check_times',{}),names=ids().filter(function(id){return (tm[id]||(info(id).kind==='spf'?'am':'pm'))==='am'}).map(function(id){return info(id).name}).slice(0,2);
-  return {title:'صبح بخیر 🌤',body:names.length?'روتین صبحت: '+names.join('، ')+(ids().length>2?' و بقیه':'')+'. یه تیک کوچیک هم توی اپ بزن.':'روتین امروزت یادت نره؛ ضدآفتاب قبل از بیرون رفتن 💜'}}
+  return {title:'صبحت بخیر قشنگم 🌸',body:names.length?'پوستت منتظر '+names.join(' و ')+'ـه 💜 یه دقیقه برای خودت؛ بعدش یه تیک کوچولو توی بیوتی‌ولت.':'یه صبح آروم برات آرزو می‌کنم 🌤 ضدآفتابت رو قبل از بیرون رفتن فراموش نکن.'}}
 function idb(){return new Promise(function(ok,bad){var r=indexedDB.open('bw-followup',1);r.onupgradeneeded=function(){r.result.createObjectStore('kv')};r.onsuccess=function(){ok(r.result)};r.onerror=function(){bad(r.error)}})}
 var planSig='';
 function writePlan(){var n=rj(K_NOTIF,{}),days=planDays().filter(function(x){return x.task}).map(function(x){return {date:x.date,title:x.title,body:x.body}});
