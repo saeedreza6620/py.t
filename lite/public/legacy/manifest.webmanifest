@@ -10,7 +10,7 @@
     "window-controls-overlay",
     "standalone"
   ],
-  "start_url": "/legacy/?v=110",
+  "start_url": "/legacy/?source=app",
   "scope": "./",
   "background_color": "#f6f8ff",
   "theme_color": "#eef3ff",

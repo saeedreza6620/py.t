@@ -19,7 +19,7 @@
     const safari=/safari/i.test(navigator.userAgent)&&!/crios|fxios|edgios/i.test(navigator.userAgent);
     intro.textContent=ios?'در آیفون، افزودن از منوی اشتراک‌گذاری Safari انجام می‌شود. اگر «Open in Safari» می‌بینی، اول آن را بزن.':'مرورگر فعلاً پنجرهٔ نصب مستقیم را نشان نداد؛ از منوی مرورگر ادامه بده.';
     steps.replaceChildren();
-    const items=ios?['اگر داخل برنامه‌ای مثل پیام‌رسان هستی، اشتراک‌گذاری را باز کن و «Open in Safari» را بزن. اگر این گزینه نیست، لینک را کپی و در Safari باز کن.','وقتی صفحهٔ BeautyWallet در Safari باز شد، دکمهٔ اشتراک‌گذاری Safari را بزن.','«Add to Home Screen» را انتخاب کن؛ اگر نبود، پایین منو «Edit Actions» را بزن و آن را اضافه کن.','نام BeautyWallet را تأیید و «Add» را بزن.']:platform==='android'?['در Chrome، سه‌نقطهٔ بالای صفحه را بزن.','«Install app» یا «افزودن به صفحهٔ اصلی» را بزن.','افزودن را در پنجرهٔ گوشی تأیید کن.']:['از منوی مرورگر «Install app» یا «افزودن به صفحهٔ اصلی» را انتخاب کن.','در پنجرهٔ مرورگر تأیید کن.'];
+    const items=ios?['اگر داخل برنامه‌ای مثل پیام‌رسان هستی، اشتراک‌گذاری را باز کن و «Open in Safari» را بزن. اگر این گزینه نیست، لینک را کپی و در Safari باز کن.','وقتی صفحهٔ BeautyWallet در Safari باز شد، دکمهٔ اشتراک‌گذاری Safari را بزن.','«Add to Home Screen» را انتخاب کن؛ اگر نبود، پایین منو «Edit Actions» را بزن و آن را اضافه کن.','نام BeautyWallet را تأیید و «Add» را بزن.']:platform==='android'?['در Chrome، سه‌نقطهٔ بالای صفحه را بزن.','«Install app» (نصب برنامه) را بزن. اگر فقط «افزودن به صفحهٔ اصلی» بود، همان را بزن؛ یادآورها با اجازه‌ی Chrome کار می‌کنند.','افزودن را در پنجرهٔ گوشی تأیید کن.']:['از منوی مرورگر «Install app» (نصب برنامه) را انتخاب کن. اگر فقط «افزودن به صفحهٔ اصلی» بود، همان را بزن؛ یادآورها با اجازه‌ی Chrome کار می‌کنند.','در پنجرهٔ مرورگر تأیید کن.'];
     items.forEach(item=>{const li=document.createElement('li');li.textContent=item;steps.append(li)});
     if(copy)copy.hidden=!(ios&&!safari);
     if(dialog.open)return;
@@ -47,7 +47,7 @@
     catch{buttons.forEach(item=>item.disabled=false);setButtonLabels();openGuide()}
   }));
   window.addEventListener('appinstalled',()=>{setInstalled();reportInstall();if(typeof toast==='function')toast('BeautyWallet به صفحهٔ اصلی اضافه شد')});
-  copy?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.origin+'/legacy/?v=110');copy.textContent='لینک کپی شد؛ در Safari باز کن'}catch{copy.textContent='آدرس سایت را از بالای مرورگر کپی کن'}});
+  copy?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.origin+'/legacy/?v=111');copy.textContent='لینک کپی شد؛ در Safari باز کن'}catch{copy.textContent='آدرس سایت را از بالای مرورگر کپی کن'}});
   // arriving from the site / QR code with ?install=1: show how to install right away
   if(/[?&]install=1/.test(location.search)&&!standalone())setTimeout(()=>{const b=buttons.find(x=>!x.hidden);if(deferredPrompt&&b){b.scrollIntoView({block:'center'});b.classList.add('bw-pulse')}else openGuide()},1600);
   document.getElementById('closeInstallDialog')?.addEventListener('click',()=>{if(typeof dialog.close==='function')dialog.close();else dialog.removeAttribute('open')});
