@@ -10,7 +10,7 @@
     "window-controls-overlay",
     "standalone"
   ],
-  "start_url": "/legacy/?v=105",
+  "start_url": "/legacy/?v=106",
   "scope": "./",
   "background_color": "#f6f8ff",
   "theme_color": "#eef3ff",
@@ -34,5 +34,14 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "share_target": {
+    "action": "/legacy/",
+    "method": "GET",
+    "params": {
+      "title": "st",
+      "text": "sx",
+      "url": "su"
+    }
+  }
 }

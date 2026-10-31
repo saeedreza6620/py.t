@@ -585,7 +585,9 @@ function renderWalletRoutine(){var host=document.getElementById('wallet');if(!ho
 function openWalletRoutine(){closeSheet();window.switchTab('wallet');setTimeout(function(){renderWalletRoutine();var c=document.getElementById('swWalletRtn');if(c)c.scrollIntoView({behavior:'smooth',block:'start'})},200)}
 var _rr3=renderRoutine;renderRoutine=function(){var r=_rr3.apply(this,arguments);try{renderWalletRoutine()}catch(e){}return r};
 var _st3=window.switchTab;window.switchTab=function(tab){var r=_st3.apply(this,arguments);if(tab==='wallet')setTimeout(function(){try{syncFromProfile()}catch(e){}try{renderWalletRoutine()}catch(e){}},60);return r};
-function start(){window.switchTab('sw-home');var qp='';try{qp=(new URLSearchParams(location.search).get('q')||'').trim().slice(0,120)}catch(e){}
+function start(){window.switchTab('sw-home');var qp='';try{var sp=new URLSearchParams(location.search);qp=(sp.get('q')||'').trim().slice(0,120);
+  // shared from a shop or Instagram (Android "Share → BeautyWallet"): the link if there is one, else the product name
+  if(!qp&&(sp.get('su')||sp.get('sx')||sp.get('st'))){var tx=(sp.get('sx')||'')+' '+(sp.get('st')||''),lk=sp.get('su')||((tx.match(/https?:\/\/\S+/)||[])[0])||'';qp=(lk||tx.replace(/https?:\/\/\S+/g,'')).replace(/\s+/g,' ').trim().slice(0,300);if(qp&&window.bwTrack)window.bwTrack('share_in')}}catch(e){}
  if(qp){try{history.replaceState(null,'',location.pathname)}catch(e){}askInput.value=qp;if(!profile().skinBase){PENDING=qp;write('bw_sw_seen',true);setTimeout(function(){openOnboarding();toast('اول سه تا سؤال کوچولو، بعد «'+qp.slice(0,24)+'» رو می‌سنجم 💜')},500)}else setTimeout(function(){runQ(qp)},300);return}
 if(!/[?&]gift=/.test(location.search)&&!profile().skinBase&&!read('bw_sw_seen',false)){write('bw_sw_seen',true);setTimeout(openOnboarding,700)}}
 if(document.readyState==='complete')setTimeout(start,50);else window.addEventListener('load',function(){setTimeout(start,50)});
