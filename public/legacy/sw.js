@@ -1,4 +1,4 @@
-const CACHE = 'bw-static-v106';
+const CACHE = 'bw-static-v107';
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(name=>/^bw-(static|complete)-/.test(name)&&name!==CACHE).map(name=>caches.delete(name)));await self.clients.claim();})()));
 
@@ -25,8 +25,37 @@ self.addEventListener('fetch', event => {
     } catch {
       if (cached) return cached;
       // Never combine JavaScript from different releases.
-      if (navigation) return new Response('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeautyWallet</title><body style="font-family:Tahoma;background:#f2faff;padding:24px;line-height:2"><h1>BeautyWallet</h1><p>اتصال برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن</p><a href="/legacy/?v=106">تلاش دوباره</a></body></html>', {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
+      if (navigation) return new Response('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeautyWallet</title><body style="font-family:Tahoma;background:#f2faff;padding:24px;line-height:2"><h1>BeautyWallet</h1><p>اتصال برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن</p><a href="/legacy/?v=107">تلاش دوباره</a></body></html>', {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
       return Response.error();
     } finally { clearTimeout(timeout); }
+  })());
+});
+
+// ---- reminders outside the app (installed app on the phone) ----
+// The server sends an empty "wake up" push at the shopper's chosen time; the message itself is
+// written on the phone from her own routine (IndexedDB 'bw-followup'), so the server never sees it.
+const FU_DB = 'bw-followup';
+function fuRead(key){return new Promise(ok=>{try{const r=indexedDB.open(FU_DB,1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onerror=()=>ok(null);
+  r.onsuccess=()=>{try{const g=r.result.transaction('kv').objectStore('kv').get(key);g.onsuccess=()=>ok(g.result||null);g.onerror=()=>ok(null)}catch{ok(null)}}}catch{ok(null)}})}
+function fuWrite(key,val){return new Promise(ok=>{try{const r=indexedDB.open(FU_DB,1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onerror=()=>ok();
+  r.onsuccess=()=>{try{const t=r.result.transaction('kv','readwrite');t.objectStore('kv').put(val,key);t.oncomplete=()=>ok();t.onerror=()=>ok()}catch{ok()}}}catch{ok()}})}
+const tehranDay = () => new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+async function showToday(force){
+  const day=tehranDay(),plan=await fuRead('plan'),shown=await fuRead('shown');
+  if(!force&&shown===day)return;
+  const item=plan&&Array.isArray(plan.days)?plan.days.find(x=>x.date===day):null;
+  const msg=item||(plan&&plan.daily?plan.daily:null)||{title:'بیوتی‌ولت 💎',body:'روتین امروزت یادت نره؛ یک تیک کوچیک کافیه.'};
+  await fuWrite('shown',day);
+  return self.registration.showNotification(msg.title,{body:msg.body,tag:'bw-today',renotify:false,icon:'/legacy/bw-gem-192.png',badge:'/legacy/bw-gem-192.png',lang:'fa',dir:'rtl',data:{url:'/legacy/?from=notif'}});
+}
+self.addEventListener('push', event => event.waitUntil(showToday(true)));
+self.addEventListener('periodicsync', event => { if (event.tag === 'bw-daily') event.waitUntil((async()=>{const plan=await fuRead('plan');const h=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',hourCycle:'h23'}).format(new Date()));const at=Number(String(plan&&plan.time||'09:00').slice(0,2));if(h>=at&&h<22)return showToday(false)})()); });
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const url = (event.notification.data && event.notification.data.url) || '/legacy/';
+  event.waitUntil((async () => {
+    const all = await self.clients.matchAll({type:'window', includeUncontrolled:true});
+    for (const c of all) { if (new URL(c.url).pathname.startsWith('/legacy/')) { await c.focus(); try { c.postMessage({bw:'notif-open'}); } catch {} return; } }
+    return self.clients.openWindow(url);
   })());
 });
