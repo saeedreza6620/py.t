@@ -1,4 +1,4 @@
-const CACHE = 'bw-static-v108';
+const CACHE = 'bw-static-v109';
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(name=>/^bw-(static|complete)-/.test(name)&&name!==CACHE).map(name=>caches.delete(name)));await self.clients.claim();})()));
 
@@ -25,7 +25,7 @@ self.addEventListener('fetch', event => {
     } catch {
       if (cached) return cached;
       // Never combine JavaScript from different releases.
-      if (navigation) return new Response('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeautyWallet</title><body style="font-family:Tahoma;background:#f2faff;padding:24px;line-height:2"><h1>BeautyWallet</h1><p>اتصال برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن</p><a href="/legacy/?v=108">تلاش دوباره</a></body></html>', {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
+      if (navigation) return new Response('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeautyWallet</title><body style="font-family:Tahoma;background:#f2faff;padding:24px;line-height:2"><h1>BeautyWallet</h1><p>اتصال برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن</p><a href="/legacy/?v=109">تلاش دوباره</a></body></html>', {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
       return Response.error();
     } finally { clearTimeout(timeout); }
   })());
@@ -41,15 +41,17 @@ function fuWrite(key,val){return new Promise(ok=>{try{const r=indexedDB.open(FU_
   r.onsuccess=()=>{try{const t=r.result.transaction('kv','readwrite');t.objectStore('kv').put(val,key);t.oncomplete=()=>ok();t.onerror=()=>ok()}catch{ok()}}}catch{ok()}})}
 const tehranDay = () => new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 async function showToday(force){
-  const day=tehranDay(),plan=await fuRead('plan'),shown=await fuRead('shown');
+  // which reminder is this: morning or evening (Tehran time); the follow-up task of the day rides on the slot she chose
+  const day=tehranDay(),h=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',hourCycle:'h23'}).format(new Date()));
+  const plan=await fuRead('plan')||{},slot=h<15?'am':'pm',key='shown_'+slot,shown=await fuRead(key);
   if(!force&&shown===day)return;
-  const item=plan&&Array.isArray(plan.days)?plan.days.find(x=>x.date===day):null;
-  const msg=item||(plan&&plan.daily?plan.daily:null)||{title:'بیوتی‌ولت 💎',body:'یه لحظه برای پوست قشنگت 🌸 روتین امروزت منتظرته.'};
-  await fuWrite('shown',day);
-  return self.registration.showNotification(msg.title,{body:msg.body,tag:'bw-today',renotify:false,icon:'/legacy/bw-gem-192.png',badge:'/legacy/bw-gem-192.png',lang:'fa',dir:'rtl',data:{url:'/legacy/?from=notif'}});
+  const item=Array.isArray(plan.days)?plan.days.find(x=>x.date===day):null,taskSlot=plan.taskSlot||'am';
+  const msg=(item&&(slot===taskSlot||!plan[taskSlot]))?item:plan[slot]||item||{title:'بیوتی‌ولت 💎',body:'یه لحظه برای پوست قشنگت 🌸 روتین امروزت منتظرته.'};
+  await fuWrite(key,day);
+  return self.registration.showNotification(msg.title,{body:msg.body,tag:'bw-'+slot,renotify:false,icon:'/legacy/bw-gem-192.png',badge:'/legacy/bw-gem-192.png',lang:'fa',dir:'rtl',data:{url:'/legacy/?from=notif'}});
 }
 self.addEventListener('push', event => event.waitUntil(showToday(true)));
-self.addEventListener('periodicsync', event => { if (event.tag === 'bw-daily') event.waitUntil((async()=>{const plan=await fuRead('plan');const h=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',hourCycle:'h23'}).format(new Date()));const at=Number(String(plan&&plan.time||'09:00').slice(0,2));if(h>=at&&h<22)return showToday(false)})()); });
+self.addEventListener('periodicsync', event => { if (event.tag === 'bw-daily') event.waitUntil((async()=>{const plan=await fuRead('plan')||{};const h=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',hourCycle:'h23'}).format(new Date()));const am=Number(String(plan.amTime||plan.time||'09:00').slice(0,2)),pm=Number(String(plan.pmTime||'21:00').slice(0,2));if(h>=am&&h<15&&(plan.am||plan.taskSlot!=='pm'))return showToday(false);if(h>=pm&&plan.pm)return showToday(false)})()); });
 self.addEventListener('notificationclick', event => {
   event.notification.close();
   const url = (event.notification.data && event.notification.data.url) || '/legacy/';

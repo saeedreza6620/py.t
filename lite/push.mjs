@@ -26,8 +26,10 @@ export function makePush({DATA,send,ip,sameOrigin,readBody,E}){
     if(status===404||status===410){delete subs[id];save()}
     fs.appendFile(LOG,JSON.stringify({at:new Date().toISOString(),why,host:new URL(s.endpoint).hostname,status,err:err||undefined})+'\n',()=>{});return {status,err}}
   // every minute: whoever chose this minute (Tehran time) and has something today
+  // every minute: morning and evening slots at the times she chose (Tehran time); the follow-up of the day goes on her chosen slot
   let lastMin='';setInterval(async()=>{const hm=tehran('time'),day=tehran('day');if(hm===lastMin)return;lastMin=hm;
-    for(const [id,s] of Object.entries(subs)){if(s.time!==hm||s.sent===day)continue;if(!(s.daily||(s.days||[]).includes(day)))continue;s.sent=day;save();await pushTo(id,'daily')}},20e3).unref();
+    for(const [id,s] of Object.entries(subs))for(const slot of ['am','pm']){if(s[slot]!==hm||s['sent_'+slot]===day)continue;
+      const task=(s.days||[]).includes(day)&&(s.taskSlot||'am')===slot;if(!(task||s[slot+'Daily']))continue;s['sent_'+slot]=day;save();await pushTo(id,slot)}},20e3).unref();
   const hits=new Map();const limited=req=>{const a=ip(req),now=Date.now(),l=(hits.get(a)||[]).filter(t=>now-t<600e3);l.push(now);hits.set(a,l);if(hits.size>5000)hits.clear();return l.length>60};
   const H={'Cache-Control':'no-store'},j=(res,st,b)=>send(res,st,b,'application/json',H);
   async function handle(req,res,url){
@@ -36,15 +38,15 @@ export function makePush({DATA,send,ip,sameOrigin,readBody,E}){
     if(limited(req))return j(res,429,{error:'کمی بعد دوباره امتحان کن'});
     const b=await readBody(req,6000),ep=String(b.endpoint||(b.sub&&b.sub.endpoint)||'');if(!okEndpoint(ep))return j(res,400,{error:'bad'});const id=idOf(ep);
     if(url.pathname==='/api/push/sub'&&req.method==='PUT'){
-      const time=/^([01]\d|2[0-3]):[0-5]\d$/.test(String(b.time))?String(b.time):'09:00';
+      const T=v=>/^([01]\d|2[0-3]):[0-5]\d$/.test(String(v))?String(v):'';const am=T(b.am||b.time)||'09:00',pm=T(b.pm)||'21:00';
       const days=(Array.isArray(b.days)?b.days:[]).filter(d=>/^\d{4}-\d\d-\d\d$/.test(d)).slice(0,120);
-      const old=subs[id]||{};subs[id]={endpoint:ep,time,daily:!!b.daily,days,d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40),since:old.since||new Date().toISOString(),sent:old.sent||''};save();return j(res,200,{ok:true})}
+      const old=subs[id]||{};subs[id]={endpoint:ep,am,pm,amDaily:b.amDaily===undefined?!!b.daily:!!b.amDaily,pmDaily:!!b.pmDaily,taskSlot:b.taskSlot==='pm'?'pm':'am',days,d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40),since:old.since||new Date().toISOString(),sent_am:old.sent_am||old.sent||'',sent_pm:old.sent_pm||''};save();return j(res,200,{ok:true})}
     if(url.pathname==='/api/push/sub'&&req.method==='DELETE'){delete subs[id];save();return j(res,200,{ok:true})}
     if(url.pathname==='/api/push/test'&&req.method==='POST'){if(!subs[id])return j(res,404,{error:'none'});const r=await pushTo(id,'test');return j(res,r.status>=200&&r.status<300?200:502,{status:r.status,error:r.err||undefined})}
     return j(res,404,{error:'none'})}
   function stats(){let rows=[];try{rows=fs.readFileSync(LOG,'utf8').trim().split('\n').filter(Boolean).slice(-2000).map(l=>JSON.parse(l))}catch{}
     const wk=rows.filter(r=>Date.now()-Date.parse(r.at)<7*864e5),ok=wk.filter(r=>r.status>=200&&r.status<300).length,bad=wk.filter(r=>!(r.status>=200&&r.status<300));
     const byHost={};for(const r of wk){const k=r.host.replace(/^.*?(fcm\.googleapis\.com|push\.apple\.com|mozilla\.com|windows\.com).*$/,'$1');(byHost[k]||(byHost[k]={ok:0,bad:0}))[r.status>=200&&r.status<300?'ok':'bad']++}
-    return {subs:Object.keys(subs).length,daily:Object.values(subs).filter(s=>s.daily).length,sent7:wk.length,ok7:ok,lastErr:bad.at(-1)||null,byHost}}
+    return {subs:Object.keys(subs).length,daily:Object.values(subs).filter(s=>s.amDaily||s.pmDaily||s.daily).length,sent7:wk.length,ok7:ok,lastErr:bad.at(-1)||null,byHost}}
   return {handle,stats};
 }
