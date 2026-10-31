@@ -18,7 +18,7 @@ export type RoutineCheck={
   fit:Finding[];interactions:Finding[];actions:PlanAction[];gaps:Array<{role:string;text:string;suggestions:Suggestion[]}>;
   reintroduce:string[];purchaseNeeded:boolean;coverage:{sourced:string[];declared:string[];unknown:string[]};text:string;
 };
-export type SkinState={oily:boolean;dry:boolean;compromised:boolean;suspectBarrier:boolean;sensitive:boolean;acne:boolean;pregnancy:boolean;medical:boolean;fragranceAvoid:boolean;whiteCastAvoid:boolean;skinLabel:string;goal:string};
+export type SkinState={oily:boolean;dry:boolean;compromised:boolean;suspectBarrier:boolean;sensitive:boolean;acne:boolean;pregnancy:boolean;medical:boolean;deepAcne?:boolean;fragranceAvoid:boolean;whiteCastAvoid:boolean;skinLabel:string;goal:string};
 
 export const CATALOG_ROUTINE_ENGINE='catalog-routine-2026-10-13.1';
 
@@ -33,17 +33,21 @@ const ROLE_FA:Record<string,string>={cleanser:'شوینده',micellar:'میسل�
 
 export function skinState(profile:Record<string,unknown>):SkinState{
   const skin=str(profile.skinBase),today=str(profile.skinToday),barrier=str(profile.barrier),symptoms=list(profile.symptoms),concerns=list(profile.concerns);
-  const flags=list(profile.safetyFlags),avoid=list(profile.sensoryAvoid),dealbreaker=str(profile.dealbreaker),goal=str(profile.goal1)||str(profile.primaryGoal);
+  const flags=list(profile.safetyFlags),avoid=list(profile.sensoryAvoid),dealbreaker=str(profile.dealbreaker);
+  // no goal chosen yet: the first symptom she ticked becomes the goal the products are weighed against
+  const fromSymptoms=symptoms.some(s=>/منافذ|سرسیاه/.test(s))?'کوچک‌تر دیده شدن منافذ':symptoms.some(s=>/لک/.test(s))?'کاهش لک پس از جوش':symptoms.some(s=>/خطوط|چروک/.test(s))?'کاهش علائم پیری':'';
+  const goal=str(profile.goal1)||str(profile.primaryGoal)||fromSymptoms;
   const irritated=/تحریک|قرمز/.test(today)||symptoms.some(s=>/سوزش|قرمزی|پوسته|خارش/.test(s));
   return {
-    oily:/چرب|مختلط/.test(skin)||/چرب/.test(today),
+    oily:/چرب|مختلط/.test(skin)||/چرب/.test(today)||symptoms.some(s=>/چربی و براقی/.test(s)),
     dry:/خشک/.test(skin)||/خشک/.test(today),
     compromised:/آسیب/.test(barrier)||irritated,
     suspectBarrier:/مشکوک/.test(barrier),
     sensitive:str(profile.sensitivity)==='زیاد'||concerns.some(c=>/حساس|قرمز/.test(c)),
-    acne:/جوش/.test(today)||symptoms.some(s=>/جوش/.test(s))||/جوش/.test(goal),
+    acne:/جوش/.test(today)||symptoms.some(s=>/جوش|سرسیاه/.test(s))||/جوش/.test(goal)||list(profile.acneType).length>0,
     pregnancy:flags.some(f=>/باردار|شیرده/.test(f)),
     medical:flags.some(f=>/درمان پزشکی|دارو|بیماری پوستی|زخم|واکنش شدید|کلینیکی/.test(f)),
+    deepAcne:list(profile.acneType).some(x=>/عمیق و دردناک/.test(x)),
     fragranceAvoid:/عطر/.test(dealbreaker)||avoid.some(a=>/بو/.test(a)),
     whiteCastAvoid:/سفیدک/.test(dealbreaker)||avoid.some(a=>/سفیدک/.test(a)),
     skinLabel:skin&&skin!=='مطمئن نیستم'?skin:'',goal
@@ -141,6 +145,7 @@ const GOALS:Array<{re:RegExp;label:string;cls:string[];claims:string[]}>=[
   {re:/لک/,label:'کاهش لک',cls:['AZELAIC','VITC','VITC_LAA','VITC_DERIV','VITAMIN_B3'],claims:['pigmentation','dull']},
   {re:/آبرسانی|محافظ/,label:'آبرسانی',cls:['HUMECTANT','CERAMIDE'],claims:['dry','damaged']},
   {re:/قرمزی/,label:'کاهش قرمزی',cls:['AZELAIC'],claims:['redness','sensitive']},
+  {re:/منافذ/,label:'کوچک‌تر دیده شدن منافذ',cls:['BHA','RETINOID'],claims:['pores']},
   {re:/چربی/,label:'کنترل چربی',cls:[],claims:['oily','pores']},
   {re:/پیری|چروک/,label:'ضدپیری',cls:['RETINOID','VITC','VITC_LAA','VITC_DERIV'],claims:['aging','mature']}];
 export type PurchaseFit={verdict:'good'|'ok'|'bad'|'not_now';reason:string;goal:boolean;score:number};
@@ -193,13 +198,14 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
   const set=(id:string,action:Action,reason:string,extra:Partial<PlanAction>={})=>{const own=items.find(x=>x.id===id)!;const prev=plan.get(id);const rank={keep:0,verify:1,replace:2,pause:3,professional:4};if(prev&&rank[prev.action]>rank[action]){if(extra.schedule&&!prev.schedule)prev.schedule=extra.schedule;return;}plan.set(id,{id,name:own.name,action,reason,...(prev?.alternatives&&!extra.alternatives?{alternatives:prev.alternatives}:{}),...extra});};
 
   // 1. Unknown products: cannot be judged from the catalog.
-  for(const x of items)if(!x.f)set(x.id,'verify','این محصول هنوز در کاتالوگ BeautyWallet فرمول ثبت‌شده ندارد؛ بیوتی‌ولت خودش ترکیباتش را پیدا می‌کند');
+  for(const x of items)if(!x.f)set(x.id,'verify','فهرست ترکیبات این محصول در کاتالوگ ثبت نشده، پس تداخلش با بقیه‌ی روتین را قطعی نمی‌گوییم؛ اگر بخواهی، ترکیبات کامل همین نسخه را جست‌وجو و بررسی می‌کنیم');
   const known=items.filter(x=>x.f) as Array<{id:string;name:string;time:Slot;f:Formula}>;
 
   // 2. Safety context first.
   for(const x of known){
     if(s.pregnancy&&(has(x.f,'RETINOID')||has(x.f,'CYSTEAMINE')))set(x.id,'professional',CLASS_FA[has(x.f,'RETINOID')?'RETINOID':'CYSTEAMINE']+' دارد؛ در بارداری یا شیردهی ادامه‌اش را فقط با نظر پزشک تصمیم بگیر');
     else if(s.medical&&strength(x.f)>=2)set(x.id,'professional',activeLabel(x.f)+' دارد و در پروفایلت درمان یا داروی مؤثر بر پوست ثبت شده؛ هم‌زمانی را با پزشک یا داروساز هماهنگ کن');
+    else if(s.deepAcne&&strength(x.f)>=2)set(x.id,'professional',activeLabel(x.f)+' دارد و گفتی جوش‌هایت عمیق و دردناک است؛ این نوع جوش را بهتر است اول پزشک ببیند و اکتیو قوی را با نظر او شروع کنی');
   }
 
   // 3. Irritated or damaged barrier: pause strong leave-on actives, swap harsh cleansers, drop scent.
@@ -283,7 +289,7 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
   for(const x of known){
     if(plan.has(x.id))continue;
     const why=keepReason(x.f,s);
-    if(x.f.basis==='declared_name')set(x.id,'verify',why+'؛ فرمول این نسخه فقط از روی نام ثبت شده و بیوتی‌ولت در حال تکمیل فهرست ترکیبات آن است تا تأیید شود');
+    if(x.f.basis==='declared_name')set(x.id,'verify',why+'؛ این نسخه فقط از روی نام شناخته شده و فهرست کامل ترکیباتش ثبت نیست، پس این نتیجه قطعی نیست');
     else set(x.id,'keep',why);
   }
   for(const a of plan.values()){const f=byId.get(a.id);if(a.action==='keep'&&f?.basis==='declared_name'){a.action='verify';a.reason+='؛ فهرست ترکیبات این نسخه هنوز ثبت نشده';}}
@@ -344,7 +350,7 @@ export function routineText(r:RoutineCheck){
   else lines.push(paused.length?'بین محصولاتی که می‌مانند تداخل مهمی دیده نشد':'بین اکتیوهای انتخاب‌شده تداخل مهمی دیده نشد');
   r.reintroduce.forEach(x=>lines.push(x));
   r.gaps.forEach(g=>lines.push(g.text+(g.suggestions.length?': '+g.suggestions.map(x=>x.name+(x.owned?' (در ولتت داری)':'')).join(' یا '):'')));
-  if(r.coverage.declared.length)lines.push('فرمول '+faDigits(r.coverage.declared.length)+' محصول فقط از روی نام ثبت شده و بیوتی‌ولت در حال تکمیل ترکیباتشان است');
+  if(r.coverage.declared.length)lines.push('فرمول '+faDigits(r.coverage.declared.length)+' محصول فقط از روی نام شناخته شده و فهرست کامل ترکیباتشان ثبت نیست؛ نتیجه‌ی آن‌ها قطعی نیست');
   return lines.join('\n');
 }
 export function actionLabel(a:Action){return ACTION_FA[a];}

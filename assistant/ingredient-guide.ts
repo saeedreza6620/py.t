@@ -70,6 +70,7 @@ const GOAL_MAP:Array<{re:RegExp;label:string;cls:string[];claims:string[]}>=[
   {re:/لک/,label:'کم شدن لک',cls:['AZELAIC','VITC','VITC_LAA','VITC_DERIV','VITAMIN_B3'],claims:['pigmentation','dull']},
   {re:/آبرسانی|محافظ/,label:'آبرسانی',cls:['HUMECTANT','CERAMIDE'],claims:['dry','damaged']},
   {re:/قرمزی/,label:'کم شدن قرمزی',cls:['AZELAIC'],claims:['redness','sensitive']},
+  {re:/منافذ/,label:'کمتر دیده شدن منافذ',cls:['BHA','RETINOID'],claims:['pores']},
   {re:/چربی/,label:'کنترل چربی',cls:[],claims:['oily','pores']},
   {re:/پیری|چروک/,label:'ضدپیری',cls:['RETINOID','VITC','VITC_LAA','VITC_DERIV'],claims:['aging','mature']}];
 const ROLE_ONE:Record<string,string>={cleanser:'شوینده',sunscreen:'ضدآفتاب',moisturizer:'مرطوب‌کننده',toner:'تونر',micellar:'میسلار',mask:'ماسک',eye:'محصول دور چشم'};

@@ -16,7 +16,7 @@ var P=function(id){return LIST.find(function(p){return p.id===id})};
 var F=function(id){return window.BWCatalog.formula(id)};
 
 /* ---------- copy: short, warm, a little spoiling ---------- */
-var STAMP={keep:'بمونه پیشت',pause:'فعلاً استراحت',replace:'یه بهترش هست',verify:'ترکیباتش در راهه',professional:'با دکترت هماهنگ کن',buy:'بخر',wait:'یه کم صبر کن',avoid:'نخر عزیزم',need_info:'یه چیز کوچولو کم دارم',undetermined:'بیا بیشتر ببینیم'};
+var STAMP={keep:'بمونه پیشت',pause:'فعلاً استراحت',replace:'یه بهترش هست',verify:'ترکیبات کامل ثبت نشده',professional:'با دکترت هماهنگ کن',buy:'بخر',wait:'یه کم صبر کن',avoid:'نخر عزیزم',need_info:'یه چیز کوچولو کم دارم',undetermined:'بیا بیشتر ببینیم'};
 function hello(){var h=new Date().getHours();return h<11?'صبحت بخیر قشنگم ☀':h<17?'سلام عزیزم 💜':'شبت بخیر نازنین ☾'}
 function toast(t){var d=document.createElement('div');d.className='sw-toast';d.textContent=t;document.body.append(d);setTimeout(function(){d.remove()},2200)}
 

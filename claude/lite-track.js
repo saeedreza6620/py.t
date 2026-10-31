@@ -5,7 +5,8 @@ var KEY='bw_device';var id='';
 try{id=localStorage.getItem(KEY)||'';if(!/^[a-z0-9]{12,40}$/.test(id)){id=(Date.now().toString(36)+Math.random().toString(36).slice(2,12)).slice(0,24);localStorage.setItem(KEY,id)}}catch(e){id=''}
 var standalone=false;try{standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
 var page=location.pathname.indexOf('/legacy/')===0?'app':'site';
-function send(type){if(!id)return;var body=JSON.stringify({type:type,d:id,sa:standalone,page:page});
+function regPhone(){try{var r=JSON.parse(localStorage.getItem('bw_reg')||'null');return r&&r.phone?String(r.phone).slice(0,15):''}catch(e){return ''}}
+function send(type){if(!id)return;var o={type:type,d:id,sa:standalone,page:page};if(/^app_open/.test(type)){var ph=regPhone();if(ph)o.p=ph}var body=JSON.stringify(o);
   try{if(navigator.sendBeacon&&navigator.sendBeacon('/api/event',new Blob([body],{type:'text/plain'})))return}catch(e){}
   try{fetch('/api/event',{method:'POST',headers:{'Content-Type':'text/plain'},body:body,keepalive:true}).catch(function(){})}catch(e){}}
 window.bwTrack=send;

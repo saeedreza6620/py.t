@@ -256,6 +256,11 @@ function saveUser(phone,info,verified){const u=getUsers();const now=new Date().t
   o.name=info.name||o.name||'';o.last=now;o.os=info.os||o.os;o.installed=!!(o.installed||info.sa);o.verified=!!(o.verified||verified);if(info.d&&!o.devices.includes(info.d))o.devices=[...o.devices,info.d].slice(-5);u[phone]=o;
   try{fs.writeFileSync(USERS+'.tmp',JSON.stringify(u));fs.renameSync(USERS+'.tmp',USERS)}catch(e){console.error('users save',e.message)}
   fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:now,t:'register',d:info.d||'anon',page:'app',os:info.os,sa:!!info.sa})+'\n',()=>{})}
+// a registered shopper opening the app: keep "last seen" and her devices right (the installed app on iPhone has its own storage, so a new device id)
+function touchUser(phone,d,sa){if(!phone)return;const u=getUsers(),o=u[phone];if(!o)return;const now=new Date().toISOString();
+  if(o.lastSeen&&Date.now()-Date.parse(o.lastSeen)<3600e3&&(o.devices||[]).includes(d))return;
+  o.lastSeen=now;o.last=now;if(sa)o.installed=true;if(d&&!(o.devices||[]).includes(d))o.devices=[...(o.devices||[]),d].slice(-5);u[phone]=o;
+  try{fs.writeFileSync(USERS+'.tmp',JSON.stringify(u));fs.renameSync(USERS+'.tmp',USERS)}catch(e){console.error('users save',e.message)}}
 const clean=v=>String(v||'').trim().replace(/^["']|["']$/g,'');
 const SMS={key:clean(E.KAVENEGAR_API_KEY),tpl:clean(E.KAVENEGAR_TEMPLATE),base:clean(E.KAVENEGAR_BASE)||'https://api.kavenegar.com'};SMS.on=!!(SMS.key&&SMS.tpl);
 const OTP=new Map();setInterval(()=>{const t=Date.now();for(const [k,v] of OTP)if(t-v.sent>15*60e3)OTP.delete(k)},5*60e3).unref();
@@ -327,7 +332,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'102'},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:'103'},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
@@ -447,6 +452,7 @@ const server=http.createServer(async(req,res)=>{
       const addr=ip(req),now=Date.now(),list=(evHits.get(addr)||[]).filter(t=>now-t<3600e3);if(list.length>=300)return send(res,429,{ok:false});list.push(now);evHits.set(addr,list);
       const b=await readBody(req,1000);const t=String(b.type||''),d=String(b.d||'');
       if(!EVENTS.has(t)||!/^[a-z0-9]{12,40}$/.test(d))return send(res,400,{ok:false});
+      if(b.p&&/^app_open/.test(t))touchUser(normPhone(b.p),d,!!b.sa);
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:new Date().toISOString(),t,d,sa:!!b.sa,page:b.page==='site'?'site':'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
       return send(res,204,'');
     }
