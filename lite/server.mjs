@@ -59,10 +59,10 @@ const tday=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Tehran'});
 function budgetOk(online){if(spend.day!==tday())spend={day:tday(),calls:0,online:0};const c=cfg||{};return spend.calls<(Number(c.aiDailyCalls)||0)&&(!online||spend.online<(Number(c.aiDailyOnline)||0))}
 function countCall(online){if(spend.day!==tday())spend={day:tday(),calls:0,online:0};spend.calls++;if(online)spend.online++;fs.writeFile(SPEND,JSON.stringify(spend),()=>{})}
 let NO_WEB_OPT=false; // set once if the provider rejects the web-result limit
-async function chatCall(model,messages,signal,key){
+async function chatCall(model,messages,signal,key,opts={}){
   const online=/:online$/.test(model);
   if(!key){if(!budgetOk(online))return {r:{ok:false,status:429},d:{error:{message:'daily_budget',code:'budget'}}};countCall(online)}
-  const params={model,messages};const webN=Number(E.WEB_RESULTS||3);if(online&&webN>0&&!NO_WEB_OPT)params.plugins=[{id:'web',max_results:webN}];
+  const params={model,messages};const webN=Number(opts.web||E.WEB_RESULTS||3);if(online&&webN>0&&!NO_WEB_OPT)params.plugins=[{id:'web',max_results:webN}];
   // gpt-5 family rejects custom temperature / max_tokens; others get a roomy budget for reasoning
   if(!/gpt-5/.test(model)){params.max_tokens=MAX_TOKENS;params.temperature=0.3}
   try{let c;try{c=await (await sdk(key)).chat.completions.create(params,{signal,timeout:110000})}catch(e){if(params.plugins&&Number(e?.status)===400){NO_WEB_OPT=true;console.error('web result limit not supported; sending without it');delete params.plugins;c=await (await sdk(key)).chat.completions.create(params,{signal,timeout:110000})}else throw e}return {r:{ok:true,status:200},d:c}}
@@ -103,7 +103,8 @@ async function ai(body){
 // ---------- product research: identify any product by name and fetch its real INCI list ----------
 // The shopper only types a name (Persian, transliterated, partial). We find the exact product and its
 // ingredient list on the web ourselves (brand site, INCIDecoder, Skinsort, big retailers) — never ask them for a photo.
-const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-4.1:online','openai/gpt-5-mini:online'])];
+// one strong web search per product; the second model is used only if the first one errors
+const RESEARCH_MODELS=[...new Set([E.AI_MODEL_RESEARCH||'openai/gpt-5:online',E.AI_MODEL_RESEARCH_FALLBACK||'openai/gpt-4.1:online'])];
 const rsDay={day:'',n:0};function researchBudgetOk(){const d=new Date().toISOString().slice(0,10);if(rsDay.day!==d){rsDay.day=d;rsDay.n=0}const cap=Number((cfg||{}).researchDailyMax??30);return cap<=0?false:rsDay.n<cap}
 const BANK=makeBank(DATA);const pubF=({aliases,query,hits,lastHit,model,addedAt,...f})=>f;
 const pcache=new Map(); // live price answers, 6 hours
@@ -152,34 +153,36 @@ async function pageText(u){try{const x=new URL(u);if(x.protocol!=='https:'||PRIV
   return incNorm((await r.text()).slice(0,1500000).replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi,' ').replace(/<[^>]+>/g,' ').replace(/&[a-z#0-9]+;/gi,' '))}catch{return ''}}
 async function checkSources(inci,sources){const items=(inci||[]).map(incNorm).filter(x=>x.length>=3);if(items.length<5)return {ok:false,coverage:0};
   const urls=[...new Set((sources||[]).map(s=>s&&s.url).filter(Boolean))].slice(0,3);let best={ok:false,coverage:0,url:''};
-  const texts=await Promise.all(urls.map(pageText));texts.forEach((t,i)=>{if(!t)return;const pad=' '+t+' ';const c=items.filter(x=>pad.includes(' '+x+' ')).length/items.length;if(c>best.coverage)best={ok:c>=0.8,coverage:Math.round(c*100)/100,url:urls[i]}});return best}
+  const texts=await Promise.all(urls.map(pageText));let fetched=0;texts.forEach((t,i)=>{if(!t)return;fetched++;const pad=' '+t+' ';const c=items.filter(x=>pad.includes(' '+x+' ')).length/items.length;if(c>best.coverage)best={ok:c>=0.6,coverage:Math.round(c*100)/100,url:urls[i]}});best.fetched=fetched;best.urls=urls.length;return best}
+async function digikalaProduct(u){try{const m=String(u).match(/dkp-(\d{3,12})/i);if(!m)return '';const r=await fetch('https://api.digikala.com/v2/product/'+m[1]+'/',{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet','Accept':'application/json'}});if(!r.ok)return '';
+  const j=await r.json(),p=j&&j.data&&j.data.product;if(!p)return '';return [p.brand&&(p.brand.title_en||p.brand.title_fa),p.title_en,p.title_fa].filter(Boolean).join(' — ').slice(0,260)}catch{return ''}}
 async function research(name,url){
-  if(url){const title=await pageTitle(url);name=(title||name||'')+' ';}
+  if(url){const title=(/digikala\.com/i.test(url)?await digikalaProduct(url):'')||await pageTitle(url);name=(title||name||'')+' ';}
   const key=normName(url||name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
-  const hit=rcache[key];if(hit&&Date.now()-hit.t<30*864e5)return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
+  const hit=rcache[key];if(hit&&Date.now()-hit.t<(hit.miss?864e5:30*864e5))return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
   if(!KEY||!BASE)return {status:503,body:{error:'سرویس هوش مصنوعی تنظیم نشده',code:'not_configured'}};
   if(!researchBudgetOk())return {status:503,body:{error:'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜',code:'support',daily_cap:true}};
   rsDay.n++;
   let best=null;const tried=[];const used=[];
   for(const model of RESEARCH_MODELS){
-    let x;try{x=await chatCall(model,[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:(url?'Product page the shopper sent (identify the product on THIS page, then read its full INCI there or on the brand site / INCIDecoder): '+url+'\nPage title: '+String(name).trim().slice(0,200):'Product name typed by the shopper: '+String(name).slice(0,200))}])}catch(e){tried.push(model+':error');continue}
+    let x;try{x=await chatCall(model,[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:(url?'Product page the shopper sent (identify the product on THIS page, then read its full INCI there or on the brand site / INCIDecoder): '+url+'\nPage title: '+String(name).trim().slice(0,260):'Product name typed by the shopper: '+String(name).slice(0,200))}],undefined,undefined,{web:Number(E.RESEARCH_WEB_RESULTS||8)})}catch(e){tried.push(model+':error');continue}
     if(x.d?.error?.code==='budget')return {status:503,body:{error:'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜',code:'support'}};
     if(x.d?.usage)used.push({model,in:x.d.usage.prompt_tokens||0,out:x.d.usage.completion_tokens||0});
     tried.push(model+':'+x.r.status);if(!x.r.ok){if([400,403,404,422,503].includes(x.r.status))continue;break}
     const msg=x.d?.choices?.[0]?.message,j=parseJson(msg?.content);const sources=sourcesOf(msg);
     if(!j)continue;
-    if(!j.found&&used.length>=2&&!best)break; // two strong searches said 'not found': ask for the product link instead of paying for a third
     j.inci=Array.isArray(j.inci)?j.inci.map(v=>String(v).trim()).filter(Boolean).slice(0,80):[];
     const cand={...j,sources,model,verified:!!j.found&&j.inci.length>=5&&sources.length>0&&j.confidence!=='low'};
     if(!best||(cand.verified&&!best.verified)||(cand.inci.length>(best.inci||[]).length&&!best.verified))best=cand;
-    if(best.verified||(best.found&&best.inci.length>=5))break; // a usable formula: don't pay for another web search
+    break; // one strong search per product — never pay for a second one when the first answered
   }
   if(!best||(!best.found&&!(best.inci||[]).length)){rcache[key]={t:Date.now(),miss:true};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   if(!best){logUsage({at:new Date().toISOString(),research:true,status:502,calls:used});return {status:502,body:{error:'الان نتونستم پیداش کنم؛ یه لحظه دیگه دوباره بزن',code:'research_failed',tried}}}
-  if(best.found&&(best.inci||[]).length>=5){const sc=await checkSources(best.inci,best.sources);best.sourceCheck=sc;best.sourceVerified=sc.ok;if(!sc.ok)best.verified=false}
+  if(best.found&&(best.inci||[]).length>=5){const sc=await checkSources(best.inci,best.sources);best.sourceCheck=sc;
+    // confirmed on a page we could open → verified. Pages we could NOT open (blocked from Iran) but a confident answer with a full list and cited sources → 'cited' (shown, waits for the owner's approval before entering the shared bank). Opened and mismatched → rejected.
+    best.sourceVerified=sc.ok?true:(sc.fetched===0&&sc.urls>0&&best.confidence!=='low'&&best.inci.length>=8)?'cited':false;if(best.sourceVerified!==true)best.verified=false}
   const data={query:String(name).slice(0,120),...best,checkedAt:new Date().toISOString()};
-  if(best.sourceVerified){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
-  else if(best.found){rcache[key]={t:Date.now(),miss:true};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
+  if(best.sourceVerified===true){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   logUsage({at:new Date().toISOString(),research:true,status:200,model:best.model,verified:best.verified,sources:best.sources.length,calls:used});
   return {status:200,body:data};
 }
@@ -441,7 +444,7 @@ const server=http.createServer(async(req,res)=>{
       const replaces=/^[a-z0-9][a-z0-9-]{1,79}$/.test(String(b.replaces||''))?String(b.replaces):'';
       if(r.status!==200||!r.body.found||r.body.cached){if(own)BANK.routineBack(d);else BANK.refund(d,via)} // no new cost → no charge
       if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),url:link||undefined,routine:own||undefined})+'\n',()=>{});
-      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);if(formula&&replaces)formula.replaces=replaces;const row=BANK.add(formula,b.name);inBank=!!row;if(row)formula=pubF(row)
+      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);if(formula&&replaces)formula.replaces=replaces;const row=BANK.add(formula,b.name,r.body.sourceVerified==='cited'?{pending:true,source:'search-cited'}:{});inBank=!!row&&r.body.sourceVerified===true;if(row)formula=pubF(row)
         // photo in the background: never delays the answer
         if(row&&!row.image){const img=r.body.image_url||'';(img?Promise.resolve(img):link?pageImage(link):Promise.resolve('')).then(u=>ensureImage(row,u)).catch(()=>{})}}
       return send(res,r.status,{...r.body,formula,inBank,wallet:BANK.balance(d,cfg)});
