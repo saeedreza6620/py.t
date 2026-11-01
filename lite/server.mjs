@@ -116,6 +116,8 @@ Search order: 1) the official brand website, 2) INCIDecoder / Skinsort / CosDNA 
 Search in English with the brand and product line (translate the Persian name first), and also the Persian name if needed.
 If several versions exist (oily/dry skin, old/new formula, SPF 30/50), choose the one that best matches the name and list the others in "variants".
 Never invent ingredients. Only fill "inci" with a list you actually saw on a page; otherwise use [].
+"found" means you identified the EXACT product (brand + line + version), even if you could not see its full INCI. In that case set inci=[] and fill "actives"/"key_actives"/"made_for"/"flags"/"spf" ONLY from what the brand or a shop page explicitly states (e.g. "with ceramides and hyaluronic acid", "fragrance-free", "SPF50"), and say in "source_note_fa" what you could and could not see.
+Korean/Japanese brands: also check the brand's global site, Olive Young global, YesStyle, Stylevana. Iranian brands: the brand site and the Digikala/Torob specification tabs.
 Answer with ONLY minified JSON, no prose, with exactly these keys:
 {"found":bool,"role":"","rinse_off":true,"texture":"","finish":null,"actives":[],"made_for":[],"flags":[],"name_en":"","name_fa":"","brand":"","category":"cleanser|toner|serum|moisturizer|sunscreen|mask|exfoliant|eye|lip|body|other","confidence":"high|medium|low","inci":[""],"key_actives":[{"name":"","percent":null}],"spf":null,"texture":"","fragrance":null,"alcohol_denat":null,"essential_oils":[],"pore_clogging":[],"claims_fa":[""],"skin_types_fa":[""],"variants":[""],"source_note_fa":""}`+RESEARCH_SCHEMA_HINT;
 function parseJson(t){const s=String(t||'');const a=s.indexOf('{'),b=s.lastIndexOf('}');if(a<0||b<=a)return null;try{return JSON.parse(s.slice(a,b+1))}catch{return null}}
@@ -159,7 +161,7 @@ async function digikalaProduct(u){try{const m=String(u).match(/dkp-(\d{3,12})/i)
 async function research(name,url){
   if(url){const title=(/digikala\.com/i.test(url)?await digikalaProduct(url):'')||await pageTitle(url);name=(title||name||'')+' ';}
   const key=normName(url||name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
-  const hit=rcache[key];if(hit&&(!hit.miss||hit.v===2)&&Date.now()-hit.t<(hit.miss?864e5:30*864e5))return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
+  const hit=rcache[key];if(hit&&(!hit.miss||hit.v===2)&&Date.now()-hit.t<(hit.miss?864e5:hit.short?3*864e5:30*864e5))return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
   if(!KEY||!BASE)return {status:503,body:{error:'سرویس هوش مصنوعی تنظیم نشده',code:'not_configured'}};
   if(!researchBudgetOk())return {status:503,body:{error:'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜',code:'support',daily_cap:true}};
   rsDay.n++;
@@ -182,7 +184,8 @@ async function research(name,url){
     // confirmed on a page we could open → verified. Pages we could NOT open (blocked from Iran) but a confident answer with a full list and cited sources → 'cited' (shown, waits for the owner's approval before entering the shared bank). Opened and mismatched → rejected.
     best.sourceVerified=sc.ok?true:(sc.fetched===0&&sc.urls>0&&best.confidence!=='low'&&best.inci.length>=8)?'cited':false;if(best.sourceVerified!==true)best.verified=false}
   const data={query:String(name).slice(0,120),...best,checkedAt:new Date().toISOString()};
-  if(best.sourceVerified===true){rcache[key]={t:Date.now(),data};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
+  if(best.found&&best.sourceVerified!==true&&best.sourceVerified!=='cited'){data.inci=[];data.level='declared'}else if(best.found)data.level='inci';
+  if(best.sourceVerified===true||data.level==='declared'){rcache[key]={t:Date.now(),data,v:2,...(data.level==='declared'?{short:true}:{})};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   logUsage({at:new Date().toISOString(),research:true,status:200,model:best.model,verified:best.verified,sources:best.sources.length,calls:used});
   return {status:200,body:data};
 }
@@ -440,9 +443,10 @@ const server=http.createServer(async(req,res)=>{
       const via=own?'routine':BANK.charge(d,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای بررسی یه محصول تازه الماس لازمه 💎',wallet:BANK.balance(d,cfg)});
       const link=cleanUrl(b.url);const r=await research(b.name,link);
       // only an ingredient list that a cited page really shows counts as found (and is worth a diamond)
-      if(r.status===200&&r.body.found&&!r.body.sourceVerified){r.body={...r.body,found:false,unverified:true}}
+      if(r.status===200&&r.body.found&&!r.body.level)r.body.level=(r.body.sourceVerified===true||r.body.sourceVerified==='cited')&&(r.body.inci||[]).length>=5?'inci':'declared';
+      if(r.status===200&&r.body.level==='declared')r.body={...r.body,inci:[]};
       const replaces=/^[a-z0-9][a-z0-9-]{1,79}$/.test(String(b.replaces||''))?String(b.replaces):'';
-      if(r.status!==200||!r.body.found||r.body.cached){if(own)BANK.routineBack(d);else BANK.refund(d,via)} // no new cost → no charge
+      if(r.status!==200||!r.body.found||r.body.cached||r.body.level==='declared'){if(own)BANK.routineBack(d);else BANK.refund(d,via)} // fair: a diamond only for a full, sourced ingredient check
       if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),url:link||undefined,routine:own||undefined})+'\n',()=>{});
       let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);if(formula&&replaces)formula.replaces=replaces;const row=BANK.add(formula,b.name,r.body.sourceVerified==='cited'?{pending:true,source:'search-cited'}:{});inBank=!!row&&r.body.sourceVerified===true;if(row)formula=pubF(row)
         // photo in the background: never delays the answer
