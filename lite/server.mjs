@@ -159,7 +159,7 @@ async function digikalaProduct(u){try{const m=String(u).match(/dkp-(\d{3,12})/i)
 async function research(name,url){
   if(url){const title=(/digikala\.com/i.test(url)?await digikalaProduct(url):'')||await pageTitle(url);name=(title||name||'')+' ';}
   const key=normName(url||name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
-  const hit=rcache[key];if(hit&&Date.now()-hit.t<(hit.miss?864e5:30*864e5))return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
+  const hit=rcache[key];if(hit&&(!hit.miss||hit.v===2)&&Date.now()-hit.t<(hit.miss?864e5:30*864e5))return hit.miss?{status:502,body:{error:'این محصول رو امروز گشتم و پیدا نشد؛ اسمش رو کامل‌تر بنویس',code:'research_failed',cached:true}}:{status:200,body:{...hit.data,cached:true}};
   if(!KEY||!BASE)return {status:503,body:{error:'سرویس هوش مصنوعی تنظیم نشده',code:'not_configured'}};
   if(!researchBudgetOk())return {status:503,body:{error:'این یکی رو تیم بیوتی‌ولت خودش برات بررسی می‌کنه؛ اسم و شماره‌ت رو بذار 💜',code:'support',daily_cap:true}};
   rsDay.n++;
@@ -176,7 +176,7 @@ async function research(name,url){
     if(!best||(cand.verified&&!best.verified)||(cand.inci.length>(best.inci||[]).length&&!best.verified))best=cand;
     break; // one strong search per product — never pay for a second one when the first answered
   }
-  if(!best||(!best.found&&!(best.inci||[]).length)){rcache[key]={t:Date.now(),miss:true};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
+  if(!best||(!best.found&&!(best.inci||[]).length)){rcache[key]={t:Date.now(),miss:true,v:2};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   if(!best){logUsage({at:new Date().toISOString(),research:true,status:502,calls:used});return {status:502,body:{error:'الان نتونستم پیداش کنم؛ یه لحظه دیگه دوباره بزن',code:'research_failed',tried}}}
   if(best.found&&(best.inci||[]).length>=5){const sc=await checkSources(best.inci,best.sources);best.sourceCheck=sc;
     // confirmed on a page we could open → verified. Pages we could NOT open (blocked from Iran) but a confident answer with a full list and cited sources → 'cited' (shown, waits for the owner's approval before entering the shared bank). Opened and mismatched → rejected.
