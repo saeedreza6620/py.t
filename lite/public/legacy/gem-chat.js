@@ -12,7 +12,7 @@ var track=function(t){try{window.bwTrack&&window.bwTrack(t)}catch(e){}};
 var HELLO='سلام قشنگم 💎 من دستیار پوستتم. بیا با هم ببینیم پوستت چطوریه و چی لازم داره؛ هر سؤالی داری بی‌خیال بپرس. الان بیشتر چی اذیتت می‌کنه؟';
 var START=['جوش دارم 🔴','لک دارم 🌤','پوستم خشکه 🍂','چربی و براقی 💧','منافذ باز','قرمزی و حساسیت 🌹','چین و چروک','نمی‌دونم پوستم چیه 🤍'];
 var READY=['یه روتین ساده برای شروع می‌خوام','فرق نیاسینامید و ویتامین C چیه؟','ضدآفتاب رو چطور درست بزنم؟','این محصول به پوستم می‌خوره؟'];
-var OFFER={check_product:'🔍 بررسی یه محصول با پوستم',build_routine:'🧴 روتینم رو بچین',photo_journal:'📷 عکس شروع پوستم',add_routine:'➕ اضافه به روتینم'};
+var OFFER={check_product:'🔍 بررسی یه محصول با پوستم',build_routine:'🧴 روتینم رو بچین',photo_journal:'📷 عکس شروع پوستم',add_routine:'➕ اضافه به روتینم',send_photo:'📷 عکس همون جا رو بفرستم'};
 
 function state(){var s=rj(K,null);if(!s||!Array.isArray(s.m))s={m:[]};return s}
 function save(s){s.m=s.m.slice(-MAX);wj(K,s)}
@@ -36,19 +36,23 @@ var CSS='@keyframes gemFloat{0%,100%{transform:translateY(0) rotate(-3deg)}50%{t
 '.gc-chips{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 4px}.gc-chips button{border:1px solid #e3dbfa;background:#fff;border-radius:16px;padding:8px 12px;font:inherit;font-size:13.5px;color:#4b3f7a;cursor:pointer}.gc-offer{display:block;margin:6px 0;border:0;border-radius:16px;padding:10px 14px;font:inherit;font-size:14px;background:linear-gradient(135deg,#7aa7ff,#c08cff 60%,#ff9cc7);color:#fff;cursor:pointer}'+
 '.gc-src{font-size:11.5px;color:#8a83a8;margin:2px 4px 6px}.gc-src a{color:#6a5bb0}.gc-note{font-size:12px;color:#5d7a63;background:#eef8f1;border-radius:12px;padding:5px 10px;margin:4px 0;display:inline-block}'+
 '.gc-typing{display:inline-flex;gap:4px}.gc-typing i{width:7px;height:7px;border-radius:50%;background:#b8a8ef;animation:gemFloat 1s infinite}.gc-typing i:nth-child(2){animation-delay:.15s}.gc-typing i:nth-child(3){animation-delay:.3s}'+
+'.gc-photo{padding:10px 12px;background:#fff;border-top:1px solid #ece6fb}.gc-photo[hidden]{display:none}.gc-photo img{max-width:150px;max-height:150px;border-radius:14px;display:block;margin-bottom:8px;object-fit:cover}.gc-photo label{display:flex;gap:7px;font-size:12.5px;color:#4b3f7a;line-height:1.85;margin-bottom:8px}.gc-photo label input{flex:none;margin-top:3px}.gc-prow{display:flex;gap:8px}.gc-photo button{border:0;border-radius:13px;padding:9px 13px;font:inherit;font-size:13.5px;background:#f0eefb;color:#4b3f7a}.gc-photo .gc-psave{background:linear-gradient(135deg,#7aa7ff,#c08cff);color:#fff}.gc-photo .gc-pmsg{font-size:12.5px;color:#9b2d3c;margin:0 0 8px}'+
 '.gc-in{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid #ece6fb;background:#fff}.gc-in textarea{flex:1;resize:none;border:1px solid #e3dbfa;border-radius:16px;padding:10px 12px;font:inherit;font-size:15px;min-height:22px;max-height:110px}.gc-in button{border:0;border-radius:16px;padding:0 16px;font:inherit;background:linear-gradient(135deg,#7aa7ff,#c08cff);color:#fff;font-size:15px}.gc-ready{display:flex;gap:7px;overflow-x:auto;padding:0 12px 8px;background:#fff}.gc-ready button{flex:0 0 auto;border:0;background:#f4f1fd;border-radius:14px;padding:7px 11px;font:inherit;font-size:12.5px;color:#4b3f7a}';
 var root,list,busy=false;
 function gem(){try{var b=document.querySelector('#swHeroGem svg');if(b)return b.outerHTML}catch(e){}return '<span style="font-size:30px">💎</span>'}
 function build(){if(root)return;var st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);
   root=document.createElement('section');root.className='gc';root.hidden=true;root.setAttribute('role','dialog');root.setAttribute('aria-label','دستیار پوست بیوتی‌ولت');
-  root.innerHTML='<div class="gc-top">'+gem()+'<b>دستیار پوست قشنگت<small>رایگان · همین‌جا کنارتم 💜</small></b><button type="button" data-gc="new">گفت‌وگوی تازه</button><button type="button" data-gc="close" aria-label="بستن">✕</button></div><div class="gc-list" aria-live="polite"></div><div class="gc-ready"></div><form class="gc-in" autocomplete="off"><textarea rows="1" placeholder="هر چی دلت می‌خواد بپرس…" aria-label="پیام"></textarea><button type="submit" aria-label="ارسال">↑</button></form>';
+  root.innerHTML='<div class="gc-top">'+gem()+'<b>دستیار پوست قشنگت<small>رایگان · همین‌جا کنارتم 💜</small></b><button type="button" data-gc="new">گفت‌وگوی تازه</button><button type="button" data-gc="close" aria-label="بستن">✕</button></div><div class="gc-list" aria-live="polite"></div><div class="gc-photo" id="gcPhoto" hidden></div><div class="gc-ready"></div><form class="gc-in" autocomplete="off"><textarea rows="1" placeholder="هر چی دلت می‌خواد بپرس…" aria-label="پیام"></textarea><button type="submit" aria-label="ارسال">↑</button></form><input type="file" id="gcFile" accept="image/*" capture="environment" hidden>';
   document.body.appendChild(root);list=$('.gc-list',root);
-  $('.gc-ready',root).innerHTML='<button type="button" data-offer="build_routine">🧴 روتین و محصولاتم</button>'+READY.map(function(q){return '<button type="button" data-q="'+esc(q)+'">'+esc(q)+'</button>'}).join('');
+  $('.gc-ready',root).innerHTML='<button type="button" data-offer="build_routine">🧴 روتین و محصولاتم</button><button type="button" data-offer="send_photo">📷 عکس بفرستم</button>'+READY.map(function(q){return '<button type="button" data-q="'+esc(q)+'">'+esc(q)+'</button>'}).join('');
   root.addEventListener('click',function(e){var b=e.target.closest('button,a');if(!b)return;
     if(b.dataset.gc==='close')return close();
     if(b.dataset.gc==='new'){wj(K,{m:[]});return paint()}
+    if(b.id==='gcPSave')return savePhoto();
+    if(b.id==='gcPCancel')return cancelPhoto();
     if(b.dataset.q)return sendMsg(b.dataset.q);
     if(b.dataset.offer){track('gem_offer');return offer(b.dataset.offer)}});
+  root.addEventListener('change',function(e){if(e.target.id==='gcFile'){var f=e.target.files&&e.target.files[0];e.target.value='';if(f)handlePhoto(f)}});
   var ta=$('textarea',root);ta.addEventListener('input',function(){ta.style.height='auto';ta.style.height=Math.min(110,ta.scrollHeight)+'px'});
   ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('form',root).requestSubmit()}});
   $('form',root).addEventListener('submit',function(e){e.preventDefault();var v=ta.value.trim();if(!v)return;ta.value='';ta.style.height='auto';sendMsg(v)});
@@ -70,11 +74,38 @@ function sendMsg(text){if(busy)return;busy=true;var s=state();s.m.push({role:'us
     var note=learn(j.profile);s2.m.push({role:'assistant',content:j.reply,chips:j.chips||[],offer:j.offer||null,sources:j.sources||[],note:note?'تو پروفایلت نوشتم: '+note:''});save(s2)})
   .catch(function(){var s2=state();s2.m.push({role:'assistant',content:'اینترنتت یه لحظه قطع شد قشنگم؛ دوباره بفرست 💜',chips:[text]});save(s2)})
   .then(function(){busy=false;paint()})}
-function offer(k){close();setTimeout(function(){
+function offer(k){if(k==='send_photo')return startPhoto();close();setTimeout(function(){
   if(k==='check_product'){if(typeof window.switchTab==='function')window.switchTab('sw-home');var a=document.getElementById('swAsk');if(a){a.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){a.focus()},350)}}
   else if(k==='build_routine'){if(typeof window.switchTab==='function')window.switchTab('sw-home');var g=document.getElementById('sw-home');var gd=g&&g.querySelector('#swGuide');if(gd&&gd.hidden){bypass=true;var hg=g.querySelector('#swHeroGem');hg&&hg.click()}setTimeout(function(){var c=document.querySelector('#swGuide [data-g="start"],#swGuide [data-g="myrtn"]');c&&c.click()},250)}
   else if(k==='photo_journal'){if(typeof window.switchTab==='function')window.switchTab('track');setTimeout(function(){var j=document.getElementById('skinJournal');j&&j.scrollIntoView({behavior:'smooth',block:'start'})},300)}
   else if(k==='add_routine'){if(typeof window.switchTab==='function')window.switchTab('sw-routine')}},120)}
+
+/* ---------- send a photo from inside the chat: needs login first (photos only ever belong to
+   a member's own secured journal), then reuses skin-journal.js's resize/encrypt/sync pipeline ---------- */
+var pendingImg=null;
+function startPhoto(){
+  // the native file-picker only opens from a direct tap, not after an async login step — so after
+  // registering we just reopen the chat and ask her to tap "عکس بفرستم" once more, rather than
+  // auto-clicking the hidden input (that silently fails to open the picker on iOS Safari)
+  if(!registeredNow()){close();
+    setTimeout(function(){if(typeof window.bwRegister==='function')window.bwRegister(function(){var s=state();s.m.push({role:'assistant',content:'خوش اومدی 💜 حالا برای فرستادن عکس، یه بار دیگه روی «📷 عکس بفرستم» بزن.'});save(s);open()})},150);
+    return}
+  var f=$('#gcFile',root);f&&f.click()}
+function registeredNow(){return !!rj('bw_reg',null)}
+function handlePhoto(file){if(!window.BWSkinJournal||!window.BWSkinJournal.prepare){var s=state();s.m.push({role:'assistant',content:'این مرورگر الان عکس رو نمی‌پذیره؛ از تب «روتین → پیگیری» امتحان کن 💜'});save(s);return paint()}
+  var box=$('#gcPhoto',root);if(box){box.hidden=false;box.innerHTML='<p class="gc-pmsg" style="color:#4b3f7a">در حال آماده‌سازی عکس روی گوشی…</p>'}
+  window.BWSkinJournal.prepare(file).then(function(img){pendingImg=img;showPhotoConsent(URL.createObjectURL(new Blob([img.data],{type:img.type})))})
+    .catch(function(){if(box){box.hidden=true;box.innerHTML=''}var s=state();s.m.push({role:'assistant',content:'این عکس باز نشد؛ یه عکس JPG یا PNG دیگه امتحان کن 💜'});save(s);paint()})}
+function showPhotoConsent(url){var box=$('#gcPhoto',root);if(!box)return;
+  box.innerHTML='<img src="'+url+'" alt="پیش‌نمایش عکس"><label><input type="checkbox" id="gcConsent" checked> مثل همیشه، این عکس روی گوشی‌ام رمز می‌شود و نسخه‌ی رمزشده‌اش در فضای امن بیوتی‌ولت پشتیبان می‌ماند؛ در دفترچه‌ی عکس پوستم ثبت شود</label><div class="gc-prow"><button type="button" class="gc-psave" id="gcPSave">ثبت عکس</button><button type="button" id="gcPCancel">انصراف</button></div>';}
+function cancelPhoto(){pendingImg=null;var box=$('#gcPhoto',root);if(box){box.hidden=true;box.innerHTML=''}}
+function savePhoto(){if(!pendingImg)return;var ck=$('#gcConsent',root);if(ck&&!ck.checked)return;
+  var btn=$('#gcPSave',root);if(btn)btn.disabled=true;var img=pendingImg;
+  var s0=state(),lastUser=(s0.m.slice().reverse().filter(function(m){return m.role==='user'})[0]||{}).content||'';
+  window.BWSkinJournal.commit(img,{note:'از گفت‌وگوی دستیار: '+String(lastUser).slice(0,120)}).then(function(){pendingImg=null;
+    var box=$('#gcPhoto',root);if(box){box.hidden=true;box.innerHTML=''}
+    var s=state();s.m.push({role:'assistant',content:'عکس رو امن گرفتم و تو دفترچه‌ی عکس پوستت ذخیره شد 💜 من خودم عکس رو نمی‌بینم، پس بگو دقیقاً کجای صورتته تا دقیق‌تر راهنماییت کنم.'});save(s);paint();track('journal_photo')})
+  .catch(function(){if(btn)btn.disabled=false;var box=$('#gcPhoto',root);if(box){var m=document.createElement('p');m.className='gc-pmsg';m.textContent='عکس ذخیره نشد؛ دوباره امتحان کن.';box.insertBefore(m,box.firstChild)}})}
 function open(){build();root.hidden=false;document.body.style.overflow='hidden';try{history.pushState({gc:1},'')}catch(e){}paint();track('gem_open');setTimeout(function(){var t=$('textarea',root);if(t&&window.innerWidth>700)t.focus()},200)}
 function close(fromPop){if(!root||root.hidden)return;root.hidden=true;document.body.style.overflow='';if(!fromPop){try{if(history.state&&history.state.gc)history.back()}catch(e){}}}
 

@@ -533,6 +533,9 @@ function regSheet(after){var g=Number((CFG||{}).registerGift)||0;var stage='phon
    toast(msg);closeSheet();regUI();if(after)after()}catch(err){toast(err.message||'نشد؛ دوباره بزن');btn.disabled=false}}}
 document.addEventListener('click',function(e){if(e.target.closest('[data-act="register"]')){if(registered())toast('عضوی عزیزم 💜');else regSheet()}});
 regUI();
+// used by gem-chat.js (and anywhere else) to gate an action behind login: calls `after()` once
+// registered — immediately if already a member, otherwise after the register/verify sheet succeeds.
+window.bwRegister=function(after){if(registered()){if(after)after();return true}regSheet(after);return false};
 // ask once, gently, right after the first verdict (not before they've seen any value)
 if(LIVE)new MutationObserver(function(){if(registered()||!$('.sw-stamp',resultBox)||regSheet.asked)return;var sk=Number(read('bw_reg_skip',0))||0;if(Date.now()-sk<3*864e5)return;regSheet.asked=true;setTimeout(function(){if(back.hidden&&!registered())regSheet()},4200)}).observe(resultBox,{childList:true,subtree:true});
 

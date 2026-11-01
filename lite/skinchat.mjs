@@ -24,9 +24,10 @@ const SYSTEM=`تو «دستیار پوست» بیوتی‌ولت هستی؛ یک
   build_routine: وقتی روتین ندارد یا گیج است → «بیا روتینت رو با هم بچینیم»
   photo_journal: وقتی درباره‌ی نتیجه و پیشرفت می‌پرسد → «یه عکس شروع بگیر تا تغییرت رو ببینی»
   add_routine: وقتی محصولی را تازه شروع کرده → «اضافه‌ش کن به روتینت تا روز سوم و هفته‌ی چهارم کنارت باشم»
+  send_photo: وقتی مشکل، محلی و دیدنی‌ست (جای دقیق جوش، لک، خط چین‌وچروک) و دونستن محل دقیق واقعاً کمک می‌کند → «اگه راحتی یه عکس از همون جا بفرست تا دقیق‌تر راهنمایی‌ت کنم» (فقط وقتی واقعاً لازمه، نه برای هر سؤال؛ عکس در دفترچه‌ی عکس پوست او امن ذخیره می‌شود، تو خودت آن را نمی‌بینی چون عکس را مدل تو دریافت نمی‌کند — فقط محل و توضیح کلامی کاربر را برای راهنمایی به کار ببر)
 - اگر کاربر به‌صراحت نوع پوست یا مشکلش را گفت، در profile بنویس (فقط چیزی که خودش گفته).
 خروجی فقط JSON فشرده، بدون هیچ متن دیگر:
-{"reply":"…","chips":["پاسخ کوتاه پیشنهادی کاربر", "…"],"offer":null یا {"kind":"check_product|build_routine|photo_journal|add_routine","text":"جمله‌ی کوتاه دعوت"},"profile":{"skinBase":"چرب|خشک|مختلط|نرمال|","concerns":["جوش|لک|خشکی|چربی|منافذ باز|قرمزی و حساسیت|چین و چروک"]},"sources":["نام منبع از فهرست مجاز، فقط اگر واقعاً به آن تکیه کردی"]}
+{"reply":"…","chips":["پاسخ کوتاه پیشنهادی کاربر", "…"],"offer":null یا {"kind":"check_product|build_routine|photo_journal|add_routine|send_photo","text":"جمله‌ی کوتاه دعوت"},"profile":{"skinBase":"چرب|خشک|مختلط|نرمال|","concerns":["جوش|لک|خشکی|چربی|منافذ باز|قرمزی و حساسیت|چین و چروک"]},"sources":["نام منبع از فهرست مجاز، فقط اگر واقعاً به آن تکیه کردی"]}
 chips: ۲ تا ۴ گزینه‌ی خیلی کوتاه که کاربر می‌تواند با یک لمس جواب بدهد.`;
 const INGR=/^(niacinamide|retinol|retinal|retinoid|tretinoin|adapalene|vitamin|vit|acid|ceramides?|spf|bha|aha|pha|peptides?|hyaluronic|azelaic|salicylic|glycolic|lactic|mandelic|zinc|arbutin|tranexamic|bakuchiol|centella|cica|snail|panthenol|urea|squalane|benzoyl|peroxide|c|e|b3|b5|uv|uva|uvb|pa)$/i;
 function needsWeb(t){if(/برند|مارک|ترند|جدیدترین|تازه اومده|قیمت|دیجی ?کالا|ترب|خانومی|اولیو ?یانگ|این محصول|این کرم|این سرم/.test(t))return true;
@@ -58,7 +59,7 @@ export function makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage
     if(!x.r.ok){day.dev[d]--;save();return j(x.r.status===429?429:502,{error:x.d?.error?.code==='budget'?'امروز دستیار خیلی شلوغ بوده؛ کمی بعد دوباره بیا 💜':'یه لحظه حواسم پرت شد عزیزم؛ دوباره بفرست 💜'})}
     const u=x.d?.usage;logUsage({at:new Date().toISOString(),status:200,model,act:'skinchat',search:web,ms:Date.now()-t0,usage:u?{in:u.prompt_tokens||0,out:u.completion_tokens||0}:null});
     const msg=x.d?.choices?.[0]?.message,o=parse(msg?.content)||{reply:clean(msg?.content,1200)};
-    const KINDS=['check_product','build_routine','photo_journal','add_routine'];
+    const KINDS=['check_product','build_routine','photo_journal','add_routine','send_photo'];
     const out={reply:clean(o.reply,1400)||'عزیزم یه بار دیگه بگو؟ 💜',chips:(Array.isArray(o.chips)?o.chips:[]).slice(0,4).map(s=>clean(s,40)).filter(Boolean),
       offer:o.offer&&KINDS.includes(o.offer.kind)?{kind:o.offer.kind,text:clean(o.offer.text,80)}:null,
       profile:{skinBase:/^(چرب|خشک|مختلط|نرمال)$/.test(o.profile?.skinBase||'')?o.profile.skinBase:'',concerns:(Array.isArray(o.profile?.concerns)?o.profile.concerns:[]).slice(0,4).map(s=>clean(s,24))},

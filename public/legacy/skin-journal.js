@@ -240,9 +240,23 @@ function nudge(text,go){var k=SEEN+tehranDay(Date.now())+'-'+go;try{if(localStor
 function nudges(){all().then(function(list){var p=plan(list);if(p.state==='due')return nudge('امروز وقت عکس '+p.label+'ـه قشنگم 🌷 فقط یک دقیقه.','photo');
   var miss=todayMissing();if(miss)nudge('روتین '+miss+'ت منتظرته عزیزم 🌸 یه تیک کوچولو بزن.','routine')}).catch(function(){})}
 
-/* ---------- public API (used by the calendar export in routine-reminder.js) ---------- */
+/* ---------- quick add (used by the gem chat: it drives its own small preview + consent UI
+   inline in the conversation, but reuses this module's resize/encrypt/sync pipeline so a photo
+   sent from chat is stored exactly like one added from the پیگیری tab) ---------- */
+function prepare(file){if(!file)return Promise.reject(Error('nofile'));
+  if(!/^image\//.test(file.type||'image/'))return Promise.reject(Error('type'));
+  if(file.size>25*1024*1024)return Promise.reject(Error('size'));
+  return loadImage(file).then(toJpeg)}
+function commitQuick(img,opts){opts=opts||{};
+  var e={id:'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),date:new Date().toISOString(),data:img.data,type:img.type,w:img.w,h:img.h,
+    bare:false,sameLight:false,tags:(opts.tags||[]).slice(0,7),note:String(opts.note||'').trim().slice(0,300),routine:routineNames(),synced:false,v:1};
+  return askPersist().then(function(){return put(e)}).then(function(){var vv=ensureVault();if(vv&&opts.share!==undefined&&vv.share!==!!opts.share){vv.share=!!opts.share;if(vv.share)vv.escrow=true;writeJ(VK,vv)}
+    try{window.bwTrack&&window.bwTrack('journal_photo')}catch(x){}
+    if(root)render();syncNow();return e})}
+
+/* ---------- public API (used by the calendar export in routine-reminder.js, and by gem-chat.js) ---------- */
 window.BWSkinJournal={plan:function(){return all().then(plan)},upcoming:function(){return all().then(function(list){if(!list.length)return [];var d0=dayIndex(list[0].date),last=dayIndex(list[list.length-1].date)-d0;
-  return SCHEDULE.filter(function(c){return c>last+6}).slice(0,4).map(function(c){return {day:c,label:c%7===0?'هفته‌ی '+fa(c/7):'روز '+fa(c),date:new Date((d0+c)*DAY).toISOString().slice(0,10)}})})},render:render,sync:syncNow};
+  return SCHEDULE.filter(function(c){return c>last+6}).slice(0,4).map(function(c){return {day:c,label:c%7===0?'هفته‌ی '+fa(c/7):'روز '+fa(c),date:new Date((d0+c)*DAY).toISOString().slice(0,10)}})})},render:render,sync:syncNow,prepare:prepare,commit:commitQuick};
 
 function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t);return new Promise(function(ok,bad){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){bad(e)}a.remove()})}
 function init(){root=document.getElementById('skinJournal');if(!root)return;root.classList.add('sj');
