@@ -79,7 +79,7 @@ function cycleDue(){var l=life();return ids().length>0&&!(l.cycle&&l.cycle.asked
 function hasRetinoid(){return ids().some(function(id){return info(id).kind==='retinoid'})}
 
 /* ---------- today card ---------- */
-var CSS='.fu{border-radius:20px;padding:14px 15px;margin:10px 0 14px;background:linear-gradient(150deg,#ffffff,#f4f0ff 60%,#fff2f8);box-shadow:0 8px 24px rgba(110,90,190,.12);font-size:14px;line-height:1.9}.fu small.k{display:block;color:#7a6aa8;font-size:12px}.fu b{display:block;font-size:15px;color:#2d2a4a;margin:2px 0 8px}.fu .o{display:flex;flex-wrap:wrap;gap:7px;align-items:center}.fu button{border:0;border-radius:13px;padding:9px 13px;font:inherit;font-size:13.5px;background:#f0eefb;color:#2d2a4a;cursor:pointer}.fu button.m{background:linear-gradient(135deg,#7aa7ff,#c08cff 60%,#ff9cc7);color:#fff}.fu p{margin:8px 0 0;color:#4a4566}.fu .x{float:left;background:transparent;padding:0 4px;color:#9a93b8}.fu input[type=time],.fu input[type=date],.fu select{border:1px solid #ddd6f3;border-radius:10px;padding:6px 8px;font:inherit;background:#fff;color:#2d2a4a;min-height:36px}.fu label{display:inline-flex;gap:6px;align-items:center;font-size:13px}.fu .row2{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0}.fu .note{font-size:12px;color:#8a83a8;margin-top:6px;display:block}.fu-set{font-size:12.5px;color:#7a6aa8;background:none!important;padding:4px 2px!important;text-decoration:underline}.fu hr{border:0;border-top:1px dashed #e2dcf3;margin:10px 0}.fu ol li{margin:3px 0}.fu-jp{max-width:100%}.fu-a{display:inline-block;border-radius:13px;padding:9px 13px;font-size:13.5px;background:#eef6ff;color:#23476b;text-decoration:none}';
+var CSS='.fu{border-radius:20px;padding:14px 15px;margin:10px 0 14px;background:linear-gradient(150deg,#ffffff,#f4f0ff 60%,#fff2f8);box-shadow:0 8px 24px rgba(110,90,190,.12);font-size:14px;line-height:1.9}.fu small.k{display:block;color:#7a6aa8;font-size:12px}.fu b{display:block;font-size:15px;color:#2d2a4a;margin:2px 0 8px}.fu .o{display:flex;flex-wrap:wrap;gap:7px;align-items:center}.fu button{border:0;border-radius:13px;padding:9px 13px;font:inherit;font-size:13.5px;background:#f0eefb;color:#2d2a4a;cursor:pointer}.fu button.m{background:linear-gradient(135deg,#7aa7ff,#c08cff 60%,#ff9cc7);color:#fff}.fu p{margin:8px 0 0;color:#4a4566}.fu .x{float:left;background:transparent;padding:0 4px;color:#9a93b8}.fu input[type=time],.fu input[type=date],.fu select{border:1px solid #ddd6f3;border-radius:10px;padding:6px 8px;font:inherit;background:#fff;color:#2d2a4a;min-height:36px}.fu label{display:inline-flex;gap:6px;align-items:center;font-size:13px}.fu .row2{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:6px 0}.fu .note{font-size:12px;color:#8a83a8;margin-top:6px;display:block}.fu-set{font-size:12.5px;color:#7a6aa8;background:none!important;padding:4px 2px!important;text-decoration:underline}.fu hr{border:0;border-top:1px dashed #e2dcf3;margin:10px 0}.fu ol li{margin:3px 0}.fu-jp{max-width:100%}.fu-ok{background:#eef8f1;color:#2f5a4a!important;border-radius:12px;padding:6px 10px}.fu-sm{font-size:12.5px;color:#6a6488!important}.fu .fu-lnk{cursor:pointer;background:none;padding:0;color:#6a5bb0;text-decoration:underline;font-size:12.5px}.fu-a{display:inline-block;border-radius:13px;padding:9px 13px;font-size:13.5px;background:#eef6ff;color:#23476b;text-decoration:none}';
 var box=null,settingsOpen=false,cycleForm=false;
 function place(){var home=document.getElementById('sw-home');if(!home)return null;if(!box){box=document.createElement('div');box.id='fuToday';var h2=$('.sw-hero h2',home);if(h2)h2.parentNode.insertBefore(box,h2);else home.prepend(box)}return box}
 function special(){ // questions/alerts that are not about one product, in priority order
@@ -96,7 +96,7 @@ function cycleCard(){var c=life().cycle||{};
 function taskCard(x,more){var q=x.q,opts=q.opts.slice(),note='';
   if(q.photo&&nearPeriod()){note='<span class="note">اگه این روزا پریودی یا نزدیکشی، پوست ممکنه موقتاً پف یا جوش داشته باشه؛ می‌تونی عکس رو چند روز دیگه بگیری تا مقایسه منصفانه باشه.</span>';opts.push(['p4','چند روز دیگه یادم بنداز'])}
   return '<div class="fu" data-id="'+esc(x.id)+'" data-c="'+x.c+'"><small class="k">کار امروز · '+esc(q.title)+'</small><b>'+esc(q.q)+'</b><div class="o">'+opts.map(function(o,i){return '<button type="button" data-fu="'+o[0]+'"'+(i===0?' class="m"':'')+'>'+esc(o[1])+'</button>'}).join('')+(q.photo?'<button type="button" data-fu-photo="1">📷 دفترچه‌ی عکس</button>':'')+'</div>'+note+(more?'<p style="font-size:12px;color:#8a83a8">'+fa(more)+' کار دیگه هم داری؛ بعد از این نشونت می‌دم.</p>':'')+'</div>'}
-function render(msg){var el=place();if(!el)return;var h='';
+function render(msg){var el=place();if(!el){try{if(msg&&remAct&&Date.now()-remAct<20000){remAct=0;renderRem(msg)}else renderRem()}catch(e){}return}var h='';
   if(msg)h='<div class="fu"><small class="k">کار امروز</small><b>ثبت شد 💜</b><p>'+esc(msg)+'</p></div>';
   else{var sp=special(),t=tasks(),st=stagger();
     if(sp)h=sp.html;else if(t.length)h=taskCard(t[0],t.length-1);
@@ -104,7 +104,7 @@ function render(msg){var el=place();if(!el)return;var h='';
     else if(st)h='<div class="fu" data-stag="'+esc(st.key)+'"><button type="button" class="x" data-fu-x="1" aria-label="بستن">✕</button><small class="k">یه نکته‌ی مهم</small><b>«'+esc(st.a.name)+'» و «'+esc(st.b.name)+'» رو با هم شروع کردی.</b><p>برای اینکه بفهمی نتیجه (خوب یا بد) از کدومه، یکی رو دو هفته دیرتر شروع کن. اگه پوستت حساسه، این‌طوری کمتر هم تحریک می‌شه.</p></div>';
     h+=notifBlock()}
   h+=settingsOpen?settingsHtml():(ids().length?'<button type="button" class="fu-set" data-set-open="1">⚙️ یادآورها و تنظیمات من</button>':'');
-  el.innerHTML=h;writePlan()}
+  el.innerHTML=h;writePlan();try{if(msg&&remAct&&Date.now()-remAct<20000){remAct=0;renderRem(msg)}else renderRem()}catch(e){}}
 function answer(id,c,v){var ans=rj(K_ANS,{}),q=ask(info(id),Number(c));
   (ans[id]||(ans[id]={}))[c]=v==='p4'?{v:'later',at:dstr(dnum(tday())+3)}:{v:v,at:tday()};wj(K_ANS,ans);track('followup_answer');
   var r=v==='p4'?'باشه قشنگم، چند روز دیگه دوباره یادت می‌ندازم 🌙':(REPLY[q.k]||{})[v]||'ثبت شد 💜';
@@ -126,8 +126,8 @@ function notifBlock(){var n=notif(),has=ids().length>0;if(!has||(n.on&&granted()
   if(!canPush&&!inApp)return '';if(inApp)return permHelp('denied');
   if(permFail||(typeof Notification!=='undefined'&&Notification.permission==='denied'))return permHelp(permFail||'denied');
   return '<div class="fu"><b>یادآور روی گوشی 🔔</b>روزای مهم روتینت (روز ۳ هر محصول، عکس هفته‌ی ۴ و ۸) رو هر ساعتی که دوست داری روی گوشیت یادت بندازم؟'+timeRows(n)+'<div class="o" style="margin-top:8px"><button type="button" class="m" data-fu-on="1">روشنش کن</button><button type="button" data-fu-later="1">بعداً</button></div></div>'}
-function timeRows(n){return '<div class="row2"><label><input type="checkbox" id="fuAmOn"'+(n.amOn?' checked':'')+'> صبح‌ها</label><input type="time" id="fuAm" value="'+n.am+'" step="60"></div><div class="row2"><label><input type="checkbox" id="fuPmOn"'+(n.pmOn?' checked':'')+'> شب‌ها هم یادم بنداز</label><input type="time" id="fuPm" value="'+n.pm+'" step="60"></div><span class="note">ساعت رو هر چی بخوای بذار (به وقت ایران). روزهایی که کار مهمی داری، پیامش همون ساعت میاد؛ بقیه‌ی روزها فقط اگه تیک زده باشی.</span>'}
-function readTimes(n){var a=($('#fuAm')||{}).value,p=($('#fuPm')||{}).value;if(TIME.test(a||''))n.am=a;if(TIME.test(p||''))n.pm=p;var ao=$('#fuAmOn'),po=$('#fuPmOn');if(ao)n.amOn=ao.checked;if(po)n.pmOn=po.checked;return n}
+function timeRows(n,p){p=p||'fu';return '<div class="row2"><label><input type="checkbox" id="'+p+'AmOn"'+(n.amOn?' checked':'')+'> صبح‌ها</label><input type="time" id="'+p+'Am" value="'+n.am+'" step="60"></div><div class="row2"><label><input type="checkbox" id="'+p+'PmOn"'+(n.pmOn?' checked':'')+'> شب‌ها هم یادم بنداز</label><input type="time" id="'+p+'Pm" value="'+n.pm+'" step="60"></div><span class="note">ساعت رو هر چی بخوای بذار (به وقت ایران). روزهایی که کار مهمی داری، پیامش همون ساعت میاد؛ بقیه‌ی روزها فقط اگه تیک زده باشی.</span>'}
+function readTimes(n,x){x=x||'fu';var a=($('#'+x+'Am')||{}).value,p=($('#'+x+'Pm')||{}).value;if(TIME.test(a||''))n.am=a;if(TIME.test(p||''))n.pm=p;var ao=$('#'+x+'AmOn'),po=$('#'+x+'PmOn');if(ao)n.amOn=ao.checked;if(po)n.pmOn=po.checked;return n}
 function settingsHtml(){var n=notif(),l=life(),c=l.cycle||{},st;
   st=n.on&&granted()?'روشن ✓':ios&&!standalone?'برای روشن شدن، اپ رو به صفحه‌ی اصلی اضافه کن':!canPush?'این مرورگر اعلان رو پشتیبانی نمی‌کنه':(typeof Notification!=='undefined'&&Notification.permission==='denied')?'اجازه‌ی اعلان در تنظیمات گوشی بسته است':'خاموش';
   return '<div class="fu" id="fuSettings"><button type="button" class="x" data-set-close="1" aria-label="بستن">✕</button><small class="k">⚙️ تنظیمات من</small><b>یادآور روی گوشی: '+st+'</b>'+timeRows(n)+'<hr><b>شرایط من</b><div class="row2"><select id="fuLife"><option value="">انتخاب کن</option>'+LIFE_OPTS.map(function(o){return '<option value="'+o[0]+'"'+(l.state===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+(l.state==='pb'?'<option value="pb" selected>بارداری یا شیردهی (از پروفایل)</option>':'')+'</select></div>'+
@@ -180,6 +180,35 @@ function writePlan(){var n=notif(),days=planDays().filter(function(x){return x.t
   idb().then(function(db){var t=db.transaction('kv','readwrite');t.objectStore('kv').put(plan,'plan')}).catch(function(){});
   if(n.on)syncSub(null,false)}
 
+function disable(n){n.on=false;saveNotif(n);try{navigator.serviceWorker.ready.then(function(r){return r.pushManager.getSubscription()}).then(function(s){if(s)fetch('/api/push/sub',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:s.endpoint})})}).catch(function(){})}catch(e){}}
+
+/* ---------- the same reminder settings, in the wallet («من و تنظیماتم»): BeautyWallet reminds her routine ---------- */
+var remMsg='',remT,remAct=0;
+function remHost(){var me=document.getElementById('sw-me');if(!me)return null;var c=document.getElementById('fuRem');
+  if(!c){c=document.createElement('div');c.id='fuRem';var t=me.querySelector('.sw-tiles');if(t)t.before(c);else me.append(c);c.addEventListener('click',remClick)}return c}
+function renderRem(msg){var c=remHost();if(!c)return;
+  if(msg){remMsg=msg;clearTimeout(remT);remT=setTimeout(function(){remMsg='';renderRem()},10000)}
+  else if(c.contains(document.activeElement))return; // don't wipe what she's choosing
+  var n=notif(),on=n.on&&granted(),denied=typeof Notification!=='undefined'&&Notification.permission==='denied',need=inApp||(ios&&!standalone)||denied||permFail;
+  var am=slotNames('am'),pm=slotNames('pm'),has=ids().length>0;
+  var h='<div class="fu fu-rem"><small class="k">⏰ یادآور روتینم</small><b>'+(on?'یادآورت روشنه 🔔':'بیوتی‌ولت روتینت رو یادت بندازه؟')+'</b>'+
+    (remMsg?'<p class="fu-ok">'+esc(remMsg)+'</p>':'')+
+    '<p>'+(on?'هر روز '+esc(whenText())+' روی گوشیت یه پیام کوچولو میاد'+(has?' که کدوم محصولت نوبتشه':'')+'؛ روزهای مهم (روز ۳ هر محصول، عکس هفته‌ی ۴ و ۸) هم همون ساعت یادت می‌ندازم.':
+      'ساعتش رو خودت انتخاب کن؛ صبح و/یا شب، روی گوشیت یادت می‌ندازم '+(has?'کدوم محصول نوبتشه':'به پوستت برسی')+' 💜')+'</p>'+
+    (has?'<p class="fu-sm">☀ صبح: '+esc(am.length?am.join('، '):'—')+' · ☾ شب: '+esc(pm.length?pm.join('، '):'—')+'</p>':'<p class="fu-sm">هنوز روتینی ثبت نکردی؛ <span role="button" tabindex="0" class="fu-lnk" data-rem-rtn="1">روتینم رو ثبت کنم</span> تا یادآورها دقیق‌تر بشن.</p>')+
+    timeRows(n,'fuR')+
+    '<div class="o" style="margin-top:8px">'+(on?'<button type="button" class="m" data-rem-save="1">ذخیره‌ی ساعت‌ها</button><button type="button" data-rem-test="1">یه اعلان آزمایشی بفرست</button><button type="button" data-rem-off="1">خاموش کن</button>':'<button type="button" class="m" data-rem-save="1">روشنش کن 🔔</button>')+'</div></div>';
+  if(!on&&need)h+=permHelp(permFail||(denied?'denied':'default')).replace(/data-fu-later="1"/g,'data-rem-hide="1"');
+  c.innerHTML=h}
+function remClick(e){var b=e.target.closest('button,[data-rem-rtn]');if(!b)return;var d=b.dataset;
+  if(d.remRtn){if(typeof window.switchTab==='function')window.switchTab('sw-routine');return}
+  if(d.remSave||d.fuOn){var n=readTimes(notif(),'fuR');if(!n.amOn&&!n.pmOn)n.amOn=true;saveNotif(n);permFail='';
+    if(canPush&&!(ios&&!standalone)&&!inApp){remAct=Date.now();b.disabled=true;return enable(n,n.on&&granted())}
+    return renderRem('ساعت‌ها ذخیره شد. برای اینکه پیام روی گوشیت بیاد، مراحل پایین رو انجام بده 💜')}
+  if(d.remTest){b.disabled=true;fetch('/api/push/test',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:notif().endpoint})}).then(function(r){renderRem(r.ok?'فرستادم 🔔 چند ثانیه‌ی دیگه روی گوشیت میاد.':'اعلان آزمایشی نرسید؛ یه بار «ذخیره‌ی ساعت‌ها» رو بزن و دوباره امتحان کن.')},function(){renderRem('اینترنت وصل نیست؛ دوباره امتحان کن.')});return}
+  if(d.remOff){var n2=notif();n2.amOn=false;n2.pmOn=false;disable(n2);track('notif_off');return renderRem('یادآور خاموش شد. هر وقت خواستی از همین‌جا دوباره روشنش کن 🌙')}
+  if(d.remHide){permFail='';return renderRem()}}
+
 /* ---------- wiring ---------- */
 function init(){if(!document.getElementById('sw-home'))return setTimeout(init,500);
   var st=document.createElement('style');st.textContent=CSS;document.head.appendChild(st);adoptProfileFlag();mirror=JSON.stringify(rj('bw_reminder_v1',{}));render();
@@ -198,13 +227,14 @@ function init(){if(!document.getElementById('sw-home'))return setTimeout(init,50
     if(d.setClose){settingsOpen=false;return render()}
     if(d.setSave){var n2=readTimes(notif()),lv=($('#fuLife')||{}).value;if(lv&&lv!==life().state)setLife(lv);
       var l4=life(),con=($('#fuCycOn')||{}).checked,cl=($('#fuCycLast2')||{}).value;l4.cycle={asked:true,on:!!con&&/^\d{4}-\d\d-\d\d$/.test(cl||''),last:cl||'',len:Number(($('#fuCycLen2')||{}).value)||28};wj(K_LIFE,l4);
-      saveNotif(n2);if(n2.amOn||n2.pmOn){if(canPush&&!(ios&&!standalone))return enable(n2,n2.on&&granted());}else if(n2.on){n2.on=false;saveNotif(n2);navigator.serviceWorker.ready.then(function(r){return r.pushManager.getSubscription()}).then(function(s){if(s)fetch('/api/push/sub',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:s.endpoint})})}).catch(function(){})}
+      saveNotif(n2);if(n2.amOn||n2.pmOn){if(canPush&&!(ios&&!standalone))return enable(n2,n2.on&&granted());}else if(n2.on)disable(n2);
       settingsOpen=false;return render('تنظیماتت ذخیره شد 💜')}});
   // keep in step with the routine, the پیگیری-tab reminder settings and the clock
   var last=JSON.stringify(ids());setInterval(function(){var cur=JSON.stringify(ids()),rm=JSON.stringify(rj('bw_reminder_v1',{}));
     if(rm!==mirror){mirror=rm;var r=rj('bw_reminder_v1',{}),n=notif();if(TIME.test(r.morning||''))n.am=r.morning;if(TIME.test(r.evening||''))n.pm=r.evening;if(typeof r.enabled==="boolean"){n.amOn=r.enabled;n.pmOn=r.enabled}wj(K_NOTIF,n);if(r.enabled&&!n.on&&canPush&&granted())enable(n,true);else render()}
     if(cur!==last){last=cur;render()}},3000);
   document.addEventListener('visibilitychange',function(){if(!document.hidden)render()});
+  window.addEventListener('bw:tab',function(e){if(e.detail==='wallet')renderRem()});
   if(/[?&]from=notif/.test(location.search))track('notif_open');
   try{navigator.serviceWorker&&navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.bw==='notif-open'){track('notif_open');render()}})}catch(e){}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
