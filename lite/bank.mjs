@@ -58,6 +58,8 @@ export function makeBank(DATA){
   const FILE=path.join(DATA,'formula-bank.json'),WAL=path.join(DATA,'wallets.json');
   let bank={version:1,products:[]};try{bank=JSON.parse(fs.readFileSync(FILE,'utf8'))}catch{}
   let wallets={};try{wallets=JSON.parse(fs.readFileSync(WAL,'utf8'))}catch{}
+  // one-time safety copy before wallets start linking to accounts (v122)
+  try{const bk=path.join(DATA,'wallets.pre-accounts.json');if(fs.existsSync(WAL)&&!fs.existsSync(bk))fs.copyFileSync(WAL,bk)}catch{}
   const save=(f,v)=>{try{fs.writeFileSync(f+'.tmp',JSON.stringify(v));fs.renameSync(f+'.tmp',f)}catch(e){console.error('save',f,e.message)}};
   let pub=null;const bump=()=>{pub=null;save(FILE,bank)};
 
@@ -95,10 +97,12 @@ export function makeBank(DATA){
 
   // only well-sourced formulas join the bank: the next shopper must get an answer as good as the first
   // pending: found by the catalog prefill job, waits for the owner's approval in /admin before anyone sees it
-  function add(f,query,opts={}){if(!f||f.basis!=='inci_sourced')return null;
+  // brand-declared formulas (no full list published) may wait for the owner's approval when they say something real
+  function add(f,query,opts={}){if(!f)return null;if(f.basis!=='inci_sourced'&&!(opts.pending&&opts.declared&&((f.actives||[]).length||(f.claims||[]).length||f.spf)))return null;
     const q=normName(query),aliases=[...new Set([q,normName(f.name),normName(f.en),normName(f.brand+' '+f.en)].filter(x=>x&&x.length>=2))];
-    const old=bank.products.find(p=>p.id===f.id);if(old){if(!opts.pending&&old.pending)delete old.pending;if(f.replaces&&!old.replaces)old.replaces=f.replaces;old.aliases=[...new Set([...(old.aliases||[]),...aliases])].slice(0,20);bump();return old}
-    const row={...f,aliases,query:String(query).slice(0,120),addedAt:new Date().toISOString(),hits:0,...(opts.pending?{pending:true,source:opts.source||'prefill'}:{})};bank.products.push(row);bump();return row}
+    const old=bank.products.find(p=>p.id===f.id);if(old&&old.basis!=='inci_sourced'&&f.basis==='inci_sourced'){const keep={aliases:old.aliases,hits:old.hits,lastHit:old.lastHit,addedAt:old.addedAt,image:old.image,replaces:old.replaces||f.replaces};for(const k of Object.keys(old))delete old[k];Object.assign(old,f,keep,{query:String(query).slice(0,120),upgradedAt:new Date().toISOString()},opts.source?{source:opts.source}:{});if(opts.pending){old.pending=true}}
+    if(old){if(!opts.pending&&old.pending)delete old.pending;if(f.replaces&&!old.replaces)old.replaces=f.replaces;old.aliases=[...new Set([...(old.aliases||[]),...aliases])].slice(0,20);bump();return old}
+    const row={...f,aliases,query:String(query).slice(0,120),addedAt:new Date().toISOString(),hits:0,...(opts.pending?{pending:true,source:opts.source||'prefill'}:opts.source?{source:opts.source}:{})};bank.products.push(row);bump();return row}
   function hit(p,query){p.hits=(p.hits||0)+1;p.lastHit=new Date().toISOString();const q=normName(query);if(q&&!(p.aliases||[]).includes(q))p.aliases=[...(p.aliases||[]),q].slice(0,20);bump()}
   function setReplaces(p,id){if(p&&id&&!p.replaces){p.replaces=id;bump()}}
   function setImage(id,url){const p=bank.products.find(x=>x.id===id);if(!p)return;p.image=url;bump()}
@@ -108,23 +112,45 @@ export function makeBank(DATA){
   function publicBank(){if(!pub)pub={version:bank.products.length,products:bank.products.filter(p=>!p.pending).map(({aliases,query,hits,lastHit,model,addedAt,pending,source,approvedAt,...f})=>f)};return pub}
 
   // ---------- wallets: free checks + Negin, kept on the server ----------
+  // A wallet starts per device. Once she signs in with her mobile, the device is linked to her account
+  // ('p:<phone>'): free checks and free routine checks are counted per PERSON (signing out/in, a new
+  // phone or the installed app never hands out the free allowance again), and — after an SMS-verified
+  // sign-in — her diamonds live on the account, so they follow her to every device and are never lost.
   const ipFree=new Map();
-  function wallet(d){return wallets[d]||(wallets[d]={free:0,negin:0,at:new Date().toISOString()})}
-  function balance(d,cfg){if(!d)return {free:0,negin:0};const w=wallet(d);return {free:Math.max(0,(Number(cfg.freeChecks)||0)-w.free),negin:w.negin}}
-  function charge(d,ip,cfg){if(!d)return null;const w=wallet(d);const day=new Date().toISOString().slice(0,10);const k=ip+'|'+day;
-    if(w.free<(Number(cfg.freeChecks)||0)&&(ipFree.get(k)||0)<(Number(cfg.freePerIpDay)||6)){w.free++;ipFree.set(k,(ipFree.get(k)||0)+1);save(WAL,wallets);return 'free'}
+  const now=()=>new Date().toISOString();
+  function dev(d){const w=wallets[d];if(w)return w;return wallets[d]={free:0,negin:0,at:now()}}
+  function acct(p){const k='p:'+p;return wallets[k]||(wallets[k]={acct:true,free:0,routine:0,negin:0,at:now(),devices:[]})}
+  function cnt(d){const w=dev(d);return w.phone?acct(w.phone):w}               // free / routine counters
+  function bag(d){const w=dev(d);return w.phone&&w.merged?acct(w.phone):w}      // where her diamonds are
+  function wallet(d){return bag(d)}
+  function balance(d,cfg){if(!d)return {free:0,negin:0};const c=cnt(d);return {free:Math.max(0,(Number(cfg.freeChecks)||0)-(c.free||0)),negin:bag(d).negin||0}}
+  function charge(d,ip,cfg){if(!d)return null;const c=cnt(d),w=bag(d);const day=now().slice(0,10);const k=ip+'|'+day;
+    if((c.free||0)<(Number(cfg.freeChecks)||0)&&(ipFree.get(k)||0)<(Number(cfg.freePerIpDay)||6)){c.free=(c.free||0)+1;ipFree.set(k,(ipFree.get(k)||0)+1);save(WAL,wallets);return 'free'}
     if(w.negin>0){w.negin--;w.spent=(w.spent||0)+1;save(WAL,wallets);return 'negin'}
     return null}
-  function refund(d,via){if(!d||!via)return;const w=wallet(d);if(via==='free')w.free=Math.max(0,w.free-1);else{w.negin++;w.spent=Math.max(0,(w.spent||0)-1)}save(WAL,wallets)}
+  function refund(d,via){if(!d||!via)return;if(via==='free'){const c=cnt(d);c.free=Math.max(0,(c.free||0)-1)}else{const w=bag(d);w.negin++;w.spent=Math.max(0,(w.spent||0)-1)}save(WAL,wallets)}
   // the shopper's own routine products are researched for free (they already own them); capped against abuse
   const ipRoutine=new Map();
-  function routineFree(d,ip,cfg){if(!d)return false;const w=wallet(d);const day=new Date().toISOString().slice(0,10);const k=ip+'|'+day;
-    if((w.routine||0)>=(Number(cfg.freeRoutine??5))||(ipRoutine.get(k)||0)>=(Number(cfg.freeRoutinePerIpDay)||25))return false;
-    w.routine=(w.routine||0)+1;ipRoutine.set(k,(ipRoutine.get(k)||0)+1);save(WAL,wallets);return true}
-  function routineBack(d){if(!d)return;const w=wallet(d);w.routine=Math.max(0,(w.routine||0)-1);save(WAL,wallets)}
-  function adjust(d,delta){if(!d)return;const w=wallet(d);w.negin+=delta;save(WAL,wallets)}
-  function credit(d,n){if(!d)return;const w=wallet(d);w.negin+=n;w.bought=(w.bought||0)+n;save(WAL,wallets)}
-  function walletStats(){const v=Object.values(wallets);return {devices:v.length,freeUsed:v.reduce((a,w)=>a+(w.free||0),0),neginSpent:v.reduce((a,w)=>a+(w.spent||0),0),neginBought:v.reduce((a,w)=>a+(w.bought||0),0),neginLeft:v.reduce((a,w)=>a+(w.negin||0),0)}}
+  function routineFree(d,ip,cfg){if(!d)return false;const c=cnt(d);const day=now().slice(0,10);const k=ip+'|'+day;
+    if((c.routine||0)>=(Number(cfg.freeRoutine??5))||(ipRoutine.get(k)||0)>=(Number(cfg.freeRoutinePerIpDay)||25))return false;
+    c.routine=(c.routine||0)+1;ipRoutine.set(k,(ipRoutine.get(k)||0)+1);save(WAL,wallets);return true}
+  function routineBack(d){if(!d)return;const c=cnt(d);c.routine=Math.max(0,(c.routine||0)-1);save(WAL,wallets)}
+  function adjust(d,delta){if(!d)return;const w=bag(d);w.negin+=delta;save(WAL,wallets)}
+  function credit(d,n){if(!d)return;const w=bag(d);w.negin+=n;w.bought=(w.bought||0)+n;save(WAL,wallets)}
+  // sign-in: link this device to her mobile. verified = the SMS code was checked (only then do the
+  // account's diamonds open on this device). giftOk = the welcome gift may be given (once per person).
+  function link(d,phone,{verified=false,cfg={},giftOk=false}={}){if(!d||!phone)return null;const w=dev(d),k='p:'+phone,returning=!!wallets[k]&&((wallets[k].devices||[]).length>0);const a=acct(phone);
+    if(w.phone!==phone){ // this device joins this person: what it already used counts toward her (no second free allowance)
+      if(!w.phone){a.free=(a.free||0)+(w.free||0);a.routine=(a.routine||0)+(w.routine||0)}
+      w.phone=phone;w.merged=false}
+    if(verified&&!w.merged){a.negin=(a.negin||0)+(w.negin||0);a.bought=(a.bought||0)+(w.bought||0);a.spent=(a.spent||0)+(w.spent||0);w.negin=0;w.bought=0;w.spent=0;w.merged=true}
+    if(!a.devices.includes(d))a.devices=[...a.devices,d].slice(-8);a.last=now();
+    let gift=0;const g=Number(cfg.registerGift)||0;if(g>0&&giftOk&&!a.gift&&!w.gift){a.gift=g;w.gift=g;bag(d).negin+=g;gift=g}
+    save(WAL,wallets);return {returning,gift,wallet:balance(d,cfg)}}
+  function phoneOf(d){const w=d&&wallets[d];return w&&w.phone||''}
+  function walletStats(){const keys=Object.keys(wallets),dv=keys.filter(k=>!k.startsWith('p:')),ac=keys.filter(k=>k.startsWith('p:')).map(k=>wallets[k]);
+    const counters=[...ac,...dv.map(k=>wallets[k]).filter(w=>!w.phone)],bags=Object.values(wallets);
+    return {devices:dv.length,accounts:ac.length,freeUsed:counters.reduce((s,w)=>s+(w.free||0),0),neginSpent:bags.reduce((s,w)=>s+(w.spent||0),0),neginBought:bags.reduce((s,w)=>s+(w.bought||0),0),neginLeft:bags.reduce((s,w)=>s+(w.negin||0),0)}}
 
-  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack};
+  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack,link,phoneOf};
 }

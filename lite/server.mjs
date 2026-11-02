@@ -159,6 +159,14 @@ async function checkSources(inci,sources){const items=(inci||[]).map(incNorm).fi
   const texts=await Promise.all(urls.map(pageText));let fetched=0;texts.forEach((t,i)=>{if(!t)return;fetched++;const pad=' '+t+' ';const c=items.filter(x=>pad.includes(' '+x+' ')).length/items.length;if(c>best.coverage)best={ok:c>=0.6,coverage:Math.round(c*100)/100,url:urls[i]}});best.fetched=fetched;best.urls=urls.length;return best}
 async function digikalaProduct(u){try{const m=String(u).match(/dkp-(\d{3,12})/i);if(!m)return '';const r=await fetch('https://api.digikala.com/v2/product/'+m[1]+'/',{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet','Accept':'application/json'}});if(!r.ok)return '';
   const j=await r.json(),p=j&&j.data&&j.data.product;if(!p)return '';return [p.brand&&(p.brand.title_en||p.brand.title_fa),p.title_en,p.title_fa].filter(Boolean).join(' — ').slice(0,260)}catch{return ''}}
+const TRUSTED_SRC=/(^|\.)(incidecoder\.com|skinsort\.com|cosdna\.com|skincarisma\.com|inci\.guide|ewg\.org|sephora\.[a-z.]+|ulta\.com|boots\.com|lookfantastic\.[a-z.]+|cultbeauty\.[a-z.]+|feelunique\.com|oliveyoung\.(com|co\.kr)|global\.oliveyoung\.com|yesstyle\.com|stylevana\.com|jolse\.com|beautylish\.com|dermstore\.com|notino\.[a-z.]+|douglas\.[a-z.]+|digikala\.com|khanoumi\.com|amazon\.[a-z.]+)$/i;
+const INCI_BASE=/^(aqua|water|eau|glycerin|butylene glycol|propanediol|dimethicone|niacinamide|panthenol|cetearyl alcohol|caprylic\/capric triglyceride|squalane|sodium hyaluronate|xanthan gum|carbomer|phenoxyethanol|ethylhexylglycerin|tocopherol|allantoin|disodium edta|1,2-hexanediol|pentylene glycol|cetyl alcohol|stearic acid|glyceryl stearate|zinc oxide|titanium dioxide)$/i;
+function trustedCited(b){const inci=(b.inci||[]).map(x=>String(x).trim()).filter(Boolean);if(inci.length<8)return false;
+  const ok=inci.filter(x=>x.length>=2&&x.length<=90&&/^[A-Za-z0-9 ,.()\/\-+'%&:]+$/.test(x)&&x.split(/\s+/).length<=8).length/inci.length;
+  const base=inci.filter(x=>INCI_BASE.test(x.toLowerCase().replace(/\s*\(.*?\)\s*/g,'').trim())).length;
+  const brand=String(b.brand||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const src=(b.sources||[]).some(s=>{try{const h=new URL(s.url).hostname.replace(/^www\./,'');return TRUSTED_SRC.test(h)||(brand.length>=3&&h.replace(/[^a-z0-9]/g,'').includes(brand))}catch{return false}});
+  return ok>=0.9&&base>=2&&src}
 async function research(name,url){
   if(url){const title=(/digikala\.com/i.test(url)?await digikalaProduct(url):'')||await pageTitle(url);name=(title||name||'')+' ';}
   const key=normName(url||name);if(!key)return {status:400,body:{error:'اسم محصول خالیه'}};
@@ -179,14 +187,26 @@ async function research(name,url){
     if(!best||(cand.verified&&!best.verified)||(cand.inci.length>(best.inci||[]).length&&!best.verified))best=cand;
     break; // one strong search per product — never pay for a second one when the first answered
   }
+  // pass 2 — one focused follow-up, only when pass 1 could not name the product or could not see its full list:
+  // the same strong model goes straight to ingredient databases with the exact product it found (or the page title).
+  if(best&&!(best.found&&(best.inci||[]).length>=5)&&E.RESEARCH_DEEP!=='0'){const who=(best.found?[best.brand,best.name_en||best.name_fa].filter(Boolean).join(' '):'')||String(name).trim();
+    try{const x=await chatCall(RESEARCH_MODELS[0],[{role:'system',content:RESEARCH_PROMPT},{role:'user',content:'Focused second search. Product'+(best.found?' (already identified)':'')+': '+who.slice(0,240)+(url?'\nShop page the shopper sent: '+url:'')+'\nGo straight to INCIDecoder, Skinsort, CosDNA, SkinCarisma, the brand\'s own product page and big retailer listings (Sephora, Lookfantastic, Olive Young, YesStyle, Digikala specification tab) and read the FULL ingredient list there. If this exact product is truly not listed anywhere, keep inci=[] and fill only what the brand states.'}],undefined,undefined,{web:Number(E.RESEARCH_WEB_RESULTS_DEEP||12)});
+      if(x.d?.usage)used.push({model:RESEARCH_MODELS[0]+':deep',in:x.d.usage.prompt_tokens||0,out:x.d.usage.completion_tokens||0});tried.push('deep:'+x.r.status);
+      const msg=x.r.ok&&x.d?.choices?.[0]?.message,j=msg&&parseJson(msg.content);
+      if(j){j.inci=Array.isArray(j.inci)?j.inci.map(v=>String(v).trim()).filter(Boolean).slice(0,80):[];const sources=sourcesOf(msg);const cand={...j,sources,model:RESEARCH_MODELS[0],deep:true,verified:!!j.found&&j.inci.length>=5&&sources.length>0&&j.confidence!=='low'};
+        if((cand.found&&!best.found)||(cand.found&&cand.inci.length>=5&&(best.inci||[]).length<5))best=cand}}catch(e){tried.push('deep:error')}}
   if(!best||(!best.found&&!(best.inci||[]).length)){rcache[key]={t:Date.now(),miss:true,v:2};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   if(!best){logUsage({at:new Date().toISOString(),research:true,status:502,calls:used});return {status:502,body:{error:'الان نتونستم پیداش کنم؛ یه لحظه دیگه دوباره بزن',code:'research_failed',tried}}}
   if(best.found&&(best.inci||[]).length>=5){const sc=await checkSources(best.inci,best.sources);best.sourceCheck=sc;
     // confirmed on a page we could open → verified. Pages we could NOT open (blocked from Iran) but a confident answer with a full list and cited sources → 'cited' (shown, waits for the owner's approval before entering the shared bank). Opened and mismatched → rejected.
     best.sourceVerified=sc.ok?true:(sc.fetched===0&&sc.urls>0&&best.confidence!=='low'&&best.inci.length>=8)?'cited':false;if(best.sourceVerified!==true)best.verified=false}
+  // a cited list joins the catalog right away only when it passes every check we can make without the page:
+  // a real-looking INCI list (8+ items, almost all valid INCI names, the usual base ingredients) and at least one
+  // source that is an ingredient database, a big retailer or the brand's own site. Anything else waits for the owner.
+  if(best.sourceVerified==='cited')best.trusted=trustedCited(best);
   const data={query:String(name).slice(0,120),...best,checkedAt:new Date().toISOString()};
   if(best.found&&best.sourceVerified!==true&&best.sourceVerified!=='cited'){data.inci=[];data.level='declared'}else if(best.found)data.level='inci';
-  if(best.sourceVerified===true||data.level==='declared'){rcache[key]={t:Date.now(),data,v:2,...(data.level==='declared'?{short:true}:{})};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
+  if(best.sourceVerified===true||best.sourceVerified==='cited'||data.level==='declared'){rcache[key]={t:Date.now(),data,v:2,...(data.level==='declared'||(best.sourceVerified==='cited'&&!best.trusted)?{short:true}:{})};try{fs.writeFileSync(RCACHE,JSON.stringify(rcache))}catch{}}
   logUsage({at:new Date().toISOString(),research:true,status:200,model:best.model,verified:best.verified,sources:best.sources.length,calls:used});
   return {status:200,body:data};
 }
@@ -271,6 +291,12 @@ function touchUser(phone,d,sa){if(!phone)return;const u=getUsers(),o=u[phone];if
   if(o.lastSeen&&Date.now()-Date.parse(o.lastSeen)<3600e3&&(o.devices||[]).includes(d))return;
   o.lastSeen=now;o.last=now;if(sa)o.installed=true;if(d&&!(o.devices||[]).includes(d))o.devices=[...(o.devices||[]),d].slice(-5);u[phone]=o;
   try{fs.writeFileSync(USERS+'.tmp',JSON.stringify(u));fs.renameSync(USERS+'.tmp',USERS)}catch(e){console.error('users save',e.message)}}
+// a signed-in shopper's device → her account (for wallets). Devices she signed in on are known; a device that only
+// says "I'm 09…" (her saved sign-in, e.g. after an update) is linked WITHOUT access to the account's diamonds —
+// only an SMS-verified sign-in opens those — so claiming someone else's number gains nothing.
+function ensureLinked(d,p){if(!d)return false;if(BANK.phoneOf(d))return true;const u=getUsers();
+  for(const [ph,o] of Object.entries(u))if((o.devices||[]).includes(d)){BANK.link(d,ph,{verified:false,cfg});return true}
+  const ph=normPhone(p);if(ph&&u[ph]){BANK.link(d,ph,{verified:false,cfg});return true}return false}
 const clean=v=>String(v||'').trim().replace(/^["']|["']$/g,'');
 const SMS={key:clean(E.KAVENEGAR_API_KEY),tpl:clean(E.KAVENEGAR_TEMPLATE),base:clean(E.KAVENEGAR_BASE)||'https://api.kavenegar.com'};SMS.on=!!(SMS.key&&SMS.tpl);
 const OTP=new Map();setInterval(()=>{const t=Date.now();for(const [k,v] of OTP)if(t-v.sent>15*60e3)OTP.delete(k)},5*60e3).unref();
@@ -363,14 +389,16 @@ const server=http.createServer(async(req,res)=>{
       if(SMS.on){const prev=OTP.get(phone);if(prev&&Date.now()-prev.sent<60e3)return send(res,429,{error:'یه دقیقه دیگه دوباره بزن'});
         const code=String(crypto.randomInt(10000,100000));const sent=await sendOtp(phone,code);if(!sent)return send(res,502,{error:'پیامک نرفت؛ چند دقیقه بعد دوباره امتحان کن'});
         OTP.set(phone,{code,sent:Date.now(),tries:0,info});return send(res,200,{otp:true})}
-      saveUser(phone,info,false);return send(res,200,{ok:true,verified:false});
+      const was=getUsers()[phone];saveUser(phone,info,false);const L=BANK.link(info.d,phone,{verified:false,cfg,giftOk:true})||{};
+      return send(res,200,{ok:true,verified:false,returning:!!(was||L.returning),name:(was&&was.name)||info.name||'',gift:L.gift||0,wallet:L.wallet});
     }
     if(url.pathname==='/register/verify'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const b=await readBody(req,1000);const phone=normPhone(b.phone);const o=phone&&OTP.get(phone);
       if(!o||Date.now()-o.sent>10*60e3)return send(res,400,{error:'کد منقضی شده؛ دوباره بفرست'});
       const code=String(b.code||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/\D/g,'');
       if(code!==o.code){o.tries++;if(o.tries>=5)OTP.delete(phone);return send(res,400,{error:'کد درست نیست'})}
-      OTP.delete(phone);saveUser(phone,o.info,true);return send(res,200,{ok:true,verified:true});
+      OTP.delete(phone);const was=getUsers()[phone];saveUser(phone,o.info,true);const L=BANK.link(o.info.d,phone,{verified:true,cfg,giftOk:true})||{};
+      return send(res,200,{ok:true,verified:true,returning:!!(was||L.returning),name:(was&&was.name)||o.info.name||'',gift:L.gift||0,wallet:L.wallet});
     }
     if(url.pathname==='/redeem'&&req.method==='POST'){ // one-time Negin code that support sends after payment
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const a=ip(req);const f=redeemFails.get(a)||{n:0,t:Date.now()};if(Date.now()-f.t>3600e3){f.n=0;f.t=Date.now()}if(f.n>=8)return send(res,429,{error:'چند بار اشتباه زدی؛ یه ساعت دیگه امتحان کن'});
@@ -407,7 +435,7 @@ const server=http.createServer(async(req,res)=>{
     }
     if(url.pathname.startsWith('/bank-img/')){const f=path.join(IMGDIR,path.basename(url.pathname));return fs.stat(f,(e,st)=>{if(e||!st.isFile())return send(res,404,'','text/plain');const ext=path.extname(f).slice(1);res.writeHead(200,{'Content-Type':ext==='png'?'image/png':ext==='webp'?'image/webp':'image/jpeg','Cache-Control':'public, max-age=2592000, immutable'});fs.createReadStream(f).pipe(res)})}
     if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});
-    if(url.pathname==='/wallet')return send(res,200,BANK.balance(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40),cfg),'application/json',{'Cache-Control':'no-store'});
+    if(url.pathname==='/wallet'){const wd=String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40);ensureLinked(wd,url.searchParams.get('p'));return send(res,200,{...BANK.balance(wd,cfg),linked:!!BANK.phoneOf(wd)},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/costs.json')return send(res,200,costs(),'application/json',{'Cache-Control':'no-store'});
     if(url.pathname==='/config.json')return send(res,200,{...cfg,aff:{dk:!!AFF.dk.tpl,kh:!!AFF.kh.tpl}},'application/json',{'Cache-Control':'no-cache'});
     if(url.pathname==='/gift'&&req.method==='POST'){
@@ -442,15 +470,23 @@ const server=http.createServer(async(req,res)=>{
       // a product the shopper already uses (added to «روتین من»): free, never a diamond
       const own=b.routine===true;
       if(own&&!BANK.routineFree(d,ip(req),cfg)){fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),routine:true,queued:true})+'\n',()=>{});return send(res,200,{found:false,queued:true,wallet:BANK.balance(d,cfg)})}
+      // a new product is checked against HER skin and routine and paid from HER wallet: she signs in first
+      if(!own&&cfg.loginForCheck!==0&&!ensureLinked(d,b.p))return send(res,401,{code:'need_login',error:'برای اینکه با پوست و روتین خودت بسنجمش، اول وارد شو 💜',wallet:BANK.balance(d,cfg)});
       const via=own?'routine':BANK.charge(d,ip(req),cfg);if(!via)return send(res,402,{code:'need_negin',error:'برای بررسی یه محصول تازه الماس لازمه 💎',wallet:BANK.balance(d,cfg)});
       const link=cleanUrl(b.url);const r=await research(b.name,link);
       // only an ingredient list that a cited page really shows counts as found (and is worth a diamond)
       if(r.status===200&&r.body.found&&!r.body.level)r.body.level=(r.body.sourceVerified===true||r.body.sourceVerified==='cited')&&(r.body.inci||[]).length>=5?'inci':'declared';
       if(r.status===200&&r.body.level==='declared')r.body={...r.body,inci:[]};
       const replaces=/^[a-z0-9][a-z0-9-]{1,79}$/.test(String(b.replaces||''))?String(b.replaces):'';
-      if(r.status!==200||!r.body.found||r.body.cached||r.body.level==='declared'){if(own)BANK.routineBack(d);else BANK.refund(d,via)} // fair: a diamond only for a full, sourced ingredient check
+      // the diamond pays for the whole process — finding the ingredients from sources AND judging them against her skin
+      // and routine. It comes back when nothing new was delivered: product not identified, an error, an answer we
+      // already had (cache), or — for a catalog product she asked to complete — no full list beyond what we had.
+      if(r.status!==200||!r.body.found||r.body.cached||(replaces&&r.body.level!=='inci')){if(own)BANK.routineBack(d);else BANK.refund(d,via)}
       if(r.status!==200||!r.body.found)fs.appendFile(path.join(DATA,'not-found.jsonl'),JSON.stringify({at:new Date().toISOString(),query:String(b.name||'').slice(0,120),url:link||undefined,routine:own||undefined})+'\n',()=>{});
-      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);if(formula&&replaces)formula.replaces=replaces;const row=BANK.add(formula,b.name,r.body.sourceVerified==='cited'?{pending:true,source:'search-cited'}:{});inBank=!!row&&r.body.sourceVerified===true;if(row)formula=pubF(row)
+      let formula=null,inBank=false;if(r.status===200&&r.body.found){formula=BANK.toFormula(r.body,b.name,r.body.sources,r.body.model);if(formula&&replaces)formula.replaces=replaces;const sv=r.body.sourceVerified,live=sv===true||(sv==='cited'&&r.body.trusted);
+        // into the catalog: verified or trusted-cited lists go live for everyone; other cited lists and brand-declared
+        // formulas wait in /admin for the owner's look (she still gets her personal answer now). Nothing is ever guessed.
+        const row=BANK.add(formula,b.name,live?{source:sv===true?'search-verified':'search-cited'}:r.body.level==='declared'?{pending:true,declared:true,source:'search-declared'}:{pending:true,source:'search-cited'});inBank=!!row&&!row.pending;if(row)formula=pubF(row)
         // photo in the background: never delays the answer
         if(row&&!row.image){const img=r.body.image_url||'';(img?Promise.resolve(img):link?pageImage(link):Promise.resolve('')).then(u=>ensureImage(row,u)).catch(()=>{})}}
       return send(res,r.status,{...r.body,formula,inBank,wallet:BANK.balance(d,cfg)});

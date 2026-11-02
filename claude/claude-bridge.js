@@ -73,7 +73,8 @@ async function assistantPost(body,signal){
     var lo=cleanModel(lr.text);if(!lo)return json({error:'پاسخ قابل‌استفاده‌ای دریافت نشد؛ دوباره بپرس'},502);
     return json({answer:lo,personalLead:lo.split('\n')[0],review:{analysisType:'price'},purchaseLinks:shopLinks(lr.sources),assistantMessageId:remember('assistant',lo),processing:{mode:'lite',intent:'price'},decision:{label:'advice'},search:{enabled:true,sourceCount:lr.sources.length},trust:trust({confidence:'medium',missing:[]})});
   }
-  if(body.purchaseCheck&&R){var p=R.catalogPurchaseCheck(shared,body.productId,body.productName);if(p){
+  // a catalog product she asked us to complete (replaces): skip the catalog shortcut and go find its full list
+  if(body.purchaseCheck&&R&&!body.replaces){var p=R.catalogPurchaseCheck(shared,body.productId,body.productName);if(p){
     var live=LITE&&MARKET.test(message),r2={text:'',sources:[]};try{r2=await ask([P().system,P().style,R.catalogPurchasePrompt(p),profileBlock(shared),live?ONLINE:OFFLINE,FORMAT,'پیام کاربر: '+message].join('\n\n'),signal,'default',live)}catch(e){if(e&&e.name==='AbortError')throw e;var fb2=R.catalogPurchaseBody(p,'provider_unavailable');fb2.assistantMessageId=remember('assistant',fb2.answer);return json(fb2)}
     var t2=r2.text,links=shopLinks(r2.sources),head=p.answer.split('\n')[0],rest=cleanModel(t2).split('\n').filter(function(l){return l.trim()&&!/^نتیجه\s*[:：]/.test(l.trim())});
     var ans=[head].concat(rest.length?rest:p.answer.split('\n').slice(1)).join('\n');
@@ -81,10 +82,12 @@ async function assistantPost(body,signal){
   }}
   // Product outside the catalog (lite server): find the exact product and its real INCI on the web ourselves,
   // then decide with the strong model. Never ask the shopper for a photo or the back label.
+  function regPh(){try{var r=JSON.parse(localStorage.getItem('bw_reg')||'null');return r&&r.phone?String(r.phone):undefined}catch(e){return undefined}}
   if(LITE&&body.purchaseCheck){var pname=String(body.productName||message.replace(/^بررسی محصول پیش از خرید[:：]?\s*/,'')).slice(0,160);
-    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname,url:body.productUrl||undefined,d:dev(),replaces:body.replaces||undefined})});rs=await rr.json().catch(function(){return null});
+    var rs=null;try{var rr=await realFetch('/api/research',{method:'POST',headers:{'Content-Type':'application/json'},signal:signal,body:JSON.stringify({name:pname,url:body.productUrl||undefined,d:dev(),p:regPh(),replaces:body.replaces||undefined})});rs=await rr.json().catch(function(){return null});
       if(rs&&rs.wallet&&window.bwWallet)window.bwWallet(rs.wallet);
       if(rr.status===402||(rs&&rs.code==='need_negin'))return json({error:(rs&&rs.error)||'برای محصول تازه الماس لازمه 💎',code:'need_negin'},402);
+      if(rr.status===401||(rs&&rs.code==='need_login'))return json({error:(rs&&rs.error)||'اول وارد شو 💜',code:'need_login'},401);
       if(rs&&rs.code==='support')return json({error:rs.error,code:'support'},503);
       if(!rr.ok)rs=null}catch(e){if(e&&e.name==='AbortError')throw e;rs=null}
     // the product is now a structured formula (new or from the bank): judge it with the catalog engine against THIS skin and routine

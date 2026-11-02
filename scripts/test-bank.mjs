@@ -15,6 +15,24 @@ assert(!JSON.stringify(B.publicBank()).includes('aliases'),'other shoppers\' que
 assert.equal(B.charge('dev1','1.1.1.1',cfg),'free');assert.equal(B.charge('dev1','1.1.1.1',cfg),'free');assert.equal(B.charge('dev1','1.1.1.1',cfg),null);
 B.credit('dev1',2);assert.deepEqual(B.balance('dev1',cfg),{free:0,negin:2});assert.equal(B.charge('dev1','1.1.1.1',cfg),'negin');B.refund('dev1','negin');assert.equal(B.balance('dev1',cfg).negin,2);
 for(let i=0;i<6;i++)B.charge('d'+i,'9.9.9.9',cfg);assert.equal(B.charge('fresh','9.9.9.9',cfg),null,'free checks capped per IP per day');
+// brand-declared formulas wait for the owner; a full sourced list found later replaces them
+{const dj={...research,name_en:'Declared Cream',brand:'DeclBrand',role:'moisturizer',inci:[],actives:[{cls:'CERAMIDE',name:'Ceramides'}],made_for:['dry']};
+ const df=B.toFormula(dj,'declared cream',[],'m');assert.equal(df.basis,'declared_name');
+ const dr=B.add(df,'declared cream',{pending:true,declared:true,source:'search-declared'});assert(dr&&dr.pending,'declared waits for approval');assert.equal(B.find('declared cream'),null,'not shown to others yet');
+ assert.equal(B.add(B.toFormula({...dj,actives:[],made_for:[]},'empty',[],'m'),'empty',{pending:true,declared:true}),null,'a declared formula that says nothing real is not stored');
+ const full=B.toFormula({...dj,inci:['Aqua','Glycerin','Ceramide NP','Cholesterol','Phytosphingosine','Dimethicone']},'declared cream',[{url:'https://incidecoder.com/y'}],'m');
+ const up=B.add(full,'declared cream',{source:'search-verified'});assert.equal(up.id,dr.id);assert.equal(up.basis,'inci_sourced','upgraded to the full list');assert(!up.pending,'and live');assert.equal(B.find('declared cream').id,dr.id)}
+// sign-in: free checks are per person, diamonds follow her (after SMS), the welcome gift is once per person
+{const c2={freeChecks:2,freePerIpDay:99,registerGift:3};
+ assert.equal(B.charge('pa','5.5.5.1',c2),'free');assert.equal(B.charge('pa','5.5.5.1',c2),'free');B.credit('pa',4);
+ let L=B.link('pa','09120000001',{verified:true,cfg:c2,giftOk:true});assert.equal(L.returning,false);assert.equal(L.gift,3);assert.deepEqual(B.balance('pa',c2),{free:0,negin:7});
+ L=B.link('pa','09120000001',{verified:true,cfg:c2,giftOk:true});assert.equal(L.gift,0,'signing in again never re-gifts');assert.equal(B.balance('pa',c2).negin,7,'or re-charges');
+ L=B.link('pb','09120000001',{verified:true,cfg:c2,giftOk:true});assert.equal(L.returning,true,'a new device / the installed app is a returning person');assert.equal(L.gift,0);
+ assert.deepEqual(B.balance('pb',c2),{free:0,negin:7},'free allowance not handed out again; her diamonds are here');
+ assert.equal(B.charge('pb','5.5.5.2',c2),'negin');assert.equal(B.balance('pa',c2).negin,6,'one purse across her devices');
+ B.link('pc','09120000001',{verified:false,cfg:c2,giftOk:true});assert.deepEqual(B.balance('pc',c2),{free:0,negin:0},'unverified sign-in: no free checks again, and no access to her diamonds');
+ B.link('pd','09120000002',{verified:false,cfg:c2,giftOk:false});assert.equal(B.balance('pd',c2).negin,0,'no gift without the go-ahead');
+ assert.equal(B.phoneOf('pb'),'09120000001');const st=B.walletStats();assert(st.accounts>=2&&st.neginLeft>=6)}
 // engine: the bank formula is judged per skin like any catalog product
 const t=x=>ts.transpile(fs.readFileSync(x,'utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});
 fs.writeFileSync(path.join(dir,'catalog-routine.mjs'),t('assistant/catalog-routine.ts'));fs.writeFileSync(path.join(dir,'ingredient-guide.mjs'),t('assistant/ingredient-guide.ts'));fs.copyFileSync('assistant/resources/catalog-formulas.json',path.join(dir,'catalog-formulas.json'));
@@ -24,4 +42,4 @@ const ctx=skin=>({profile:{skinBase:skin,skinToday:'متعادل',barrier:'سا�
 assert.equal(m.catalogPurchaseCheck(ctx('خشک'),f.id).decision,'avoid','oil-control BHA cleanser is not for dry skin');
 assert.equal(m.catalogPurchaseCheck(ctx('چرب'),f.id).decision,'buy','and fits oily skin');
 assert.notEqual(m.catalogPurchaseCheck({...ctx('چرب'),selection:[{id:'avene-oil',name:'',time:'pm'}]},f.id).decision,'buy','routine already has a cleanser');
-console.log('PASS bank: formula from research, vocab filter, weak formulas kept out, lookup + aliases, free→Negin→none, refunds, IP cap, per-skin verdict, routine-aware');
+console.log('PASS bank: sign-in links wallets per person (no re-gift, no second free allowance, diamonds follow her), declared formulas wait + upgrade to full lists, formula from research, vocab filter, weak formulas kept out, lookup + aliases, free→Negin→none, refunds, IP cap, per-skin verdict, routine-aware');
