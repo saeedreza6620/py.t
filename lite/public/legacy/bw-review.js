@@ -3508,7 +3508,7 @@ function explainPurchase(f, s, items, extra = {}) {
         you.push('ضدآفتابه با SPF ' + String(f.spf).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]) + '؛ جاش در روتین صبحه.');
     const seen = new Set();
     const actives = [];
-    const sunAm = others.some(x => x.f.role === 'sunscreen' && x.time === 'am');
+    const sunAm = others.some(x => x.f.role === 'sunscreen' && (x.time === 'am' || x.time === 'both'));
     for (const a of f.actives) {
         const key = a.cls === 'VITC_LAA' ? 'VITC' : a.cls;
         if (seen.has(key))
@@ -3569,7 +3569,7 @@ function explainPurchase(f, s, items, extra = {}) {
     const pairs = [];
     const add = (kind, w, title) => { const p = PAIR_INFO[kind]; if (!p || !w.length)
         return; cite(p.src); pairs.push({ title: title || p.title, why: p.why, todo: p.todo, with: w.map(x => x.name) }); };
-    const same = others.filter(x => x.time === fTime);
+    const same = others.filter(x => x.time === fTime || x.time === 'both');
     const retF = leave(f) && hasC(f, 'RETINOID');
     if (retF) {
         add('ret_acid', same.filter(x => acidLeave(x.f)));
@@ -3590,7 +3590,7 @@ function explainPurchase(f, s, items, extra = {}) {
     if (leave(f) && hasC(f, 'AZELAIC'))
         add('ret_aze', same.filter(x => leave(x.f) && hasC(x.f, 'RETINOID')));
     if (vitcPure(f))
-        add('vitc_acid', others.filter(x => acidLeave(x.f) && x.time === 'am'));
+        add('vitc_acid', others.filter(x => acidLeave(x.f) && (x.time === 'am' || x.time === 'both')));
     if (anyC(f, ['VITAMIN_B3']) || anyC(f, ['VITC', 'VITC_LAA', 'VITC_DERIV'])) {
         const want = hasC(f, 'VITAMIN_B3') ? ['VITC', 'VITC_LAA', 'VITC_DERIV'] : ['VITAMIN_B3'];
         if (!(hasC(f, 'VITAMIN_B3') && anyC(f, ['VITC', 'VITC_LAA', 'VITC_DERIV'])))
@@ -3848,7 +3848,7 @@ function evaluateRoutine(input, catalog) {
     const byId = new Map(formulas.map(f => [f.id, f]));
     const s = skinState(input.profile || {});
     const owned = new Set(list(input.owned));
-    const items = input.selection.filter((x, i, a) => x && typeof x.id === 'string' && a.findIndex(y => y.id === x.id) === i).slice(0, 20).map(x => { var _a; return ({ id: x.id, name: x.name || ((_a = byId.get(x.id)) === null || _a === void 0 ? void 0 : _a.name) || x.id, time: normTime(x.time), f: byId.get(x.id) }); });
+    const items = input.selection.filter((x, i, a) => x && typeof x.id === 'string' && a.findIndex(y => y.id === x.id) === i).slice(0, 20).map(x => { var _a; return ({ id: x.id, name: x.name || ((_a = byId.get(x.id)) === null || _a === void 0 ? void 0 : _a.name) || x.id, time: normTime(x.time), both: x.time === 'both' || x.time === 'صبح و شب', f: byId.get(x.id) }); });
     const selected = new Set(items.map(x => x.id));
     const plan = new Map();
     const fit = [];
@@ -3916,16 +3916,16 @@ function evaluateRoutine(input, catalog) {
                 set(x.id, 'replace', (flag(x.f, 'fragrance') ? 'عطر' : 'اسانس') + ' دارد و «عطر زیاد» در خط قرمز تو ثبت شده', { alternatives: suggest(formulas, s, x.f.role, selected, owned) });
     const active = (x) => { const a = plan.get(x.id); return !a || a.action === 'keep' || a.action === 'verify'; };
     for (const x of known)
-        if (x.time === 'am' && has(x.f, 'RETINOID') && active(x)) {
+        if ((x.time === 'am' || x.both) && has(x.f, 'RETINOID') && active(x)) {
             interactions.push({ severity: 'caution', text: x.name + ' رتینوئید دارد؛ آن را به روتین شب منتقل کن', ids: [x.id], kind: 'ret_am' });
             set(x.id, 'keep', 'رتینوئید است؛ فقط شب استفاده شود', { schedule: 'فقط شب' });
             x.time = 'pm';
         }
     for (const x of known)
-        if (x.time === 'pm' && x.f.role === 'sunscreen')
+        if (x.time === 'pm' && !x.both && x.f.role === 'sunscreen')
             interactions.push({ severity: 'info', text: x.name + ' ضدآفتاب است و جایش در روتین صبح است', ids: [x.id], kind: 'sun_pm' });
     for (const slot of ['am', 'pm']) {
-        const inSlot = known.filter(x => x.time === slot && active(x));
+        const inSlot = known.filter(x => (x.time === slot || x.both) && active(x));
         const retinoid = inSlot.filter(x => leaveOn(x.f) && has(x.f, 'RETINOID'));
         const acids = inSlot.filter(x => leaveOn(x.f) && (has(x.f, 'AHA') || has(x.f, 'BHA')) && x.f.role !== 'spot' && strength(x.f) >= 1.5);
         const azelaic = inSlot.filter(x => leaveOn(x.f) && has(x.f, 'AZELAIC') && pct(x.f, 'AZELAIC') >= 10);
@@ -3966,7 +3966,7 @@ function evaluateRoutine(input, catalog) {
         }
     }
     const live = known.filter(x => { const a = plan.get(x.id); return !a || a.action !== 'pause'; });
-    const amSun = known.some(x => x.f.role === 'sunscreen' && x.time === 'am');
+    const amSun = known.some(x => x.f.role === 'sunscreen' && (x.time === 'am' || x.both));
     const exfoliating = live.some(x => leaveOn(x.f) && (has(x.f, 'RETINOID') || has(x.f, 'AHA') || has(x.f, 'BHA') || has(x.f, 'AZELAIC')));
     if (!amSun && known.length) {
         const sug = suggest(formulas, s, 'sunscreen', selected, owned);
@@ -4061,7 +4061,7 @@ function routineText(r) {
     r.reintroduce.forEach(x => lines.push(x));
     r.gaps.forEach(g => lines.push(g.text + (g.suggestions.length ? ': ' + g.suggestions.map(x => x.name + (x.owned ? ' (در ولتت داری)' : '')).join(' یا ') : '')));
     if (r.coverage.declared.length)
-        lines.push('فرمول ' + faDigits(r.coverage.declared.length) + ' محصول فقط از روی نام شناخته شده و فهرست کامل ترکیباتشان ثبت نیست؛ نتیجه‌ی آن‌ها قطعی نیست');
+        lines.push(faDigits(r.coverage.declared.length) + ' محصول از روی ترکیبات کلیدی‌ای سنجیده شد که خود برند اعلام کرده');
     return lines.join('\n');
 }
 function actionLabel(a) { return ACTION_FA[a]; }
@@ -4106,7 +4106,7 @@ function catalogResponseBody(check, reason, extra = {}) {
         review: { analysisType: 'routine', routinePlan: routinePlanFrom(check, answer), catalogCheck: check },
         purchaseLinks: [], assistantMessageId: null, processing: { mode: 'catalog', intent: 'routine' }, decision: { label: 'advice' },
         search: { enabled: false, sourceCount: 0, citedSourceCount: 0 },
-        trust: { confidence: check.coverage.declared.length || check.coverage.unknown.length ? 'low' : 'medium', confidenceMethod: 'catalog_rules_not_clinically_calibrated', catalog: catalogSummary(check), checkedAt: new Date().toISOString(), missing: check.coverage.declared.length ? ['فهرست ترکیبات بسته برای محصولاتی که فقط از روی نام ثبت شده‌اند'] : [] }, ...extra };
+        trust: { confidence: check.coverage.declared.length || check.coverage.unknown.length ? 'low' : 'medium', confidenceMethod: 'catalog_rules_not_clinically_calibrated', catalog: catalogSummary(check), checkedAt: new Date().toISOString(), missing: [] }, ...extra };
 }
 function findCatalogProduct(productId, productName) {
     const id = typeof productId === 'string' ? productId.trim() : '', name = typeof productName === 'string' ? productName.trim() : '';
@@ -4184,7 +4184,7 @@ function catalogPurchaseCheck(shared, productId, productName) {
     const lead = check.state.skinLabel ? 'برای پوست ' + check.state.skinLabel + (check.state.acne ? ' با جوش فعال' : '') + (check.state.compromised ? ' و لایه محافظ تحریک‌شده' : '') : 'بر اساس پروفایل ثبت‌شده';
     const answer = [head, ...reasons.slice(0, 3), lead + '؛ این نتیجه از فرمول ثبت‌شده همین محصول در کاتالوگ BeautyWallet است'].join('\n');
     const byId = new Map(CATALOG.products.map(p => [p.id, p]));
-    const items = shared.selection.filter(x => x.id !== f.id && byId.has(x.id)).map(x => ({ id: x.id, name: byId.get(x.id).name, time: (x.time === 'am' || x.time === 'صبح' ? 'am' : 'pm'), f: byId.get(x.id) }));
+    const items = shared.selection.filter(x => x.id !== f.id && byId.has(x.id)).map(x => ({ id: x.id, name: byId.get(x.id).name, time: (x.time === 'both' || x.time === 'صبح و شب' ? 'both' : x.time === 'am' || x.time === 'صبح' ? 'am' : 'pm'), f: byId.get(x.id) }));
     const explain = explainPurchase(f, st, items, { decision, inRoutine: shared.selection.some(x => x.id === f.id) });
     return { productId: f.id, name: f.name, decision, answer, lead: reasons[0] || head, check, basis: f.basis, explain };
 }

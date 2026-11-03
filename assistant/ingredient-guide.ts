@@ -54,7 +54,7 @@ export function pairInfo(kind:string){return PAIR_INFO[kind]||null;}
 
 // ---------- one person's explanation for one product ----------
 type F={id:string;name:string;role:string;rinseOff:boolean;texture:string;finish?:string;actives:Array<{cls:string;pct?:number}>;claims:string[];flags:string[];basis:string;spf?:number};
-type Item={id:string;name:string;time:'am'|'pm';f:F};
+type Item={id:string;name:string;time:'am'|'pm'|'both';f:F};
 type St={oily:boolean;dry:boolean;compromised:boolean;sensitive:boolean;acne:boolean;pregnancy:boolean;fragranceAvoid:boolean;skinLabel:string;goal:string};
 export type Explain={you:string[];actives:Array<{name:string;what:string;care?:string;forYou?:string;nameOnly?:boolean}>;pairs:Array<{title:string;why:string;todo:string;with:string[]}>;clean:string;notes:string[];sources:GuideSrc[]};
 
@@ -108,7 +108,7 @@ export function explainPurchase(f:F,s:St,items:Item[],extra:{decision?:string;in
 
   // 3. what is inside, and what it means for this person
   const seen=new Set<string>();const actives:Explain['actives']=[];
-  const sunAm=others.some(x=>x.f.role==='sunscreen'&&x.time==='am');
+  const sunAm=others.some(x=>x.f.role==='sunscreen'&&(x.time==='am'||x.time==='both'));
   for(const a of f.actives){
     const key=a.cls==='VITC_LAA'?'VITC':a.cls;if(seen.has(key))continue;seen.add(key);
     const info=ACTIVE_INFO[key];
@@ -144,7 +144,7 @@ export function explainPurchase(f:F,s:St,items:Item[],extra:{decision?:string;in
   // 4. against the person's own routine
   const pairs:Explain['pairs']=[];
   const add=(kind:string,w:Item[],title?:string)=>{const p=PAIR_INFO[kind];if(!p||!w.length)return;cite(p.src);pairs.push({title:title||p.title,why:p.why,todo:p.todo,with:w.map(x=>x.name)})};
-  const same=others.filter(x=>x.time===fTime);
+  const same=others.filter(x=>x.time===fTime||x.time==='both');
   const retF=leave(f)&&hasC(f,'RETINOID');
   if(retF){
     add('ret_acid',same.filter(x=>acidLeave(x.f)));
@@ -160,7 +160,7 @@ export function explainPurchase(f:F,s:St,items:Item[],extra:{decision?:string;in
   }
   if(f.rinseOff&&hasC(f,'BHA')){add('ret_wash',same.filter(x=>leave(x.f)&&hasC(x.f,'RETINOID')));add('bha_wash',same.filter(x=>acidLeave(x.f)&&hasC(x.f,'BHA')));}
   if(leave(f)&&hasC(f,'AZELAIC'))add('ret_aze',same.filter(x=>leave(x.f)&&hasC(x.f,'RETINOID')));
-  if(vitcPure(f))add('vitc_acid',others.filter(x=>acidLeave(x.f)&&x.time==='am'));
+  if(vitcPure(f))add('vitc_acid',others.filter(x=>acidLeave(x.f)&&(x.time==='am'||x.time==='both')));
   if(anyC(f,['VITAMIN_B3'])||anyC(f,['VITC','VITC_LAA','VITC_DERIV'])){
     const want=hasC(f,'VITAMIN_B3')?['VITC','VITC_LAA','VITC_DERIV']:['VITAMIN_B3'];
     if(!(hasC(f,'VITAMIN_B3')&&anyC(f,['VITC','VITC_LAA','VITC_DERIV'])))add('niac_vitc',same.filter(x=>anyC(x.f,want)));

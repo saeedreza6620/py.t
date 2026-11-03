@@ -141,7 +141,7 @@
     }).join('');
     const gaps=check.gaps.map(gap=>'<div class="bw-catalog-gap"><b>'+safe(gap.text)+'</b>'+(gap.suggestions.length?'<div class="bw-catalog-alts">'+productButtons(gap.suggestions)+'</div>':'')+'</div>').join('');
     const notes=[...check.fit.map(x=>x.text),...check.interactions.map(x=>x.text),...check.reintroduce];
-    const coverage=check.coverage.declared.length?'<p class="bw-catalog-note">فرمول '+safe(String(check.coverage.declared.length).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]))+' محصول فقط از روی نام ثبت شده؛ ثبت فهرست ترکیبات پشت بسته دقت را بالا می‌برد</p>':'';
+    const coverage='';
     return '<p class="bw-catalog-lead">'+safe(check.lead)+'</p>'+actions+gaps+(notes.length?'<details class="bw-catalog-more"><summary>دلیل‌ها و زمان مصرف</summary>'+notes.map(x=>'<p>'+safe(x)+'</p>').join('')+'</details>':'')+coverage+'<p class="bw-catalog-note">این نتیجه از داده فرمول محصولات کاتالوگ BeautyWallet است، نه نسخه پزشکی</p>';
   }
   function renderActiveVerdict(detail){

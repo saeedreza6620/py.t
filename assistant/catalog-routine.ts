@@ -191,7 +191,7 @@ export function bestForSkin(catalog:CatalogFormulas,s:SkinState,role:string,excl
 export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection:SelectionItem[];owned?:string[]},catalog:CatalogFormulas):RoutineCheck{
   const formulas=catalog.products;const byId=new Map(formulas.map(f=>[f.id,f]));
   const s=skinState(input.profile||{});const owned=new Set(list(input.owned));
-  const items=input.selection.filter((x,i,a)=>x&&typeof x.id==='string'&&a.findIndex(y=>y.id===x.id)===i).slice(0,20).map(x=>({id:x.id,name:x.name||byId.get(x.id)?.name||x.id,time:normTime(x.time),f:byId.get(x.id)}));
+  const items=input.selection.filter((x,i,a)=>x&&typeof x.id==='string'&&a.findIndex(y=>y.id===x.id)===i).slice(0,20).map(x=>({id:x.id,name:x.name||byId.get(x.id)?.name||x.id,time:normTime(x.time),both:x.time==='both'||x.time==='صبح و شب',f:byId.get(x.id)}));
   const selected=new Set(items.map(x=>x.id));
   const plan=new Map<string,PlanAction>();const fit:Finding[]=[];const interactions:Finding[]=[];const gaps:RoutineCheck['gaps']=[];const reintroduce:string[]=[];
   const set=(id:string,action:Action,reason:string,extra:Partial<PlanAction>={})=>{const own=items.find(x=>x.id===id)!;const prev=plan.get(id);const rank={keep:0,verify:1,replace:2,pause:3,professional:4};if(prev&&rank[prev.action]>rank[action]){if(extra.schedule&&!prev.schedule)prev.schedule=extra.schedule;return;}plan.set(id,{id,name:own.name,action,reason,...(prev?.alternatives&&!extra.alternatives?{alternatives:prev.alternatives}:{}),...extra});};
@@ -241,10 +241,10 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
 
   // 5. Chemistry and timing for actives that remain in use.
   const active=(x:typeof known[number])=>{const a=plan.get(x.id);return !a||a.action==='keep'||a.action==='verify';};
-  for(const x of known)if(x.time==='am'&&has(x.f,'RETINOID')&&active(x)){interactions.push({severity:'caution',text:x.name+' رتینوئید دارد؛ آن را به روتین شب منتقل کن',ids:[x.id],kind:'ret_am'});set(x.id,'keep','رتینوئید است؛ فقط شب استفاده شود',{schedule:'فقط شب'});x.time='pm';}
-  for(const x of known)if(x.time==='pm'&&x.f.role==='sunscreen')interactions.push({severity:'info',text:x.name+' ضدآفتاب است و جایش در روتین صبح است',ids:[x.id],kind:'sun_pm'});
+  for(const x of known)if((x.time==='am'||x.both)&&has(x.f,'RETINOID')&&active(x)){interactions.push({severity:'caution',text:x.name+' رتینوئید دارد؛ آن را به روتین شب منتقل کن',ids:[x.id],kind:'ret_am'});set(x.id,'keep','رتینوئید است؛ فقط شب استفاده شود',{schedule:'فقط شب'});x.time='pm';}
+  for(const x of known)if(x.time==='pm'&&!x.both&&x.f.role==='sunscreen')interactions.push({severity:'info',text:x.name+' ضدآفتاب است و جایش در روتین صبح است',ids:[x.id],kind:'sun_pm'});
   for(const slot of ['am','pm'] as Slot[]){
-    const inSlot=known.filter(x=>x.time===slot&&active(x));
+    const inSlot=known.filter(x=>(x.time===slot||x.both)&&active(x));
     const retinoid=inSlot.filter(x=>leaveOn(x.f)&&has(x.f,'RETINOID'));
     const acids=inSlot.filter(x=>leaveOn(x.f)&&(has(x.f,'AHA')||has(x.f,'BHA'))&&x.f.role!=='spot'&&strength(x.f)>=1.5);
     const azelaic=inSlot.filter(x=>leaveOn(x.f)&&has(x.f,'AZELAIC')&&pct(x.f,'AZELAIC')>=10);
@@ -275,7 +275,7 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
 
   // 6. Gaps: what the routine is missing. Prefer what the user already owns.
   const live=known.filter(x=>{const a=plan.get(x.id);return !a||a.action!=='pause';});
-  const amSun=known.some(x=>x.f.role==='sunscreen'&&x.time==='am');
+  const amSun=known.some(x=>x.f.role==='sunscreen'&&(x.time==='am'||x.both));
   const exfoliating=live.some(x=>leaveOn(x.f)&&(has(x.f,'RETINOID')||has(x.f,'AHA')||has(x.f,'BHA')||has(x.f,'AZELAIC')));
   if(!amSun&&known.length){const sug=suggest(formulas,s,'sunscreen',selected,owned);gaps.push({role:'sunscreen',text:exfoliating?'اکتیو داری ولی ضدآفتاب صبح در روتین نیست؛ اولویت اول ضدآفتاب است':'ضدآفتاب صبح در روتین دیده نمی‌شود',suggestions:sug});}
   const hasMoist=live.some(x=>x.f.role==='moisturizer'||x.f.actives.some(a=>a.cls==='CERAMIDE'&&leaveOn(x.f)));
@@ -347,7 +347,7 @@ export function routineText(r:RoutineCheck){
   else lines.push(paused.length?'بین محصولاتی که می‌مانند تداخل مهمی دیده نشد':'بین اکتیوهای انتخاب‌شده تداخل مهمی دیده نشد');
   r.reintroduce.forEach(x=>lines.push(x));
   r.gaps.forEach(g=>lines.push(g.text+(g.suggestions.length?': '+g.suggestions.map(x=>x.name+(x.owned?' (در ولتت داری)':'')).join(' یا '):'')));
-  if(r.coverage.declared.length)lines.push('فرمول '+faDigits(r.coverage.declared.length)+' محصول فقط از روی نام شناخته شده و فهرست کامل ترکیباتشان ثبت نیست؛ نتیجه‌ی آن‌ها قطعی نیست');
+  if(r.coverage.declared.length)lines.push(faDigits(r.coverage.declared.length)+' محصول از روی ترکیبات کلیدی‌ای سنجیده شد که خود برند اعلام کرده');
   return lines.join('\n');
 }
 export function actionLabel(a:Action){return ACTION_FA[a];}

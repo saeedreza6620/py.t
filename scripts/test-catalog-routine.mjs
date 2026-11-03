@@ -57,6 +57,12 @@ assert.equal(catalog.products.find(p=>p.id==='brightmax-niacinamide').basis,'inc
 assert(catalog.products.find(p=>p.id==='brightmax-cbright-cream').actives.some(a=>a.cls==='RETINOID'));
 assert(!catalog.products.some(p=>p.id==='brightmax-tone-physical'),'duplicate folded into brightmax-physical');
 
+// Morning AND night: a moisturizer used twice a day counts in both slots; a retinoid used twice a day is flagged for the morning.
+{const ret=catalog.products.find(p=>p.actives.some(a=>a.cls==='RETINOID')&&p.basis==='inci_sourced');
+ const both=evaluateRoutine({profile:{skinBase:'نرمال'},selection:[{id:ret.id,time:'both'},{id:'boj-relief',time:'am'}]},catalog);
+ assert(both.interactions.some(x=>x.ids.includes(ret.id)&&/شب/.test(x.text)),'retinoid twice a day → move to night');
+ const sunBoth=evaluateRoutine({profile:{skinBase:'نرمال'},selection:[{id:'boj-relief',time:'both'}]},catalog);
+ assert(!sunBoth.interactions.some(x=>/جایش در روتین صبح/.test(x.text)),'sunscreen morning+night is still a morning sunscreen')}
 // Dry skin: dry-skin sunscreen is fine, soap-based foam is flagged.
 const dry=evaluateRoutine({profile:{skinBase:'خشک'},selection:[{id:'boj-relief',time:'am'},{id:'skin1004-pore-foam',time:'pm'}]},catalog);
 assert.equal(actionOf(dry,'boj-relief'),'keep');

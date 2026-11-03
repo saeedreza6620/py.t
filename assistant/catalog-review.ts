@@ -52,7 +52,7 @@ export function catalogResponseBody(check:RoutineCheck,reason:CatalogFallbackRea
     review:{analysisType:'routine',routinePlan:routinePlanFrom(check,answer),catalogCheck:check},
     purchaseLinks:[],assistantMessageId:null,processing:{mode:'catalog',intent:'routine'},decision:{label:'advice'},
     search:{enabled:false,sourceCount:0,citedSourceCount:0},
-    trust:{confidence:check.coverage.declared.length||check.coverage.unknown.length?'low':'medium',confidenceMethod:'catalog_rules_not_clinically_calibrated',catalog:catalogSummary(check),checkedAt:new Date().toISOString(),missing:check.coverage.declared.length?['فهرست ترکیبات بسته برای محصولاتی که فقط از روی نام ثبت شده‌اند']:[]},...extra};
+    trust:{confidence:check.coverage.declared.length||check.coverage.unknown.length?'low':'medium',confidenceMethod:'catalog_rules_not_clinically_calibrated',catalog:catalogSummary(check),checkedAt:new Date().toISOString(),missing:[]},...extra};
 }
 
 // ---- Purchase check for a product that exists in the BeautyWallet catalog ----
@@ -87,7 +87,7 @@ export function catalogPurchaseCheck(shared:Shared,productId:unknown,productName
   const lead=check.state.skinLabel?'برای پوست '+check.state.skinLabel+(check.state.acne?' با جوش فعال':'')+(check.state.compromised?' و لایه محافظ تحریک‌شده':''):'بر اساس پروفایل ثبت‌شده';
   const answer=[head,...reasons.slice(0,3),lead+'؛ این نتیجه از فرمول ثبت‌شده همین محصول در کاتالوگ BeautyWallet است'].join('\n');
   const byId=new Map(CATALOG.products.map(p=>[p.id,p]));
-  const items=shared.selection.filter(x=>x.id!==f.id&&byId.has(x.id)).map(x=>({id:x.id,name:byId.get(x.id)!.name,time:(x.time==='am'||x.time==='صبح'?'am':'pm') as 'am'|'pm',f:byId.get(x.id)!}));
+  const items=shared.selection.filter(x=>x.id!==f.id&&byId.has(x.id)).map(x=>({id:x.id,name:byId.get(x.id)!.name,time:(x.time==='both'||x.time==='صبح و شب'?'both':x.time==='am'||x.time==='صبح'?'am':'pm') as 'am'|'pm'|'both',f:byId.get(x.id)!}));
   const explain=explainPurchase(f,st,items,{decision,inRoutine:shared.selection.some(x=>x.id===f.id)});
   return {productId:f.id,name:f.name,decision,answer,lead:reasons[0]||head,check,basis:f.basis,explain};
 }
