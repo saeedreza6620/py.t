@@ -2,7 +2,7 @@
 // Login with ADMIN_TOKEN once → HttpOnly cookie (the token never sits in the address bar).
 import {retentionHtml} from './retention.mjs';
 import {insightsHtml} from './insights.mjs';
-import {kpiHtml} from './kpi.mjs';
+import {kpiHtml} from './kpi.mjs';import {journeysHtml,journeysCsv} from './journeys.mjs';
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -111,6 +111,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 6px;b
 ${(()=>{const st=getReqStatus();const n=readJsonl(path.join(DATA,'purchase-requests.jsonl')).filter(r=>r.method==='card'&&(st[r.ref]||{}).status==='proof').length;
 return `<a href="/admin/pay" style="display:block;margin:0 0 14px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;${n?'background:#1f9d6f;color:#fff':'background:#fff;color:#241a4f;border:1px solid #e3def8'}">💳 ${n?fa(n)+' واریز منتظر تأیید توست — بزن و تأیید کن':'واریز منتظری نیست · صفحه‌ی تأیید واریزها'}</a>`})()}
 ${(()=>{try{return kpiHtml({ev:readJsonl(path.join(DATA,'events.jsonl')),users:getUsers(),reqs:readJsonl(path.join(DATA,'purchase-requests.jsonl')),reqStatus:getReqStatus(),costs,cfg:getCfg(),fb:readJsonl(path.join(DATA,'feedback.jsonl')),fa,esc})}catch(e){console.error('kpi',e);return '<p class="note">کارت KPI فعلاً بارگذاری نشد.</p>'}})()}
+${(()=>{try{return journeysHtml({ev:readJsonl(path.join(DATA,'events.jsonl')),users:getUsers(),reqs:readJsonl(path.join(DATA,'purchase-requests.jsonl')),reqStatus:getReqStatus(),fa,esc})}catch(e){console.error('journeys',e);return '<p class="note">سفر کاربران فعلاً بارگذاری نشد.</p>'}})()}
 ${(()=>{const st=getReqStatus(),red=getRedeem();const codeOf=ref=>Object.entries(red).find(([,v])=>v.ref===ref);const rows=readJsonl(path.join(DATA,'purchase-requests.jsonl')).slice(-80).reverse();
 const KIND={negin:'💎 الماس',sub:'⭐ اشتراک',product:'🛍 محصول',support:'🤝 پشتیبانی'};const STAT={new:'🔴 جدید',called:'🟡 تماس گرفته شد',paid:'🟢 پرداخت شد',proof:'🟠 واریز اعلام شد — بررسی کن',done:'✅ تمام',rejected:'⛔ واریزی پیدا نشد'};const fresh=rows.filter(r=>!(st[r.ref]&&st[r.ref].status)||st[r.ref].status==='new').length;
 const sms=readJsonl(path.join(DATA,'pay-sms.jsonl')).slice(-200),wk=sms.filter(x=>Date.now()-Date.parse(x.at)<7*864e5),lastS=sms.at(-1),odd=wk.filter(x=>x.deposit&&!x.ref).slice(-5).reverse();
@@ -226,6 +227,7 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
       logUsage({at:new Date().toISOString(),test:true,status:r.status,model:r.body.model||'',search:true,ms:Date.now()-t0,sources:(r.body.sources||[]).length,code:r.body.code||''});
       return send(res,200,{ok:r.status===200,model:r.body.model,seconds:Math.round((Date.now()-t0)/100)/10,text:String(r.body.text||'').slice(0,1200),sources:r.body.sources||[],error:r.body.error},'application/json',{'Cache-Control':'no-store'});
     }
+    if(p==='/admin/journeys.csv')return send(res,200,journeysCsv({ev:readJsonl(path.join(DATA,'events.jsonl')),users:getUsers(),reqs:readJsonl(path.join(DATA,'purchase-requests.jsonl')),reqStatus:getReqStatus()}),'text/csv; charset=utf-8',{'Content-Disposition':'attachment; filename="beautywallet-journeys.csv"','Cache-Control':'no-store'});
     if(p==='/admin/users.csv'){const cols=['name','phone','verified','installed','os','first','last'];const u=Object.values(getUsers());
       return send(res,200,'﻿'+cols.join(',')+'\n'+u.map(r=>cols.map(c=>{let v=String(r[c]??'');if(/^[=+\-@]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'}).join(',')).join('\n'),'text/csv; charset=utf-8',{'Content-Disposition':'attachment; filename="beautywallet-users.csv"','Cache-Control':'no-store'})}
     if(p==='/admin/feedback.csv'||(p==='/admin/feedback'&&url.searchParams.get('format')==='csv'))return send(res,200,csv(),'text/csv; charset=utf-8',{'Content-Disposition':'attachment; filename="beautywallet-feedback.csv"','Cache-Control':'no-store'});
