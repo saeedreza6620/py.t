@@ -213,7 +213,7 @@ async function research(name,url){
 
 // Catalog completion comes only from shoppers' own checks (each researched product joins the bank); no background searches.
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
-const EVENTS=new Set(['notif_off','wel_check','wel_chat','wel_skip','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
+const EVENTS=new Set(['paywall_view','negin_open','notif_off','wel_check','wel_chat','wel_skip','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
 const evHits=new Map();let deepCache=null;
 function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,rawLength:String(RAW_KEY).length,keysInValue:(String(RAW_KEY).match(/eyJ[\w-]+\.eyJ/g)||[]).length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
 let lastUpstream=null;
@@ -284,7 +284,7 @@ const USERS=path.join(DATA,'users.json');
 function getUsers(){try{return JSON.parse(fs.readFileSync(USERS,'utf8'))}catch{return {}}}
 function normPhone(v){const x=String(v||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^\d+]/g,'');const m=x.match(/^(?:\+98|0098|98|0)?(9\d{9})$/);return m?'0'+m[1]:''}
 function saveUser(phone,info,verified){const u=getUsers();const now=new Date().toISOString();const o=u[phone]||{phone,first:now,devices:[]};
-  o.name=info.name||o.name||'';o.last=now;o.os=info.os||o.os;o.installed=!!(o.installed||info.sa);o.verified=!!(o.verified||verified);if(info.d&&!o.devices.includes(info.d))o.devices=[...o.devices,info.d].slice(-5);u[phone]=o;
+  o.name=info.name||o.name||'';o.last=now;if(!o.src)o.src=info.src||'';o.os=info.os||o.os;o.installed=!!(o.installed||info.sa);o.verified=!!(o.verified||verified);if(info.d&&!o.devices.includes(info.d))o.devices=[...o.devices,info.d].slice(-5);u[phone]=o;
   try{fs.writeFileSync(USERS+'.tmp',JSON.stringify(u));fs.renameSync(USERS+'.tmp',USERS)}catch(e){console.error('users save',e.message)}
   fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:now,t:'register',d:info.d||'anon',page:'app',os:info.os,sa:!!info.sa})+'\n',()=>{})}
 // a registered shopper opening the app: keep "last seen" and her devices right (the installed app on iPhone has its own storage, so a new device id)
@@ -402,7 +402,7 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname==='/register'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});if(allow(ip(req)))return send(res,429,{error:'یه کم بعد دوباره بزن'});
       const b=await readBody(req,2000);const phone=normPhone(b.phone);if(!phone)return send(res,400,{error:'شماره موبایل درست نیست'});
-      const info={name:String(b.name||'').replace(/[<>]/g,'').trim().slice(0,40),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40),sa:!!b.sa,os:osOf(req.headers['user-agent'])};
+      const info={name:String(b.name||'').replace(/[<>]/g,'').trim().slice(0,40),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40),sa:!!b.sa,os:osOf(req.headers['user-agent']),src:/^[a-z0-9_-]{1,30}$/i.test(String(b.src||''))?String(b.src).toLowerCase():''};
       if(SMS.on){const prev=OTP.get(phone);if(prev&&Date.now()-prev.sent<60e3)return send(res,429,{error:'یه دقیقه دیگه دوباره بزن'});
         const code=String(crypto.randomInt(10000,100000));const sent=await sendOtp(phone,code);if(!sent)return send(res,502,{error:'پیامک نرفت؛ چند دقیقه بعد دوباره امتحان کن'});
         OTP.set(phone,{code,sent:Date.now(),tries:0,info});return send(res,200,{otp:true})}
@@ -532,7 +532,7 @@ const server=http.createServer(async(req,res)=>{
       const b=await readBody(req,1000);const t=String(b.type||''),d=String(b.d||'');
       if(!EVENTS.has(t)||!/^[a-z0-9]{12,40}$/.test(d))return send(res,400,{ok:false});
       if(b.p&&/^app_open/.test(t))touchUser(normPhone(b.p),d,!!b.sa);
-      fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:new Date().toISOString(),t,d,...(t==='check_noinci'&&/^[a-z0-9-]{3,80}$/.test(String(b.x||''))?{x:String(b.x)}:{}),sa:!!b.sa,page:b.page==='site'?'site':'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
+      fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:new Date().toISOString(),t,d,...(t==='check_noinci'&&/^[a-z0-9-]{3,80}$/.test(String(b.x||''))?{x:String(b.x)}:{}),...(/^[a-z0-9_-]{1,30}$/i.test(String(b.s||''))?{s:String(b.s).toLowerCase()}:{}),sa:!!b.sa,page:b.page==='site'?'site':'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
       return send(res,204,'');
     }
     if(url.pathname==='/api/skinchat'&&req.method==='POST')return await CHAT.handle(req,res);

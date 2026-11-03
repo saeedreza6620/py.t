@@ -2,6 +2,7 @@
 // Login with ADMIN_TOKEN once → HttpOnly cookie (the token never sits in the address bar).
 import {retentionHtml} from './retention.mjs';
 import {insightsHtml} from './insights.mjs';
+import {kpiHtml} from './kpi.mjs';
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -107,6 +108,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 6px;b
     return page('پنل مدیریت بیوتی‌ولت',`
 <header><div class="brand"><div class="logo">BW</div><h1>پنل مدیریت بیوتی‌ولت<small>نسخه آزمایشی · آخرین فعالیت: ${s.lastAt?esc(new Date(s.lastAt).toLocaleString('fa-IR',{timeZone:'Asia/Tehran'})):'—'}</small></h1></div><div><a class="btn ghost" href="/admin">تازه‌سازی</a> <a class="btn ghost" href="/admin/logout">خروج</a></div></header>
 <div class="card links"><div class="l"><span>🧪 لینک تست برای کاربران</span><a href="${esc(o)}/legacy/" target="_blank">${esc(o)}/legacy/</a></div><div class="l"><span>🌐 وب‌سایت</span><a href="${esc(o)}/" target="_blank">${esc(o)}/</a></div><div class="l"><span>🛠 پنل مدیریت (همین صفحه)</span><a href="${esc(o)}/admin">${esc(o)}/admin</a></div></div>
+${(()=>{try{return kpiHtml({ev:readJsonl(path.join(DATA,'events.jsonl')),users:getUsers(),reqs:readJsonl(path.join(DATA,'purchase-requests.jsonl')),reqStatus:getReqStatus(),costs,cfg:getCfg(),fb:readJsonl(path.join(DATA,'feedback.jsonl')),fa,esc})}catch(e){console.error('kpi',e);return '<p class="note">کارت KPI فعلاً بارگذاری نشد.</p>'}})()}
 ${(()=>{const st=getReqStatus(),red=getRedeem();const codeOf=ref=>Object.entries(red).find(([,v])=>v.ref===ref);const rows=readJsonl(path.join(DATA,'purchase-requests.jsonl')).slice(-80).reverse();
 const KIND={negin:'💎 الماس',sub:'⭐ اشتراک',product:'🛍 محصول',support:'🤝 پشتیبانی'};const STAT={new:'🔴 جدید',called:'🟡 تماس گرفته شد',paid:'🟢 پرداخت شد',proof:'🟠 واریز اعلام شد — بررسی کن',done:'✅ تمام',rejected:'⛔ واریزی پیدا نشد'};const fresh=rows.filter(r=>!(st[r.ref]&&st[r.ref].status)||st[r.ref].status==='new').length;
 const sms=readJsonl(path.join(DATA,'pay-sms.jsonl')).slice(-200),wk=sms.filter(x=>Date.now()-Date.parse(x.at)<7*864e5),lastS=sms.at(-1),odd=wk.filter(x=>x.deposit&&!x.ref).slice(-5).reverse();

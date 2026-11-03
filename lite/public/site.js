@@ -22,5 +22,7 @@ window.BW={
   dev:function(){var id='';try{id=localStorage.getItem('bw_device')||'';if(!/^[a-z0-9]{12,40}$/.test(id)){id=(Date.now().toString(36)+Math.random().toString(36).slice(2,12)).slice(0,24);localStorage.setItem('bw_device',id)}}catch(e){}return id},
   post:function(u,b){return fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw Error(j.error||'نرسید؛ دوباره بزن');return j})})}
 };
-try{window.BW.post('/api/event',{type:'site_open',d:window.BW.dev(),page:'site'}).catch(function(){})}catch(e){}
+// where she came from (?src=ig, ?src=<shop>, utm_source): first touch kept on this phone, shared with the app (same site)
+var SRC='';try{var q=new URLSearchParams(location.search),sv=(q.get('src')||q.get('utm_source')||'').toLowerCase().replace(/[^a-z0-9_-]/g,'').slice(0,30);SRC=localStorage.getItem('bw_src')||'';if(sv&&!SRC){localStorage.setItem('bw_src',sv);SRC=sv}}catch(e){}
+try{window.BW.post('/api/event',{type:'site_open',d:window.BW.dev(),page:'site',s:SRC||undefined}).catch(function(){})}catch(e){}
 })();
