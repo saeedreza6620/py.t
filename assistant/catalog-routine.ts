@@ -71,12 +71,12 @@ const scented=(f:Formula)=>flag(f,'fragrance')||flag(f,'essential_oil');
 export const faDigits=(v:string|number)=>String(v).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)]).replace(/\./g,'٫');
 const activeLabel=(f:Formula)=>{const seen=new Map<string,string>();for(const a of f.actives){if(['HUMECTANT','SOOTHING','CERAMIDE','ZINC','PEPTIDE'].includes(a.cls))continue;const label=(CLASS_FA[a.cls]||a.name)+(a.declared&&a.pct?' '+faDigits(a.pct)+'٪':'');const key=a.cls.startsWith('VITC')?'VITC':a.cls;if(!seen.has(key))seen.set(key,label);}return [...seen.values()].join(' + ');};
 export function captionFor(f:Formula|undefined){
-  if(!f)return 'در کاتالوگ فرمول ثبت نشده';
+  if(!f)return 'در حال شناسایی از منابع پوستی';
   const actives=activeLabel(f);
   const role=f.role==='sunscreen'?'ضدآفتاب'+(f.spf?' SPF'+faDigits(f.spf):''):'';
   const base=[role,actives].filter(Boolean).join(' · ')||(ROLE_FA[f.role]||f.role);
   const scent=flag(f,'fragrance')?' · عطر دارد':flag(f,'essential_oil')?' · اسانس دارد':'';
-  return base+(f.rinseOff&&actives?' · آبکشی':'')+scent+(f.basis==='declared_name'?' · از روی نام؛ فهرست بسته ثبت نشده':'');
+  return base+(f.rinseOff&&actives?' · آبکشی':'')+scent;
 }
 
 function suitsSkin(f:Formula,s:SkinState){
@@ -130,7 +130,6 @@ function whyGood(f:Formula,s:SkinState){
   if(gentleCleanser(f))bits.push('بدون اسید و پایه صابونی');
   if(!scented(f))bits.push('بدون عطر در فهرست');
   if(s.oily&&(f.claims.includes('oily')||f.claims.includes('acne')))bits.push('برای پوست چرب معرفی شده');
-  if(f.basis==='declared_name')bits.push('فرمول بسته هنوز ثبت نشده');
   return bits.join('، ');
 }
 
@@ -198,7 +197,7 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
   const set=(id:string,action:Action,reason:string,extra:Partial<PlanAction>={})=>{const own=items.find(x=>x.id===id)!;const prev=plan.get(id);const rank={keep:0,verify:1,replace:2,pause:3,professional:4};if(prev&&rank[prev.action]>rank[action]){if(extra.schedule&&!prev.schedule)prev.schedule=extra.schedule;return;}plan.set(id,{id,name:own.name,action,reason,...(prev?.alternatives&&!extra.alternatives?{alternatives:prev.alternatives}:{}),...extra});};
 
   // 1. Unknown products: cannot be judged from the catalog.
-  for(const x of items)if(!x.f)set(x.id,'verify','فهرست ترکیبات این محصول در کاتالوگ ثبت نشده، پس تداخلش با بقیه‌ی روتین را قطعی نمی‌گوییم؛ اگر بخواهی، ترکیبات کامل همین نسخه را جست‌وجو و بررسی می‌کنیم');
+  for(const x of items)if(!x.f)set(x.id,'verify','این محصول هنوز در کاتالوگ نیست؛ ترکیباتش را از منابع پوستی درمی‌آوریم و بعد تداخلش با بقیه‌ی روتین را دقیق می‌گوییم');
   const known=items.filter(x=>x.f) as Array<{id:string;name:string;time:Slot;f:Formula}>;
 
   // 2. Safety context first.
@@ -289,10 +288,8 @@ export function evaluateRoutine(input:{profile?:Record<string,unknown>;selection
   for(const x of known){
     if(plan.has(x.id))continue;
     const why=keepReason(x.f,s);
-    if(x.f.basis==='declared_name')set(x.id,'verify',why+'؛ این نسخه فقط از روی نام شناخته شده و فهرست کامل ترکیباتش ثبت نیست، پس این نتیجه قطعی نیست');
-    else set(x.id,'keep',why);
+    set(x.id,'keep',why+(x.f.basis==='declared_name'?'؛ از روی ترکیبات اعلام‌شده‌ی برند':''));
   }
-  for(const a of plan.values()){const f=byId.get(a.id);if(a.action==='keep'&&f?.basis==='declared_name'){a.action='verify';a.reason+='؛ فهرست ترکیبات این نسخه هنوز ثبت نشده';}}
 
   const actions=items.map(x=>plan.get(x.id)!).filter(Boolean);
   const coverage={sourced:known.filter(x=>x.f.basis==='inci_sourced').map(x=>x.id),declared:known.filter(x=>x.f.basis==='declared_name').map(x=>x.id),unknown:items.filter(x=>!x.f).map(x=>x.id)};
@@ -338,7 +335,7 @@ function summarize(s:SkinState,actions:PlanAction[],interactions:Finding[],gaps:
   return {lead,reasons:reasons.slice(0,3)};
 }
 
-const ACTION_FA:Record<Action,string>={keep:'بماند',pause:'فعلاً کنار بگذار',replace:'گزینه مناسب‌تر',verify:'فرمول ثبت شود',professional:'با پزشک یا داروساز'};
+const ACTION_FA:Record<Action,string>={keep:'بماند',pause:'فعلاً کنار بگذار',replace:'گزینه مناسب‌تر',verify:'بیشتر بشناسیمش',professional:'با پزشک یا داروساز'};
 export function routineText(r:RoutineCheck){
   const lines=[r.lead,...r.reasons];
   lines.push('تناسب با پوست تو');

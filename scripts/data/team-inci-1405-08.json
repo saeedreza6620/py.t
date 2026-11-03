@@ -1,0 +1,270 @@
+{
+ "note": "INCI entered by the BeautyWallet team (Excel BeautyWallet-INCI-needed, Aban 1405) from the brand/pharmacy pages listed; Persian lists translated to standard INCI names. inci_fa keeps the team's original text.",
+ "items": {
+  "permancy-sensitive": {
+   "inci": "Sodium Lauroyl Sarcosinate, Cocamidopropyl Betaine, Glycerin, Disodium Cocoamphodiacetate, Disodium Glutamate, Coco-Glucoside, Glyceryl Oleate, PEG-7 Glyceryl Cocoate, Chamomilla Recutita Flower Extract, Calendula Officinalis Flower Extract, Polyquaternium-7, Mimosa Tenuiflora Bark Extract, Isothiazolinones, Sodium Benzoate, Potassium Sorbate, Sodium Lactate, C12-13 Alkyl Lactate, Aloe Barbadensis Leaf Powder, Avena Sativa Kernel Oil, Guar Hydroxypropyltrimonium Chloride, Hexadecanol, Bisabolol, Cetyl Hydroxyproline Palmitamide, Stearic Acid, Brassica Campestris Sterols, Lactic Acid, Lavandula Angustifolia Oil, Benzalkonium Chloride, Disodium EDTA, Aqua",
+   "eo": true,
+   "inci_fa": "سدیم لوریل سارکوزینات 30%، کوکامیدوپروپیل بتائین 30%، گلیسیرین، دی ‌سدیم کوکوآمفو دی ‌استات 37%، دی‌ سدیم گلوتامات 50%، کوکوگلوکوزید گلیسیریل اولئات، PEG-7 گلیسیریل کوکوات، عصاره گل بابونه، عصاره کالاندولا، پلی ‌کواترنیوم 7، عصاره پوست درخت میموزا تنوییفلورا، ترکیب: تیازولیدین ‌دیون‌ها و سدیم بنزوات و پتاسیم سوربات و سدیم لاکتات، لاکتات آلکیل C-12-13، پودر آلوئه ‌ورا، روغن دانه جو دوسر، گوار هیدروکسی ‌پروپیل تریمونیوم کلرید، ترکیب:هگزا‌دکانول/بیزابولول/سیتیل-هیدروکسی‌ پرولین پالمیتامید، اسید استئاریک، استرول‌ های براسیکا کمپستریس، اسید لاکتیک 85%، روغن اسطوخودوس، بنزالکونیوم کلرید 30%، دی ‌سدیم ا.د.ت.آ، آب دیونیزه.",
+   "src": "https://darukade.com/products/cosmetic-cleanser-for-all-skin-types-1376/foam-repair-cleansing-foam-for-damaged-skin-28215",
+   "size": "۱۵۰ میل",
+   "made": "ایرانی"
+  },
+  "anaparla-hydrodermie": {
+   "inci": "Aqua, Butylene Glycol, Sorbitol, Ceramide AP, Sodium Citrate, Sodium Hydroxide, Xanthan Gum, Imidazolidinyl Urea, Hyaluronic Acid, Disodium EDTA, Bis-Hydroxyethyl Tromethamine, Ceratonia Siliqua Gum, Phenoxyethanol, Parfum",
+   "nosrc": true,
+   "inci_fa": "آب دیونیزه، بوتیلن گلایکول، سوربیتول، سرامید ای‌پی، سدیم سیترات، سدیم هیدروکساید، زانتان گام، ایمیدازولیدینیل اوره، هیالورونیک اسید، ا.د.ت.ا. بیس هیدروکسی اتیل ترومتامین، صمغ لوبیا لوکاست، فنوکسی اتانول، اسانس مجاز آرایشی و بهداشتی.",
+   "size": "400 میل",
+   "made": "ایرانی"
+  },
+  "brightmax-physical": {
+   "inci": "Aqua, Cyclopentasiloxane, Silica, Titanium Dioxide, Alumina, Zinc Oxide, Glycerin, Niacinamide, Cera Alba, Waltheria Indica Leaf Extract, Mannitol, Sodium Gluconate, Citric Acid, Sodium Citrate, Dextrin, Ferulic Acid, Cetyl PEG/PPG-10/1 Dimethicone, Paraffinum Liquidum, Cetyl Alcohol, Magnesium Sulfate, Ethylhexyl Palmitate, Hydrolyzed Castor Oil, Phenoxyethanol, Ethylhexylglycerin, Polyglyceryl-4 Isostearate, Hexyl Laurate",
+   "spf": 50,
+   "filters": "mineral",
+   "inci_fa": "آب دیونیزه، سیکلو پنتا سیلوکسان، سیلیکا، تیتانیوم دی اکساید، آلومینا، زینک اکساید، گلیسیرین، نیاسینامید، سرا آلبا، عصاره برگ waltheria indica ، مانیتول سدیم گلوکونات، سیتریک اسید، سدیم سیترات دکسترین، فرولیک اسید، ستیل peg/ppg-10/1 دایمتیکون، پارافین مایع، ستیل الکل، منیزیم سولفات، اتیل هگزیل پالمیتات روغن کرچک هیدرولیز شده، فنوکسی اتانول، اتیل هگزیل گلیسیرین، پلی گلیسیریل-4 ایزو استئارات، هگزیل لورات.",
+   "src": "https://darukade.com/products/cosmetic-sunscreen-for-all-skin-types-1379/cream-tone-bright-physical-sunscreen-spf50-29570",
+   "size": "۴۰ میل",
+   "made": "ایرانی"
+  },
+  "brightmax-cbright-tinted": {
+   "inci": "Aqua, Ethylhexyl Methoxycinnamate, Cetearyl Alcohol, PEG-100 Stearate, Dimethicone, Mannitol, Sodium Gluconate, Sodium Ascorbyl Phosphate, Citric Acid, Sodium Citrate, Althaea Officinalis Flower Extract, Tranexamic Acid, Tocopheryl Acetate, Dextrin, Ferulic Acid, Glycerin, 4-Methylbenzylidene Camphor, Butyl Methoxydibenzoylmethane, Potassium Cetyl Phosphate, Hydroxyethyl Acrylate/Sodium Acryloyldimethyl Taurate Copolymer, Isohexadecane, Polysorbate 60, Propylene Glycol, Diazolidinyl Urea, Disodium EDTA, Methylparaben, Propylparaben, CI 77891, CI 77492, CI 77491, CI 77499",
+   "spf": 50,
+   "filters": "chemical",
+   "tinted": true,
+   "inci_fa": "آب، اتیل هگزیل متوکسی سینامات، ستئاریل الکل، PEG-100 استئارات، دایمتیکون، مانیتول، سدیم گلوکونات، سدیم آسکوربیل فسفات، سیتریک اسید، سدیم سیترات، عصاره گل ختمی، ترانگزامیک اسید، توکوفریل استات، دکسترین، فرولیک اسید، گلیسرین، 4- متیل بنزیلیدن کامفر، بوتیل متوکسی دی بنزوئیل متان، پتاسیم ستیل فسفات، هیدروکسی اتیل آکریلات/ سدیم آکریلویل دی متیل تائورات کوپلیمر، ایزوهگزادکان، پلی سوربات-60، پروپیلن گلیکول، دیازولیدینیل اوره، دی سدیم ا.د.ت.آ، متیل پارابن، پروپیل پارابن، CI 77891، CI 77492، CI 77491، CI 77499.",
+   "src": "https://brightmax.ir/product/vitamin-c-tinted-sunscreen/",
+   "size": "50 میل",
+   "made": "ایرانی"
+  },
+  "brightmax-acne-matt": {
+   "inci": "Aqua, Isopropyl Myristate, Glycerin, Cyclopentasiloxane, Sodium Hyaluronate, Trifolium Pratense Flower Extract, Melaleuca Alternifolia Leaf Oil, Centella Asiatica Extract, Niacinamide, Mannitol, Sodium Gluconate, Citric Acid, Sodium Citrate, Waltheria Indica Leaf Extract, Dextrin, Ferulic Acid, Isopentyldiol, Glycyrrhiza Glabra Root Extract, Dimethicone, Cetyl Alcohol, Carbomer, Steareth-20, Triethanolamine, Phenoxyethanol, Methylparaben, Ethylparaben, Propylparaben, Butylparaben",
+   "eo": true,
+   "inci_fa": "آب، ایزوپروپیل میریستات، گلیسیرین، سیکلوپنتاسیلوکسان، سدیم هیالورونات، عصاره گل شبدر، روغن برگ درخت چای، عصاره سنتلا آسیاتیکا، نیاسینامید، مانیتول، سدیم گلوکونات، اسید سیتریک، سدیم سیترات، عصاره برگ والتریا ایندیکا، دکسترین، اسید فرولیک، ایزو پنتیل ‌دیول، عصاره شیرین بیان، دایمتیکون، ستیل الکل، کربومر، ستئارت-۲۰، تری ‌اتانول ‌آمین، فنوکسی ‌اتانول، متیل ‌پارابن، اتیل‌ پارابن، پروپیل ‌پارابن، بوتیل‌ پارابن",
+   "src": "https://brightmax.ir/product/acne-matt-hydrating-cream/",
+   "size": "40 میل",
+   "made": "ایرانی"
+  },
+  "brightmax-hydra-light": {
+   "inci": "Aqua, Glycerin, Cyclopentasiloxane, Isononyl Isononanoate, Phenyl Trimethicone, Hyaluronic Acid, Cetyl Alcohol, Isopentyldiol, Safflower Oil Esters, Ceramide NP, Trifolium Pratense Flower Extract, Linoleic Acid, Linolenic Acid, Tocopheryl Acetate, Niacinamide, Potassium Thiocyanate, Lactoferrin, Lactoperoxidase, Glucose Oxidase, Glucose Pentaacetate, Dimethicone, Triethanolamine, Carbomer, Phenoxyethanol, Chlorphenesin, Parfum",
+   "inci_fa": "آب دیونیزه، گلیسیرین، سیکلوپنتاسیلوکسان، ایزونونیل ایزو نانوات، فنیل تری متیکون، هیالورونیک‌ اسید، ستیل الکل، ایزو پنتیل دیول، استرهای روغن گلرنگ، سرامید NP، عصاره گل شبدر قرمز، لینولئیک اسید، لینولنیک اسید، توکوفریل استات، نیاسین آمید، پتاسیم تیو سیانات، لاکتوفرین، لاکتو پراکسیداز، گلوکز اکسیداز، گلوکز پنتا استات، دایمتیکون، تری اتانول آمین، کربومر، فنوکسی اتانول، کلر فنزین، اسانس.",
+   "src": "https://darukade.com/products/cosmetic-oily-skin-moisturizer-62/cream-hydra-bright-light-hydrating-cream-28536",
+   "size": "۵۰میل",
+   "made": "ایرانی"
+  },
+  "brightmax-acne-foam": {
+   "inci": "Aqua, Sodium Laureth Sulfate, Glycerin, Sodium Capryloyl Glutamate, Decyl Glucoside, Cocamidopropyl Betaine, Sodium Cocoyl Apple Amino Acids, PEG-40 Hydrogenated Castor Oil, Salicylic Acid, Camellia Sinensis Leaf Extract, Niacinamide, Sodium PCA, Panthenol, Phenoxyethanol, Chlorphenesin, Disodium EDTA, Citric Acid, Parfum",
+   "inci_fa": "آب، سدیم لورت سولفات، گلیسرین، سدیم کاپریلویل گلوتامات، دسیل گلوکوزاید، کوکامیدو پروپیل بتائین، سدیم کوکوئیل اپل آمینو اسید، PEG-40 هیدروژنیتد کاستر اویل، سالیسیلیک اسید، عصاره برگ چای، نیاسین آمید، سدیم پی سی ای، پانتنول، فنوکسی اتانول، کلرفنزین، دی سدیم EDTA، سیتریک اسید، عطر.",
+   "src": "https://darukade.com/products/cosmetic-oily-skin-cleaners--19/foam-acne-bright-cleansing-foam-28777",
+   "size": "150 میل",
+   "made": "ایرانی"
+  },
+  "brightmax-cbright-foam": {
+   "inci": "Aqua, Sodium Laureth Sulfate, Glycerin, Sodium Capryloyl Glutamate, Niacinamide, Decyl Glucoside, Mannitol, Sodium Gluconate, Waltheria Indica Leaf Extract, Citric Acid, Sodium Citrate, Dextrin, Ferulic Acid, Cocamidopropyl Betaine, Sodium Cocoyl Apple Amino Acids, Aloe Barbadensis Leaf Extract, PEG-40 Hydrogenated Castor Oil, Sodium Ascorbyl Phosphate, Sodium PCA, Disodium EDTA, Phenoxyethanol, Chlorphenesin, Parfum",
+   "inci_fa": "آب، سدیم لورت سولفات، گلیسیرین، سدیم کاپریلویل گلوتامات، نیاسینامید، دسیل گلوکوزید، مانیتول، سدیم گلوکونات، عصاره برگ والتریا ایندیکا، سیتریک اسید، سدیم سیترات، دکسترین، فرولیک اسید، کوکامیدو پروپیل بتائین، سدیم کوکویل اپل آمینو اسید، عصاره آلوئه ورا باربادنسیس، پی ای جی-40 روغن کرچک هیدروژنه، سدیم اسکوربیل فسفات، سدیم پی سی ای، دی سدیم ا.د.ت.آ، فنوکسی اتانول، کلرفنسین، اسانس.",
+   "src": "https://brightmax.ir/product/vitamin-c-cleansing-foam/",
+   "size": "۱۵۰ میل",
+   "made": "ایرانی"
+  },
+  "brightmax-acne-spot": {
+   "inci": "Aqua, Alcohol, Lactic Acid, Glycolic Acid, Citric Acid, Malic Acid, Salicylic Acid, Azelaic Acid, Mannitol, Sodium Gluconate, Sodium Citrate, Waltheria Indica Leaf Extract, Silybum Marianum Fruit Extract, Niacinamide, Dextrin, Butylene Glycol, Ferulic Acid, Dipotassium Glycyrrhizate, Hydroxyethylcellulose, Disodium EDTA",
+   "pct": {
+    "BHA": 2,
+    "AZELAIC": 5
+   },
+   "inci_fa": "آکوا (آب)، الکل، لاکتیک اسید، گلیکولیک اسید، سیتریک اسید، مالیک اسید، سالیسیلیک اسید، آزلائیک اسید، مانیتول، سدیم گلوکونات، سدیم سیترات، عصاره برگ والتریا ایندیکا، عصاره میوه خارمریم، نیاسینامید، دکسترین، بوتیلن گلیکول، فرولیک اسید، دی پتاسیم گلیسریزات، هیدروکسی اتیل سلولز، دی سدیم ا.د.ت.آ.",
+   "src": "https://darukade.com/products/supplement-anti-spot-901/gel-acne-bright-spot-acne-gel-28457",
+   "size": "۱۵ میل",
+   "made": "ایرانی",
+   "declared_fa": "گلیکولیک اسید و سالیسیلیک اسید 2 درصد و آزلائیک اسید 5 درصد"
+  },
+  "brightmax-cbright-cream": {
+   "inci": "Aqua, Diethylhexyl Carbonate, Cyclopentasiloxane, Glycerin, Myristyl Myristate, Stearyl Alcohol, Sorbitan Laurate, Polyglyceryl-4 Laurate, Dilauryl Citrate, Pentylene Glycol, Lecithin, Alcohol, Retinol, Polysorbate 20, Potassium Phosphate, Tocopherol, Sodium Ascorbyl Phosphate, Niacinamide, Dimethicone, Citric Acid, Dextrin, Ferulic Acid, Mannitol, Sodium Citrate, Sodium Gluconate, Waltheria Indica Leaf Extract, Tranexamic Acid, Rosa Damascena Flower Wax, Cera Alba, Propylene Glycol, Methylparaben, Propylparaben, Carbomer, Triethanolamine, BHT, Diazolidinyl Urea, Disodium EDTA, CI 77491, CI 77492, Parfum",
+   "pct": {
+    "VITC_DERIV": 5
+   },
+   "inci_fa": "آکوا، دی اتیل هگزیل کربنات، سیکلوپنتاسیلوکسان گلیسیرین، میریستیل میریستات، استئاریل الکل، سوربیتان لورات، پلی گلیسرول-4 لورات، دی لوریل سیترات پنتیلن گلیکول، لسیتین، الکل، رتینول، پلی سوربات 20، پتاسیم فسفات، توکوفرول، سدیم اسکوربیل فسفات، نیاسینامید، دایمتیکون، سیتریک اسید، دکسترین، فرولیک اسید، مانیتول، سدیم سیترات، سدیم گلوکونات، عصاره برگ waltheria indica، ترانگزامیک اسید، موم گل محمدی، موم زنبور عسل، پروپیلن گلیکول، متیل پارابن، پروپیل پارابن، کربومر، تری اتانول آمین، بی اچ تی، دیازولیدنیل اوره، دی سدیم ا.د.ت.آ، Cl77491 ،Cl77492، اسانس.",
+   "src": "https://darukade.com/products/cosmetic-face-anti-spot-507/cream-c-bright-rejuvenating-cream-27708",
+   "size": "۳۰ میل",
+   "made": "ایرانی",
+   "declared_fa": "ویتامین c 5% پایدار"
+  },
+  "brightmax-hydra-sunfluid": {
+   "inci": "Aqua, Ethylhexyl Methoxycinnamate, Methylene Bis-Benzotriazolyl Tetramethylbutylphenol, Decyl Glucoside, Tocopheryl Acetate, Cera Alba, Sodium Stearoyl Lactylate, Sodium Hyaluronate, Hyaluronic Acid, Niacinamide, Propylene Glycol, Xanthan Gum, Mannitol, Sodium Gluconate, Safflower/Palm Oil Aminopropanediol Esters, Ceramide, Citric Acid, Sodium Citrate, Iris Extract, Dextrin, Ferulic Acid, 4-Methylbenzylidene Camphor, Diazolidinyl Urea, Butyl Methoxydibenzoylmethane, Ethylhexyl Palmitate, Cetearyl Alcohol, C12-15 Alkyl Benzoate, PEG-100 Stearate, Glyceryl Stearate, Polymethyl Methacrylate, Hydroxyacetophenone, Dimethicone, Chlorphenesin, BHT",
+   "spf": 50,
+   "filters": "chemical",
+   "inci_fa": "آب دیونیزه، اتیل هگزیل متوکسی سینامات، متیلن بیس- بنزوتریازولیل تترا متیل بوتیل فنل، دسیل گلوکوزید، توکوفریل استات، موم زنبور عسل، سدیم ستئارویل لاکتیلات، سدیم هیالورونات، هیالورونیک اسید، نیاسین آمید، پروپیلن گلیکول، زانتان گام، مانیتول، سدیم گلوکونات، روغن گلرنگ/ روغن پالم آمینو پروپان دیول استر، سرامید، سیتریک اسید، سدیم سیترات، عصاره برگ زنبق، دکسترین، فرولیک اسید، 4- متیل بنزیلیدن کامفور، دیازولیدینیل اوره، بوتیل متوکسی دی بنزوئیل متان، اتیل هگزیل پالمیتات، ستوستئارلیل الکل، C12-15 آلکیل بنزوات، PEG-100 استئارات، گلیسرول مونو استئارات، پلی متیل متاکریلات، هیدروکسی استوفنون، دایمتیکون، کلر فنزین، BHT.",
+   "src": "https://darukade.com/products/cosmetic-sunscreen-for-all-skin-types-1379/fluid-hydra-bright-fluid-aqua-fusion-sunscreen-spf50-27706",
+   "size": "50 میل",
+   "made": "ایرانی"
+  },
+  "brightmax-hyaluronic": {
+   "inci": "Aqua, Glycerin, Pentylene Glycol, Sodium Hyaluronate, Acrylates Copolymer, Hyaluronic Acid, Panthenol, Iris Extract, Ferulic Acid, Dextrin, Mannitol, Sodium Gluconate, Citric Acid, Sodium Citrate, Chlorphenesin, Phenoxyethanol",
+   "pct": {
+    "HUMECTANT": 2
+   },
+   "inci_fa": "آب دیونیزه، گلیسیرین، پنتیلن گلیکول، سدیم هیالورونات، آکریلات کوپلیمر، هیالورونییک اسید، پانتنول، عصاره برگ زنبق، فرولیک اسید، بکسترین، مانیتول، سدیم گلوکونات، سیتریک اسید، سدیم سیترات، کلر فنزین، فنوکسی اتانول.",
+   "src": "https://darukade.com/products/cosmetic-moisturizing-for-all-skin-types-1371/serum-hyaluronic-acid-hydra-bright-serum-27384",
+   "size": "۳۰ میلی",
+   "made": "ایرانی",
+   "declared_fa": "هیالورینیک اسید ۲٪"
+  },
+  "brightmax-niacinamide": {
+   "inci": "Niacinamide, Propylene Glycol, Glycerin, Palmitoyl Tripeptide-8, Carbomer, Zinc Gluconate, Chlorphenesin, Phenoxyethanol",
+   "pct": {
+    "VITAMIN_B3": 10
+   },
+   "inci_fa": "نیاسین‌آمید، پروپیلن‌گلایکول، گلیسیرین، پالمیتویل‌تری‌پپتاید-8، کربومر، زینک گلوکونات، کلرفنزین، فنوکسی اتانول",
+   "src": "https://darukade.com/products/%D8%A2%D8%B1%D8%A7%DB%8C%D8%B4%DB%8C-%D8%A8%D9%87%D8%AF%D8%A7%D8%B4%D8%AA%DB%8C-%D8%B6%D8%AF-%D9%84%DA%A9-%D8%B5%D9%88%D8%B1%D8%AA-507/serum-tone-bright-niacinamide-10-serum-25684",
+   "size": "۳۰ میل",
+   "made": "ایرانی",
+   "declared_fa": "نیاسینامید ۱۰٪"
+  },
+  "brightmax-vitamin-c25": {
+   "inci": "Aqua, Glycerin, Phospholipids, Niacinamide, Sodium Ascorbyl Phosphate, Arbutin, Butylene Glycol, Carbomer, Aminomethyl Propanol, Palmitoyl Tripeptide-8, Tranexamic Acid, Sodium Gluconate, Ferulic Acid, Citric Acid, Sodium Citrate, Chlorphenesin, Phenoxyethanol",
+   "pct": {
+    "VITC_DERIV": 25
+   },
+   "inci_fa": "آب دیونیزه، گلیسیرین، فسفولیپید، نیاسین آمید، سدیم اسکوربیل فسفات، آربوتین، بوتیل گلیکول، کربومر، آمینو متیل پروپانول، پالمیتوئیل تری پپتید 8، ترانگزامیک اسید، سدیم گلوکونات، فرولیک اسید، سیتریک اسید، سدیم سیترات کلروفنسین، فنوکسی اتانول.",
+   "src": "https://darukade.com/products/cosmetic-face-anti-spot-507/serum-c-bright-vitamin-c-25-serum-25685",
+   "size": "۳۰میل",
+   "made": "ایرانی",
+   "declared_fa": "25 درصد کمپلکس ویتامین سی لیپوزومال، ترانگزامیک اسید، پالمیتویل تری پپتید 8 ،نیاسینامید،فرولیک اسید،اربوتین"
+  },
+  "brightmax-azelaic": {
+   "inci": "Aqua, Azelaic Acid, Caprylic/Capric Triglyceride, Propylene Glycol, Glycerin, Dimethicone, Calendula Officinalis Extract, Acrylates Copolymer, Potassium Sorbate",
+   "pct": {
+    "AZELAIC": 10
+   },
+   "inci_fa": "آب، آزلائیک اسید، کاپریلیک/کاپریک تری گلیسرید، پروپیلن گلیکول، گلیسرین، دایمتیکون، عصاره کالاندولا، آکریلات کوپلیمر، پتاسیم سوربات.",
+   "src": "https://darukade.com/products/cosmetic-anti-spot-901/suspension-acne-bright-azelaic-acid-suspension-25816",
+   "size": "۳۰ میل",
+   "made": "ایرانی",
+   "declared_fa": "آزالائیک اسید ۱۰٪ و عصاره کالاندولا"
+  },
+  "cyspersa-eye": {
+   "inci": "Aqua, Glycerin, Cetearyl Alcohol, Butyrospermum Parkii Butter, Palmitoyl Tetrapeptide-7, Mannitol, Phosphatidylcholine, Phytonadione Epoxide, Cetyl Alcohol, Polysorbate 80, Decyl Glucoside, Potassium Sorbate, Sodium Benzoate, Xanthan Gum, Citric Acid, Sodium Chloride, Dimethicone, Argania Spinosa Kernel Oil, Cocos Nucifera Oil, Niacinamide, Pentylene Glycol, Polyglyceryl-10, Retinal Laurate, Calendula Officinalis Flower Oil, Carbomer, Tocopherol, Caffeine, Lactobionic Acid, Aminomethyl Propanol, Phenoxyethanol, Chlorphenesin",
+   "inci_fa": "آکوا (آب) (Aqua (Water))، گلیسرین (Glycerin)، ستئاریل الکل (Cetearyl Alcohol)، شی باتر (Butyrospermum Parkii (Shea) Butter)، پالمیتوئیل تتراپپتید-۷ (Palmitoyl Tetrapeptide-7)، مانیتول (Mannitol)، فسفاتیدیل کولین (Phosphatidylcholine)، فیتونادیون اکساید (Phytonadione Epoxide)، ستیل الکل (Cetyl Alcohol)، پلی‌سوربات ۸۰ (Polysorbate 80)، دسیل گلوکوزید (Decyl Glucoside)، پتاسیم سوربات (Potassium Sorbate)، سدیم بنزوات (Sodium Benzoate)، زانتان گام (Xanthan Gum)، اسید سیتریک (Citric Acid)، سدیم کلرید (Sodium Chloride)، دایمتیکون (Dimethicone)، روغن آرگان (Argania Spinosa Kernel Oil)، روغن نارگیل (Cocos Nucifera (Coconut) Oil)، نیاسینامید (Niacinamide)، پنتیلن گلیکول (Pentylene Glycol)، پلی‌گلیسریل-۱۰ (Polyglyceryl-10)، رتینال لورات (Retinal Laurate)، روغن کالاندولا (Calendula Officinalis Flower Oil)، کربومر (Carbomer)، توکوفرول (Tocopherol)، کافئین (Caffeine)، لاکتوبیونیک اسید (Lactobionic Acid)، آمینومتیل پروپانول (Aminomethyl Propanol)، فنوکسی‌اتانول (Phenoxyethanol)، کلرفنزین (Chlorphenesin).",
+   "src": "https://cyspersa.com/product/eye-revive-fluid/",
+   "size": "۱۵میل",
+   "made": "ایرانی"
+  },
+  "cyspersa-cysteamine": {
+   "inci": "Aqua, Phospholipids, Caprylic/Capric Triglyceride, Dimethicone, Glyceryl Stearate, Cetyl Alcohol, Steareth-20, Glycerin, Cysteamine HCl, Niacinamide, Arbutin, Ascorbyl Palmitate, Calendula Officinalis Flower Oil, Carbomer, Disodium EDTA, Chlorphenesin, Phenoxyethanol",
+   "pct": {
+    "CYSTEAMINE": 5
+   },
+   "inci_fa": "آکوا (آب) / Aqua (Water)، فسفولیپید / Phospholipid، کاپریلیک/کاپریک تری‌گلیسیرید / Caprylic/Capric Triglyceride، دایمتیکون / Dimethicone، گلیسریل استئارات / Glyceryl Stearate، ستیل الکل / Cetyl Alcohol، ستئاره-۲۰ / Steareth-20، گلیسرین / Glycerin، سیستئامین هیدروکلراید / Cysteamine HCl، نیاسینامید / Niacinamide، آربوتین / Arbutin، آسکوربیل پالمیتات / Ascorbyl Palmitate، روغن گل کالاندولا آفیشینالیس / Calendula Officinalis Flower Oil، کربومر / Carbomer، ادتا (دی‌سدیم اتیلن‌دی‌آمین تترااستات) / Disodium EDTA، کلرفنسین / Chlorphenesin، فنوکسی‌اتانول / Phenoxyethanol.",
+   "src": "https://darukade.com/products/cosmetic-face-anti-spot-507/cream-liposomal-cysteamine-5-cream-23358",
+   "size": "۵۰ میل",
+   "made": "ایرانی",
+   "declared_fa": "۵٪ سیستئامین لیپوزومی، آلفا آربوتین، ویتامین C و نیاسینامید"
+  },
+  "cyspersa-sun-untinted": {
+   "inci": "Aqua, Ethylhexyl Methoxycinnamate, Butyl Methoxydibenzoylmethane, 4-Methylbenzylidene Camphor, Ethylhexyl Palmitate, Glycerin, C12-15 Alkyl Benzoate, Palmitoyl Tripeptide-8, Sodium Ascorbyl Phosphate, Dextran, Niacinamide, Decyl Glucoside, Propylene Glycol, Xanthan Gum, C12-20 Alkyl Glucoside, Butylene Glycol, Hydroxyacetophenone, Dimethicone, BHT, Carbomer, Diazolidinyl Urea, Chlorphenesin",
+   "spf": 50,
+   "filters": "chemical",
+   "check": "لینک منبع این ردیف («power-bright-series») ممکن است برای محصول دیگری باشد؛ یک بار با بسته‌ی سیسپرسا تطبیق بده",
+   "inci_fa": "آب دیونیزه، اکتیل متوکسی‌سینامات، بوتیل متوکسی دی بنزوئیل متان، -4 متیل بنزیلیدین کامفور، اتیل هگزیل پالمیتات، گلیسیرین، C۱۲-۱۵ آلکیل بنزوات، پالمیتوئیل تری پپتید -8، سدیم آسکوربیل فسفات، دکستران نیاسینامید، دسیل گلوکوزاید، پروپیلن گلیکول، زانتان گام، C12-20 آلکیل گلوکوزاید، بوتیل گلیکول، هیدروکسی استوفنون، دایمتیکون، بی اچ تی، کربومر، اوره دیازولیدینیل، کلروفنزین.",
+   "src": "https://darukade.com/products/cosmetic-sunscreen-for-all-skin-types-1379/fluid-power-bright-series-sunscreen-fluid-spf50-24942",
+   "size": "۵۰ میل",
+   "made": "ایرانی"
+  },
+  "revival-hyalusense-cream": {
+   "inci": "Aqua, Caprylic/Capric Triglyceride, Butyrospermum Parkii Butter, Olea Europaea Fruit Oil, Niacinamide, Butylene Glycol, Macadamia Ternifolia Seed Oil, Arachidyl Alcohol, Dimethicone, Glycerin, Arachidyl Glucoside, Behenyl Alcohol, Xylitylglucoside, Anhydroxylitol, Xylitol, Phenoxyethanol, Allantoin, Panthenol, Hyaluronic Acid, Ethylhexylglycerin, Aloe Barbadensis Leaf Extract",
+   "rich": true,
+   "inci_fa": "آب، کاپریلیک کاپریک تری گلیسرید، شی باتر، روغن زیتون، نیاسین آمید، بوتیلن گلیکول، روغن دانه ماکادمیا، آراشیدیل الکل، دایمتیکون، گلیسرین آراشیدیل گلوکوزاید، بهنیل الکل، زایلیتویل گلوکوزاید، انهیدروکسی زایلیتول، زایلیتول، فنوکسی اتانول، آلانتوئین، پانتنول، هیالورونیک اسید، اتیل هگزیل گلیسرین، آلوئه ورا.",
+   "src": "https://darukade.com/products/cosmetic-dry-skin-moisturizer-6/cream-hyalusense-hydrating-cream-for-normal-to-dry-skin-28549",
+   "size": "۴۰ میل",
+   "made": "ایرانی"
+  },
+  "revival-hyalusense-serum": {
+   "inci": "Aqua, Butylene Glycol, Niacinamide, Pentylene Glycol, Glycerin, Sucrose, Fructose, Maltose, Trehalose, Glucose, Sodium PCA, Urea, Citric Acid, Sodium Lactate, Allantoin, Sodium Hyaluronate, Sodium Benzoate, Hyaluronic Acid, Xanthan Gum, Potassium Sorbate, Hydrolyzed Hyaluronic Acid, Panthenol",
+   "inci_fa": "آب، بوتیلن گلیکول، نیاسین آمید، پنتیلن گلیکول، گلیسرین، ساکران، فروکتوز، مالتوز، ترهالوز، گلوکز، سدیم PCA، اوره، سیتریک اسید، سدیم لاکتات، آلانتوئین، سدیم هیالورونات، سدیم بنزوات، هیالورونیک اسید، زانتان گام، پتاسیم سوربات، هیالورونیک اسید هیدرولیز شده، دکسپانتنول.",
+   "src": "https://dr-dadras-pharmacy.com/product/سرم-آبرسان-و-روشن-کننده-پوست-رویوال/",
+   "size": "۳۰ میل",
+   "made": "ایرانی"
+  },
+  "vitalayer-activit-foam": {
+   "inci": "Aqua, Disodium Laureth Sulfosuccinate, Hydrogenated Phosphatidylcholine, Cholesterol, Magnesium Ascorbyl Phosphate, Lycopodium Clavatum Extract, Imperata Cylindrica Root Extract, Lauryl Glucoside, Coco-Glucoside, Cocamidopropyl Betaine, Zinc PCA, Azelaic Acid, Glycerin, Melaleuca Alternifolia Leaf Oil, Phenoxyethanol, Ethylhexylglycerin, Polyquaternium-7, PEG-7 Glyceryl Cocoate, Panthenol, Niacinamide, Aloe Barbadensis Leaf Extract, Salicylic Acid, Parfum",
+   "eo": true,
+   "pct": {
+    "ZINC": 1,
+    "BHA": 0.1
+   },
+   "inci_fa": "آب دیونیزه، دی سدیم لورت سولفوسوکسینات، فسفاتیدیل کولین هیدروژنه، کلسترول، منیزیم اسکوربیل فسفات، عصاره لیکوپودیوم کلاواتوم، عصاره ریشه ایمپراتا سیلیندریکا، لوریل گلوکوزاید، کوکو گلوکوزاید، کوکامیدو پروپیل بتائین، زینک پی سی ای، آزلائیک اسید، گلیسرین، روغن درخت چای، فنوکسی اتانول، اتیل هگزیل گلیسرین، پلی کواترنیوم-7، پی ای جی -7 گلیسرول کوکوات، دکسپانتنول، نیاسینامید، عصاره برگ آلوئه ورا، سالیسیلیک اسید، اسانس مجاز آرایشی و بهداشتی",
+   "src": "https://mosbatesabz.com/product/vitalayer-activit-face-foaming-wash/",
+   "size": "۲۰۰ میل",
+   "made": "ایرانی",
+   "declared_fa": "Tea tree oil 1%.   Zinck PCA 1%.  Salicylic asid 0.1%"
+  },
+  "vitalayer-hydravit-foam": {
+   "inci": "Aqua, Disodium Cocoyl Glutamate, Glycerin, Lycopodium Clavatum Extract, Imperata Cylindrica Root Extract, Alcohol, Hydrogenated Phosphatidylcholine, Cholesterol, Magnesium Ascorbyl Phosphate, Lauryl Glucoside, Coco-Glucoside, Sodium PCA, Phenoxyethanol, Ethylhexylglycerin, Polyquaternium-7, PEG-7 Glyceryl Cocoate, Panthenol, Allantoin, Niacinamide, Avena Sativa Kernel Extract, Aloe Barbadensis Leaf Powder, Zinc Gluconate, Sodium Hyaluronate, Parfum",
+   "inci_fa": "آب دیونیزه، دی سدیم کوکویل گلوتامات، گلیسرین، عصاره لیکوپودیوم کلاواتوموم، عصاره ریشه ایمپراتا سیلیندریا، آب دیونیزه، اتانول، فسفات گلیکوئید هیدروژنه، کلسترول و منیزیم آسکوربیل فسفات، لوریل گلوکوزاید، کوکو گلوکوزاید، گلیسرین، سدیم پی سی ای، فنوکسی اتانول و اتیل هگزیل گلیسرین، پلی کواترنیوم-7، پی ای جی-7 گلیسریل کوکوآت، دکسپانتنول، آلانتوئین، نیاسین آمید، عصاره جو دوسر، پودر برگ آلوئه ورا، زینک گلوکونات، سدیم هیالورونیت، اسانس مجاز آرایشی و بهداشتی.",
+   "src": "https://darukade.com/products/cosmetic-dry-skin-cleaners--35/foam-hydravit-face-foaming-wash-26343",
+   "size": "150 میل",
+   "made": "ایرانی",
+   "declared_fa": "زینک گلوکونات، سدیم هیالورونیت و آلانتوئین ،ویتامین های B5، B3 و ویتامین سی"
+  },
+  "vitalayer-whitevit-foam": {
+   "inci": "Aqua, Disodium Laureth Sulfosuccinate, Hydrogenated Phosphatidylcholine, Cholesterol, Magnesium Ascorbyl Phosphate, Glycine, Lycopodium Clavatum Extract, Lauryl Glucoside, Coco-Glucoside, Cocamidopropyl Betaine, Glycerin, Octadecenedioic Acid, Melaleuca Alternifolia Leaf Oil, Ethylhexylglycerin, Phenoxyethanol, Polyquaternium-7, PEG-7 Glyceryl Cocoate, Panthenol, Caffeine, Arbutin, Glycyrrhiza Glabra Root Extract, Allantoin, Niacinamide, Aloe Barbadensis Leaf Extract, Zinc Gluconate, Sodium Hyaluronate, Parfum",
+   "eo": true,
+   "inci_fa": "آب دیونیزه، دی سدیم لورت سولفوسوکسینات، فسفاتیدیل کولین هیدروژنه، کلسترول، منیزیم، آسکوربیل فسفات، گلیسین، عصاره لیکوپودیم، لوریل گلوکوزید، کوکو گلوکوزید، کوکامیدو پروپیل بتائین، گلیسیرین، اکتا دسنوئیک اسید، روغن درخت چای، اتیل هگزیل گلیسیرین و پروپیلن متانول، پلی کواترنیوم-7، PEG-7 گلیسریل کوکوات، دکسپانتنول، کافئین بی آب، آربوتین، عصاره شیرین بیان، آلانتوئین، نیاسین آمید، عصاره آلوئه ورا، زینک گلوکونات، سدیم هیالورونات، اسانس.",
+   "src": "https://darukade.com/products/cosmetic-anti-spot-and-whitening-897/foam-whitevit-face-foaming-wash-20672",
+   "size": "۲۰۰ میل",
+   "made": "ایرانی",
+   "declared_fa": "Licorice Extract 1% - O.D.A white 1%"
+  },
+  "vitalayer-sensivit-foam": {
+   "inci": "Aqua, Disodium Laureth Sulfosuccinate, Hydrogenated Phosphatidylcholine, Cholesterol, Magnesium Ascorbyl Phosphate, Melaleuca Alternifolia Leaf Oil, Lycopodium Clavatum Extract, Imperata Cylindrica Root Extract, Lauryl Glucoside, Coco-Glucoside, Cocamidopropyl Betaine, Glycerin, Phenoxyethanol, Ethylhexylglycerin, Polyquaternium-7, PEG-7 Glyceryl Cocoate, Panthenol, Glycyrrhiza Glabra Root Extract, Allantoin, Niacinamide, Aloe Barbadensis Leaf Powder, Zinc Gluconate, Sodium Hyaluronate",
+   "eo": true,
+   "inci_fa": "آب، دی سدیم لورت سولفوسوکسینات، فسفاتیدیل کولین هیدروژنه، کلسترول، منیزیم آسکوربیل فسفات، روغن درخت چای، عصاره لیکوپودیوم کلاواتوم و ایمپراتا سیلندریکا، لوریل گلوکوزاید، کوکو گلوکوزاید، کوکامیدو پروپیل بتائین، گلیسرین، مخلوط فنوکسی اتانول و اتیل هگزیل گلیسرین، پلی کواترنیوم 7، پی ای جی 7 گلیسریل کوکوات، پانتنول، عصاره ریشه شیرین بیان، آلانتوئین، نیاسین آمید، پودر عصاره برگ آلوئه ورا، زینک گلوکونات، سدیم هیالورونیت.",
+   "src": "https://darukade.com/products/cosmetic-sensitive-skin-cleaners-355/foam-sensivit-face-foaming-wash-20611",
+   "size": "150 میل",
+   "made": "ایرانی"
+  },
+  "vitalayer-vitc-foam": {
+   "inci": "Aqua, Disodium Cocoamphodiacetate, Lauryl Glucoside, Coco-Glucoside, Glycerin, Melaleuca Alternifolia Leaf Oil, Phenoxyethanol, Ethylhexylglycerin, Sodium PCA, PEG-40 Hydrogenated Castor Oil, PEG-7 Glyceryl Cocoate, Ascorbic Acid, Tocopheryl Acetate, Sodium Hyaluronate, Aloe Barbadensis Leaf Powder",
+   "eo": true,
+   "pct": {
+    "VITC_LAA": 2
+   },
+   "inci_fa": "آب دیونیزه، دی سدیم کوکوامفو دی استات، لوریل گلوکوزاید، کوکو گلوکوزاید، گلیسیرین، روغن درخت چای، فنوکسی اتانول و اتیل هگزیل گلیسرین، سدیم پی سی ای، پی ای جی 40 روغن کرچک اتوکسیله، پی ای جی 7 گلیسیرین کوکوات، آسکوربیک اسید، توکوفرول استات، سدیم هیالورونات، پودر برگ آلوئه ورا.",
+   "src": "https://darukade.com/products/cosmetic-cleanser-for-all-skin-types-1376/foam-vitamin-c-foaming-face-wash-15902",
+   "size": "۲۰۰ میل",
+   "made": "ایرانی",
+   "declared_fa": "Liposomal vitamin C 2% - Hyaloronic Acid 0.2%"
+  },
+  "vitalayer-hydravit-spray": {
+   "inci": "Aqua, Sodium PCA, Panthenol, Sodium Hyaluronate, Allantoin, Glycerin, Propylene Glycol, Niacinamide, Bisabolol, Aloe Barbadensis Leaf Powder, Sodium Benzoate, Potassium Sorbate, Magnesium Ascorbyl Phosphate, Ceramide NG, Tocopheryl Acetate, Parfum",
+   "inci_fa": "آب دیونیزه، سدیم پی سی ای، پانتنول، سدیم هیالورونیت، آلانتوئین، گلیسرین، پروپیلن گلایکول، نیاسین آمید، بیزابولول، پودر آلوئه ورا، سدیم بنزوات، پتاسیم سوربات، منیزیم آسکوربیل فسفات، سرامید ان جی، ویتامین ای استات، اسانس مجاز آرایشی و بهداشتی.",
+   "src": "https://darukade.com/products/cosmetic-moisturizing-for-all-skin-types-1371/spray-hydravit-refreshing-water-spray-29462",
+   "size": "75 میل",
+   "made": "ایرانی"
+  },
+  "vitalayer-timevit-gel": {
+   "inci": "Aqua, Disodium Cocoyl Glutamate, Disodium Cocoamphoacetate, Coco-Glucoside, Hydrogenated Phosphatidylcholine, Cholesterol, Magnesium Ascorbyl Phosphate, Lycopodium Clavatum Extract, Imperata Cylindrica Root Extract, Gluconolactone, Lactobionic Acid, PEG-150 Distearate, Lactic Acid, Glycolic Acid, Citric Acid, Malic Acid, Glycerin, PEG-8, PEG/SMDI Copolymer, Palmitoyl Myristyl Serinate, Sodium Polyacrylate, Panthenol, Salicylic Acid, Sodium Benzoate, Potassium Sorbate, Niacinamide, Allantoin, Sodium Hyaluronate, Aloe Barbadensis Leaf Powder, Parfum",
+   "pct": {
+    "BHA": 0.5,
+    "PHA": 1,
+    "AHA": 1
+   },
+   "nosrc": true,
+   "check": "لینکی که برای این ردیف گذاشته بودی صفحه‌ی «ژل وایت‌ویت» است، نه تایم‌ویت؛ آن را به ردیف وایت‌ویت منتقل کردم. برای تایم‌ویت منبع جدا بگذار",
+   "inci_fa": "آب دیونیزه، دی سدیم کوکوئیل گلوتامات، دی سدیم کوکو آمفو استات، کوکو گلوکوزید، مخلوط آب دیونیزه، فسفاتیدیل کولین هیدروژنه شده، کلسترول و منیزیم آسکوربیل فسفات، مخلوط گلیسیرین، عصاره لیکوپودیوم کلاواتوم و ریشه ایمپراتا سیلندریکا، پلی هیدروکسید اسید (گلوکونولاکتون و لاکتوبیوتیک اسید)، پی ای جی-150 دی استئارات، آلفا هیدروکسی اسید (لاکتیک اسید، گلیکولیک اسید، سیتریک اسید و مالیک اسید)، گلیسرین، پی ای جی-8، پی ای جی/ اس ام دی آی کوپلیمر، پالمیتوئیل میریستیل سرینات، سدیم پلی آکریلات، گلیسیرین، دکسپانتنول، بتا هیدروکسی اسید (سالیسیلیک اسید)، سدیم بنزوات، پتاسیم سوربات، نیاسینامید، آلانتوئین، سدیم هیالورونات، پودر برگ آلوئه ورا، اسانس مجاز آرایشی و بهداشتی.",
+   "size": "۲۰۰ میل",
+   "made": "ایرانی",
+   "declared_fa": "BHA 0.5 %. PHA 1%.  AHA 1%"
+  },
+  "vitalayer-whitevit-gel": {
+   "inci": "Aqua, Disodium Laureth Sulfosuccinate, Hydrogenated Phosphatidylcholine, Cholesterol, Magnesium Ascorbyl Phosphate, Glycerin, Lycopodium Clavatum Extract, Imperata Cylindrica Root Extract, Lauryl Glucoside, Coco-Glucoside, Cocamidopropyl Betaine, Octadecenedioic Acid, Melaleuca Alternifolia Leaf Oil, Phenoxyethanol, Ethylhexylglycerin, Polyquaternium-7, PEG-7 Glyceryl Cocoate, PEG-150 Distearate, Panthenol, Caffeine, Arbutin, Glycyrrhiza Glabra Root Extract, Allantoin, Niacinamide, Aloe Barbadensis Leaf Powder, Zinc Gluconate, Sodium Hyaluronate, Parfum",
+   "eo": true,
+   "src": "https://darukade.com/products/cosmetic-cleanser-for-all-skin-types-1376/gel-whitevit-face-gel-wash-20669",
+   "inci_fa": "آب دیونیزه، دی سدیم لورت سولفوکسینات، آب، هیدروژنیتد فسفاتیدیل کولین، کلسترول و منیزیم آسکوربیل فسفات، گلیسرین، عصاره لیکوپودیوم کلاواتوموم و عصاره ریشه ایمپرتا سیلیندریا، لوریل گلوکوزاید، کوکو گلوکوزاید، کوکامیدوپروپیل بتائین، اکتادسن دی اولئیک اسید، گلیسرین، روغن درخت چای، فنوکسی اتانول و اتیل هگزیل گلیسرین، پلی کواترنیوم-7، PEG-7 گلیسرید کوکوات،PEG-150 دی استئارات، دکسپانتنول، کافئین، آربوتین، عصاره لیکوریس، آلانتوئین، نیاسین آمید، پودر آلوئه ورا، زینک گلوکونات، سدیم هیالورونات، اسانس مجاز آرایشی و بهداشتی.",
+   "size": "200 میل",
+   "made": "ایرانی",
+   "declared_fa": "Licorice Extract 1% - O.D.A white 0.5٪"
+  }
+ },
+ "duplicates": {
+  "brightmax-tone-physical": "brightmax-physical"
+ }
+}

@@ -9,7 +9,8 @@ for(const p of C.products){
   if(!p.name||!p.role)bad('name/role missing '+p.id);
   if(p.basis==='inci_sourced'){
     const n=String(p.inci||'').split(/,\s*/).filter(Boolean).length;if(n<5)bad('incomplete INCI ('+n+') '+p.id);
-    if(!(p.sources||[]).some(u=>/^https:\/\//.test(u)))bad('no https source '+p.id);
+    // a list the team typed from the package itself may have no web page; it must then keep the team's original text
+    if(!(p.sources||[]).some(u=>/^https:\/\//.test(u))&&!(p.team&&String(p.inci_fa||'').length>30))bad('no https source '+p.id);
   }else if(p.basis!=='declared_name')bad('unknown basis '+p.id);
 }
 // every batch product shown in the app has a formula and a local photo

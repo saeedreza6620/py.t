@@ -21,7 +21,7 @@ assert.equal(sun.decision,'buy');assert(sun.answer.startsWith('نتیجه: بخ�
 const dup=m.catalogPurchaseCheck({profile:{skinBase:'چرب',barrier:'سالم'},selection:[{id:'skin1004-hyalucica',name:'',time:'am'}],ownedIds:[]},'boj-rice-bright');
 assert.equal(dup.decision,'wait','same role already in routine');
 assert.equal(m.catalogPurchaseCheck({profile:{}},'not-a-product'),null);
-assert.equal(m.catalogPurchaseCheck({profile:{skinBase:'چرب'},selection:[]},'brightmax-niacinamide').decision,'wait','name-only formula is not a buy');
+{const dc=m.catalogPurchaseCheck({profile:{skinBase:'چرب'},selection:[]},'simple-soothing-toner');assert(['buy','wait','avoid'].includes(dc.decision));assert(dc.answer.includes('اعلام کرده'),'declared basis said plainly');assert(!/ثبت نشده|تو راه/.test(dc.answer),'no pending wording')}
 assert.equal(m.catalogPurchaseBody(sun,'api_not_configured').decision.label,'buy');
 fs.rmSync(dir,{recursive:true,force:true});
-console.log('PASS catalog review: fallback body, server-owned lead, purchase verdicts (wait/avoid/buy/duplicate/name-only)');
+console.log('PASS catalog review: fallback body, server-owned lead, purchase verdicts (wait/avoid/buy/duplicate/brand-declared)');

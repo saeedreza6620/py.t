@@ -45,10 +45,17 @@ const sunGap=owned.gaps.find(g=>g.role==='sunscreen');
 assert.equal(sunGap.suggestions[0].id,'skin1004-hyalucica');assert.equal(sunGap.suggestions[0].owned,true);
 assert.equal(owned.purchaseNeeded,false,'owned sunscreen means no purchase');
 
-// Declared-only formula never becomes a plain keep; unknown id becomes verify.
-const declared=evaluateRoutine({profile:{skinBase:'چرب'},selection:[{id:'brightmax-niacinamide',time:'pm'},{id:'not-in-catalog',name:'محصول ناشناس',time:'pm'}]},catalog);
-assert.equal(actionOf(declared,'brightmax-niacinamide'),'verify');
+// A brand-declared formula gets a real, personal answer (no "waiting for ingredients" label), with its basis said
+// plainly; a product outside the catalog is identified from sources (verify).
+const declared=evaluateRoutine({profile:{skinBase:'چرب'},selection:[{id:'simple-soothing-toner',time:'pm'},{id:'not-in-catalog',name:'محصول ناشناس',time:'pm'}]},catalog);
+assert.equal(actionOf(declared,'simple-soothing-toner'),'keep');
+assert(declared.actions.find(a=>a.id==='simple-soothing-toner').reason.includes('اعلام‌شده'),'says it is judged from the brand-declared ingredients');
+assert(!/ثبت نشده|تو راه|در راه/.test(JSON.stringify(declared)),'no pending-ingredients wording');
 assert.equal(actionOf(declared,'not-in-catalog'),'verify');
+// the team-entered Iranian lists are in: Bright Max niacinamide is judged from its full list, the C-Bright cream's retinol is seen
+assert.equal(catalog.products.find(p=>p.id==='brightmax-niacinamide').basis,'inci_sourced');
+assert(catalog.products.find(p=>p.id==='brightmax-cbright-cream').actives.some(a=>a.cls==='RETINOID'));
+assert(!catalog.products.some(p=>p.id==='brightmax-tone-physical'),'duplicate folded into brightmax-physical');
 
 // Dry skin: dry-skin sunscreen is fine, soap-based foam is flagged.
 const dry=evaluateRoutine({profile:{skinBase:'خشک'},selection:[{id:'boj-relief',time:'am'},{id:'skin1004-pore-foam',time:'pm'}]},catalog);

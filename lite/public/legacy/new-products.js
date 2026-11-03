@@ -3,7 +3,6 @@
 window.BW_ADDED_PRODUCTS = [
   ['brightmax-cbright-tinted','ضد آفتاب','ضد آفتاب رنگی برایت‌مکس C-Bright SPF 50','Bright Max C-Bright Tinted SPF 50',2030],
   ['brightmax-acne-matt','آبرسان','کرم آبرسان مات برایت‌مکس Acne-Bright','Bright Max Acne-Bright Matt Hydrating Cream',2031],
-  ['brightmax-tone-physical','ضد آفتاب','ضد آفتاب فیزیکال برایت‌مکس Tone-Bright SPF 50، بی‌رنگ','Bright Max Tone-Bright Physical Sunscreen SPF 50 Invisible',2032],
   ['brightmax-hydra-light','آبرسان','کرم آبرسان سبک برایت‌مکس Hydra-Bright','Bright Max Hydra-Bright Light Hydrating Cream',2033],
   ['brightmax-acne-foam','شوینده','فوم پاک‌کننده برایت‌مکس Acne-Bright، سالیسیلیک اسید و نیاسینامید','Bright Max Acne-Bright Cleansing Foam',2036],
   ['brightmax-cbright-night','مرطوب‌کننده','کرم شب ویتامین C برایت‌مکس C-Bright','Bright Max C-Bright Night Cream',2037],

@@ -81,10 +81,9 @@ export function catalogPurchaseCheck(shared:Shared,productId:unknown,productName
   else if(own.action==='pause'||own.action==='professional'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);}
   else if(own.action==='replace'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);if(own.alternatives?.length)reasons.push('گزینه مناسب‌تر از کاتالوگ: '+own.alternatives.map(x=>x.name+(x.owned?' (در ولتت داری)':'')).join(' یا '));}
   else if(sameRole.length){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push('در روتینت '+sameRole.map(a=>a.name).join('، ')+' همین نقش را دارد؛ خرید دوم فعلاً لازم نیست');}
-  else if(f.basis==='declared_name'){decision='wait';head='نتیجه: فعلاً صبر کن';reasons.push(own.reason);}
   else{decision='buy';head='نتیجه: بخر، اگر قیمت و اصالت فروشنده را تأیید کردی';if(fit.reason)reasons.push(fit.reason+'؛ '+own.reason);else reasons.push(own.reason);own.alternatives=[];}
   reasons.push(...related.slice(0,2));
-  if(f.basis==='declared_name')reasons.push('فهرست ترکیبات این نسخه هنوز در کاتالوگ ثبت نشده');
+  if(f.basis==='declared_name')reasons.push('این سنجش از روی ترکیبات کلیدی‌ای است که خود برند اعلام کرده');
   const lead=check.state.skinLabel?'برای پوست '+check.state.skinLabel+(check.state.acne?' با جوش فعال':'')+(check.state.compromised?' و لایه محافظ تحریک‌شده':''):'بر اساس پروفایل ثبت‌شده';
   const answer=[head,...reasons.slice(0,3),lead+'؛ این نتیجه از فرمول ثبت‌شده همین محصول در کاتالوگ BeautyWallet است'].join('\n');
   const byId=new Map(CATALOG.products.map(p=>[p.id,p]));

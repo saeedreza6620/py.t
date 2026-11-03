@@ -43,7 +43,7 @@ export const INCI_RULES=[
  ['SOOTHING',/\b(centella asiatica|madecassoside|asiaticoside|panthenol|allantoin)\b/i],
  ['ZINC',/\bzinc (pca|gluconate|sulfate)\b/i],
  ['BAKUCHIOL',/\bbakuchiol\b/i],
- ['PEPTIDE',/\b(palmitoyl|acetyl hexapeptide|copper tripeptide|peptide)\b/i],
+ ['PEPTIDE',/peptide|\bmatrixyl\b/i],
  ['ENZYME',/\b(papain|bromelain|subtilisin|protease)\b/i]];
 // exfoliating acids low in the list are often pH adjusters, not actives
 const POS_LIMIT={AHA:0.66};

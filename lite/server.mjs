@@ -159,7 +159,7 @@ async function checkSources(inci,sources){const items=(inci||[]).map(incNorm).fi
   const texts=await Promise.all(urls.map(pageText));let fetched=0;texts.forEach((t,i)=>{if(!t)return;fetched++;const pad=' '+t+' ';const c=items.filter(x=>pad.includes(' '+x+' ')).length/items.length;if(c>best.coverage)best={ok:c>=0.6,coverage:Math.round(c*100)/100,url:urls[i]}});best.fetched=fetched;best.urls=urls.length;return best}
 async function digikalaProduct(u){try{const m=String(u).match(/dkp-(\d{3,12})/i);if(!m)return '';const r=await fetch('https://api.digikala.com/v2/product/'+m[1]+'/',{signal:AbortSignal.timeout(8000),headers:{'User-Agent':'Mozilla/5.0 BeautyWallet','Accept':'application/json'}});if(!r.ok)return '';
   const j=await r.json(),p=j&&j.data&&j.data.product;if(!p)return '';return [p.brand&&(p.brand.title_en||p.brand.title_fa),p.title_en,p.title_fa].filter(Boolean).join(' — ').slice(0,260)}catch{return ''}}
-const TRUSTED_SRC=/(^|\.)(incidecoder\.com|skinsort\.com|cosdna\.com|skincarisma\.com|inci\.guide|ewg\.org|sephora\.[a-z.]+|ulta\.com|boots\.com|lookfantastic\.[a-z.]+|cultbeauty\.[a-z.]+|feelunique\.com|oliveyoung\.(com|co\.kr)|global\.oliveyoung\.com|yesstyle\.com|stylevana\.com|jolse\.com|beautylish\.com|dermstore\.com|notino\.[a-z.]+|douglas\.[a-z.]+|digikala\.com|khanoumi\.com|amazon\.[a-z.]+)$/i;
+const TRUSTED_SRC=/(^|\.)(darukade\.com|incidecoder\.com|skinsort\.com|cosdna\.com|skincarisma\.com|inci\.guide|ewg\.org|sephora\.[a-z.]+|ulta\.com|boots\.com|lookfantastic\.[a-z.]+|cultbeauty\.[a-z.]+|feelunique\.com|oliveyoung\.(com|co\.kr)|global\.oliveyoung\.com|yesstyle\.com|stylevana\.com|jolse\.com|beautylish\.com|dermstore\.com|notino\.[a-z.]+|douglas\.[a-z.]+|digikala\.com|khanoumi\.com|amazon\.[a-z.]+)$/i;
 const INCI_BASE=/^(aqua|water|eau|glycerin|butylene glycol|propanediol|dimethicone|niacinamide|panthenol|cetearyl alcohol|caprylic\/capric triglyceride|squalane|sodium hyaluronate|xanthan gum|carbomer|phenoxyethanol|ethylhexylglycerin|tocopherol|allantoin|disodium edta|1,2-hexanediol|pentylene glycol|cetyl alcohol|stearic acid|glyceryl stearate|zinc oxide|titanium dioxide)$/i;
 function trustedCited(b){const inci=(b.inci||[]).map(x=>String(x).trim()).filter(Boolean);if(inci.length<8)return false;
   const ok=inci.filter(x=>x.length>=2&&x.length<=90&&/^[A-Za-z0-9 ,.()\/\-+'%&:]+$/.test(x)&&x.split(/\s+/).length<=8).length/inci.length;
@@ -211,6 +211,25 @@ async function research(name,url){
   return {status:200,body:data};
 }
 
+// ---------- catalog completion in the background ----------
+// The built-in catalog products that still have only the brand-declared ingredients are researched one at a time
+// (the same strong search a shopper's check uses), at most cfg.backfillDaily a day. A full list from a verified or
+// trusted source replaces the catalog entry for everyone; anything else waits in /admin. Each product is retried
+// at most every 14 days. Shoppers never wait for this: they always get an answer from what is known now.
+const BACKF=path.join(DATA,'backfill.json');let bf={day:'',n:0,tried:{}};try{bf={...bf,...JSON.parse(fs.readFileSync(BACKF,'utf8'))}}catch{}
+let CATDECL=[];try{CATDECL=JSON.parse(fs.readFileSync(path.join(here,'catalog-formulas.json'),'utf8')).products.filter(p=>p.basis==='declared_name').map(p=>({id:p.id,name:p.name,en:p.en||''}))}catch{}
+function backfillLeft(){const done=new Set(BANK.list().filter(p=>p.replaces&&p.basis==='inci_sourced').map(p=>p.replaces));return CATDECL.filter(p=>!done.has(p.id))}
+async function backfillOne(){const day=new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Tehran'});if(bf.day!==day){bf.day=day;bf.n=0}
+  if(bf.n>=Number(cfg.backfillDaily??12)||!KEY||!BASE)return;
+  const left=backfillLeft().filter(p=>Date.now()-((bf.tried||{})[p.id]||0)>14*864e5);const next=left[0];if(!next)return;
+  bf.tried[next.id]=Date.now();bf.n++;try{fs.writeFileSync(BACKF,JSON.stringify(bf))}catch{}
+  const r=await research(next.en||next.name,'');let result='not_found';
+  if(r.status===200&&r.body.found&&r.body.level==='inci'){const f=BANK.toFormula(r.body,next.name,r.body.sources,r.body.model);if(f){f.replaces=next.id;const sv=r.body.sourceVerified,live=sv===true||(sv==='cited'&&r.body.trusted);
+    const row=BANK.add(f,next.name,live?{source:'backfill'}:{pending:true,source:'backfill-cited'});result=row?(row.pending?'pending':'live'):'rejected'}}
+  else if(r.status===200&&r.body.found)result='declared_only';
+  fs.appendFile(path.join(DATA,'backfill.jsonl'),JSON.stringify({at:new Date().toISOString(),id:next.id,result})+'\n',()=>{})}
+setTimeout(()=>backfillOne().catch(()=>{}),5*60e3).unref?.();setInterval(()=>backfillOne().catch(()=>{}),40*60e3).unref?.();
+globalThis.BW_BACKFILL=()=>({left:backfillLeft().length,total:CATDECL.length,today:bf.day===new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Tehran'})?bf.n:0,cap:Number(cfg.backfillDaily??12)});
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
 const EVENTS=new Set(['notif_off','wel_check','wel_chat','wel_skip','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
 const evHits=new Map();let deepCache=null;

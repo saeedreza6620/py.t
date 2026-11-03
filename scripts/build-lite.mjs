@@ -12,6 +12,8 @@ const load=f=>import('data:text/javascript;base64,'+Buffer.from(ts.transpile(fs.
 const {BEAUTYWALLET_SYSTEM_PROMPT:system}=await load('assistant/knowledge.ts');const {PERSONAL_RESPONSE_STYLE:style}=await load('assistant/personal-response.ts');
 fs.writeFileSync(path.join(dest,'bw-prompts.js'),'/* GENERATED */window.BWPrompts='+JSON.stringify({system:system.trim(),style:style.trim()})+';\n');
 fs.copyFileSync(path.join(src,'claude/claude-bridge.js'),path.join(dest,'claude-bridge.js'));
+// the server's background catalog completion needs the list of products that still lack a full ingredient list
+fs.copyFileSync(path.join(src,'assistant/resources/catalog-formulas.json'),path.join(src,'lite/catalog-formulas.json'));
 fs.copyFileSync(path.join(src,'claude/lite-track.js'),path.join(dest,'lite-track.js'));
 fs.copyFileSync(path.join(src,'claude/landing.html'),path.join(out,'index.html'));
 for(const f of fs.existsSync(path.join(src,'claude/site'))?fs.readdirSync(path.join(src,'claude/site')):[])fs.copyFileSync(path.join(src,'claude/site',f),path.join(out,f));

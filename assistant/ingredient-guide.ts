@@ -139,7 +139,7 @@ export function explainPurchase(f:F,s:St,items:Item[],extra:{decision?:string;in
     if(s.sensitive||s.compromised||s.fragranceAvoid)notes.push(word+' داره. عطر بعد از نیکل شایع‌ترین علت حساسیت تماسی پوسته و تو '+(s.fragranceAvoid?'عطر رو خط قرمزت گذاشتی':'پوستت رو حساس یا تحریک‌شده ثبت کردی')+'. اگه باز هم خواستی امتحانش کنی، دو هفته روزی دو بار یه کم روی ساعدت بزن و اگه قرمزی یا خارش زد کنارش بذار.');
     else notes.push(word+' داره؛ تو حساسیت ثبت نکردی، پس دلیل رد کردنش نیست، ولی اگه قرمزی یا خارش دیدی اولین مشکوک همینه.');
   }
-  if(f.basis==='declared_name')notes.push('فهرست کامل ترکیبات همین نسخه هنوز ثبت نشده؛ این جواب از روی اسم و ادعای برنده و برای همین قطعی نیست.');
+  if(f.basis==='declared_name')notes.push('این سنجش از روی ترکیبات کلیدی‌ایه که خود برند اعلام کرده.');
 
   // 4. against the person's own routine
   const pairs:Explain['pairs']=[];
@@ -169,6 +169,6 @@ export function explainPurchase(f:F,s:St,items:Item[],extra:{decision?:string;in
   if(!['treatment','serum','spot'].includes(f.role)){const dup=same.filter(x=>x.f.role===f.role&&!(f.role==='cleanser'&&x.f.claims.includes('eye')));add('dup_role',dup,'دو '+(ROLE_ONE[f.role]||'محصول هم‌نقش')+' در یک نوبت');}
   const flagged=new Set(pairs.flatMap(p=>p.with));
   const fine=others.filter(x=>!flagged.has(x.name)).map(x=>q(x.name));
-  const clean=f.basis==='declared_name'&&others.length?'چون فهرست کامل ترکیباتش هنوز ثبت نشده، درباره‌ی تداخلش با روتینت نمی‌تونم قطعی چیزی بگم.':!others.length?(extra.inRoutine?'به‌جز خود همین محصول، چیز دیگه‌ای تو روتینت ثبت نشده.':'روتینت هنوز خالیه؛ فقط با پوست و هدفت سنجیدمش.'):fine.length?'کنار '+joinFa(fine.slice(0,4))+(fine.length>4?' و '+String(fine.length-4).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)])+' محصول دیگه‌ی روتینت':'')+' تداخل شناخته‌شده‌ای نداره.':'';
+  const clean=!others.length?(extra.inRoutine?'به‌جز خود همین محصول، چیز دیگه‌ای تو روتینت ثبت نشده.':'روتینت هنوز خالیه؛ فقط با پوست و هدفت سنجیدمش.'):fine.length?'کنار '+joinFa(fine.slice(0,4))+(fine.length>4?' و '+String(fine.length-4).replace(/[0-9]/g,d=>'۰۱۲۳۴۵۶۷۸۹'[Number(d)])+' محصول دیگه‌ی روتینت':'')+' تداخل شناخته‌شده‌ای نداره.':'';
   return {you:you.slice(0,4),actives:actives.slice(0,6),pairs,clean,notes,sources:[...used.values()]};
 }
