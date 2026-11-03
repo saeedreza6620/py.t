@@ -367,3 +367,14 @@ button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(
 #wallet .sw-me-in h2{font-size:18px}
 .sw-regwhy{background:#f3eeff;border-radius:12px;padding:8px 10px;color:#4b3f7a!important}
 @media (prefers-reduced-motion:reduce){.bw-wel,.bw-wel *,.gy-gift,.gy-s{animation:none!important;opacity:1}}
+
+/* ---------- v123: card-to-card in two copies ---------- */
+.sw-exact{font-size:28px!important;letter-spacing:.5px;margin:0!important}
+.sw-tail{background:#f3eeff;border-radius:12px;padding:6px 10px;color:#4b3f7a!important;margin:6px 0 10px!important}
+.sw-copy2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.sw-copy2 .sw-btn{padding:12px 8px;font-size:14px}
+.sw-copy2 .sw-copied{opacity:.75}
+.sw-copy2 .sw-copied::after{content:' ✓'}
+.sw-wait{font-weight:700;color:#4b3f7a!important;min-height:1em}
+.sw-more2{margin-top:10px}.sw-more2 summary{cursor:pointer}
+.sw-subn{z-index:10030}

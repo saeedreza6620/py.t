@@ -311,6 +311,22 @@ const REQS=path.join(DATA,'request-status.json'),REDEEM=path.join(DATA,'redeem.j
 function readJ(f){try{return JSON.parse(fs.readFileSync(f,'utf8'))}catch{return {}}}
 function writeJ(f,v){try{fs.writeFileSync(f+'.tmp',JSON.stringify(v));fs.renameSync(f+'.tmp',f)}catch(e){console.error('save',f,e.message)}}
 const getReqStatus=()=>readJ(REQS),getRedeem=()=>readJ(REDEEM),saveRedeem=v=>writeJ(REDEEM,v);
+// a paid card-to-card order: the rest of the diamonds (the advance was given when she said "I paid"), and for the
+// subscription 30 more days on her end date. One place for the automatic SMS match and the admin's approve button.
+function fulfilOrder(row,how){const ss=getReqStatus()[row.ref]||{};if(['done','rejected'].includes(ss.status))return false;
+  BANK.credit(row.d,Math.max(0,(row.n||0)-(ss.advance||0)));if(row.kind==='sub')BANK.subExtend(row.d,30);setReqStatus(row.ref,{status:'done',auto:how==='sms',paidVia:how});
+  fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:new Date().toISOString(),t:'pay_done',d:row.d||'anon',page:'app',x:how})+'\n',()=>{});return true}
+globalThis.BW_FULFIL=fulfilOrder;
+// the bank's deposit SMS, forwarded by the owner's Android phone: find the deposit amount and the one open order
+// with exactly that amount (Toman, or Rial = ×10). Withdrawals and purchases are ignored. The SMS text is never stored.
+const faNum=t=>String(t||'').replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/[٠-٩]/g,x=>'٠١٢٣٤٥٦٧٨٩'.indexOf(x));
+function smsAmounts(text){const t=faNum(text);if(!/واریز|بستانکار|انتقال\s*(وجه\s*)?به|دریافت|\+\s*\d|deposit|credit/i.test(t))return [];
+  if(/برداشت|خرید|کسر|\bdebit\b/i.test(t)&&!/واریز|بستانکار|\+\s*\d/i.test(t))return [];
+  return [...new Set((t.replace(/(\d)[,٬،'](?=\d{3}\b)/g,'$1').match(/\d{4,12}/g)||[]).filter(x=>x[0]!=='0').map(Number))]} // account numbers (leading 0) are skipped
+function matchSms(text){const nums=smsAmounts(text);if(!nums.length)return {deposit:false};const st=getReqStatus(),since=Date.now()-48*3600e3;
+  const open=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>r.method==='card'&&r.amount&&Date.parse(r.at)>since&&!['done','rejected'].includes((st[r.ref]||{}).status));
+  const hits=open.filter(r=>nums.includes(r.amount)||nums.includes(r.amount*10));
+  return {deposit:true,nums:nums.filter(n=>n>=10000&&n<1e10).slice(0,4),hit:hits.length===1?hits[0]:null,many:hits.length>1}}
 function setReqStatus(ref,patch){if(!ref)return;const all=getReqStatus();all[ref]={...(all[ref]||{}),...patch,at:new Date().toISOString()};writeJ(REQS,all)}
 function newRedeem(ref,n,sub){const all=getRedeem();let code;do{code=Array.from({length:6},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[crypto.randomInt(31)]).join('')}while(all[code]);all[code]={n,ref,sub:!!sub,at:new Date().toISOString(),usedAt:null};saveRedeem(all);return code}
 // ---------- real API cost → Negin price ----------
@@ -404,7 +420,7 @@ const server=http.createServer(async(req,res)=>{
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const a=ip(req);const f=redeemFails.get(a)||{n:0,t:Date.now()};if(Date.now()-f.t>3600e3){f.n=0;f.t=Date.now()}if(f.n>=8)return send(res,429,{error:'چند بار اشتباه زدی؛ یه ساعت دیگه امتحان کن'});
       const b=await readBody(req,500);const code=String(b.code||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).toUpperCase().replace(/[^A-Z0-9]/g,'');const all=getRedeem();const r=all[code];
       if(!r){f.n++;redeemFails.set(a,f);return send(res,400,{error:'این کد درست نیست'})}if(r.usedAt)return send(res,400,{error:'این کد قبلاً استفاده شده'});
-      r.usedAt=new Date().toISOString();r.d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);saveRedeem(all);BANK.credit(r.d,r.n);setReqStatus(r.ref,{status:'done'});
+      r.usedAt=new Date().toISOString();r.d=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);saveRedeem(all);BANK.credit(r.d,r.n);if(r.sub)BANK.subExtend(r.d,30);setReqStatus(r.ref,{status:'done'});
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:r.usedAt,t:'redeem',d:r.d||'anon',page:'app'})+'\n',()=>{});return send(res,200,{ok:true,n:r.n,sub:!!r.sub,wallet:BANK.balance(r.d,cfg)});
     }
     if(url.pathname==='/pay-proof'&&req.method==='POST'){ // the shopper says "I paid": tracking number + last 4 card digits → admin confirms
@@ -412,13 +428,23 @@ const server=http.createServer(async(req,res)=>{
       const b=await readBody(req,1000);const digits=v=>String(v||'').replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'');
       const ref=String(b.ref||''),d=String(b.d||'').replace(/[^a-z0-9]/g,'');const row=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).find(r=>r.ref===ref&&r.d===d);
       if(!row)return send(res,404,{error:'سفارش پیدا نشد'});const track=digits(b.track).slice(0,24),last4=digits(b.last4).slice(-4);
-      if(track.length<4&&last4.length<4)return send(res,400,{error:'شماره پیگیری یا ۴ رقم آخر کارتت رو بنویس'});
-      const prev=getReqStatus()[ref]||{};if(['done','rejected'].includes(prev.status))return send(res,400,{error:'این سفارش قبلاً بررسی شده'});
+      if(track.length<4&&last4.length<4&&!row.amount)return send(res,400,{error:'شماره پیگیری یا ۴ رقم آخر کارتت رو بنویس'});
+      const prev=getReqStatus()[ref]||{};if(prev.status==='done')return send(res,200,{ok:true,done:true,wallet:BANK.balance(d,cfg)});if(prev.status==='rejected')return send(res,400,{error:'این سفارش قبلاً بررسی شده'});
       const adv=prev.advance!=null?prev.advance:Math.max(0,Math.min(Number(cfg.payAdvance??1),row.n||0));if(adv&&prev.advance==null)BANK.credit(d,adv);
       setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv});return send(res,200,{ok:true,advance:adv,wallet:BANK.balance(d,cfg)});
     }
+    if(url.pathname==='/api/pay/sms'&&(req.method==='POST'||req.method==='GET')){ // owner's SMS forwarder → automatic card-to-card confirmation
+      const want=String(E.PAY_SMS_TOKEN||'');if(want.length<16)return send(res,503,{error:'PAY_SMS_TOKEN is not set'});
+      const got=String(req.headers['x-pay-token']||url.searchParams.get('t')||'');const ok=got.length===want.length&&crypto.timingSafeEqual(Buffer.from(got),Buffer.from(want));
+      if(!ok){if(allow(ip(req)))return send(res,429,{error:'slow down'});return send(res,401,{error:'bad token'})}
+      let text=url.searchParams.get('text')||url.searchParams.get('msg')||'';
+      if(req.method==='POST'){const raw=await new Promise((okr,bad)=>{let n=0;const c=[];req.on('data',x=>{n+=x.length;if(n>8000){req.destroy();bad(Object.assign(Error('too_large'),{status:413}))}else c.push(x)});req.on('end',()=>okr(Buffer.concat(c).toString('utf8')));req.on('error',bad)});
+        let j=null;try{j=JSON.parse(raw)}catch{};if(j&&typeof j==='object'){text=[j.text,j.message,j.msg,j.body,j.sms,j.content,j.key].filter(x=>typeof x==='string').join('\n')||text}else if(raw.includes('=')&&!raw.includes('\n')){const f=new URLSearchParams(raw);text=f.get('text')||f.get('message')||f.get('msg')||f.get('body')||raw}else text=raw||text}
+      const m=matchSms(String(text).slice(0,2000));let done=false;if(m.hit)done=fulfilOrder(m.hit,'sms');
+      fs.appendFile(path.join(DATA,'pay-sms.jsonl'),JSON.stringify({at:new Date().toISOString(),deposit:m.deposit,amounts:m.nums||[],ref:m.hit?m.hit.ref:undefined,done,many:m.many||undefined})+'\n',()=>{});
+      return send(res,200,{ok:true,deposit:m.deposit,matched:m.hit?m.hit.ref:null,done})}
     if(url.pathname==='/order-status'){const d=String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'');const st=getReqStatus();
-      const mine=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>d&&r.d===d&&r.method==='card').slice(-5).map(r=>({ref:r.ref,n:r.n,price:r.price,kind:r.kind,status:(st[r.ref]&&st[r.ref].status)||'new'}));
+      const mine=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>d&&r.d===d&&r.method==='card').slice(-5).map(r=>({ref:r.ref,n:r.n,price:r.price,amount:r.amount||r.price,kind:r.kind,status:(st[r.ref]&&st[r.ref].status)||'new',auto:!!(st[r.ref]&&st[r.ref].auto)}));
       return send(res,200,{orders:mine,wallet:BANK.balance(d,cfg)},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/buy-request'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const lim=allow(ip(req));if(lim)return send(res,429,{error:'یه کم بعد دوباره بزن'});
@@ -429,9 +455,12 @@ const server=http.createServer(async(req,res)=>{
       // card-to-card orders take amount and Negin count from the server's own price list, never from the page
       const pk=card&&kind==='negin'?(cfg.packs||[])[Number(b.pack)||0]:null;
       const row={at:new Date().toISOString(),ref,kind,method:card?'card':'contact',n:card?(kind==='sub'?Number(cfg.subscription.monthly)||0:Number(pk&&pk.n)||0):Math.max(0,Math.min(1000,Number(b.n)||0)),price:card?(kind==='sub'?Number(cfg.subscription.price)||0:Number(pk&&pk.price)||0):Math.max(0,Number(b.price)||0),name:String(b.name||'').slice(0,40),phone,item:String(b.item||'').slice(0,kind==='support'?600:120),d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40)};
+      // card-to-card: a one-off amount per order (price + 101…999 Toman) so the bank's deposit SMS alone identifies it
+      if(card&&row.price>0){const st0=getReqStatus(),since=Date.now()-48*3600e3;const taken=new Set(readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).filter(r=>r.amount&&Date.parse(r.at)>since&&!['done','rejected'].includes((st0[r.ref]||{}).status)).map(r=>r.amount));
+        let a=0;for(let i=0;i<60&&(!a||taken.has(a));i++)a=row.price+crypto.randomInt(101,1000);row.amount=a}
       fs.appendFileSync(path.join(DATA,'purchase-requests.jsonl'),JSON.stringify(row)+'\n');
       fs.appendFile(path.join(DATA,'events.jsonl'),JSON.stringify({at:row.at,t:'buy_request',d:row.d||'anon',page:'app',os:osOf(req.headers['user-agent'])})+'\n',()=>{});
-      return send(res,200,{ok:true,ref,n:row.n,price:row.price});
+      return send(res,200,{ok:true,ref,n:row.n,price:row.price,amount:row.amount||row.price,auto:!!E.PAY_SMS_TOKEN});
     }
     if(url.pathname.startsWith('/bank-img/')){const f=path.join(IMGDIR,path.basename(url.pathname));return fs.stat(f,(e,st)=>{if(e||!st.isFile())return send(res,404,'','text/plain');const ext=path.extname(f).slice(1);res.writeHead(200,{'Content-Type':ext==='png'?'image/png':ext==='webp'?'image/webp':'image/jpeg','Cache-Control':'public, max-age=2592000, immutable'});fs.createReadStream(f).pipe(res)})}
     if(url.pathname==='/bank.json')return send(res,200,BANK.publicBank(),'application/json',{'Cache-Control':'no-cache'});

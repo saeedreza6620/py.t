@@ -123,7 +123,7 @@ export function makeBank(DATA){
   function cnt(d){const w=dev(d);return w.phone?acct(w.phone):w}               // free / routine counters
   function bag(d){const w=dev(d);return w.phone&&w.merged?acct(w.phone):w}      // where her diamonds are
   function wallet(d){return bag(d)}
-  function balance(d,cfg){if(!d)return {free:0,negin:0};const c=cnt(d);return {free:Math.max(0,(Number(cfg.freeChecks)||0)-(c.free||0)),negin:bag(d).negin||0}}
+  function balance(d,cfg){if(!d)return {free:0,negin:0};const c=cnt(d),b=bag(d);const o={free:Math.max(0,(Number(cfg.freeChecks)||0)-(c.free||0)),negin:b.negin||0};if(b.subUntil&&Date.parse(b.subUntil)>Date.now()-30*864e5)o.subUntil=b.subUntil;return o}
   function charge(d,ip,cfg){if(!d)return null;const c=cnt(d),w=bag(d);const day=now().slice(0,10);const k=ip+'|'+day;
     if((c.free||0)<(Number(cfg.freeChecks)||0)&&(ipFree.get(k)||0)<(Number(cfg.freePerIpDay)||6)){c.free=(c.free||0)+1;ipFree.set(k,(ipFree.get(k)||0)+1);save(WAL,wallets);return 'free'}
     if(w.negin>0){w.negin--;w.spent=(w.spent||0)+1;save(WAL,wallets);return 'negin'}
@@ -147,10 +147,12 @@ export function makeBank(DATA){
     if(!a.devices.includes(d))a.devices=[...a.devices,d].slice(-8);a.last=now();
     let gift=0;const g=Number(cfg.registerGift)||0;if(g>0&&giftOk&&!a.gift&&!w.gift){a.gift=g;w.gift=g;bag(d).negin+=g;gift=g}
     save(WAL,wallets);return {returning,gift,wallet:balance(d,cfg)}}
+  // monthly subscription (prepaid, renewed by hand): an end date on her purse; renewing early adds to it
+  function subExtend(d,days){if(!d)return null;const w=bag(d);const base=Math.max(Date.now(),Date.parse(w.subUntil||0)||0);w.subUntil=new Date(base+days*864e5).toISOString();save(WAL,wallets);return w.subUntil}
   function phoneOf(d){const w=d&&wallets[d];return w&&w.phone||''}
   function walletStats(){const keys=Object.keys(wallets),dv=keys.filter(k=>!k.startsWith('p:')),ac=keys.filter(k=>k.startsWith('p:')).map(k=>wallets[k]);
     const counters=[...ac,...dv.map(k=>wallets[k]).filter(w=>!w.phone)],bags=Object.values(wallets);
     return {devices:dv.length,accounts:ac.length,freeUsed:counters.reduce((s,w)=>s+(w.free||0),0),neginSpent:bags.reduce((s,w)=>s+(w.spent||0),0),neginBought:bags.reduce((s,w)=>s+(w.bought||0),0),neginLeft:bags.reduce((s,w)=>s+(w.negin||0),0)}}
 
-  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack,link,phoneOf};
+  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack,link,phoneOf,subExtend};
 }
