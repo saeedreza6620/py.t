@@ -15,7 +15,7 @@ const here=path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC=path.join(here,'public');
 // release number of the app files on disk (same number the app carries in its ?v= links) — the app compares it on open and refreshes itself
 const APP_VERSION=(()=>{try{return (fs.readFileSync(path.join(PUBLIC,'legacy','sw.js'),'utf8').match(/bw-static-v(\d+)/)||[])[1]||'0'}catch{return '0'}})();
-import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';
+import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';import {makePayBot} from './paybot.mjs';
 // Liara app filesystems are read-only unless a disk is mounted: pick the first writable folder, never crash.
 function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
 const DATA=[process.env.DATA_DIR,'/data',path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
@@ -367,6 +367,10 @@ function costs(){const since=Date.now()-30*864e5;const rows=readJsonlSafe(path.j
     perAction:Object.fromEntries(Object.entries(acc).map(([k,a])=>[k,{calls:a.n,avgIn:Math.round(a.tin/a.n),avgOut:Math.round(a.tout/a.n),avgCost:a.priced?a.cost/a.priced:null,toman:tpk?Math.round((a.tin+a.tout)/a.n*tpk/1000):null}])),
     perNeginAction:{research:per.research,live:per.live},perNeginToman:{research:tomanOf('research'),live:tomanOf('live')},tokensPerNegin:tokPer,tomanPer1k:tpk,margin,dollarRate:Number(c.dollarRate)||0,suggested}}
 function readJsonlSafe(f){try{return fs.readFileSync(f,'utf8').split('\n').filter(Boolean).map(l=>{try{return JSON.parse(l)}catch{return null}}).filter(Boolean)}catch{return []}}
+// card-to-card receipts to the owner's Bale/Telegram bots, with signed approve/reject buttons (lite/paybot.mjs)
+const PAYBOT=makePayBot({E,getRow:ref=>readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).find(r=>r.ref===ref),getReqStatus,setReqStatus,fulfil:fulfilOrder,
+  unadvance:(row,ss)=>{if(ss.advance)BANK.adjust(row.d,-ss.advance)},send,readForm,sameOrigin,adminSecret:String(E[Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN')]||'').trim()});
+globalThis.BW_PAYBOT=PAYBOT;
 const admin=makeAdmin({BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const CHAT=makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MODELS,getCfg:()=>cfg,hasKey:()=>!!(KEY&&BASE)});globalThis.BW_CHAT_STATS=CHAT.stats;
 const PUSH=makePush({DATA,send,ip,sameOrigin,readBody,E});globalThis.BW_PUSH_STATS=PUSH.stats;
@@ -429,11 +433,13 @@ const server=http.createServer(async(req,res)=>{
       const b=await readBody(req,1000);const digits=v=>String(v||'').replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'');
       const ref=String(b.ref||''),d=String(b.d||'').replace(/[^a-z0-9]/g,'');const row=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).find(r=>r.ref===ref&&r.d===d);
       if(!row)return send(res,404,{error:'سفارش پیدا نشد'});const track=digits(b.track).slice(0,24),last4=digits(b.last4).slice(-4);
-      if(track.length<4&&last4.length<4&&!row.amount)return send(res,400,{error:'شماره پیگیری یا ۴ رقم آخر کارتت رو بنویس'});
+      if(last4.length<4)return send(res,400,{error:'۴ رقم آخر کارتی که باهاش واریز کردی رو بنویس'});
       const prev=getReqStatus()[ref]||{};if(prev.status==='done')return send(res,200,{ok:true,done:true,wallet:BANK.balance(d,cfg)});if(prev.status==='rejected')return send(res,400,{error:'این سفارش قبلاً بررسی شده'});
       const adv=prev.advance!=null?prev.advance:Math.max(0,Math.min(Number(cfg.payAdvance??1),row.n||0));if(adv&&prev.advance==null)BANK.credit(d,adv);
-      setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv});return send(res,200,{ok:true,advance:adv,wallet:BANK.balance(d,cfg)});
+      setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv});PAYBOT.receipt(row,getReqStatus()[ref]||{},req);
+      return send(res,200,{ok:true,advance:adv,order:'#'+last4,bot:PAYBOT.ready(),wallet:BANK.balance(d,cfg)});
     }
+    if(url.pathname==='/pay/ok'&&(req.method==='GET'||req.method==='POST'))return await PAYBOT.handle(req,res,url);
     if(url.pathname==='/api/pay/sms'&&(req.method==='POST'||req.method==='GET')){ // owner's SMS forwarder → automatic card-to-card confirmation
       const want=String(E.PAY_SMS_TOKEN||'');if(want.length<16)return send(res,503,{error:'PAY_SMS_TOKEN is not set'});
       const got=String(req.headers['x-pay-token']||url.searchParams.get('t')||'');const ok=got.length===want.length&&crypto.timingSafeEqual(Buffer.from(got),Buffer.from(want));
@@ -441,7 +447,7 @@ const server=http.createServer(async(req,res)=>{
       let text=url.searchParams.get('text')||url.searchParams.get('msg')||'';
       if(req.method==='POST'){const raw=await new Promise((okr,bad)=>{let n=0;const c=[];req.on('data',x=>{n+=x.length;if(n>8000){req.destroy();bad(Object.assign(Error('too_large'),{status:413}))}else c.push(x)});req.on('end',()=>okr(Buffer.concat(c).toString('utf8')));req.on('error',bad)});
         let j=null;try{j=JSON.parse(raw)}catch{};if(j&&typeof j==='object'){text=[j.text,j.message,j.msg,j.body,j.sms,j.content,j.key].filter(x=>typeof x==='string').join('\n')||text}else if(raw.includes('=')&&!raw.includes('\n')){const f=new URLSearchParams(raw);text=f.get('text')||f.get('message')||f.get('msg')||f.get('body')||raw}else text=raw||text}
-      const m=matchSms(String(text).slice(0,2000));let done=false;if(m.hit)done=fulfilOrder(m.hit,'sms');
+      const m=matchSms(String(text).slice(0,2000));let done=false;if(m.hit)done=fulfilOrder(m.hit,'sms');if(done)PAYBOT.autoDone(m.hit);
       fs.appendFile(path.join(DATA,'pay-sms.jsonl'),JSON.stringify({at:new Date().toISOString(),deposit:m.deposit,amounts:m.nums||[],ref:m.hit?m.hit.ref:undefined,done,many:m.many||undefined})+'\n',()=>{});
       return send(res,200,{ok:true,deposit:m.deposit,matched:m.hit?m.hit.ref:null,done})}
     if(url.pathname==='/order-status'){const d=String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'');const st=getReqStatus();
