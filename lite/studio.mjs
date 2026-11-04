@@ -28,7 +28,7 @@ const tdayOf=t=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tehran',year:'nu
 // a Tehran day (YYYY-MM-DD) + "HH:MM" → timestamp (Iran has no daylight saving: +03:30)
 const tehranAt=(day,hm)=>{const m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(day||''),h=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(hm||'');if(!m||!h)return 0;return Date.UTC(+m[1],+m[2]-1,+m[3],+h[1],+h[2])-3.5*HOUR};
 
-export function makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,smsOn,getUsers,readJsonl,getReqStatus,cloudOf,productName}){
+export function makeStudio({SMSLINE={},DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,smsOn,getUsers,readJsonl,getReqStatus,cloudOf,productName}){
   const CFG=path.join(DATA,'studio.json'),MSG=path.join(DATA,'studio-msgs.json');
   const rd=(f,d)=>{try{return JSON.parse(fs.readFileSync(f,'utf8'))}catch{return d}};
   const wr=(f,v)=>{try{fs.writeFileSync(f+'.tmp',JSON.stringify(v));fs.renameSync(f+'.tmp',f)}catch(e){console.error('studio',e.message)}};
@@ -44,7 +44,20 @@ export function makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,sms
   const devicesOf=ph=>(getUsers()[ph]||{}).devices||[];
   function create(r,text,cta,source,hold,at){const m={id:crypto.randomBytes(6).toString('hex'),ph:r.ph,source,cta:cta||'',text,at:at||Date.now(),hold:!!hold};
     if(!hold)m.pushDue=next9(m.at);msgs.push(m);return m}
-  async function pushDue(){const now=Date.now();let changed=false;
+  // SMS from BeautyWallet's own Kavenegar line (KAVENEGAR_SENDER) — only for people without notifications,
+  // only 9:00–21:00, at most one SMS a week per person, never after «دیگه نفرست». The text starts «بیوتی‌ولت:».
+  const smsReady=()=>!!(SMSLINE.key&&SMSLINE.sender);
+  async function smsSend(phone,text){if(!smsReady())return {ok:false,err:'خط تنظیم نشده'};
+    try{const r=await fetch(`${SMSLINE.base}/v1/${encodeURIComponent(SMSLINE.key)}/sms/send.json`,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({receptor:phone,sender:SMSLINE.sender,message:text}),signal:AbortSignal.timeout(15000)});
+      const j=await r.json().catch(()=>({}));const e=(j.entries||[])[0]||{};const ok=r.ok&&j?.return?.status===200;return {ok,cost:Number(e.cost)||0,err:ok?'':String(j?.return?.message||('HTTP '+r.status)).slice(0,120)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
+  const smsText=m=>'بیوتی‌ولت: '+m.text+'\n'+SMSLINE.site.replace(/^https?:\/\//,'')+'/legacy/?perm=1&src=sms'+(m.optLine?'\nلغو11':'');
+  async function smsDue(){const now=Date.now(),h=tehranHour(now);if(h<9||h>=21||!smsReady())return;let changed=false;
+    for(const m of msgs){if(m.sms!=='due'||m.at>now)continue;changed=true;
+      if(cfg.optout[m.ph]||m.seenAt||(pushOn({devices:devicesOf(m.ph)})&&m.pushed>0)){m.sms='skip';continue}
+      if(msgs.some(x=>x!==m&&x.ph===m.ph&&x.smsAt&&now-x.smsAt<7*DAY)){m.sms='skip';continue}
+      const r=await smsSend(m.ph,smsText(m));m.sms=r.ok?'sent':'fail';m.smsAt=now;m.smsCost=r.cost;if(!r.ok)m.smsErr=r.err}
+    if(changed)saveMsgs()}
+  async function pushDue(){smsDue().catch(()=>{});const now=Date.now();let changed=false;
     for(const m of msgs){if(m.hold||!m.pushDue||m.pushDue>now||m.pushed!=null||m.seenAt)continue;m.pushed=0;changed=true;
       const devs=devicesOf(m.ph);if(devs.length&&PUSH){m.pushAt=Date.now();try{const r=await PUSH.toDevices(devs,'studio');m.pushed=r.ok}catch{}}}
     if(changed)saveMsgs()}
@@ -78,10 +91,10 @@ export function makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,sms
     for(const m of msgs){if(m.hold)continue;const k=m.batch||m.source;(batches.get(k)||batches.set(k,[]).get(k)).push(m)}
     const list=[...batches.values()].sort((a,b)=>b[0].at-a[0].at).slice(0,6);if(!list.length)return '<p class="m">هنوز پیامی نرفته.</p>';
     return list.map(ms=>{const m0=ms[0],due=m0.at>Date.now();const label=m0.label||(FLOWS[m0.source.slice(5)]||{}).title||'پیام';
-      const tr=ms.map(m=>{const r=byPh.get(m.ph)||{},back=(r.evs||[]).find(e=>e.t>m.at);return `<tr><td>${esc(r.name||'—')} <small dir="ltr">${esc(r.phone||'')}</small></td><td>${esc(r.devices?KIND[kindOf(r)]:'')}</td><td>${m.pushed>0?'✅':m.pushed===0?'—':due?'⏳':'—'}</td><td>${m.seenAt?sh(m.seenAt):'—'}</td><td>${m.clickAt?sh(m.clickAt):'—'}</td><td>${back?'<b>'+sh(back.t)+'</b>':due?'⏳':'هنوز نه'}</td></tr>`}).join('');
+      const tr=ms.map(m=>{const r=byPh.get(m.ph)||{},back=(r.evs||[]).find(e=>e.t>m.at);return `<tr><td>${esc(r.name||'—')} <small dir="ltr">${esc(r.phone||'')}</small></td><td>${esc(r.devices?KIND[kindOf(r)]:'')}</td><td>${m.pushed>0?'✅':m.pushed===0?'—':due?'⏳':'—'}</td><td>${m.sms==='sent'?'✅':m.sms==='fail'?'❌ '+esc(m.smsErr||''):m.sms==='due'?'⏳':'—'}</td><td>${m.seenAt?sh(m.seenAt):'—'}</td><td>${m.clickAt?sh(m.clickAt):'—'}</td><td>${back?'<b>'+sh(back.t)+'</b>':due?'⏳':'هنوز نه'}</td></tr>`}).join('');
       const nb=ms.filter(m=>{const r=byPh.get(m.ph)||{};return (r.evs||[]).some(e=>e.t>m.at)}).length;
       return `<div class="p"><b>${esc(label)}</b> · ${due?'⏳ زمان‌بندی‌شده برای ':'رفته در '}${sh(m0.at)} · <b>${fa(nb)} از ${fa(ms.length)}</b> نفر برگشتند<br><small>${esc(m0.text.slice(0,120))}</small>
-<table style="margin-top:8px"><tr><th>نفر</th><th>نوع</th><th>اعلان</th><th>دید</th><th>دکمه را زد</th><th>اولین برگشت به اپ</th></tr>${tr}</table></div>`}).join('')}
+<table style="margin-top:8px"><tr><th>نفر</th><th>نوع</th><th>اعلان</th><th>پیامک</th><th>دید</th><th>دکمه را زد</th><th>اولین برگشت به اپ</th></tr>${tr}</table></div>`}).join('')}
   function box(){const R=results().slice(0,3),on=Object.values(cfg.flows).filter(f=>f.on).length;
     return `<a href="/admin/studio" style="display:block;margin:0 0 14px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;background:linear-gradient(135deg,#6a5bd6,#c86dd7);color:#fff">📣 استودیوی پیام · ${fa(on)} مسیر خودکار روشن${R.length?' · آخرین: '+fa(R[0].seen)+' دید از '+fa(R[0].sent):''}</a>`}
 
@@ -125,9 +138,12 @@ table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-
 <p class="m">پیام‌ها از خود بیوتی‌ولت می‌روند: کارت بالای اپ دفعه‌ی بعد که بازش کند، و اگر اجازه‌ی اعلان داده (🔔) اعلان روی گوشی. پیامک نمی‌رود. فیلدها: <b>{نام}</b>، <b>{محصول_روتین}</b>، <b>{محصول_آخر}</b>؛ با <b>{محصول_آخر|اون محصول}</b> وقتی نامعلوم است «اون محصول» می‌آید. کسی که فیلدش نامعلوم است و جایگزین ندارد، پیام را نمی‌گیرد.</p>
 <h2>👥 کاربرانی که الان داری</h2><div class="p"><div class="row" style="flex-wrap:wrap">${Object.entries(KIND).map(([k,l])=>`<div style="background:#f5f3ff;border-radius:12px;padding:10px;text-align:center;min-width:150px"><b style="font-size:22px">${fa(rows.filter(r=>kindOf(r)===k).length)}</b><br><small>${esc(l)}</small></div>`).join('')}</div>
 <p class="m">«نصب کرده» یعنی اپ را روی صفحه‌ی گوشی گذاشته و از آن‌جا باز کرده. اعلان فقط به گروه اول می‌رسد؛ بقیه پیام را وقتی اپ را باز کنند به‌صورت کارت می‌بینند، و نصب‌کرده‌ها همان‌جا یک بار برای روشن کردن اعلان هم پرسیده می‌شوند.</p></div>
+<h2>📩 پیامک از خط بیوتی‌ولت</h2><div class="p">${smsReady()?`<p class="m">خط <b dir="ltr">${esc(SMSLINE.sender)}</b> وصل است. پیامک‌های رفته: <b>${fa(msgs.filter(m=>m.sms==='sent').length)}</b> · هزینه‌ی ثبت‌شده: <b>${fa(Math.round(msgs.reduce((a,m)=>a+(m.smsCost||0),0)).toLocaleString('en'))}</b> ریال${msgs.some(m=>m.sms==='fail')?' · آخرین خطا: '+esc((msgs.filter(m=>m.sms==='fail').at(-1)||{}).smsErr||''):''}</p>
+<form method="post" action="/admin/studio/smstest" class="row"><input type="text" name="phone" placeholder="شماره‌ی خودت برای آزمایش 09…" dir="ltr" required><button>پیامک آزمایشی</button></form>`:'<p class="m">هنوز وصل نیست. در لیارا متغیر <code>KAVENEGAR_SENDER</code> را برابر شماره‌ی خطی که در کاوه‌نگار خریدی بگذار (کلید کاوه‌نگار همان <code>KAVENEGAR_API_KEY</code> فعلی است).</p>'}</div>
 <h2>✍️ پیام تازه</h2><form class="p" method="post" action="/admin/studio/send" id="cf"><div class="row"><select name="to" id="to">${opt}</select><select name="ph" id="ph" hidden>${people}</select></div>
 <textarea name="text" id="tx" rows="3" maxlength="400" placeholder="{نام} جان، …" required></textarea><div class="row"><select name="cta">${ctaSel('check')}</select><input type="text" name="label" maxlength="40" placeholder="اسم این پیام برای گزارش (اختیاری)"></div>
 <div class="row"><select name="day">${(()=>{let o='<option value="">همین الان</option>';for(let i=0;i<8;i++){const t=Date.now()+i*DAY;o+=`<option value="${tdayOf(t)}">${esc(new Intl.DateTimeFormat('fa-IR-u-ca-persian',{timeZone:'Asia/Tehran',weekday:'long',day:'numeric',month:'long'}).format(new Date(t)))}${i===0?' (امروز)':''}</option>`}return o})()}</select><input type="time" name="time" value="20:30"></div>
+${smsReady()?`<label class="m" style="display:block;margin-top:8px"><input type="checkbox" name="sms" value="1"> 📩 به کسانی که اعلان ندارند، همین پیام با <b>پیامک از خط بیوتی‌ولت</b> هم برود (با لینک روشن کردن اعلان؛ فقط ۹ تا ۲۱؛ هر نفر حداکثر هفته‌ای یک پیامک)</label><label class="m" style="display:block"><input type="checkbox" name="opt" value="1" checked> «لغو11» آخر پیامک بیاید</label>`:'<p class="m">📩 پیامک از خط بیوتی‌ولت خاموش است؛ برای روشن شدن، KAVENEGAR_SENDER را در لیارا بگذار.</p>'}
 <p class="m" style="margin:4px 0 0">زمان به وقت تهران. پیام در آن ساعت در اپ ظاهر می‌شود و اعلانش همان موقع می‌رود (اگر بین ۲۲ تا ۹ باشد، اعلان ۹ صبح می‌رود).</p>
 <div id="prev" class="m">پیش‌نمایش اینجا می‌آید</div><div class="row"><button type="button" class="g" id="pv">پیش‌نمایش برای ۳ نفر</button><button>بفرست</button></div></form>
 <h2>⚙️ لحظه‌های خودکار</h2><p class="m">هر مسیر برای هر نفر حداکثر یک بار در ۳۰ روز؛ همه‌ی مسیرها با هم حداکثر یک پیام در هفته برای هر نفر؛ فقط ۹ صبح تا ۹ شب؛ اگر دو پیام قبلی را باز نکرده، صبر می‌کند؛ ۱۰٪ آدم‌ها به‌عنوان گروه کنترل پیام نمی‌گیرند.</p>${flows}
@@ -136,17 +152,19 @@ table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-
 <p class="m">${fa(Object.keys(cfg.optout).length)} نفر «دیگه نفرست» را زده‌اند و هیچ پیامی نمی‌گیرند.</p></main>
 <script>var to=document.getElementById('to'),ph=document.getElementById('ph');to.onchange=function(){ph.hidden=to.value!=='one'};
 document.getElementById('pv').onclick=async function(){var f=new FormData(document.getElementById('cf'));var r=await fetch('/admin/studio/preview',{method:'POST',body:new URLSearchParams(f)});var j=await r.json();
-document.getElementById('prev').textContent=j.error||('به '+j.n+' نفر می‌رسد ('+j.push+' نفر اعلان هم می‌گیرند'+(j.skip?'، '+j.skip+' نفر به‌خاطر فیلد نامعلوم یا «دیگه نفرست» نمی‌گیرند':'')+'):\\n\\n'+j.sample.join('\\n\\n'))};</script></html>`}
+document.getElementById('prev').textContent=j.error||('به '+j.n+' نفر می‌رسد ('+j.push+' نفر اعلان هم می‌گیرند'+(j.sms?'، '+j.sms+' نفر پیامک':'')+(j.skip?'، '+j.skip+' نفر به‌خاطر فیلد نامعلوم یا «دیگه نفرست» نمی‌گیرند':'')+'):\\n\\n'+j.sample.join('\\n\\n'))};</script></html>`}
   async function admin(req,res,url){const p=url.pathname;const html=(b)=>send(res,200,b,'text/html; charset=utf-8',{'Cache-Control':'no-store'});
     if(p==='/admin/studio'&&req.method==='GET')return html(page(url.searchParams.get('m')||''));
     if(req.method!=='POST'||!sameOrigin(req))return send(res,403,{error:'forbidden'});const f=await readForm(req);
     if(p==='/admin/studio/flow'){const k=String(f.k||'');if(!cfg.flows[k])return send(res,400,{error:'bad'});const t=String(f.text||'').trim().slice(0,400);
       cfg.flows[k]={on:f.on==='1',text:t||FLOWS[k].text,cta:CTA[f.cta]!==undefined?f.cta:FLOWS[k].cta};saveCfg();res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent('ذخیره شد')});return res.end()}
+    if(p==='/admin/studio/smstest'){const ph=String(f.phone||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/\D/g,'');const r=/^09\d{9}$/.test(ph)?await smsSend(ph,'بیوتی‌ولت: پیامک آزمایشی 💜 اگر این را می‌بینی، خط بیوتی‌ولت درست وصل است.'):{ok:false,err:'شماره درست نیست'};
+      res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent(r.ok?'پیامک آزمایشی رفت ✅ (هزینه: '+r.cost+' ریال)':'نرفت ❌ '+r.err)});return res.end()}
     const text=String(f.text||'').trim().slice(0,400),cta=CTA[f.cta]!==undefined?f.cta:'';if(!text)return send(res,400,{error:'متن خالی است'});
     const push=PUSH?PUSH.devices():new Set();const list=targets(f).filter(r=>!cfg.optout[r.ph]).map(r=>({r,t:fill(text,vars(r))})).filter(x=>x.t);const skip=targets(f).length-list.length;
-    if(p==='/admin/studio/preview')return send(res,200,{n:list.length,skip,push:list.filter(x=>x.r.devices.some(d=>push.has(d))).length,sample:list.slice(0,3).map(x=>x.r.name+': '+x.t)});
+    if(p==='/admin/studio/preview')return send(res,200,{n:list.length,skip,sms:f.sms==='1'&&smsReady()?list.filter(x=>!x.r.devices.some(d=>push.has(d))).length:0,push:list.filter(x=>x.r.devices.some(d=>push.has(d))).length,sample:list.slice(0,3).map(x=>x.r.name+': '+x.t)});
     if(p==='/admin/studio/send'){if(!list.length){res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent('به کسی نرسید (فیلد نامعلوم یا گروه خالی)')});return res.end()}
-      const batch=crypto.randomBytes(4).toString('hex'),label=String(f.label||'').trim().slice(0,40);let when=tehranAt(f.day,f.time);if(!when||when<Date.now())when=Date.now();for(const x of list){const m=create(x.r,x.t,cta,'manual',false,when);m.batch=batch;m.label=label||'پیام دستی · '+new Date().toLocaleDateString('fa-IR',{timeZone:'Asia/Tehran',month:'short',day:'numeric'})}
+      const batch=crypto.randomBytes(4).toString('hex'),label=String(f.label||'').trim().slice(0,40);let when=tehranAt(f.day,f.time);if(!when||when<Date.now())when=Date.now();const wantSms=f.sms==='1'&&smsReady();for(const x of list){const m=create(x.r,x.t,cta,'manual',false,when);if(wantSms&&!pushOn(x.r)){m.sms='due';m.optLine=f.opt==='1'}m.batch=batch;m.label=label||'پیام دستی · '+new Date().toLocaleDateString('fa-IR',{timeZone:'Asia/Tehran',month:'short',day:'numeric'})}
       saveMsgs();pushDue().catch(()=>{});res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent(when>Date.now()+20e3?'برای '+list.length+' نفر زمان‌بندی شد: '+sh(when):'برای '+list.length+' نفر فرستاده شد')});return res.end()}
     return send(res,404,{error:'not found'})}
   return {handle,admin,box,runFlows,pushDue,results}}

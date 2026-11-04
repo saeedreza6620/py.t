@@ -378,7 +378,7 @@ const CHAT=makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MO
 const PUSH=makePush({DATA,send,ip,sameOrigin,readBody,E});globalThis.BW_PUSH_STATS=PUSH.stats;
 // message studio: in-app cards + notifications written by the team, and four automatic moments (lite/studio.mjs)
 const PNAME=(()=>{const m=new Map();try{const t=fs.readFileSync(path.join(PUBLIC,'legacy','catalog-routine.js'),'utf8');for(const x of t.matchAll(/"id":"([a-z0-9-]+)","name":"([^"]+)"/g))if(!m.has(x[1]))m.set(x[1],x[2])}catch(e){console.error('studio names',e.message)}return m})();
-const STUDIO=makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,smsOn:()=>SMS.on,getUsers,readJsonl:readJsonlSafe,getReqStatus,cloudOf:CLOUD.dataOf,
+const STUDIO=makeStudio({SMSLINE:{key:SMS.key,base:SMS.base,sender:clean(E.KAVENEGAR_SENDER).replace(/[^\d+]/g,''),site:clean(E.PUBLIC_URL)||'https://beautywallet.liara.run'},DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,smsOn:()=>SMS.on,getUsers,readJsonl:readJsonlSafe,getReqStatus,cloudOf:CLOUD.dataOf,
   productName:id=>PNAME.get(id)||((BANK.list()||[]).find(p=>p.id===id)||{}).name||''});globalThis.BW_STUDIO=STUDIO;
 const VAULT=makeVault({DATA,send,ip,sameOrigin,E,normPhone,sendOtp,SMS,readBody});globalThis.BW_VAULT_STATS=VAULT.stats;globalThis.BW_VAULT_ADMIN=VAULT.adminHandle;
 const server=http.createServer(async(req,res)=>{
