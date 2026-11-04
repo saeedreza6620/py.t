@@ -299,7 +299,9 @@ function ensureLinked(d,p){if(!d)return false;if(BANK.phoneOf(d))return true;con
   for(const [ph,o] of Object.entries(u))if((o.devices||[]).includes(d)){BANK.link(d,ph,{verified:false,cfg});return true}
   const ph=normPhone(p);if(ph&&u[ph]){BANK.link(d,ph,{verified:false,cfg});return true}return false}
 const clean=v=>String(v||'').trim().replace(/^["']|["']$/g,'');
-const SMS={key:clean(E.KAVENEGAR_API_KEY),tpl:clean(E.KAVENEGAR_TEMPLATE),base:clean(E.KAVENEGAR_BASE)||'https://api.kavenegar.com'};SMS.on=!!(SMS.key&&SMS.tpl);
+// Kavenegar variables, tolerant of stray spaces / invisible characters / lower case in the NAME (values never logged)
+const envAny=(...names)=>{const want=names.map(n=>n.toUpperCase());const k=Object.keys(E).find(k=>want.includes(k.replace(/[\s\u200b-\u200f\ufeff]/g,'').toUpperCase())&&String(E[k]).trim());return k?E[k]:''};
+const SMS={key:clean(envAny('KAVENEGAR_API_KEY','KAVENEGAR_APIKEY','KAVENEGAR_KEY')),tpl:clean(E.KAVENEGAR_TEMPLATE),base:clean(E.KAVENEGAR_BASE)||'https://api.kavenegar.com'};SMS.on=!!(SMS.key&&SMS.tpl);
 const OTP=new Map();setInterval(()=>{const t=Date.now();for(const [k,v] of OTP)if(t-v.sent>15*60e3)OTP.delete(k)},5*60e3).unref();
 async function sendOtp(phone,code){try{const u=`${SMS.base}/v1/${encodeURIComponent(SMS.key)}/verify/lookup.json?receptor=${phone}&token=${code}&template=${encodeURIComponent(SMS.tpl)}`;
   const r=await fetch(u,{signal:AbortSignal.timeout(12000)});const j=await r.json().catch(()=>({}));if(!(r.ok&&j?.return?.status===200))console.error('sms',r.status,j?.return?.message||'');return r.ok&&j?.return?.status===200}catch(e){console.error('sms',e.message);return false}}
@@ -378,7 +380,7 @@ const CHAT=makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MO
 const PUSH=makePush({DATA,send,ip,sameOrigin,readBody,E});globalThis.BW_PUSH_STATS=PUSH.stats;
 // message studio: in-app cards + notifications written by the team, and four automatic moments (lite/studio.mjs)
 const PNAME=(()=>{const m=new Map();try{const t=fs.readFileSync(path.join(PUBLIC,'legacy','catalog-routine.js'),'utf8');for(const x of t.matchAll(/"id":"([a-z0-9-]+)","name":"([^"]+)"/g))if(!m.has(x[1]))m.set(x[1],x[2])}catch(e){console.error('studio names',e.message)}return m})();
-const STUDIO=makeStudio({SMSLINE:{key:SMS.key,base:SMS.base,sender:clean(E.KAVENEGAR_SENDER).replace(/[^\d+]/g,''),site:clean(E.PUBLIC_URL)||'https://beautywallet.liara.run'},DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,smsOn:()=>SMS.on,getUsers,readJsonl:readJsonlSafe,getReqStatus,cloudOf:CLOUD.dataOf,
+const STUDIO=makeStudio({SMSLINE:{key:SMS.key,base:SMS.base,sender:clean(envAny('KAVENEGAR_SENDER','KAVENEGAR_LINE','KAVENEGAR_NUMBER')).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[^\d+]/g,''),site:clean(E.PUBLIC_URL)||'https://beautywallet.liara.run'},DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,smsOn:()=>SMS.on,getUsers,readJsonl:readJsonlSafe,getReqStatus,cloudOf:CLOUD.dataOf,
   productName:id=>PNAME.get(id)||((BANK.list()||[]).find(p=>p.id===id)||{}).name||''});globalThis.BW_STUDIO=STUDIO;
 const VAULT=makeVault({DATA,send,ip,sameOrigin,E,normPhone,sendOtp,SMS,readBody});globalThis.BW_VAULT_STATS=VAULT.stats;globalThis.BW_VAULT_ADMIN=VAULT.adminHandle;
 const server=http.createServer(async(req,res)=>{
@@ -397,7 +399,7 @@ const server=http.createServer(async(req,res)=>{
       }
       return send(res,200,deepCache.r,'application/json',{'Cache-Control':'no-store'});
     }
-    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,...adminDiag(),version:APP_VERSION},'application/json',{'Cache-Control':'no-store'})}
+    if(url.pathname==='/healthz'){const bad=Object.keys(E).filter(k=>/\s|=/.test(k)).length;return send(res,200,{ok:true,ai:!!(KEY&&BASE),key:!!KEY,base:!!BASE,admin:!!Object.keys(E).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim()),disk:persistent,badVarNames:bad,smsKey:!!SMS.key,smsTemplate:!!SMS.tpl,smsSender:!!clean(envAny('KAVENEGAR_SENDER','KAVENEGAR_LINE','KAVENEGAR_NUMBER')),...adminDiag(),version:APP_VERSION},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/ai'&&req.method==='POST'){
       if(!sameOrigin(req))return send(res,403,{error:'درخواست نامعتبر است'});
       const limited=allow(ip(req));if(limited)return send(res,429,{error:limited==='daily'?'سقف امروز آزمایش پر شده؛ فردا دوباره سر بزن 💜':'یه کم زیاد پرسیدی عزیزم؛ یه ساعت دیگه دوباره بپرس',code:'rate_limited'});
