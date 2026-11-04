@@ -453,6 +453,8 @@ const server=http.createServer(async(req,res)=>{
       setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv});PAYBOT.receipt(row,getReqStatus()[ref]||{},req);
       return send(res,200,{ok:true,advance:adv,order:'#'+last4,bot:PAYBOT.ready(),wallet:BANK.balance(d,cfg)});
     }
+    // short link for SMS (fits one Persian SMS): opens the app and asks to turn reminders on
+    if(url.pathname==='/y'||url.pathname==='/y/'){res.writeHead(302,{Location:'/legacy/?perm=1&src=sms','Cache-Control':'no-store'});return res.end()}
     if(url.pathname==='/pay/ok'&&(req.method==='GET'||req.method==='POST'))return await PAYBOT.handle(req,res,url);
     if(url.pathname==='/api/pay/sms'&&(req.method==='POST'||req.method==='GET')){ // owner's SMS forwarder → automatic card-to-card confirmation
       const want=String(E.PAY_SMS_TOKEN||'');if(want.length<16)return send(res,503,{error:'PAY_SMS_TOKEN is not set'});
