@@ -46,18 +46,17 @@ export function makeStudio({SMSLINE={},DATA,send,readBody,readForm,sameOrigin,BA
     if(!hold)m.pushDue=next9(m.at);msgs.push(m);return m}
   // SMS from BeautyWallet's own Kavenegar line (KAVENEGAR_SENDER) — only for people without notifications,
   // only 9:00–21:00, at most one SMS a week per person, never after «دیگه نفرست». The text starts «بیوتی‌ولت:».
-  const smsReady=()=>!!(SMSLINE.key&&(SMSLINE.sender||SMSLINE.pattern));
+  const smsReady=()=>!!(SMSLINE.key&&(SMSLINE.sender||(SMSLINE.pattern&&SMSLINE.patternSender)));
   const FA=SMSLINE.provider==='faraz',PROV=FA?'فراز اس‌ام‌اس':'کاوه‌نگار';
   const intl=n=>{n=String(n||'').replace(/[^\d+]/g,'');if(n.startsWith('+'))return n;if(n.startsWith('0098'))return '+'+n.slice(2);if(n.startsWith('98'))return '+'+n;if(n.startsWith('0'))return '+98'+n.slice(1);return '+98'+n};
-  async function farazSend(phone,text){try{const r=await fetch(SMSLINE.base+'/api/send',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json',Authorization:SMSLINE.key},
-      body:JSON.stringify({sending_type:'webservice',from_number:intl(SMSLINE.sender),message:text,params:{recipients:[intl(phone)]}}),signal:AbortSignal.timeout(15000)});
-    const j=await r.json().catch(()=>({}));const ok=r.ok&&j?.meta?.status===true;const id=((j.data||{}).message_outbox_ids||[])[0];
-    return {ok,id:id?String(id):'',cost:0,err:ok?'':(String(j?.meta?.message||j?.message||'بدون پیام')+' · کد '+(j?.meta?.message_code||'—')+' · HTTP '+r.status+' · طول کلید '+SMSLINE.key.length).slice(0,200)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
-  // «پیامک سریع» (pattern): fixed text approved by Faraz, only the name changes; goes out on Faraz's service line
-  async function farazPattern(phone,vars){try{const r=await fetch(SMSLINE.base+'/api/send',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json',Authorization:SMSLINE.key},
-      body:JSON.stringify({sending_type:'pattern',from_number:intl(SMSLINE.patternSender),code:SMSLINE.pattern,recipients:[intl(phone)],params:vars}),signal:AbortSignal.timeout(15000)});
-    const j=await r.json().catch(()=>({}));const ok=r.ok&&j?.meta?.status===true;const id=((j.data||{}).message_outbox_ids||[])[0];
-    return {ok,id:id?String(id):'',cost:0,err:ok?'':(String(j?.meta?.message||j?.message||'بدون پیام')+' · کد '+(j?.meta?.message_code||'—')+' · HTTP '+r.status).slice(0,200)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
+  // Faraz SMS (IranPayamak web service, api.iranpayamak.com): header «Api-Key»; numbers in 09… form; success = 201 / status "success"
+  const local=n=>{n=String(n||'').replace(/[^\d]/g,'');if(n.startsWith('0098'))n=n.slice(4);else if(n.startsWith('98')&&n.length===12)n=n.slice(2);return n.startsWith('0')?n:'0'+n};
+  async function farazCall(path,body){try{const r=await fetch(SMSLINE.base+path,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json','Api-Key':SMSLINE.key},body:JSON.stringify(body),signal:AbortSignal.timeout(15000)});
+    const j=await r.json().catch(()=>({}));const ok=r.ok&&(j.status==='success'||(r.status===201&&!j.status));const msg=Array.isArray(j.messages)?j.messages.join('، '):typeof j.messages==='object'&&j.messages?Object.values(j.messages).flat().join('، '):String(j.messages||j.message||'');
+    return {ok,id:j.data!=null&&j.data!==0?String(j.data):'',cost:0,err:ok?'':((msg||'بدون پیام')+' · وضعیت '+(j.status||'—')+' · HTTP '+r.status+' · طول کلید '+SMSLINE.key.length).slice(0,220)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
+  const farazSend=(phone,text)=>farazCall('/ws/v1/sms/simple',{text,line_number:SMSLINE.sender,recipients:[local(phone)],number_format:'english'});
+  // «پیامک سریع» (pattern): fixed text approved by Faraz, only %name% changes
+  const farazPattern=(phone,vars)=>farazCall('/ws/v1/sms/pattern',{code:SMSLINE.pattern,attributes:vars,recipient:local(phone),line_number:SMSLINE.patternSender,number_format:'english'});
   const PAT=FA&&!!SMSLINE.pattern;
   async function smsSend(phone,text,vars){if(!smsReady())return {ok:false,err:'خط تنظیم نشده'};if(PAT)return farazPattern(phone,vars||{name:'کاربر'});if(FA)return farazSend(phone,text);
     const url=`${SMSLINE.base}/v1/${encodeURIComponent(SMSLINE.key)}/sms/send.json`,params=new URLSearchParams({receptor:phone,sender:SMSLINE.sender,message:text});
