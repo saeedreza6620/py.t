@@ -22,6 +22,11 @@ const tehranHour=t=>Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehra
 const next9=t=>{let x=t;for(let i=0;i<30&&!(tehranHour(x)>=9&&tehranHour(x)<22);i++)x+=HOUR;return x};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]);
+// Shamsi date and exact time in Tehran, e.g. «شنبه ۱۶ آبان · ۲۰:۳۱»
+const sh=t=>t?new Intl.DateTimeFormat('fa-IR-u-ca-persian',{timeZone:'Asia/Tehran',weekday:'long',day:'numeric',month:'long'}).format(new Date(t))+' · '+new Intl.DateTimeFormat('fa-IR',{timeZone:'Asia/Tehran',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(t)):'—';
+const tdayOf=t=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tehran',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(t));
+// a Tehran day (YYYY-MM-DD) + "HH:MM" → timestamp (Iran has no daylight saving: +03:30)
+const tehranAt=(day,hm)=>{const m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(day||''),h=/^([01]\d|2[0-3]):([0-5]\d)$/.exec(hm||'');if(!m||!h)return 0;return Date.UTC(+m[1],+m[2]-1,+m[3],+h[1],+h[2])-3.5*HOUR};
 
 export function makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,smsOn,getUsers,readJsonl,getReqStatus,cloudOf,productName}){
   const CFG=path.join(DATA,'studio.json'),MSG=path.join(DATA,'studio-msgs.json');
@@ -37,7 +42,7 @@ export function makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,sms
   function fill(text,v){let miss=false;const out=String(text).replace(/\{([^{}|]+)(?:\|([^{}]*))?\}/g,(m,k,f)=>{const val=v[k.trim()];if(val)return val;if(f!==undefined)return f;miss=true;return ''});return miss?null:out.replace(/\s+/g,' ').trim()}
   function personOf(d){const t=BANK.trust(d);if(!t.phone)return null;if(smsOn()&&!t.verified)return null;return t.phone}
   const devicesOf=ph=>(getUsers()[ph]||{}).devices||[];
-  function create(r,text,cta,source,hold){const m={id:crypto.randomBytes(6).toString('hex'),ph:r.ph,source,cta:cta||'',text,at:Date.now(),hold:!!hold};
+  function create(r,text,cta,source,hold,at){const m={id:crypto.randomBytes(6).toString('hex'),ph:r.ph,source,cta:cta||'',text,at:at||Date.now(),hold:!!hold};
     if(!hold)m.pushDue=next9(m.at);msgs.push(m);return m}
   async function pushDue(){const now=Date.now();let changed=false;
     for(const m of msgs){if(m.hold||!m.pushDue||m.pushDue>now||m.pushed!=null||m.seenAt)continue;m.pushed=0;changed=true;
@@ -66,13 +71,24 @@ export function makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,sms
       if(m.at>o.at)o.at=m.at;if(m.hold){o.hold++;o.hAct+=act?1:0;o.hBack+=back?1:0;continue}
       o.sent++;o.pushed+=m.pushed>0?1:0;o.seen+=m.seenAt?1:0;o.click+=m.clickAt?1:0;o.act+=act?1:0;o.back+=back?1:0}
     return Object.values(g).sort((a,b)=>b.at-a.at)}
+  // people who got the last hand-written message (already sent) and have not opened the app since
+  function noReturn(){const sent=msgs.filter(m=>!m.hold&&m.batch&&m.at<=Date.now());if(!sent.length)return new Set();const b=sent.at(-1).batch;const byPh=new Map(data().rows.map(r=>[r.ph,r]));
+    return new Set(sent.filter(m=>m.batch===b).filter(m=>!((byPh.get(m.ph)||{}).evs||[]).some(e=>e.t>m.at)).map(m=>m.ph))}
+  function detail(){const rows=data().rows,byPh=new Map(rows.map(r=>[r.ph,r]));const batches=new Map();
+    for(const m of msgs){if(m.hold)continue;const k=m.batch||m.source;(batches.get(k)||batches.set(k,[]).get(k)).push(m)}
+    const list=[...batches.values()].sort((a,b)=>b[0].at-a[0].at).slice(0,6);if(!list.length)return '<p class="m">هنوز پیامی نرفته.</p>';
+    return list.map(ms=>{const m0=ms[0],due=m0.at>Date.now();const label=m0.label||(FLOWS[m0.source.slice(5)]||{}).title||'پیام';
+      const tr=ms.map(m=>{const r=byPh.get(m.ph)||{},back=(r.evs||[]).find(e=>e.t>m.at);return `<tr><td>${esc(r.name||'—')} <small dir="ltr">${esc(r.phone||'')}</small></td><td>${esc(r.devices?KIND[kindOf(r)]:'')}</td><td>${m.pushed>0?'✅':m.pushed===0?'—':due?'⏳':'—'}</td><td>${m.seenAt?sh(m.seenAt):'—'}</td><td>${m.clickAt?sh(m.clickAt):'—'}</td><td>${back?'<b>'+sh(back.t)+'</b>':due?'⏳':'هنوز نه'}</td></tr>`}).join('');
+      const nb=ms.filter(m=>{const r=byPh.get(m.ph)||{};return (r.evs||[]).some(e=>e.t>m.at)}).length;
+      return `<div class="p"><b>${esc(label)}</b> · ${due?'⏳ زمان‌بندی‌شده برای ':'رفته در '}${sh(m0.at)} · <b>${fa(nb)} از ${fa(ms.length)}</b> نفر برگشتند<br><small>${esc(m0.text.slice(0,120))}</small>
+<table style="margin-top:8px"><tr><th>نفر</th><th>نوع</th><th>اعلان</th><th>دید</th><th>دکمه را زد</th><th>اولین برگشت به اپ</th></tr>${tr}</table></div>`}).join('')}
   function box(){const R=results().slice(0,3),on=Object.values(cfg.flows).filter(f=>f.on).length;
     return `<a href="/admin/studio" style="display:block;margin:0 0 14px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;background:linear-gradient(135deg,#6a5bd6,#c86dd7);color:#fff">📣 استودیوی پیام · ${fa(on)} مسیر خودکار روشن${R.length?' · آخرین: '+fa(R[0].seen)+' دید از '+fa(R[0].sent):''}</a>`}
 
   // ---- the app's side ----
   async function handle(req,res,url){const H={'Cache-Control':'no-store'};
     if(url.pathname==='/api/inbox'&&req.method==='GET'){const ph=personOf(String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,''));if(!ph)return send(res,200,{msgs:[]},'application/json',H);
-      const list=msgs.filter(m=>m.ph===ph&&!m.hold&&!m.closedAt&&!m.clickAt&&!(m.seenAt&&Date.now()-m.seenAt>12*HOUR)&&Date.now()-m.at<14*DAY).slice(-3).reverse().map(m=>({id:m.id,text:m.text,cta:m.cta,label:CTA[m.cta]||''}));
+      const list=msgs.filter(m=>m.ph===ph&&!m.hold&&m.at<=Date.now()&&!m.closedAt&&!m.clickAt&&!(m.seenAt&&Date.now()-m.seenAt>12*HOUR)&&Date.now()-m.at<14*DAY).slice(-3).reverse().map(m=>({id:m.id,text:m.text,cta:m.cta,label:CTA[m.cta]||''}));
       return send(res,200,{msgs:list,optout:!!cfg.optout[ph]},'application/json',H)}
     if(url.pathname==='/api/inbox/ev'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const b=await readBody(req,600);
       const ph=personOf(String(b.d||'').replace(/[^a-z0-9]/g,''));if(!ph)return send(res,401,{error:'need_login'});
@@ -86,9 +102,12 @@ export function makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,sms
     return send(res,404,{error:'not found'})}
 
   // ---- the panel ----
-  function targets(f){const rows=data().rows;if(f.to==='one')return rows.filter(r=>r.ph===f.ph);if(f.to==='all')return rows;return rows.filter(r=>r.stage===f.to)}
+  const pushOn=r=>{const p=PUSH?PUSH.devices():new Set();return r.devices.some(d=>p.has(d))};
+  const kindOf=r=>pushOn(r)?'inst_push':r.installed?'inst_nopush':'browser';
+  const KIND={inst_push:'نصب کرده و اعلان روشن 🔔',inst_nopush:'نصب کرده ولی اعلان نداده',browser:'فقط از مرورگر'};
+  function targets(f){const rows=data().rows;if(f.to==='one')return rows.filter(r=>r.ph===f.ph);if(f.to==='all')return rows;if(KIND[f.to])return rows.filter(r=>kindOf(r)===f.to);if(f.to==='noreturn'||f.to==='noreturn_push'){const nr=noReturn();return rows.filter(r=>nr.has(r.ph)&&(f.to==='noreturn'||kindOf(r)==='inst_push'))}return rows.filter(r=>r.stage===f.to)}
   function page(msg){const rows=data().rows,R=results(),push=PUSH?PUSH.devices():new Set();
-    const opt=`<option value="all">همه‌ی ثبت‌نامی‌ها (${fa(rows.length)} نفر)</option>`+STAGES.map(([k,l])=>`<option value="${k}">${esc(l)} (${fa(rows.filter(r=>r.stage===k).length)} نفر)</option>`).join('')+`<option value="one">یک نفر مشخص…</option>`;
+    const opt=`<option value="all">همه‌ی ثبت‌نامی‌ها (${fa(rows.length)} نفر)</option>`+Object.entries(KIND).map(([k,l])=>`<option value="${k}">${esc(l)} (${fa(rows.filter(r=>kindOf(r)===k).length)} نفر)</option>`).join('')+STAGES.map(([k,l])=>`<option value="${k}">${esc(l)} (${fa(rows.filter(r=>r.stage===k).length)} نفر)</option>`).join('')+(()=>{const nr=noReturn();return nr.size?`<option value="noreturn">برنگشته‌ها بعد از آخرین پیام (${fa(nr.size)} نفر)</option><option value="noreturn_push">برنگشته‌ها که اعلان دارند (${fa(rows.filter(r=>nr.has(r.ph)&&kindOf(r)==='inst_push').length)} نفر)</option>`:''})()+`<option value="one">یک نفر مشخص…</option>`;
     const people=rows.map(r=>`<option value="${esc(r.ph)}">${esc(r.name)} · ${esc(r.phone)} · ${esc((STAGES.find(s=>s[0]===r.stage)||[])[1]||'')}${r.devices.some(d=>push.has(d))?' · 🔔':''}</option>`).join('');
     const ctaSel=v=>Object.entries(CTA).map(([k,l])=>`<option value="${k}"${k===v?' selected':''}>${esc(l)}</option>`).join('');
     const pct=(a,b)=>b?fa(Math.round(a/b*100))+'٪':'—';
@@ -104,10 +123,15 @@ table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-
 .ok{background:#e3f6ee;color:#17744f;padding:10px 14px;border-radius:12px;margin-bottom:12px}.sw{display:block}#prev{white-space:pre-wrap;background:#faf8ff;border-radius:12px;padding:10px;margin-top:8px;font-size:14px}</style>
 <header><b>📣 استودیوی پیام</b><a href="/admin">پنل کامل</a></header><main>${msg?`<div class="ok">${esc(msg)}</div>`:''}
 <p class="m">پیام‌ها از خود بیوتی‌ولت می‌روند: کارت بالای اپ دفعه‌ی بعد که بازش کند، و اگر اجازه‌ی اعلان داده (🔔) اعلان روی گوشی. پیامک نمی‌رود. فیلدها: <b>{نام}</b>، <b>{محصول_روتین}</b>، <b>{محصول_آخر}</b>؛ با <b>{محصول_آخر|اون محصول}</b> وقتی نامعلوم است «اون محصول» می‌آید. کسی که فیلدش نامعلوم است و جایگزین ندارد، پیام را نمی‌گیرد.</p>
+<h2>👥 کاربرانی که الان داری</h2><div class="p"><div class="row" style="flex-wrap:wrap">${Object.entries(KIND).map(([k,l])=>`<div style="background:#f5f3ff;border-radius:12px;padding:10px;text-align:center;min-width:150px"><b style="font-size:22px">${fa(rows.filter(r=>kindOf(r)===k).length)}</b><br><small>${esc(l)}</small></div>`).join('')}</div>
+<p class="m">«نصب کرده» یعنی اپ را روی صفحه‌ی گوشی گذاشته و از آن‌جا باز کرده. اعلان فقط به گروه اول می‌رسد؛ بقیه پیام را وقتی اپ را باز کنند به‌صورت کارت می‌بینند، و نصب‌کرده‌ها همان‌جا یک بار برای روشن کردن اعلان هم پرسیده می‌شوند.</p></div>
 <h2>✍️ پیام تازه</h2><form class="p" method="post" action="/admin/studio/send" id="cf"><div class="row"><select name="to" id="to">${opt}</select><select name="ph" id="ph" hidden>${people}</select></div>
 <textarea name="text" id="tx" rows="3" maxlength="400" placeholder="{نام} جان، …" required></textarea><div class="row"><select name="cta">${ctaSel('check')}</select><input type="text" name="label" maxlength="40" placeholder="اسم این پیام برای گزارش (اختیاری)"></div>
+<div class="row"><select name="day">${(()=>{let o='<option value="">همین الان</option>';for(let i=0;i<8;i++){const t=Date.now()+i*DAY;o+=`<option value="${tdayOf(t)}">${esc(new Intl.DateTimeFormat('fa-IR-u-ca-persian',{timeZone:'Asia/Tehran',weekday:'long',day:'numeric',month:'long'}).format(new Date(t)))}${i===0?' (امروز)':''}</option>`}return o})()}</select><input type="time" name="time" value="20:30"></div>
+<p class="m" style="margin:4px 0 0">زمان به وقت تهران. پیام در آن ساعت در اپ ظاهر می‌شود و اعلانش همان موقع می‌رود (اگر بین ۲۲ تا ۹ باشد، اعلان ۹ صبح می‌رود).</p>
 <div id="prev" class="m">پیش‌نمایش اینجا می‌آید</div><div class="row"><button type="button" class="g" id="pv">پیش‌نمایش برای ۳ نفر</button><button>بفرست</button></div></form>
 <h2>⚙️ لحظه‌های خودکار</h2><p class="m">هر مسیر برای هر نفر حداکثر یک بار در ۳۰ روز؛ همه‌ی مسیرها با هم حداکثر یک پیام در هفته برای هر نفر؛ فقط ۹ صبح تا ۹ شب؛ اگر دو پیام قبلی را باز نکرده، صبر می‌کند؛ ۱۰٪ آدم‌ها به‌عنوان گروه کنترل پیام نمی‌گیرند.</p>${flows}
+<h2>📅 کی برگشتند؟ (نفر به نفر)</h2><div class="scroll">${detail()}</div>
 <h2>📊 نتیجه‌ها</h2><div class="scroll">${table}</div><p class="m">«کار را کرد» یعنی همان کاری که دکمه می‌خواست (مثلاً بررسی) تا ۴۸ ساعت انجام شد. «گروه کنترل» کسانی‌اند که همان شرایط را داشتند ولی پیام نگرفتند؛ اگر درصد برگشت گروه پیام‌گرفته بیشتر از کنترل باشد، پیام اثر داشته. با تعداد کم، این مقایسه فقط جهت را نشان می‌دهد.</p>
 <p class="m">${fa(Object.keys(cfg.optout).length)} نفر «دیگه نفرست» را زده‌اند و هیچ پیامی نمی‌گیرند.</p></main>
 <script>var to=document.getElementById('to'),ph=document.getElementById('ph');to.onchange=function(){ph.hidden=to.value!=='one'};
@@ -122,7 +146,7 @@ document.getElementById('prev').textContent=j.error||('به '+j.n+' نفر می�
     const push=PUSH?PUSH.devices():new Set();const list=targets(f).filter(r=>!cfg.optout[r.ph]).map(r=>({r,t:fill(text,vars(r))})).filter(x=>x.t);const skip=targets(f).length-list.length;
     if(p==='/admin/studio/preview')return send(res,200,{n:list.length,skip,push:list.filter(x=>x.r.devices.some(d=>push.has(d))).length,sample:list.slice(0,3).map(x=>x.r.name+': '+x.t)});
     if(p==='/admin/studio/send'){if(!list.length){res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent('به کسی نرسید (فیلد نامعلوم یا گروه خالی)')});return res.end()}
-      const batch=crypto.randomBytes(4).toString('hex'),label=String(f.label||'').trim().slice(0,40);for(const x of list){const m=create(x.r,x.t,cta,'manual');m.batch=batch;m.label=label||'پیام دستی · '+new Date().toLocaleDateString('fa-IR',{timeZone:'Asia/Tehran',month:'short',day:'numeric'})}
-      saveMsgs();pushDue().catch(()=>{});res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent('برای '+list.length+' نفر فرستاده شد')});return res.end()}
+      const batch=crypto.randomBytes(4).toString('hex'),label=String(f.label||'').trim().slice(0,40);let when=tehranAt(f.day,f.time);if(!when||when<Date.now())when=Date.now();for(const x of list){const m=create(x.r,x.t,cta,'manual',false,when);m.batch=batch;m.label=label||'پیام دستی · '+new Date().toLocaleDateString('fa-IR',{timeZone:'Asia/Tehran',month:'short',day:'numeric'})}
+      saveMsgs();pushDue().catch(()=>{});res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent(when>Date.now()+20e3?'برای '+list.length+' نفر زمان‌بندی شد: '+sh(when):'برای '+list.length+' نفر فرستاده شد')});return res.end()}
     return send(res,404,{error:'not found'})}
   return {handle,admin,box,runFlows,pushDue,results}}
