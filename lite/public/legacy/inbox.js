@@ -33,7 +33,7 @@ function canAsk(){return 'Notification' in window&&'serviceWorker' in navigator&
 function busyUI(){var w=document.querySelector('.bw-wel'),sh=document.getElementById('swSheet'),bk=sh&&sh.parentElement;return !!(w||(bk&&!bk.hidden&&bk.offsetParent!==null))}
 function whenFree(fn,n){n=n||0;if(busyUI()&&n<120){setTimeout(function(){whenFree(fn,n+1)},1500);return}fn()}
 var forced=/[?&]perm=1\b/.test(location.search); // a personal link «…/legacy/?perm=1» asks at once, even in the browser
-function askPerm(){if(busyUI())return whenFree(askPerm);var K='bw_perm_asked';try{if(!forced&&Date.now()-Number(localStorage.getItem(K)||0)<3*864e5)return;localStorage.setItem(K,String(Date.now()))}catch(e){}
+function askPerm(){try{if(sessionStorage.getItem('bw_wel_perm'))return}catch(e){}if(busyUI())return whenFree(askPerm);var K='bw_perm_asked';try{if(!forced&&Date.now()-Number(localStorage.getItem(K)||0)<3*864e5)return;localStorage.setItem(K,String(Date.now()))}catch(e){}
   if(!canAsk()||document.querySelector('.bw-ib'))return;style();var d=document.createElement('div');d.className='bw-ib';
   var nm='';try{nm=(JSON.parse(localStorage.getItem('bw_reg')||'null')||{}).name||''}catch(_){}nm=String(nm).trim().split(/\s+/)[0]||'';
   d.innerHTML='<small>🔔 یه قدم کوچیک</small><p>'+(nm?nm.replace(/[<>&]/g,'')+' جان، ':'')+'بذار یادآور روتینت و پیام‌های بیوتی‌ولت روی گوشیت بیاد؛ صبح‌ها ساعت ۹ و شب‌ها ساعت ۹ (بعداً هر وقت خواستی عوضش کن).</p><div class="r"><button type="button" class="go">اجازه بده 💜</button><button type="button" class="x">بعداً</button></div>';

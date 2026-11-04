@@ -639,7 +639,36 @@ function openWalletRoutine(){closeSheet();window.switchTab('wallet');setTimeout(
 var _rr3=renderRoutine;renderRoutine=function(){var r=_rr3.apply(this,arguments);try{renderWalletRoutine()}catch(e){}return r};
 var _st3=window.switchTab;window.switchTab=function(tab){var r=_st3.apply(this,arguments);if(tab==='wallet')setTimeout(function(){try{syncFromProfile()}catch(e){}try{renderWalletRoutine()}catch(e){}},60);return r};
 /* ---------- the first half-second: "what did you come for, love?" — check a product, or just talk ---------- */
+/* ---------- someone we messaged (SMS link …/y → ?perm=1&src=sms): a welcome that is about HER ----------
+   signed in on this phone → her name, her routine, and one tap to turn reminders on;
+   not signed in here (new phone / storage lost) → sign in with her number and everything comes back. */
+function welcomeBack(){var r=registered(),nm=r&&r.name?String(r.name).trim().split(/\s+/)[0].slice(0,20):'';
+ var ids=[];try{ids=routineIds()}catch(e){}var names=ids.map(function(id){var p=P(id);return p&&p.name}).filter(Boolean).slice(0,2);
+ var canN=('Notification' in window)&&('serviceWorker' in navigator)&&('PushManager' in window)&&Notification.permission==='default';
+ var on=('Notification' in window)&&Notification.permission==='granted';
+ var hi=new Date().getHours(),when=hi<11?'صبحت بخیر':hi<17?'سلام':'شبت بخیر';
+ var line=!r?'روتین، یادآورها و پروفایل پوستت روی بیوتی‌ولت ذخیره‌ست. با همون شماره‌ای که عضو شدی وارد شو تا همه‌چیز برگرده 💜'
+  :names.length?'روتینت سر جاشه: <b>'+names.map(esc).join('</b> و <b>')+'</b>'+(ids.length>names.length?' و '+fa(ids.length-names.length)+' محصول دیگه':'')+' 🌸'
+  :'پروفایل پوستت آماده‌ست؛ یه محصول بده تا با پوستت بسنجمش 🌸';
+ var w=document.createElement('div');w.className='bw-wel';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-label','خوش برگشتی');
+ w.innerHTML='<div class="bw-wel-glow" aria-hidden="true"></div><div class="bw-wel-in"><div class="bw-wel-gem" aria-hidden="true">'+gemArt()+'<i class="bw-wel-sp bw-wel-sp1">✦</i><i class="bw-wel-sp bw-wel-sp2">✦</i><i class="bw-wel-sp bw-wel-sp3">✦</i></div>'+
+  '<p class="bw-wel-hi">'+esc(when+(nm?' '+nm+' جان':' عزیزم'))+' 💜</p><h2 class="bw-wel-q">خوش برگشتی به بیوتی‌ولت</h2><p class="bw-wel-hi" style="font-weight:500;line-height:1.9;margin:6px 0 16px">'+line+'</p>'+
+  (!r?'<button type="button" class="bw-wel-c" data-wel="reg"><span class="bw-wel-i">📱</span><span><b>با شماره‌م وارد می‌شم</b><small>روتین و یادآورهات برمی‌گرده</small></span></button>'
+   :(canN?'<button type="button" class="bw-wel-c" data-wel="perm"><span class="bw-wel-i">🔔</span><span><b>یادآور روتینم رو روشن کن</b><small>صبح‌ها ساعت ۹ و شب‌ها ساعت ۹؛ هر وقت خواستی عوضش کن</small></span></button>':on?'<p class="bw-wel-hi" style="font-size:13px">🔔 یادآورهات روشنه</p>':''))+
+  '<button type="button" class="bw-wel-c bw-wel-c2" data-wel="'+(ids.length?'routine':'check')+'"><span class="bw-wel-i">'+(ids.length?'🧴':'🔍')+'</span><span><b>'+(ids.length?'روتینم رو ببینم':'یه محصول رو با پوستم بسنجم')+'</b><small>'+(ids.length?'تیک امروز رو بزنم':'قبل از خرید بپرس: بخرم یا نخرم؟')+'</small></span></button>'+
+  '<button type="button" class="bw-wel-skip" data-wel="skip">بعداً</button></div>';
+ document.body.append(w);if(r&&canN)try{sessionStorage.setItem('bw_wel_perm','1')}catch(e){}if(window.bwTrack)try{window.bwTrack('wel_back')}catch(x){}
+ var shut=function(then){w.classList.add('bw-wel-out');setTimeout(function(){w.remove();if(then)then()},230)};
+ w.addEventListener('click',function(e){var b=e.target.closest('[data-wel]');if(!b)return;var k=b.dataset.wel;if(window.bwTrack)try{window.bwTrack('wel_'+k)}catch(x){}
+  if(k==='perm'){try{var n=JSON.parse(localStorage.getItem('bw_fu_notif')||'{}');if(n.amOn===undefined)n.amOn=true;if(n.pmOn===undefined)n.pmOn=true;localStorage.setItem('bw_fu_notif',JSON.stringify(n))}catch(x){}
+   if(window.BWFollowup&&window.BWFollowup.enable)window.BWFollowup.enable();else try{Notification.requestPermission()}catch(x){}shut()}
+  else if(k==='reg')shut(function(){if(window.bwRegister)window.bwRegister(function(){},'با همون شماره‌ای که قبلاً عضو شدی وارد شو تا روتین و یادآورهات برگرده')});
+  else if(k==='routine')shut(function(){window.switchTab('sw-routine')});
+  else if(k==='check')shut(function(){window.switchTab('sw-home');var a=$('#swAsk');if(a){a.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){a.focus()},300)}});
+  else shut()});
+ return true}
 function welcome(){var sp=location.search;if(/[?&](gift|q|su|sx|st)=/.test(sp))return false;
+ if(/[?&](perm=1|src=sms)\b/.test(sp)){try{if(sessionStorage.getItem('bw_wel_back'))return false;sessionStorage.setItem('bw_wel_back','1');sessionStorage.setItem('bw_wel_v1','1')}catch(e){}return welcomeBack()}
  try{if(sessionStorage.getItem('bw_wel_v1'))return false;sessionStorage.setItem('bw_wel_v1','1')}catch(e){}
  var r=registered(),nm=r&&r.name?String(r.name).slice(0,20):'';
  var hi=new Date().getHours(),greet=nm?(hi<11?'صبحت بخیر '+nm+' جان ☀':hi<17?'سلام '+nm+' جان 💜':'شبت بخیر '+nm+' جان ☾'):hello();
