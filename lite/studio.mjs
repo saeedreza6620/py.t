@@ -48,8 +48,11 @@ export function makeStudio({SMSLINE={},DATA,send,readBody,readForm,sameOrigin,BA
   // only 9:00–21:00, at most one SMS a week per person, never after «دیگه نفرست». The text starts «بیوتی‌ولت:».
   const smsReady=()=>!!(SMSLINE.key&&SMSLINE.sender);
   async function smsSend(phone,text){if(!smsReady())return {ok:false,err:'خط تنظیم نشده'};
-    try{const r=await fetch(`${SMSLINE.base}/v1/${encodeURIComponent(SMSLINE.key)}/sms/send.json`,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({receptor:phone,sender:SMSLINE.sender,message:text}),signal:AbortSignal.timeout(15000)});
-      const j=await r.json().catch(()=>({}));const e=(j.entries||[])[0]||{};const ok=r.ok&&j?.return?.status===200;return {ok,id:e.messageid?String(e.messageid):'',cost:Number(e.cost)||0,err:ok?'':String(j?.return?.message||('HTTP '+r.status)).slice(0,120)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
+    const url=`${SMSLINE.base}/v1/${encodeURIComponent(SMSLINE.key)}/sms/send.json`,params=new URLSearchParams({receptor:phone,sender:SMSLINE.sender,message:text});
+    try{let r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:params,signal:AbortSignal.timeout(15000)});let j=await r.json().catch(()=>({}));
+      if(!(r.ok&&j?.return?.status===200)&&[404,405].includes(Number(j?.return?.status||r.status))){r=await fetch(url+'?'+params,{signal:AbortSignal.timeout(15000)});j=await r.json().catch(()=>({}))} // same call as GET
+      const e=(j.entries||[])[0]||{};const ok=r.ok&&j?.return?.status===200;
+      return {ok,id:e.messageid?String(e.messageid):'',cost:Number(e.cost)||0,err:ok?'':(String(j?.return?.message||'بدون پیام')+' · کد '+(j?.return?.status??'—')+' · HTTP '+r.status+' · آدرس '+SMSLINE.base.replace(/^https?:\/\//,'')+' · طول کلید '+SMSLINE.key.length).slice(0,200)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
   // what the operator did with it (Kavenegar's own words): delivered / not delivered / blocked by the receiver…
   async function smsStatus(ids){if(!smsReady()||!ids.length)return {};const out={};
     for(let i=0;i<ids.length;i+=50){try{const r=await fetch(`${SMSLINE.base}/v1/${encodeURIComponent(SMSLINE.key)}/sms/status.json`,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({messageid:ids.slice(i,i+50).join(',')}),signal:AbortSignal.timeout(15000)});

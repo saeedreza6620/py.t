@@ -301,7 +301,8 @@ function ensureLinked(d,p){if(!d)return false;if(BANK.phoneOf(d))return true;con
 const clean=v=>String(v||'').trim().replace(/^["']|["']$/g,'');
 // Kavenegar variables, tolerant of stray spaces / invisible characters / lower case in the NAME (values never logged)
 const envAny=(...names)=>{const want=names.map(n=>n.toUpperCase());const k=Object.keys(E).find(k=>want.includes(k.replace(/[\s\u200b-\u200f\ufeff]/g,'').toUpperCase())&&String(E[k]).trim());return k?E[k]:''};
-const SMS={key:clean(envAny('KAVENEGAR_API_KEY','KAVENEGAR_APIKEY','KAVENEGAR_KEY')),tpl:clean(E.KAVENEGAR_TEMPLATE),base:clean(E.KAVENEGAR_BASE)||'https://api.kavenegar.com'};SMS.on=!!(SMS.key&&SMS.tpl);
+// key: no spaces/invisible characters; base: just the host (a pasted «…/v1» or trailing slash would make Kavenegar answer «متد نامشخص»)
+const SMS={key:clean(envAny('KAVENEGAR_API_KEY','KAVENEGAR_APIKEY','KAVENEGAR_KEY')).replace(/[\s\u200b-\u200f\ufeff]/g,''),tpl:clean(E.KAVENEGAR_TEMPLATE),base:(clean(E.KAVENEGAR_BASE)||'https://api.kavenegar.com').replace(/\s/g,'').replace(/\/+$/,'').replace(/\/v1(\/.*)?$/i,'')};SMS.on=!!(SMS.key&&SMS.tpl);
 const OTP=new Map();setInterval(()=>{const t=Date.now();for(const [k,v] of OTP)if(t-v.sent>15*60e3)OTP.delete(k)},5*60e3).unref();
 async function sendOtp(phone,code){try{const u=`${SMS.base}/v1/${encodeURIComponent(SMS.key)}/verify/lookup.json?receptor=${phone}&token=${code}&template=${encodeURIComponent(SMS.tpl)}`;
   const r=await fetch(u,{signal:AbortSignal.timeout(12000)});const j=await r.json().catch(()=>({}));if(!(r.ok&&j?.return?.status===200))console.error('sms',r.status,j?.return?.message||'');return r.ok&&j?.return?.status===200}catch(e){console.error('sms',e.message);return false}}
