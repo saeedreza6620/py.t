@@ -339,7 +339,7 @@ function devId(){try{return localStorage.getItem('bw_device')||''}catch(e){retur
 function setWallet(w){if(w&&typeof w==='object'){WAL={free:0,negin:(Number(w.free)||0)+(Number(w.negin)||0),subUntil:w.subUntil||''};subNudge();neginUI();try{renderGuide()}catch(e){}}}
 function regPhone(){try{var r=JSON.parse(localStorage.getItem('bw_reg')||'null');return r&&r.phone?String(r.phone):''}catch(e){return ''}}
 function syncWallet(){if(!LIVE)return;var d=devId();if(!d){setTimeout(syncWallet,800);return}var ph=regPhone();fetch('/wallet?d='+encodeURIComponent(d)+(ph?'&p='+encodeURIComponent(ph):'')).then(function(r){return r.json()}).then(setWallet).catch(function(){})}
-window.bwWallet=setWallet;window.bwSyncWallet=syncWallet;
+window.bwWallet=setWallet;window.bwSyncWallet=syncWallet;window.bwNegin=function(){neginSheet(false)};
 function negin(){return WAL.negin}
 // monthly subscription is prepaid and renewed by hand: a gentle note 3 days before it ends (once a day), and right after
 function subLeft(){var u=Date.parse(WAL.subUntil||'');return u?Math.ceil((u-Date.now())/864e5):null}

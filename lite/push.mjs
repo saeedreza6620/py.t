@@ -48,5 +48,9 @@ export function makePush({DATA,send,ip,sameOrigin,readBody,E}){
     const wk=rows.filter(r=>Date.now()-Date.parse(r.at)<7*864e5),ok=wk.filter(r=>r.status>=200&&r.status<300).length,bad=wk.filter(r=>!(r.status>=200&&r.status<300));
     const byHost={};for(const r of wk){const k=r.host.replace(/^.*?(fcm\.googleapis\.com|push\.apple\.com|mozilla\.com|windows\.com).*$/,'$1');(byHost[k]||(byHost[k]={ok:0,bad:0}))[r.status>=200&&r.status<300?'ok':'bad']++}
     return {subs:Object.keys(subs).length,daily:Object.values(subs).filter(s=>s.amDaily||s.pmDaily||s.daily).length,sent7:wk.length,ok7:ok,lastErr:bad.at(-1)||null,byHost}}
-  return {handle,stats};
+  // for the message studio: push to all of a person's devices (empty push; the phone asks what to show)
+  async function toDevices(devs,why){const set=new Set(devs);let ok=0,n=0;for(const [id,s] of Object.entries(subs))if(set.has(s.d)){n++;const r=await pushTo(id,why);if(r.status>=200&&r.status<300)ok++}return {n,ok}}
+  const devOf=ep=>{const s=subs[idOf(String(ep||''))];return s?s.d:''};
+  const devices=()=>new Set(Object.values(subs).map(s=>s.d).filter(Boolean));
+  return {handle,stats,toDevices,devOf,devices};
 }

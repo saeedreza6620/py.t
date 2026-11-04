@@ -108,6 +108,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 6px;b
     return page('پنل مدیریت بیوتی‌ولت',`
 <header><div class="brand"><div class="logo">BW</div><h1>پنل مدیریت بیوتی‌ولت<small>نسخه آزمایشی · آخرین فعالیت: ${s.lastAt?esc(new Date(s.lastAt).toLocaleString('fa-IR',{timeZone:'Asia/Tehran'})):'—'}</small></h1></div><div><a class="btn ghost" href="/admin">تازه‌سازی</a> <a class="btn ghost" href="/admin/logout">خروج</a></div></header>
 <div class="card links"><div class="l"><span>🧪 لینک تست برای کاربران</span><a href="${esc(o)}/legacy/" target="_blank">${esc(o)}/legacy/</a></div><div class="l"><span>🌐 وب‌سایت</span><a href="${esc(o)}/" target="_blank">${esc(o)}/</a></div><div class="l"><span>🛠 پنل مدیریت (همین صفحه)</span><a href="${esc(o)}/admin">${esc(o)}/admin</a></div></div>
+${globalThis.BW_STUDIO?globalThis.BW_STUDIO.box():''}
 ${(()=>{const st=getReqStatus();const n=readJsonl(path.join(DATA,'purchase-requests.jsonl')).filter(r=>r.method==='card'&&(st[r.ref]||{}).status==='proof').length;
 return `<a href="/admin/pay" style="display:block;margin:0 0 14px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;${n?'background:#1f9d6f;color:#fff':'background:#fff;color:#241a4f;border:1px solid #e3def8'}">💳 ${n?fa(n)+' واریز منتظر تأیید توست — بزن و تأیید کن':'واریز منتظری نیست · صفحه‌ی تأیید واریزها'}</a>`})()}
 ${(()=>{try{return kpiHtml({ev:readJsonl(path.join(DATA,'events.jsonl')),users:getUsers(),reqs:readJsonl(path.join(DATA,'purchase-requests.jsonl')),reqStatus:getReqStatus(),costs,cfg:getCfg(),fb:readJsonl(path.join(DATA,'feedback.jsonl')),fa,esc})}catch(e){console.error('kpi',e);return '<p class="note">کارت KPI فعلاً بارگذاری نشد.</p>'}})()}
@@ -195,6 +196,7 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
     if(secret&&okPass(url.searchParams.get('token'))&&(p==='/admin'||p==='/admin/')){const secure=String(req.headers['x-forwarded-proto']||'').startsWith('https')?'; Secure':'';
       res.writeHead(303,{Location:'/admin','Set-Cookie':`bw_admin=${sig}; HttpOnly; SameSite=Lax; Path=/admin; Max-Age=31536000${secure}`,'Cache-Control':'no-store','Referrer-Policy':'no-referrer'});return res.end()}
     if(!authed(req,url))return send(res,p==='/admin'||p==='/admin/'?200:401,loginPage(false),'text/html; charset=utf-8',{'Cache-Control':'no-store'});
+    if(p.startsWith('/admin/studio')&&globalThis.BW_STUDIO)return await globalThis.BW_STUDIO.admin(req,res,url);
     if(p==='/admin/paybot'&&globalThis.BW_PAYBOT)return await globalThis.BW_PAYBOT.admin(req,res);
     if(p.startsWith('/admin/vault')&&globalThis.BW_VAULT_ADMIN)return await globalThis.BW_VAULT_ADMIN(req,res,url,{page,readForm});
     if(p==='/admin/config'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,'forbidden','text/plain');saveCfg(await readForm(req));res.writeHead(303,{Location:'/admin'});return res.end()}

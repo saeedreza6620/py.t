@@ -21,7 +21,7 @@ export function journeys({ev,users,reqs,reqStatus,now=Date.now()}){
     const days=new Set(ev.map(e=>tday(e.t))),checks=c('check');const paid=(u.devices||[]).some(d=>paidDev.has(d))||c('pay_done')>0;
     const stage=paid?'paid':c(['negin_buy_click','sub_click','buy_request'])?'click':c('paywall_view')?'wall':days.size>1?'back':checks||c('gem_msg')?'once':'none';
     const lastEv=[...ev].reverse().find(e=>LABEL[e.type]&&!/^app_open/.test(e.type));
-    return {name:String(u.name||'').trim().split(/\s+/)[0]||'—',phone:mask(ph),src:u.src||'نامشخص',first:isFinite(first)?new Date(first).toISOString():'',last:last?new Date(last).toISOString():'',
+    return {ph,devices:u.devices||[],evs:ev,name:String(u.name||'').trim().split(/\s+/)[0]||'—',phone:mask(ph),src:u.src||'نامشخص',first:isFinite(first)?new Date(first).toISOString():'',last:last?new Date(last).toISOString():'',
       idle:last?Math.floor((now-last)/DAY):null,days:days.size,opens:c(['app_open','app_open_installed']),checks,chat:c('gem_msg'),routine:c('routine_tick'),followup:c('followup_answer'),
       wall:c('paywall_view'),buy:c(['negin_buy_click','sub_click','buy_request']),paid,installed:!!u.installed||c('install')>0,notif:c('notif_on')>0,
       welcome:c('wel_check')?'بررسی':c('wel_chat')?'گفتگو':c('wel_skip')?'رد کرد':'—',stage,lastAction:lastEv?LABEL[lastEv.type]:'فقط باز کرد'}});

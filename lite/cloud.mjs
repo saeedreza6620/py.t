@@ -32,4 +32,6 @@ export function makeCloud({DATA,BANK,send,readBody,sameOrigin,smsOn}){
         try{const lines=fs.readFileSync(hist,'utf8').trim().split('\n');if(lines.length>KEEP)fs.writeFileSync(hist,lines.slice(-KEEP).join('\n')+'\n')}catch{}}
       const at=Date.now();fs.writeFileSync(f+'.tmp',JSON.stringify({at,dev:dd,data}));fs.renameSync(f+'.tmp',f);return send(res,200,{ok:true,at})}
     return send(res,404,{error:'not found'})}
-  return {handle}}
+  // read-only, for the message studio's {محصول…} fields
+  const dataOf=ph=>{const o=read(file(ph));return o&&o.data||{}};
+  return {handle,dataOf}}

@@ -1,4 +1,4 @@
-const CACHE = 'bw-static-v128';
+const CACHE = 'bw-static-v129';
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => event.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(name=>/^bw-(static|complete)-/.test(name)&&name!==CACHE).map(name=>caches.delete(name)));await self.clients.claim();})()));
 
@@ -25,7 +25,7 @@ self.addEventListener('fetch', event => {
     } catch {
       if (cached) return cached;
       // Never combine JavaScript from different releases.
-      if (navigation) return new Response('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeautyWallet</title><body style="font-family:Tahoma;background:#f2faff;padding:24px;line-height:2"><h1>BeautyWallet</h1><p>اتصال برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن</p><a href="/legacy/?v=128">تلاش دوباره</a></body></html>', {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
+      if (navigation) return new Response('<!doctype html><html lang="fa" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeautyWallet</title><body style="font-family:Tahoma;background:#f2faff;padding:24px;line-height:2"><h1>BeautyWallet</h1><p>اتصال برقرار نشد؛ اینترنت را بررسی کن و دوباره تلاش کن</p><a href="/legacy/?v=129">تلاش دوباره</a></body></html>', {status:503,headers:{'Content-Type':'text/html; charset=utf-8'}});
       return Response.error();
     } finally { clearTimeout(timeout); }
   })());
@@ -50,7 +50,12 @@ async function showToday(force){
   await fuWrite(key,day);
   return self.registration.showNotification(msg.title,{body:msg.body,tag:'bw-'+slot,renotify:false,icon:'/legacy/bw-gem-192.png',badge:'/legacy/bw-gem-192.png',lang:'fa',dir:'rtl',data:{url:'/legacy/?from=notif'}});
 }
-self.addEventListener('push', event => event.waitUntil(showToday(true)));
+// a push can also mean "the BeautyWallet team wrote you a message" (panel → message studio): ask the server what
+// it says (the push itself carries nothing); otherwise it is the routine reminder written on the phone
+async function onPush(){try{const sub=await self.registration.pushManager.getSubscription();if(sub){const r=await fetch('/api/inbox/peek',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint})});const j=await r.json();
+  if(j&&j.body)return self.registration.showNotification(j.title||'بیوتی‌ولت 💎',{body:j.body,tag:'bw-msg-'+j.id,icon:'/legacy/bw-gem-192.png',badge:'/legacy/bw-gem-192.png',lang:'fa',dir:'rtl',data:{url:'/legacy/?from=msg'}})}}catch(e){}
+  return showToday(true)}
+self.addEventListener('push', event => event.waitUntil(onPush()));
 self.addEventListener('periodicsync', event => { if (event.tag === 'bw-daily') event.waitUntil((async()=>{const plan=await fuRead('plan')||{};const h=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',hourCycle:'h23'}).format(new Date()));const am=Number(String(plan.amTime||plan.time||'09:00').slice(0,2)),pm=Number(String(plan.pmTime||'21:00').slice(0,2));if(h>=am&&h<15&&(plan.am||plan.taskSlot!=='pm'))return showToday(false);if(h>=pm&&plan.pm)return showToday(false)})()); });
 self.addEventListener('notificationclick', event => {
   event.notification.close();

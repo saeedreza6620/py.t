@@ -15,7 +15,7 @@ const here=path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC=path.join(here,'public');
 // release number of the app files on disk (same number the app carries in its ?v= links) — the app compares it on open and refreshes itself
 const APP_VERSION=(()=>{try{return (fs.readFileSync(path.join(PUBLIC,'legacy','sw.js'),'utf8').match(/bw-static-v(\d+)/)||[])[1]||'0'}catch{return '0'}})();
-import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';import {makePayBot} from './paybot.mjs';import {makeCloud} from './cloud.mjs';
+import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';import {makePayBot} from './paybot.mjs';import {makeCloud} from './cloud.mjs';import {makeStudio} from './studio.mjs';
 // Liara app filesystems are read-only unless a disk is mounted: pick the first writable folder, never crash.
 function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
 const DATA=[process.env.DATA_DIR,'/data',path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
@@ -376,6 +376,10 @@ const CLOUD=makeCloud({DATA,BANK,send,readBody,sameOrigin,smsOn:()=>SMS.on});
 const admin=makeAdmin({BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const CHAT=makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MODELS,getCfg:()=>cfg,hasKey:()=>!!(KEY&&BASE)});globalThis.BW_CHAT_STATS=CHAT.stats;
 const PUSH=makePush({DATA,send,ip,sameOrigin,readBody,E});globalThis.BW_PUSH_STATS=PUSH.stats;
+// message studio: in-app cards + notifications written by the team, and four automatic moments (lite/studio.mjs)
+const PNAME=(()=>{const m=new Map();try{const t=fs.readFileSync(path.join(PUBLIC,'legacy','catalog-routine.js'),'utf8');for(const x of t.matchAll(/"id":"([a-z0-9-]+)","name":"([^"]+)"/g))if(!m.has(x[1]))m.set(x[1],x[2])}catch(e){console.error('studio names',e.message)}return m})();
+const STUDIO=makeStudio({DATA,send,readBody,readForm,sameOrigin,BANK,PUSH,smsOn:()=>SMS.on,getUsers,readJsonl:readJsonlSafe,getReqStatus,cloudOf:CLOUD.dataOf,
+  productName:id=>PNAME.get(id)||((BANK.list()||[]).find(p=>p.id===id)||{}).name||''});globalThis.BW_STUDIO=STUDIO;
 const VAULT=makeVault({DATA,send,ip,sameOrigin,E,normPhone,sendOtp,SMS,readBody});globalThis.BW_VAULT_STATS=VAULT.stats;globalThis.BW_VAULT_ADMIN=VAULT.adminHandle;
 const server=http.createServer(async(req,res)=>{
   const url=new URL(req.url,'http://x');
@@ -546,6 +550,7 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname==='/api/skinchat'&&req.method==='POST')return await CHAT.handle(req,res);
     if(url.pathname.startsWith('/api/push/'))return await PUSH.handle(req,res,url);
     if(url.pathname.startsWith('/api/cloud/'))return await CLOUD.handle(req,res,url);
+    if(url.pathname==='/api/inbox'||url.pathname.startsWith('/api/inbox/'))return await STUDIO.handle(req,res,url);
     if(url.pathname.startsWith('/api/vault'))return await VAULT.handle(req,res,url);
     if(url.pathname==='/admin'||url.pathname.startsWith('/admin/'))return await admin(req,res,url);
     if(url.pathname.startsWith('/api/'))return send(res,404,{error:'این بخش در نسخه آزمایشی فعال نیست'});
