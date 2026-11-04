@@ -49,13 +49,17 @@ export function makeStudio({SMSLINE={},DATA,send,readBody,readForm,sameOrigin,BA
   const smsReady=()=>!!(SMSLINE.key&&SMSLINE.sender);
   async function smsSend(phone,text){if(!smsReady())return {ok:false,err:'خط تنظیم نشده'};
     try{const r=await fetch(`${SMSLINE.base}/v1/${encodeURIComponent(SMSLINE.key)}/sms/send.json`,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({receptor:phone,sender:SMSLINE.sender,message:text}),signal:AbortSignal.timeout(15000)});
-      const j=await r.json().catch(()=>({}));const e=(j.entries||[])[0]||{};const ok=r.ok&&j?.return?.status===200;return {ok,cost:Number(e.cost)||0,err:ok?'':String(j?.return?.message||('HTTP '+r.status)).slice(0,120)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
+      const j=await r.json().catch(()=>({}));const e=(j.entries||[])[0]||{};const ok=r.ok&&j?.return?.status===200;return {ok,id:e.messageid?String(e.messageid):'',cost:Number(e.cost)||0,err:ok?'':String(j?.return?.message||('HTTP '+r.status)).slice(0,120)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
+  // what the operator did with it (Kavenegar's own words): delivered / not delivered / blocked by the receiver…
+  async function smsStatus(ids){if(!smsReady()||!ids.length)return {};const out={};
+    for(let i=0;i<ids.length;i+=50){try{const r=await fetch(`${SMSLINE.base}/v1/${encodeURIComponent(SMSLINE.key)}/sms/status.json`,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({messageid:ids.slice(i,i+50).join(',')}),signal:AbortSignal.timeout(15000)});
+      const j=await r.json().catch(()=>({}));for(const e of j.entries||[])out[String(e.messageid)]={code:Number(e.status),text:String(e.statustext||'')}}catch{}}return out}
   const smsText=m=>'بیوتی‌ولت: '+m.text+'\n'+SMSLINE.site.replace(/^https?:\/\//,'')+'/legacy/?perm=1&src=sms'+(m.optLine?'\nلغو11':'');
   async function smsDue(){const now=Date.now(),h=tehranHour(now);if(h<9||h>=21||!smsReady())return;let changed=false;
     for(const m of msgs){if(m.sms!=='due'||m.at>now)continue;changed=true;
       if(cfg.optout[m.ph]||m.seenAt||(pushOn({devices:devicesOf(m.ph)})&&m.pushed>0)){m.sms='skip';continue}
       if(msgs.some(x=>x!==m&&x.ph===m.ph&&x.smsAt&&now-x.smsAt<7*DAY)){m.sms='skip';continue}
-      const r=await smsSend(m.ph,smsText(m));m.sms=r.ok?'sent':'fail';m.smsAt=now;m.smsCost=r.cost;if(!r.ok)m.smsErr=r.err}
+      const r=await smsSend(m.ph,smsText(m));m.sms=r.ok?'sent':'fail';m.smsAt=now;m.smsCost=r.cost;m.smsId=r.id;if(!r.ok)m.smsErr=r.err}
     if(changed)saveMsgs()}
   async function pushDue(){smsDue().catch(()=>{});const now=Date.now();let changed=false;
     for(const m of msgs){if(m.hold||!m.pushDue||m.pushDue>now||m.pushed!=null||m.seenAt)continue;m.pushed=0;changed=true;
@@ -91,7 +95,7 @@ export function makeStudio({SMSLINE={},DATA,send,readBody,readForm,sameOrigin,BA
     for(const m of msgs){if(m.hold)continue;const k=m.batch||m.source;(batches.get(k)||batches.set(k,[]).get(k)).push(m)}
     const list=[...batches.values()].sort((a,b)=>b[0].at-a[0].at).slice(0,6);if(!list.length)return '<p class="m">هنوز پیامی نرفته.</p>';
     return list.map(ms=>{const m0=ms[0],due=m0.at>Date.now();const label=m0.label||(FLOWS[m0.source.slice(5)]||{}).title||'پیام';
-      const tr=ms.map(m=>{const r=byPh.get(m.ph)||{},back=(r.evs||[]).find(e=>e.t>m.at);return `<tr><td>${esc(r.name||'—')} <small dir="ltr">${esc(r.phone||'')}</small></td><td>${esc(r.devices?KIND[kindOf(r)]:'')}</td><td>${m.pushed>0?'✅':m.pushed===0?'—':due?'⏳':'—'}</td><td>${m.sms==='sent'?'✅':m.sms==='fail'?'❌ '+esc(m.smsErr||''):m.sms==='due'?'⏳':'—'}</td><td>${m.seenAt?sh(m.seenAt):'—'}</td><td>${m.clickAt?sh(m.clickAt):'—'}</td><td>${back?'<b>'+sh(back.t)+'</b>':due?'⏳':'هنوز نه'}</td></tr>`}).join('');
+      const tr=ms.map(m=>{const r=byPh.get(m.ph)||{},back=(r.evs||[]).find(e=>e.t>m.at);return `<tr><td>${esc(r.name||'—')} <small dir="ltr">${esc(r.phone||'')}</small></td><td>${esc(r.devices?KIND[kindOf(r)]:'')}</td><td>${m.pushed>0?'✅':m.pushed===0?'—':due?'⏳':'—'}</td><td>${m.sms==='sent'?(m.smsState?esc(m.smsState):'✅ تحویل کاوه‌نگار'):m.sms==='fail'?'❌ '+esc(m.smsErr||''):m.sms==='due'?'⏳':'—'}</td><td>${m.seenAt?sh(m.seenAt):'—'}</td><td>${m.clickAt?sh(m.clickAt):'—'}</td><td>${back?'<b>'+sh(back.t)+'</b>':due?'⏳':'هنوز نه'}</td></tr>`}).join('');
       const nb=ms.filter(m=>{const r=byPh.get(m.ph)||{};return (r.evs||[]).some(e=>e.t>m.at)}).length;
       return `<div class="p"><b>${esc(label)}</b> · ${due?'⏳ زمان‌بندی‌شده برای ':'رفته در '}${sh(m0.at)} · <b>${fa(nb)} از ${fa(ms.length)}</b> نفر برگشتند<br><small>${esc(m0.text.slice(0,120))}</small>
 <table style="margin-top:8px"><tr><th>نفر</th><th>نوع</th><th>اعلان</th><th>پیامک</th><th>دید</th><th>دکمه را زد</th><th>اولین برگشت به اپ</th></tr>${tr}</table></div>`}).join('')}
@@ -139,6 +143,8 @@ table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border-
 <h2>👥 کاربرانی که الان داری</h2><div class="p"><div class="row" style="flex-wrap:wrap">${Object.entries(KIND).map(([k,l])=>`<div style="background:#f5f3ff;border-radius:12px;padding:10px;text-align:center;min-width:150px"><b style="font-size:22px">${fa(rows.filter(r=>kindOf(r)===k).length)}</b><br><small>${esc(l)}</small></div>`).join('')}</div>
 <p class="m">«نصب کرده» یعنی اپ را روی صفحه‌ی گوشی گذاشته و از آن‌جا باز کرده. اعلان فقط به گروه اول می‌رسد؛ بقیه پیام را وقتی اپ را باز کنند به‌صورت کارت می‌بینند، و نصب‌کرده‌ها همان‌جا یک بار برای روشن کردن اعلان هم پرسیده می‌شوند.</p></div>
 <h2>📩 پیامک از خط بیوتی‌ولت</h2><div class="p">${smsReady()?`<p class="m">خط <b dir="ltr">${esc(SMSLINE.sender)}</b> وصل است. پیامک‌های رفته: <b>${fa(msgs.filter(m=>m.sms==='sent').length)}</b> · هزینه‌ی ثبت‌شده: <b>${fa(Math.round(msgs.reduce((a,m)=>a+(m.smsCost||0),0)).toLocaleString('en'))}</b> ریال${msgs.some(m=>m.sms==='fail')?' · آخرین خطا: '+esc((msgs.filter(m=>m.sms==='fail').at(-1)||{}).smsErr||''):''}</p>
+${(cfg.smsTests||[]).length?'<p class="m"><b>پیامک‌های آزمایشی:</b> '+cfg.smsTests.slice().reverse().map(t=>`<span dir="ltr">${esc(t.to)}</span> (${sh(t.at)}): <b>${esc(t.state||'وضعیت هنوز گرفته نشده')}</b>`).join(' · ')+'</p>':''}
+<form method="post" action="/admin/studio/smsstatus"><button class="g">🔄 وضعیت تحویل پیامک‌ها را از کاوه‌نگار بگیر</button></form>
 <form method="post" action="/admin/studio/smstest" class="row"><input type="text" name="phone" placeholder="شماره‌ی خودت برای آزمایش 09…" dir="ltr" required><button>پیامک آزمایشی</button></form>`:`<p class="m">هنوز وصل نیست. وضعیت متغیرها در لیارا: <b>KAVENEGAR_API_KEY</b> ${SMSLINE.key?'✅ پیدا شد':'❌ پیدا نشد'} · <b>KAVENEGAR_SENDER</b> ${SMSLINE.sender?'✅ پیدا شد':'❌ پیدا نشد'}. بعد از گذاشتن یا تغییر متغیر، برنامه را در لیارا یک بار «راه‌اندازی مجدد» کن.</p>`}</div>
 <h2>✍️ پیام تازه</h2><form class="p" method="post" action="/admin/studio/send" id="cf"><div class="row"><select name="to" id="to">${opt}</select><select name="ph" id="ph" hidden>${people}</select></div>
 <textarea name="text" id="tx" rows="3" maxlength="400" placeholder="{نام} جان، …" required></textarea><div class="row"><select name="cta">${ctaSel('check')}</select><input type="text" name="label" maxlength="40" placeholder="اسم این پیام برای گزارش (اختیاری)"></div>
@@ -158,7 +164,10 @@ document.getElementById('prev').textContent=j.error||('به '+j.n+' نفر می�
     if(req.method!=='POST'||!sameOrigin(req))return send(res,403,{error:'forbidden'});const f=await readForm(req);
     if(p==='/admin/studio/flow'){const k=String(f.k||'');if(!cfg.flows[k])return send(res,400,{error:'bad'});const t=String(f.text||'').trim().slice(0,400);
       cfg.flows[k]={on:f.on==='1',text:t||FLOWS[k].text,cta:CTA[f.cta]!==undefined?f.cta:FLOWS[k].cta};saveCfg();res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent('ذخیره شد')});return res.end()}
-    if(p==='/admin/studio/smstest'){const ph=String(f.phone||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/\D/g,'');const r=/^09\d{9}$/.test(ph)?await smsSend(ph,'بیوتی‌ولت: پیامک آزمایشی 💜 اگر این را می‌بینی، خط بیوتی‌ولت درست وصل است.'):{ok:false,err:'شماره درست نیست'};
+    if(p==='/admin/studio/smsstatus'){const ids=[...msgs.filter(m=>m.smsId).map(m=>m.smsId),...(cfg.smsTests||[]).map(t=>t.id)].filter(Boolean);const st=await smsStatus(ids);
+      for(const m of msgs)if(m.smsId&&st[m.smsId])m.smsState=st[m.smsId].text;for(const t of cfg.smsTests||[])if(st[t.id])t.state=st[t.id].text;saveMsgs();saveCfg();
+      res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent(Object.keys(st).length?'وضعیت تحویل به‌روز شد':'کاوه‌نگار وضعیتی برنگرداند')});return res.end()}
+    if(p==='/admin/studio/smstest'){const ph=String(f.phone||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/\D/g,'');const r=/^09\d{9}$/.test(ph)?await smsSend(ph,'بیوتی‌ولت: پیامک آزمایشی 💜 اگر این را می‌بینی، خط بیوتی‌ولت درست وصل است.'):{ok:false,err:'شماره درست نیست'};if(r.ok&&r.id){cfg.smsTests=[...(cfg.smsTests||[]),{id:r.id,to:ph.slice(0,4)+'•••'+ph.slice(-3),at:Date.now()}].slice(-5);saveCfg()}
       res.writeHead(303,{Location:'/admin/studio?m='+encodeURIComponent(r.ok?'پیامک آزمایشی رفت ✅ (هزینه: '+r.cost+' ریال)':'نرفت ❌ '+r.err)});return res.end()}
     const text=String(f.text||'').trim().slice(0,400),cta=CTA[f.cta]!==undefined?f.cta:'';if(!text)return send(res,400,{error:'متن خالی است'});
     const push=PUSH?PUSH.devices():new Set();const list=targets(f).filter(r=>!cfg.optout[r.ph]).map(r=>({r,t:fill(text,vars(r))})).filter(x=>x.t);const skip=targets(f).length-list.length;
