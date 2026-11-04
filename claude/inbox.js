@@ -32,13 +32,14 @@ function canAsk(){return 'Notification' in window&&'serviceWorker' in navigator&
 // wait until the welcome screen and any open sheet are gone, so nothing covers the question
 function busyUI(){var w=document.querySelector('.bw-wel'),sh=document.getElementById('swSheet'),bk=sh&&sh.parentElement;return !!(w||(bk&&!bk.hidden&&bk.offsetParent!==null))}
 function whenFree(fn,n){n=n||0;if(busyUI()&&n<120){setTimeout(function(){whenFree(fn,n+1)},1500);return}fn()}
-function askPerm(){if(busyUI())return whenFree(askPerm);var K='bw_perm_asked';try{if(Date.now()-Number(localStorage.getItem(K)||0)<3*864e5)return;localStorage.setItem(K,String(Date.now()))}catch(e){}
+var forced=/[?&]perm=1\b/.test(location.search); // a personal link «…/legacy/?perm=1» asks at once, even in the browser
+function askPerm(){if(busyUI())return whenFree(askPerm);var K='bw_perm_asked';try{if(!forced&&Date.now()-Number(localStorage.getItem(K)||0)<3*864e5)return;localStorage.setItem(K,String(Date.now()))}catch(e){}
   if(!canAsk()||document.querySelector('.bw-ib'))return;style();var d=document.createElement('div');d.className='bw-ib';
   d.innerHTML='<small>🔔 یه قدم کوچیک</small><p>بذار یادآور روتینت و پیام‌های بیوتی‌ولت روی گوشیت بیاد؛ صبح‌ها ساعت ۹ و شب‌ها ساعت ۹ (بعداً هر وقت خواستی عوضش کن).</p><div class="r"><button type="button" class="go">اجازه بده 💜</button><button type="button" class="x">بعداً</button></div>';
   document.body.appendChild(d);if(window.bwTrack)try{window.bwTrack('install_offer')}catch(e){}
   d.onclick=function(e){if(e.target.closest('.go')){d.remove();try{var n=JSON.parse(localStorage.getItem('bw_fu_notif')||'{}');if(n.amOn===undefined)n.amOn=true;if(n.pmOn===undefined)n.pmOn=true;localStorage.setItem('bw_fu_notif',JSON.stringify(n))}catch(_){}if(window.BWFollowup&&window.BWFollowup.enable)window.BWFollowup.enable();else try{Notification.requestPermission()}catch(_){}}else if(e.target.closest('.x'))d.remove()}}
 window.addEventListener('appinstalled',function(){setTimeout(askPerm,1500)});
-setTimeout(function(){if(standalone&&canAsk())askPerm();check()},3500);
+setTimeout(function(){if((standalone||forced)&&canAsk())askPerm();check()},3500);
 setInterval(check,5*60e3);
 window.BWInbox={check:function(){lastAt=0;check()},askPerm:askPerm};
 })();
