@@ -150,9 +150,11 @@ export function makeBank(DATA){
   // monthly subscription (prepaid, renewed by hand): an end date on her purse; renewing early adds to it
   function subExtend(d,days){if(!d)return null;const w=bag(d);const base=Math.max(Date.now(),Date.parse(w.subUntil||0)||0);w.subUntil=new Date(base+days*864e5).toISOString();save(WAL,wallets);return w.subUntil}
   function phoneOf(d){const w=d&&wallets[d];return w&&w.phone||''}
+  // which person this device belongs to, and whether that was proven with the SMS code on this device
+  function trust(d){const w=d&&wallets[d];return {phone:w&&w.phone||'',verified:!!(w&&w.phone&&w.merged)}}
   function walletStats(){const keys=Object.keys(wallets),dv=keys.filter(k=>!k.startsWith('p:')),ac=keys.filter(k=>k.startsWith('p:')).map(k=>wallets[k]);
     const counters=[...ac,...dv.map(k=>wallets[k]).filter(w=>!w.phone)],bags=Object.values(wallets);
     return {devices:dv.length,accounts:ac.length,freeUsed:counters.reduce((s,w)=>s+(w.free||0),0),neginSpent:bags.reduce((s,w)=>s+(w.spent||0),0),neginBought:bags.reduce((s,w)=>s+(w.bought||0),0),neginLeft:bags.reduce((s,w)=>s+(w.negin||0),0)}}
 
-  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack,link,phoneOf,subExtend};
+  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack,link,phoneOf,trust,subExtend};
 }
