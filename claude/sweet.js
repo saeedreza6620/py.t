@@ -642,6 +642,20 @@ var _st3=window.switchTab;window.switchTab=function(tab){var r=_st3.apply(this,a
 /* ---------- someone we messaged (SMS link …/y → ?perm=1&src=sms): a welcome that is about HER ----------
    signed in on this phone → her name, her routine, and one tap to turn reminders on;
    not signed in here (new phone / storage lost) → sign in with her number and everything comes back. */
+/* «مراقبت روزانه‌م»: the wallet, her routine for today, and — right there — how to set the reminder */
+function careGo(){try{sessionStorage.setItem('bw_wel_perm','1')}catch(e){}document.querySelectorAll('.bw-ib').forEach(function(e){if(/قدم کوچیک/.test(e.textContent))e.remove()});window.switchTab('wallet');setTimeout(function(){try{renderWalletRoutine()}catch(e){}
+  var rtn=document.getElementById('swWalletRtn'),rem=document.getElementById('fuRem');(rtn||rem||document.getElementById('wallet')).scrollIntoView({behavior:'smooth',block:'start'});
+  if(!rem)return;var old=document.getElementById('bwCareTip');if(old)old.remove();
+  var perm=('Notification' in window)?Notification.permission:'none',canN=perm==='default'&&('serviceWorker' in navigator)&&('PushManager' in window);
+  var t=document.createElement('div');t.id='bwCareTip';t.className='bw-care-tip';
+  t.innerHTML=perm==='granted'?'<b>⏰ یادآورت روشنه 💜</b><span>ساعت صبح و شب رو همین پایین، توی کارت «یادآور روتینم» هر وقت خواستی عوض کن.</span>'
+   :canN?'<b>⏰ بذار یادت بندازیم</b><span>همین پایین توی کارت «یادآور روتینم» ساعت صبح و شبت رو انتخاب کن؛ یا با یک لمس با ساعت ۹ صبح و ۹ شب روشنش کن.</span><button type="button" class="sw-btn" data-care="on">🔔 روشنش کن</button>'
+   :'<b>⏰ یادآور روتین</b><span>'+((/iphone|ipad/i.test(navigator.userAgent)&&!(window.navigator.standalone))?'برای یادآور، اول اپ رو به صفحه‌ی اصلی گوشی اضافه کن (دکمه‌ی اشتراک‌گذاری ← Add to Home Screen)، بعد از همین‌جا روشنش کن.':'اعلان‌ها برای بیوتی‌ولت بسته‌ست؛ از تنظیمات مرورگر برای این سایت «اعلان‌ها» رو اجازه بده تا یادآور بیاد.')+'</span>';
+  rem.before(t);rem.classList.add('bw-care-glow');setTimeout(function(){rem.classList.remove('bw-care-glow')},4200);
+  t.addEventListener('click',function(e){if(!e.target.closest('[data-care=on]'))return;try{var n=JSON.parse(localStorage.getItem('bw_fu_notif')||'{}');if(n.amOn===undefined)n.amOn=true;if(n.pmOn===undefined)n.pmOn=true;localStorage.setItem('bw_fu_notif',JSON.stringify(n))}catch(x){}
+   if(window.BWFollowup&&window.BWFollowup.enable)window.BWFollowup.enable();if(window.bwTrack)try{window.bwTrack('wel_perm')}catch(x){}t.remove()});
+ },350)}
+window.bwCare=careGo;
 function welcomeBack(){var r=registered(),nm=r&&r.name?String(r.name).trim().split(/\s+/)[0].slice(0,20):'';
  var ids=[];try{ids=routineIds()}catch(e){}var names=ids.map(function(id){var p=P(id);return p&&p.name}).filter(Boolean).slice(0,2);
  var canN=('Notification' in window)&&('serviceWorker' in navigator)&&('PushManager' in window)&&Notification.permission==='default';
@@ -676,6 +690,7 @@ function welcome(){var sp=location.search;if(/[?&](gift|q|su|sx|st)=/.test(sp))r
  w.innerHTML='<div class="bw-wel-glow" aria-hidden="true"></div><div class="bw-wel-in"><div class="bw-wel-gem" aria-hidden="true">'+gemArt()+'<i class="bw-wel-sp bw-wel-sp1">✦</i><i class="bw-wel-sp bw-wel-sp2">✦</i><i class="bw-wel-sp bw-wel-sp3">✦</i></div>'+
   '<p class="bw-wel-hi">'+esc(greet)+'</p><h2 class="bw-wel-q">امروز اومدی چیکار کنیم؟</h2>'+
   '<button type="button" class="bw-wel-c" data-wel="check"><span class="bw-wel-i">🔍</span><span><b>یه محصول رو با پوستم بسنجم</b><small>قبل از خرید بپرس: بخرم یا نخرم؟</small></span></button>'+
+  '<button type="button" class="bw-wel-c bw-wel-c3" data-wel="care"><span class="bw-wel-i">🌸</span><span><b>مراقبت روزانه‌م</b><small>روتین امروزم، تیک‌ها و یادآورم</small></span></button>'+
   '<button type="button" class="bw-wel-c bw-wel-c2" data-wel="chat"><span class="bw-wel-i">💬</span><span><b>بیا با هم حرف بزنیم</b><small>سؤال پوستی داری یا روتینت رو بچینیم</small></span></button>'+
   '<button type="button" class="bw-wel-skip" data-wel="skip">فقط می‌خوام یه دوری بزنم</button></div>';
  document.body.append(w);
@@ -683,6 +698,7 @@ function welcome(){var sp=location.search;if(/[?&](gift|q|su|sx|st)=/.test(sp))r
  w.addEventListener('click',function(e){var b=e.target.closest('[data-wel]');if(!b)return;var k=b.dataset.wel;if(window.bwTrack)try{window.bwTrack('wel_'+k)}catch(x){}
   if(k==='check')shut(function(){window.switchTab('sw-home');var a=$('#swAsk');if(a){a.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){a.focus()},300)}});
   else if(k==='chat')shut(function(){if(window.BWGem)window.BWGem.open()});
+  else if(k==='care')shut(careGo);
   else shut()});
  document.addEventListener('keydown',function esc_(e){if(e.key==='Escape'&&w.isConnected){shut();document.removeEventListener('keydown',esc_)}});
  return true}

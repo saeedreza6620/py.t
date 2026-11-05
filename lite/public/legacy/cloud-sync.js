@@ -51,6 +51,9 @@ var orig=LS.setItem,origDel=LS.removeItem;
 LS.setItem=function(k,v){orig.apply(this,arguments);if(hydrating||!ok(k))return;if(k==='bw_reg'){lastStart=0;setTimeout(start,400);return}dirty()};
 LS.removeItem=function(k){origDel.apply(this,arguments);if(!hydrating&&ok(k)&&k!=='bw_reg')dirty()};
 document.addEventListener('visibilitychange',function(){if(document.hidden){if(timer){clearTimeout(timer);timer=null;save()}}else start()});
+// ask the browser to keep this site's storage (routine, photos) even when the phone is short of space
+function keep(){try{if(phone()&&navigator.storage&&navigator.storage.persist)navigator.storage.persisted().then(function(p){if(!p)navigator.storage.persist()}).catch(function(){})}catch(e){}}
+setTimeout(keep,2500);
 window.bwCloud={start:function(){lastStart=0;return start()},save:save};
 setTimeout(function(){try{if(sessionStorage.getItem('bw_cloud_note')){sessionStorage.removeItem('bw_cloud_note');note('روتین، یادآورها و پروفایلت برگشت 💜')}}catch(e){}start()},1200);
 })();
