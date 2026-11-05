@@ -65,7 +65,7 @@ export function makeStudio({SMSLINE={},DATA,send,readBody,readForm,sameOrigin,BA
   async function farazCall(path,body){try{const r=await fetch(SMSLINE.base+path,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json','Api-Key':SMSLINE.key},body:JSON.stringify(body),signal:AbortSignal.timeout(15000)});
     const j=await r.json().catch(()=>({}));const ok=r.ok&&(j.status==='success'||(r.status===201&&!j.status));const msg=Array.isArray(j.messages)?j.messages.join('، '):typeof j.messages==='object'&&j.messages?Object.values(j.messages).flat().join('، '):String(j.messages||j.message||'');
     return {ok,id:j.data!=null&&j.data!==0?String(j.data):'',cost:0,err:ok?'':((msg||'بدون پیام')+' · وضعیت '+(j.status||'—')+' · HTTP '+r.status+' · '+keyInfo()).slice(0,260)}}catch(e){return {ok:false,err:e.message.slice(0,120)}}}
-  const farazSend=(phone,text)=>farazCall('/ws/v1/sms/simple',{text,line_number:SMSLINE.sender,recipients:[local(phone)],number_format:'english'});
+  const farazSend=(phone,text)=>farazCall('/ws/v1/sms/simple',{text,line_number:SMSLINE.sender,recipients:[local(phone)],number_format:'english',schedule:null});
   // «پیامک سریع» (pattern): fixed text approved by Faraz, only %name% changes
   const farazPattern=(phone,vars)=>farazCall('/ws/v1/sms/pattern',{code:SMSLINE.pattern,attributes:vars,recipient:local(phone),line_number:SMSLINE.patternSender,number_format:'english'});
   const PAT=FA&&!!SMSLINE.pattern;
