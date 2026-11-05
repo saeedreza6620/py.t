@@ -659,6 +659,7 @@ window.bwCare=careGo;
 function welcomeBack(){var r=registered(),nm=r&&r.name?String(r.name).trim().split(/\s+/)[0].slice(0,20):'';
  var ids=[];try{ids=routineIds()}catch(e){}var names=ids.map(function(id){var p=P(id);return p&&p.name}).filter(Boolean).slice(0,2);
  var canN=('Notification' in window)&&('serviceWorker' in navigator)&&('PushManager' in window)&&Notification.permission==='default';
+ var doCheck=/[?&]do=check\b/.test(location.search);
  var on=('Notification' in window)&&Notification.permission==='granted';
  var hi=new Date().getHours(),when=hi<11?'صبحت بخیر':hi<17?'سلام':'شبت بخیر';
  var line=!r?'روتین، یادآورها و پروفایل پوستت روی بیوتی‌ولت ذخیره‌ست. با همون شماره‌ای که عضو شدی وارد شو تا همه‌چیز برگرده 💜'
@@ -667,9 +668,10 @@ function welcomeBack(){var r=registered(),nm=r&&r.name?String(r.name).trim().spl
  var w=document.createElement('div');w.className='bw-wel';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-label','خوش برگشتی');
  w.innerHTML='<div class="bw-wel-glow" aria-hidden="true"></div><div class="bw-wel-in"><div class="bw-wel-gem" aria-hidden="true">'+gemArt()+'<i class="bw-wel-sp bw-wel-sp1">✦</i><i class="bw-wel-sp bw-wel-sp2">✦</i><i class="bw-wel-sp bw-wel-sp3">✦</i></div>'+
   '<p class="bw-wel-hi">'+esc(when+(nm?' '+nm+' جان':' عزیزم'))+' 💜</p><h2 class="bw-wel-q">خوش برگشتی به بیوتی‌ولت</h2><p class="bw-wel-hi" style="font-weight:500;line-height:1.9;margin:6px 0 16px">'+line+'</p>'+
+  (doCheck&&r?'<button type="button" class="bw-wel-c" data-wel="check"><span class="bw-wel-i">🔍</span><span><b>اسم یا لینک یه محصول رو بده</b><small>همین الان با پوستت می‌سنجمش: بخری یا نه؟</small></span></button>':'')+
   (!r?'<button type="button" class="bw-wel-c" data-wel="reg"><span class="bw-wel-i">📱</span><span><b>با شماره‌م وارد می‌شم</b><small>روتین و یادآورهات برمی‌گرده</small></span></button>'
-   :(canN?'<button type="button" class="bw-wel-c" data-wel="perm"><span class="bw-wel-i">🔔</span><span><b>یادآور روتینم رو روشن کن</b><small>صبح‌ها ساعت ۹ و شب‌ها ساعت ۹؛ هر وقت خواستی عوضش کن</small></span></button>':on?'<p class="bw-wel-hi" style="font-size:13px">🔔 یادآورهات روشنه</p>':''))+
-  '<button type="button" class="bw-wel-c bw-wel-c2" data-wel="'+(ids.length?'routine':'check')+'"><span class="bw-wel-i">'+(ids.length?'🧴':'🔍')+'</span><span><b>'+(ids.length?'روتینم رو ببینم':'یه محصول رو با پوستم بسنجم')+'</b><small>'+(ids.length?'تیک امروز رو بزنم':'قبل از خرید بپرس: بخرم یا نخرم؟')+'</small></span></button>'+
+   :(canN?'<button type="button" class="bw-wel-c'+(doCheck?' bw-wel-c3':'')+'" data-wel="perm"><span class="bw-wel-i">🔔</span><span><b>یادآور روتینم رو روشن کن</b><small>صبح‌ها ساعت ۹ و شب‌ها ساعت ۹؛ هر وقت خواستی عوضش کن</small></span></button>':on?'<p class="bw-wel-hi" style="font-size:13px">🔔 یادآورهات روشنه</p>':''))+
+  (doCheck&&r&&!ids.length?'':'<button type="button" class="bw-wel-c bw-wel-c2" data-wel="'+(ids.length?'routine':'check')+'">'+'<span class="bw-wel-i">'+(ids.length?'🧴':'🔍')+'</span><span><b>'+(ids.length?'روتینم رو ببینم':'یه محصول رو با پوستم بسنجم')+'</b><small>'+(ids.length?'تیک امروز رو بزنم':'قبل از خرید بپرس: بخرم یا نخرم؟')+'</small></span></button>')+
   '<button type="button" class="bw-wel-skip" data-wel="skip">بعداً</button></div>';
  document.body.append(w);if(r&&canN)try{sessionStorage.setItem('bw_wel_perm','1')}catch(e){}if(window.bwTrack)try{window.bwTrack('wel_back')}catch(x){}
  var shut=function(then){w.classList.add('bw-wel-out');setTimeout(function(){w.remove();if(then)then()},230)};
