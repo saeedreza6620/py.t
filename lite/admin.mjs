@@ -2,7 +2,7 @@
 // Login with ADMIN_TOKEN once → HttpOnly cookie (the token never sits in the address bar).
 import {retentionHtml} from './retention.mjs';
 import {insightsHtml} from './insights.mjs';
-import {kpiHtml} from './kpi.mjs';import {journeysHtml,journeysCsv} from './journeys.mjs';
+import {kpiHtml} from './kpi.mjs';import {journeysHtml,journeysCsv} from './journeys.mjs';import {carePage} from './carekpi.mjs';
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -108,6 +108,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 6px;b
     return page('پنل مدیریت بیوتی‌ولت',`
 <header><div class="brand"><div class="logo">BW</div><h1>پنل مدیریت بیوتی‌ولت<small>نسخه آزمایشی · آخرین فعالیت: ${s.lastAt?esc(new Date(s.lastAt).toLocaleString('fa-IR',{timeZone:'Asia/Tehran'})):'—'}</small></h1></div><div><a class="btn ghost" href="/admin">تازه‌سازی</a> <a class="btn ghost" href="/admin/logout">خروج</a></div></header>
 <div class="card links"><div class="l"><span>🧪 لینک تست برای کاربران</span><a href="${esc(o)}/legacy/" target="_blank">${esc(o)}/legacy/</a></div><div class="l"><span>🌐 وب‌سایت</span><a href="${esc(o)}/" target="_blank">${esc(o)}/</a></div><div class="l"><span>🛠 پنل مدیریت (همین صفحه)</span><a href="${esc(o)}/admin">${esc(o)}/admin</a></div></div>
+<a href="/admin/care" style="display:block;margin:0 0 10px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;background:linear-gradient(135deg,#ff9a7a,#ff7fa8);color:#fff">🌸 داشبورد مراقبت روزانه · ستاره‌ی شمال و هشدارها</a>
 ${globalThis.BW_STUDIO?globalThis.BW_STUDIO.box():''}
 ${(()=>{const st=getReqStatus();const n=readJsonl(path.join(DATA,'purchase-requests.jsonl')).filter(r=>r.method==='card'&&(st[r.ref]||{}).status==='proof').length;
 return `<a href="/admin/pay" style="display:block;margin:0 0 14px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;${n?'background:#1f9d6f;color:#fff':'background:#fff;color:#241a4f;border:1px solid #e3def8'}">💳 ${n?fa(n)+' واریز منتظر تأیید توست — بزن و تأیید کن':'واریز منتظری نیست · صفحه‌ی تأیید واریزها'}</a>`})()}
@@ -229,6 +230,12 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
       logUsage({at:new Date().toISOString(),test:true,status:r.status,model:r.body.model||'',search:true,ms:Date.now()-t0,sources:(r.body.sources||[]).length,code:r.body.code||''});
       return send(res,200,{ok:r.status===200,model:r.body.model,seconds:Math.round((Date.now()-t0)/100)/10,text:String(r.body.text||'').slice(0,1200),sources:r.body.sources||[],error:r.body.error},'application/json',{'Cache-Control':'no-store'});
     }
+    if(p==='/admin/care'||p==='/admin/care/team'){const TF=path.join(DATA,'kpi-team.json');let team=[];try{team=JSON.parse(fs.readFileSync(TF,'utf8'))}catch{}
+      if(p==='/admin/care/team'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const f=await readForm(req);
+        team=[...new Set(String(f.team||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).split(/[\s,،;]+/).map(x=>x.replace(/\D/g,'')).filter(x=>/^09\d{9}$/.test(x)))];
+        try{fs.writeFileSync(TF,JSON.stringify(team))}catch{}res.writeHead(303,{Location:'/admin/care'});return res.end()}
+      return send(res,200,carePage({ev:readJsonl(path.join(DATA,'events.jsonl')),users:getUsers(),reqs:readJsonl(path.join(DATA,'purchase-requests.jsonl')),reqStatus:getReqStatus(),
+        use:readJsonl(path.join(DATA,'usage.jsonl')).filter(u=>!u.test),fb:readJsonl(path.join(DATA,'feedback.jsonl')),push:globalThis.BW_PUSH_STATS?globalThis.BW_PUSH_STATS():null,team,fa,esc}),'text/html; charset=utf-8',{'Cache-Control':'no-store'})}
     if(p==='/admin/journeys.csv')return send(res,200,journeysCsv({ev:readJsonl(path.join(DATA,'events.jsonl')),users:getUsers(),reqs:readJsonl(path.join(DATA,'purchase-requests.jsonl')),reqStatus:getReqStatus()}),'text/csv; charset=utf-8',{'Content-Disposition':'attachment; filename="beautywallet-journeys.csv"','Cache-Control':'no-store'});
     if(p==='/admin/users.csv'){const cols=['name','phone','verified','installed','os','first','last'];const u=Object.values(getUsers());
       return send(res,200,'﻿'+cols.join(',')+'\n'+u.map(r=>cols.map(c=>{let v=String(r[c]??'');if(/^[=+\-@]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'}).join(',')).join('\n'),'text/csv; charset=utf-8',{'Content-Disposition':'attachment; filename="beautywallet-users.csv"','Cache-Control':'no-store'})}
