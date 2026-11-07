@@ -384,3 +384,11 @@ button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(
 .bw-care-tip{background:#fff7ec;border:1px solid #ffd9a8;border-radius:16px;padding:12px 14px;margin:10px 0;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.85;color:#4a3410}
 .bw-care-tip .sw-btn{align-self:flex-start;margin-top:4px}
 .bw-care-glow{outline:3px solid #ffb36b;outline-offset:3px;border-radius:18px;transition:outline-color .6s}
+
+.pf-goals{border:0;padding:0;margin:8px 0;display:flex;flex-wrap:wrap;gap:8px}
+.pf-goals legend{font-weight:700;margin-bottom:6px;padding:0}
+.pf-goal{display:inline-flex!important;align-items:center;gap:0;margin:0!important;cursor:pointer}
+.pf-goal input{position:absolute;opacity:0;width:1px;height:1px}
+.pf-goal span{border:1.5px solid #ddd6fb;border-radius:999px;padding:7px 13px;font-size:14px;background:#fff;color:#3d3566;transition:all .15s}
+.pf-goal input:checked+span{background:linear-gradient(135deg,#8b6cf0,#d27cd9);color:#fff;border-color:transparent}
+.pf-goal input:focus-visible+span{outline:2px solid #8b6cf0;outline-offset:2px}

@@ -13,7 +13,7 @@ var HELLO='سلام قشنگم 💎 من دستیار پوستتم. سؤال پ�
 var ACTS='<button type="button" data-gc="ask">💭 یه سؤال دارم</button><button type="button" data-offer="build_routine">🧴 روتینم رو با هم بچینیم</button>';
 var START=['جوش دارم 🔴','لک دارم 🌤','پوستم خشکه 🍂','چربی و براقی 💧','منافذ باز','قرمزی و حساسیت 🌹','چین و چروک','نمی‌دونم پوستم چیه 🤍'];
 var READY=['یه روتین ساده برای شروع می‌خوام','فرق نیاسینامید و ویتامین C چیه؟','ضدآفتاب رو چطور درست بزنم؟','این محصول به پوستم می‌خوره؟'];
-var OFFER={check_product:'🔍 بررسی یه محصول با پوستم',build_routine:'🧴 روتینم رو بچین',photo_journal:'📷 عکس شروع پوستم',add_routine:'➕ اضافه به روتینم',send_photo:'📷 عکس همون جا رو بفرستم'};
+var OFFER={open_journal:'📒 دفترچه‌ی عکس پوستم توی ولت',check_product:'🔍 بررسی یه محصول با پوستم',build_routine:'🧴 روتینم رو بچین',photo_journal:'📷 عکس شروع پوستم',add_routine:'➕ اضافه به روتینم',send_photo:'📷 عکس همون جا رو بفرستم'};
 
 function state(){var s=rj(K,null);if(!s||!Array.isArray(s.m))s={m:[]};return s}
 function save(s){s.m=s.m.slice(-MAX);wj(K,s)}
@@ -83,7 +83,7 @@ function offer(k){if(k==='send_photo')return startPhoto();
   close();setTimeout(function(){
   if(k==='check_product'){if(typeof window.switchTab==='function')window.switchTab('sw-home');var a=document.getElementById('swAsk');if(a){a.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){a.focus()},350)}}
   else if(k==='build_routine'){if(typeof window.switchTab==='function')window.switchTab('sw-home');var g=document.getElementById('sw-home');var gd=g&&g.querySelector('#swGuide');if(gd&&gd.hidden){bypass=true;var hg=g.querySelector('#swHeroGem');hg&&hg.click()}setTimeout(function(){var c=document.querySelector('#swGuide [data-g="start"],#swGuide [data-g="myrtn"]');c&&c.click()},250)}
-  else if(k==='photo_journal'){if(typeof window.switchTab==='function')window.switchTab('track');setTimeout(function(){var j=document.getElementById('skinJournal');j&&j.scrollIntoView({behavior:'smooth',block:'start'})},300)}
+  else if(k==='photo_journal'||k==='open_journal'){if(typeof window.switchTab==='function')window.switchTab('track');setTimeout(function(){var j=document.getElementById('skinJournal');j&&j.scrollIntoView({behavior:'smooth',block:'start'})},300)}
   else if(k==='add_routine'){if(typeof window.switchTab==='function')window.switchTab('sw-routine')}},120)}
 
 /* ---------- send a photo from inside the chat: needs login first (photos only ever belong to
@@ -110,7 +110,15 @@ function savePhoto(){if(!pendingImg)return;var ck=$('#gcConsent',root);if(ck&&!c
   var s0=state(),lastUser=(s0.m.slice().reverse().filter(function(m){return m.role==='user'})[0]||{}).content||'';
   window.BWSkinJournal.commit(img,{note:'از گفت‌وگوی دستیار: '+String(lastUser).slice(0,120)}).then(function(){pendingImg=null;
     var box=$('#gcPhoto',root);if(box){box.hidden=true;box.innerHTML=''}
-    var s=state();s.m.push({role:'assistant',content:'عکس رو امن گرفتم و تو دفترچه‌ی عکس پوستت ذخیره شد 💜 من خودم عکس رو نمی‌بینم، پس بگو دقیقاً کجای صورتته تا دقیق‌تر راهنماییت کنم.'});save(s);paint();track('journal_photo')})
+    var s=state(),nth=s.m.filter(function(m){return m.photo}).length;
+    // first photo in this chat: what happens next in daily care, honestly; later photos: short
+    var txt=nth?'این عکس هم کنار قبلی، با تاریخ امروز، توی دفترچه‌ی عکس پوستت ثبت شد 💜 بگو این یکی مال کجای صورته و چی توش می‌بینی تا همین‌جا راهنماییت کنم.'
+      :'عکست امن توی «دفترچه‌ی عکس پوست من» در ولتت ثبت شد 💜 این عکس، نقطه‌ی شروع مراقبت روزانه‌ته:\n'+
+       '۱. هر صبح و شب روتینت رو تیک می‌زنی؛ یادآور روتین هم اگه روشنش کنی میاد.\n'+
+       '۲. روز ۱۴، روز ۲۸ و هفته‌ی ۸ و ۱۲، توی ولتت نشونت می‌دیم وقت عکس بعدیه؛ با همون نور و همون فاصله.\n'+
+       '۳. هر عکس با روتین همون روزها کنار هم می‌مونه تا تغییر واقعی پوستت معلوم بشه، نه حس یه روز.\n'+
+       'من خودم عکس رو نمی‌بینم؛ پس بگو دقیقاً کجای صورته و چی می‌بینی (جوش، لک، قرمزی، رنگ) تا همین‌جا برای خودت راهنماییت کنم.';
+    s.m.push({role:'assistant',content:txt,photo:1,offer:{kind:'open_journal',text:''}});save(s);paint();track('journal_photo')})
   .catch(function(){if(btn)btn.disabled=false;var box=$('#gcPhoto',root);if(box){var m=document.createElement('p');m.className='gc-pmsg';m.textContent='عکس ذخیره نشد؛ دوباره امتحان کن.';box.insertBefore(m,box.firstChild)}})}
 function open(){build();root.hidden=false;document.body.style.overflow='hidden';try{history.pushState({gc:1},'')}catch(e){}paint();track('gem_open');setTimeout(function(){var t=$('textarea',root);if(t&&window.innerWidth>700)t.focus()},200)}
 function close(fromPop){if(!root||root.hidden)return;root.hidden=true;document.body.style.overflow='';if(!fromPop){try{if(history.state&&history.state.gc)history.back()}catch(e){}}}
