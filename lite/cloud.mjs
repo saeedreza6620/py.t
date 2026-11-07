@@ -7,7 +7,7 @@ import fs from 'node:fs';import path from 'node:path';import crypto from 'node:c
 
 export const CLOUD_KEYS=['bw_reg','bw_profile_v1_full','bw_profile','bw_skin_quick_v1','bw_check_products','bw_check_times','bw_routine_set','bw_routine_map','bw_routine_synced',
   'bw_own_products','bw_wallet','bw_reminder_v1','bw_fu_notif','bw_fu_start','bw_fu_answers','bw_life','bw_refill','bw_supplements_v1','bw_regret_v1','bw_quick_routine_v1',
-  'bw_budget_v1','bw_reviews_v1','bw_last_check'];
+  'bw_budget_v1','bw_reviews_v1','bw_last_check','bw_city','bw_sellers','bw_auth_v1'];
 export const CLOUD_PREFIX=/^bw_(track|note|mood)_\d{4}-\d{2}-\d{2}$/;
 const MAX=300*1024,KEEP=6;
 

@@ -15,7 +15,7 @@ const here=path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC=path.join(here,'public');
 // release number of the app files on disk (same number the app carries in its ?v= links) — the app compares it on open and refreshes itself
 const APP_VERSION=(()=>{try{return (fs.readFileSync(path.join(PUBLIC,'legacy','sw.js'),'utf8').match(/bw-static-v(\d+)/)||[])[1]||'0'}catch{return '0'}})();
-import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';import {makePayBot} from './paybot.mjs';import {makeCloud} from './cloud.mjs';import {makeStudio} from './studio.mjs';
+import os from 'node:os';import {makeBank,RESEARCH_SCHEMA_HINT} from './bank.mjs';import crypto from 'node:crypto';import {makeAdmin} from './admin.mjs';import {makePayBot} from './paybot.mjs';import {makeCloud} from './cloud.mjs';import {makeStudio} from './studio.mjs';import {makeLayer2} from './layer2.mjs';
 // Liara app filesystems are read-only unless a disk is mounted: pick the first writable folder, never crash.
 function writable(dir){try{fs.mkdirSync(dir,{recursive:true});const t=path.join(dir,'.w');fs.writeFileSync(t,'1');fs.unlinkSync(t);return true}catch{return false}}
 const DATA=[process.env.DATA_DIR,'/data',path.join(here,'data'),path.join(os.tmpdir(),'beautywallet-data')].filter(Boolean).find(writable)||os.tmpdir();
@@ -213,7 +213,7 @@ async function research(name,url){
 
 // Catalog completion comes only from shoppers' own checks (each researched product joins the bank); no background searches.
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
-const EVENTS=new Set(['paywall_view','negin_open','notif_off','wel_check','wel_chat','wel_skip','wel_back','wel_perm','wel_reg','wel_routine','wel_care','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
+const EVENTS=new Set(['l1_auth','l1_report','l1_film','l1_city','paywall_view','negin_open','notif_off','wel_check','wel_chat','wel_skip','wel_back','wel_perm','wel_reg','wel_routine','wel_care','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
 const evHits=new Map();let deepCache=null;
 function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,rawLength:String(RAW_KEY).length,keysInValue:(String(RAW_KEY).match(/eyJ[\w-]+\.eyJ/g)||[]).length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
 let lastUpstream=null;
@@ -376,7 +376,8 @@ const PAYBOT=makePayBot({E,getRow:ref=>readJsonlSafe(path.join(DATA,'purchase-re
 globalThis.BW_PAYBOT=PAYBOT;
 // her routine, profile and reminder times under her mobile number (lite/cloud.mjs)
 const CLOUD=makeCloud({DATA,BANK,send,readBody,sameOrigin,smsOn:()=>SMS.on});
-const admin=makeAdmin({BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
+const L2=makeLayer2({DATA,send,readBody,sameOrigin,BANK});
+const admin=makeAdmin({L2,BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
 const CHAT=makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MODELS,getCfg:()=>cfg,hasKey:()=>!!(KEY&&BASE)});globalThis.BW_CHAT_STATS=CHAT.stats;
 const PUSH=makePush({DATA,send,ip,sameOrigin,readBody,E});globalThis.BW_PUSH_STATS=PUSH.stats;
 // message studio: in-app cards + notifications written by the team, and four automatic moments (lite/studio.mjs)
@@ -562,6 +563,7 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname==='/api/skinchat'&&req.method==='POST')return await CHAT.handle(req,res);
     if(url.pathname.startsWith('/api/push/'))return await PUSH.handle(req,res,url);
     if(url.pathname.startsWith('/api/cloud/'))return await CLOUD.handle(req,res,url);
+    if(url.pathname.startsWith('/api/l2/'))return await L2.handle(req,res,url);
     if(url.pathname==='/api/inbox'||url.pathname.startsWith('/api/inbox/'))return await STUDIO.handle(req,res,url);
     if(url.pathname.startsWith('/api/vault'))return await VAULT.handle(req,res,url);
     if(url.pathname==='/admin'||url.pathname.startsWith('/admin/'))return await admin(req,res,url);

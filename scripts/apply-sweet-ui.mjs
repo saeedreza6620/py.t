@@ -3,7 +3,7 @@
 import fs from 'node:fs';import path from 'node:path';import {bwReviewBundle} from './lib-bw-review.mjs';
 const src=new URL('../',import.meta.url).pathname,legacy=path.join(src,'public/legacy');
 const VERSION=process.argv[2]||'68';
-for(const f of ['fresh.css','fresh.js','sweet.css','sweet.js','lilac.css','skin-journal.js','followup.js','gem-chat.js','cloud-sync.js','inbox.js'])fs.copyFileSync(path.join(src,'claude',f),path.join(legacy,f));
+for(const f of ['fresh.css','fresh.js','sweet.css','sweet.js','lilac.css','skin-journal.js','followup.js','gem-chat.js','cloud-sync.js','inbox.js','layer1.js'])fs.copyFileSync(path.join(src,'claude',f),path.join(legacy,f));
 // light thumbnails of catalog photos hosted elsewhere (made by .github/workflows/thumbs.yml)
 {const tdir=path.join(src,'claude/thumbs-ext'),ids=fs.existsSync(tdir)?fs.readdirSync(tdir).filter(f=>f.endsWith('.webp')).map(f=>f.slice(0,-5)):[];
  const out=path.join(legacy,'t/ext');fs.mkdirSync(out,{recursive:true});ids.forEach(id=>fs.copyFileSync(path.join(tdir,id+'.webp'),path.join(out,id+'.webp')));
@@ -16,6 +16,7 @@ if(!html.includes('./sweet.js'))html=html.replace(/<\/body>/,'<link rel="stylesh
 if(!html.includes('./lilac.css'))html=html.replace(/(<link rel="stylesheet" href="\.\/sweet\.css\?v=\d+">)/,'$1\n<link rel="stylesheet" href="./lilac.css?v='+VERSION+'">');
 if(!html.includes('./gem-chat.js'))html=html.replace(/(<script src="\.\/sweet\.js\?v=\d+"[^>]*><\/script>)/,'$1\n<script src="./gem-chat.js?v='+VERSION+'" defer></script>');
 if(!html.includes('./cloud-sync.js'))html=html.replace(/(<script src="\.\/sweet\.js\?v=\d+"[^>]*><\/script>)/,'<script src="./cloud-sync.js?v='+VERSION+'" defer></script>\n$1');
+if(!html.includes('./layer1.js'))html=html.replace(/(<script src="\.\/sweet\.js\?v=\d+"[^>]*><\/script>)/,'$1\n<script src="./layer1.js?v='+VERSION+'" defer></script>');
 if(!html.includes('./inbox.js'))html=html.replace(/(<script src="\.\/sweet\.js\?v=\d+"[^>]*><\/script>)/,'$1\n<script src="./inbox.js?v='+VERSION+'" defer></script>');
 if(!html.includes('./followup.js'))html=html.replace(/(<script src="\.\/sweet\.js\?v=\d+"[^>]*><\/script>)/,'$1\n<script src="./followup.js?v='+VERSION+'" defer></script>');
 if(!html.includes('./skin-journal.js'))html=html.replace(/(<script src="\.\/routine-reminder\.js\?v=\d+"[^>]*><\/script>)/,'<script src="./skin-journal.js?v='+VERSION+'" defer></script>\n$1');

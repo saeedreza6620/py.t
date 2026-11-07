@@ -34,7 +34,7 @@ document.getElementById('list').addEventListener('click',function(e){var b=e.tar
   c.querySelectorAll('button').forEach(function(x){x.disabled=true});fetch('/admin/req',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({ref:c.dataset.ref,a:a})}).then(function(r){if(!r.ok)throw 0;c.innerHTML='<div class="m">'+(a==='approve'?'✅ الماس‌ها به ولت کاربر اضافه شد':'❌ رد شد')+'</div>';setTimeout(load,1200)}).catch(function(){c.querySelectorAll('button').forEach(function(x){x.disabled=false});alert('نشد؛ دوباره بزن')})});
 if(window.Notification&&Notification.permission==='granted')st();load();setInterval(load,8000);document.addEventListener('visibilitychange',function(){if(!document.hidden)load()});
 </script></html>`;
-export function makeAdmin({BANK_ADJ,BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend,getUsers,SMS_ON,getCfg,saveCfg,getGifts,chatCall,refreshBestsellers,getBest,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin}){
+export function makeAdmin({L2,BANK_ADJ,BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend,getUsers,SMS_ON,getCfg,saveCfg,getGifts,chatCall,refreshBestsellers,getBest,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin}){
   // tolerate stray spaces/case in the variable name or value as typed in the Liara console
 const adminKeys=Object.keys(E).filter(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_TOKEN'&&String(E[k]).trim());const adminKey=adminKeys[0];
 // normalise what phones add: Persian/Arabic digits, invisible marks, stray spaces
@@ -108,6 +108,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 6px;b
     return page('پنل مدیریت بیوتی‌ولت',`
 <header><div class="brand"><div class="logo">BW</div><h1>پنل مدیریت بیوتی‌ولت<small>نسخه آزمایشی · آخرین فعالیت: ${s.lastAt?esc(new Date(s.lastAt).toLocaleString('fa-IR',{timeZone:'Asia/Tehran'})):'—'}</small></h1></div><div><a class="btn ghost" href="/admin">تازه‌سازی</a> <a class="btn ghost" href="/admin/logout">خروج</a></div></header>
 <div class="card links"><div class="l"><span>🧪 لینک تست برای کاربران</span><a href="${esc(o)}/legacy/" target="_blank">${esc(o)}/legacy/</a></div><div class="l"><span>🌐 وب‌سایت</span><a href="${esc(o)}/" target="_blank">${esc(o)}/</a></div><div class="l"><span>🛠 پنل مدیریت (همین صفحه)</span><a href="${esc(o)}/admin">${esc(o)}/admin</a></div></div>
+<a href="/admin/l2" style="display:block;margin:0 0 10px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;background:linear-gradient(135deg,#8b6cf0,#5bb2ff);color:#fff">🧬 داده‌ی لایه‌ی دوم · اصالت، پیگیری، عکس با برچسب محصول و شهر</a>
 <a href="/admin/care" style="display:block;margin:0 0 10px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;background:linear-gradient(135deg,#ff9a7a,#ff7fa8);color:#fff">🌸 داشبورد مراقبت روزانه · ستاره‌ی شمال و هشدارها</a>
 ${globalThis.BW_STUDIO?globalThis.BW_STUDIO.box():''}
 ${(()=>{const st=getReqStatus();const n=readJsonl(path.join(DATA,'purchase-requests.jsonl')).filter(r=>r.method==='card'&&(st[r.ref]||{}).status==='proof').length;
@@ -230,6 +231,17 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
       logUsage({at:new Date().toISOString(),test:true,status:r.status,model:r.body.model||'',search:true,ms:Date.now()-t0,sources:(r.body.sources||[]).length,code:r.body.code||''});
       return send(res,200,{ok:r.status===200,model:r.body.model,seconds:Math.round((Date.now()-t0)/100)/10,text:String(r.body.text||'').slice(0,1200),sources:r.body.sources||[],error:r.body.error},'application/json',{'Cache-Control':'no-store'});
     }
+    if(p==='/admin/l2'){const S=L2.summary(),fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]),bar=(n,of)=>`<div style="height:8px;border-radius:6px;background:#eee;overflow:hidden"><i style="display:block;height:8px;width:${Math.min(100,of?100*n/of:0)}%;background:#8b6cf0"></i></div>`;
+      const row=(t,n,note)=>`<tr><td>${t}</td><td style="text-align:center"><b>${fa(n)}</b></td><td class="note">${note}</td></tr>`;
+      return send(res,200,page('داده‌ی لایه‌ی دوم',`<div class="card"><h1>داده‌ی لایه‌ی دوم</h1><p class="note">هر استعلام اصالت، پیگیری و عکس با شناسه‌ی محصول، فروشنده، شهر، نوع پوست و تاریخ اینجا جمع می‌شود (بدون عکس، اسم یا شماره). هیچ آماری زیر ۱۰ مورد به کاربر نشان داده نمی‌شود.</p>
+<table style="width:100%;border-collapse:collapse"><tr><th style="text-align:right">چه</th><th>تعداد</th><th style="text-align:right">یعنی</th></tr>
+${row('کل ردیف‌ها',S.total,'از '+fa(S.people)+' نفر')}${row('پیگیری محصول',S.fu,fa(S.tagFu)+'٪ با محصول و شهر')}${row('استعلام اصالت',S.auth,fa(S.bad)+' مورد مشکل‌دار · '+fa(S.tagAuth)+'٪ با فروشنده و شهر')}${row('عکس پوست (فقط مشخصات)',S.photo,fa(S.std)+' استاندارد · '+fa(S.react)+' عکس واکنش')}</table></div>
+<div class="card"><h2>فاصله تا مزیت‌های لایه‌ی دوم</h2>
+<p><b>آمار پوست‌های شبیه تو</b> — ${fa(S.readySimilar)} از ${fa(S.pairsSimilar)} ترکیب «محصول × نوع پوست» به ۱۰ پیگیری رسیده</p>${bar(S.readySimilar,S.pairsSimilar)}
+<p><b>نقشه‌ی فروشنده‌های امن</b> — ${fa(S.readySellers)} از ${fa(S.sellers)} نوع فروشنده به ۱۰ استعلام رسیده</p>${bar(S.readySellers,S.sellers)}
+<p><b>الگوی فصلی شهرها</b> — ${fa(S.readyCities)} از ${fa(S.cities)} شهر به ۱۰ ردیف رسیده</p>${bar(S.readyCities,S.cities)}
+<p class="note">استعلام به تفکیک فروشنده: ${S.topSellers.map(([k,n])=>esc(k)+' '+fa(n)).join(' · ')||'هنوز نیست'}</p></div>
+<div class="card"><h2>آخرین ردیف‌ها</h2><table style="width:100%;font-size:12px">${S.last.map(r=>`<tr><td>${esc(r.day)}</td><td>${esc(r.t)}</td><td dir="ltr">${esc(r.pid||(r.pids||[]).join(','))}</td><td>${esc(r.seller||'')}</td><td>${esc(r.city||'')}</td><td>${esc(r.skin||'')}</td><td>${esc(r.res||r.v||r.light||'')}</td></tr>`).join('')||'<tr><td>هنوز ردیفی نیست</td></tr>'}</table></div><p><a href="/admin">← پنل</a></p>`),'text/html; charset=utf-8')}
     if(p==='/admin/care'||p==='/admin/care/team'){const TF=path.join(DATA,'kpi-team.json');let team=[];try{team=JSON.parse(fs.readFileSync(TF,'utf8'))}catch{}
       if(p==='/admin/care/team'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,{error:'forbidden'});const f=await readForm(req);
         team=[...new Set(String(f.team||'').replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).split(/[\s,،;]+/).map(x=>x.replace(/\D/g,'')).filter(x=>/^09\d{9}$/.test(x)))];

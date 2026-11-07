@@ -113,6 +113,7 @@ function render(msg){var el=place();if(!el){try{if(msg&&remAct&&Date.now()-remAc
   el.innerHTML=h;writePlan();try{if(msg&&remAct&&Date.now()-remAct<20000){remAct=0;renderRem(msg)}else renderRem()}catch(e){}}
 function answer(id,c,v){var ans=rj(K_ANS,{}),q=ask(info(id),Number(c));
   (ans[id]||(ans[id]={}))[c]=v==='p4'?{v:'later',at:dstr(dnum(tday())+3)}:{v:v,at:tday()};wj(K_ANS,ans);track('followup_answer');
+  if(v!=='p4'&&v!=='later')try{window.dispatchEvent(new CustomEvent('bw-fu-answer',{detail:{pid:id,c:Number(c),k:q.k,v:v,name:info(id).name}}))}catch(e){}
   var r=v==='p4'?'باشه قشنگم، چند روز دیگه دوباره یادت می‌ندازم 🌙':(REPLY[q.k]||{})[v]||'ثبت شد 💜';
   if(q.k==='purge'&&(v==='same'||v==='new')&&premenstrual())r+=' این روزها نزدیک پریودت هم هست؛ بخشی از جوش‌ها ممکنه هورمونی باشه. یک هفته بعد دوباره نگاه کن.';
   render(r);setTimeout(function(){render()},v==='later'||v==='p4'?2500:9000)}
