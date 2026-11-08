@@ -1,0 +1,678 @@
+# SIMULATOR_SPEC.md — rebuild the "Gelatin Microsphere Release Simulator" exactly
+
+**Audience:** any AI (ChatGPT / OpenAI, Gemini, Claude, …) or developer.
+**Goal:** produce a page that looks and behaves identically to the reference `index.html` in this folder.
+**How to use:** give an AI this whole file and say: *"Build index.html exactly as specified. Output one complete self-contained HTML file."* Appendix A contains the full reference source; if anything in the text is ambiguous, **the appendix is the truth**.
+
+## 0. Hard facts
+- One static HTML file, no build step, no framework, no libraries. Vanilla JS + Canvas 2D. Only external resource: Google Fonts CSS (Vazirmatn 400/500/700/800, IBM Plex Mono 400/500); fallbacks Tahoma / monospace. One image: `hu2024_external.png` (same folder).
+- Language Persian (fa), **direction RTL** (`<html lang="fa" dir="rtl">`, `body{direction:rtl}`). Numbers/outputs/sliders are forced LTR (`direction:ltr`, mono font). Persian text strings must be copied verbatim from the appendix.
+- Light + dark theme by `prefers-color-scheme` (and `data-theme` override). Canvas colours are read from CSS variables at draw time.
+- Layout max width 1180 px, 16 px side gutters, works at phone width (grid collapses at 860 px; stats 4→2 columns at 520 px). `prefers-reduced-motion` disables transitions.
+- Charts redraw on `resize`, use `devicePixelRatio`, canvas height = width × ratio (0.55 / 0.56 / 0.8).
+
+## 1. Design tokens (CSS variables on :root)
+| var | light | dark |
+|---|---|---|
+| --bg | #F5F6F2 | #12161C |
+| --panel | #FFFFFF | #1A2029 |
+| --ink | #16202E | #E7EAEE |
+| --muted | #5E6878 | #9AA4B2 |
+| --line | #D9DDD4 | #2C3440 |
+| --free (diffusion, blue) | #2C5BD8 | #7FA2FF |
+| --des (desorption, orange) | #C2551B | #F08A52 |
+| --deg (degradation, green) | #17855A | #4CC28F |
+| --irr (non-releasable, grey) | #8A8F99 | #7B828E |
+| --accent | #16202E | #E7EAEE |
+| --data | #111111 | #F2F2F2 |
+| --chip | #EEF0EA | #232A35 |
+Fonts: `--fa: Vazirmatn, Tahoma, sans-serif`; `--mono: IBM Plex Mono, ui-monospace, monospace`.
+Formulation colours: K-1 #2C5BD8, K-2 #C2551B, K-3 #6B4FD8. Mladenovska sizes A–F: #0000FF #008000 #FF0000 #00A0A0 #BF00BF #A0A000. Badge colours: fail #B23A3A, base #4A6FA5, ok = --deg, partial #B8860B, next = --irr. "Mixed" regime pill colour #6B4FD8.
+Look: calm lab-notebook style, white panels with 1 px border, 10 px radius, 16 px padding; headings h1 1.5rem/800; panel h2 1.15rem/800; body small text .8–.9rem; one ink colour per mechanism (blue = free diffusion, orange = desorption, green = degradation, grey = irreversible).
+
+## 2. Page structure (top to bottom, all inside `.wrap`, flex column, gap 18)
+1. **Header**: h1 + `.sub` paragraph.
+2. **Panel.doe "مسیر کلی"** (id-less): `h2` "مسیر کلی: مدل ما در کدام گام است؟" → 4 `.gap` cards (grid auto-fit min 230 px; classes `ok` green border ×2, `open` orange border ×2) → h2 "مراحل طراحی آزمایش Kodra 2026" → `.sub` → `.steps` (6 buttons `.step`, grid 6 cols; first five have `data-s=1..5` and `aria-pressed`; the sixth is `disabled` with badge "قبول بخشی" and text "◀ مدل ما الان اینجاست" in `.here`) → `.sub` note → `<figure class="extfig">` with the Hu 2024 image + 2 paragraphs → `.doegrid` (2 columns 1.35fr/1fr): left = canvas `#cv2` (700×380) + legend + slider `#xl2` (0.5–4 step .05 value 1.0) + `#xl2-o` + note `#doe-note`; right = RMSE table (`#rmse` tbody, columns مرحله/K-1/K-2/K-3/میانگین) + "inputs and source of parameters" table (7 rows, source chips `.src` with classes s-m green "اندازه‌گیری/طراحی", s-c orange "تنظیم…/نقطه پایانی", s-p blue "مقیاس با EE").
+3. **Panel "نمای میدان غلظت"**: COMSOL-style half-disc fields. Two `.fieldbox` (grid 2 cols): left Fick-only (`#fcv1` 520×420, sliders `#ft1` log-time −4…1.5 step .01 value −2, `#fr1` radius 5–100 µm value 8, outputs `#ft1o #fr1o`, note `#fn1`); right full model (`#fcv2`, slider `#ft2` 0–24 h step .05 value 3, select `#fk2` K-1/K-2/K-3, `#ft2o`, note `#fn2`). Below: play button `#fplay` ("▶ پخش" / "❚❚ توقف") and a closing note.
+4. **Panel "آزمون Mladenovska"**: canvas `#mcv` (700×380), slider `#mv` 0.1–3 step .01 value .62 (`#mvo`), checkbox `#mfick`, table `#mtab` (اندازه / قطر µm / τ (h) / RMSE + mean row), note `#mnote`.
+5. **Panel "وضعیت مدل"**: 6 `.gap` cards (3 `ok`, 3 `open`).
+6. `h2` "کاوش آزاد پارامترها" then `.grid` (columns `minmax(0,360px) 1fr`):
+   - Left panel: 5 preset pills (`#p-k1 p-k2 p-k3 p-c1 p-c2`, `aria-pressed`, pressed = ink background); group "حالت طراحی (Kodra)" (`#xl` 0.5–4 step .05, checkbox `#usexl`); group blue dot "نفوذ و تورم": `#R` (log10 µm, 0–2.3, value 1.39), `#Q` (1.5–40 step .1, value 19), `#rs` (3–30 Å step .1, value 4.9); group orange dot "اتصال دارو": `#ff` (0–1 step .01, value .05), `#tb` (log10 hours −1…4.01; ≥4 means ∞, value .62), `#fi` (0–0.6, value 0); group green dot "تخریب": `#tg` (log10 hours −1…3.3, value 1.15); group "پنجره مشاهده": `#win` (log10 hours 0…3.2, value 1.38). Each row = label + mono output (`#R-o` …) + full-width range.
+   - Right panel: 4 `.stat` boxes (`#s-t10 #s-t50 #s-t90 #s-tD`), regime row (pill `#pill` + 4-segment share bar `#sh-free #sh-des #sh-deg #sh-irr`), chart bar (legend + select `#axis` lin/log), canvas `#cv` (760×420), `#explain` text, `.eq` box (3 lines of mono equations), final note.
+Initial state: preset **k2** selected; DOE step **5** selected.
+
+## 3. Model (all in JS; no server)
+### 3.1 Lumped release model (free-explore chart `#cv`) — function `simulate(p)`
+State fractions of total drug: M mobile (free), S bound. Equations:
+- dM/dt = −(π²D/R²)·M + k_off·S + r(t)·S ; dS/dt = −(k_off + r(t))·S ; r(t) = −g′/g ; g = remaining gel fraction.
+- Stokes–Einstein: Dw = kB·310.15 /(6π·0.69e-3·rs[m]) → m²/s, ×1e4 → cm²/s. Mackie–Meares: φ = 1/Q, D = Dw·((1−φ)/(1+φ))².
+- kD = π²D/R² (R in cm), τ_D = 1/kD. k_off = ln2/(t_half·3600), 0 if t_half = ∞.
+- Time grid: 3000 steps, t_i = T·10^(−7 + 7·i/(N−1)) (log spaced), T = window·3600 s. **Exact exponential steps per interval** (stable for stiff diffusion): lost share of sites `fracLost=(g0−g1)/g0` → S→Mdeg; desorbed `S(1−e^{−k_off dt})` → Mdes; mobile pools Mfree/Mdes/Mdeg each leave with `(1−e^{−kD dt})`. Release = sum of the three outflows. Initial: M = ff, S = 1 − ff − fi (fi = non-releasable, never released).
+- g(t): preset Chang → function `gfun`; preset Kodra → linear interpolation of measured DR(t); otherwise linear loss reaching 0 at t = 2·t50_deg.
+- Outputs: t10/t50/t90 by linear interpolation, τ_D, shares {free, des, deg, irr}, text via `regime()`:
+  ff ≥ .5 & deg>des & deg>.05 → "دومرحله‌ای…" (green); ff ≥ .5 → "انفجاری…" (blue); bound<.02 → "نفوذ خالص (فیک)" (blue); des/bound >.7 → "کنترل با جدا شدن…" (orange); <.3 → "کنترل با تخریب شبکه" (green); else "ترکیبی…" (#6B4FD8).
+- Time formatter `fmtT(h)`: ∞; <1 min → s; <1 h → min; <48 h → h; else d (3 significant digits).
+- Design mode (`#usexl` on): EE, t_half, t50_deg, Q interpolated linearly in crosslinking time over XL=[0.5,2,4]: EE=[15.2,22.5,38.9], TG=[2.7,14.0,14.3] h, Q=[1+1.35·3.79, 1+1.35·13.45, 1+1.35·18.2]; k_off = 2.68e-5·ln(100/EE)/ln(100/38.9); ff=0, window 24 h, preset cleared.
+### 3.2 Presets (data in appendix, object `P`)
+Kodra K-1/2/3: R = 7.5 µm·(1+1.35·SD/100)^(1/3), Q = 1+1.35·SD…, rs = 4.86 Å, ff=0, t_half = ln2/k_off/3600 with k_off = 2.68e-5 × [1, 1.58, 2.0], g(t) points at t=[0,1,3,6,24] h (K-1 [1,.97,.95,.932,0]; K-2 [1,.96,.94,.899,0]; K-3 [1,.92,.43,0,0]), data t=[0.5,1,3,5,24] h, y K-1 [12.9,17.4,34.0,35.6,62.3], K-2 [10.6,22.3,41.9,84.8,100], K-3 [9.0,37.1,99.6,99.8,100]. Chang 1.0dM / 2.5dM: R 10.5/8.7 µm, Q 5, rs 6, ff .83/.54, t_half ∞, g from weight-loss regressions (`gfun`), data normalised to last point. Pressing a preset sets all sliders; touching `#tg` clears the preset.
+### 3.3 DOE ladder (`run(c, step)`, 5 steps) — the table and chart `#cv2`
+Per formulation c: Qmax = 1+1.35·max(SD)/100; R = 7.5e-4 cm·Qmax^(1/3); Dw = 7.58e-6 cm²/s; rs=4.86.
+- step 1: D = Dw·MM(φ=0.1); steps ≥2: D = Dw·min(rs·Q^(−0.75)·exp(−1/(Q−1)), 1) (Eq. 26, Q=Qmax). kD = π²D/R².
+- step ≥3: k_off = 2.68e-5·ln(100/EE)/ln(100/38.9); initial all bound (M=0,S=1−firr), steps ≤2: M=1.
+- step ≥4: g(t) = interpolated measured DR; steps <4: g=1. step 5: firr = 1 − last data point/100 (0.38 for K-1, 0 for others), steps <5: 0.
+- 1500 log-spaced steps over 24 h (t=24·3600·10^(−6+6i/(N−1))), exact exponential update as in 3.1.
+- RMSE = sqrt(mean over the 5 data points of (100·model − data)²). **Expected table (acceptance test):**
+| step | K-1 | K-2 | K-3 | mean |
+|---|---|---|---|---|
+| 1 | 69.8 | 59.4 | 49.5 | 59.5 |
+| 2 | 69.8 | 59.4 | 49.5 | 59.5 |
+| 3 | 14.1 | 14.8 | 31.4 | 20.1 |
+| 4 | 17.7 | 12.5 | 12.5 | 14.2 |
+| 5 | 10.3 | 12.5 | 12.5 | 11.7 |
+- New-design curve (dashed ink line): `designCase(x)` interpolates SD(t), DR(t), EE, firr between levels (xs=[0.5,2,4]) and runs step 5; note text reports t50 and 24 h release. (At 1 h: t50 ≈ 2.2 h, 24-h ≈ 100 %.)
+### 3.4 Field view
+- `halfdisc(canvas, profile(ρ), vmax, R_µm, title)`: white background, axisymmetric half-disc drawn by per-pixel sampling of profile at ρ=r/R using the **jet colormap** (`r=clamp(1.5−|4v−3|)`, `g=clamp(1.5−|4v−2|)`, `b=clamp(1.5−|4v−1|)`), white flux arrows every 10° from −80° to 80° (line from .06R to .97R, arrow head at .97R), black outline, µm axes (left ±R, bottom 0…R), colour bar on the right with ▲ max and ▼ min markers, titles "Surface: Concentration (%)   Streamline: Total flux".
+- Left (Fick): analytical Crank sphere series with perfect sink, D = 5.2e-6·(0.9/1.1)² cm²/s; C(ρ,t)=100·(2/π)·Σ (−1)^(n+1)·sin(nπρ)/(ρ·n)·e^{−n²π²Dt/R²} (limit ρ→0: nπ). Time axis is log: t = 10^(slider) s. Note reports remaining % and the 90 % exit time.
+- Right: step-5 model total remaining drug (100·(1−release)) uniform with ρ: `tot·(1−1e-5ρ²)`; R from Kodra formula.
+- Play button animates both sliders (every 40 ms: ft1 += .04, ft2 += .18) until both reach end.
+### 3.5 Mladenovska 2002 test
+Release = measured mass loss L(t)=100−REM(t) with first-order lag: F ← a·F + (1−a)·L, a=e^{−dt/τ}, τ = d/2 / v (d µm, v µm/h), 2400 steps over 24 h. Data (sizes d: A 7.03, B 5.89, C 4.63, D 3.20, E 2.29, F 1.99 µm; release times TR=[0,1,3,5,7,10,13,24] h; mass-loss times TD=[0,1,3,5,7,13,24,48,72] h) are in the appendix (`REL`, `REM`). RMSE over the 7 non-zero release points, mean over sizes. Expected at v=.62: A 6.5, B 5.7, C 5.4, D 3.7, E 4.9, F 5.7, mean 5.3 (τ = 5.67, 4.75, 3.73, 2.58, 1.85, 1.60 h). Dashed "Fick" line = instant release (0→100 % at t≈0).
+
+## 4. Interactions / accessibility
+Every slider has a `<label for>`; canvases have `role="img"` + Persian `aria-label`; presets and steps use `aria-pressed`; focus ring 2 px --free. Updating any slider recomputes and redraws immediately.
+
+## 5. Honest-labelling rules (keep these texts!)
+Steps 1–2 badge "پایه لازم، به‌تنهایی ناکافی"; step 3 "بخشی"; step 4 "پیش‌بینی معتبر برای K-2 و K-3"; step 5 "توصیفی، نه پیش‌بینی"; step 6 "قبول بخشی". k_off is fitted on K-1 (≤5 h) only and scaled for others — never present as measured. Model status: step 6, external test, partially accepted.
+
+## 6. Acceptance checklist
+1. No console errors (apart from blocked fonts offline). 2. RMSE tables match §3.3 and §3.5. 3. Default free-explore (k2): t50 ≈ 4.06 h. 4. Dark mode readable. 5. 390 px wide phone: no horizontal scroll. 6. RTL: sliders LTR, outputs LTR.
+
+## Appendix A — full reference source (`index.html`)
+
+```html
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>شبیه‌ساز رهایش میکروسفر ژلاتینی</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: control column + live chart, lab-notebook feel; one ink accent per mechanism */
+:root{
+  --bg:#F5F6F2; --panel:#FFFFFF; --ink:#16202E; --muted:#5E6878; --line:#D9DDD4;
+  --free:#2C5BD8; --des:#C2551B; --deg:#17855A; --irr:#8A8F99; --accent:#16202E; --data:#111111;
+  --chip:#EEF0EA;
+  --fa:'Vazirmatn', Tahoma, sans-serif; --mono:'IBM Plex Mono', ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161C; --panel:#1A2029; --ink:#E7EAEE; --muted:#9AA4B2; --line:#2C3440;
+  --free:#7FA2FF; --des:#F08A52; --deg:#4CC28F; --irr:#7B828E; --accent:#E7EAEE; --data:#F2F2F2; --chip:#232A35; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161C; --panel:#1A2029; --ink:#E7EAEE; --muted:#9AA4B2; --line:#2C3440;
+  --free:#7FA2FF; --des:#F08A52; --deg:#4CC28F; --irr:#7B828E; --accent:#E7EAEE; --data:#F2F2F2; --chip:#232A35; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--fa);margin:0;direction:rtl;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1{font-size:1.5rem;font-weight:800;margin:0;text-wrap:balance}
+.sub{color:var(--muted);font-size:.92rem;line-height:1.8;margin:0;max-width:70ch}
+.grid{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.presets button{font-family:var(--fa);font-size:.82rem;border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer}
+.presets button[aria-pressed="true"]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.presets button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--free);outline-offset:2px}
+.group{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px;display:flex;flex-direction:column;gap:10px}
+.group h3{font-size:.86rem;margin:0;font-weight:700;display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
+.row label{font-size:.84rem}
+.row output{font-family:var(--mono);font-size:.8rem;color:var(--muted);direction:ltr;text-align:left;min-width:86px}
+.row input[type=range]{grid-column:1 / -1;width:100%;accent-color:var(--ink);direction:ltr}
+.hint{font-size:.74rem;color:var(--muted);grid-column:1/-1;line-height:1.6}
+.chk{font-size:.82rem;display:flex;gap:6px;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+@media (max-width:520px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.stat b{display:block;font-family:var(--mono);font-size:1.05rem;direction:ltr;text-align:right;font-variant-numeric:tabular-nums}
+.stat span{font-size:.74rem;color:var(--muted)}
+.regime{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 10px}
+.pill{font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:999px;color:#fff}
+.shares{display:flex;height:12px;border-radius:6px;overflow:hidden;border:1px solid var(--line);flex:1;min-width:160px}
+.shares i{display:block;height:100%}
+canvas{width:100%;height:auto;display:block}
+.chartbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.78rem;color:var(--muted)}
+.legend i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-left:5px}
+select{font-family:var(--fa);font-size:.8rem;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:3px 6px}
+.note{font-size:.8rem;color:var(--muted);line-height:1.9;margin:10px 0 0}
+.eq{font-family:var(--mono);direction:ltr;text-align:left;font-size:.78rem;background:var(--chip);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:pre;color:var(--ink)}
+
+.doe{display:flex;flex-direction:column;gap:14px}
+.doe h2{font-size:1.15rem;margin:0;font-weight:800}
+.steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+@media (max-width:860px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.step{font-family:var(--fa);text-align:right;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:9px 10px;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-width:0}
+.step[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.step[disabled]{cursor:default;opacity:.75}
+.step b{font-size:.84rem}
+.step small{font-size:.72rem;color:var(--muted);line-height:1.5}
+.badge{align-self:flex-start;font-size:.68rem;font-weight:700;border-radius:999px;padding:2px 8px;color:#fff}
+.b-fail{background:#B23A3A}.b-base{background:#4A6FA5}.extfig{margin:14px 0 4px;padding:12px;border:1px solid rgba(127,127,127,.3);border-radius:10px}.extfig img{width:100%;height:auto;background:#fff;border-radius:6px}.extfig p{margin:.4rem 0;font-size:.9rem;line-height:1.8}.b-ok{background:var(--deg)}.b-part{background:#B8860B}.b-next{background:var(--irr)}
+.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media (max-width:760px){.fieldgrid{grid-template-columns:1fr}}
+.fieldbox{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--panel)}
+.fieldbox h3{font-size:.95rem;margin:0 0 6px}.fieldbox canvas{width:100%;display:block;background:#fff;border-radius:6px}
+.ctl{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center;margin-top:8px;font-size:.85rem}
+.ctl input[type=range]{direction:ltr;width:100%}.ctl output{font-family:'IBM Plex Mono',monospace;direction:ltr;unicode-bidi:isolate;min-width:76px;text-align:left}
+.playbtn{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:8px;padding:4px 12px;cursor:pointer;font:inherit}
+.gaps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-top:8px}
+.gap{border:1px solid var(--line);border-radius:10px;padding:10px;font-size:.88rem;line-height:1.8}
+.gap b{display:block;margin-bottom:2px}.gap.ok{border-color:var(--deg)}.gap.open{border-color:var(--des)}
+.here{font-size:.7rem;font-weight:800;color:var(--des)}
+.doegrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.doegrid{grid-template-columns:minmax(0,1fr)}}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.8rem}
+th,td{border-bottom:1px solid var(--line);padding:6px 6px;text-align:center;font-variant-numeric:tabular-nums}
+th{font-weight:700;color:var(--muted);font-size:.74rem}
+td.l,th.l{text-align:right}
+td:not(.l){direction:ltr;unicode-bidi:isolate}
+tr.sel td{background:var(--chip);font-weight:700}
+.src{display:inline-block;font-size:.68rem;padding:1px 7px;border-radius:999px;border:1px solid var(--line)}
+.s-m{color:var(--deg);border-color:var(--deg)}.s-c{color:var(--des);border-color:var(--des)}.s-p{color:var(--free);border-color:var(--free)}
+.k1{color:#2C5BD8}.k2{color:#C2551B}.k3{color:#6B4FD8}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>شبیه‌ساز رهایش دارو از میکروسفر ژلاتینی</h1>
+    <p class="sub">پارامترهای طراحی را عوض کن و ببین شکل منحنی رهایش، زمان نیمه‌رهایش و سازوکار کنترل‌کننده چه می‌شود. مدل همان مدل یکپارچه پایان‌نامه است: نفوذ با ضریب محاسبه‌شده و اصلاح تورم، اتصال دارو به شبکه (اثر اتصال عرضی)، و تخریب. دکمه‌های Kodra و Chang مقادیر اندازه‌گیری‌شده همان مقاله‌ها را می‌گذارند و داده واقعی را روی نمودار نشان می‌دهند.</p>
+  </header>
+
+
+  <section class="panel doe" aria-label="طراحی آزمایش Kodra">
+    <h2>مسیر کلی: مدل ما در کدام گام است؟</h2>
+    <div class="gaps">
+      <div class="gap ok"><b>✓ بخش الف: فیک تا لانگمیر (عبدخدایی 2006)</b>فیک خالص خطای ۰٫۶۹ داشت؛ با اتصال عرضی و لانگمیر ۰٫۰۵. به داده نزدیک شد، نه کامل: K_ads فقط روی یک منحنی برازش شده و پارامترهای تعادلی خود مقاله ۰٫۰۳ تا ۰٫۰۴ پایین‌ترند.</div>
+      <div class="gap ok"><b>✓ گام‌های ۱ تا ۵ ساخته و سنجیده شده‌اند (Kodra 2026)</b>خطای میانگین از ۵۹٫۵٪ (فیک) به ۱۴٫۲٪ (با تخریب) و ۱۱٫۷٪ (با مخزن غیرقابل‌رهایش) رسید.</div>
+      <div class="gap open"><b>◐ گام ۶ (آزمون بیرونی): قبول بخشی ← مدل ما اینجاست</b>Mladenovska: خطا ۳٫۶ تا ۶٫۵٪ بدون تنظیم مجدد؛ Hu: سطح ۲۴ ساعت درست، ساعت‌های اول سریع‌تر از داده. Zhang 2023 هنوز آزمون نشده.</div>
+      <div class="gap open"><b>○ گام بعد: k_off مستقل و آزادشدن بر پایه شکست شبکه</b>k_off هنوز برازشی و کسر غیرقابل‌رهایش از داده گرفته شده؛ برای پیش‌بینی واقعی به Singh یا Song 2015 و منطق شکست اتصال‌ها نیاز است.</div>
+    </div>
+    <h2>مراحل طراحی آزمایش Kodra 2026</h2>
+    <p class="sub">متغیر طراحی آزمایش، زمان اتصال عرضی با تانیک اسید است: ۴، ۲ و ۰.۵ ساعت. با هر مرحله یک پدیده به مدل اضافه می‌شود و همان لحظه روی داده هر سه فرمولاسیون نمره می‌گیرد. روی هر مرحله بزن.</p>
+    <div class="steps" role="group" aria-label="مراحل مدل">
+      <button class="step" data-s="1"><span class="badge b-base">پایه لازم، به‌تنهایی ناکافی</span><b>۱. فیک</b><small>D از فرمول، همه دارو آزاد</small></button>
+      <button class="step" data-s="2"><span class="badge b-base">پایه لازم، به‌تنهایی ناکافی</span><b>۲. + تورم</b><small>D از معادله ۲۶ با Q اندازه‌گیری‌شده</small></button>
+      <button class="step" data-s="3"><span class="badge b-part">بخشی</span><b>۳. + اتصال عرضی</b><small>اتصال دارو؛ k_off فقط از K-1 برازش شده و با EE مقیاس می‌شود</small></button>
+      <button class="step" data-s="4"><span class="badge b-ok">پیش‌بینی معتبر برای K-2 و K-3</span><b>۴. + تخریب</b><small>DR% اندازه‌گیری‌شده هر فرمولاسیون؛ برای K-1 از گام ۳ بدتر است</small></button>
+      <button class="step" data-s="5"><span class="badge b-part">توصیفی، نه پیش‌بینی</span><b>۵. + مخزن غیرقابل‌رهایش</b><small>همه سازوکارها با هم؛ کسر آزادنشدنی از نقطه انتهای همان منحنی (K-1: ۰٫۳۸)</small></button>
+      <button class="step" disabled><span class="badge b-part">قبول بخشی</span><b>۶. آزمون بیرونی</b><small>Hu 2024 و Mladenovska 2002 بدون تنظیم دوباره</small><span class="here">◀ مدل ما الان اینجاست</span></button>
+    </div>
+    <p class="sub">مراحل ۱ و ۲ رد نشده‌اند: انتقال دارو را درست می‌دهند، ولی به‌تنهایی زمان رهایش را توضیح نمی‌دهند. مدل وقتی معنا پیدا می‌کند که این‌ها کنار اتصال و تخریب قرار بگیرند.</p>
+    <figure class="extfig">
+      <img src="hu2024_external.png" alt="پیش‌بینی بدون تنظیم برای داده Hu 2024 در کنار کاهش وزن اندازه‌گیری‌شده">
+      <p><b>آزمون بیرونی، Hu 2024 (جنتامایسین، ژلاتین نوع B با GA):</b> هیچ پارامتری روی این مقاله تنظیم نشد. سهم داروی آزاد (۰.۸۳) از Chang 2023 آمده و تخریب از کاهش وزن اندازه‌گیری‌شده خود Hu.</p>
+      <p>از روز ۱ به بعد خطا ۹.۱ درصد است و سطح ۲۴ ساعت درست پیش‌بینی شد (داده ۸۴٪، مدل ۸۳٪). در ساعت‌های ۱ تا ۸ داده آهسته‌تر از مدل بالا می‌رود (خطای کل ۱۹.۵). یعنی یک مرحله جداشدن چندساعته هست که Chang اندازه نگرفته بود. این همان مسیر اتصال (k_off) است و برای Hu باید از داده‌ای مستقل تعیین شود، نه با برازش.</p>
+    </figure>
+    <div class="doegrid">
+      <div>
+        <canvas id="cv2" width="700" height="380" role="img" aria-label="داده سه فرمولاسیون Kodra و پیش‌بینی مدل در مرحله انتخاب‌شده"></canvas>
+        <div class="legend" style="margin-top:6px"><span class="k1">● MS/K-1 (۴ ساعت)</span><span class="k2">● MS/K-2 (۲ ساعت)</span><span class="k3">● MS/K-3 (۰.۵ ساعت)</span><span>خط: مدل · نقطه: داده · خط‌چین: طراحی جدید</span></div>
+        <div class="row" style="margin-top:12px"><label for="xl2">طراحی جدید: زمان اتصال عرضی</label><output id="xl2-o"></output>
+          <input type="range" id="xl2" min="0.5" max="4" step="0.05" value="1.0">
+          <span class="hint">پیش‌بینی مرحله ۵ برای زمانی که آزمایش نشده، با درون‌یابی پاسخ‌های اندازه‌گیری‌شده بین سه سطح. فقط درون بازه ۰.۵ تا ۴ ساعت.</span></div>
+        <p class="note" id="doe-note"></p>
+      </div>
+      <div class="tbl">
+        <table aria-label="خطای هر مرحله">
+          <thead><tr><th class="l">مرحله</th><th class="k1">K-1</th><th class="k2">K-2</th><th class="k3">K-3</th><th>میانگین</th></tr></thead>
+          <tbody id="rmse"></tbody>
+        </table>
+        <p class="note" style="margin-top:4px">اعداد خطای RMS هستند، به درصد رهایش.</p>
+        <table aria-label="طراحی آزمایش و منبع پارامترها" style="margin-top:10px">
+          <thead><tr><th class="l">ورودی</th><th>K-1</th><th>K-2</th><th>K-3</th><th>منبع</th></tr></thead>
+          <tbody>
+            <tr><td class="l">زمان اتصال عرضی</td><td>4 h</td><td>2 h</td><td>0.5 h</td><td><span class="src s-m">طراحی</span></td></tr>
+            <tr><td class="l">تورم بیشینه SD%</td><td>1942</td><td>1700</td><td>920</td><td><span class="src s-m">اندازه‌گیری</span></td></tr>
+            <tr><td class="l">درجه اتصال عرضی CD%</td><td>95.8</td><td>~93</td><td>90.9</td><td><span class="src s-m">اندازه‌گیری</span></td></tr>
+            <tr><td class="l">بازده بارگذاری EE%</td><td>38.9</td><td>22.5</td><td>15.2</td><td><span class="src s-m">اندازه‌گیری</span></td></tr>
+            <tr><td class="l">DR% در ۳ ساعت</td><td>95</td><td>94</td><td>43</td><td><span class="src s-m">اندازه‌گیری</span></td></tr>
+            <tr><td class="l">k_off (نیمه‌عمر)</td><td>7.2 h</td><td>4.6 h</td><td>3.6 h</td><td><span class="src s-c">تنظیم: K-1، ≤ ۵ ساعت</span> <span class="src s-p">مقیاس با EE</span></td></tr>
+            <tr><td class="l">کسر غیرقابل‌رهایش</td><td>0.38</td><td>0</td><td>0</td><td><span class="src s-c">نقطه پایانی منحنی</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-label="نمای میدان غلظت">
+    <h2>نمای میدان غلظت، سبک کامسول: دارو از کجای ذره خارج می‌شود؟</h2>
+    <p class="sub">نیم‌دایره، مقطع محورمتقارن ذره است، مثل خروجی کامسول. رنگ غلظت را نشان می‌دهد (آبی صفر، قرمز بیشینه) و پیکان‌های سفید جهت شار را. چپ: فیک تنها. راست: مدل کامل روی داده کودرا. زمان را جلو ببر یا «پخش» را بزن.</p>
+    <div class="fieldgrid">
+      <div class="fieldbox">
+        <h3>مرحله ۱، فیک تنها: داروی آزاد (جنتامایسین)</h3>
+        <canvas id="fcv1" width="520" height="420" role="img" aria-label="میدان غلظت داروی آزاد در فیک تنها"></canvas>
+        <div class="ctl">
+          <label for="ft1">زمان</label><input type="range" id="ft1" min="-4" max="1.5" step="0.01" value="-2"><output id="ft1o"></output>
+          <label for="fr1">شعاع ذره</label><input type="range" id="fr1" min="5" max="100" step="1" value="8"><output id="fr1o"></output>
+        </div>
+        <p class="note" id="fn1"></p>
+      </div>
+      <div class="fieldbox">
+        <h3>مرحله ۵، مدل کامل: کل دارو (آزاد + متصل + گیرافتاده)</h3>
+        <canvas id="fcv2" width="520" height="420" role="img" aria-label="میدان غلظت کل دارو در مدل کامل"></canvas>
+        <div class="ctl">
+          <label for="ft2">زمان</label><input type="range" id="ft2" min="0" max="24" step="0.05" value="3"><output id="ft2o"></output>
+          <label for="fk2">فرمولاسیون</label><select id="fk2"><option value="0">MS/K-1 (۴ ساعت)</option><option value="1">MS/K-2 (۲ ساعت)</option><option value="2">MS/K-3 (۰.۵ ساعت)</option></select><span></span>
+        </div>
+        <p class="note" id="fn2"></p>
+      </div>
+    </div>
+    <p style="margin-top:10px"><button class="playbtn" id="fplay">▶ پخش</button></p>
+    <p class="note">برداشت اصلی: در فیک، دارو از سطح به داخل خالی می‌شود و ذره در کسری از ثانیه تمام می‌شود. در مدل کامل، کل ذره یکنواخت کم‌رنگ می‌شود، چون داروی متصل همه‌جا با هم جدا می‌شود. گرادیان داروی آزاد هست، ولی کمتر از ۰.۰۰۱٪ دارو را در خود دارد. پس تصویر کامسولی فیک برای ژلاتین کراس‌لینک‌شده تصویر درستی نیست.</p>
+  </section>
+
+  <section class="panel" aria-label="آزمون Mladenovska">
+    <h2>آزمون اندازه ذره، Mladenovska 2002: قانون تأخیر τ = R / v</h2>
+    <p class="sub">ژلاتین با GA، ماده BSA، کلاژناز. شش اندازه ذره؛ تخریب و رهایش هر دو اندازه‌گیری شده‌اند. مدل: رهایش برابر کاهش جرم اندازه‌گیری‌شده است، با تأخیر τ = R / v. مقدار v فقط از اندازه A آمده (۰.۶۲ میکرون بر ساعت) و پنج اندازه دیگر پیش‌بینی شده‌اند. v را تغییر بده یا فیک را روشن کن.</p>
+    <div class="doegrid">
+      <div>
+        <canvas id="mcv" width="700" height="380" role="img" aria-label="داده و پیش‌بینی رهایش برای شش اندازه ذره"></canvas>
+        <div class="ctl">
+          <label for="mv">سرعت جبهه v</label><input type="range" id="mv" min="0.1" max="3" step="0.01" value="0.62"><output id="mvo"></output>
+          <label for="mfick">نمایش فیک</label><input type="checkbox" id="mfick" style="justify-self:start"><span></span>
+        </div>
+        <p class="note">نقطه: داده Fig. 2 · خط: پیش‌بینی · خط‌چین: فیک (ذره در چند ثانیه خالی می‌شود)</p>
+      </div>
+      <div class="tbl">
+        <table aria-label="خطای هر اندازه"><thead><tr><th class="l">اندازه</th><th>قطر µm</th><th>τ (h)</th><th>RMSE</th></tr></thead><tbody id="mtab"></tbody></table>
+        <p class="note" id="mnote" style="margin-top:6px"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-label="وضعیت نقص‌ها">
+    <h2>وضعیت مدل: چه چیزی بسته شد، چه چیزی باز است</h2>
+    <div class="gaps">
+      <div class="gap ok"><b>✓ ضریب نفوذ (مرحله ۱)</b>Politzer 1996 ضریب نفوذ مولکول کوچک در ژلاتین متورم را ۰.۳ تا ۱.۷ × ۱۰⁻⁶ cm²/s اندازه گرفته؛ هم‌مرتبه مدل ما. کندی رهایش از D نیست.</div>
+      <div class="gap ok"><b>✓ تأخیر آزادشدن (نقص ۲)</b>رهایش دیرتر از کاهش جرم، در سه مقاله: Chang، کودرا K-1، Mladenovska. قانون τ = R / v با یک ثابت، شش اندازه را با خطای ۳.۶ تا ۶.۵٪ می‌دهد.</div>
+      <div class="gap ok"><b>✓ آزمون بیرونی Hu 2024</b>بدون هیچ تنظیم: از روز ۱ به بعد خطا ۹.۱٪؛ سطح ۲۴ ساعت ۸۳ در برابر ۸۴٪.</div>
+      <div class="gap open"><b>○ k_off هنوز برازشی است (نقص ۱)</b>با Singh (Pharm Res، ایزوترم جنتامایسین) یا Song 2015 (اثر قدرت یونی) از داده مستقل جایگزین می‌شود.</div>
+      <div class="gap open"><b>○ الگوی پروپوزال</b>مقایسه با Cheng 2011 و داده Choy 2008 (سری غلظت GA و تخریب آنزیمی). منتظر PDF.</div>
+      <div class="gap open"><b>○ ساعت‌های اول Hu (نقص ۳)</b>آب‌گیری ذره لیوفیلیزه؛ داده تورم دقیقه‌های اول لازم است.</div>
+    </div>
+  </section>
+
+  <h2 style="font-size:1.15rem;margin:6px 0 0">کاوش آزاد پارامترها</h2>
+  <div class="grid">
+    <section class="panel" aria-label="پارامترها">
+      <div class="presets" role="group" aria-label="پیش‌تنظیم‌ها">
+        <button id="p-k1" aria-pressed="false">Kodra MS/K-1</button>
+        <button id="p-k2" aria-pressed="false">Kodra MS/K-2</button>
+        <button id="p-k3" aria-pressed="false">Kodra MS/K-3</button>
+        <button id="p-c1" aria-pressed="false">Chang 1.0dM-G</button>
+        <button id="p-c2" aria-pressed="false">Chang 2.5dM-G</button>
+      </div>
+
+      <div class="group" id="g-design">
+        <h3>حالت طراحی (Kodra): زمان اتصال عرضی</h3>
+        <div class="row"><label for="xl">زمان اتصال عرضی با تانیک اسید</label><output id="xl-o"></output>
+          <input type="range" id="xl" min="0.5" max="4" step="0.05" value="2">
+          <span class="hint">بازده بارگذاری، سرعت جدا شدن و زمان تخریب از سه سطح اندازه‌گیری‌شده (۰.۵، ۲ و ۴ ساعت) درون‌یابی می‌شوند. بیرون از این بازه ادعایی نداریم.</span></div>
+        <label class="chk"><input type="checkbox" id="usexl"> این حالت را روشن کن</label>
+      </div>
+
+      <div class="group">
+        <h3><span class="dot" style="background:var(--free)"></span>نفوذ و تورم (راه ۱)</h3>
+        <div class="row"><label for="R">شعاع ذره متورم</label><output id="R-o"></output><input type="range" id="R" min="0" max="2.3" step="0.01" value="1.39"></div>
+        <div class="row"><label for="Q">نسبت تورم Q</label><output id="Q-o"></output><input type="range" id="Q" min="1.5" max="40" step="0.1" value="19"></div>
+        <div class="row"><label for="rs">شعاع مولکول دارو</label><output id="rs-o"></output><input type="range" id="rs" min="3" max="30" step="0.1" value="4.9">
+          <span class="hint">۴ تا ۸ آنگستروم برای داروهای کوچک، حدود ۲۰ برای پروتئین‌هایی مثل bFGF. D = D_w × مکی–میرز(φ = 1/Q).</span></div>
+      </div>
+
+      <div class="group">
+        <h3><span class="dot" style="background:var(--des)"></span>اتصال دارو، اثر اتصال عرضی (راه ۲)</h3>
+        <div class="row"><label for="ff">کسر آزاد در لحظه صفر</label><output id="ff-o"></output><input type="range" id="ff" min="0" max="1" step="0.01" value="0.05"></div>
+        <div class="row"><label for="tb">نیمه‌عمر جدا شدن دارو از شبکه</label><output id="tb-o"></output><input type="range" id="tb" min="-1" max="4.01" step="0.01" value="0.62">
+          <span class="hint">اتصال عرضی و برهم‌کنش قوی‌تر یعنی نیمه‌عمر بلندتر. انتهای راست یعنی دارو فقط با تخریب آزاد می‌شود.</span></div>
+        <div class="row"><label for="fi">کسر غیرقابل‌رهایش</label><output id="fi-o"></output><input type="range" id="fi" min="0" max="0.6" step="0.01" value="0"></div>
+      </div>
+
+      <div class="group">
+        <h3><span class="dot" style="background:var(--deg)"></span>تخریب (راه ۳)</h3>
+        <div class="row"><label for="tg">زمان رسیدن به ۵۰٪ کاهش جرم</label><output id="tg-o"></output><input type="range" id="tg" min="-1" max="3.3" step="0.01" value="1.15">
+          <span class="hint">کاهش جرم خطی تا دو برابر این زمان. در پیش‌تنظیم‌ها، منحنی کاهش جرم اندازه‌گیری‌شده خود مقاله به کار می‌رود.</span></div>
+      </div>
+
+      <div class="group">
+        <h3>پنجره مشاهده</h3>
+        <div class="row"><label for="win">طول آزمایش</label><output id="win-o"></output><input type="range" id="win" min="0" max="3.2" step="0.01" value="1.38"></div>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="نتیجه">
+      <div class="stats">
+        <div class="stat"><b id="s-t10">—</b><span>t10 (۱۰٪ آزاد)</span></div>
+        <div class="stat"><b id="s-t50">—</b><span>t50 (نیمه‌رهایش)</span></div>
+        <div class="stat"><b id="s-t90">—</b><span>t90</span></div>
+        <div class="stat"><b id="s-tD">—</b><span>زمان نفوذ R²/(π²D)</span></div>
+      </div>
+      <div class="regime"><span class="pill" id="pill">—</span>
+        <div class="shares" aria-label="سهم هر سازوکار از داروی آزادشده"><i id="sh-free" style="background:var(--free)"></i><i id="sh-des" style="background:var(--des)"></i><i id="sh-deg" style="background:var(--deg)"></i><i id="sh-irr" style="background:var(--irr)"></i></div>
+      </div>
+      <div class="chartbar">
+        <div class="legend"><span><i style="background:var(--ink)"></i>رهایش کل</span><span><i style="background:var(--free)"></i>داروی آزاد (نفوذ)</span><span><i style="background:var(--des)"></i>از راه جدا شدن</span><span><i style="background:var(--deg)"></i>از راه تخریب</span><span>● داده</span></div>
+        <label class="chk">محور زمان <select id="axis"><option value="lin">خطی</option><option value="log">لگاریتمی</option></select></label>
+      </div>
+      <canvas id="cv" width="760" height="420" role="img" aria-label="منحنی رهایش تجمعی بر حسب زمان"></canvas>
+      <p class="note" id="explain"></p>
+      <div class="eq">dM/dt = −(π²D/R²)·M + k_off·S + r(t)·S        mobile drug (diffuses out)
+dS/dt = −k_off·S − r(t)·S                          bound drug
+r(t)  = −g′(t)/g(t)     g = remaining gel mass (measured)    D = D_w·((1−φ)/(1+φ))², φ = 1/Q</div>
+      <p class="note">این شکل خلاصه‌شده مدل کامل است و وقتی زمان نفوذ خیلی کوتاه‌تر از زمان جدا شدن و تخریب باشد معتبر است. حداکثر اختلاف با حل کامل معادله دیفرانسیل جزئی برای داده‌های Kodra حدود 3×10⁻⁶ است. k_off برای Kodra فقط روی ۵ ساعت اول MS/K-1 تنظیم شده و برای بقیه از بازده بارگذاری اندازه‌گیری‌شده مقیاس شده است.</p>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+const $ = id => document.getElementById(id);
+const H = 3600, DAY = 86400;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+// ---------- presets (all from the papers) ----------
+const KODRA_T = [0,1,3,6,24];
+const P = {
+ k1:{R:7.5*Math.pow(1+1.35*19.42,1/3), Q:1+1.35*19.42, rs:4.86, ff:0, tb:Math.log(2)/2.68e-5/H, fi:0, win:24, g:{t:KODRA_T,v:[1,.97,.95,.932,0]},
+     data:{t:[0.5,1,3,5,24], y:[12.9,17.4,34.0,35.6,62.3]}, name:'Kodra MS/K-1 (۴ ساعت اتصال عرضی)'},
+ k2:{R:7.5*Math.pow(1+1.35*17.01,1/3), Q:1+1.35*13.45, rs:4.86, ff:0, tb:Math.log(2)/(2.68e-5*1.58)/H, fi:0, win:24, g:{t:KODRA_T,v:[1,.96,.94,.899,0]},
+     data:{t:[0.5,1,3,5,24], y:[10.6,22.3,41.9,84.8,100]}, name:'Kodra MS/K-2 (۲ ساعت)'},
+ k3:{R:7.5*Math.pow(1+1.35*9.30,1/3), Q:1+1.35*3.79, rs:4.86, ff:0, tb:Math.log(2)/(2.68e-5*2.0)/H, fi:0, win:24, g:{t:KODRA_T,v:[1,.92,.43,0,0]},
+     data:{t:[0.5,1,3,5,24], y:[9.0,37.1,99.6,99.8,100]}, name:'Kodra MS/K-3 (نیم ساعت)'},
+ c1:{R:10.5, Q:5, rs:6.0, ff:0.83, tb:Infinity, fi:0, win:768, gfun:t=>{const d=t/DAY;const w=d>=1?3.1905*d+13.844:17.03*d;return Math.min(Math.max(1-w/100,0),1)},
+     data:{t:[1,2,4,8,24,48,96,192,384,768], y:[2.46,3.82,3.94,3.96,3.99,3.97,3.96,3.95,4.03,4.79].map(v=>100*v/4.79)}, name:'Chang 1.0dM-G'},
+ c2:{R:8.7, Q:5, rs:6.0, ff:0.54, tb:Infinity, fi:0, win:768, gfun:t=>{const d=t/DAY;const w=d>=1?2.9257*d+3.8528:6.78*d;return Math.min(Math.max(1-w/100,0),1)},
+     data:{t:[1,2,4,8,24,48,96,192,384,768], y:[2.65,4.01,4.11,4.13,4.16,4.16,4.16,4.16,4.53,7.72].map(v=>100*v/7.72)}, name:'Chang 2.5dM-G'},
+};
+let preset = null; // active preset key (keeps its measured g(t) and data)
+
+// ---------- slider <-> value maps ----------
+const lg = v => Math.pow(10, v);
+const fmtT = h => !isFinite(h) ? '∞' : h < 1/60 ? (h*3600).toPrecision(2)+' s' : h < 1 ? (h*60).toPrecision(2)+' min' : h < 48 ? h.toPrecision(3)+' h' : (h/24).toPrecision(3)+' d';
+function read(){
+  return {R: lg(+$('R').value), Q:+$('Q').value, rs:+$('rs').value, ff:+$('ff').value,
+          tb: +$('tb').value >= 4 ? Infinity : lg(+$('tb').value), fi:+$('fi').value,
+          tg: lg(+$('tg').value), win: lg(+$('win').value)};
+}
+function setSliders(p){
+  $('R').value = Math.log10(p.R); $('Q').value = p.Q; $('rs').value = p.rs; $('ff').value = p.ff;
+  $('tb').value = isFinite(p.tb) ? Math.log10(p.tb) : 4.01; $('fi').value = p.fi; $('win').value = Math.log10(p.win);
+  if (p.tg) $('tg').value = Math.log10(p.tg);
+}
+// ---------- Kodra design mode: interpolate measured responses vs crosslinking time ----------
+const XL = [0.5, 2, 4], EE = [15.2, 22.5, 38.9], TG = [2.7, 14.0, 14.3], QQ = [1+1.35*3.79, 1+1.35*13.45, 1+1.35*18.2];
+const lerp = (x, xs, ys) => { if (x <= xs[0]) return ys[0]; for (let i=1;i<xs.length;i++) if (x <= xs[i]) return ys[i-1]+(ys[i]-ys[i-1])*(x-xs[i-1])/(xs[i]-xs[i-1]); return ys[ys.length-1]; };
+function designParams(x){
+  const ee = lerp(x, XL, EE); const koff = 2.68e-5 * Math.log(100/ee)/Math.log(100/38.9);
+  return {ee, tb: Math.log(2)/koff/H, tg: lerp(x, XL, TG), Q: lerp(x, XL, QQ)};
+}
+
+// ---------- model (exact exponential steps; stable for stiff diffusion) ----------
+function simulate(p){
+  const T = p.win*H, N = 3000;
+  const tg = [0]; for (let i=0;i<N;i++) tg.push(T*Math.pow(10, -7 + 7*i/(N-1)));   // log-spaced grid, exact steps
+  const kB = 1.381e-23*310.15/(6*Math.PI*0.69e-3); // m^3/s
+  const Dw = kB/(p.rs*1e-10)*1e4;                     // cm^2/s
+  const phi = 1/p.Q, D = Dw*Math.pow((1-phi)/(1+phi),2);
+  const Rcm = p.R*1e-4, kD = Math.PI*Math.PI*D/(Rcm*Rcm), tauD = 1/kD;
+  const koff = isFinite(p.tb) ? Math.log(2)/(p.tb*H) : 0;
+  let g;
+  if (preset && P[preset].gfun) g = P[preset].gfun;
+  else if (preset && P[preset].g) { const gt=P[preset].g.t.map(x=>x*H), gv=P[preset].g.v; g = t => lerp(t, gt, gv); }
+  else { const t2 = 2*p.tg*H; g = t => Math.max(1 - t/t2, 0); }
+  let M = p.ff, S = 1 - p.ff - p.fi, rel = 0, relFree = 0, relDes = 0, relDeg = 0;
+  const out = {t:[0], f:[0], fF:[0], fD:[0], fG:[0]};
+  let Mfree = p.ff, Mdes = 0, Mdeg = 0;   // mobile drug tagged by origin
+  for (let i=1;i<=N;i++){
+    const t0 = tg[i-1], t1 = tg[i], dt = t1 - t0, g0 = g(t0), g1 = g(t1);
+    const fracLost = g0 > 1e-9 ? Math.max(0, Math.min(1, (g0-g1)/g0)) : 1;   // share of remaining sites lost this step
+    const sDeg = S*fracLost; S -= sDeg;
+    const sDes = S*(1-Math.exp(-koff*dt)); S -= sDes;
+    Mdes += sDes; Mdeg += sDeg;
+    const e = Math.exp(-kD*dt);
+    const oF = Mfree*(1-e), oD = Mdes*(1-e), oG = Mdeg*(1-e);
+    Mfree -= oF; Mdes -= oD; Mdeg -= oG; relFree += oF; relDes += oD; relDeg += oG;
+    rel = relFree + relDes + relDeg;
+    out.t.push(t1/H); out.f.push(rel); out.fF.push(relFree); out.fD.push(relDes); out.fG.push(relDeg);
+  }
+  out.tauD = tauD; out.D = D; out.shares = {free:relFree, des:relDes, deg:relDeg, irr:p.fi}; out.final = rel;
+  return out;
+}
+const tAt = (o, lev) => { for (let i=1;i<o.f.length;i++) if (o.f[i] >= lev) return o.t[i-1] + (o.t[i]-o.t[i-1])*(lev-o.f[i-1])/Math.max(o.f[i]-o.f[i-1],1e-12); return Infinity; };
+
+// ---------- regime ----------
+function regime(o, p){
+  const s = o.shares, bound = s.des + s.deg;
+  if (p.ff >= 0.5 && s.deg > s.des && s.deg > 0.05) return {txt:'دومرحله‌ای: انفجاری، سپس آزادسازی با تخریب', col:css('--deg')};
+  if (p.ff >= 0.5) return {txt:'انفجاری: بیشتر دارو آزاد است', col:css('--free')};
+  if (bound < 0.02) return {txt:'نفوذ خالص (فیک)', col:css('--free')};
+  const r = s.des/bound;
+  if (r > 0.7) return {txt:'کنترل با جدا شدن دارو از شبکه (اتصال عرضی)', col:css('--des')};
+  if (r < 0.3) return {txt:'کنترل با تخریب شبکه', col:css('--deg')};
+  return {txt:'ترکیبی: جدا شدن و تخریب', col:'#6B4FD8'};
+}
+
+// ---------- chart ----------
+const cv = $('cv'), ctx = cv.getContext('2d');
+function draw(o, p){
+  const dpr = window.devicePixelRatio || 1, W = cv.clientWidth, Hh = Math.round(W*0.55);
+  cv.width = W*dpr; cv.height = Hh*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  const m = {l:48, r:14, t:14, b:38}, w = W-m.l-m.r, h = Hh-m.t-m.b;
+  const log = $('axis').value === 'log', tmax = p.win, tmin = log ? Math.max(tmax/1e5, 1/3600) : 0;
+  const X = t => m.l + w*(log ? (Math.log10(Math.max(t,tmin))-Math.log10(tmin))/(Math.log10(tmax)-Math.log10(tmin)) : t/tmax);
+  const Y = f => m.t + h*(1 - f/1.05);
+  ctx.clearRect(0,0,W,Hh); ctx.direction = 'ltr'; ctx.font = '11px IBM Plex Mono, monospace'; ctx.fillStyle = css('--muted'); ctx.strokeStyle = css('--line'); ctx.lineWidth = 1;
+  for (let v=0; v<=1.0001; v+=0.2){ ctx.beginPath(); ctx.moveTo(m.l, Y(v)); ctx.lineTo(W-m.r, Y(v)); ctx.stroke(); ctx.textAlign='right'; ctx.fillText(Math.round(v*100)+'%', m.l-6, Y(v)+4); }
+  ctx.textAlign = 'center';
+  const ticks = log ? [1/3600,1/60,1,24,168,720].filter(x=>x>=tmin&&x<=tmax) : Array.from({length:6},(_,i)=>tmax*i/5);
+  const lab = x => log ? (x<1/59?'1 s':x<0.9?'1 min':x<23?'1 h':x<160?'1 d':x<700?'1 wk':'30 d') : (tmax <= 72 ? (+x.toPrecision(3))+' h' : (+(x/24).toPrecision(3))+' d');
+  ticks.forEach(x=>{ ctx.beginPath(); ctx.moveTo(X(x), m.t); ctx.lineTo(X(x), m.t+h); ctx.stroke(); ctx.fillText(lab(x), X(x), Hh-m.b+16); });
+  ctx.direction = 'rtl'; ctx.fillText(log ? 'زمان (لگاریتمی)' : 'زمان', m.l + w/2, Hh-4); ctx.direction = 'ltr';
+  const line = (arr, col, lw, dash) => { ctx.beginPath(); ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.setLineDash(dash||[]);
+    let first = true; for (let i=0;i<o.t.length;i++){ if (log && o.t[i] < tmin) continue; const x = X(o.t[i]), y = Y(arr[i]); first ? ctx.moveTo(x,y) : ctx.lineTo(x,y); first=false; } ctx.stroke(); ctx.setLineDash([]); };
+  line(o.fF, css('--free'), 1.5, [5,4]); line(o.fD, css('--des'), 1.5, [5,4]); line(o.fG, css('--deg'), 1.5, [5,4]); line(o.f, css('--ink'), 2.6);
+  if (preset && P[preset].data){ ctx.fillStyle = css('--data'); const d = P[preset].data; d.t.forEach((t,i)=>{ if (t<=tmax){ ctx.beginPath(); ctx.arc(X(t), Y(d.y[i]/100), 4.2, 0, 7); ctx.fill(); } }); }
+}
+
+// ---------- update ----------
+function update(){
+  let p = read();
+  if ($('usexl').checked){ const d = designParams(+$('xl').value); p.tb = d.tb; p.tg = d.tg; p.Q = d.Q; p.ff = 0; preset = null; setPressed(null);
+    $('tb').value = Math.log10(d.tb); $('tg').value = Math.log10(d.tg); $('Q').value = d.Q; $('ff').value = 0; p.win = 24; $('win').value = Math.log10(24); }
+  $('xl-o').textContent = (+$('xl').value).toFixed(2)+' h' + ($('usexl').checked ? '  EE '+designParams(+$('xl').value).ee.toFixed(1)+'%' : '');
+  $('R-o').textContent = p.R.toPrecision(3)+' µm'; $('Q-o').textContent = p.Q.toFixed(1); $('rs-o').textContent = p.rs.toFixed(1)+' Å';
+  $('ff-o').textContent = (100*p.ff).toFixed(0)+'%'; $('tb-o').textContent = fmtT(p.tb); $('fi-o').textContent = (100*p.fi).toFixed(0)+'%';
+  $('tg-o').textContent = (preset ? 'از داده مقاله' : fmtT(p.tg)); $('win-o').textContent = fmtT(p.win);
+  const o = simulate(p);
+  $('s-t10').textContent = fmtT(tAt(o,.1)); $('s-t50').textContent = fmtT(tAt(o,.5)); $('s-t90').textContent = fmtT(tAt(o,.9)); $('s-tD').textContent = fmtT(o.tauD/H);
+  const rg = regime(o, p); $('pill').textContent = rg.txt; $('pill').style.background = rg.col;
+  const s = o.shares; ['free','des','deg','irr'].forEach(k=>{ $('sh-'+k).style.width = (100*s[k])+'%'; });
+  const tot = s.free+s.des+s.deg;
+  $('explain').textContent = `ضریب نفوذ ${o.D.toExponential(2)} cm²/s و زمان نفوذ ${fmtT(o.tauD/H)} است. از دارویی که تا پایان پنجره آزاد شده، ${Math.round(100*s.free/Math.max(tot,1e-9))}٪ داروی آزاد اولیه بوده، ${Math.round(100*s.des/Math.max(tot,1e-9))}٪ با جدا شدن از شبکه و ${Math.round(100*s.deg/Math.max(tot,1e-9))}٪ با تخریب آزاد شده است.` + (o.tauD/H < 0.01*p.win ? ' چون زمان نفوذ در برابر پنجره ناچیز است، شعاع و تورم روی شکل منحنی تقریباً اثری ندارند؛ اتصال و تخریب تعیین‌کننده‌اند.' : ' زمان نفوذ در این حالت قابل مقایسه با پنجره است، پس شعاع و تورم هم روی منحنی اثر دارند.');
+  draw(o, p);
+}
+function setPressed(k){ ['k1','k2','k3','c1','c2'].forEach(x => $('p-'+x).setAttribute('aria-pressed', x===k ? 'true':'false')); }
+['k1','k2','k3','c1','c2'].forEach(k => $('p-'+k).addEventListener('click', () => { preset = k; $('usexl').checked = false; setSliders(P[k]); setPressed(k); update(); }));
+['R','Q','rs','ff','tb','fi','win'].forEach(id => $(id).addEventListener('input', () => update()));
+$('tg').addEventListener('input', () => { preset = null; setPressed(null); update(); });
+['xl','usexl','axis'].forEach(id => $(id).addEventListener('input', update));
+window.addEventListener('resize', update);
+preset = 'k2'; setSliders(P.k2); setPressed('k2'); update();
+})();
+
+// ================= Kodra DOE: stepwise model =================
+(function(){
+const $ = id => document.getElementById(id), H = 3600;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const lerp = (x, xs, ys) => { if (x <= xs[0]) return ys[0]; for (let i=1;i<xs.length;i++) if (x <= xs[i]) return ys[i-1]+(ys[i]-ys[i-1])*(x-xs[i-1])/(xs[i]-xs[i-1]); return ys[ys.length-1]; };
+const TT = [0,1,3,6,24];
+const K = [
+ {id:'K-1', xl:4,   sd:[0,1650,1850,1942,1820], dr:[1,.97,.95,.932,0], EE:38.9, td:[0.5,1,3,5,24], yd:[12.9,17.4,34.0,35.6,62.3], col:'#2C5BD8'},
+ {id:'K-2', xl:2,   sd:[0,1300,1700,1345,450],  dr:[1,.96,.94,.899,0], EE:22.5, td:[0.5,1,3,5,24], yd:[10.6,22.3,41.9,84.8,100],  col:'#C2551B'},
+ {id:'K-3', xl:0.5, sd:[0,920,620,379,250],     dr:[1,.92,.43,0,0],    EE:15.2, td:[0.5,1,3,5,24], yd:[9.0,37.1,99.6,99.8,100],  col:'#6B4FD8'},
+];
+K.forEach(c => c.firr = Math.max(0, 1 - c.yd[c.yd.length-1]/100));
+const KOFF1 = 2.68e-5, Dw = 7.58e-6, RS = 4.86;
+const mm = phi => Math.pow((1-phi)/(1+phi),2);
+const eq26 = Q => Math.min(RS*Math.pow(Q,-0.75)*Math.exp(-1/(Q-1)), 1);
+function run(c, step){
+  const Qmax = 1 + 1.35*Math.max(...c.sd)/100, R = 7.5e-4*Math.pow(Qmax,1/3);
+  const D = step === 1 ? Dw*mm(0.1) : Dw*eq26(Qmax), kD = Math.PI*Math.PI*D/(R*R);
+  const N = 1500, T = 24*H, tg = [0]; for (let i=0;i<N;i++) tg.push(T*Math.pow(10,-6+6*i/(N-1)));
+  const koff = KOFF1*Math.log(100/c.EE)/Math.log(100/38.9);
+  const firr = step >= 5 ? c.firr : 0;
+  let M = step <= 2 ? 1 : 0, S = step <= 2 ? 0 : 1 - firr, rel = 0; const t = [0], f = [0];
+  const g = step >= 4 ? (x => lerp(x, TT.map(v=>v*H), c.dr)) : (x => 1);
+  for (let i=1;i<=N;i++){ const dt = tg[i]-tg[i-1], g0 = g(tg[i-1]), g1 = g(tg[i]);
+    if (step >= 3){ const lost = g0 > 1e-9 ? Math.max(0, Math.min(1, (g0-g1)/g0)) : 1; const sd = S*lost; S -= sd; const sx = S*(1-Math.exp(-koff*dt)); S -= sx; M += sd + sx; }
+    const o = M*(1-Math.exp(-kD*dt)); M -= o; rel += o; t.push(tg[i]/H); f.push(rel); }
+  return {t, f, koff};
+}
+const at = (r, x) => { const i = r.t.findIndex(v => v >= x); if (i <= 0) return r.f[0]; return r.f[i-1] + (r.f[i]-r.f[i-1])*(x-r.t[i-1])/(r.t[i]-r.t[i-1]); };
+const rmse = (c, r) => Math.sqrt(c.td.reduce((s, x, i) => s + Math.pow(100*at(r, x) - c.yd[i], 2), 0)/c.td.length);
+// design point between levels: interpolate every measured response in crosslinking time
+function designCase(x){
+  const xs = [0.5,2,4], L = [K[2],K[1],K[0]];
+  return {id:'new', xl:x, sd: TT.map((_,j)=>lerp(x, xs, L.map(c=>c.sd[j]))), dr: TT.map((_,j)=>lerp(x, xs, L.map(c=>c.dr[j]))),
+          EE: lerp(x, xs, L.map(c=>c.EE)), firr: lerp(x, xs, L.map(c=>c.firr)), td:[], yd:[]};
+}
+let step = 5;
+const names = ['','۱. فیک','۲. + تورم','۳. + اتصال عرضی','۴. + تخریب','۵. + مخزن غیرقابل‌رهایش (توصیفی)'];
+function table(){
+  const rows = []; for (let s=1;s<=5;s++){ const e = K.map(c => rmse(c, run(c, s))); const m = e.reduce((a,b)=>a+b,0)/3;
+    rows.push(`<tr class="${s===step?'sel':''}"><td class="l">${names[s]}</td>${e.map(v=>`<td>${v.toFixed(1)}</td>`).join('')}<td>${m.toFixed(1)}</td></tr>`); }
+  $('rmse').innerHTML = rows.join('');
+}
+const cv = $('cv2'), ctx = cv.getContext('2d');
+function draw(){
+  const dpr = window.devicePixelRatio||1, W = cv.clientWidth, Hh = Math.round(W*0.56);
+  cv.width = W*dpr; cv.height = Hh*dpr; ctx.setTransform(dpr,0,0,dpr,0,0); ctx.direction = 'ltr';
+  const m = {l:46,r:12,t:12,b:34}, w = W-m.l-m.r, h = Hh-m.t-m.b, X = t => m.l + w*t/24, Y = f => m.t + h*(1-f/1.05);
+  ctx.clearRect(0,0,W,Hh); ctx.font = '11px IBM Plex Mono, monospace'; ctx.strokeStyle = css('--line'); ctx.fillStyle = css('--muted'); ctx.lineWidth = 1;
+  for (let v=0; v<=1.0001; v+=0.2){ ctx.beginPath(); ctx.moveTo(m.l,Y(v)); ctx.lineTo(W-m.r,Y(v)); ctx.stroke(); ctx.textAlign='right'; ctx.fillText(Math.round(v*100)+'%', m.l-6, Y(v)+4); }
+  ctx.textAlign = 'center'; [0,4,8,12,16,20,24].forEach(x => { ctx.beginPath(); ctx.moveTo(X(x),m.t); ctx.lineTo(X(x),m.t+h); ctx.stroke(); ctx.fillText(x+' h', X(x), Hh-m.b+16); });
+  K.forEach(c => { const r = run(c, step); ctx.beginPath(); ctx.strokeStyle = c.col; ctx.lineWidth = 2.4;
+    r.t.forEach((t,i) => i ? ctx.lineTo(X(t), Y(r.f[i])) : ctx.moveTo(X(t), Y(r.f[i]))); ctx.stroke();
+    ctx.fillStyle = c.col; c.td.forEach((t,i) => { ctx.beginPath(); ctx.arc(X(t), Y(c.yd[i]/100), 4.5, 0, 7); ctx.fill(); }); });
+  const x = +$('xl2').value, dc = designCase(x), r = run(dc, 5);
+  ctx.beginPath(); ctx.strokeStyle = css('--ink'); ctx.lineWidth = 2; ctx.setLineDash([6,4]);
+  r.t.forEach((t,i) => i ? ctx.lineTo(X(t), Y(r.f[i])) : ctx.moveTo(X(t), Y(r.f[i]))); ctx.stroke(); ctx.setLineDash([]);
+  const t50 = (() => { const i = r.f.findIndex(v => v >= .5); return i > 0 ? r.t[i-1] + (r.t[i]-r.t[i-1])*(.5-r.f[i-1])/(r.f[i]-r.f[i-1]) : NaN; })();
+  $('xl2-o').textContent = x.toFixed(2)+' h';
+  $('doe-note').textContent = `طراحی جدید با ${x.toFixed(2)} ساعت اتصال عرضی: پیش‌بینی مدل کامل t50 ≈ ${isFinite(t50)? t50.toFixed(1)+' h' : 'بیش از ۲۴ ساعت'} و رهایش ۲۴ ساعته ≈ ${(100*r.f[r.f.length-1]).toFixed(0)}٪ است (بازده بارگذاری درون‌یابی‌شده ${dc.EE.toFixed(1)}٪). این عدد را می‌شود با یک آزمایش واقعی در همین زمان آزمود. توجه: k_off از K-1 برازش شده و همه ورودی‌ها درون‌یابی‌اند، پس این یک پیش‌بینی آزمون‌پذیر است نه نتیجه قطعی.`;
+}
+function setStep(s){ step = s; document.querySelectorAll('.step[data-s]').forEach(b => b.setAttribute('aria-pressed', +b.dataset.s === s ? 'true' : 'false')); table(); draw(); }
+document.querySelectorAll('.step[data-s]').forEach(b => b.addEventListener('click', () => setStep(+b.dataset.s)));
+$('xl2').addEventListener('input', draw); window.addEventListener('resize', draw);
+setStep(5);
+window.kodraRun = run; window.kodraK = K;
+})();
+
+// ================= COMSOL-style field view + Mladenovska test =================
+(function(){
+const $ = id => document.getElementById(id), H = 3600;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function jet(v){ v = Math.max(0, Math.min(1, v)); const r = Math.min(1, Math.max(0, 1.5 - Math.abs(4*v - 3))), g = Math.min(1, Math.max(0, 1.5 - Math.abs(4*v - 2))), b = Math.min(1, Math.max(0, 1.5 - Math.abs(4*v - 1))); return [r*255|0, g*255|0, b*255|0]; }
+function fmtS(t){ return t < 1e-3 ? (t*1e6).toPrecision(2)+' µs' : t < 1 ? (t*1e3).toPrecision(3)+' ms' : t.toPrecision(3)+' s'; }
+// draws a half disc (axisymmetric section) of radial profile prof(rho), rho in [0,1]
+function halfdisc(cv, prof, vmax, Rum, title){
+  const dpr = window.devicePixelRatio||1, W = cv.clientWidth, Hh = Math.round(W*0.8);
+  cv.width = W*dpr; cv.height = Hh*dpr; const ctx = cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.direction = 'ltr';
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,W,Hh);
+  const top = 34, rad = Math.min((W-120)*0.85, (Hh-top-30)/2), cx = 52, cy = top + 6 + rad;
+  const n = 120, pr = new Float64Array(n+1); let mx = -1e9, mn = 1e9;
+  for (let i=0;i<=n;i++){ pr[i] = prof(i/n); mx = Math.max(mx, pr[i]); mn = Math.min(mn, pr[i]); }
+  const vm = vmax ?? mx, S = Math.ceil(rad*2*dpr), img = ctx.createImageData(Math.ceil(rad*dpr)+1, S);
+  for (let y=0;y<S;y++) for (let x=0;x<img.width;x++){ const rr = Math.hypot(x, y - S/2)/(rad*dpr); if (rr > 1) continue;
+    const c = jet(vm > 0 ? pr[Math.round(rr*n)]/vm : 0), k = 4*(y*img.width + x); img.data[k]=c[0]; img.data[k+1]=c[1]; img.data[k+2]=c[2]; img.data[k+3]=255; }
+  const off = document.createElement('canvas'); off.width = img.width; off.height = S; off.getContext('2d').putImageData(img,0,0);
+  ctx.drawImage(off, cx, cy - rad, img.width/dpr, S/dpr);
+  ctx.strokeStyle = '#fff'; ctx.fillStyle = '#fff'; ctx.lineWidth = 1;
+  for (let a=-80; a<=80; a+=10){ const th = a*Math.PI/180, c = Math.cos(th), s = Math.sin(th);
+    ctx.beginPath(); ctx.moveTo(cx + .06*rad*c, cy - .06*rad*s); ctx.lineTo(cx + .97*rad*c, cy - .97*rad*s); ctx.stroke();
+    const bx0 = cx + .87*rad*c, by0 = cy - .87*rad*s; ctx.beginPath(); ctx.moveTo(cx + .97*rad*c, cy - .97*rad*s); ctx.lineTo(bx0 + 3.5*s, by0 + 3.5*c); ctx.lineTo(bx0 - 3.5*s, by0 - 3.5*c); ctx.closePath(); ctx.fill(); }
+  ctx.strokeStyle = '#222'; ctx.beginPath(); ctx.arc(cx, cy, rad, -Math.PI/2, Math.PI/2); ctx.lineTo(cx, cy - rad); ctx.stroke();
+  ctx.fillStyle = '#333'; ctx.font = '11px IBM Plex Mono, monospace'; ctx.textAlign = 'left'; ctx.fillText(title, 6, 14);
+  ctx.fillStyle = '#666'; ctx.fillText('Surface: Concentration (%)   Streamline: Total flux', 6, 27);
+  ctx.textAlign = 'right'; [-1, -.5, 0, .5, 1].forEach(v => ctx.fillText((v*Rum).toFixed(Rum < 20 ? 1 : 0), cx - 6, cy - v*rad + 4));
+  ctx.textAlign = 'center'; [0, .5, 1].forEach(v => ctx.fillText((v*Rum).toFixed(Rum < 20 ? 1 : 0), cx + v*rad, cy + rad + 16)); ctx.fillText('µm', cx + rad + 18, cy + rad + 16);
+  const bx = W - 46, bh = 2*rad, by = cy - rad; for (let i=0;i<bh;i++){ const c = jet(1 - i/bh); ctx.fillStyle = `rgb(${c[0]},${c[1]},${c[2]})`; ctx.fillRect(bx, by + i, 14, 1.2); }
+  ctx.strokeStyle = '#888'; ctx.strokeRect(bx, by, 14, bh); ctx.fillStyle = '#333'; ctx.textAlign = 'left';
+  for (let k=0;k<=4;k++) ctx.fillText((+(vm*k/4).toPrecision(3)).toString(), bx + 18, by + bh*(1-k/4) + 4);
+  ctx.fillText('▲ ' + mx.toPrecision(3), bx - 6, by - 8); ctx.fillText('▼ ' + Math.max(mn, 0).toPrecision(2), bx - 6, by + bh + 16);
+}
+// ---- left: Fick only, analytical Crank series for a sphere with a perfect sink ----
+const DF = 5.2e-6 * Math.pow(0.9/1.1, 2);
+function fick(rho, t, R){ if (t <= 0) return 100; let s = 0; const tau = DF*t/(R*R);
+  for (let n=1;n<=400;n++){ const e = Math.exp(-n*n*Math.PI*Math.PI*tau); if (e < 1e-14 && n > 3) break;
+    s += (rho < 1e-6 ? n*Math.PI : Math.sin(n*Math.PI*rho)/rho) * (n % 2 ? 1 : -1)/n * e; }
+  return Math.max(0, Math.min(100, 100*2/Math.PI*s)); }
+function drawL(){ const t = Math.pow(10, +$('ft1').value), Rum = +$('fr1').value, R = Rum*1e-4;
+  $('ft1o').textContent = fmtS(t); $('fr1o').textContent = Rum + ' µm';
+  halfdisc($('fcv1'), rho => fick(rho, t, R), 100, Rum, 'Time=' + fmtS(t));
+  let m = 0; for (let i=1;i<=200;i++){ const r0 = (i-.5)/200; m += fick(r0, t, R)*3*r0*r0/200; }
+  $('fn1').textContent = `دارو باقی‌مانده ${m.toFixed(1)}٪. با شعاع ${Rum} میکرون، ۹۰٪ دارو در حدود ${fmtS(-Math.log(0.1*Math.PI*Math.PI/6)*R*R/(Math.PI*Math.PI*DF))} خارج می‌شود. دو برابر کردن شعاع، این زمان را چهار برابر می‌کند (R²).`; }
+// ---- right: full step-5 model (Kodra), total drug: uniform inside, free drug leaves in < 1 s ----
+let cache = {};
+function drawR(){ const t = +$('ft2').value, k = +$('fk2').value, c = window.kodraK[k];
+  if (!cache[k]) cache[k] = window.kodraRun(c, 5); const r = cache[k];
+  const i = r.t.findIndex(v => v >= t), f = i <= 0 ? r.f[0] : r.f[i-1] + (r.f[i]-r.f[i-1])*(t-r.t[i-1])/(r.t[i]-r.t[i-1]);
+  const tot = 100*(1 - f), Rum = 7.5*Math.pow(1 + 1.35*Math.max(...c.sd)/100, 1/3);
+  $('ft2o').textContent = t.toFixed(2) + ' h';
+  halfdisc($('fcv2'), rho => tot*(1 - 1e-5*(rho*rho)), 100, Rum, 'Time=' + t.toFixed(2) + ' h  (' + c.id + ')');
+  $('fn2').textContent = `دارو باقی‌مانده ${tot.toFixed(1)}٪ (${c.id}). ${c.firr > 0 ? 'سهم غیرقابل‌رهایش ' + Math.round(100*c.firr) + '٪ در ذره می‌ماند. ' : ''}رنگ در همه شعاع‌ها یکی است: رهایش را جدا شدن و تخریب کنترل می‌کنند، نه نفوذ.`; }
+['ft1','fr1'].forEach(id => $(id).addEventListener('input', drawL)); ['ft2','fk2'].forEach(id => $(id).addEventListener('input', drawR));
+let timer = null;
+$('fplay').addEventListener('click', () => { if (timer){ clearInterval(timer); timer = null; $('fplay').textContent = '▶ پخش'; return; }
+  $('ft1').value = -4; $('ft2').value = 0; $('fplay').textContent = '❚❚ توقف';
+  timer = setInterval(() => { const a = $('ft1'), b = $('ft2'); a.value = Math.min(+a.max, +a.value + 0.04); b.value = Math.min(24, +b.value + 0.18); drawL(); drawR();
+    if (+a.value >= +a.max && +b.value >= 24){ clearInterval(timer); timer = null; $('fplay').textContent = '▶ پخش'; } }, 40); });
+// ---- Mladenovska 2002: release = measured mass loss with lag tau = R / v ----
+const MD = {A:7.03,B:5.89,C:4.63,D:3.20,E:2.29,F:1.99}, TR = [0,1,3,5,7,10,13,24], TD = [0,1,3,5,7,13,24,48,72];
+const REL = {A:[0,5.5,19.5,29.5,33,57.5,71,80.5],B:[0,6.5,21.5,32.5,54,65.5,75.5,85],C:[0,7.5,32.5,48.5,66.5,70,77.5,86],D:[0,8.5,43,52.5,70,76,80,88.5],E:[0,9.5,48.5,57.5,74,78.5,83.5,89.5],F:[0,12.5,54,74,80.5,84.5,87,92.5]};
+const REM = {A:[100,45,41,33,31.7,28.8,23,22.3,19],B:[100,40.5,34,28.5,28,23.5,21.5,18,16],C:[100,40.5,34,28.5,27.5,22.5,21,18,16],D:[100,37,29,25,23.5,20.5,16.5,15,14.5],E:[100,34,28,25,22.5,19,16,15,12.5],F:[100,33.5,25.5,25,22,18,16,12.5,12]};
+const COL = {A:'#0000FF',B:'#008000',C:'#FF0000',D:'#00A0A0',E:'#BF00BF',F:'#A0A000'};
+const li = (x, xs, ys) => { if (x <= xs[0]) return ys[0]; for (let i=1;i<xs.length;i++) if (x <= xs[i]) return ys[i-1]+(ys[i]-ys[i-1])*(x-xs[i-1])/(xs[i]-xs[i-1]); return ys[ys.length-1]; };
+function lagged(k, tau){ const N = 2400, dt = 24/N, a = Math.exp(-dt/tau), t = [0], f = [0]; let F = 0;
+  for (let i=1;i<=N;i++){ const L = 100 - li(i*dt, TD, REM[k]); F = a*F + (1-a)*L; t.push(i*dt); f.push(F); } return {t, f}; }
+function drawM(){ const v = +$('mv').value; $('mvo').textContent = v.toFixed(2) + ' µm/h';
+  const cv = $('mcv'), dpr = window.devicePixelRatio||1, W = cv.clientWidth, Hh = Math.round(W*0.56); cv.width = W*dpr; cv.height = Hh*dpr;
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.direction = 'ltr';
+  const m = {l:46,r:12,t:12,b:34}, w = W-m.l-m.r, h = Hh-m.t-m.b, X = t => m.l + w*t/24, Y = f => m.t + h*(1-f/105);
+  ctx.clearRect(0,0,W,Hh); ctx.font = '11px IBM Plex Mono, monospace'; ctx.strokeStyle = css('--line'); ctx.fillStyle = css('--muted'); ctx.lineWidth = 1;
+  for (let v2=0; v2<=100; v2+=20){ ctx.beginPath(); ctx.moveTo(m.l,Y(v2)); ctx.lineTo(W-m.r,Y(v2)); ctx.stroke(); ctx.textAlign='right'; ctx.fillText(v2+'%', m.l-6, Y(v2)+4); }
+  ctx.textAlign = 'center'; [0,4,8,12,16,20,24].forEach(x => { ctx.beginPath(); ctx.moveTo(X(x),m.t); ctx.lineTo(X(x),m.t+h); ctx.stroke(); ctx.fillText(x+' h', X(x), Hh-m.b+16); });
+  const rows = []; let all = 0;
+  Object.keys(MD).forEach(k => { const tau = MD[k]/2/v, r = lagged(k, tau);
+    ctx.beginPath(); ctx.strokeStyle = COL[k]; ctx.lineWidth = 2; r.t.forEach((t,i) => i ? ctx.lineTo(X(t), Y(r.f[i])) : ctx.moveTo(X(t), Y(r.f[i]))); ctx.stroke();
+    if ($('mfick').checked){ ctx.setLineDash([5,4]); ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(0.002), Y(100)); ctx.lineTo(X(24), Y(100)); ctx.stroke(); ctx.setLineDash([]); }
+    ctx.fillStyle = COL[k]; TR.forEach((t,i) => { ctx.beginPath(); ctx.arc(X(t), Y(REL[k][i]), 4, 0, 7); ctx.fill(); });
+    const e = Math.sqrt(TR.slice(1).reduce((s,t,i) => s + Math.pow(li(t, r.t, r.f) - REL[k][i+1], 2), 0)/7); all += e/6;
+    rows.push(`<tr><td class="l" style="color:${COL[k]}">${k}</td><td>${MD[k].toFixed(2)}</td><td>${tau.toFixed(2)}</td><td>${e.toFixed(1)}</td></tr>`); });
+  $('mtab').innerHTML = rows.join('') + `<tr class="sel"><td class="l">میانگین</td><td></td><td></td><td>${all.toFixed(1)}</td></tr>`;
+  $('mnote').textContent = Math.abs(v - 0.62) < 0.02 ? 'v = ۰.۶۲ از اندازه A آمده است. پنج اندازه دیگر پیش‌بینی‌اند. فیک خطای ۴۰ تا ۶۳٪ دارد و زمان نیمه‌رهایش در داده با قطر به توان ۰.۸۳ تغییر می‌کند، نه ۲.' : 'v تغییر کرده است. مقدار مستقل از داده A برابر ۰.۶۲ میکرون بر ساعت است.'; }
+['mv','mfick'].forEach(id => $(id).addEventListener('input', drawM));
+window.addEventListener('resize', () => { drawL(); drawR(); drawM(); });
+drawL(); drawR(); drawM();
+})();
+</script>
+
+</body>
+</html>
+
+```

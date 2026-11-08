@@ -55,7 +55,8 @@ Abdekhodaie & Wu 2006 (verapamil on Sephadex): four-stage ladder Fick → Eq. 26
 | `07_plga/` | PLGA step 1 (levonorgestrel) and PLGA data bank |
 | `08_stepD/` | D-formula check, Abdekhodaie self-check, notebook |
 | `09_deck_source/` | Slides deck source (`gen_slides.py` → `project/deck.json` + `slides/*.html`) |
-| `10_simulator_source/` | Live simulator HTML source |
+| `simulator/` | **Standalone simulator** (`index.html`) + `SIMULATOR_SPEC.md` (rebuild spec for any AI) |
+| `10_simulator_source/` | Older copy of simulator source |
 | `11_reports_docx/` | Persian Word reports/scripts built so far |
 | `docs/` | The 10 Project notes (findings per stage) — the best summary of results |
 
