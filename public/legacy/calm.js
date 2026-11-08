@@ -6,7 +6,14 @@
    - after irritation, skin function stays off for ~2 weeks and is back by ~3 weeks (Lee et al., Contact Dermatitis 1997)
      → calm phase until two calm days in a row (from day 3), refer if no better by day 7, cap 21 days;
    - retinoid adjustment is usual in weeks 2–4 (Galderma) → retinoids/acids are «too much for now», not «never».
-   Red flags (swelling, blisters, fever, spreading, after a drug, eyes) → a doctor today; the program does not start.
+   - daily symptoms (scale 2): itch and burning as the worst moment of the last 24 h on 0–10 — the numeric rating format validated
+     for itch (Yosipovitch et al., Br J Dermatol 2019: test–retest ICC 0.95; a 2–4 point change is meaningful → we use ≥3);
+     redness 0–3 and new bumps since yesterday. POEM is not used: commercial use needs a licence.
+   - red flags: swelling of face/lips/tongue/eyelids (breathing → emergency), blisters or open sores, discharge / yellow crusts /
+     increasing pain, fever or feeling unwell (signs of infection, HSE Ireland), fast spreading, after a medicine, eyes → a doctor today.
+   - diamonds only after value: triage, suspects, simple routine, daily follow-up and the trend are free; finding the culprit
+     (cfg.calmPrice, 3) and safe alternatives without the suspect group (cfg.altPrice, 1) are the next steps she pays for.
+   Programs started before scale 2 keep their old 0–3 scores and rules.
    Storage: NEW keys only — bw_calm_v1 (the program), bw_skin_passport (what upset her skin). Her routine (bw_check_products)
    is never changed: paused products are only shown as paused. Photos go through the existing encrypted journal. */
 (function(){'use strict';
@@ -31,7 +38,9 @@ function save(s){wj(K,s);paint()}
 function dayN(s){return dnum(tday())-dnum(s.start)}
 function tot(x){return x?(+x.b||0)+(+x.r||0)+(+x.p||0):0}
 
-var RED=[['swell','تورم صورت، لب یا پلک'],['blister','تاول، ترشح یا زخم باز'],['fever','درد شدید، داغی پوست یا تب'],['spread','پخش شدن سریع به گردن یا بدن'],['drug','بعد از شروع یک دارو (قرص، آمپول) شروع شد'],['eye','چشم درگیره یا دید تار شده']];
+var RED=[['swell','تورم صورت، لب، زبان یا پلک'],['blister','تاول یا زخم باز'],['infect','ترشح، دلمه‌ی زرد یا دردی که هر روز بیشتر می‌شه'],['fever','تب، لرز یا حال عمومی بد'],['spread','پخش شدن سریع به گردن یا بدن'],['drug','بعد از شروع یک دارو (قرص، آمپول) شروع شد'],['eye','چشم درگیره یا دید تار شده']];
+// scale 2: worst itch / burning in the last 24 h (0–10), redness (0–3), new bumps since yesterday (0–2)
+var NRS=[['itch','خارش'],['burn','سوزش یا سوزن‌سوزن شدن']],RLV=['ندارم','کم','متوسط','زیاد'],BLV=['نه','۱ یا ۲ تا','بیشتر'];
 var SYM=[['burn','سوزش یا خارش'],['red','قرمزی'],['bumps','جوش ریز تازه'],['deep','جوش دردناک و عمقی'],['dry','خشکی و پوسته'],['hives','کهیر یا برجستگی']];
 var SINCE=[['1','امروز یا دیروز'],['3','۲ تا ۳ روزه'],['7','حدود یک هفته'],['14','بیشتر از دو هفته']];
 var DIM=[['b','سوزش یا خارش'],['r','قرمزی'],['p','جوش یا دانه‌ی تازه']],LV=['ندارم','کم','متوسط','زیاد'];
@@ -57,7 +66,7 @@ var CSS='.cm-sheet{position:fixed;inset:0;z-index:9990;background:rgba(25,18,60,
  '.cm-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.cm-go{background:linear-gradient(135deg,#7c5cf0,#c86dd7)!important;color:#fff!important;font-weight:800}.cm-sus{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed #ece6ff}.cm-sus small{display:block;color:#6d6496;font-size:12px}'+
  '.cm-dim{margin:6px 0}.cm-dim b{display:block;font-size:13px}.cm-card{background:#fff;border:1px solid #f0d9e6;border-radius:18px;padding:12px 14px;margin:0 0 12px;line-height:1.9;font-size:14px;color:#241a4f;direction:rtl}.cm-card h4{margin:0 0 4px;font-size:15px}'+
  '.cm-chip{display:block;width:100%;text-align:right;margin:8px 0 2px;background:linear-gradient(135deg,#fff0f4,#f4efff)!important;border:1px solid #f3d6e3!important;font-weight:700}.cm-chip small{display:block;font-weight:400;color:#6d6496;font-size:12px}.cm-trend{font-size:12.5px;color:#4d5670}'+
- '.cm-in .bw-action-icon::before,.cm-in .bw-action-icon::after,.cm-card .bw-action-icon::before,.cm-card .bw-action-icon::after{display:none!important;content:none!important}.cm-pp{background:#fff6e9;border-radius:12px;padding:6px 10px;margin-top:8px;font-size:13px;color:#6b4a14;line-height:1.8}';
+ '.cm-in .bw-action-icon::before,.cm-in .bw-action-icon::after,.cm-card .bw-action-icon::before,.cm-card .bw-action-icon::after{display:none!important;content:none!important}.cm-nrs{gap:4px!important}.cm-nrs button{padding:6px 0!important;min-width:27px;flex:1 0 27px;text-align:center}.cm-pp{background:#fff6e9;border-radius:12px;padding:6px 10px;margin-top:8px;font-size:13px;color:#6b4a14;line-height:1.8}';
 function style(){if(document.getElementById('cmCss'))return;var s=document.createElement('style');s.id='cmCss';s.textContent=CSS;document.head.appendChild(s)}
 var cur=null;
 function sheet(html){style();if(cur)cur.remove();var o=document.createElement('div');o.className='cm-sheet';o.setAttribute('role','dialog');o.innerHTML='<div class="cm-in">'+html+'</div>';
@@ -66,6 +75,19 @@ function chips(name,list,sel,multi){return '<div class="cm-chips" data-g="'+name
 function picked(o,name){var g=o.querySelector('[data-g="'+name+'"]');if(!g)return null;var on=[].slice.call(g.querySelectorAll('.on')).map(function(b){return b.dataset.v});return g.dataset.m?on:(on[0]||null)}
 function bindChips(o){o.addEventListener('click',function(e){var b=e.target.closest('.cm-chips button');if(!b)return;var g=b.parentNode;if(g.dataset.m)b.classList.toggle('on');else [].forEach.call(g.children,function(x){x.classList.toggle('on',x===b)})})}
 function scoreForm(v){v=v||{};return DIM.map(function(d){return '<div class="cm-dim"><b>'+d[1]+'</b>'+chips('s_'+d[0],LV.map(function(l,i){return [String(i),l]}),v[d[0]]!=null?String(v[d[0]]):null)+'</div>'}).join('')}
+function nrsRow(k,v){return '<div class="cm-chips cm-nrs" data-g="n_'+k+'">'+[0,1,2,3,4,5,6,7,8,9,10].map(function(i){return '<button type="button" data-v="'+i+'"'+(v===i?' class="on"':'')+'>'+fa(i)+'</button>'}).join('')+'</div>'}
+function scoreForm2(v){v=v||{};return NRS.map(function(d){return '<div class="cm-dim"><b>'+d[1]+': شدیدترین لحظه در ۲۴ ساعت گذشته</b><small class="cm-note">۰ یعنی اصلاً، ۱۰ یعنی بدترین حالتی که می‌شه تصور کرد</small>'+nrsRow(d[0],v[d[0]])+'</div>'}).join('')+
+  '<div class="cm-dim"><b>قرمزی</b>'+chips('n_red',RLV.map(function(l,i){return [String(i),l]}),v.red!=null?String(v.red):null)+'</div><div class="cm-dim"><b>جوش یا دانه‌ی تازه از دیروز</b>'+chips('n_bumps',BLV.map(function(l,i){return [String(i),l]}),v.bumps!=null?String(v.bumps):null)+'</div>'}
+function readScores2(root){var x={},ok=true;['itch','burn','red','bumps'].forEach(function(k){var on=root.querySelector('[data-g="n_'+k+'"] .on');if(!on)ok=false;else x[k]=+on.dataset.v});return ok?x:null}
+function calmDay(x){return !!x&&x.itch<=1&&x.burn<=1&&x.red<=1&&!x.bumps}
+function better(b,x){return !!x&&calmDay(x)||(!!x&&(b.itch-x.itch>=3||x.itch<=1)&&(b.burn-x.burn>=3||x.burn<=1)&&x.red<=Math.max(1,b.red-1)&&!x.bumps)}
+function verdict2(s){var n=dayN(s),ks=Object.keys(s.days).sort(),b=s.base,l=s.days[ks[ks.length-1]],y=ks.length>1?s.days[ks[ks.length-2]]:null,cons=ks.length>1&&dnum(ks[ks.length-1])-dnum(ks[ks.length-2])===1;
+  if(n>=2&&(l.itch-b.itch>=3||l.burn-b.burn>=3||(l.red===3&&b.red<3)||(l.bumps===2&&b.bumps<2)))return 'worse';
+  if(n>=3&&cons&&((calmDay(l)&&calmDay(y))||(better(b,l)&&better(b,y))))return 'ready';
+  if(n>=7&&!better(b,l))return 'stuck';if(n>=21)return 'cap';return 'calm'}
+function trend2(s){var ks=Object.keys(s.days).sort(),f=s.days[ks[0]],l=s.days[ks[ks.length-1]];
+  return 'خارش: روز اول '+fa(f.itch)+' از ۱۰، امروز '+fa(l.itch)+'<br>سوزش: روز اول '+fa(f.burn)+' از ۱۰، امروز '+fa(l.burn)+'<br>قرمزی: روز اول '+RLV[f.red]+'، امروز '+RLV[l.red]}
+function lvl(x){return x?(x.itch!=null?Math.round((x.itch+x.burn)/2):tot(x)):0}
 function readScores(o){var x={},ok=true;DIM.forEach(function(d){var v=picked(o,'s_'+d[0]);if(v==null)ok=false;x[d[0]]=+v||0});return ok?x:null}
 
 /* ---------- start: intro → red flags → what / since when → suspects → plan for today ---------- */
@@ -79,8 +101,8 @@ function redFlags(){var o=sheet('<h3>اول یه سؤال مهم</h3><p>هر ک�
   o.querySelector('[data-a="yes"]').onclick=function(){var r=picked(o,'red');if(!r.length)return what();track('calm_redflag');l2({ev:'red',sym:r});
     sheet('<h3>⚠️ این رو با برنامه درست نکنیم</h3><div class="cm-warn">چیزی که گفتی ('+esc(r.map(function(k){return RED.find(function(x){return x[0]===k})[1]}).join('، '))+') باید <b>همین امروز</b> پزشک ببینه'+(r.indexOf('swell')>=0||r.indexOf('eye')>=0?'؛ اگه تورم یا تنگی نفس داری، اورژانس.':'.')+'</div><p>تا اون موقع هر محصولی که این روزها شروع کردی رو کنار بذار و فقط با آب ولرم صورتت رو بشور.</p><div class="cm-row"><button type="button" class="cm-go" data-cx="1">باشه</button></div>')}}
 function what(){var o=sheet('<h3>چی شده؟</h3><p>هر چی داری انتخاب کن:</p>'+chips('sym',SYM,[],true)+'<p style="margin-top:8px">از کِی؟</p>'+chips('since',SINCE,null)+
-   '<p style="margin-top:8px">الان چقدر؟</p>'+scoreForm()+'<div class="cm-row"><button type="button" class="cm-go" data-a="next">ادامه</button><button type="button" data-cx="1">بستن</button></div><p class="cm-msg cm-note"></p>');bindChips(o);
-  o.querySelector('[data-a="next"]').onclick=function(){var sym=picked(o,'sym'),since=picked(o,'since'),sc=readScores(o),m=o.querySelector('.cm-msg');
+   '<p style="margin-top:8px">الان چقدر؟</p>'+scoreForm2()+'<div class="cm-row"><button type="button" class="cm-go" data-a="next">ادامه</button><button type="button" data-cx="1">بستن</button></div><p class="cm-msg cm-note"></p>');bindChips(o);
+  o.querySelector('[data-a="next"]').onclick=function(){var sym=picked(o,'sym'),since=picked(o,'since'),sc=readScores2(o),m=o.querySelector('.cm-msg');
     if(!sym.length||!since||!sc){m.textContent='همه‌ی بخش‌ها رو انتخاب کن 💜';return}    pickSuspects({sym:sym,since:since,base:sc})}}
 function pickSuspects(d){var L=suspects(d.since),top=L.filter(function(i){return i.recent||i.bad}).slice(0,3).map(function(i){return i.id});if(!top.length&&L.length)top=[L[0].id];
   var hormonal=d.sym.indexOf('deep')>=0;
@@ -97,8 +119,8 @@ function planToday(d){var names=d.sus.map(pname).concat(d.extra),simp=simple();
    '<p class="cm-note">صورتت رو با آب ولرم بشور، نمال، و چیز تازه‌ای امتحان نکن. هر روز یک بار اینجا (مراقبت روزانه) فقط سه سؤال کوچیک جواب بده.</p>'+
    '<div class="cm-box">📷 یه عکس از امروز بگیر تا روز هفتم کنارش ببینی (روی گوشیت رمزگذاری می‌مونه).</div>'+
    '<div class="cm-row"><button type="button" class="cm-go" data-a="start">شروع برنامه + عکس امروز</button><button type="button" data-a="nophoto">شروع بدون عکس</button></div>');
-  function go(photo){var s={v:1,id:'c'+Date.now().toString(36),start:tday(),since:d.since,sym:d.sym,base:d.base,sus:d.sus,extra:d.extra,days:{},phase:'calm',unlocked:false};s.days[tday()]=d.base;wj(K,s);
-    track('calm_start');l2({ev:'start',sus:d.sus,base:tot(d.base),sym:d.sym,since:d.since});if(cur){cur.remove();cur=null}paint();
+  function go(photo){var s={v:1,scale:2,id:'c'+Date.now().toString(36),start:tday(),since:d.since,sym:d.sym,base:d.base,sus:d.sus,extra:d.extra,days:{},phase:'calm',unlocked:false};s.days[tday()]=d.base;wj(K,s);
+    track('calm_start');l2({ev:'start',sus:d.sus,base:lvl(d.base),sym:d.sym,since:d.since});if(cur){cur.remove();cur=null}paint();
     if(photo){window.bwReactCtx={pid:d.sus[0]||'',name:'برنامه‌ی آرام‌سازی',at:Date.now()};goTrack(function(){window.BWSkinJournal&&window.BWSkinJournal.photo&&window.BWSkinJournal.photo()})}else goTrack();toast('برنامه شروع شد 💜 هر روز توی مراقبت روزانه منتظرتم')}
   o.querySelector('[data-a="start"]').onclick=function(){go(true)};o.querySelector('[data-a="nophoto"]').onclick=function(){go(false)}}
 function goTrack(then){if(typeof window.switchTab==='function')window.switchTab('track');setTimeout(function(){var c=document.getElementById('bwCalm');c&&c.scrollIntoView({behavior:'smooth',block:'start'});then&&then()},350)}
@@ -110,13 +132,13 @@ function verdict(s){var n=dayN(s),days=Object.keys(s.days).sort(),last=days.leng
 function trend(s){var ks=Object.keys(s.days).sort(),f=s.days[ks[0]],l=s.days[ks[ks.length-1]];return DIM.map(function(d){return d[1]+': روز اول '+LV[f[d[0]]]+'، امروز '+LV[l[d[0]]]}).join('<br>')}
 function card(s){var n=dayN(s),done=!!s.days[tday()],h='<div class="cm-card" id="bwCalm"><h4>🌿 برنامه‌ی آرام‌سازی · روز '+fa(n)+'</h4>';
   var paused=s.sus.map(pname).concat(s.extra||[]);
-  if(s.phase==='calm'){var v=verdict(s);
+  if(s.phase==='calm'){var v2=s.scale===2,v=v2?verdict2(s):verdict(s);
     h+=paused.length?'<div class="cm-pp">✋ فعلاً نزن: '+esc(paused.join('، '))+'</div>':'';
-    if(!done)h+='<p style="margin:8px 0 0"><b>امروز چطوره؟</b></p>'+scoreForm()+'<div class="cm-row"><button type="button" class="cm-go" data-c="save">ثبت امروز</button></div>';
-    else h+='<p class="cm-trend">'+trend(s)+'</p>';
+    if(!done)h+='<p style="margin:8px 0 0"><b>امروز چطوره؟</b></p>'+(v2?scoreForm2():scoreForm())+'<div class="cm-row"><button type="button" class="cm-go" data-c="save">ثبت امروز</button></div>';
+    else h+='<p class="cm-trend">'+(v2?trend2(s):trend(s))+'</p>';
     if(done&&v==='worse')h+='<div class="cm-warn">از روز اول بدتر شده. لطفاً همین روزها پزشک ببینه؛ برنامه رو نگه می‌داریم، ولی جای پزشک نیست.</div>';
     if(done&&v==='stuck')h+='<div class="cm-warn">'+fa(n)+' روز گذشته و هنوز خیلی بهتر نشده؛ احتمالاً فقط واکنش به یه محصول نیست. بهتره پزشک ببینه. اگه خواستی، روتین ساده رو ادامه بده.</div>';
-    if(done&&v==='ready')h+='<div class="cm-ok">پوستت آروم‌تر شده ✨ حالا وقتشه <b>مقصر رو پیدا کنیم</b>: یه تست کوچیک روی ساعد، معمولاً تا روز چهارم جواب می‌ده.</div><div class="cm-row"><button type="button" class="cm-go" data-c="unlock">پیدا کردن مقصر</button></div>';
+    if(done&&v==='ready')h+='<div class="cm-ok">پوستت آروم‌تر شده ✨ '+fa(n)+' روز کنارت بودیم'+(v2?' و خارشت از '+fa(s.base.itch)+' به '+fa(s.days[tday()].itch)+' رسید':'')+'.<br>قدم بعد: <b>پیدا کردن مقصر</b> با یه تست کوچیک روی ساعد (معمولاً تا روز چهارم جواب می‌ده)، و بعدش ثبتش توی «پرونده‌ی پوست من» تا هیچ‌وقت تکرار نشه.</div><div class="cm-row"><button type="button" class="cm-go" data-c="unlock">پیدا کردن مقصر با '+fa(PRICE.test)+' الماس 💎</button></div>';
     if(done&&v==='calm')h+='<p class="cm-note">وقتی دو روز پشت سر هم آروم بود (از روز سوم به بعد)، می‌ریم سراغ پیدا کردن مقصر.</p>';
     if(done&&v==='cap')h+='<div class="cm-box">۲۱ روز شد. اگه هنوز بهتر نشده، پزشک بهترین قدم بعدیه.</div><div class="cm-row"><button type="button" data-c="close">بستن برنامه</button></div>'}
   else if(s.phase==='test'){var t=s.test,tn=dnum(tday())-dnum(t.start)+1;
@@ -130,6 +152,7 @@ function paint(){var j=document.getElementById('skinJournal'),s=st();var old=doc
   if(!s){if(old)old.remove();homeChip();return}if(!j)return;style();var w=document.createElement('div');w.innerHTML=card(s);var nw=w.firstChild;
   if(old)old.replaceWith(nw);else{var l1=document.getElementById('bwL1');(l1||j).parentNode.insertBefore(nw,l1||j)}homeChip()}
 document.addEventListener('click',function(e){var b=e.target.closest('#bwCalm [data-c]');if(!b)return;var s=st();if(!s)return;var a=b.dataset.c,card=document.getElementById('bwCalm');
+  if(a==='save'&&s.scale===2){var x2=readScores2(card);if(!x2)return toast('هر چهار مورد رو انتخاب کن 💜');s.days[tday()]=x2;save(s);if(verdict2(s)==='worse')track('calm_worse');return}
   if(a==='save'){var g=card.querySelectorAll('.cm-chips');var x={},ok=true;DIM.forEach(function(d){var on=card.querySelector('[data-g="s_'+d[0]+'"] .on');if(!on)ok=false;x[d[0]]=on?+on.dataset.v:0});if(!ok)return toast('هر سه مورد رو انتخاب کن 💜');s.days[tday()]=x;save(s);var v=verdict(s);if(v==='worse')track('calm_worse');return}
   if(a==='unlock')return unlock(s);
   if(a==='photo'){window.bwReactCtx={pid:s.sus[0]||'',name:'برنامه‌ی آرام‌سازی',at:Date.now()};var jj=document.getElementById('skinJournal');jj&&jj.scrollIntoView({behavior:'smooth',block:'start'});window.BWSkinJournal&&window.BWSkinJournal.photo&&window.BWSkinJournal.photo();return}
@@ -144,10 +167,13 @@ document.addEventListener('click',function(e){var b=e.target.closest('#bwCalm [d
 document.addEventListener('click',function(e){var b=e.target.closest('#bwCalm .cm-chips button');if(!b)return;[].forEach.call(b.parentNode.children,function(x){x.classList.toggle('on',x===b)})});
 
 /* ---------- unlock (paid with diamonds) → forearm test, two at a time ---------- */
-function unlock(s){var b=document.querySelector('#bwCalm [data-c="unlock"]');if(b)b.disabled=true;
-  fetch('/api/calm/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({d:dev()})}).then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})}).then(function(x){if(b)b.disabled=false;
-    if(!x.ok&&x.j&&x.j.code==='need_negin'){toast(x.j.error||'الماس لازمه 💎');if(window.bwNeginSheet)window.bwNeginSheet(1,function(){unlock(st())});else if(window.bwNegin)window.bwNegin();return}
-    if(!x.ok)return toast('الان نشد؛ دوباره امتحان کن');try{window.bwSyncWallet&&window.bwSyncWallet()}catch(e){}track('calm_unlock');l2({ev:'unlock',sus:s.sus,dayn:dayN(s),base:tot(s.base),now:tot(s.days[tday()])});startTest(st())}).catch(function(){if(b)b.disabled=false;toast('اینترنت وصل نیست؛ دوباره امتحان کن')})}
+// diamonds for the next step, only after something useful was already given; short → the diamond sheet, then it retries
+var PRICE={test:3,alt:1};try{fetch('/api/calm/price',{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){if(j&&j.price!=null)PRICE.test=j.price;if(j&&j.alt!=null)PRICE.alt=j.alt}).catch(function(){})}catch(e){}
+function spend(what,ok,btn){if(btn)btn.disabled=true;
+  fetch('/api/calm/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({d:dev(),what:what})}).then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})}).then(function(x){if(btn)btn.disabled=false;
+    if(!x.ok&&x.j&&x.j.code==='need_negin'){toast(x.j.error||'الماس لازمه 💎');track(what==='test'?'calm_pay_short':what==='refill_alt'?'refill_alt_short':'calm_alt_short');if(window.bwNeginSheet)window.bwNeginSheet(1,function(){spend(what,ok)});else if(window.bwNegin)window.bwNegin();return}
+    if(!x.ok)return toast('الان نشد؛ دوباره امتحان کن');try{window.bwSyncWallet&&window.bwSyncWallet()}catch(e){}ok(x.j)}).catch(function(){if(btn)btn.disabled=false;toast('اینترنت وصل نیست؛ دوباره امتحان کن')})}
+function unlock(s){spend('test',function(){var c=st();track('calm_unlock');l2({ev:'unlock',sus:c.sus,dayn:dayN(c),base:lvl(c.base),now:lvl(c.days[tday()])});startTest(c)},document.querySelector('#bwCalm [data-c="unlock"]'))}
 function startTest(s){s.unlocked=true;var L=s.sus.map(info),leave=L.filter(function(i){return !i.rinse}),rinse=L.filter(function(i){return i.rinse});
   var now=leave.slice(0,2),later=leave.slice(2).concat(rinse);
   if(!now.length){s.phase='face';s.face={queue:later.map(function(i){return i.id}),done:[],cur:'',start:tday()};return nextFace(s)}
@@ -170,13 +196,22 @@ function finish(s,stopped){var found=uniq(s.found||[]),safe=uniq(s.safe||[]).fil
   if(found.length){var p=rj(KP,{items:[]});if(!p||!Array.isArray(p.items))p={items:[]};found.forEach(function(id){var i=info(id);if(!p.items.some(function(x){return x.id===id}))p.items.push({id:id,name:i.name,cls:i.cls,fl:i.fl,kind:i.strong?'caution':'avoid',at:tday()})});wj(KP,p)}
   s.closed=true;s.end=tday();s.result={found:found,safe:safe,untested:untested,stopped:!!stopped};wj(K,s);
   var hist=rj('bw_calm_hist',[]);if(!Array.isArray(hist))hist=[];hist.push({id:s.id,start:s.start,end:s.end,found:found,safe:safe});wj('bw_calm_hist',hist.slice(-10));
-  track(stopped?'calm_stop':'calm_done');l2({ev:stopped?'stop':'done',sus:s.sus,culprit:found,safe:safe,dayn:dayN(s),base:tot(s.base),now:tot(s.days[Object.keys(s.days).sort().pop()])});paint();
+  track(stopped?'calm_stop':'calm_done');l2({ev:stopped?'stop':'done',sus:s.sus,culprit:found,safe:safe,dayn:dayN(s),base:lvl(s.base),now:lvl(s.days[Object.keys(s.days).sort().pop()])});paint();
   if(stopped&&!found.length&&!safe.length)return toast('برنامه بسته شد 💜 هر وقت لازم شد دوباره از «پوستم به هم ریخته» شروع کن');
   sheet('<h3>🌿 نتیجه‌ی برنامه</h3>'+(found.length?'<div class="cm-warn"><b>احتمالاً مقصر:</b><br>'+found.map(function(id){var i=info(id);return esc(i.name)+(i.strong?' <small>(ممکنه فقط دوزش زیاد بوده؛ اگه خواستی دوباره، یک شب در میان شروع کن)</small>':'')}).join('<br>')+'</div>':'<div class="cm-box">مقصر قطعی پیدا نشد. این هم یه جوابه: احتمالاً یه محصول تنها مقصر نبوده (هوا، هورمون، استرس). اگه دوباره تکرار شد، پزشک بهتر کمک می‌کنه.</div>')+
    (safe.length?'<div class="cm-ok"><b>این‌ها توی تست واکنشی نشون ندادن؛ یکی‌یکی و با فاصله‌ی ۴ روز برگردون:</b><br>'+safe.map(function(id){return esc(pname(id))}).join('<br>')+'</div>':'')+
    (untested.length?'<p class="cm-note">تست نشد: '+esc(untested.map(pname).join('، '))+'. اگه برگردوندی، یکی‌یکی و با فاصله‌ی ۴ روز.</p>':'')+
    (found.length?'<p>📁 به «پرونده‌ی پوست من» اضافه شد؛ از این به بعد هر محصولی رو بسنجی، اگه همین محصول یا گروه مواد مشکوکش رو داشته باشه، بهت می‌گم.</p>':'')+
-   '<div class="cm-row"><button type="button" class="cm-go" data-cx="1">ممنون 💜</button></div>')}
+   '<p class="cm-note">اگه دوباره تکرار شد، دقیق‌ترین راه «تست پچ» پیش متخصص پوسته.</p>'+altTeaser(found)+
+   '<div class="cm-row"><button type="button" class="cm-go" data-cx="1">ممنون 💜</button></div>');bindAlt()}
+// next step after the result: safe alternatives for what she put aside (same kind, without the suspect group, fit for her skin)
+function avoidOf(ids){var a={cls:[],fl:[]};ids.forEach(function(id){var i=info(id);i.cls.forEach(function(c){if(STRONG.test(c)&&a.cls.indexOf(c)<0)a.cls.push(c)});i.fl.forEach(function(f){if(FL[f]&&a.fl.indexOf(f)<0)a.fl.push(f)})});return a}
+var altFound=[];
+function altTeaser(found){altFound=[];if(!found.length||!window.bwAlternatives)return '';var av=avoidOf(found);found.forEach(function(id){(window.bwAlternatives(id,av)||[]).forEach(function(x){if(!altFound.some(function(y){return y.id===x.id}))altFound.push(x)})});altFound=altFound.slice(0,3);
+  if(!altFound.length)return '';track('calm_alt_offer');
+  return '<div class="cm-box" id="cmAlt">💡 برای «'+esc(pname(found[0]))+'» '+fa(altFound.length)+' جایگزین پیدا کردم که با پوست و روتینت جورن و '+(av.cls.concat(av.fl).length?'«'+av.cls.map(function(c){return CLS[c]||c}).concat(av.fl.map(function(f){return FL[f]})).join('، ')+'» رو ندارن':'همون محصول نیستن')+'.<div class="cm-row"><button type="button" class="cm-go" data-alt="1">دیدن جایگزین‌ها با '+fa(PRICE.alt)+' الماس 💎</button></div></div>'}
+function bindAlt(){var b=cur&&cur.querySelector('[data-alt]');if(!b)return;b.onclick=function(){spend('alt',function(){track('calm_alt_unlock');l2({ev:'alt',sus:altFound.map(function(x){return x.id})});var box=cur&&cur.querySelector('#cmAlt');if(box)box.innerHTML=altList(altFound)},b)}}
+function altList(L){return '<b>جایگزین‌های سازگار با پوستت:</b>'+L.map(function(x){return '<div class="cm-sus"><span>'+esc(x.name)+(x.why?'<small>'+esc(x.why)+'</small>':'')+'</span></div>'}).join('')+'<p class="cm-note">اگه یکی رو خریدی، اول ۴ روز روی ساعد تستش کن. بیوتی‌ولت از هیچ برندی پول نمی‌گیره.</p>'}
 function uniq(a){return a.filter(function(x,i){return x&&a.indexOf(x)===i})}
 
 /* ---------- status sheet when already running ---------- */
@@ -200,5 +235,5 @@ window.addEventListener('bw-journal',function(){setTimeout(paint,80)});
 document.addEventListener('visibilitychange',function(){if(!document.hidden)paint()});
 function start(){watchChecks();paint()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(start,700)});else setTimeout(start,700);
-window.BWCalm={open:open,paint:paint,state:st};
+window.BWCalm={open:open,paint:paint,state:st,spend:spend,price:function(){return PRICE},altList:altList};
 })();

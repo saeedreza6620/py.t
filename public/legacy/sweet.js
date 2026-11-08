@@ -293,28 +293,47 @@ function setRefill(id,patch){var m=refillMeta();m[id]=Object.assign(m[id]||{},pa
 function lifeDays(id){var f=F(id)||{},p=P(id)||{},r=String(f.role||'')+' '+String(p.cat||'');for(var k in REFILL_DAYS)if(r.indexOf(k)>=0)return REFILL_DAYS[k];
  if(/ضدآفتاب|ضد آفتاب/.test(r))return 45;if(/شوینده|ژل شستشو|فوم/.test(r))return 60;if(/میسلار/.test(r))return 75;if(/سرم/.test(r))return 45;if(/تونر/.test(r))return 75;if(/لایه|اسید/.test(r))return 90;return 60}
 function refillItems(){var ids=[];routineIds().concat(wallet()).forEach(function(id){if(P(id)&&ids.indexOf(id)<0)ids.push(id)});return ids}
+// alternatives of the same kind that fit her skin and routine (the catalog engine says «بخر»), optionally without a suspect group
+function altFor(id,avoid){avoid=avoid||{};var p=P(id)||{},f=F(id)||{},own=routineIds(),out=[];
+ // judged as a replacement: her routine without the product being replaced
+ var ctx=shared();ctx.selection=ctx.selection.filter(function(x){return x.id!==id});ctx.ownedIds=(ctx.ownedIds||[]).filter(function(x){return x!==id});ctx.owned=(ctx.owned||[]).filter(function(x){return (x&&x.id)!==id});
+ for(var i=0;i<LIST.length&&out.length<3;i++){var q=LIST[i];if(q.id===id||own.indexOf(q.id)>=0)continue;var g=F(q.id)||{};if(!((p.cat&&q.cat===p.cat)||(f.role&&g.role===f.role)))continue;
+  var cls=(g.actives||[]).map(function(a){return a.cls}),fl=g.flags||[];if((avoid.cls||[]).some(function(c){return cls.indexOf(c)>=0})||(avoid.fl||[]).some(function(x){return fl.indexOf(x)>=0}))continue;
+  var r=null;try{r=window.BWReview&&window.BWReview.catalogPurchaseCheck(ctx,q.id)}catch(e){}if(!r||r.decision!=='buy')continue;
+  out.push({id:q.id,name:q.name,why:String((r.answer||'').split('\n')[1]||'').split('؛')[0].slice(0,120)})}return out}
+window.bwAlternatives=altFor;window.bwCheckProduct=function(id){window.switchTab('sw-home');checkProduct(id)};
+function rl2(ev,id){try{window.bwL2&&window.bwL2({t:'refill',ev:ev,pid:id})}catch(e){}}
 function daysLeft(id){var m=refillMeta()[id];if(!m||!m.since)return null;return Math.round(lifeDays(id)-(Date.now()-Date.parse(m.since))/864e5)}
 var refillBox=document.createElement('div');refillBox.id='swRefill';resultBox.after(refillBox);
+function refillAltHtml(id,mm){var alts=altFor(id),price=(window.BWCalm&&window.BWCalm.price?window.BWCalm.price().alt:1);
+ if(!alts.length)return '<p class="sw-why">پس به‌جای تمدید، یه گزینه‌ی بهتر برات پیدا کنیم.</p><div class="sw-ractions"><button type="button" class="sw-btn" data-rf="find">🔎 جستجوی جایگزین</button><button type="button" class="sw-ghost" data-rf="later">بعداً</button></div>';
+ if(!refillAltHtml.seen){refillAltHtml.seen=1;if(window.bwTrack)window.bwTrack('refill_alt_offer');rl2('alt_offer',id)}
+ if(mm&&mm.altSeen)return '<div class="sw-why">'+(window.BWCalm?window.BWCalm.altList(alts):'')+'</div><div class="sw-ractions">'+alts.map(function(x){return '<button type="button" class="sw-ghost" data-rcheck="'+x.id+'">بسنج: '+esc(x.name.slice(0,22))+'</button>'}).join('')+'<button type="button" class="sw-ghost" data-rf="later">بعداً</button></div>';
+ return '<p class="sw-why">به‌جای تمدید، '+fa(alts.length)+' جایگزین از همین دسته پیدا کردم که با پوست و روتین الانت جورن 💡</p><div class="sw-ractions"><button type="button" class="sw-btn" data-rf="alt">دیدن جایگزین‌ها با '+fa(price)+' الماس 💎</button><button type="button" class="sw-ghost" data-rf="later">بعداً</button></div>'}
 function renderRefill(){var m=refillMeta(),now=Date.now(),ids=refillItems(),html='';
  var unknown=ids.filter(function(id){return !(m[id]&&m[id].since)}).slice(0,1);
  var due=ids.filter(function(id){var d=daysLeft(id);return d!==null&&d<=10&&!(m[id].snooze&&Date.parse(m[id].snooze)>now)}).slice(0,2);
  due.forEach(function(id){var p=P(id),d=daysLeft(id),w=m[id].worked;
   html+='<article class="sw-card sw-refill" data-id="'+id+'"><div class="sw-rhead">'+thumb(p)+'<div class="sw-rname">'+esc(p.name)+'<br><small class="sw-sub">'+(d>0?'حدوداً '+fa(d)+' روز دیگه تموم می‌شه 💜':'احتمالاً دیگه ته کشیده')+'</small></div></div>'+
-  (w==='yes'?'<p class="sw-why">جواب داده؛ به‌موقع تمدیدش کن که روتینت قطع نشه.</p>'+shopHtml(p)+'<div class="sw-ractions"><button type="button" class="sw-ghost" data-rf="done">✓ تمدید کردم</button><button type="button" class="sw-ghost" data-rf="later">هنوز دارم</button></div>'
-   :w==='no'?'<p class="sw-why">پس به‌جای تمدید، یه گزینه‌ی بهتر برات پیدا کنیم.</p><div class="sw-ractions"><button type="button" class="sw-btn" data-rf="alt">🔎 جایگزین مناسب</button><button type="button" class="sw-ghost" data-rf="later">بعداً</button></div>'
+  (w==='yes'?'<p class="sw-why">جواب داده؛ به‌موقع تمدیدش کن که روتینت قطع نشه.</p>'+shopHtml(p)+'<div class="sw-ractions"><button type="button" class="sw-ghost" data-rf="done">✓ تمدید کردم</button><button type="button" class="sw-ghost" data-rf="auth">🛡 اصالت بسته‌ی تازه</button><button type="button" class="sw-ghost" data-rf="later">هنوز دارم</button></div>'
+   :w==='no'?refillAltHtml(id,m[id])
    :'<p class="sw-why">این مدت روی پوستت جواب داد؟</p><div class="sw-ractions"><button type="button" class="sw-btn" data-rf="yes">آره، همینو می‌خوام</button><button type="button" class="sw-ghost" data-rf="no">نه چندان</button></div>')+'</article>'});
  unknown.forEach(function(id){var p=P(id);html+='<article class="sw-card sw-refill" data-id="'+id+'"><div class="sw-rhead">'+thumb(p)+'<div class="sw-rname">'+esc(p.name)+'<br><small class="sw-sub">کی شروعش کردی؟ تا قبل از تموم شدن یادت بندازم</small></div></div><div class="sw-chips"><button type="button" class="sw-chip" data-since="0">این هفته</button><button type="button" class="sw-chip" data-since="30">حدود یه ماه پیش</button><button type="button" class="sw-chip" data-since="60">دو ماه یا بیشتر</button><button type="button" class="sw-chip" data-since="x">ندارمش</button></div></article>'});
  refillBox.innerHTML=html?'<small class="sw-sub">🔁 تمدید به‌موقع</small>'+html:'';
- if(due.length&&window.bwTrack&&!renderRefill.seen){renderRefill.seen=1;window.bwTrack('refill_due')}}
+ if(due.length&&window.bwTrack&&!renderRefill.seen){renderRefill.seen=1;window.bwTrack('refill_due');due.forEach(function(id){rl2('due',id)})}}
 refillBox.addEventListener('click',function(e){var card=e.target.closest('[data-id]');if(!card)return;var id=card.dataset.id,b;
  if((b=e.target.closest('[data-since]'))){if(b.dataset.since==='x'){write('bw_wallet',wallet().filter(function(x){return x!==id}));setRefill(id,{since:new Date(0).toISOString(),snooze:new Date(Date.now()+3650*864e5).toISOString()})}else setRefill(id,{since:new Date(Date.now()-Number(b.dataset.since)*864e5).toISOString()});renderRefill();return}
  if((b=e.target.closest('[data-rf]'))){var a=b.dataset.rf;
-  if(a==='yes'||a==='no'){setRefill(id,{worked:a});if(window.bwTrack)window.bwTrack(a==='yes'?'refill_worked':'refill_not_worked')}
+  if(a==='yes'||a==='no'){setRefill(id,{worked:a});if(window.bwTrack)window.bwTrack(a==='yes'?'refill_worked':'refill_not_worked');rl2(a==='yes'?'worked':'notworked',id)}
+  if(a==='auth'){if(window.bwTrack)window.bwTrack('refill_auth');if(window.BWLayer1&&window.BWLayer1.auth)window.BWLayer1.auth(id);return}
+  if(a==='find'){askInput.value=(P(id).cat||'');askInput.dispatchEvent(new Event('input'));askInput.focus();askInput.scrollIntoView({behavior:'smooth',block:'center'});return}
+  if(a==='alt'){if(window.BWCalm&&window.BWCalm.spend){window.BWCalm.spend('refill_alt',function(){setRefill(id,{altSeen:Date.now()});if(window.bwTrack)window.bwTrack('refill_alt_unlock');rl2('alt',id);renderRefill()},b);return}}
   if(a==='later')setRefill(id,{snooze:new Date(Date.now()+7*864e5).toISOString()});
-  if(a==='done'){setRefill(id,{since:new Date().toISOString(),snooze:null});toast('عالیه 💜 دفعه‌ی بعد هم یادت می‌ندازم')}
-  if(a==='alt'){askInput.value=(P(id).cat||'');askInput.dispatchEvent(new Event('input'));askInput.focus();askInput.scrollIntoView({behavior:'smooth',block:'center'})}
+  if(a==='done'){setRefill(id,{since:new Date().toISOString(),snooze:null});rl2('renewed',id);toast('عالیه 💜 دفعه‌ی بعد هم یادت می‌ندازم')}
+  if(a==='alt_old'){askInput.value=(P(id).cat||'');askInput.dispatchEvent(new Event('input'));askInput.focus();askInput.scrollIntoView({behavior:'smooth',block:'center'})}
   renderRefill();return}
- if(e.target.closest('.sw-shop')&&window.bwTrack)window.bwTrack('refill_buy')});
+ if((b=e.target.closest('[data-rcheck]'))){window.bwCheckProduct(b.dataset.rcheck);return}
+ if(e.target.closest('.sw-shop')){if(window.bwTrack)window.bwTrack('refill_buy');rl2('buy',id)}});
 // new products start their clock when added to the wallet or routine
 function rowsOf(){var pr=profile();return Array.isArray(pr.routine)?pr.routine:[]}
 function syncedKeys(){var s=read('bw_routine_synced',[]);return Array.isArray(s)?s:[]}

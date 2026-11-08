@@ -16,7 +16,7 @@ export const CITIES={
   zanjan:{n:'زنجان',lat:36.67,lon:48.48,z:'cold'},sari:{n:'ساری',lat:36.57,lon:53.06,z:'humid'},qazvin:{n:'قزوین',lat:36.27,lon:50.00,z:'cold'},
   gorgan:{n:'گرگان',lat:36.84,lon:54.43,z:'humid'},sanandaj:{n:'سنندج',lat:35.31,lon:47.00,z:'cold'},bushehr:{n:'بوشهر',lat:28.97,lon:50.84,z:'hot'},
   khorramabad:{n:'خرم‌آباد',lat:33.49,lon:48.36,z:'cold'},semnan:{n:'سمنان',lat:35.58,lon:53.39,z:'dry'},kish:{n:'کیش',lat:26.53,lon:53.98,z:'hot'}};
-const TYPES=new Set(['auth','fu','photo','check','calm']);
+const TYPES=new Set(['auth','fu','photo','check','calm','refill']);
 const s=(v,n)=>String(v==null?'':v).replace(/[\u0000-\u001f<>]/g,'').trim().slice(0,n);
 const DAYRE=/^\d{4}-\d{2}-\d{2}$/;
 
@@ -33,8 +33,9 @@ export function makeLayer2({DATA,send,readBody,sameOrigin,BANK}){
     if(r.t==='photo'){o.pids=(Array.isArray(r.pids)?r.pids:[]).map(x=>s(x,60)).filter(Boolean).slice(0,15);o.adh=Math.max(0,Math.min(14,Number(r.adh)||0));
       o.std=!!r.std;o.light=['ok','dark','bright','warm','cool','uneven'].includes(r.light)?r.light:'';o.react=!!r.react;o.n=Math.max(0,Math.min(60,Number(r.n)||0))}
     if(r.t==='check'){o.dec=s(r.dec,12);if(!o.pid)return null}
-    if(r.t==='calm'){o.ev=['start','red','unlock','test','done','stop'].includes(r.ev)?r.ev:'';if(!o.ev)return null;const ids=x=>(Array.isArray(x)?x:[]).map(y=>s(y,60)).filter(Boolean).slice(0,8);
-      o.sus=ids(r.sus);o.culprit=ids(r.culprit);o.safe=ids(r.safe);o.dn=Math.max(0,Math.min(60,Number(r.dayn)||0));o.base=Math.max(0,Math.min(9,Number(r.base)||0));o.now=Math.max(0,Math.min(9,Number(r.now)||0));o.sym=(Array.isArray(r.sym)?r.sym:[]).map(y=>s(y,12)).slice(0,8);o.since=s(r.since,8)}
+    if(r.t==='refill'){o.ev=['due','worked','notworked','alt_offer','alt','buy','renewed'].includes(r.ev)?r.ev:'';if(!o.ev||!o.pid)return null}
+    if(r.t==='calm'){o.ev=['start','red','unlock','test','done','stop','alt'].includes(r.ev)?r.ev:'';if(!o.ev)return null;const ids=x=>(Array.isArray(x)?x:[]).map(y=>s(y,60)).filter(Boolean).slice(0,8);
+      o.sus=ids(r.sus);o.culprit=ids(r.culprit);o.safe=ids(r.safe);o.dn=Math.max(0,Math.min(60,Number(r.dayn)||0));o.base=Math.max(0,Math.min(10,Number(r.base)||0));o.now=Math.max(0,Math.min(10,Number(r.now)||0));o.sym=(Array.isArray(r.sym)?r.sym:[]).map(y=>s(y,12)).slice(0,8);o.since=s(r.since,8)}
     return o}
   const cache=new Map();
   async function weather(key){const c=CITIES[key];if(!c)return null;const hit=cache.get(key);if(hit&&Date.now()-hit.at<3*3600e3)return hit.v;
@@ -60,7 +61,7 @@ export function makeLayer2({DATA,send,readBody,sameOrigin,BANK}){
     const fu=by('fu'),au=by('auth'),ph=by('photo'),ca=by('calm'),ready=m=>Object.values(m).filter(n=>n>=10).length;
     const fuP=cnt(fu.filter(r=>r.skin),r=>r.pid+'|'+r.skin),auS=cnt(au.filter(r=>r.seller),r=>r.seller),cityM=cnt(R.filter(r=>r.city),r=>r.city);
     const tagged=a=>a.length?Math.round(100*a.filter(r=>r.pid&&r.city).length/a.length):0;
-    return {total:R.length,people:new Set(R.map(r=>r.u)).size,calmStart:ca.filter(r=>r.ev==='start').length,calmRed:ca.filter(r=>r.ev==='red').length,calmUnlock:ca.filter(r=>r.ev==='unlock').length,calmDone:ca.filter(r=>r.ev==='done').length,calmFound:ca.filter(r=>r.ev==='done'&&r.culprit&&r.culprit.length).length,fu:fu.length,auth:au.length,photo:ph.length,std:ph.filter(r=>r.std).length,react:ph.filter(r=>r.react).length,
+    return {total:R.length,people:new Set(R.map(r=>r.u)).size,calmStart:ca.filter(r=>r.ev==='start').length,calmRed:ca.filter(r=>r.ev==='red').length,calmUnlock:ca.filter(r=>r.ev==='unlock').length,calmDone:ca.filter(r=>r.ev==='done').length,calmFound:ca.filter(r=>r.ev==='done'&&r.culprit&&r.culprit.length).length,calmAlt:ca.filter(r=>r.ev==='alt').length,refDue:by('refill').filter(r=>r.ev==='due').length,refWorked:by('refill').filter(r=>r.ev==='worked').length,refNot:by('refill').filter(r=>r.ev==='notworked').length,refAltOffer:by('refill').filter(r=>r.ev==='alt_offer').length,refAlt:by('refill').filter(r=>r.ev==='alt').length,refBuy:by('refill').filter(r=>r.ev==='buy').length,refRenew:by('refill').filter(r=>r.ev==='renewed').length,fu:fu.length,auth:au.length,photo:ph.length,std:ph.filter(r=>r.std).length,react:ph.filter(r=>r.react).length,
       bad:au.filter(r=>r.res==='bad').length,tagFu:tagged(fu),tagAuth:Math.round(100*(au.length?au.filter(r=>r.seller&&r.city).length/au.length:0)),
       readySimilar:ready(fuP),pairsSimilar:Object.keys(fuP).length,readySellers:ready(auS),sellers:Object.keys(auS).length,readyCities:ready(cityM),cities:Object.keys(cityM).length,
       topSellers:Object.entries(auS).sort((a,b)=>b[1]-a[1]).slice(0,8),last:R.slice(-15).reverse()}}
