@@ -27,9 +27,17 @@ export function makePush({DATA,send,ip,sameOrigin,readBody,E}){
     fs.appendFile(LOG,JSON.stringify({at:new Date().toISOString(),why,host:new URL(s.endpoint).hostname,status,err:err||undefined})+'\n',()=>{});return {status,err}}
   // every minute: whoever chose this minute (Tehran time) and has something today
   // every minute: morning and evening slots at the times she chose (Tehran time); the follow-up of the day goes on her chosen slot
+  // a reminder that the push service did not take (network, 5xx, 429) is tried again at +2, +5 and +15 minutes;
+  // it is marked sent only when the push service accepted it. The push service then holds it up to 12 h (TTL)
+  // and hands it to the phone as soon as the phone is online — the app does not need to be open.
+  const retry=new Map();
+  const ok=st=>st>=200&&st<300;
+  async function sendSlot(id,slot,day,tries){const s=subs[id];if(!s||s['sent_'+slot]===day)return;const r=await pushTo(id,slot+(tries?'-retry'+tries:''));
+    if(ok(r.status)){s['sent_'+slot]=day;save();retry.delete(id+slot);return}
+    if(r.status===404||r.status===410||tries>=3)return;const wait=[2,5,15][tries]*60e3;retry.set(id+slot,setTimeout(()=>{retry.delete(id+slot);sendSlot(id,slot,day,tries+1)},wait))}
   let lastMin='';setInterval(async()=>{const hm=tehran('time'),day=tehran('day');if(hm===lastMin)return;lastMin=hm;
-    for(const [id,s] of Object.entries(subs))for(const slot of ['am','pm']){if(s[slot]!==hm||s['sent_'+slot]===day)continue;
-      const task=(s.days||[]).includes(day)&&(s.taskSlot||'am')===slot;if(!(task||s[slot+'Daily']))continue;s['sent_'+slot]=day;save();await pushTo(id,slot)}},20e3).unref();
+    for(const [id,s] of Object.entries(subs))for(const slot of ['am','pm']){if(s[slot]!==hm||s['sent_'+slot]===day||retry.has(id+slot))continue;
+      const task=(s.days||[]).includes(day)&&(s.taskSlot||'am')===slot;if(!(task||s[slot+'Daily']))continue;await sendSlot(id,slot,day,0)}},20e3).unref();
   const hits=new Map();const limited=req=>{const a=ip(req),now=Date.now(),l=(hits.get(a)||[]).filter(t=>now-t<600e3);l.push(now);hits.set(a,l);if(hits.size>5000)hits.clear();return l.length>60};
   const H={'Cache-Control':'no-store'},j=(res,st,b)=>send(res,st,b,'application/json',H);
   async function handle(req,res,url){
@@ -40,6 +48,7 @@ export function makePush({DATA,send,ip,sameOrigin,readBody,E}){
     if(url.pathname==='/api/push/sub'&&req.method==='PUT'){
       const T=v=>/^([01]\d|2[0-3]):[0-5]\d$/.test(String(v))?String(v):'';const am=T(b.am||b.time)||'09:00',pm=T(b.pm)||'21:00';
       const days=(Array.isArray(b.days)?b.days:[]).filter(d=>/^\d{4}-\d\d-\d\d$/.test(d)).slice(0,120);
+      const prev=b.old&&okEndpoint(String(b.old))?idOf(String(b.old)):'';if(prev&&prev!==id&&subs[prev]){delete subs[prev]}
       const old=subs[id]||{};subs[id]={endpoint:ep,am,pm,amDaily:b.amDaily===undefined?!!b.daily:!!b.amDaily,pmDaily:!!b.pmDaily,taskSlot:b.taskSlot==='pm'?'pm':'am',days,d:String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40),since:old.since||new Date().toISOString(),sent_am:old.sent_am||old.sent||'',sent_pm:old.sent_pm||''};save();return j(res,200,{ok:true})}
     if(url.pathname==='/api/push/sub'&&req.method==='DELETE'){delete subs[id];save();return j(res,200,{ok:true})}
     if(url.pathname==='/api/push/test'&&req.method==='POST'){if(!subs[id])return j(res,404,{error:'none'});const r=await pushTo(id,'test');return j(res,r.status>=200&&r.status<300?200:502,{status:r.status,error:r.err||undefined})}

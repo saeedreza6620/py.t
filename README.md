@@ -1,6 +1,6 @@
 # BeautyWallet (بیوتی‌ولت) — README for the next developer or AI
 
-> **Read this whole file before changing anything.** Then read `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
+> **Read this whole file before changing anything.** Then read `docs/PROCESS.md` (Persian: the product journey, the customer's «job», the diamond model, the medical boundary, what to do next) and `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
 > Owner: Saeedreza Barzkar (founder). Talk to him in **Persian**.
 
 BeautyWallet is a Persian skincare web app (installable PWA). It checks a product against **her own skin and routine** before she buys. It also gives her:
@@ -133,3 +133,10 @@ cd lite && DATA_DIR=/tmp/bwdata PORT=3917 ADMIN_TOKEN=test node server.mjs   # a
   - paid with diamonds (`cfg.calmPrice`, default 3) when the skin has calmed: `/api/calm/unlock`
   - entry points: welcome choice, home chip, bad follow-up answer, chat offer `open_calm`
   - Timings and sources are in the header comment of `claude/calm.js`.
+- v138–v139:
+  - Calm program: validated 0–10 itch/burn questions; infection red flags. The forearm test is free; she pays `cfg.calmPrice` (3 💎) to open the full result (ingredient group, her other products with that group, alternatives, skin record).
+  - Refill: not worked → «N alternatives» for `cfg.altPrice` (1 💎); worked → TTAC authenticity of the new package.
+  - First screen: «پک شخصی روتین» (request to a human consultant via support) and گیفت‌یار cards.
+  - Reminders: server retries failed pushes (+2/+5/+15 min) and marks them sent only on success; the service worker renews a rotated push subscription (`pushsubscriptionchange`); the app re-syncs once a day. Morning notifications start with «صبحت بخیر».
+  - Speed: the installed app opens from the service-worker cache at once (it used to wait up to 12 s for the network); static files are served with brotli/gzip.
+  - Rule kept: diamonds are asked right after value is felt and before the next result is shown — never only at the very end.

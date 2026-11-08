@@ -172,6 +172,7 @@ function syncSub(sub,force){var n=notif();if(!n.on)return Promise.resolve(false)
   var body={am:n.am,pm:n.pm,amDaily:!!n.amOn,pmDaily:!!n.pmOn,taskSlot:taskSlot(n),days:days},sig=JSON.stringify(body);if(!force&&(sig===lastSig||sig===n.sig))return Promise.resolve(true);lastSig=sig;
   var dev='';try{dev=localStorage.getItem('bw_device')||''}catch(e){}
   return (sub?Promise.resolve(sub):navigator.serviceWorker.ready.then(function(r){return r.pushManager.getSubscription()})).then(function(s){if(!s){n.on=false;saveNotif(n);return false}
+    try{idb().then(function(db){var t=db.transaction('kv','readwrite');t.objectStore('kv').put({am:body.am,pm:body.pm,amDaily:body.amDaily,pmDaily:body.pmDaily,taskSlot:body.taskSlot,days:body.days,d:dev},'subBody')}).catch(function(){})}catch(e){}
     body.sub=s.toJSON();body.d=dev;return fetch('/api/push/sub',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){if(r.ok){n.sig=sig;saveNotif(n)}return r.ok})}).catch(function(){lastSig='';return false})}
 
 /* next 30 days of messages, written on the phone for the service worker */
@@ -243,7 +244,15 @@ function init(){if(!document.getElementById('sw-home'))return setTimeout(init,50
   document.addEventListener('visibilitychange',function(){if(!document.hidden)render()});
   window.addEventListener('bw:tab',function(e){if(e.detail==='wallet')renderRem()});
   if(/[?&]from=notif/.test(location.search))track('notif_open');
+  setTimeout(keepAlive,6000);
   try{navigator.serviceWorker&&navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.bw==='notif-open'){track('notif_open');render()}})}catch(e){}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+// once a day on opening: if reminders are on and the phone still allows them, make sure the server has her current
+// push address and times (a lost or replaced subscription is renewed silently — no new permission prompt)
+function keepAlive(){var n=notif();if(!n.on||!canPush||typeof Notification==='undefined'||Notification.permission!=='granted')return;
+  var K='bw_push_check',last=0;try{last=Number(localStorage.getItem(K)||0)}catch(e){}if(Date.now()-last<20*3600e3)return;try{localStorage.setItem(K,String(Date.now()))}catch(e){}
+  navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription().then(function(s){if(s)return s;
+    return fetch('/api/push/key',{cache:'no-store'}).then(function(r){return r.json()}).then(function(k){return reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(k.key)})})})})
+  .then(function(sub){if(n.endpoint!==sub.endpoint){n.endpoint=sub.endpoint;saveNotif(n)}return syncSub(sub,true)}).catch(function(){})}
 window.BWFollowup={tasks:tasks,plan:planDays,render:render,life:life,careful:careful,enable:function(){permFail='';var n=notif();if(!(canPush&&!(ios&&!standalone)))return render();return enable(n,false)}};
 })();

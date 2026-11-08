@@ -18,7 +18,7 @@ function act(cta){var t=window.switchTab;try{
 var shown={},busy=false,lastAt=0;
 function show(m){style();var old=document.querySelector('.bw-ib');if(old)old.remove();var d=document.createElement('div');d.className='bw-ib';d.setAttribute('role','status');
   d.innerHTML='<small>💜 از طرف بیوتی‌ولت</small><p></p><div class="r">'+(m.cta?'<button type="button" class="go"></button>':'')+'<button type="button" class="x">باشه</button><button type="button" class="no">دیگه از این پیام‌ها نفرست</button></div>';
-  d.querySelector('p').textContent=m.text;if(m.cta)d.querySelector('.go').textContent=m.label||'بزن بریم';document.body.appendChild(d);shown[m.id]=1;ev(m.id,'seen');
+  var hr=Number(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tehran',hour:'2-digit',hourCycle:'h23'}).format(new Date()));d.querySelector('p').textContent=(hr<12&&!/صبح/.test(m.text)?'صبحت بخیر 🌸 ':'')+m.text;if(m.cta)d.querySelector('.go').textContent=m.label||'بزن بریم';document.body.appendChild(d);shown[m.id]=1;ev(m.id,'seen');
   d.onclick=function(e){if(e.target.closest('.go')){ev(m.id,'click');d.remove();act(m.cta)}else if(e.target.closest('.x')){ev(m.id,'close');d.remove()}
     else if(e.target.closest('.no')){ev(m.id,'optout');d.remove();try{var tt=document.createElement('div');tt.className='sw-toast';tt.textContent='باشه عزیزم، دیگه پیامی نمی‌فرستیم 💜';document.body.append(tt);setTimeout(function(){tt.remove()},2600)}catch(_){}}}}
 function check(){if(busyUI()){if(!check.w){check.w=1;setTimeout(function(){check.w=0;check()},4000)}return}if(busy||!signed()||!dev()||Date.now()-lastAt<15000)return;busy=true;lastAt=Date.now();

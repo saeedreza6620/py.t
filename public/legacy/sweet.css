@@ -393,3 +393,5 @@ button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(
 .pf-goal span{border:1.5px solid #ddd6fb;border-radius:999px;padding:7px 13px;font-size:14px;background:#fff;color:#3d3566;transition:all .15s}
 .pf-goal input:checked+span{background:linear-gradient(135deg,#8b6cf0,#d27cd9);color:#fff;border-color:transparent}
 .pf-goal input:focus-visible+span{outline:2px solid #8b6cf0;outline-offset:2px}
+
+.sw-more{margin:14px 0 6px}.sw-more .sw-card{margin-bottom:12px}.sw-pack-card{border:1px solid #e3dbff;background:linear-gradient(180deg,#fbf9ff,#fff)}.sw-gift-card{border:1px solid #ffd9e6;background:linear-gradient(180deg,#fff7fa,#fff)}.sw-more .sw-card>b{font-size:16px}.sw-human{font-size:13px;color:#5b4f8f;background:#f6f3ff;border-radius:14px;padding:9px 12px;line-height:1.9;margin:4px 0 0}

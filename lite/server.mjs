@@ -10,7 +10,7 @@
 import {makeSkinChat} from './skinchat.mjs';
 import {makePush} from './push.mjs';
 import {makeVault} from './vault.mjs';
-import http from 'node:http';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
+import http from 'node:http';import zlib from 'node:zlib';import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const here=path.dirname(fileURLToPath(import.meta.url));
 const PUBLIC=path.join(here,'public');
 // release number of the app files on disk (same number the app carries in its ?v= links) — the app compares it on open and refreshes itself
@@ -39,6 +39,7 @@ const FALLBACK=E.AI_MODEL_FALLBACK||'google/gemini-2.5-flash',FALLBACK_SEARCH=E.
 // reasoning models (Gemini Pro, GPT-5…) spend tokens on thinking first, so leave room for the answer
 const MAX_TOKENS=Number(E.AI_MAX_TOKENS||8000);
 const HOURLY=Number(E.HOURLY_LIMIT||40),DAILY=Number(E.DAILY_LIMIT||600);
+const ZIPPABLE=new Set(['.js','.mjs','.css','.html','.json','.svg','.ttf','.otf','.webmanifest','.txt','.xml','.map']),ZCACHE=new Map();
 const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.PNG':'image/png','.JPG':'image/jpeg','.webp':'image/webp','.svg':'image/svg+xml','.ico':'image/x-icon','.woff2':'font/woff2','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.xml':'application/xml'};
 const SEC={'X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','X-Frame-Options':'DENY'};
 const send=(res,status,body,type='application/json',extra={})=>{res.writeHead(status,{'Content-Type':type,...SEC,...extra});res.end(typeof body==='string'||Buffer.isBuffer(body)?body:JSON.stringify(body))};
@@ -213,7 +214,7 @@ async function research(name,url){
 
 // Catalog completion comes only from shoppers' own checks (each researched product joins the bank); no background searches.
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
-const EVENTS=new Set(['calm_pay_short','calm_alt_offer','calm_alt_unlock','calm_alt_short','calm_worse','refill_alt_offer','refill_alt_unlock','refill_alt_short','refill_auth','wel_calm','calm_open','calm_start','calm_redflag','calm_test','calm_unlock','calm_done','calm_stop','l1_auth','l1_report','l1_film','l1_city','paywall_view','negin_open','notif_off','wel_check','wel_chat','wel_skip','wel_back','wel_perm','wel_reg','wel_routine','wel_care','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
+const EVENTS=new Set(['calm_reveal_ready','home_pack','home_gift','calm_pay_short','calm_alt_offer','calm_alt_unlock','calm_alt_short','calm_worse','refill_alt_offer','refill_alt_unlock','refill_alt_short','refill_auth','wel_calm','calm_open','calm_start','calm_redflag','calm_test','calm_unlock','calm_done','calm_stop','l1_auth','l1_report','l1_film','l1_city','paywall_view','negin_open','notif_off','wel_check','wel_chat','wel_skip','wel_back','wel_perm','wel_reg','wel_routine','wel_care','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
 const evHits=new Map();let deepCache=null;
 function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,rawLength:String(RAW_KEY).length,keysInValue:(String(RAW_KEY).match(/eyJ[\w-]+\.eyJ/g)||[]).length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
 let lastUpstream=null;
@@ -493,7 +494,7 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname==='/wallet'){const wd=String(url.searchParams.get('d')||'').replace(/[^a-z0-9]/g,'').slice(0,40);ensureLinked(wd,url.searchParams.get('p'));return send(res,200,{...BANK.balance(wd,cfg),linked:!!BANK.phoneOf(wd)},'application/json',{'Cache-Control':'no-store'})}
     if(url.pathname==='/api/calm/unlock'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,{error:'forbidden'});let b;try{b=await readBody(req,4096)}catch{return send(res,400,{error:'bad'})}
       const cd=String(b.d||'').replace(/[^a-z0-9]/g,'').slice(0,40);if(!cd)return send(res,400,{error:'device'});const what=['test','alt','refill_alt'].includes(b.what)?b.what:'test';const price=Math.max(0,Math.min(20,Number(what==='test'?(cfg.calmPrice??3):(cfg.altPrice??1))));
-      const via=price?BANK.spendN(cd,price):'free';if(!via)return send(res,402,{code:'need_negin',error:(what==='test'?'برای پیدا کردن مقصر ':'برای دیدن جایگزین‌ها ')+price+' الماس لازمه 💎',price,wallet:BANK.balance(cd,cfg)});
+      const via=price?BANK.spendN(cd,price):'free';if(!via)return send(res,402,{code:'need_negin',error:(what==='test'?'برای دیدن نتیجه‌ی کامل ':'برای دیدن جایگزین‌ها ')+price+' الماس لازمه 💎',price,wallet:BANK.balance(cd,cfg)});
       try{fs.appendFileSync(path.join(DATA,'calm-unlocks.jsonl'),JSON.stringify({at:new Date().toISOString(),d:cd,what,via,price})+'\n')}catch{}
       return send(res,200,{ok:true,via,price,wallet:BANK.balance(cd,cfg)})}
     if(url.pathname==='/api/calm/price')return send(res,200,{price:Math.max(0,Math.min(20,Number(cfg.calmPrice??3))),alt:Math.max(0,Math.min(20,Number(cfg.altPrice??1)))},'application/json',{'Cache-Control':'no-store'});
@@ -581,7 +582,14 @@ const server=http.createServer(async(req,res)=>{
     if(p==='/app'||p==='/app/'){res.writeHead(302,{Location:'/legacy/'+url.search,'Cache-Control':'no-store'});return res.end()} // the app's own short address; the site lives at /
     if(p.endsWith('/'))p+='index.html';
     const file=path.normalize(path.join(PUBLIC,p));if(!file.startsWith(PUBLIC))return send(res,403,'','text/plain');
-    fs.stat(file,(err,st)=>{if(err||!st.isFile())return send(res,404,'پیدا نشد','text/plain; charset=utf-8');const ext=path.extname(file);const html=ext==='.html'||/sw\.js$/.test(file);res.writeHead(200,{'Content-Type':TYPES[ext]||'application/octet-stream',...SEC,'Cache-Control':html?'no-cache':'public, max-age=604800'});fs.createReadStream(file).pipe(res)});
+    fs.stat(file,(err,st)=>{if(err||!st.isFile())return send(res,404,'پیدا نشد','text/plain; charset=utf-8');const ext=path.extname(file);const html=ext==='.html'||/sw\.js$/.test(file);
+      const head={'Content-Type':TYPES[ext]||'application/octet-stream',...SEC,'Cache-Control':html?'no-cache':'public, max-age=604800','Vary':'Accept-Encoding'};
+      // text files and fonts go compressed (br, else gzip): about a third of the bytes on a slow mobile line; compressed once per file version
+      const ae=String(req.headers['accept-encoding']||''),enc=/\bbr\b/.test(ae)?'br':/\bgzip\b/.test(ae)?'gzip':'';
+      if(enc&&ZIPPABLE.has(ext)&&st.size>600&&st.size<4e6){const k=file+'|'+st.mtimeMs+'|'+st.size+'|'+enc;let buf=ZCACHE.get(k);
+        if(!buf){try{const raw=fs.readFileSync(file);buf=enc==='br'?zlib.brotliCompressSync(raw,{params:{[zlib.constants.BROTLI_PARAM_QUALITY]:9}}):zlib.gzipSync(raw,{level:9});if(ZCACHE.size>600)ZCACHE.clear();ZCACHE.set(k,buf)}catch{buf=null}}
+        if(buf){res.writeHead(200,{...head,'Content-Encoding':enc,'Content-Length':buf.length});return res.end(req.method==='HEAD'?undefined:buf)}}
+      res.writeHead(200,head);fs.createReadStream(file).pipe(res)});
   }catch(e){send(res,e.status||500,{error:e.status===413?'پیام خیلی طولانیه':'خطای سرور',code:e.message})}
 });
 server.listen(Number(E.PORT||3000),'0.0.0.0',()=>console.log('BeautyWallet lite on 0.0.0.0:'+(E.PORT||3000)+' ai='+(KEY&&BASE?'configured':'missing')+' data='+DATA+(persistent?' (disk)':' (temporary)')));

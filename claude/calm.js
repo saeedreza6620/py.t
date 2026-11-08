@@ -11,8 +11,9 @@
      redness 0–3 and new bumps since yesterday. POEM is not used: commercial use needs a licence.
    - red flags: swelling of face/lips/tongue/eyelids (breathing → emergency), blisters or open sores, discharge / yellow crusts /
      increasing pain, fever or feeling unwell (signs of infection, HSE Ireland), fast spreading, after a medicine, eyes → a doctor today.
-   - diamonds only after value: triage, suspects, simple routine, daily follow-up and the trend are free; finding the culprit
-     (cfg.calmPrice, 3) and safe alternatives without the suspect group (cfg.altPrice, 1) are the next steps she pays for.
+   - diamonds only after value: triage, suspects, simple routine, daily follow-up and the trend are free;
+     (v139) the forearm test is free; when it finds the cause she sees what the full result holds and pays cfg.calmPrice (3)
+     to open it: ingredient group, her other products with that group, safe alternatives, the skin record.
    Programs started before scale 2 keep their old 0–3 scores and rules.
    Storage: NEW keys only — bw_calm_v1 (the program), bw_skin_passport (what upset her skin). Her routine (bw_check_products)
    is never changed: paused products are only shown as paused. Photos go through the existing encrypted journal. */
@@ -138,12 +139,13 @@ function card(s){var n=dayN(s),done=!!s.days[tday()],h='<div class="cm-card" id=
     else h+='<p class="cm-trend">'+(v2?trend2(s):trend(s))+'</p>';
     if(done&&v==='worse')h+='<div class="cm-warn">از روز اول بدتر شده. لطفاً همین روزها پزشک ببینه؛ برنامه رو نگه می‌داریم، ولی جای پزشک نیست.</div>';
     if(done&&v==='stuck')h+='<div class="cm-warn">'+fa(n)+' روز گذشته و هنوز خیلی بهتر نشده؛ احتمالاً فقط واکنش به یه محصول نیست. بهتره پزشک ببینه. اگه خواستی، روتین ساده رو ادامه بده.</div>';
-    if(done&&v==='ready')h+='<div class="cm-ok">پوستت آروم‌تر شده ✨ '+fa(n)+' روز کنارت بودیم'+(v2?' و خارشت از '+fa(s.base.itch)+' به '+fa(s.days[tday()].itch)+' رسید':'')+'.<br>قدم بعد: <b>پیدا کردن مقصر</b> با یه تست کوچیک روی ساعد (معمولاً تا روز چهارم جواب می‌ده)، و بعدش ثبتش توی «پرونده‌ی پوست من» تا هیچ‌وقت تکرار نشه.</div><div class="cm-row"><button type="button" class="cm-go" data-c="unlock">پیدا کردن مقصر با '+fa(PRICE.test)+' الماس 💎</button></div>';
+    if(done&&v==='ready')h+='<div class="cm-ok">پوستت آروم‌تر شده ✨ '+fa(n)+' روز کنارت بودیم'+(v2?' و خارشت از '+fa(s.base.itch)+' به '+fa(s.days[tday()].itch)+' رسید':'')+'.<br>قدم بعد: <b>پیدا کردن علت</b> با یه تست کوچیک روی ساعد؛ معمولاً تا روز چهارم جواب می‌ده.</div><div class="cm-row"><button type="button" class="cm-go" data-c="starttest">شروع تست ساعد</button></div>';
     if(done&&v==='calm')h+='<p class="cm-note">وقتی دو روز پشت سر هم آروم بود (از روز سوم به بعد)، می‌ریم سراغ پیدا کردن مقصر.</p>';
     if(done&&v==='cap')h+='<div class="cm-box">۲۱ روز شد. اگه هنوز بهتر نشده، پزشک بهترین قدم بعدیه.</div><div class="cm-row"><button type="button" data-c="close">بستن برنامه</button></div>'}
   else if(s.phase==='test'){var t=s.test,tn=dnum(tday())-dnum(t.start)+1;
     h+='<p><b>تست ساعد · روز '+fa(Math.min(tn,7))+' از ۷</b></p><p class="cm-note">صبح و شب، به اندازه‌ی یه سکه (حدود ۲ در ۲ سانت)، روی داخل ساعد بزن و همون‌جا رو نشور. صورتت هنوز روتین ساده‌ست.</p>';
     t.items.forEach(function(it,i){h+='<div class="cm-box"><b>'+esc(pname(it.id))+'</b> · ساعد '+it.site+(it.res==='pos'?'<br>⚠️ واکنش داد؛ دیگه نزن.':it.res==='neg'?'<br>✓ واکنشی نداد.':(it.asked===tday()?'<br>امروز ثبت شد؛ فردا دوباره نگاه کن.':'<br>جای این محصول قرمز، خارش‌دار یا برجسته شده؟<div class="cm-row"><button type="button" data-c="pos" data-i="'+i+'">بله</button><button type="button" data-c="neg" data-i="'+i+'">نه</button></div>'))+'</div>'})}
+  else if(s.phase==='reveal'){h+=revealCard(s)}
   else if(s.phase==='face'){var f=s.face,fn=dnum(tday())-dnum(f.start)+1;
     h+='<p><b>برگرداندن روی صورت · «'+esc(pname(f.cur))+'» · روز '+fa(Math.min(fn,4))+' از ۴</b></p><p class="cm-note">فقط همین یکی رو مثل قبل بزن؛ بقیه‌ی مظنون‌ها هنوز کنار.</p>'+
       (f.asked===tday()?'<p class="cm-note">امروز ثبت شد.</p>':'<div class="cm-box">از وقتی دوباره زدیش، سوزش، قرمزی یا جوش تازه برگشته؟<div class="cm-row"><button type="button" data-c="fpos">بله</button><button type="button" data-c="fneg">نه</button></div></div>')}
@@ -155,6 +157,8 @@ document.addEventListener('click',function(e){var b=e.target.closest('#bwCalm [d
   if(a==='save'&&s.scale===2){var x2=readScores2(card);if(!x2)return toast('هر چهار مورد رو انتخاب کن 💜');s.days[tday()]=x2;save(s);if(verdict2(s)==='worse')track('calm_worse');return}
   if(a==='save'){var g=card.querySelectorAll('.cm-chips');var x={},ok=true;DIM.forEach(function(d){var on=card.querySelector('[data-g="s_'+d[0]+'"] .on');if(!on)ok=false;x[d[0]]=on?+on.dataset.v:0});if(!ok)return toast('هر سه مورد رو انتخاب کن 💜');s.days[tday()]=x;save(s);var v=verdict(s);if(v==='worse')track('calm_worse');return}
   if(a==='unlock')return unlock(s);
+  if(a==='starttest'){b.disabled=true;return startTest(s)}
+  if(a==='reveal')return spend('test',function(){var c=st();c.unlocked=true;track('calm_unlock');l2({ev:'unlock',sus:c.sus,culprit:c.found||[],dayn:dayN(c)});finish(c)},b);
   if(a==='photo'){window.bwReactCtx={pid:s.sus[0]||'',name:'برنامه‌ی آرام‌سازی',at:Date.now()};var jj=document.getElementById('skinJournal');jj&&jj.scrollIntoView({behavior:'smooth',block:'start'});window.BWSkinJournal&&window.BWSkinJournal.photo&&window.BWSkinJournal.photo();return}
   if(a==='stop'&&!b.dataset.sure){b.dataset.sure='1';b.textContent='مطمئنی؟ دوباره بزن';return}
   if(a==='stop'||a==='close'){finish(s,true);return}
@@ -174,7 +178,7 @@ function spend(what,ok,btn){if(btn)btn.disabled=true;
     if(!x.ok&&x.j&&x.j.code==='need_negin'){toast(x.j.error||'الماس لازمه 💎');track(what==='test'?'calm_pay_short':what==='refill_alt'?'refill_alt_short':'calm_alt_short');if(window.bwNeginSheet)window.bwNeginSheet(1,function(){spend(what,ok)});else if(window.bwNegin)window.bwNegin();return}
     if(!x.ok)return toast('الان نشد؛ دوباره امتحان کن');try{window.bwSyncWallet&&window.bwSyncWallet()}catch(e){}ok(x.j)}).catch(function(){if(btn)btn.disabled=false;toast('اینترنت وصل نیست؛ دوباره امتحان کن')})}
 function unlock(s){spend('test',function(){var c=st();track('calm_unlock');l2({ev:'unlock',sus:c.sus,dayn:dayN(c),base:lvl(c.base),now:lvl(c.days[tday()])});startTest(c)},document.querySelector('#bwCalm [data-c="unlock"]'))}
-function startTest(s){s.unlocked=true;var L=s.sus.map(info),leave=L.filter(function(i){return !i.rinse}),rinse=L.filter(function(i){return i.rinse});
+function startTest(s){s.tested=true;var L=s.sus.map(info),leave=L.filter(function(i){return !i.rinse}),rinse=L.filter(function(i){return i.rinse});
   var now=leave.slice(0,2),later=leave.slice(2).concat(rinse);
   if(!now.length){s.phase='face';s.face={queue:later.map(function(i){return i.id}),done:[],cur:'',start:tday()};return nextFace(s)}
   s.phase='test';s.test={start:tday(),items:now.map(function(i,k){return {id:i.id,site:k?'راست':'چپ',res:null}}),later:later.map(function(i){return i.id})};track('calm_test');l2({ev:'test',sus:now.map(function(i){return i.id})});save(s);
@@ -182,14 +186,21 @@ function startTest(s){s.unlocked=true;var L=s.sus.map(info),leave=L.filter(funct
 function afterTest(s){var pos=s.test.items.filter(function(x){return x.res==='pos'}).map(function(x){return x.id}),neg=s.test.items.filter(function(x){return x.res==='neg'}).map(function(x){return x.id});
   s.found=(s.found||[]).concat(pos);
   // a culprit found: the others did not react on the forearm → back one at a time (told in the result)
-  if(pos.length){s.safe=neg;s.later=s.test.later||[];return finish(s)}
+  if(pos.length){s.safe=neg;s.later=s.test.later||[];return reveal(s)}
   // nothing on the forearm (tougher skin than the face): a short face re-try, one product at a time, 4 days each
   var queue=neg.concat(s.test.later||[]);
   s.phase='face';s.face={queue:queue,done:[],cur:'',start:tday()};nextFace(s)}
 function nextFace(s){var f=s.face;if(f.done.some(function(x){return x.res==='pos'})){s.found=(s.found||[]).concat(f.done.filter(function(x){return x.res==='pos'}).map(function(x){return x.id}))}
   var safe=f.done.filter(function(x){return x.res==='neg'}).map(function(x){return x.id});s.safe=safe;
-  if(!f.queue.length||f.done.some(function(x){return x.res==='pos'}))return finish(s);
+  if(f.done.some(function(x){return x.res==='pos'}))return reveal(s);if(!f.queue.length)return finish(s);
   f.cur=f.queue.shift();f.start=tday();f.asked='';save(s);toast('حالا «'+pname(f.cur)+'» رو فقط خودش دوباره روی صورت بزن؛ ۴ روز.')}
+
+/* ---------- the check is done: the cause is found → she sees what she gets, pays, then the full result opens ---------- */
+function reveal(s){if(s.unlocked)return finish(s);s.phase='reveal';s.ready=tday();save(s);track('calm_reveal_ready');l2({ev:'ready',sus:s.sus,dayn:dayN(s)});goTrack()}
+function revealCard(s){var n=(s.found||[]).length,others=sameGroup(s.found||[]).length;
+  return '<div class="cm-ok"><b>✅ بررسی تموم شد؛ علت احتمالی به هم ریختگی پوستت مشخص شد.</b></div><p>توی نتیجه‌ی کامل می‌بینی:</p><div class="cm-box">• کدوم گروه ماده احتمالاً پوستت رو اذیت کرده<br>• '+(others?'محصولات دیگه‌ی روتینت که همین گروه رو دارن ('+fa(others)+' تا)':'محصولات دیگه‌ی روتینت که باید حواست بهشون باشه')+'<br>• جایگزین‌های سازگار با پوستت که اون گروه رو ندارن<br>• ثبت توی «پرونده‌ی پوست من» تا هر چکی بعد از این خودکار هشدار بده</div>'+
+   '<div class="cm-row"><button type="button" class="cm-go" data-c="reveal">دیدن نتیجه‌ی کامل با '+fa(PRICE.test)+' الماس 💎</button></div><p class="cm-note">تا اون موقع هر محصولی که روی ساعد واکنش داد رو نزن.</p>'}
+function sameGroup(found){var av=avoidOf(found);if(!av.cls.length&&!av.fl.length)return [];return routine().filter(function(id){if(found.indexOf(id)>=0)return false;var i=info(id);return av.cls.some(function(c){return i.cls.indexOf(c)>=0})||av.fl.some(function(f){return i.fl.indexOf(f)>=0})})}
 
 /* ---------- end: result + «پرونده‌ی پوست من» ---------- */
 function finish(s,stopped){var found=uniq(s.found||[]),safe=uniq(s.safe||[]).filter(function(x){return found.indexOf(x)<0}),untested=s.sus.filter(function(x){return found.indexOf(x)<0&&safe.indexOf(x)<0});s.phase='done';
@@ -202,8 +213,13 @@ function finish(s,stopped){var found=uniq(s.found||[]),safe=uniq(s.safe||[]).fil
    (safe.length?'<div class="cm-ok"><b>این‌ها توی تست واکنشی نشون ندادن؛ یکی‌یکی و با فاصله‌ی ۴ روز برگردون:</b><br>'+safe.map(function(id){return esc(pname(id))}).join('<br>')+'</div>':'')+
    (untested.length?'<p class="cm-note">تست نشد: '+esc(untested.map(pname).join('، '))+'. اگه برگردوندی، یکی‌یکی و با فاصله‌ی ۴ روز.</p>':'')+
    (found.length?'<p>📁 به «پرونده‌ی پوست من» اضافه شد؛ از این به بعد هر محصولی رو بسنجی، اگه همین محصول یا گروه مواد مشکوکش رو داشته باشه، بهت می‌گم.</p>':'')+
-   '<p class="cm-note">اگه دوباره تکرار شد، دقیق‌ترین راه «تست پچ» پیش متخصص پوسته.</p>'+altTeaser(found)+
-   '<div class="cm-row"><button type="button" class="cm-go" data-cx="1">ممنون 💜</button></div>');bindAlt()}
+   groupHtml(found)+
+   '<p class="cm-note">اگه دوباره تکرار شد، دقیق‌ترین راه «تست پچ» پیش متخصص پوسته.</p>'+(found.length?altPaid(found):'')+
+   '<div class="cm-row"><button type="button" class="cm-go" data-cx="1">ممنون 💜</button></div>')}
+function groupHtml(found){if(!found.length)return '';var av=avoidOf(found),g=av.cls.map(function(c){return CLS[c]||c}).concat(av.fl.map(function(f){return FL[f]})),o=sameGroup(found);
+  return '<div class="cm-box"><b>گروه ماده‌ی احتمالی:</b> '+(g.length?esc(g.join('، ')):'گروه مشخصی از مواد شناخته‌شده‌ی حساسیت‌زا در فهرست این محصول نبود؛ خود همین محصول توی پرونده‌ت ثبت شد')+(o.length?'<br><b>توی روتینت همین گروه رو دارن:</b> '+esc(o.map(pname).join('، '))+'<br><small>اگه پوستت با این‌ها مشکلی نداشته، لازم نیست کنار بذاری؛ فقط اگه دوباره به هم ریخت، اول این‌ها رو کنار بذار.</small>':'')+'</div>'}
+function altPaid(found){var L=[],av=avoidOf(found);if(!window.bwAlternatives)return '';found.forEach(function(id){(window.bwAlternatives(id,av)||[]).forEach(function(x){if(!L.some(function(y){return y.id===x.id}))L.push(x)})});L=L.slice(0,3);
+  return L.length?'<div class="cm-box">'+altList(L)+'</div>':''}
 // next step after the result: safe alternatives for what she put aside (same kind, without the suspect group, fit for her skin)
 function avoidOf(ids){var a={cls:[],fl:[]};ids.forEach(function(id){var i=info(id);i.cls.forEach(function(c){if(STRONG.test(c)&&a.cls.indexOf(c)<0)a.cls.push(c)});i.fl.forEach(function(f){if(FL[f]&&a.fl.indexOf(f)<0)a.fl.push(f)})});return a}
 var altFound=[];

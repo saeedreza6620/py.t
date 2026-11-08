@@ -305,6 +305,15 @@ window.bwAlternatives=altFor;window.bwCheckProduct=function(id){window.switchTab
 function rl2(ev,id){try{window.bwL2&&window.bwL2({t:'refill',ev:ev,pid:id})}catch(e){}}
 function daysLeft(id){var m=refillMeta()[id];if(!m||!m.since)return null;return Math.round(lifeDays(id)-(Date.now()-Date.parse(m.since))/864e5)}
 var refillBox=document.createElement('div');refillBox.id='swRefill';resultBox.after(refillBox);
+/* ---------- first screen: personal routine pack (put together by a real person) and گیفت‌یار ---------- */
+var moreBox=document.createElement('div');moreBox.id='swHomeMore';moreBox.className='sw-more';refillBox.after(moreBox);
+moreBox.innerHTML='<article class="sw-card sw-pack-card"><b>🧴 پک شخصی روتین</b><p class="sw-why">روتین کامل صبح و شب، متناسب با پوست، هدف‌ها و محصولاتی که الان داری؛ <b>چیده‌شده توسط مشاور انسانی بیوتی‌ولت</b>، نه فقط هوش مصنوعی.</p><small class="sw-sub">درخواستت مستقیم به دست تیم ما می‌رسه و خودمون باهات در تماسیم.</small><div class="sw-ractions"><button type="button" class="sw-btn" data-more="pack">درخواست پک شخصی</button></div></article>'+
+ '<article class="sw-card sw-gift-card"><b>🎁 گیفت‌یار</b><p class="sw-why">هدیه‌ی مراقبت پوستی برای عزیزت، طوری که به پوست خودش بخوره و اشتباه از آب درنیاد.</p><div class="sw-ractions"><button type="button" class="sw-btn sw-btn2" data-more="gift">بریم سراغ گیفت‌یار</button></div></article>'+
+ '<p class="sw-human">💜 پشت بیوتی‌ولت آدم‌های واقعی هستن؛ هر درخواست و سؤالی که برای تیم می‌فرستی رو خودمون می‌خونیم و جواب می‌دیم.</p>';
+moreBox.addEventListener('click',function(e){var b=e.target.closest('[data-more]');if(!b)return;
+ if(b.dataset.more==='gift'){if(window.bwTrack)window.bwTrack('home_gift');window.switchTab('sw-gift');return}
+ if(window.bwTrack)window.bwTrack('home_pack');var pr=profile()||{},names=routineIds().map(function(id){return (P(id)||{}).name}).filter(Boolean).slice(0,8);
+ supportSheet('پک شخصی روتین (مشاور انسانی)','پوستم: '+(pr.skinBase||'؟')+(names.length?'\nالان دارم: '+names.join('، '):'')+'\nهدفم/بودجه‌م: ')});
 function refillAltHtml(id,mm){var alts=altFor(id),price=(window.BWCalm&&window.BWCalm.price?window.BWCalm.price().alt:1);
  if(!alts.length)return '<p class="sw-why">پس به‌جای تمدید، یه گزینه‌ی بهتر برات پیدا کنیم.</p><div class="sw-ractions"><button type="button" class="sw-btn" data-rf="find">🔎 جستجوی جایگزین</button><button type="button" class="sw-ghost" data-rf="later">بعداً</button></div>';
  if(!refillAltHtml.seen){refillAltHtml.seen=1;if(window.bwTrack)window.bwTrack('refill_alt_offer');rl2('alt_offer',id)}
