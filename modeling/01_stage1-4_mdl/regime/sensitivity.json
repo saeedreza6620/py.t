@@ -1,0 +1,79 @@
+{
+ "baseline": {
+  "t50_h": 3.7343035791450845,
+  "rel3h": 0.4347504558569436,
+  "tauD_s": 0.12437314920897045
+ },
+ "rows": [
+  {
+   "parameter": "particle radius R",
+   "factor": 0.5,
+   "t50_h": 3.73,
+   "dt50_pct": -0.0,
+   "release_3h": 43.5
+  },
+  {
+   "parameter": "particle radius R",
+   "factor": 1.5,
+   "t50_h": 3.73,
+   "dt50_pct": 0.0,
+   "release_3h": 43.5
+  },
+  {
+   "parameter": "swelling Q (-> D via Eq. 26)",
+   "factor": 0.5,
+   "t50_h": 3.73,
+   "dt50_pct": -0.0,
+   "release_3h": 43.5
+  },
+  {
+   "parameter": "swelling Q (-> D via Eq. 26)",
+   "factor": 1.5,
+   "t50_h": 3.73,
+   "dt50_pct": 0.0,
+   "release_3h": 43.5
+  },
+  {
+   "parameter": "desorption time 1/k_off (crosslinking / binding)",
+   "factor": 0.5,
+   "t50_h": 1.94,
+   "dt50_pct": -48.1,
+   "release_3h": 64.2
+  },
+  {
+   "parameter": "desorption time 1/k_off (crosslinking / binding)",
+   "factor": 1.5,
+   "t50_h": 5.36,
+   "dt50_pct": 43.6,
+   "release_3h": 34.2
+  },
+  {
+   "parameter": "degradation time scale (crosslinking)",
+   "factor": 0.5,
+   "t50_h": 3.29,
+   "dt50_pct": -11.8,
+   "release_3h": 46.0
+  },
+  {
+   "parameter": "degradation time scale (crosslinking)",
+   "factor": 1.5,
+   "t50_h": 3.84,
+   "dt50_pct": 2.7,
+   "release_3h": 42.9
+  },
+  {
+   "parameter": "free (unbound) fraction",
+   "factor": 0.5,
+   "t50_h": 3.89,
+   "dt50_pct": 4.2,
+   "release_3h": 42.0
+  },
+  {
+   "parameter": "free (unbound) fraction",
+   "factor": 1.5,
+   "t50_h": 3.57,
+   "dt50_pct": -4.3,
+   "release_3h": 45.0
+  }
+ ]
+}

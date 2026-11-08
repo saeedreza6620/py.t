@@ -1,0 +1,322 @@
+# %% [markdown]
+# # Diffusion coefficient from first principles → Fick release → swelling correction (Abdekhodaie & Wu 2006) → comparison with data
+# No parameter is fitted to the release curves in this notebook.
+#
+# Step 0  Verify the D formulas against independent numbers (Abdekhodaie's verapamil value; measured rhodamine data).
+# Step 1  D in water (Wilke–Chang, Eq. 28 of Abdekhodaie & Wu 2006; Stokes–Einstein as a cross-check) → D in gelatin
+#         (Mackie–Meares) → Fick release of a sphere.
+# Step 2  D corrected for the equilibrium swelling ratio Q (Abdekhodaie & Wu 2006, Eq. 26, after Lustig & Peppas 1988)
+#         → Fick release. Only where the paper measured swelling of the same microspheres (Kodra 2026, Zhang 2023).
+# Step 3  Data, Step-1 curve and Step-2 curve side by side.
+
+# %% Setup
+import numpy as np, pandas as pd, matplotlib.pyplot as plt, os
+OUT = "figures_stepD"; os.makedirs(OUT, exist_ok=True)
+NAVY, BLUE, ORANGE, GREEN, GREY, RED = "#0E1B4D", "#2F5CF0", "#EB6834", "#1BAF7A", "#6B7590", "#C8323C"
+plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False})
+NA, kB = 6.02214e23, 1.380649e-23
+
+# %% [markdown]
+# ## Formulas
+# Wilke–Chang (Abdekhodaie & Wu 2006, Eq. 28):  D_w = 7.4e-8 (φ_B M_B)^0.5 T / (η_B V_s^0.6)   [cm²/s; T in K, η in cP, V_s in cm³/mol]
+# Solute radius (Eq. 27):                         r_s = (3 V_s / (4π N_0))^(1/3)
+# Stokes–Einstein (cross-check):                  D_w = k_B T / (6π η r_s)
+# Mackie–Meares (gel, polymer volume fraction φ): D_gel = D_w ((1−φ)/(1+φ))²,   φ = 1/Q for a gel swollen to volume ratio Q
+# Abdekhodaie & Wu Eq. 26:                        D/D_w ≅ r_s Q^(−3/4) exp(−Y/(Q−1)),  Y = 1
+
+# %% Water properties
+def eta_water_cP(T):                       # Vogel-type fit, good to ~1 % for 0-100 °C
+    return 2.414e-2 * 10 ** (247.8 / (T - 140)) 
+PHI_B, M_B = 2.6, 18.015                   # association factor and molar mass of water (Wilke & Chang 1955)
+
+def wilke_chang(V, T):    return 7.4e-8 * np.sqrt(PHI_B * M_B) * T / (eta_water_cP(T) * V ** 0.6)
+def r_solute_cm(V):       return (3 * V / (4 * np.pi * NA)) ** (1 / 3)
+def stokes_einstein(r_cm, T): return kB * T / (6 * np.pi * eta_water_cP(T) * 1e-3 * r_cm * 1e-2) * 1e4
+def mackie_meares(phi):   return ((1 - phi) / (1 + phi)) ** 2
+def abdekhodaie_eq26(r_cm, Q, Y=1.0):      # r_s must be in ångström to reproduce the paper's number (see Step 0)
+    return (r_cm * 1e8) * Q ** -0.75 * np.exp(-Y / (Q - 1))
+
+# %% Le Bas molar volume at the normal boiling point (increments from Poling, Prausnitz & O'Connell, 5th ed., Table 11-5)
+LEBAS = dict(C=14.8, H=3.7, O=7.4, O_me=9.1, O_eth=11.0, O_acid=12.0, N_prim=10.5, N_sec=12.0, N_tert=10.8, N_dbl=15.6,
+             Cl=24.6, ring6=-15.0, ring5=-11.5)
+def lebas(**n): return sum(LEBAS[k] * v for k, v in n.items())
+
+DRUGS = {   # Le Bas atom/ring counts; comments give formula and assumption
+ "verapamil":  dict(V=lebas(C=27, H=38, O_me=4, N_dbl=1, N_tert=1, ring6=2), MW=454.6, note="C27H38N2O4; 4 methyl ethers, nitrile N, tertiary amine"),
+ "rhodamine B":dict(V=lebas(C=28, H=31, N_tert=2, O_acid=2, O_eth=1, ring6=4), MW=443.6, note="C28H31N2O3+ cation; xanthene + benzoic acid"),
+ "morphine":   dict(V=lebas(C=17, H=19, N_tert=1, O=2, O_eth=1, ring6=4, ring5=1), MW=285.3, note="C17H19NO3; pentacyclic"),
+ "diclofenac": dict(V=lebas(C=14, H=11, Cl=2, N_sec=1, O_acid=2, ring6=2), MW=296.1, note="C14H11Cl2NO2 (anion of the Na salt)"),
+ "ketoprofen": dict(V=lebas(C=16, H=14, O=1, O_acid=2, ring6=2), MW=254.3, note="C16H14O3"),
+ "gentamicin": dict(V=lebas(C=21, H=43, N_prim=3, N_sec=2, O=4, O_eth=3, ring6=3), MW=477.6, note="gentamicin C1, C21H43N5O7"),
+ "icariin":    dict(V=lebas(C=33, H=40, O=9, O_eth=5, O_me=1, ring6=5), MW=676.7, note="C33H40O15; flavonol + 2 sugars"),
+ "vancomycin": dict(V=lebas(C=66, H=75, Cl=2, N_prim=1, N_sec=8, O=16, O_eth=4, O_acid=1, O_me=0, ring6=7) , MW=1449.3,
+                    note="C66H75Cl2N9O24; Le Bas uncertain for a glycopeptide (±20 % in V → ±11 % in D)"),
+}
+# bFGF is a protein: hydrodynamic radius from Wilkins et al. (1999), Rh = 4.75 N^0.29 Å (N = residues; 146 for 17.2 kDa bFGF)
+RH_BFGF_CM = 4.75 * 146 ** 0.29 * 1e-8
+
+T25, T37 = 298.15, 310.15
+for k, d in DRUGS.items():
+    d["r_cm"] = r_solute_cm(d["V"])
+    d["Dw_WC_37"] = wilke_chang(d["V"], T37); d["Dw_SE_37"] = stokes_einstein(d["r_cm"], T37)
+    d["Dw_WC_25"] = wilke_chang(d["V"], T25)
+DRUGS["bFGF"] = dict(V=np.nan, MW=17200, r_cm=RH_BFGF_CM, note="protein; Rh from Wilkins 1999",
+                     Dw_WC_37=np.nan, Dw_SE_37=stokes_einstein(RH_BFGF_CM, T37), Dw_WC_25=np.nan)
+TAB_D = pd.DataFrame({k: dict(MW=v["MW"], V_LeBas=v["V"], r_s_A=v["r_cm"] * 1e8, Dw_WilkeChang_37C=v["Dw_WC_37"],
+                              Dw_StokesEinstein_37C=v["Dw_SE_37"]) for k, v in DRUGS.items()}).T
+pd.set_option("display.float_format", lambda x: f"{x:.3g}")
+print(TAB_D)
+
+# %% [markdown]
+# ## Step 0 — verification of the formulas (no release data involved)
+# (a) Abdekhodaie & Wu report D = 3.21e-6 cm²/s for verapamil in Sephadex SP C-25 with Q = 12 (p. 3660), from Eqs. 26–28.
+# (b) Water diffusivity of a rhodamine-size molecule: measured 4.0e-6 (rhodamine 6G) and 4.4e-6 cm²/s (rhodamine 110)
+#     at 25 °C (Gendron et al. 2008). Rhodamine B has the same formula as rhodamine 6G (C28H31N2O3+).
+# (c) Rhodamine B in acellular GelMA gels 5–10 % w/v (Dogan et al. 2023, Table 1): 2.56–5.54e-6 cm²/s.
+V = DRUGS["verapamil"]
+Dw_ver_25 = wilke_chang(V["V"], T25)
+f_ver = abdekhodaie_eq26(V["r_cm"], 12.0)
+CHECK = []
+CHECK.append(("Verapamil in dextran, Q = 12 (Abdekhodaie & Wu 2006, p. 3660)", 3.21e-6, Dw_ver_25 * f_ver))
+for T, lab in [(T25, "25 °C")]:
+    CHECK.append((f"Rhodamine in water, {lab} — Wilke–Chang vs measured R6G (Gendron 2008)", 4.0e-6, wilke_chang(DRUGS['rhodamine B']['V'], T)))
+    CHECK.append((f"Rhodamine in water, {lab} — Stokes–Einstein vs measured R6G (Gendron 2008)", 4.0e-6, stokes_einstein(DRUGS['rhodamine B']['r_cm'], T)))
+# GelMA: polymer volume fraction from w/v concentration and polymer density 1.35 g/cm3
+RHO_P = 1.35
+DOGAN = {5: (5.543e-6, 3.110e-6), 7: (5.105e-6, 2.843e-6), 10: (4.229e-6, 2.558e-6)}   # low-MA, high-MA (µm²/s ×1e-8)
+Dw_rb = wilke_chang(DRUGS["rhodamine B"]["V"], T25)
+for c, (lo_ma, hi_ma) in DOGAN.items():
+    phi = c / 100 / RHO_P
+    CHECK.append((f"Rhodamine B in GelMA {c} % (Dogan 2023; mean of low/high MA)", np.sqrt(lo_ma * hi_ma), Dw_rb * mackie_meares(phi)))
+CHK = pd.DataFrame(CHECK, columns=["check", "reference value", "this code"])
+CHK["ratio"] = CHK["this code"] / CHK["reference value"]
+print(CHK.to_string(index=False))
+print(f"\nVerapamil: V_LeBas = {V['V']:.1f} cm3/mol, r_s = {V['r_cm']*1e8:.2f} Å, D_w(25 °C) = {Dw_ver_25:.3g}, D/D_w = {f_ver:.3f}")
+print("Eq. 26 reproduces 3.21e-6 only with r_s in ångström; with r_s in nm or cm it gives 0.086 and ~1e-8.")
+
+# %% Eq. 26 behaviour: where does it become unphysical (D_gel > D_w)?
+Qs = np.linspace(2, 40, 400)
+fig, ax = plt.subplots(figsize=(7.2, 4.2))
+for name, col in [("ketoprofen", BLUE), ("verapamil", NAVY), ("vancomycin", ORANGE)]:
+    ax.plot(Qs, abdekhodaie_eq26(DRUGS[name]["r_cm"], Qs), color=col, lw=2.2, label=f"{name} (r_s = {DRUGS[name]['r_cm']*1e8:.1f} Å)")
+ax.plot(Qs, mackie_meares(1 / Qs), color=GREEN, lw=2.2, ls="--", label="Mackie–Meares, φ = 1/Q")
+ax.axhline(1, color=RED, lw=1.2); ax.text(39.5, 1.03, "D_gel = D_water", color=RED, ha="right", fontsize=9)
+ax.axvspan(13.6, 27.2, color=BLUE, alpha=.08); ax.text(20.4, 2.3, "Kodra\nQ 13.6–27", ha="center", color=BLUE, fontsize=8.5)
+ax.axvspan(6.27, 6.54, color=ORANGE, alpha=.25); ax.text(6.4, 2.3, "Zhang\nQ ≈ 6.4", ha="center", color=ORANGE, fontsize=8.5)
+ax.plot([12], [f_ver], "o", color=NAVY); ax.annotate("Abdekhodaie & Wu: Q = 12", (12, f_ver), (14, 1.5), fontsize=8.5, arrowprops=dict(arrowstyle="->", color=GREY))
+ax.set_xlabel("equilibrium volumetric swelling ratio Q"); ax.set_ylabel("D_gel / D_water"); ax.set_ylim(0, 2.6)
+ax.legend(fontsize=8.5, loc="upper right", bbox_to_anchor=(1, .82)); ax.set_title("Eq. 26 (r_s in Å) vs Mackie–Meares", loc="left")
+plt.tight_layout(); plt.savefig(f"{OUT}/D0_eq26_vs_Q.png", dpi=200); plt.close()
+
+# %% [markdown]
+# ## Release data (extracted earlier; figure/page in each entry) and swelling of the same microspheres
+DATA = {
+ "Morphine GMS": dict(ref="Jin et al., Des. Monomers Polym. 26 (2023) 1–14, Fig. 2, p. 7 (printed data row)",
+    R=31.6, unit="%", amp_free=True,
+    series={"MGM": ([0.0833,0.1667,0.5,0.75,1,1.5,2,4,8,12,24,36,48,60,72],
+                    [0,5,12,21.5,25.8,37.2,40,47,55,56,57.1,57.5,58.1,58.5,59.2])}),
+ "Diclofenac GMS": dict(ref="Saravanan et al., J. Drug Target. 19 (2011) 96–103, Fig. 6, p. 102 (vector-extracted)",
+    R={"GM1 (9.8%)":18.9,"GM2 (18.3%)":20.3,"GM3 (26.7%)":22.7}, unit="%", amp_free=False,
+    series={"GM1 (9.8%)": ([24,48,72,144,216,288,360,432,504,576,648,720],[9.98,15.04,20.02,25.0,30.99,35.98,41.03,45.02,48.01,51.01,53.99,55.99]),
+            "GM2 (18.3%)": ([24,48,72,144,216,288,360,432,504,576,648,720],[16.05,26.01,32.0,38.05,45.03,51.02,57.0,63.05,68.03,72.03,76.01,80.0]),
+            "GM3 (26.7%)": ([24,48,72,144,216,288,360,432,504,576,648,720],[25.0,35.98,44.02,52.0,58.98,66.03,73.02,78.0,81.98,84.98,88.04,91.03])}),
+ "Ketoprofen GMS": dict(ref="Kodra et al., Polymers 18 (2026) 1807, Fig. 7c, p. 17 (digitized)",
+    R=7.5, unit="%", amp_free=False,
+    series={"MS/K-1 (4 h XL)": ([0.5,1,3,5,24],[12.9,17.4,34.0,35.6,62.3]),
+            "MS/K-2 (2 h XL)": ([0.5,1,3,5,24],[10.6,22.3,41.9,84.8,100.0]),
+            "MS/K-3 (0.5 h XL)": ([0.5,1,3,5,24],[9.0,37.1,99.6,99.8,100.0])}),
+ "Vancomycin GMS": dict(ref="Zhang et al., Mater. Adv. 4 (2023) 4349–4368, Fig. 8B, p. 4362 (digitized; dialysis bag)",
+    R=13.7, unit="%", amp_free=False,
+    series={"pH 7.4": ([12,24,48,72,96,144,192,240,288,336],[25.41,37.24,45.89,52.33,56.16,59.62,62.18,63.92,65.11,66.52]),
+            "pH 6.0": ([6,12,24,48,72,96,144,192,240,288,336],[21.46,29.63,40.97,52.37,60.07,65.99,70.61,74.10,75.97,77.17,78.01])}),
+ "Gentamicin GMS (Chang)": dict(ref="Chang et al., Polymers 15 (2023) 1504, Fig. 5, p. 14 (digitized, mg/mL)",
+    R={"1.0dM-G":10.5,"2.5dM-G":8.7}, unit="mg/mL", amp_free=True,
+    series={"1.0dM-G": ([1,2,4,8,24,48,96,192,384,768],[2.46,3.82,3.94,3.96,3.99,3.97,3.96,3.95,4.03,4.79]),
+            "2.5dM-G": ([1,2,4,8,24,48,96,192,384,768],[2.65,4.01,4.11,4.13,4.16,4.16,4.16,4.16,4.53,7.72])}),
+ "Gentamicin m-EmG (Hu)": dict(ref="Hu et al., Materials 17 (2024) 3578, Fig. 5, p. 10 (digitized, net of drug-free background)",
+    R=8.05, unit="mg", amp_free=True,
+    series={"m-EmG net": ([1,2,4,8,24,48,96,192,288,384,480,576,672,768],
+                          [0.106,0.172,0.233,0.284,0.297,0.314,0.338,0.358,0.350,0.350,0.362,0.371,0.285,0.305])}),
+ "bFGF GMS": dict(ref="Lan et al., PLoS ONE 12 (2017) e0173814, Fig. 3, p. 9 (digitized)",
+    R={"A porous":17.5,"B normal":None}, unit="%", amp_free=False,
+    series={"A porous": ([10.1,24,48,72,119.8,167.5,215.5,288,359.8,480,696],[1.0,2.8,5.1,8.0,15.65,28.86,40.97,51.21,55.36,62.1,65.7]),
+            "B normal": ([10.1,23.5,48,72,119.8,168,216,288,360,479.8,696],[3.36,6.88,30.6,45.1,64.8,82.38,91.43,94.7,95.3,96.22,97.07])}),
+ "Icariin GMs": dict(ref="Liu et al., BioMed. Eng. OnLine 21 (2022) 89, Fig. 1A, p. 4 (digitized)",
+    R=None, unit="%", amp_free=False,
+    series={"GM-1 (0.25 mM)": ([24,72,168,240,336,504],[19.34,36.05,55.48,65.83,69.93,74.90]),
+            "GM-2 (0.5 mM)": ([24,72,168,240,336,504],[32.10,57.17,69.77,79.94,88.23,94.72])}),
+}
+DRUG_OF = {"Morphine GMS": "morphine", "Diclofenac GMS": "diclofenac", "Ketoprofen GMS": "ketoprofen", "Vancomycin GMS": "vancomycin",
+           "Gentamicin GMS (Chang)": "gentamicin", "Gentamicin m-EmG (Hu)": "gentamicin", "bFGF GMS": "bFGF", "Icariin GMs": "icariin"}
+RFALLBACK = {"Icariin GMs": 30.0, "bFGF GMS": 17.5}          # icariin: 10–110 µm diameter only; bFGF B: radius of A
+# Measured equilibrium swelling of the SAME microspheres (mass water / mass dry polymer = q):
+#   Kodra 2026, Fig. 7a, p. 17: SD% (peak) 1942, 1701, 930 % for MS/K-1, -2, -3 (dry radius 7.5 µm, SEM, D50 ≈ 15 µm)
+#   Zhang 2023, Fig. 8 panel "swelling rate", p. 4362: plateau ≈ 390 % (pH 7.4) and ≈ 410 % (pH 6.0) (read from figure)
+# Volumetric swelling ratio Q = 1 + q·ρ_p/ρ_w (volume additivity, ρ_p = 1.35 g/cm3), polymer fraction φ = 1/Q.
+SWELL_Q = {("Ketoprofen GMS", "MS/K-1 (4 h XL)"): 19.42, ("Ketoprofen GMS", "MS/K-2 (2 h XL)"): 17.01,
+           ("Ketoprofen GMS", "MS/K-3 (0.5 h XL)"): 9.30, ("Vancomycin GMS", "pH 7.4"): 3.90, ("Vancomycin GMS", "pH 6.0"): 4.10}
+SWELL_Q = {k: 1 + q * RHO_P for k, q in SWELL_Q.items()}
+PHI_RANGE = (0.05, 0.30)        # used ONLY where swelling was not measured: hydrated-gelatin polymer fraction band
+
+def radius_um(case, name):
+    R = DATA[case]["R"]; R = R.get(name) if isinstance(R, dict) else R
+    return R if R else RFALLBACK[case]
+
+# %% Fick release from a sphere (Crank 1975, Eq. 6.20), exact series with short-time form
+def fick_F(tau):
+    tau = np.atleast_1d(np.asarray(tau, float)); F = np.empty_like(tau)
+    s = tau < 0.05
+    F[s] = 6 * np.sqrt(tau[s] / np.pi) - 3 * tau[s]
+    n = np.arange(1, 200)[:, None]
+    F[~s] = 1 - 6 / np.pi**2 * np.sum(np.exp(-(n * np.pi) ** 2 * tau[~s]) / n**2, axis=0)
+    return np.clip(F, 0, 1)
+TAU50 = 0.030483   # tau at 50 % (check below)
+from scipy.optimize import brentq
+TAU50 = brentq(lambda s: fick_F(s)[0] - 0.5, 1e-5, 1); print("tau50 =", round(TAU50, 5))
+
+# %% Step 1 and Step 2 diffusivities per formulation
+rows = []
+for case, d in DATA.items():
+    drug = DRUG_OF[case]; dd = DRUGS[drug]
+    Dw = dd["Dw_WC_37"] if np.isfinite(dd["Dw_WC_37"]) else dd["Dw_SE_37"]
+    for name in d["series"]:
+        R = radius_um(case, name); key = (case, name)
+        if key in SWELL_Q:
+            Q = SWELL_Q[key]; phi = 1 / Q; Rsw = R * Q ** (1 / 3)
+            D1 = Dw * mackie_meares(phi); D1lo = D1hi = D1
+            f26 = abdekhodaie_eq26(dd["r_cm"], Q); D2 = Dw * f26
+        else:
+            Q = np.nan; Rsw = R; f26 = np.nan; D2 = np.nan
+            D1lo, D1hi = Dw * mackie_meares(PHI_RANGE[1]), Dw * mackie_meares(PHI_RANGE[0]); D1 = np.sqrt(D1lo * D1hi)
+        rows.append(dict(case=case, formulation=name, drug=drug, R_um=Rsw, Q=Q, Dw=Dw, D_step1=D1, D_step1_lo=D1lo, D_step1_hi=D1hi,
+                         eq26_ratio=f26, D_step2=D2, t50_step1_s=TAU50 * (Rsw * 1e-4) ** 2 / D1,
+                         t50_step2_s=TAU50 * (Rsw * 1e-4) ** 2 / min(D2, Dw) if np.isfinite(D2) else np.nan))
+RES = pd.DataFrame(rows)
+
+def t50_obs_h(t, y, unit):
+    t, y = np.asarray(t, float), np.asarray(y, float)
+    yn = y / 100 if unit == "%" else y / y.max()
+    if unit == "%" and yn.max() < 0.75: yn = yn / yn.max()
+    i = int(np.argmax(yn >= 0.5))
+    if yn[i] < 0.5: return np.nan
+    return t[0] if i == 0 else np.interp(0.5, [yn[i-1], yn[i]], [t[i-1], t[i]])
+RES["t50_data_h"] = [t50_obs_h(*DATA[r.case]["series"][r.formulation], DATA[r.case]["unit"]) for r in RES.itertuples()]
+RES["gap_step1"] = RES.t50_data_h * 3600 / RES.t50_step1_s
+RES["gap_step2"] = RES.t50_data_h * 3600 / RES.t50_step2_s
+RES.to_csv("stepD_results.csv", index=False)
+print(RES[["drug", "formulation", "R_um", "Q", "Dw", "D_step1", "eq26_ratio", "D_step2", "t50_step1_s", "t50_step2_s", "t50_data_h", "gap_step1"]].to_string(index=False))
+
+# %% Figure 1: Step 1 — Fick release with the formula D (every formulation, log time)
+SRC = {"Morphine GMS": "Jin 2023", "Diclofenac GMS": "Saravanan 2011", "Ketoprofen GMS": "Kodra 2026", "Vancomycin GMS": "Zhang 2023",
+       "Gentamicin GMS (Chang)": "Chang 2023", "Gentamicin m-EmG (Hu)": "Hu 2024", "bFGF GMS": "Lan 2017", "Icariin GMs": "Liu 2022"}
+tt = np.logspace(-3, np.log10(60 * 86400), 700)
+TICKS = [("1 s", 1), ("1 min", 60), ("1 h", 3600), ("1 d", 86400), ("1 wk", 604800)]
+def deco(ax):
+    ax.set_xscale("log"); ax.set_xlim(1e-3, 60 * 86400); ax.set_ylim(-3, 108)
+    for lab, s in TICKS:
+        ax.axvline(s, color="#E1E6F3", lw=1, zorder=0); ax.text(s, 103, lab, fontsize=7, color=GREY, ha="center")
+
+fig, axs = plt.subplots(2, 4, figsize=(17, 7.6), sharey=True)
+for ax, case in zip(axs.ravel(), DATA):
+    sub = RES[RES.case == case]
+    for j, r in enumerate(sub.itertuples()):
+        R = r.R_um * 1e-4
+        ax.fill_between(tt, fick_F(r.D_step1_lo * tt / R**2) * 100, fick_F(r.D_step1_hi * tt / R**2) * 100, color=BLUE, alpha=.25, lw=0)
+        ax.plot(tt, fick_F(r.D_step1 * tt / R**2) * 100, color=BLUE, lw=1.8, ls=["-", "--", ":"][j % 3], label=f"Step 1 · {r.formulation}")
+    deco(ax); ax.set_title(f"{DRUG_OF[case]} — {SRC[case]}", loc="left", fontsize=10.5)
+    ax.legend(fontsize=6.8, loc="lower right"); ax.set_xlabel("time (log)")
+axs[0, 0].set_ylabel("released (%)"); axs[1, 0].set_ylabel("released (%)")
+fig.suptitle("Step 1 — Fick release of a sphere with D from Wilke–Chang × Mackie–Meares ", x=.01, ha="left", fontsize=12.5)
+plt.tight_layout(); plt.savefig(f"{OUT}/step1_fick_formulaD.png", dpi=170); plt.close()
+
+# %% Figure 2: validation — data vs Step 1 vs Step 2, per paper
+fig, axs = plt.subplots(2, 4, figsize=(17, 7.8), sharey=True)
+MK = ["o", "s", "^"]
+for ax, case in zip(axs.ravel(), DATA):
+    d = DATA[case]; sub = RES[RES.case == case]
+    for j, r in enumerate(sub.itertuples()):
+        R = r.R_um * 1e-4; ls = ["-", "--", ":"][j % 3]
+        ax.plot(tt, fick_F(r.D_step1 * tt / R**2) * 100, color=BLUE, lw=2, ls=ls, label="Step 1: Fick, D = D_w × Mackie–Meares" if j == 0 else None)
+        if np.isfinite(r.D_step2):
+            D2 = min(r.D_step2, r.Dw)
+            ax.plot(tt, fick_F(D2 * tt / R**2) * 100, color=ORANGE, lw=2, ls=ls, label="Step 2: Fick, D = D_w × Eq. 26 (Q measured)" if j == 0 else None)
+        t, y = map(lambda a: np.asarray(a, float), d["series"][r.formulation])
+        yn = y if d["unit"] == "%" else 100 * y / y.max()
+        ax.plot(t * 3600, yn, MK[j % 3], color=NAVY, ms=5.5, mec="white", label=f"data · {r.formulation}")
+    deco(ax)
+    ax.set_title(f"{DRUG_OF[case]} — {SRC[case]}" + ("" if sub.Q.notna().any() else "  (Q not reported → no Step 2)"), loc="left", fontsize=9.8)
+    ax.legend(fontsize=6.5, loc="center left"); ax.set_xlabel("time (log)")
+axs[0, 0].set_ylabel("released (%)"); axs[1, 0].set_ylabel("released (%)")
+fig.suptitle("Validation — extracted data vs Step 1 and Step 2 predictions (all parameters from material properties)", x=.01, ha="left", fontsize=12.5)
+plt.tight_layout(); plt.savefig(f"{OUT}/validation_overlay_all.png", dpi=170); plt.close()
+
+# %% Figure 3: zoom on the two papers with measured swelling (Kodra, Zhang)
+fig, axs = plt.subplots(1, 2, figsize=(13, 4.8), sharey=True)
+for ax, case in zip(axs, ["Ketoprofen GMS", "Vancomycin GMS"]):
+    d = DATA[case]; sub = RES[RES.case == case]
+    cols = [BLUE, GREEN, RED]
+    for j, r in enumerate(sub.itertuples()):
+        R = r.R_um * 1e-4; c = cols[j]
+        ax.plot(tt, fick_F(r.D_step1 * tt / R**2) * 100, color=c, lw=2, label=f"{r.formulation}: Step 1 (Q = {r.Q:.1f})")
+        ax.plot(tt, fick_F(min(r.D_step2, r.Dw) * tt / R**2) * 100, color=c, lw=2, ls="--",
+                label=f"{r.formulation}: Step 2" + (" (Eq. 26 > 1 → capped at D_w)" if r.eq26_ratio > 1 else ""))
+        t, y = map(lambda a: np.asarray(a, float), d["series"][r.formulation])
+        ax.plot(t * 3600, y, MK[j], color=c, ms=7, mec="white", label=f"{r.formulation}: data")
+    deco(ax); ax.set_title(f"{DRUG_OF[case]} — {SRC[case]} (swelling of the same microspheres measured)", loc="left", fontsize=10.5)
+    ax.legend(fontsize=7.2, loc="center left"); ax.set_xlabel("time (log)")
+axs[0].set_ylabel("released (%)")
+plt.tight_layout(); plt.savefig(f"{OUT}/validation_kodra_zhang.png", dpi=190); plt.close()
+
+# %% Figure 4: the gap
+fig, ax = plt.subplots(figsize=(10.5, 4.5))
+lab = [f"{r.drug} {r.formulation.split(' (')[0]}" for r in RES.itertuples()]
+x = np.arange(len(RES))
+ax.bar(x - .2, RES.gap_step1, .4, color=BLUE, label="data t50 / Step-1 t50")
+ax.bar(x + .2, RES.gap_step2, .4, color=ORANGE, label="data t50 / Step-2 t50")
+ax.set_yscale("log"); ax.axhline(1, color=NAVY, lw=1); ax.set_xticks(x); ax.set_xticklabels(lab, rotation=60, ha="right", fontsize=8)
+ax.set_ylabel("times slower than predicted"); ax.legend(fontsize=9); ax.set_ylim(.5, 1e9)
+ax.set_title("How much slower the measured release is than diffusion predicts", loc="left")
+plt.tight_layout(); plt.savefig(f"{OUT}/gap_step1_step2.png", dpi=200); plt.close()
+print("figures in", OUT)
+
+# %% Save tables
+TAB_D.to_csv("table_D_water.csv"); CHK.to_csv("table_verification.csv", index=False)
+
+# %% Figure 5: the meeting whiteboard rebuilt with the new process
+# (a) same C–t axes as the board: Fick with constant D_gel, Fick with swelling-corrected D (Abdekhodaie Eq. 26),
+#     and measured curves; "curve 1" = late second rise (Chang 2.5dM-G), "curve 2" = plateau below 100 % (Zhang pH 7.4).
+# (b) shape comparison: every curve plotted against t / t50 of its own data; constant-D Fick (Step 1 and Step 2 alike)
+#     has one universal shape, so deviations from it point to the missing mechanism.
+def norm_series(case, name):
+    t, y = map(lambda a: np.asarray(a, float), DATA[case]["series"][name])
+    yn = y if DATA[case]["unit"] == "%" else 100 * y / y.max()
+    return t, yn
+fig, ax = plt.subplots(1, 2, figsize=(14, 5.2), gridspec_kw=dict(width_ratios=[1.15, 1]))
+r = RES[(RES.case == "Ketoprofen GMS") & (RES.formulation == "MS/K-2 (2 h XL)")].iloc[0]; R = r.R_um * 1e-4
+a = ax[0]; th = tt / 3600
+a.plot(th, fick_F(r.D_step1 * tt / R**2) * 100, color=BLUE, lw=3, label="Fick, D = D_gel constant (Step 1)")
+a.plot(th, fick_F(min(r.D_step2, r.Dw) * tt / R**2) * 100, color=ORANGE, lw=3, ls="--", label="Fick + swelling, D = f(Q) (Step 2, Abdekhodaie Eq. 26)")
+t, y = norm_series("Ketoprofen GMS", "MS/K-2 (2 h XL)"); a.plot(t, y, "o-", color=NAVY, lw=1.5, ms=7, label="data: ketoprofen MS/K-2 (Kodra 2026)")
+t, y = norm_series("Gentamicin GMS (Chang)", "2.5dM-G"); a.plot(t, y, "s-", color=GREEN, lw=1.5, ms=6, label="curve 1: late second rise (gentamicin, Chang 2023)")
+t, y = norm_series("Vancomycin GMS", "pH 7.4"); a.plot(t, y, "^-", color="#7A4FD0", lw=1.5, ms=6, label="curve 2: plateau below 100 % (vancomycin, Zhang 2023)")
+a.set_xscale("log"); a.set_xlim(1e-6, 2e3); a.set_ylim(-3, 108)
+for lab, s in [("1 s", 1/3600), ("1 min", 1/60), ("1 h", 1), ("1 d", 24), ("1 wk", 168)]:
+    a.axvline(s, color="#E1E6F3", lw=1, zorder=0); a.text(s, 103, lab, fontsize=8, color=GREY, ha="center")
+a.annotate("", xy=(2.0, 50), xytext=(1.5e-5, 50), arrowprops=dict(arrowstyle="<->", color=RED, lw=1.8))
+a.text(4e-3, 53, "≈ 10⁵ × gap", color=RED, fontsize=11, ha="center")
+a.set_xlabel("time (h, log)"); a.set_ylabel("released (%)"); a.legend(fontsize=7.6, loc="lower right")
+a.set_title("(a) The board's C–t comparison, with D from the formula", loc="left", fontsize=11)
+b = ax[1]; x = np.logspace(-2, 1.6, 300)
+b.plot(x, fick_F(TAU50 * x) * 100, color=BLUE, lw=6, alpha=.35, label="constant-D Fick shape (Step 1 = Step 2)")
+GROUP = {"Diclofenac GMS": BLUE, "Icariin GMs": BLUE, "Morphine GMS": ORANGE, "Ketoprofen GMS": ORANGE, "bFGF GMS": ORANGE,
+         "Vancomycin GMS": "#7A4FD0", "Gentamicin m-EmG (Hu)": "#7A4FD0", "Gentamicin GMS (Chang)": GREEN}
+for rr in RES.itertuples():
+    if not np.isfinite(rr.t50_data_h): continue
+    t, y = norm_series(rr.case, rr.formulation)
+    b.plot(t / rr.t50_data_h, y, "-o", color=GROUP[rr.case], lw=1.2, ms=3.5, alpha=.85)
+for lab, col in [("Fick-like", BLUE), ("delayed / S-shaped", ORANGE), ("curve 2: plateau", "#7A4FD0"), ("curve 1: second rise", GREEN)]:
+    b.plot([], [], "-o", color=col, label=lab)
+b.set_xscale("log"); b.set_xlim(1e-2, 40); b.set_ylim(-3, 108); b.axhline(50, color="#E1E6F3", lw=1, zorder=0)
+b.set_xlabel("t / t50 of each measured curve (log)"); b.legend(fontsize=8, loc="upper left")
+b.set_title("(b) Shape comparison: 17 measured curves vs the Fick shape", loc="left", fontsize=11)
+plt.tight_layout(); plt.savefig(f"{OUT}/whiteboard_new_process.png", dpi=190); plt.close()

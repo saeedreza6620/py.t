@@ -1,0 +1,44 @@
+[
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-3",
+  "t": 1,
+  "prose": 37.7,
+  "digitized": 37.0724
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-1",
+  "t": 24,
+  "prose": 62.1,
+  "digitized": 62.254
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-2",
+  "t": 5,
+  "prose": 84.7,
+  "digitized": 84.8392
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "0.5dM-G",
+  "t": 32,
+  "prose": 4.9,
+  "digitized": 5.0288
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "1.0dM-G",
+  "t": 32,
+  "prose": 4.7,
+  "digitized": 4.7933
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "2.5dM-G",
+  "t": 32,
+  "prose": 7.7,
+  "digitized": 7.7186
+ }
+]

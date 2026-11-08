@@ -1,0 +1,98 @@
+Advances in Applied Mathematics and Mechanics                       DOI: 10.4208/aamm.OA-2024-0219
+Adv. Appl. Math. Mech., Vol. 18, No. 3, pp. 897-922                 June 2026
+
+
+
+
+Adaptive Finite Element Solutions of a Diffusion Model
+for Drug Release in PLGA Microspheres
+Hongyu Chen1 , Guanghui Hu1,2,3,∗ and Defang Ouyang4,5, ∗
+1 Department of Mathematics, Faculty of Science and Technology, University of Macau,
+
+Macao SAR, China
+2 Zhuhai UM Science and Technology Research Institute, Guangdong, China
+3 Guangdong-Hong Kong-Macao Joint Laboratory for Data-Driven Fluid Mechanics and
+
+Engineering Applications, University of Macau, Macao SAR, China
+4 State Key Laboratory of Mechanism and Quality of Chinese Medicine, Institute of
+
+Chinese Medical Sciences (ICMS), University of Macau, Macao SAR, China
+5 Department of Public Health and Medicinal Administration, Faculty of Health Sciences
+
+(FHS), University of Macau, Macao SAR, China
+Received 8 October 2024; Accepted (in revised version) 4 July 2025
+
+
+
+           Abstract. Poly (lactic-co-glycolic acid) copolymer (PLGA) microspheres are crucial in
+           drug delivery due to their ability to provide controlled release of a wide range of ther-
+           apeutic agents while minimizing side effects and enhancing biocompatibility. In this
+           paper, a mathematical model is proposed and numerically studied for the drug release
+           process in PLGA microspheres. A three-dimensional diffusion model is constructed
+           based on Fick’s law, being different from the traditional one-dimensional model in the
+           past and fitting the configuration from the drug delivery system, while an h-adaptive
+           finite element method is designed and realized using a C++ library AFEPack for nu-
+           merical solutions of the proposed model. A notable feature is that the h-adaptivity
+           makes the proposed model and numerical method a quality tool for studying con-
+           cerned phenomena such as initial bursts in drug delivery. In numerical experiments,
+           besides demonstrating the convergence of the numerical method, a case on proges-
+           terone release from PLGA is also studied using the proposed model, from which the
+           potential of the model and the method towards the practical application is shown suc-
+           cessfully.
+
+AMS subject classifications: 65N30, 65N50, 92C45, 35K57
+
+Key words: PLGA microspheres, drug delivery, diffusion model, h-adaptive finite element method.
+
+
+
+∗ Corresponding author.
+Emails: garyhu@um.edu.mo (G. Hu), defangouyang@um.edu.mo (D. Ouyang)
+
+
+https://www.global-sci.com/aamm                       897                    c 2026 Global Science Press
+898                   H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+1     Introduction
+Poly(lactic-co-glycolic acid) (PLGA) is the copolymer first approved by the FDA in Jan-
+uary 1989 [1]. Because of its superb biodegradability and biocompatibility, it has been
+popularly researched as a biological material in drug delivery systems [2, 3]. By slowly
+releasing drug molecules over an extensive period starting from a single administration,
+these systems can control the drug concentrations between the target scopes, decrease
+side effects caused by extraordinary concentrations and repeated administrations, and
+enhance patient compliance in contrast with traditional therapies [4, 5]. Intending to ob-
+tain a required dosage depending on the type of medication, the degradation time of the
+polymer matrix can be controlled by modifying some parameter values, such as molecu-
+lar weight of the polymer, drug concentration, and proportion of lactide to glycolide [6,7].
+In spite of these benefits, the characterization and design of PLGA mainly rely on plenty
+of trial experiments and error modification, and it is still being explored that the interac-
+tion among complicated processes that influence the drug release [8].
+    With the development of drug delivery systems, it is critical to optimize therapeu-
+tic effects by accurately controlling the release rate of drugs. Mathematical modeling
+provides a powerful tool for predicting and optimizing drug release kinetics, as they can
+quantitatively demonstrate the complicated interactions between drug properties, design
+of the delivery system, and environmental factors [9]. By combining experimental data
+with mathematical models, a deeper understanding of the mechanisms will be gained by
+underlying drug release and more efficient and effective delivery systems [10]. Thus, the
+integration of mathematical modeling with drug release research is essential for advanc-
+ing drug delivery technology and improving the prognosis of patients.
+    In order to reduce the multitudinous experiments predicting the unknown trial re-
+sults, establishing a suitable mathematical model is a practical approach to address the
+problem. With the inspiration from heat conduction, Fick first founded the diffusion
+equation in 1855. The main idea of this equation is that the transition rate of diffusive
+material through per unit cross-sectional area proportionate to the concentration gradi-
+ent with the measurement from perpendicular to the cross-section [11]. In 1975, Crank
+collected the previous mathematical theories of diffusion, including the discussion of the
+solution and the numerical experiments [12]. Since 2000, a common method has built
+a relevance between the effective drug diffusivity and molecular weight with exponen-
+tial decline, which is on account of the pseudo-first-order degradation kinetics [13–15].
+Ford et al. (2011) developed a reaction-diffusion model to generate quadratic autocat-
+alytic degradation of the matrix of polymer and evolution in the pore structure [16].
+Casalini et al. and Busatto et al. considered the acid-catalyzed hydrolysis mechanism
+to consist of the polymer degradation process as a system of partial differential equa-
+tions(PDEs), the model also takes the autocatalytic influence into consideration [17–19].
+Recently, the machine learning method has also been utilized for the estimation of effec-
+tive diffusion coefficients in a one-dimensional diffusion-erosion model [20]. Notwith-
+standing the methodology of building the mathematical model has become increasingly
+

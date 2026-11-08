@@ -1,0 +1,469 @@
+>> stage1_verification.py
+{
+ "series": {
+  "tol": 1e-13,
+  "max_terms": 1373,
+  "terms_at_tau_1em6": 1373,
+  "max_abs_diff_series_vs_short_time_tau_le_0p05": 9.697798120100742e-14,
+  "max_abs_diff_production_vs_series": 9.681144774731365e-14
+ },
+ "fvm_vs_exact": {
+  "N25": {
+   "max_err_all": 0.01204796641168715,
+   "max_err_tau_ge_0p01": 0.002406878488456332
+  },
+  "N50": {
+   "max_err_all": 0.002507603357500554,
+   "max_err_tau_ge_0p01": 0.0005923970090159214
+  },
+  "N100": {
+   "max_err_all": 0.0006050003573676577,
+   "max_err_tau_ge_0p01": 0.0001475689480325837
+  },
+  "N200": {
+   "max_err_all": 0.00015078973154136754,
+   "max_err_tau_ge_0p01": 3.688183321270966e-05
+  }
+ },
+ "mesh_convergence": {
+  "N": [
+   10,
+   20,
+   40,
+   80,
+   160,
+   320
+  ],
+  "dtau": 2e-06,
+  "err_F_max_tau_0p01_to_0p5": [
+   0.01773920238129112,
+   0.0038082438926001494,
+   0.0009282154220202621,
+   0.00023068912351431603,
+   5.7589531131552185e-05,
+   1.4393128452860893e-05
+  ],
+  "order_F": [
+   2.2197433606052472,
+   2.036594303827196,
+   2.008509681931064,
+   2.0020715043100434,
+   2.0004263697040248
+  ],
+  "err_profile_L2_tau_0p05": [
+   0.002754879957095219,
+   0.0006841031626188142,
+   0.00017070238260490333,
+   4.265505782365509e-05,
+   1.0662551324488384e-05,
+   2.665638274067285e-06
+  ],
+  "order_profile": [
+   2.009703650497523,
+   2.0027307044922735,
+   2.0006944707757994,
+   2.00016413324376,
+   1.9999997602694684
+  ]
+ },
+ "time_convergence": {
+  "N": 200,
+  "dtau": [
+   0.02,
+   0.01,
+   0.005,
+   0.0025,
+   0.00125,
+   0.000625
+  ],
+  "err_BE": [
+   0.026188496330432076,
+   0.013232391969672852,
+   0.00664867247492229,
+   0.003332106652542799,
+   0.0016679429684181013,
+   0.0008344364717152164
+  ],
+  "err_CN_Rannacher": [
+   0.00404106095219281,
+   0.001004399043678439,
+   0.0002499423524927602,
+   6.24212762980747e-05,
+   1.5601534796627625e-05,
+   3.900144310287068e-06
+  ],
+  "order_BE": [
+   0.9848593508469519,
+   0.9929356608470236,
+   0.9966317312170009,
+   0.998364618670775,
+   0.9991958379433429
+  ],
+  "order_CN": [
+   2.0084015520805263,
+   2.0066652695374967,
+   2.001485624665917,
+   2.0003498948657925,
+   2.0000885491687357
+  ]
+ },
+ "mass_balance_positivity": {
+  "BE": {
+   "max_abs_inventory_minus_flux": 9.2148511043888e-15,
+   "min_c_every_step": 5.199975433302709e-07,
+   "min_release_increment_every_step": 1.0399950867181577e-08,
+   "min_dF": 2.0155851133796254e-05
+  },
+  "CN": {
+   "max_abs_inventory_minus_flux": 1.4099832412739488e-14,
+   "min_c_every_step": 5.174728173054005e-07,
+   "min_release_increment_every_step": 1.0354565870205955e-08,
+   "min_dF": 2.007052907282425e-05
+  }
+ },
+ "positivity_all_main_runs_min_c": 2.586460660116968e-07,
+ "monotonic_all_main_runs_min_dF": 2.0063715500673318e-05,
+ "profile_max_abs_err_N200": {
+  "0.005": 0.00014064401021940398,
+  "0.02": 3.0098101356901275e-05,
+  "0.05": 1.544458174751462e-05,
+  "0.1": 5.064861372638951e-06,
+  "0.2": 7.21391192820553e-06,
+  "0.4": 1.995035965450531e-06
+ },
+ "tau_at_F": {
+  "0.1": 0.0009215858003307396,
+  "0.5": 0.030546524298045684,
+  "0.9": 0.18298537473829993
+ }
+}
+>> digitize_saravanan2011.py /root/.claude/uploads/a11b49a0-bef8-5992-ab58-10b375fbbd31 /home/claude/mdl/data/digitization/saravanan2011_fig6_vector.csv
+('GM1 (9.8% w/w)', 'diamond', 0.002, 0.008, None)
+('GM1 (9.8% w/w)', 'diamond', 1.009, 9.981, 1.813)
+('GM1 (9.8% w/w)', 'diamond', 1.992, 15.039, 2.104)
+('GM1 (9.8% w/w)', 'diamond', 2.999, 20.021, 1.988)
+('GM1 (9.8% w/w)', 'diamond', 5.998, 25.004, 1.922)
+('GM1 (9.8% w/w)', 'diamond', 8.995, 30.993, 2.096)
+('GM1 (9.8% w/w)', 'diamond', 11.992, 35.976, 2.03)
+('GM1 (9.8% w/w)', 'diamond', 15.012, 41.033, 2.487)
+('GM1 (9.8% w/w)', 'diamond', 18.009, 45.017, 3.094)
+('GM1 (9.8% w/w)', 'diamond', 21.008, 48.012, 3.71)
+('GM1 (9.8% w/w)', 'diamond', 24.005, 51.007, 4.126)
+('GM1 (9.8% w/w)', 'diamond', 27.001, 53.993, 4.201)
+('GM1 (9.8% w/w)', 'diamond', 30.001, 55.989, 3.202)
+('GM2 (18.3% w/w)', 'square', -0.001, 0.016, None)
+('GM2 (18.3% w/w)', 'square', 1.006, 16.045, 1.996)
+('GM2 (18.3% w/w)', 'square', 1.989, 26.011, 1.922)
+('GM2 (18.3% w/w)', 'square', 2.996, 32.0, 2.096)
+('GM2 (18.3% w/w)', 'square', 5.995, 38.047, 2.529)
+('GM2 (18.3% w/w)', 'square', 8.992, 45.026, 3.094)
+('GM2 (18.3% w/w)', 'square', 11.989, 51.015, 2.096)
+('GM2 (18.3% w/w)', 'square', 15.009, 56.996, 1.822)
+('GM2 (18.3% w/w)', 'square', 18.006, 63.052, 1.53)
+('GM2 (18.3% w/w)', 'square', 21.005, 68.034, 1.389)
+('GM2 (18.3% w/w)', 'square', 24.002, 72.027, 1.714)
+('GM2 (18.3% w/w)', 'square', 26.999, 76.012, 1.921)
+('GM2 (18.3% w/w)', 'square', 29.998, 80.004, 2.387)
+('GM3 (26.7% w/w)', 'triangle', 0.002, 0.008, None)
+('GM3 (26.7% w/w)', 'triangle', 1.009, 25.004, 2.063)
+('GM3 (26.7% w/w)', 'triangle', 1.992, 35.976, 1.672)
+('GM3 (26.7% w/w)', 'triangle', 2.999, 44.02, 1.597)
+('GM3 (26.7% w/w)', 'triangle', 5.998, 52.005, 1.098)
+('GM3 (26.7% w/w)', 'triangle', 8.995, 58.984, 1.389)
+('GM3 (26.7% w/w)', 'triangle', 11.992, 66.03, 1.888)
+('GM3 (26.7% w/w)', 'triangle', 15.012, 73.017, 2.105)
+('GM3 (26.7% w/w)', 'triangle', 18.009, 78.0, 1.78)
+('GM3 (26.7% w/w)', 'triangle', 21.008, 81.984, 2.105)
+('GM3 (26.7% w/w)', 'triangle', 24.005, 84.979, 1.813)
+('GM3 (26.7% w/w)', 'triangle', 27.001, 88.04, 1.389)
+('GM3 (26.7% w/w)', 'triangle', 30.001, 91.034, 2.496)
+>> build_dataset.py /root/.claude/uploads/a11b49a0-bef8-5992-ab58-10b375fbbd31
+207 rows
+[
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-3",
+  "t": 1,
+  "prose": 37.7,
+  "digitized": 37.0724
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-1",
+  "t": 24,
+  "prose": 62.1,
+  "digitized": 62.254
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-2",
+  "t": 5,
+  "prose": 84.7,
+  "digitized": 84.8392
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "0.5dM-G",
+  "t": 32,
+  "prose": 4.9,
+  "digitized": 5.0288
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "1.0dM-G",
+  "t": 32,
+  "prose": 4.7,
+  "digitized": 4.7933
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "2.5dM-G",
+  "t": 32,
+  "prose": 7.7,
+  "digitized": 7.7186
+ }
+]
+>> qa_overlay.py /root/.claude/uploads/a11b49a0-bef8-5992-ab58-10b375fbbd31
+>> stage2_fit.py
+                 case        formulation      model   n  p  full_RMSE   full_MAE  early_RMSE  late_RMSE  train_RMSE  test_RMSE   test_MAE        aicc  fick_adequate_until_h    R_um    Dapp_cm2_s      Dapp_low     Dapp_high       k_per_h             b             A          k_se      b_se          A_se
+0   C1_Jin2023_mor...    MGM (optimised)        A·F  15  2   4.112804   2.967582    6.063328   0.767480    5.052514  12.348244  12.165818  -90.731958                NaN      31.555  6.804447e-11  3.430114e-11  1.349824e-10  2.460135e-02           NaN  5.847850e-01  4.217372e-03       NaN  1.863813e-02
+1   C1_Jin2023_mor...    MGM (optimised)  A·F+burst  15  3   4.112804   2.967582    6.063327   0.767482    5.052514  12.348243  12.165817  -87.550140                NaN      31.555  6.804443e-11           NaN           NaN  2.460134e-02  4.500454e-13  5.847850e-01           NaN       NaN           NaN
+2   C2_Saravanan20...                GM1          F  12  1   1.312501   1.138127    1.656761   1.012653    1.001597   2.754663   2.721718 -101.597659              720.0      18.945  5.309595e-14  2.420756e-14  1.164587e-13  5.325675e-05           NaN           NaN  1.289856e-06       NaN           NaN
+3   C2_Saravanan20...                GM1    F+burst  12  2   1.312501   1.138126    1.656763   1.012650    1.001597   2.754663   2.721718  -98.664325              720.0      18.945  5.309596e-14           NaN           NaN  5.325676e-05  1.013937e-12           NaN           NaN       NaN           NaN
+4   C2_Saravanan20...                GM2          F  12  1   2.524033   2.269304    2.378246   2.492276    1.759312   4.740514   4.432236  -85.903496              144.0      20.310  1.499927e-13  6.824495e-14  3.296629e-13  1.309040e-04           NaN           NaN  4.941546e-06       NaN           NaN
+5   C2_Saravanan20...                GM2    F+burst  12  2   2.524033   2.269304    2.378247   2.492275    1.610092   5.758178   5.467987  -82.970163              144.0      20.310  1.499928e-13           NaN           NaN  1.309040e-04  4.825013e-13           NaN           NaN       NaN           NaN
+6   C2_Saravanan20...                GM3          F  12  1   2.033477   1.568143    2.744182   0.880948    2.532017   1.126334   0.890708  -91.090151               48.0      22.705  3.499720e-13  1.594375e-13  7.682034e-13  2.443953e-04           NaN           NaN  7.331006e-06       NaN           NaN
+7   C2_Saravanan20...                GM3    F+burst  12  2   1.835125   1.560448    2.241671   1.314417    1.763236   3.117883   3.030409  -90.620047               48.0      22.705  3.322742e-13  1.509261e-13  7.315247e-13  2.320364e-04  3.270672e-02           NaN  1.067711e-05  0.021693           NaN
+8   C3_Kodra2026_k...             MS/K-1          F   5  1   3.362786   2.495516    0.851779   2.942516    1.662173   9.013523   8.304902  -30.590670                1.0       7.500  4.157113e-13  1.838069e-13  9.402032e-13  2.660552e-03           NaN           NaN  3.076637e-04       NaN           NaN
+9   C3_Kodra2026_k...             MS/K-1    F+burst   5  2   2.641295   2.109909    1.849402   1.195804    1.662173   9.013521   8.304900  -26.339008                1.0       7.500  3.485726e-13  1.481502e-13  8.201328e-13  2.230865e-03  4.428221e-02           NaN  3.900366e-04  0.031850           NaN
+10  C3_Kodra2026_k...             MS/K-2          F   5  1  13.087883  11.897739   12.062850  15.020236    4.183381  28.951410  27.111537  -17.001500                NaN       7.500  1.800594e-12  6.068257e-13  5.342784e-12  1.152380e-02           NaN           NaN  4.432230e-03       NaN           NaN
+11  C3_Kodra2026_k...             MS/K-2    F+burst   5  2  13.087883  11.897746   12.062886  15.020186    4.183381  28.951406  27.111532  -10.334833                NaN       7.500  1.800599e-12           NaN           NaN  1.152383e-02  1.901993e-14           NaN           NaN       NaN           NaN
+12  C3_Kodra2026_k...             MS/K-3          F   5  1  18.649765  15.734470   23.010413   8.497544   22.788865  10.787498   7.669873  -13.460033                NaN       7.500  5.078283e-12  1.421065e-12  1.814763e-11  3.250101e-02           NaN           NaN  1.664269e-02       NaN           NaN
+13  C3_Kodra2026_k...             MS/K-3    F+burst   5  2  18.649765  15.734479   23.010287   8.497648   22.788865  10.787613   7.669957   -6.793367                NaN       7.500  5.078246e-12  1.140942e-12  2.260288e-11  3.250077e-02  1.048243e-11           NaN  2.107109e-02  0.099703           NaN
+14  C4_Zhang2023_v...             pH 6.0          F  11  1   6.291366   5.688159    5.668848   7.746849    1.276024  12.410089  11.948009  -58.407380                NaN      13.700  2.687698e-13  1.196851e-13  6.035606e-13  5.155156e-04           NaN           NaN  5.247910e-05       NaN           NaN
+15  C4_Zhang2023_v...             pH 6.0    F+burst  11  2   4.306684   3.842991    3.871047   4.342148    0.833968  11.311721  10.779012  -63.690042                NaN      13.700  1.962019e-13  8.603634e-14  4.474295e-13  3.763264e-04  1.410717e-01           NaN  4.892787e-05  0.041322           NaN
+16  C4_Zhang2023_v...             pH 7.4          F  10  1   7.755195   7.128308    8.720892   7.849862    3.930088  16.047092  15.729710  -48.636146                NaN      13.700  1.598916e-13  7.013033e-14  3.645402e-13  3.066811e-04           NaN           NaN  3.975442e-05       NaN           NaN
+17  C4_Zhang2023_v...             pH 7.4    F+burst  10  2   3.847616   3.205116    4.597132   2.816578    2.378717  11.073701  10.712725  -59.440046                NaN      13.700  8.579471e-14  3.626118e-14  2.029921e-13  1.645591e-04  2.159186e-01           NaN  2.992350e-05  0.040895           NaN
+18  C5_Chang2023_g...            0.5dM-G        A·F   6  2   0.234519   0.173041    0.082250   0.383178    0.004192   0.363398   0.238039   -9.402620              384.0      10.280  3.702753e-12  4.458640e-13  3.075014e-11  1.261366e-02           NaN  4.521308e+00  9.682438e-03       NaN  1.310712e-01
+19  C5_Chang2023_g...            0.5dM-G  A·F+burst   6  3   0.160372   0.125048    0.080882   0.259943         NaN        NaN        NaN   -3.963134              768.0      10.280  4.198273e-29  9.470600e-30  1.861075e-28  1.430168e-19  2.364142e-07  1.769958e+07  0.000000e+00  0.000000  0.000000e+00
+20  C5_Chang2023_g...            1.0dM-G        A·F  10  2   0.286033   0.215775    0.256632   0.360778    0.212067   0.389747   0.228275  -19.318704                NaN      10.545  2.101377e-11  3.696615e-12  1.194549e-10  6.803203e-02           NaN  4.108563e+00  1.744014e-02       NaN  1.190616e-01
+21  C5_Chang2023_g...            1.0dM-G  A·F+burst  10  3   0.286033   0.215775    0.256632   0.360778    0.212067   0.389747   0.228275  -15.032989                NaN      10.545  2.101370e-11           NaN           NaN  6.803177e-02  4.609154e-13  4.108564e+00           NaN       NaN           NaN
+22  C5_Chang2023_g...            2.5dM-G        A·F  10  2   1.039356   0.680272    0.363699   1.550165    0.204844   1.771633   0.982225    6.486305                NaN       8.680  9.947433e-12  1.097117e-12  9.019221e-11  4.753068e-02           NaN  4.733755e+00  3.531594e-02       NaN  4.469735e-01
+23  C5_Chang2023_g...            2.5dM-G  A·F+burst  10  3   0.686937   0.596781    0.597497   0.897261    0.204844   1.771633   0.982225    2.489746              768.0       8.680  3.186970e-32  8.760295e-75  1.159410e+11  1.522793e-22  1.178710e-09  2.815729e+09  1.296326e-13  0.006192  1.479066e+16
+24  C6_Hu2024_gent...  m-EmG net (raw...        A·F  14  2   0.024560   0.021050    0.018540   0.031165    0.017812   0.031924   0.030402  -98.695104                NaN       8.050  2.849702e-12  8.284229e-13  9.802725e-12  1.583107e-02           NaN  3.344944e-01  3.235643e-03       NaN  8.511836e-03
+25  C6_Hu2024_gent...  m-EmG net (raw...  A·F+burst  14  3   0.024560   0.021050    0.018540   0.031165    0.017812   0.031924   0.030402  -95.386013                NaN       8.050  2.849705e-12           NaN           NaN  1.583108e-02  8.940709e-61  3.344944e-01           NaN       NaN           NaN
+26    C7_Lan2017_bFGF       A porous GMS          F  11  1   9.812453   9.036240   12.318622   7.648548    5.542426  27.139202  26.849059  -48.628949                NaN      17.500  6.283374e-14  2.614297e-14  1.510188e-13  7.386171e-05           NaN           NaN  1.480378e-05       NaN           NaN
+27    C7_Lan2017_bFGF       A porous GMS    F+burst  11  2   9.812453   9.036235   12.318632   7.648524    5.542426  27.139207  26.849064  -45.573393                NaN      17.500  6.283382e-14           NaN           NaN  7.386180e-05  7.481970e-15           NaN           NaN       NaN           NaN
+28    C7_Lan2017_bFGF       B normal GMS          F  11  1  12.452841  10.070834   17.662623   6.279561   13.892993  13.817284  12.156522  -43.386427                NaN         NaN           NaN           NaN           NaN  4.771398e-04           NaN           NaN  1.002097e-04       NaN           NaN
+29    C7_Lan2017_bFGF       B normal GMS    F+burst  11  2  12.452841  10.070804   17.662709   6.279467   13.892993  13.817264  12.156502  -40.330871                NaN         NaN           NaN           NaN           NaN  4.771428e-04  1.296418e-14           NaN           NaN       NaN           NaN
+30  C8_Liu2022_ica...       GM-1 0.25 mM          F   6  1   2.992946   2.642059    2.650392   2.906814    2.405919   3.543004   3.179818  -39.106945                NaN         NaN           NaN           NaN           NaN  2.154409e-04           NaN           NaN  1.420620e-05       NaN           NaN
+31  C8_Liu2022_ica...       GM-1 0.25 mM    F+burst   6  2   2.992946   2.642059    2.650392   2.906814    2.405919   3.543002   3.179814  -34.106945                NaN         NaN           NaN           NaN           NaN  2.154409e-04  2.324068e-14           NaN           NaN       NaN           NaN
+32  C8_Liu2022_ica...        GM-2 0.5 mM          F   6  1   2.096467   1.502060    3.075042   0.201227    2.916379   0.600045   0.391789  -43.379000               24.0         NaN           NaN           NaN           NaN  4.887232e-04           NaN           NaN  2.333801e-05       NaN           NaN
+33  C8_Liu2022_ica...        GM-2 0.5 mM    F+burst   6  2   2.069119   1.598304    3.066810   0.423822    2.884430   0.506170   0.493532  -38.536568               24.0         NaN           NaN           NaN           NaN  4.779349e-04  1.499874e-02           NaN  4.142823e-05  0.045692           NaN
+>> stage2_plots.py
+                           case                   formulation preferred   k_per_h      k_se         b         A  full_RMSE  test_RMSE  early_RMSE  late_RMSE    Dapp_cm2_s   residual_signs
+0           C1_Jin2023_morphine               MGM (optimised)         F  0.024601  0.004217       NaN  0.584785   4.112804  12.348244    6.063328   0.767480  6.804447e-11  -----++++----++
+1   C2_Saravanan2011_diclofenac                           GM1         F  0.000053  0.000001       NaN       NaN   1.312501   2.754663    1.656761   1.012653  5.309595e-14     --+----+++++
+2   C2_Saravanan2011_diclofenac                           GM2         F  0.000131  0.000005       NaN       NaN   2.524033   4.740514    2.378246   2.492276  1.499927e-13     -++-----++++
+3   C2_Saravanan2011_diclofenac                           GM3         F  0.000244  0.000007       NaN       NaN   2.033477   1.126334    2.744182   0.880948  3.499720e-13     +++-----++++
+4       C3_Kodra2026_ketoprofen                        MS/K-1         F  0.002661  0.000308       NaN       NaN   3.362786   9.013523    0.851779   2.942516  4.157113e-13            ++++-
+5       C3_Kodra2026_ketoprofen                        MS/K-2         F  0.011524  0.004432       NaN       NaN  13.087883  28.951410   12.062850  15.020236  1.800594e-12            ---++
+6       C3_Kodra2026_ketoprofen                        MS/K-3         F  0.032501  0.016643       NaN       NaN  18.649765  10.787498   23.010413   8.497544  5.078283e-12            --+++
+7       C4_Zhang2023_vancomycin                        pH 6.0        FB  0.000376  0.000049  0.141072       NaN   4.306684  11.311721    3.871047   4.342148  1.962019e-13      --++++++---
+8       C4_Zhang2023_vancomycin                        pH 7.4        FB  0.000165  0.000030  0.215919       NaN   3.847616  11.073701    4.597132   2.816578  8.579471e-14       --+++++---
+9       C5_Chang2023_gentamicin                       0.5dM-G         F  0.012614  0.009682       NaN  4.521308   0.234519   0.363398    0.082250   0.383178  3.702753e-12           +----+
+10      C5_Chang2023_gentamicin                       1.0dM-G         F  0.068032  0.017440       NaN  4.108563   0.286033   0.389747    0.256632   0.360778  2.101377e-11       -+-------+
+11      C5_Chang2023_gentamicin                       2.5dM-G         F  0.047531  0.035316       NaN  4.733755   1.039356   1.771633    0.363699   1.550165  9.947433e-12       -+-------+
+12         C6_Hu2024_gentamicin  m-EmG net (raw - background)         F  0.015831  0.003236       NaN  0.334494   0.024560   0.031924    0.018540   0.031165  2.849702e-12   -+++--++++++--
+13              C7_Lan2017_bFGF                  A porous GMS         F  0.000074  0.000015       NaN       NaN   9.812453  27.139202   12.318622   7.648548  6.283374e-14      ------+++++
+14              C7_Lan2017_bFGF                  B normal GMS         F  0.000477  0.000100       NaN       NaN  12.452841  13.817284   17.662623   6.279561           NaN      ----++++++-
+15           C8_Liu2022_icariin                  GM-1 0.25 mM         F  0.000215  0.000014       NaN       NaN   2.992946   3.543004    2.650392   2.906814           NaN           --+++-
+16           C8_Liu2022_icariin                   GM-2 0.5 mM         F  0.000489  0.000023       NaN       NaN   2.096467   0.600045    3.075042   0.201227           NaN           -+--++
+>> stage3_readiness.py
+                           case                                                                    Q1_Cw_or_data         Q2_same_formulation_medium                                                    Q3_volume_or_radius_vs_time                                  Q4_network_mass_constant                                            Q5_covers_initial_transient                                                                        determinable                                                                               decision
+0          C1 Jin 2023 morphine                                                                               no                                  —                                                                             no                                              not reported                                                                     no                                                           k only (lumped D_app/R^2)                                             constant radius; Fujita model not testable
+1  C2 Saravanan 2011 diclofenac                                                                               no                                  —                                                                             no                                              not reported                                                                     no                                       k per batch; D_app with assumed R uncertainty                                             constant radius; Fujita model not testable
+2      C3 Kodra 2026 ketoprofen  partial: gravimetric SD% = (Wt-Wi)/Wi only; no wet volume -> C_w not computable  yes (MS/K-1..3, PBS pH 7.4, 37 C)  no (single hydrated size distribution of empty MS; MS/K Table S2 unavailable)  no (DR% -> ~0 at 24 h; apparent SD falls after its peak)  no (first swelling point 1 h; 10-38% of drug already released by 1 h)  k; exploratory (k_eq, beta) of a gravimetric-index model only, weakly identifiable  constant radius retained; Fujita C_w model not testable; index model = candidate only
+3      C4 Zhang 2023 vancomycin                                     partial: 'swelling rate' of drug-free M only                       no (M vs VM)                                                                             no                                              not reported                                           partial (M: 15 min resolved)                                                   k (lumped with dialysis membrane)                                                          constant radius; not testable
+4      C5 Chang 2023 gentamicin                                                                               no                                  —                                                                             no                 no (weight loss of drug-free dM reported)                                                                     no                                                                                k, A                                                          constant radius; not testable
+5         C6 Hu 2024 gentamicin                                             no (weight change of drug-free m-Em)                                 no                                                                             no                                                        no                                                                     no                                                                                k, A                                                          constant radius; not testable
+6              C7 Lan 2017 bFGF                                                                               no                                  —                                                                             no                                              not reported                                                                     no                                                                                   k                                                          constant radius; not testable
+7           C8 Liu 2022 icariin                                                                               no                                  —                                                                             no                                              not reported                                                                     no                                                             k (no reference radius)                                                          constant radius; not testable
+>> stage4_compare.py
+   formulation                          model          variant  scope   k_per_h  k_eq_per_h          beta   RMSE_fit  test_RMSE       aicc  corr_k_beta beta_at_bound
+0       MS/K-1                  C: constant D                -   full  0.002661         NaN           NaN   3.362786        NaN -30.590670          NaN           NaN
+1       MS/K-1                  C: constant D                -  train  0.003673         NaN           NaN   1.662173   9.013524 -18.582267          NaN           NaN
+2       MS/K-1  W-Q: index-driven Fujita form           linear   full       NaN    0.002661  7.042966e-20   3.362786        NaN -23.924004     0.460690          True
+3       MS/K-1  W-Q: index-driven Fujita form           linear  train       NaN    0.004816  7.157565e-01   0.692102  13.415572        inf     0.865829         False
+4       MS/K-1  W-Q: index-driven Fujita form             step   full       NaN    0.002661  9.517398e-17   3.362786        NaN -23.924004     0.298098          True
+5       MS/K-1  W-Q: index-driven Fujita form             step  train       NaN    0.010178  8.254431e+00   0.194792  21.728300        inf     0.984735         False
+6       MS/K-1  W-Q: index-driven Fujita form  linear_monotone   full       NaN    0.002661  3.486996e-19   3.362786        NaN -23.924004     0.389789          True
+7       MS/K-1  W-Q: index-driven Fujita form  linear_monotone  train       NaN    0.004816  7.157565e-01   0.692102  13.644384        inf     0.865829         False
+8       MS/K-1  W-Q: index-driven Fujita form    step_monotone   full       NaN    0.002661  2.754048e-15   3.362786        NaN -23.924004     0.243974          True
+9       MS/K-1  W-Q: index-driven Fujita form    step_monotone  train       NaN    0.010178  8.254431e+00   0.194792  23.670608        inf     0.984735         False
+10      MS/K-2                  C: constant D                -   full  0.011524         NaN           NaN  13.087883        NaN -17.001500          NaN           NaN
+11      MS/K-2                  C: constant D                -  train  0.005413         NaN           NaN   4.183381  28.951410 -13.044303          NaN           NaN
+12      MS/K-2  W-Q: index-driven Fujita form           linear   full       NaN    0.027447  3.176517e+00   8.987388        NaN -14.093479     0.811874         False
+13      MS/K-2  W-Q: index-driven Fujita form           linear  train       NaN    0.009794  1.523551e+00   1.582480  24.218680        inf     0.847131         False
+14      MS/K-2  W-Q: index-driven Fujita form             step   full       NaN    0.063356  1.127252e+01  11.046706        NaN -12.030379     0.905808         False
+15      MS/K-2  W-Q: index-driven Fujita form             step  train       NaN    0.014914  5.817588e+00   2.540573  29.973324        inf     0.944770         False
+16      MS/K-2  W-Q: index-driven Fujita form  linear_monotone   full       NaN    0.026996  4.023096e+00   7.494542        NaN -15.909952     0.702492         False
+17      MS/K-2  W-Q: index-driven Fujita form  linear_monotone  train       NaN    0.009794  1.523551e+00   1.582480  21.081935        inf     0.847131         False
+18      MS/K-2  W-Q: index-driven Fujita form    step_monotone   full       NaN    0.041608  1.206258e+01   5.001776        NaN -19.953770     0.731281         False
+19      MS/K-2  W-Q: index-driven Fujita form    step_monotone  train       NaN    0.014914  5.817588e+00   2.540573  17.203953        inf     0.944770         False
+20      MS/K-3                  C: constant D                -   full  0.032501         NaN           NaN  18.649765        NaN -13.460033          NaN           NaN
+21      MS/K-3                  C: constant D                -  train  0.027790         NaN           NaN  22.788865  10.787294  -2.873389          NaN           NaN
+22      MS/K-3  W-Q: index-driven Fujita form           linear   full       NaN    0.228075  7.247942e+00   7.848314        NaN -15.448714     0.898932         False
+23      MS/K-3  W-Q: index-driven Fujita form           linear  train       NaN    0.221104  8.270397e+00   8.511061   8.473849        inf     0.888908         False
+24      MS/K-3  W-Q: index-driven Fujita form             step   full       NaN    0.032501  6.694747e-17  18.649765        NaN  -6.793367          NaN          True
+25      MS/K-3  W-Q: index-driven Fujita form             step  train       NaN    0.027790  1.614217e-14  22.788865  10.787494        inf          NaN          True
+26      MS/K-3  W-Q: index-driven Fujita form  linear_monotone   full       NaN    0.134059  7.680205e+00   2.149552        NaN -28.399107     0.752739         False
+27      MS/K-3  W-Q: index-driven Fujita form  linear_monotone  train       NaN    0.134052  7.679204e+00   2.774391   0.016508        inf     0.754461         False
+28      MS/K-3  W-Q: index-driven Fujita form    step_monotone   full       NaN    0.032580  2.344647e+01  18.616105        NaN  -6.811431          NaN         False
+29      MS/K-3  W-Q: index-driven Fujita form    step_monotone  train       NaN    0.027800  2.083681e+01  22.784204  10.790934        inf          NaN         False
+                           case                   formulation       t50_h                                                        note model    t50_lo_h      t50_hi_h   data_bracket_h
+0           C1_Jin2023_morphine               MGM (optimised)         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+1   C2_Saravanan2011_diclofenac                           GM1  573.570902  model-based; data bracket shows observed crossing interval     F  547.577207  6.021554e+02   (504.0, 576.0)
+2   C2_Saravanan2011_diclofenac                           GM2  233.350586  model-based; data bracket shows observed crossing interval     F  217.274690  2.519954e+02   (216.0, 288.0)
+3   C2_Saravanan2011_diclofenac                           GM3  124.988202  model-based; data bracket shows observed crossing interval     F  118.047798  1.327957e+02    (72.0, 144.0)
+4       C3_Kodra2026_ketoprofen                        MS/K-1   11.481272  model-based; data bracket shows observed crossing interval     F    9.359841  1.484620e+01      (5.0, 24.0)
+5       C3_Kodra2026_ketoprofen                        MS/K-2    2.650733  model-based; data bracket shows observed crossing interval     F    1.511383  1.076859e+01       (3.0, 5.0)
+6       C3_Kodra2026_ketoprofen                        MS/K-3    0.939864  model-based; data bracket shows observed crossing interval     F    0.469076  3.054652e+10       (1.0, 3.0)
+7       C4_Zhang2023_vancomycin                        pH 6.0   52.893460  model-based; data bracket shows observed crossing interval    FB   42.151949  7.098158e+01     (24.0, 48.0)
+8       C4_Zhang2023_vancomycin                        pH 7.4   87.121074  model-based; data bracket shows observed crossing interval    FB   64.229287  1.353668e+02     (48.0, 72.0)
+9       C5_Chang2023_gentamicin                       0.5dM-G         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+10      C5_Chang2023_gentamicin                       1.0dM-G         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+11      C5_Chang2023_gentamicin                       2.5dM-G         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+12         C6_Hu2024_gentamicin  m-EmG net (raw - background)         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+13              C7_Lan2017_bFGF                  A porous GMS  413.563744  model-based; data bracket shows observed crossing interval     F  296.922430  6.811382e+02  (215.52, 288.0)
+14              C7_Lan2017_bFGF                  B normal GMS   64.020072  model-based; data bracket shows observed crossing interval     F   45.351478  1.088115e+02   (72.0, 119.76)
+15           C8_Liu2022_icariin                  GM-1 0.25 mM  141.786099  model-based; data bracket shows observed crossing interval     F  125.558577  1.628308e+02    (72.0, 168.0)
+16           C8_Liu2022_icariin                   GM-2 0.5 mM   62.502710  model-based; data bracket shows observed crossing interval     F   57.153386  6.895678e+01     (24.0, 72.0)
+{
+ "coupled_solver_check": {
+  "beta0_max_err_vs_analytical": 0.0005226439634626878,
+  "mass_balance_max": 8.548717289613705e-15
+ },
+ "synthetic": {
+  "diclofenac-like (12 points) | noise=0.0": {
+   "k_app_over_kdeq": 0.27556486256806423,
+   "RMSE_constD_vs_truth": 2.3543872103757986,
+   "RMSE_constD_fit": 2.3543872103757986,
+   "burst_b": 8.927338630585808e-12
+  },
+  "diclofenac-like (12 points) | noise=0.01": {
+   "k_app_over_kdeq": 0.27308567274757495,
+   "RMSE_constD_vs_truth": 2.3602503354935926,
+   "RMSE_constD_fit": 2.5465664232051313,
+   "burst_b": 9.177794052867477e-12
+  },
+  "diclofenac-like (12 points) | noise=0.02": {
+   "k_app_over_kdeq": 0.25690284226164056,
+   "RMSE_constD_vs_truth": 2.690271690379447,
+   "RMSE_constD_fit": 2.0007730860212516,
+   "burst_b": 3.220702165273067e-13
+  },
+  "Kodra-like (5 points) | noise=0.0": {
+   "k_app_over_kdeq": 0.24985637337096134,
+   "RMSE_constD_vs_truth": 1.6423370047806303,
+   "RMSE_constD_fit": 1.6423370047806303,
+   "burst_b": 2.0249792506679574e-09
+  },
+  "Kodra-like (5 points) | noise=0.01": {
+   "k_app_over_kdeq": 0.23903137729853632,
+   "RMSE_constD_vs_truth": 1.8161443339474483,
+   "RMSE_constD_fit": 1.8849202124706321,
+   "burst_b": 2.9690893635580436e-09
+  },
+  "Kodra-like (5 points) | noise=0.02": {
+   "k_app_over_kdeq": 0.230023993020545,
+   "RMSE_constD_vs_truth": 2.1877797632049143,
+   "RMSE_constD_fit": 1.7487205464911064,
+   "burst_b": 3.4816196996571476e-13
+  }
+ },
+ "identifiability_grid": {
+  "scale": [
+   0.6,
+   0.7,
+   0.8,
+   0.9,
+   1.0,
+   1.1,
+   1.2000000000000002,
+   1.3,
+   1.4,
+   1.5,
+   1.6
+  ],
+  "beta": [
+   4.0,
+   5.0,
+   6.0,
+   7.0,
+   8.0,
+   9.0,
+   10.0,
+   11.0,
+   12.0,
+   13.0
+  ],
+  "SSR": [
+   [
+    0.04372150626870576,
+    0.010694633975298745,
+    0.001832509698745197,
+    0.00747748152444692,
+    0.02190116934272413,
+    0.04156575548152833,
+    0.06428345553104518,
+    0.08868958233329353,
+    0.11398676015023736,
+    0.13960307531120475,
+    0.16513372550844882
+   ],
+   [
+    0.06905316554105455,
+    0.02278204216308821,
+    0.003937851178134523,
+    0.0020211654840385446,
+    0.01062693063473142,
+    0.025736188810346644,
+    0.044841075560588015,
+    0.06631871508226364,
+    0.08918745455771226,
+    0.11280419499061087,
+    0.136666739787767
+   ],
+   [
+    0.09142727148809032,
+    0.03510357632283042,
+    0.008684957872807576,
+    0.0009793306083716814,
+    0.0051193211113218515,
+    0.016735791501168246,
+    0.03303868718860497,
+    0.05227184109840651,
+    0.07327915488611066,
+    0.09532607800324258,
+    0.117891225332814
+   ],
+   [
+    0.1128107490731523,
+    0.047770727612163943,
+    0.01477927023284484,
+    0.0020272177669209794,
+    0.0022469339104226296,
+    0.010798279472096566,
+    0.02464414400865159,
+    0.04187538130807917,
+    0.06126233013891239,
+    0.08193544529140499,
+    0.10332869291900891
+   ],
+   [
+    0.13410896911843811,
+    0.061046655818950676,
+    0.021905971809470764,
+    0.004471522430897107,
+    0.0010089956500301

@@ -1,0 +1,104 @@
+{
+ "C1_Jin2023_morphine|MGM (optimised)": {
+  "n": 15,
+  "n_train": 9,
+  "t_split_h": 8.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C2_Saravanan2011_diclofenac|GM1": {
+  "n": 12,
+  "n_train": 7,
+  "t_split_h": 360.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C2_Saravanan2011_diclofenac|GM2": {
+  "n": 12,
+  "n_train": 7,
+  "t_split_h": 360.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C2_Saravanan2011_diclofenac|GM3": {
+  "n": 12,
+  "n_train": 7,
+  "t_split_h": 360.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C3_Kodra2026_ketoprofen|MS/K-1": {
+  "n": 5,
+  "n_train": 3,
+  "t_split_h": 3.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C3_Kodra2026_ketoprofen|MS/K-2": {
+  "n": 5,
+  "n_train": 3,
+  "t_split_h": 3.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C3_Kodra2026_ketoprofen|MS/K-3": {
+  "n": 5,
+  "n_train": 3,
+  "t_split_h": 3.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C4_Zhang2023_vancomycin|pH 6.0": {
+  "n": 11,
+  "n_train": 6,
+  "t_split_h": 96.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C4_Zhang2023_vancomycin|pH 7.4": {
+  "n": 10,
+  "n_train": 6,
+  "t_split_h": 144.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C5_Chang2023_gentamicin|0.5dM-G": {
+  "n": 6,
+  "n_train": 3,
+  "t_split_h": 96.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C5_Chang2023_gentamicin|1.0dM-G": {
+  "n": 10,
+  "n_train": 6,
+  "t_split_h": 48.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C5_Chang2023_gentamicin|2.5dM-G": {
+  "n": 10,
+  "n_train": 6,
+  "t_split_h": 48.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C6_Hu2024_gentamicin|m-EmG net (raw - background)": {
+  "n": 14,
+  "n_train": 8,
+  "t_split_h": 192.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C7_Lan2017_bFGF|A porous GMS": {
+  "n": 11,
+  "n_train": 6,
+  "t_split_h": 167.52,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C7_Lan2017_bFGF|B normal GMS": {
+  "n": 11,
+  "n_train": 6,
+  "t_split_h": 168.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C8_Liu2022_icariin|GM-1 0.25 mM": {
+  "n": 6,
+  "n_train": 3,
+  "t_split_h": 168.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ },
+ "C8_Liu2022_icariin|GM-2 0.5 mM": {
+  "n": 6,
+  "n_train": 3,
+  "t_split_h": 168.0,
+  "rule": "first max(3, floor(0.6 n)) points in time order = training; rest = test"
+ }
+}

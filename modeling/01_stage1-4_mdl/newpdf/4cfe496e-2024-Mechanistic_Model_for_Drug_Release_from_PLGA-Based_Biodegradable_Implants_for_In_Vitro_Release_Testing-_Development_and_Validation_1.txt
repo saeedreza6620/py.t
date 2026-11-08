@@ -1,0 +1,1049 @@
+                                                                                                          Downloaded from https://iranpaper.ir
+
+
+
+
+                                                                                                          www.acsabm.org                                                                                                                                     Article
+
+
+
+                                                                                                          Mechanistic Model for Drug Release from PLGA-Based
+                                                                                                          Biodegradable Implants for In Vitro Release Testing: Development
+                                                                                                          and Validation
+                                                                                                          Naresh Mittapelly,* Alexandre Djehizian, Krishna Chaitanya Telaprolu, Kevin McNally,
+                                                                                                          Santosh Kumar Puttrevu, Omid Arjmandi-Tash, Sebastian Polak, and Frederic Y. Bois*
+                                                                                                                Cite This: ACS Appl. Bio Mater. 2024, 7, 7453−7465                              Read Online
+See https://pubs.acs.org/sharingguidelines for options on how to legitimately share published articles.
+
+
+
+
+                                                                                                          ACCESS                          Metrics & More                            Article Recommendations                *
+                                                                                                                                                                                                                           sı Supporting Information
+    Downloaded via CHINESE UNIV OF HONG KONG on April 29, 2026 at 09:06:36 (UTC).
+
+
+
+
+                                                                                                          ABSTRACT: Several factors can affect drug release from polylactide coglycolide
+                                                                                                          (PLGA)-based formulations, including polymer and drug properties, formulation
+                                                                                                          components, manufacturing processes, and environmental in vitro or in vivo
+                                                                                                          conditions. To achieve optimal release profiles for specific drug delivery
+                                                                                                          applications, it is crucial to understand the mechanistic processes that determine
+                                                                                                          drug release from PLGA-based formulations. In the current study, we developed a
+                                                                                                          mechanistic model for the in vitro drug release of PLGA-based solid implants. The
+                                                                                                          model accounts for all known critical quality attributes (CQAs) and considers the
+                                                                                                          most important release rate processes, including water or dissolution medium
+                                                                                                          influx into the porous structure of the implant, initial noncatalytic hydrolysis of
+                                                                                                          PLGA, autocatalytic hydrolysis, dissolution of oligomers and monomers into the
+                                                                                                          aqueous medium, the liberation of the trapped solid drug from the polymer
+                                                                                                          matrix, dissolution of the solid drug into the wetted pore network, diffusion of the
+                                                                                                          dissolved drug out of the implant, and distribution of the dissolved drug into the dissolution medium. The model has been validated
+                                                                                                          using in vitro release data obtained from implants of four drugs (buserelin, afamelanotide, brimonidine, and nafarelin). The model
+                                                                                                          presented in this manuscript provides valuable insights into the kinetics and mechanism of drug release from PLGA-based solid
+                                                                                                          implants and has demonstrated the potential for optimizing formulation design. The in vitro release model, coupled with
+                                                                                                          physiologically based pharmacokinetic (PBPK) modeling, can predict the in vivo performance of implants and can be used to support
+                                                                                                          bioequivalence studies in a drug development program.
+                                                                                                          KEYWORDS: long-acting injectables, biodegradable implants, PLGA-based solid implants, in vitro release testing, mechanistic modeling
+
+
+                                                                                                          1. INTRODUCTION                                                                  rate-controlled drug release predominantly by diffusion through
+                                                                                                          Poly(lactide-co-glycolide) (PLGA)-based formulations were                        the water-filled porous structure of the polymeric matrix,
+                                                                                                          first approved for clinical use by the U.S. Food and Drug                        osmotic pumping, and erosion.9 Drug release from PLGA
+                                                                                                          Administration (FDA) in 1989 in the case of Lupron Depot.1                       polymers typically lasts from days to months.
+                                                                                                          Since then, the FDA has approved 24 other innovator drug                            Fredenberg et al.9 and Park et al.10 discussed that drug release
+                                                                                                          products using PLGA as the main excipient to achieve sustained                   from PLGA-based formulations is influenced by several
+                                                                                                          release.2 PLGA-based formulations offer a therapeutic advant-                    physicochemical properties of the polymer (molecular weight,
+                                                                                                          age in the treatment of diseases requiring long durations of drug                lactic acid (LA) to glycolic acid (GA) ratio, acid or ester end-
+                                                                                                          exposure with sustained levels of therapeutic concentrations.3−8                 capping, crystallinity), drug (chemical properties, drug loading,
+                                                                                                          PLGA is biodegradable and biocompatible, so PLGA-based drug                      content uniformity), drug delivery system (size, porosity,
+                                                                                                          products were approved for parenteral use by regulatory                          density, and shape), in vitro (release medium composition,
+                                                                                                          authorities. Biodegradation of PLGA is driven by an initial                      pH, temperature, stirring rate, osmolality), and in vivo
+                                                                                                          water influx followed by pH-driven rate-controlled degradation                   conditions (immune response, sink conditions, enzymes, lipids).
+                                                                                                          (ester hydrolysis) into short-chain oligomers. Further degrada-
+                                                                                                          tion of oligomers results in the formation of free acid molecules,               Received: July 29, 2024
+                                                                                                          resulting in a further drop in the pH, which further increases the               Revised: October 9, 2024
+                                                                                                          hydrolysis rate. This phenomenon is termed autocatalytic                         Accepted: October 11, 2024
+                                                                                                          degradation. The time-dependent degradation of polymers                          Published: October 18, 2024
+                                                                                                          results in an increase in the porosity of the polymeric matrix,
+                                                                                                          leading to drug release. Consequently, PLGA formulations offer
+
+                                                                                                                                                 © 2024 American Chemical Society                                                https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                                                                                    7453                                         ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                    www.acsabm.org                                                    Article
+
+
+
+
+Figure 1. Schematic of the mechanistic release model, where arrows indicate physical or chemical processes. The schematic shows three regions:
+unwetted, wetted, and solvent/dissolution media compartments. R(t) demarcates the boundary between unwetted and wetted compartments, and Rim
+indicates the radius of the implant.
+
+Drug release is influenced not only by the physicochemical                   CPPs. Mechanistic mathematical models are one of the key
+properties of the polymer and drug but also by the processes                 elements of the QbD approach.15 Furthermore, in vitro release
+employed in manufacturing.9,10 For example, the hot melt                     testing (IVRT) is a useful technique for evaluating product
+extrusion method leads to less porous implants compared to                   performance and is widely reported to be used for understanding
+implants produced by direct compression.11 Critical process                  product behavior when changing formulation factors or
+parameters (CPPs) such as extrusion temperature, screw speed                 manufacturing conditions. Unfortunately, IVRT alone does
+and feed rate, cooling rate, and melt viscosity for hot melt                 not provide quantitative insights into the release behavior of new
+extrusion can have an impact on critical quality attributes                  or alternative formulations manufactured. Mathematical model-
+(CQAs) of PLGA implants such as its porosity and, therefore,                 ing is a tool to bridge the gap between the generated information
+drug release.                                                                from IVRT and the CQAs of the product. By using mathematical
+   Although PLGA-based injectable formulations offer several                 models to understand the underlying mechanisms of drug
+therapeutic advantages, their development is challenging, which              release, researchers can predict the release kinetics of drugs from
+is evident from their limited availability on the market. As                 PLGA implants and make informed decisions about the design
+described by Park et al.10 and Yun et al.,12 the bioavailability of          and optimization of the delivery system. The use of
+API released from long-acting injectable (LAI) dosage forms,                 mathematical models can help to reduce the number of physical
+unlike the one released from oral dosage forms, cannot be                    experiments that are needed to determine the optimal design of
+predicted simply by drug properties because the release is                   the delivery system. Consequently, this approach can potentially
+predominantly influenced by the implant properties, polymer                  save time and resources during the initial drug product
+characteristics, and implant type. Drug release from most of the             development phase for new chemical entities (NCEs) and
+marketed PLGA drug delivery systems is characterized by an                   generic equivalents.
+initial burst release followed by a slow drug release phase and is              Mathematical modeling of drug release from PLGA
+influenced by drug loading.10,12 A high drug loading, with a low             formulations was extensively reviewed in the literature.16 Most
+burst, is intended from a dosage form design perspective, the                of the published mathematical models emphasize one of the
+large pores in solid implants; however, a high drug loading can              processes involved in drug release, either PLGA degrada-
+cause the burst release to occur initially, which is why it is               tion,17−21 erosion with pore formation, diffusive drug release,
+important to maintain a balance between burst release and drug               stochastic degradation and erosion, erosion by dissolution to
+loading during development.13,14 Additionally, the sensitivity of            determine microclimate pH, noncatalytic and autocatalytic
+drug release toward the in vitro media testing conditions is also            degradation,22−26 or show empirical fits between drug diffusivity
+difficult to control.13                                                      and degradation.27−30 A few models interlinking different
+   The implementation of the Quality by Design (QbD)                         phenomena of drug release from PLGA formulations were
+approach ensures the development of quality drug products                    also reported.31−41 However, these coupled phenomena models
+throughout their life cycle and helps overcome the challenges                do not account for all of the key processes involved in drug
+associated with their development. In summary, the QbD                       release from the PLGA matrices. Furthermore, most of the
+approach involves Quality Target Product Profile (QTPP)                      mathematical models were developed for microspheres, and a
+construction, which can be achieved by controlling CQAs and                  comprehensive mechanistic model of drug release from PLGA-
+                                                                      7454                                         https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                   ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                           www.acsabm.org                                                                       Article
+
+based implants is still lacking. Therefore, the present study aims                               ij c yz
+                                                                                                  jj zzln(r ) + b; v = c
+to address the gaps in existing models by developing a                                 p=          jj zz
+                                                                                                    j pz               r
+comprehensive mathematical model to predict the in vitro                                            k {                                                                         (2)
+drug release from solid implants by accounting for the CQAs of                      where b and c are integration constants, which should be determined
+these formulations. Attention has been paid toward the inclusion                    using the boundary conditions for the pressure at the implant edge,
+of drug, polymer, and formulation-related parameters in the                         where r = Rim (implant radius), and at the circular edge of the wetted
+model, and in most cases, they can be either measured or                            region inside the porous implant, where r = R(t), with R(t) being the
+predicted (i.e., calculated). The model has been validated with in                  radius of the circular edge of the wetted region of the implant.
+vitro release data obtained from implants with four different                          The boundary condition at the edge of the implant is
+compounds to demonstrate its applicability and performance.                            p = pr at r = R im                                                                       (3)
+                                                                                    The boundary condition at the circular edge of the wetted region inside
+2. MATERIALS AND METHODS                                                            the porous implant is
+We developed a predictive, bottom-up, mechanistic model that
+encapsulates all of the following underlying rate processes leading to                 p = pr         pim at r = R(t )                                                          (4)
+the drug release from PLGA-based solid implant formulations:                        where pr is an unknown reference pressure within the tissue,
+    1. Water/dissolution media influx into the porous structure of the                   2 cos
+                                                                                    pim    R
+                                                                                               is the capillary pressure inside the pores of the implant,
+       implant.                                                                                  p
+                                                                                    γ is the surface tension of the dissolution media, θ is the contact angle or
+    2. Initial noncatalytic hydrolysis of PLGA while the concentration
+                                                                                    hydrophobicity of the implant, and Rp is a characteristic scale of the
+       of acid end groups on the polymer chains is low.
+                                                                                    pore radius inside the implant.
+    3. Autocatalytic hydrolysis phase when the catalyst concentration                  Taking into account the latter two boundaries, both integration
+       is pronounced.                                                               constants, b and c, can be determined, which gives the following
+    4. Dissolution of small oligomers and monomers into the aqueous                 expression for the radial velocity (flux) of dissolution media:42
+       medium characterized by substantial mass loss of the polymer                            p         pim
+       and the growing pore network.                                                     v=
+    5. Liberation of the trapped solid drug from the formulation PLGA                             R(t ) × ln R
+                                                                                                              R(t )
+                                                                                                                im
+                                                                                                                    ( )                                     (5)
+       polymer matrix.
+                                                                                    The velocity at the circular edge of the wetted region inside the implant
+    6. Dissolution of solid drugs into the wetted pore network.                     is
+    7. Diffusion of the dissolved drug out of the implant through pores.
+                                                                                             d R( t )
+    8. Accumulation of the dissolved drug in the dissolution media.                     SF            = v|r = R(t )
+                                                                                               dt                                                                               (6)
+   The developed model, along with the above-mentioned rate
+                                                                                    where εSF is the porosity of the implant. A combination of the latter two
+processes, is illustrated schematically in Figure 1 and should be
+                                                                                    equations gives the evolution equation for R(t):
+understood to be spatially structured, as indicated therein by three
+compartments: unwetted implant compartment, wetted implant                              d R( t )           p                pim
+compartment, and solvent compartment. A detailed description of                                  =
+the rate processes and their governing equations in each compartment
+                                                                                          dt              SF    R(t ) × ln        ( )
+                                                                                                                                  R (t )
+                                                                                                                                  R im                                          (7)
+can be found in the following section. Further, to evaluate model
+performance, we used fold error (simulated-to-observed data ratio) as a             And therefore, the volume of the absorbed liquid inside the implant can
+metric; a ratio within the range of 0.5−2 is considered acceptable.                 be found by
+   2.1. Modeling of Drug Release from PLGA Implants.                                                                                                     ij
+2.1.1. Water/Dissolution Media Influx. Recent investigations of the                                                                                       j       R(t )2 yzz
+                                                                                       W (t ) =       SF(t )Lim         [R im 2    R(t )2 ] =   SF(t )Vimj
+                                                                                                                                                         jj1               zz
+microstructure characterization of long-acting polymeric implants                                                                                         k       R im 2 z{
+revealed a clear wetted front (and thus a release front) inside the                                                                                 (8)
+implant during the in vitro release experiments. This wetted front
+advances radially from the outer edge of the cylindrical implant toward             where Lim and Vim are the length and volume of the implant,
+its central axis during the release experiments and divides the implant             respectively.
+into the wetted and unwetted regions, as shown in Figure 1. The                        If we adopt the Kozeny−Carman model of the porous medium43
+kinetics of the wetting and liquid penetration inside the porous implant            considering the pore space as a packed bed, the permeability can be
+depends on the microstructural characteristics of the implant such as               approximated by
+porosity and pore size, and the penetrating liquid properties, such as its                                      3       (2R p)2
+viscosity. Our aim in this section is to develop a mechanistic model that                                  SF
+                                                                                         p = Dw                     2
+can predict the wetting kinetics of the dissolution media inside the                                 (1         SF)       180                                                   (9)
+PLGA implant as a function of both liquid and implant properties.
+                                                                                    where Dw is a permeation scalar used to recover the observed data, as
+   The kinetics of water/dissolution media penetration in a porous
+                                                                                    required.
+medium such as a PLGA implant, in the radial direction can be
+                                                                                       2.1.2. PLGA Degradation. Since the trapped drug is released during
+described by Darcy’s equation:
+                                                                                    the degradation of the implant, it is important to begin with the
+   1                      p   p                                                     degradation dynamics of PLGA. The hydrolysis and degradation of
+       (rv) = 0, v =                                                                PLGA occur through two spatially separable processes known as
+   r r                        r                                       (1)           surface- and bulk-hydrolysis. The liquid/water in contact with the
+where v is the flux (radial velocity) of the liquid inside the porous               PLGA solid surface initiates hydrolysis and degradation. The kinetics of
+medium, κp is the permeability of the porous medium, μ is the viscosity             liquid penetration in a porous PLGA implant are discussed and
+                                                                                    predicted in the previous section based on a modified Darcy’s equation
+of the dissolution media, and p is the pressure gradient in the radial              and the wettability of the implant. Accordingly, the degradation and
+                                 r
+direction causing the liquid influx. Equation 1 assumes that the rate of            hydrolysis of a highly wettable implant mainly occur from the bulk of
+increase of solid matrix volume is equal to the volumetric rate of liquid           the implant, where most of the surface-accessible pores are occupied by
+absorption by the solid matrix. The solution of the latter equations is             the penetrating liquid. In this case, hydrolysis is taking place within the
+
+                                                                             7455                                                           https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                                            ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                              www.acsabm.org                                                                                                       Article
+
+liquid-saturated pores inside the implant, and the degradation proceeds                the various polymer bonds in binding H+. To take this competition into
+through bulk-hydrolysis (bulk erosion). In contrast, for less wettable or              account, we assume that the probability for polymers of size j to bind H+
+nonwettable implants, degradation mainly occurs from the surface of                    is equal to the total number of bounds they contain (j − 1 bonds times
+the implant, as it is mainly controlled by surface hydrolysis (surface                 the number of polymer molecules of size j) divided by the total number
+erosion).                                                                              of bounds present in the reaction volume. For nondissolved (p) and
+   To develop a kinetic model for PLGA degradation, we begin with the                  dissolved (q) polymers, the corresponding probabilities are therefore
+hydrolysis and depolymerization reaction kinetics in the presence of                   (eqs 10 and 11):
+water. Experimental data suggest that this hydrolysis reaction is
+catalyzed by an acid (H+ ions). We assume that polymers can be of                           pi , j (pi , j is hydrolyzed)
+different types (indexed by i), depending on their composition (see
+Figure 2). The fraction in moles (molar ratio) of polylactic acid (PLA,                                                                    (j     1)pi , j (t )
+                                                                                                                                                j × Mw Mi
+                                                                                                 =              ÅÄ                                                               (j 1)pi , j (t ) yÑ
+                                                                                                                                                                                                       É
+                                                                                                           2 Å ÅÅij       Ji ,min 1 (j 1)qi , j(t ) y
+                                                                                                                                                    zz + ijj
+                                                                                                                                                                                                      Ñ
+                                                                                                                                                                                                  zzÑÑÑ
+                                                                                                                Åjj                                                   Lp
+                                                                                                           i=1 ÅÅ
+                                                                                                                ÅÅÇk                  j × Mw M z           j          j = Ji ,min j × Mw M zÑ         Ñ
+                                                                                                                                                                                                     {ÑÑÖ
+                                                                                                                          j=2
+                                                                                                                                                  i   {           k                              i              (10)
+
+
+                                                                                           qi , j (qi , j is hydrolyzed)
+Figure 2. Structure of poly(lactic-co-glycolic acid); x = number of units
+                                                                                                                                           (j     1)qi , j(t )
+of lactic acid; y = number of units of glycolic acid. The localization of the
+various monomers can be more or less random.                                                                                                    j × Mw Mi
+                                                                                                 =              ÄÅ                                                                                     É
+                                                                                                           2 Å ÅÅij       Ji ,min 1 (j 1)qi , j(t ) y                            (j 1)pi , j (t ) yÑ  Ñ
+                                                                                                                Åjj                                 zz + ijj          Lp                          zzÑÑÑ
+                                                                                                           i=1 ÅÅ
+                                                                                                                ÅÅÇk                  j × Mw M z           j          j = Ji ,min j × Mw M zÑ         Ñ
+                                                                                                                                                                                                     {ÑÑÖ
+                                                                                                                          j=2
+type 1) polymers in the PLGA polymer mixture is ψ, and it is known                                                                                i   {           k                              i              (11)
+from the manufacturing process. For a polymer of the type i and any
+given chain of j monomers, the net hydrolysis reaction can be                          where Ji,min is the oligomers’ chain length below which they are
+summarized by                                                                          considered to be dissolved and capable of diffusing within the liquid-
+                                                                                       occupied pores inside the implant (Ji,min ≈ 16) experimentally
+   Pi , j + H 2O + H+      Pi , m + Pi ,j m + H+, j = 2, 3, ..., Lp and m              determined by size exclusion chromatography.45 Note that the masses
+                                                                                       here should be molar or, equivalently, numbers of molecules in the
+                           = 1, 2, ..., j   1                                          reaction volume (the individual i monomers have the molecular weight
+where i = 1 and 2 correspond to polylactic acid (PLA) and polyglycolic                 MwMi).
+                                                                                            d
+
+
+
+
+acid (PGA), respectively, and Lp is the initial chain length. This                        Given the above considerations, we derive eq 12 to track the mass of
+degradation process is schematically shown in Figure 3.                                nondissolved polymers with specific chain lengths for lactide (LA) and
+   To handle the complex process of long-chain polymer degradation,                    glycolide (GA) oligomers, pi,j(t,r), over the reaction time and along the
+we derived a similar but more sophisticated relation,44 describing the                 radius of the implant.
+probabilistic degradation of a polymer chain length distribution. For                                                                       ÄÅ L
+any given chain of j monomers, the number of hydrolytically accessible                                                                       ÅÅi p                                             pi , k (t , r) zyz
+                                                                                                     pi , j (t , r)                           ÅÅjj                                      2
+bonds is (j − 1). The rate of hydrolysis of PLGA polymers of a given size                                  = Khyd, i·[H ](t , r )ÅÅÅÅjjjj +                                                                     zz
+                                                                                                                                                                                                                 z
+                                                                                                                                                                                            1 k × MwMi zz
+                                                                                                                                                                            pi ,k
+can be assumed to be proportional to the number of hydrolytically                               t j × MwMi                                     ÅÅj k = j + 1                        k
+                                                                                                                                                Å
+accessible bounds it contains (j − 1), to a hydrolysis rate per bond                                                                   ÉÑ ÅÇk                                                                    {
+                                                                                                                       pi , j (t , r) ÑÑÑ
+                                                                                                                                        Ñ
+(Khyd,i), to the concentration of H+ ions in the volume where the                                                                       ÑÑ
+                                                                                                                                         Ñ
+                                                                                                                      j × MwMi ÑÑÑÑ
+reaction is taking place, and to the mass of the polymer present in the                                         pi ,j
+reaction volume. A full description of the hydrolysis reaction would                                                                     ÑÖ
+model the binding of H+ to PLGA, the subsequent breakage of the chain
+                                                                                          withj             Ji ,min , r        [R(t ), R im)
+into two smaller polymers, and the release of H+. The fact is that the
+availability of H+ is rate limiting and that there is competition between                                                                                                                                       (12)
+
+
+
+
+Figure 3. Schematic of PLGA polymer degradation in the presence of water molecules.
+
+                                                                                7456                                                                              https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                                                                  ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                                                                                      www.acsabm.org                                                                        Article
+
+The radial hydrogen ion distribution over the reaction time, H+(t,r), is                                                                       matrix due to degradation (as described in the previous section) and the
+described in Section 2.1.5. Accordingly, the mass of dissolved polymers,                                                                       dissolution of the released API from the pore surfaces into the bulk
+qi,j(t,r), and time evolution along the implant radius can be described by                                                                     solution inside the wetted pores (Figure 4).
+the following eq (eq 13):
+
+           qi , j(t , r )                           Dd,if                 jij        qi , j(t , r ) zy
+                                                                                                      zz
+                            =                                               jjr                        zz
+                                       q,m(t )                               jj
+       t j × MwMi                                              r r j r j × MwMi zz
+                                                                              k                         {
+                                + Khyd, i·[H +](t , r )
+                                ÄÅ
+                                 ÅÅ Ji,min 1 i                                  qi , k(t , r) zy
+                                  ÅÅÅ                 jj
+                                                       jj            2                            zz
+                                    ÅÅ                                                             z
+                                     ÅÅÅ k = j + 1 jj qi , k k 1 k × MwM zz
+                                       ÅÅÇ              k                                       i{
+
+                                                          jij                      pi , k (t , r) zy
+                                               Lp
+                                                            jj p       2                             zz
+                                         +                   j i, k k 1 k × Mw zzz
+                                                             j
+                                           k = Ji ,min k                                        Mi {
+                                                                       ÉÑ
+                                                     qi , j(t , r) ÑÑÑÑ
+                                                                        ÑÑ
+                                                                         Ñ
+                                                    j × MwMi ÑÑÑÑ
+                                             qi , j
+                                                                         ÑÖ
+   withj < Ji ,min , r              [R(t ), R im)                                                                                (13)
+The first term on the right-hand side of the above equation accounts for
+the obstructive diffusion of the dissolved polymer molecules through                                                                           Figure 4. Illustration of the modified DLM model for release and
+the pore network radially from the center to the surface of the implant.                                                                       dissolution of API: A fraction of pore surfaces is covered by solid drug,
+It depends on the obstruction coefficient for the diffusive species                                                                            and dissolution happens from those parts of the pore surfaces covered
+ωq,m(t) (see Section 2.1.6). Dq,if is the diffusivity of dissolved polymers                                                                    by solid drug (untrapped drug). The rate-limiting step for the
+in the dissolution media, assumed to be the same for oligomers with                                                                            dissolution of this untrapped drug is the diffusion within the effective
+different chain lengths. The second term accounts first for the                                                                                thickness, hDLM.
+hydrolysis of dissolved polymers yielding polymer qi,j, next for the
+hydrolysis of undissolved polymers yielding qi,j, and finally, the
+hydrolysis of qi,j itself.
+   2.1.3. Liberation of the API from the PLGA Polymer Matrix. We                                                                                  In this case, we assume that the surface of the pores is partially
+assume that a fraction of the drug is trapped in the polymer matrix and is                                                                     covered with solid drug (i.e., untrapped drug) and the rate-limiting step
+not immediately available for dissolution into the wetted pores. This                                                                          for the dissolution of this untrapped drug is the diffusion within the
+trapped fraction of the drug is released and should come in contact with                                                                       effective thickness hDLM (as shown in Figure 4), from the pore surfaces
+water at the surface of the pores as the nondissolved polymer is                                                                               into the bulk solution inside the pores (eq 15):
+hydrolytically degraded in the wetted portion of the implant. Therefore,
+we assume that the release rate of the trapped drug is proportional to the                                                                                                                    Dc ,if
+                                                                                                                                                          m(t , r) =        ·SA p(t , r)               (Cs(t , r)    C(t , r ))
+nondissolved polymer degradation rate,1 as described by the following                                                                                 t                                       hDLM
+equation:
+                                                                                                                                                                                (t , r)
+                                                                                              2             Lp                                                              t
+                                           (t = 0, r )
+           (t , r ) =       2            Lp
+                                                                                   ·                                 pi , j (t , r)               r        [R(t ), R im)                                                                 (15)
+       t                    i=1
+                                                    p (t = 0, r )
+                                         j = Ji ,min i , j
+                                                                                        t i=1 j=J
+                                                                                                            i ,min
+                                                                                                                                               where m is the mass of the released solid drug (from the polymer matrix
+   r       [R(t ), R im)                                                                                                                       after its degradation), available for dissolution, DC,if is the drug
+                                                                                                                                 (14)          diffusivity in the dissolution media, SAp(t,r) is the surface area of the
+                                                                                                                                               pores (eq 22), σΛ is the surface fraction of the pores which are covered
+where ξ(t,r) is the mass of the trapped solid drug. As the polymer                                                                             with solid drug (assumed to be equal to the fractional mass loading of
+degradation proceeds, the drug is moved from a trap to an untrapped                                                                            drug in the implant: dose divided by the initial mass of the implant,
+state, and it becomes available for subsequent dissolution into the                                                                            Mim), Cs is the aqueous (or dissolution medium) solubility of the drug
+wetted pore network, as described in the following section.                                                                                    (pH dependent obtained by Henderson−Hasselbalch equations for
+   2.1.4. Dissolution and Distribution of the API. Dissolution of the                                                                          different compound types depending on their dissociation constants,
+untrapped API from the PLGA polymer matrix is handled by a modified                                                                            pKa1 and pKa2), hDLM is the diffusion layer thickness (by default
+diffusion layer model (DLM). The DLM model itself is used by the                                                                               considered to be equal to the average pore radius, Rp), and C is the
+Simcyp simulator, and it is based on the Wang Flanagan model.46                                                                                concentration of dissolved drug within the pores of an implant, which
+Diffusion layer models, sometimes called thin-film models, assume that                                                                         can be obtained by (eq 16):
+there is a hydrodynamic boundary layer of effective thickness, hDLM,
+                                                                                                                                                                                     DC ,ifij             y
+surrounding the solid drug particles and that diffusion of dissolved drug                                                                                 C(t , r) =       c,m(t )          jjr C(t , r)zzz
+through this layer into bulk solution is the rate-limiting step of the                                                                                t                            r rk r                 {
+dissolution process. DLMs originated with the work of Noyes−                                                                                                                  SA p(t , r ) DC ,if
+Whitney47 later extended by Nernst48 and Brunner.49 These models                                                                                                       +    ·                     (Cs(t , r )          C(t , r ))
+                                                                                                                                                                               Vp(t , r) hDLM
+assume a linear decrease in the concentration of the dissolving
+compound when moving from the solid surface to the hydrodynamic                                                                                   r        [R(t ), R im)                                                                 (16)
+boundary layer limit. Noyes and Whitney models consider dissolution
+from a planar surface, while the Wang and Flanagan model was derived                                                                           The first term on the right-hand side of the above equation accounts for
+for spherical geometry and applies for dissolution from spherical                                                                              the obstructive diffusion of the dissolved drug molecules through the
+particles.                                                                                                                                     pore network radially from the center to the surface of the implant. The
+   The modified DLM for the dissolution of the API from the PLGA                                                                               second term corresponds to the dissolution of the untrapped drug.
+polymer matrix considers both the release of API from the polymer                                                                              SAp(t,r)/Vp(t,r) can be approximated by 2/Rp(t) in the above equation.
+
+                                                                                                                                        7457                                                             https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                                                                                                         ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                                                 www.acsabm.org                                                              Article
+
+   After release, dissolution, and diffusion through the pore network,
+                                                                                                                              SF(t )Vim
+the drug molecules reach the solvent compartment and accumulate                                                 R p(t ) =
+there over the time course of the in vitro release testing experiment.                                                        2n R im                                                     (21)
+   Accordingly, the concentration of the drug in the peri-implant
+solvent compartment, Cif(t,r), can be obtained by (eq 17):                                                     SA p(t , r) = 2 nR p(t )dr                                                 (22)
+                              DC ,if     ij                y                                              where Vim is the volume of the implant and n is the number of pores in
+            Cif (t , r) =                 jjr Cif (t , r)zzz                                              the implant (assumed to remain unchanged and calculated by solving
+        t                       r       rk r               {                                              the eq 21 for n, using the initial values of the average pore radius and
+    r         [R im ,   )                                                                   (17)          porosity: n = (εSF0Vim)/(2πR2p0Rim)).
+                                                                                                                                 d               d
+
+
+
+
+                                                                                                             The pore diffusion theory was originally described by Ferry50 and is
+   2.1.5. Dynamics of H+ Ionization and Distribution. During the                                          used to model the hindered transport of molecules through liquid-filled
+polymer hydrolysis process, the acidic polymer fragments and                                              pores, and it is used to obtain the obstruction coefficients for a diffusing
+byproducts accumulate inside the interior of the implant and further                                      species i (eq 23):
+catalyze the hydrolysis reaction. This autocatalytic effect accelerates the
+                                                                                                                                                      2
+reaction time and eventually leads to a secondary burst phase in the                                                                jij     Mri zyz
+release profile of the drug. The dynamics of ionization due to                                                   i ,m(t ) =   SF(t )j
+                                                                                                                                      j1            zz
+                                                                                                                                      jj   R p(t ) zz
+dissociation equilibrium for polymeric species with acid groups and                                                                    k             {                                    (23)
+radial H+ distribution within the implant (H+(t,r)) and in the peri-
+                                                                                                          where Mri is the molecular radius of the diffusing molecules�drug,
+implant solvent compartment (Hif+(t,r)) are described by (eqs 18 and
+                                                                                                          polymer molecules, or H+ ions.
+19):
+                                                                                                              2.1.7. Initial Conditions. The initial conditions are presented in the
+                                                                                                          Supporting Information.
+                                                        jijr H+(t , r)zyz
+                                            DH+,if
+            H+(t , r) =          H+,m(t )                 j              z                                    2.1.8. Numerical Implementation. The above system of partial
+        t                                      r       rk r              {                                differential equations�described by eqs 7 and 12−19�is solved
+                                             Np i
+                                                 jj          Lp
+                                                                pi , j (t , r)                            numerically using the method of lines; every space derivative is
+                                                  jj
+                            + k p+[H+]             jjKhyd, i
+                                                    jj                                                    approximated according to the method of lines, leading to a set of
+                                          i=1 j              j = Ji ,min j × MwM i
+                                                     k                                                    ordinary differential equations (ODEs). This compartmental approach
+                              Ji ,min 1
+                                         qi , j(t , r) zyz              kp
+                                                                                                          allows us to use the ODE solvers implemented in Simcyp
+                            +                            zzz                     2
+                                                                               H+ (t , r)                 physiologically based pharmacokinetic (PBPK) Simulator Version 23.
+                                                           z
+                                                           z
+                                  j = 1 j × MwM i z        z        Vintra(t )                            The rest of the equations are solved analytically at each time step. The
+                                                           {                                              list of all primary input model parameters and state variables, along with
+    r         [R(t ), R im)                                                                 (18)          their symbols and units, are listed in Tables 1 and 2.
+
+
+                                            jijr H +(t , r )zyz                                           Table 1. List of Model State Variables
+                                D H+,if
+            Hif +(t , r) =                    j   if          z
+        t                           r      rk r               {                                                                 state variable                       symbol            units
+    r         [R im ,   )                                                                   (19)               radius of the wetted region edge                       R                m
+                                                                                                               nondissolved polymers masses                           pi,j             g
+where, DH+,if is the diffusivity of the H+ ions, ωH+,m is the obstruction                                      dissolved polymers masses                              qi,j             g
+coefficient for the diffusion of H+ ions through the pore network, and kp+
+                                                                                                               trapped solid drug mass                                ξ                g
+and kp− are the polymer ionization and deionization proportionality and
+rate constants, respectively. Note that in both equations, unknowns H+                                         untrapped solid drug mass                              m                g
+and Hif+ are in mol to avoid handling concentrations with a time-                                              dissolved drug concentration in implant                C                g/m3
+changing volume of fluid Vintra(t), which would lead to an additional                                          dissolution media drug concentration                   Cif              g/m3
+term in the equations. The brackets around H+ represent its (molar)                                            H+ ion concentration in implant                        [H+]             Ma
+concentration.                                                                                                 Hif+ ion concentration in dissolution media            [Hif+]           Ma
+   2.1.6. Auxiliary Equations. Degradation, erosion, and dissolution of                                        H+ ion amount in implant                               H+               mol
+oligomers and monomers and subsequent release and dissolution of                                               Hif+ ion amount in dissolution media                   Hif+             mol
+drug particles substantially increase the mass loss of the implant matrix                                 a
+and lead to a growing pore network. The diffusive transport of the drug,                                      M is mol/L.
+polymer, and ionized species can face some sort of obstruction due to
+the pore structure. Therefore, quantifying the time evolution of the
+solid fraction, or porosity, of the implant and average pore size is                                         2.2. Model Validation. The primary objectives for the selection of
+important, as it affects the diffusion rates of the drug, polymers, and                                   a compound-formulation validation set were: (a) to robustly challenge
+ionized species. Accordingly, we derived the following equation to                                        the model by picking complex and varied formulations, and (b) to
+determine the dynamic porosity of the implant during the degradation,                                     demonstrate the predictive capability of the model. Moreover, it was
+erosion, release, and dissolution processes (eq 20):                                                      important to us that sufficient in vitro characterization of the implant
+                                      Ä                                                                   had been performed (LA/GA ratio, MW, polymer mass, etc.) and was
+                                  iÅÅÅ i = 2
+                            R(t ) j
+                                                       Lp
+                     Lim          jjÅÅÅ      1                                                            available in the literature to allow simulation of the formulation’s
+                                   jÅÅ
+                                   j
+       (t ) = 1                    j                           pi , k (t , r )
+                     Vim R im jjjÅÅÅÅ i = 1 i k = J
+     SF                                                                                                   behavior without the need for speculation or fitting of these essential
+                                   kÅÇ                  i ,min                                            parameters. In line with these criteria, we have chosen to evaluate the
+                                               ÉÑ                                                         model’s performance against different solid long-acting implants
+                                                ÑÑ               yz
+                                                 ÑÑ               zz                                      comprising four compounds: namely, buserelin, afamelanotide,
+              + ( (t , r ) + m(t , r ))ÑÑÑÑ2 r· dr zzzz
+                  1
+                                                                                                          brimonidine, and nafarelin.
+                                                  ÑÑ               zz
+                   d                               ÑÑÖ                                                       The following four case studies show tables in the Supporting
+                                                                    {          (20)
+                                                                                                          Information with values of the parameters used in the model. The
+where ρd and ρi are the skeletal densities of the drug and polymer,                                       source of their value is referenced in the “Reference” column. For the
+respectively. The εSF(t) value is used in the following equations to                                      sake of understanding, “Predicted” means the value is directly
+calculate the time evolution of the average pore radius and surface area                                  computed analytically based on the value of other inputs, using well-
+of the pores (eqs 21 and 22):                                                                             known formulas, while the entry “Optimized” means that the value has
+
+                                                                                                   7458                                                   https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                                                          ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                             www.acsabm.org                                                        Article
+
+Table 2. List of Primary Model Parameters Summarized,                                     2.2.2. Afamelanotide. Afamelanotide is a synthetic peptide, the
+Excluding Parameters Function of Those                                                analogue of α-melanocyte stimulating hormone, and indicated to
+                                                                                      prevent phototoxicity in adult patients with erythropoietic proto-
+                      parameter                          symbol        units          porphyria. Subcutaneous implants of afamelanotide under the brand
+viscosity of dissolution media                           μ         mPa·h              name SCENESSE were approved by the FDA in 2019. The
+radius of the implant                                    Rim       m                  physicochemical properties of Afamelanotide such as log P and pKa
+                                                                                      were obtained from the DrugBank. An in vitro release study using
+surface tension of dissolution media                     Γ         g·h−2
+                                                                                      bespoke afamelanotide containing PLGA implants was reported in the
+average implant pore radius                              Rp        m
+                                                                                      literature.52,53 The implant-related information such as dimensions and
+contact angle/implant hydrophobicity                     Θ         radian             drug loading, and relevant information about the experimental
+permeation scalar                                        Dw                           conditions were extracted from Bhardwaj and Blanchard’s publication53
+volumetric porosity of the implant                       εSF                          for the manufactured implants using PLGA with lactide-to-glycolide
+length of the implant                                    Lim       m                  molar ratios of 0.5 but different molecular weights, which were reported
+volume of the implant                                    Vim       m3                 in terms of inherent viscosity (dL/g). The data from the 0.2 and 0.6 dL/
+volume of the dissolution media                          Vif       m3                 g implants were utilized in the model validation. The PLGA
+initial mass of the implant                              Mim       g                  manufacturer Evonik provided the mean molecular weight of PLGA
+molar ratio of PLA polymers in the polymer mixture       Ψ                            products corresponding to these respective inherent viscosities
+                                                                                      (although it was not possible to unambiguously identify the products
+hydrolysis rate constant of PLGA bonds                   Khyd,i    M−1·h−1
+                                                                                      since both acid and ester end-capped PLGA products corresponded to
+minimum chain length of undissolved polymers             Ji,min
+                                                                                      these inherent viscosities). All of the input parameters for the
+molecular radius of polymer                              Mrq       m                  simulation, along with their references, are listed in Table S2.
+molecular radius of H+ ions                              MrH+      m                      Data corresponding to the 0.2 and 0.6 dL/g implants (mean values
+molecular radius of the drug                             Mrc       m                  from three replicates) were digitized (Engauge digitizer 12.1) from
+diffusivity of dissolved polymers in dissolution media   Dq,if     m2·h−1             Figure 1 of Bhardwaj and Blanchard’s publication.53 The model was
+diffusivity of the drug in dissolution media             Dc,if     m2·h−1             initially optimized by fitting to the release profile of the afamelanotide
+diffusivity of H+ ions                                   DH+,if    m2·h−1             implant with PLGA inherent viscosity of 0.6 dL/g, with ionization
+aqueous solubility of the drug                           Cs        g·m−3              proportionality constant, deionization constant, initial releasable
+diffusion layer thickness                                hDLM      m                  fraction, and initial porosity estimated. Predictions of the release of
+                                                                                      the 0.2 dL/g implant were subsequently made, accounting for the
+ionization proportionality constant of polymer           kp+
+                                                                                      different properties of the polymer. The ionization proportionality
+deionization constant rate of polymer                    kp−       M−1·h−1
+                                                                                      constant was optimized by fitting to the 0.2 dL/g release profile (we
+polymer skeletal density                                 ρi        g·m−3              inferred that the end-capping differed in the 0.2 and 0.6 dL/g polymers
+drug particle skeletal density                           ρd        g·m−3              and were unable to recover the release profile of the data without
+initial releasable fraction of drug                      RF                           making this change).
+dose of drug in the implant at initial time              dose      g                      2.2.3. Brimonidine. Brimonidine is an adrenergic agonist used for
+initial pH of the dissolution media                      pH0                          the management of Glaucoma. It decreases intraocular pressure by
+weights of Gaussian component of initial PLGA mol.       W[k]                         reducing aqueous humor production and increasing uveoscleral
+  weights                                                                             outflow.54,55 The drug’s physicochemical properties such as log P and
+molecular weight of LA/GA monomers                       MwM,i     Da                 pKa were obtained from experimental data reported in the literature.56
+mean of Gaussian components of initial PLGA mol.         Mw[k]     Da                 The intrinsic solubility of brimonidine was calculated by using the
+  weights                                                                             solubility module in SIVA 4.0.35.0. A US patent (Patent No.
+SD of Gaussian components of initial PLGA mol.           σMw,[k]   Da                 US20210113458A1) reported an in vitro release study involving
+  weights                                                                             PLGA implants of brimonidine, alongside details of the implant-related
+                                                                                      information such as dimensions, polymers used, drug loading, etc.57
+                                                                                      This data was used for the parameterization of the model. The data
+been determined numerically so that the output can match the                          from three implants (EX1, EX3, EX4), which differed in the lactide-to-
+published release data.                                                               glycolide molar ratios (0.5, 0.75, and 0.875) and mean molecular weight
+   2.2.1. Buserelin. Buserelin is a synthetic peptide, the analogue of the            (between 12,000 and 14,000 Da) were recorded. The list of all
+natural gonadotropin-releasing hormone (GnRH/LH-RH), and it is                        parameters and their sources for parametrizing the model are listed in
+used for the treatment of hormone-responsive cancers such as                          Table S3. Data corresponding to the EX1, EX3, and EX4 formulations
+carcinoma of the prostate gland in males and endometriosis in females.                (mean values from four replicates at each formulation) were digitized
+Subcutaneous implants of buserelin are commercially available under                   from Figure 2 of US20210113458A1.57 The model was initially
+the brand names Suprefact Depot 2 Months and Suprefact Depot 3                        optimized by fitting to the release profile of the EX1 implant, with
+Months. The physicochemical properties of buserelin, such as log P and                ionization proportionality constant, deionization constant, initial
+pKa, were obtained from DrugBank. An in vitro release study of the                    releasable fraction, and initial porosity estimated. Predictions of the
+commercial buserelin implant was reported in the literature.51 The                    EX3 and EX4 profiles, accounting only for the different properties of the
+implant-related information such as dimensions and drug loading, and                  polymers used, were subsequently made.
+relevant information about the experimental conditions were extracted                     2.2.4. Nafarelin. Nafarelin is a synthetic GnRH (gonadotropin-
+from Schliecker et al.51 and a product monograph on the commercial                    releasing hormone) analogue that is used medically as a hormonal
+implant. All of the input parameters for the simulation, along with their             treatment. It works by increasing or decreasing the production of
+references, are listed in Table S1.                                                   certain hormones in the body, particularly the gonadotropins
+   The mean and error bounds calculated from six replicates were                      luteinizing hormone (LH) and follicle-stimulating hormone (FSH).
+digitized from Figure 2 of Schliecker et al.’s publication.51 The model               The physicochemical properties of nafarelin, such as log P and pKa,
+was optimized by fitting to the release profile of the buserelin implant,             were obtained from DrugBank. An in vitro release study using bespoke
+with ionization proportionality constant, deionization constant, initial              nafarelin containing PLGA implants was reported by Sanders et al.58
+releasable fraction, and initial porosity estimated. A sensitivity study was          The implant-related information such as dimensions and drug loading,
+conducted to demonstrate the effect on the predicted release profile of               and relevant information about the experimental conditions for the
+varying key CQAs, specifically the mean and standard deviation of the                 manufactured implants using PLGA polymers with lactide-to-glycolide
+polymer MW, the GA/LA ratio, volumetric porosity, and mean pore                       molar ratios of 80:20, 85:15, 90:10, 95:5 and 100:0 respectively, was
+size.                                                                                 extracted from the same publication. The molecular weights of the
+
+                                                                               7459                                             https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                                ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                         www.acsabm.org                                                       Article
+
+polymers used in experiments were not reported; however, a range of               optimized by fitting to the release profile of the 80:20 implant, with
+inherent viscosities (dL/g) between 0.33 and 0.38 dL/g were reported.             ionization proportionality constant, deionization constant, and initial
+The inherent viscosity is indicative of the molecular weight; however,            releasable fraction optimized. Predictions of the release profile of the
+this measurement is influenced by the solvent and other experimental              other four implants were subsequently made, accounting for the
+variables. The molecular weights of these five polymers were therefore            different properties of the polymers.
+estimated based on available information. All of the input parameters
+for the simulation, along with their references, are listed in Table S4.          3. RESULTS
+   The cumulative release data from these formulations were digitized
+from Figure 5 of the Sanders et al.’s58 paper. The model was initially               3.1. Buserelin. A simulation of the release profile based on
+                                                                                  the parameters listed in Table S1 is shown in Figure 5 alongside
+                                                                                  the observed data;51 the mean and range from the replicates of
+                                                                                  the implant are shown in this example. As shown in Figure 5, the
+                                                                                  comparison indicates that the observed data are in close
+                                                                                  agreement with the simulated release. The simulated-to-
+                                                                                  observed ratio as a function of time was plotted and is shown
+                                                                                  in Figure S1.
+                                                                                     Results from a sensitivity analysis are also shown for this case
+                                                                                  study, with the effect of a 10% decrease/increase in the baseline
+                                                                                  parameter value from Table S1 on the release profile shown for
+                                                                                  the GA/LA ratio, immediate release fraction, mean and standard
+                                                                                  deviation of the polymer MW, volumetric porosity, and mean
+                                                                                  pore size shown in panels a−f of Figure 6.
+                                                                                     The results from sensitivity analysis based on this case study
+                                                                                  demonstrate that the model’s behavior is reasonable. A higher
+Figure 5. Observed and simulated in vitro cumulative release profile for          lactide-to-glycolide ratio in the PLGA composition makes the
+the buserelin implant.                                                            implant more hydrophobic, hence, delaying the water
+                                                                                  penetration within the implant and its hydrolysis and drug
+
+
+
+
+Figure 6. Results from local sensitivity analysis for the buserelin case study, demonstrating the effects of a plus/minus 10% change in (a) GA/LA molar
+ratio; (b) initial release fraction; (c) mean MW of polymer; (d) SD MW of polymer; (e) fractional volumetric porosity; and (f) mean pore size.
+
+                                                                           7460                                            https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                           ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                         www.acsabm.org                                                       Article
+
+release (Figure 6a). A larger immediate release fraction speeds
+up release in the initial phase (Figure 6b). As the PLGA
+molecular weight increases, the number of hydrolytically
+accessible bonds also increases, and due to the increased
+molecular entanglement and cross-linking, it makes the implant
+more resistant to degradation, therefore reducing the drug
+release rate (Figure 6c). Greater variability in the polymer
+molecular weight slows the release (Figure 6d). A larger
+volumetric porosity and a larger mean pore size increase the
+release rate (Figure 6e,f). The effects of parameter variations on
+the release profile are sensitive to the baseline parameters and
+the magnitude of parameter changes; however, the direction of
+effect is representative of the model sensitivities.
+   3.2. Afamelanotide. Simulations of the release profiles
+based on the parameters listed in Table S2 are shown in Figure 7
+
+
+
+
+                                                                                  Figure 8. Observed and simulated in vitro cumulative release profile for
+                                                                                  the three brimonidine implants: (a) EX1; (b) EX3; and (c) EX4.
+
+
+                                                                                  glycolide molar ratio of the implants; however, there were also
+                                                                                  differences in the end-capping between the experiments.
+                                                                                     3.4. Nafarelin. Simulations of the release profiles based on
+                                                                                  the parameters listed in Table S4 are shown in Figure 9 alongside
+                                                                                  the observed data:58 the points represent mean values taken over
+                                                                                  the replicates. The model was initially optimized by fitting to the
+                                                                                  release profile of the 80:20 implant, with extrapolations to the
+                                                                                  other four implants subsequently made: only differences in the
+                                                                                  CQAs of the implants were accounted for extrapolations. The
+                                                                                  simulated profile for the 80:20 implant was well captured. The
+                                                                                  successively later onsets of the tertiary phase of release in the
+                                                                                  90:10, 95:5, and 100:0 implants were predicted; however, for
+Figure 7. Observed and simulated in vitro cumulative release profile for
+the two afamelanotide implants: (a) 0.6 dL/g; (b) 0.2 dL/g.                       this case study, the experimental data indicated an earlier onset
+                                                                                  and a slower release rate relative to simulations. The simulated-
+                                                                                  to-observed ratios vs time plots are presented in Figure S4 for
+alongside the observed data;53 the points represent the mean                      five different formulations.
+values taken over the replicates. The data from the 0.6 dL/g
+implant were used for model calibration, and the release profile                  4. DISCUSSION
+was well captured. The profile following extrapolation to the 0.2                 We noted in the introduction that PLGA-based formulations
+dL/g implant was also well captured (with only an adjustment                      were first approved for clinical use in 1989; however, in the
+made to the ionization proportionality constant). The difference                  subsequent 35-year period, relatively few PLGA-based products
+in the release profiles can be primarily attributed to a large                    in the form of solid implants, microspheres, or in situ forming
+difference in the molecular weight of the PLGA. The simulated-                    gels have been approved. Further, despite the FDA commencing
+to-observed ratio vs time for all of the observations is presented                a regulatory science program to support the development of
+in Figure S2.                                                                     generic products in 2013, with a research focus on analytical
+   3.3. Brimonidine. Simulations of the release profiles based                    tools for the characterization of PLGA polymers, impacts of
+on the parameters listed in Table S3 are shown in Figure 8                        PLGA characteristics and manufacturing conditions on product
+alongside the observed data;57 the data points represent mean                     performance, in vitro drug release testing and in vitro-in vivo
+values taken over the replicates. The data from the EX1 implant                   correlations (IVIVCs) of PLGA-based products, and modeling
+were used in model calibration, and the release profile was well                  tools to facilitate formulation design and bioequivalence studies
+captured. The profiles of the EX3 and EX4 implants required                       of PLGA-based drugs, the generic products following a decade
+extrapolations with the only adjustments being made to the                        of collaborative research by the FDA, academia and industry,
+CQAs of the implants. The simulated-to-observed ratio vs time                     were only approved by the FDA in 2023.
+profile is shown in Figure S3. These release profiles were also                      The sustained release that may be achieved by PLGA-based
+reasonably well captured. The difference in the release profiles                  formulations helps to reduce dosing frequency, maintain stable
+can be primarily attributed to the difference in the lactide-to-                  concentrations of API, and may improve patient compliance.59
+                                                                           7461                                            https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                           ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                         www.acsabm.org                                                    Article
+
+                                                                                  factors will have a direct influence on the drug release; for
+                                                                                  example, a high molecular weight polymer within the implant is
+                                                                                  expected to slow down the drug release compared to the lower
+                                                                                  molecular polymer under similar testing conditions. On the
+                                                                                  contrary, the extrinsic factors such as release temperature and
+                                                                                  composition of release media, for example, the presence of
+                                                                                  surfactants and concentration of surfactants, influence the
+                                                                                  dynamics of the process, thereby changing the rate processes
+                                                                                  such as rate of fluid penetration into the implant, degradation
+                                                                                  rate of polymer, etc., for the same implant under different testing
+                                                                                  conditions.62
+                                                                                     The mathematical model described in this work, as
+                                                                                  implemented in the V23 release of the Simcyp Simulator,
+                                                                                  takes as input the geometry of the prepared implant, information
+                                                                                  on the CQAs of the PLGA and implant itself, and a system of
+                                                                                  equations that describe the degradation of the PLGA and
+                                                                                  subsequent release of drug. The key processes in the model
+                                                                                  include water influx into the porous structure of the implant,
+                                                                                  initial hydrolysis followed by autocatalytic hydrolysis, dissolu-
+                                                                                  tion of oligomer and monomer into the dissolution media
+                                                                                  accompanied by mass loss and a growing pore network,
+                                                                                  liberation, dissolution, and diffusion of the trapped drug. As
+                                                                                  output, the model can simulate the cumulative release of the
+                                                                                  drug in the solvent with further profiles that characterize the
+                                                                                  penetration of fluid into the implant (percent water occupation),
+                                                                                  pH, the molecular weight of PLGA, volumetric porosity, and
+                                                                                  mass of PLGA (and LA and GA, respectively). A weight of
+                                                                                  information on the degradation of the implant that would be
+                                                                                  time-consuming, expensive, or unavailable from other sources
+                                                                                  allows new insights into the degradation of the implant over and
+                                                                                  above the raw data from in vitro release experiments that are used
+                                                                                  to tune the model parameters. All of the implants studied in this
+Figure 9. Observed and simulated in vitro cumulative release profile for          article were reported to be manufactured using the extrusion
+the five nafarelin implants: (a) 80:20; (b) 85:15; (c) 90:10; (d) 95:5;           process, except for Buserelin, which was manufactured using the
+and (e) 100:0.                                                                    compression molding technique. However, there is no detailed
+                                                                                  information about the exact manufacturing conditions, and
+The biodegradable nature of PLGA compared with other                              manufacturing process variables are likely different, in addition
+polymers such as ethylene vinyl acetate (EVA) is an undoubted                     to testing them under different test conditions; thus, it was
+advantage; however, the complex interplay between the                             necessary to tune the model first for some of the in vitro release
+physicochemical properties of the polymer, the API, and the                       data before studying the changing CQAs or characteristics of the
+drug delivery system has been a particular barrier in the                         in vitro test environment.
+development of generic products. Wang et al.59 noted that even                       The input requirements for the mathematical model are
+when candidate generic products qualitatively (Q1) and                            substantial since information on the API, polymers, and the
+quantitatively (Q2) match reference-listed drug products in                       implant microstructure are required. The necessary information
+terms of inactive ingredients�so-called Q1/Q2 compliance�is                       to parametrize the model may be almost entirely obtained from
+insufficient to ensure bioequivalence between test and reference                  public databases, polymer product sheets, and high-quality in
+products.59 The Q1/Q2 requirement does not capture other                          vitro studies,63 which characterize the microstructure of the
+parameters, such as the manufacturing process, drug distribution                  manufactured implant before commencing experiments. How-
+within the PLGA product, and drug crystallinity.60                                ever, even in cases where near complete information is available,
+   To further advance the regulatory science of PLGA-based                        a small number of parameters (principally the ionization
+LAIs, there is an immediate need to understand the critical                       proportionality constant and immediate release fraction)
+formulation parameters that may affect product performance in                     needed estimation using data from a controlled release
+vitro and in vivo. Mathematical models of polymer degradation                     experiment; our work suggests a sharp optimum (a sudden
+and subsequent drug release offer a unique opportunity to                         improvement in the fitting during parameter estimation) is
+understand how the physicochemical properties of drug                             found when few parameters need to be estimated. In the case
+molecules/polymer, implant-specific properties, critical formu-                   studies reported in this work, a wider pool of parameters was
+lation attributes, and the test environment influence the in vitro                estimated since there was insufficient information available in
+release mechanisms of LAI drug products and their disposition                     the source publications to fully parametrize the model. In
+characteristics.61                                                                principle, this raises a problem associated with overfitting;
+   The release of drugs from PLGA-based implants is influenced                    however, our numerical work suggests that rather than
+by intrinsic and extrinsic factors. These factors include                         additional free parameters allowing a significant improvement
+qualitative (Q1) and quantitative (Q2) compositions, micro-                       in the fit to in vitro data, we instead found that there was a
+structural characteristics, and release conditions. The intrinsic                 significant uncertainty associated with the values of the
+                                                                           7462                                         https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                        ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                      www.acsabm.org                                                     Article
+
+estimated model parameters; known values for properties such                   5. CONCLUSIONS
+as mean pore size and volumetric porosity would simply reduce                  A predictive, comprehensive, bottom-up mechanistic model was
+this uncertainty rather than compromise the quality of fit to in               developed to predict the in vitro drug release from PLGA-based
+vitro data. Following calibration using one data set, the                      solid implant formulations. The model takes into account all of
+extrapolations made within the case studies suggest the model                  the following kinetic rate processes that take place for the drug to
+extrapolated reliably with release profiles responding to changes              be released from the formulation: (1) water/dissolution media
+in parameters in a physically plausible manner. The observed                   influx into the porous structure of the implant, (2) initial
+differences between the simulated release profiles and                         noncatalytic hydrolysis of PLGA, (3) autocatalytic hydrolysis
+observations for the brimonidine and nafarelin case studies                    phase (4) substantial mass loss of the polymer due to dissolution
+may be attributed to the microstructural changes that might also               of small oligomers and monomers into the aqueous medium, (5)
+be affected by the material changes. However, for the sake of                  liberation of the trapped solid drug from the polymer matrix, (6)
+simplicity for running the simulations, we assumed that the                    dissolution of solid drug into the wetted pore network, (7)
+implant parameters are constant for different polymer implants                 diffusion of the dissolved drug out of the implant, and (8)
+of the same drug. Also, it is important to note that the structure             accumulation of the dissolved drug in the dissolution media. The
+of the implant throughout the release experiment tends to be                   developed model has been validated by the in vitro release data
+influenced by the erosion pattern, i.e., bulk vs surface, and a shift          obtained from subcutaneous/intravitreal implants with four
+in the release mechanisms may be possible because of a process                 different compounds, including buserelin, afamelanotide,
+or material change, or both, which we have not accounted for                   brimonidine, and nafarelin.
+during the development of case studies due to the lack of                         In conclusion, the developed model has proven to be a
+thorough characterization information. This, we plan to                        valuable tool for predicting and understanding drug release
+investigate in our future studies, thereby addressing the                      behavior from PLGA solid implants. Through the use of the
+discrepancies between the simulation data vs observed data. If                 model, it has been possible to study the complex interactions
+necessary, we would account for additional mechanisms and                      between the polymer and the drug, as well as to evaluate the
+processes to accurately describe the observed data.                            impact of all CQAs for PLGA-based formulation such as
+   The adjusted parameters for the cases discussed in this paper,              molecular weight, lactide-to-glycolide molar ratio, and hydro-
+namely, polymer ionization proportionality constant and                        phobicity on drug release. The model has provided valuable
+deionization constants, impact the H+ ions mass in the implant,                insights into the kinetics and mechanism of drug release from
+thereby impacting the polymer degradation and subsequently                     PLGA solid implants and has demonstrated the potential for
+liberation, dissolution, and diffusion of the active from inside to            optimizing the design of these systems for specific medical
+the outside of the implant. Another model parameter, “initial                  applications. The in vitro release model coupled with a PBPK
+releasable fraction” in the model, is a fraction of the total amount           modeling framework gives a more complete picture of the drug’s
+of dose within the implant that is present in the pores. However,              behavior in the body, which can provide valuable information to
+these pores are distributed spatially within the implant at the                support bioequivalence study in a drug development program.
+surface or within the implant. Further, due to the slow wetting                The focus of future work will be on enhancing the model
+process in the case of a solid implant, only surface pores are                 predictions for drug release; additionally, we acknowledge the
+expected to be in contact with the release media during the initial            fact that there is likely scope for the demonstration of additional
+hours; thus, the drug released from these surface pores is seen as             cases for validation of the model, which we plan to take up as a
+burst in release experiments.                                                  future activity.
+   Other parameters such as the critical chain length of the
+oligomer directly influence the polymer mass loss from the
+implant and indirectly influence H+ ion mass in the implant,
+                                                                               ■      ASSOCIATED CONTENT
+                                                                               * Supporting Information
+                                                                                sı
+thereby modulating the drug release from the implant. Again, it                The Supporting Information is available free of charge at
+may be possible that for some of the parameter combinations,                   https://pubs.acs.org/doi/10.1021/acsabm.4c01054.
+one or more parameters in the model can be less sensitive, and to
+                                                                                        Initial conditions for the equations, model parametriza-
+understand the parameter impact, it may be necessary to look at
+                                                                                        tion tables (Tables S1−S4), and fold error vs time plots
+the profiles other than drug release, for example, polymer
+                                                                                        (Figures S1−S4) (PDF)
+degradation, water occupation, etc.
+   Additionally, while the focus of this work has been on
+documenting and validating the mathematical model for
+polymer degradation and drug release in the in vitro setting,
+                                                                               ■      AUTHOR INFORMATION
+                                                                               Corresponding Authors
+the model can be used in conjunction with PBPK modeling for                          Naresh Mittapelly − Certara Predictive Technologies (CPT),
+the human in vivo setting; this requires a release into the local                      Simcyp Division, Sheffield S1 2BJ, U.K.; orcid.org/0000-
+injection site, rather than a solvent, and accounting for the local                    0003-0130-4519; Email: naresh.mittapelly@certara.com
+cell drug partition from interstitial fluid and systemic drug                        Frederic Y. Bois − Certara Predictive Technologies (CPT),
+transfer, which are governed by the physicochemical properties                         Simcyp Division, Sheffield S1 2BJ, U.K.; orcid.org/0000-
+of the drug molecule. Finally, future work may focus on                                0002-4154-0391; Email: frederic.bois@certara.com
+improving the model’s ability to predict the drug release by
+accounting for additional processes and/or assumptions related                 Authors
+to the polymer degradation and diffusion and adding features to                      Alexandre Djehizian − Certara Predictive Technologies (CPT),
+the models, for example, the ability to input the pore size                            Simcyp Division, Sheffield S1 2BJ, U.K.
+distribution data for an implant, and outputting of pore size                        Krishna Chaitanya Telaprolu − Certara Predictive
+distribution as a function of time for data analysis.                                  Technologies (CPT), Simcyp Division, Sheffield S1 2BJ, U.K.
+                                                                        7463                                          https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                      ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                        www.acsabm.org                                                         Article
+
+    Kevin McNally − Certara Predictive Technologies (CPT),                         (7) Patel, P.; Mundargi, R. C.; Babu, V. R.; Jain, D.; Rangaswamy, V.;
+      Simcyp Division, Sheffield S1 2BJ, U.K.                                    Aminabhavi, T. M. Microencapsulation of doxycycline into poly
+    Santosh Kumar Puttrevu − Certara Predictive Technologies                     (lactide-co-glycolide) by spray drying technique: Effect of polymer
+      (CPT), Simcyp Division, Sheffield S1 2BJ, U.K.                             molecular weight on process parameters. J. Appl. Polym. Sci. 2008, 108
+    Omid Arjmandi-Tash − Certara Predictive Technologies                         (6), 4038−4046.
+      (CPT), Simcyp Division, Sheffield S1 2BJ, U.K.                               (8) Yen, S.-Y.; Sung, K.; Wang, J.-J.; Hu, O. Y.-P. Controlled release of
+    Sebastian Polak − Certara Predictive Technologies (CPT),                     nalbuphine propionate from biodegradable microspheres: in vitro and
+                                                                                 in vivo studies. Int. J. Pharm. 2001, 220 (1−2), 91−99.
+      Simcyp Division, Sheffield S1 2BJ, U.K.; Department of
+                                                                                   (9) Fredenberg, S.; Wahlgren, M.; Reslow, M.; Axelsson, A. The
+      Pharmaceutical Technology and Biopharmaceutics, Faculty of                 mechanisms of drug release in poly (lactic-co-glycolic acid)-based drug
+      Pharmacy, Jagiellonian University Medical College, 30-688                  delivery systems�a review. Int. J. Pharm. 2011, 415 (1−2), 34−52.
+      Krakow, Poland                                                               (10) Park, K.; Skidmore, S.; Hadar, J.; Garner, J.; Park, H.; Otte, A.;
+Complete contact information is available at:                                    Soh, B. K.; Yoon, G.; Yu, D.; Yun, Y.; et al. Injectable, long-acting PLGA
+https://pubs.acs.org/10.1021/acsabm.4c01054                                      formulations: Analyzing PLGA and understanding microparticle
+                                                                                 formation. J. Controlled Release 2019, 304, 125−134.
+Author Contributions                                                               (11) Bassand, C.; Benabed, L.; Verin, J.; Danede, F.; Lefol, L.; Willart,
+All authors contributed to the manuscript, and they have all                     J.-F.; Siepmann, F.; Siepmann, J. Hot melt extruded PLGA implants
+approved its final version. In addition, N.M. contributed to                     loaded with ibuprofen: How heat exposure alters the physical drug
+methodology, investigation, formal analysis, and data curation;                  state. J. Drug Delivery Sci. Technol. 2022, 73, No. 103432.
+                                                                                   (12) Yun, Y. H.; Lee, B. K.; Park, K. Controlled Drug Delivery:
+A.D. contributed to methodology, investigation, and imple-
+                                                                                 Historical perspective for the next generation. J. Controlled Release
+mentation; K.C.T. worked on formal analysis and data curation;
+                                                                                 2015, 219, 2−7.
+K.M. contributed to formal analysis; S.K.P. worked on formal                       (13) Garner, J.; Skidmore, S.; Park, H.; Park, K.; Choi, S.; Wang, Y.
+analysis and data curation; O.A.T. contributed to conceptualiza-                 Beyond Q1/Q2: the impact of manufacturing conditions and test
+tion and implementation; S.P. worked on methodology; and                         methods on drug release from PLGA-based microparticle depot
+F.B. contributed to conceptualization and supervision.                           formulations. J. Pharm. Sci. 2018, 107 (1), 353−361.
+Notes                                                                              (14) Hu, F.; Qi, J.; Lu, Y.; He, H.; Wu, W. PLGA-based implants for
+The authors declare the following competing financial                            sustained delivery of peptides/proteins: Current status, challenge and
+interest(s): All the authors are Certara UK Limited (Certara                     perspectives. Chin. Chem. Lett. 2023, 34 (11), No. 108250.
+Predictive Technologies) employees.                                                (15) Yu, L. X.; Amidon, G.; Khan, M. A.; Hoag, S. W.; Polli, J.; Raju,
+                                                                                 G.; Woodcock, J. Understanding pharmaceutical quality by design.
+■    ACKNOWLEDGMENTS
+The authors acknowledge the assistance of Whitney Moro from
+                                                                                 AAPS J. 2014, 16 (4), 771−783.
+                                                                                   (16) Versypt, A. N. F.; Pack, D. W.; Braatz, R. D. Mathematical
+                                                                                 modeling of drug delivery from autocatalytically degradable PLGA
+Evonik Corporation, who assisted in making estimates of                          microspheres–a review. J. Controlled Release 2013, 165 (1), 29−37.
+molecular weights of PLGA polymers. The authors also thank                         (17) Antheunis, H.; van der Meer, J.-C.; de Geus, M.; Kingma, W.;
+Natalie Morris, an employee of Certara U.K. Ltd., for her                        Koning, C. E. Improved mathematical model for the hydrolytic
+assistance with graphics design using Inkscape software.                         degradation of aliphatic polyesters. Macromolecules 2009, 42 (7),
+
+■
+1
+   ADDITIONAL NOTE
+ This assumes that even when large nondissolved polymer
+                                                                                 2462−2471.
+                                                                                   (18) Siparsky, G. L.; Voorhees, K. J.; Miao, F. Hydrolysis of polylactic
+                                                                                 acid (PLA) and polycaprolactone (PCL) in aqueous acetonitrile
+molecules are degraded into still nondissolved polymer                           solutions: autocatalysis. J. Polym. Environ. 1998, 6 (1), 31−41.
+                                                                                   (19) Nishida, H.; Yamashita, M.; Nagashima, M.; Hattori, N.; Endo,
+molecules, some drug will be released from the polymer matrix.
+                                                                                 T.; Tokiwa, Y. Theoretical prediction of molecular weight on
+
+■    REFERENCES
+ (1) Takada, N.; Kawabe, H. Drug Discovery in Japan: Investigating the
+                                                                                 autocatalytic random hydrolysis of aliphatic polyesters. Macromolecules
+                                                                                 2000, 33 (17), 6595−6601.
+                                                                                   (20) Lyu, S.; Schley, J.; Loy, B.; Lind, D.; Hobot, C.; Sparer, R.;
+Sources of Innovation; Nagaoka, S., Ed.; Springer: Singapore, 2019.              Untereker, D. Kinetics and time− temperature equivalence of polymer
+ (2) Lim, Y. W.; Tan, W. S.; Ho, K. L.; Mariatulqabtiah, A. R.; Abu              degradation. Biomacromolecules 2007, 8 (7), 2301−2310.
+Kasim, N. H.; Abd Rahman, N.; Wong, T. W.; Chee, C. F. Challenges                  (21) Antheunis, H.; van der Meer, J.-C.; de Geus, M.; Heise, A.;
+and Complications of Poly(lactic-co-glycolic acid)-Based Long-Acting             Koning, C. E. Autocatalytic equation describing the change in
+Drug Product Development. Pharmaceutics 2022, 14 (3), No. 614,                   molecular weight during hydrolytic degradation of aliphatic polyesters.
+DOI: 10.3390/pharmaceutics14030614.
+                                                                                 Biomacromolecules 2010, 11 (4), 1118−1124.
+ (3) D’Souza, S. S.; Selmin, F.; Murty, S. B.; Qiu, W.; Thanoo, B.;
+                                                                                   (22) Batycky, R. P.; Hanes, J.; Langer, R.; Edwards, D. A. A theoretical
+DeLuca, P. P. Assessment of fertility in male rats after extended
+chemical castration with a GnRH antagonist. AAPS PharmSci 2004, 6                model of erosion and macromolecular drug release from biodegrading
+(1), 94−99.                                                                      microspheres. J. Pharm. Sci. 1997, 86 (12), 1464−1477.
+ (4) Gu, H.; Song, C.; Long, D.; Mei, L.; Sun, H. Controlled release of            (23) Ding, A. G.; Shenderova, A.; Schwendeman, S. P. Prediction of
+recombinant human nerve growth factor (rhNGF) from poly [(lactic                 microclimate pH in poly (lactic-co-glycolic acid) films. J. Am. Chem.
+acid)-co-(glycolic acid)] microspheres for the treatment of neuro-               Soc. 2006, 128 (16), 5384−5390.
+degenerative disorders. Polym. Int. 2007, 56 (10), 1272−1280.                      (24) Göpferich, A. Polymer bulk erosion. Macromolecules 1997, 30
+ (5) Mo, Y.; Lim, L.-Y. Paclitaxel-loaded PLGA nanoparticles:                    (9), 2598−2604.
+potentiation of anticancer activity by surface conjugation with wheat              (25) Chen, Y.; Zhou, S.; Li, Q. Mathematical modeling of degradation
+germ agglutinin. J. Controlled Release 2005, 108 (2−3), 244−262.                 for bulk-erosive polymers: applications in tissue engineering scaffolds
+ (6) Murata, N.; Takashima, Y.; Toyoshima, K.; Yamamoto, M.;                     and drug delivery systems. Acta Biomater. 2011, 7 (3), 1140−1149.
+Okada, H. Anti-tumor effects of anti-VEGF siRNA encapsulated with                  (26) Wang, Y.; Pan, J.; Han, X.; Sinka, C.; Ding, L. A
+PLGA microspheres in mice. J. Controlled Release 2008, 126 (3), 246−             phenomenological model for the degradation of biodegradable
+254.                                                                             polymers. Biomaterials 2008, 29 (23), 3393−3401.
+
+                                                                          7464                                              https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                            ACS Appl. Bio Mater. 2024, 7, 7453−7465
+Downloaded from https://iranpaper.ir
+
+
+
+ACS Applied Bio Materials                                                           www.acsabm.org                                                         Article
+
+  (27) Charlier, A.; Leclerc, B.; Couarraze, G. Release of mifepristone              (49) Brunner, E. Reaktionsgeschwindigkeit in Heterogenen System-
+from biodegradable matrices: experimental and theoretical evaluations.              en. Z. Phys. Chem. 1904, 47U (1), 56−102.
+Int. J. Pharm. 2000, 200 (1), 115−120.                                               (50) Ferry, J. D. Statistical Evaluation of Sieve Constants in
+  (28) Faisant, N.; Siepmann, J.; Benoit, J.-P. PLGA-based micro-                   Ultrafiltration. J. Gen. Physiol. 1936, 20 (1), 95−104.
+particles: elucidation of mechanisms and a new, simple mathematical                  (51) Schliecker, G.; Schmidt, C.; Fuchs, S.; Ehinger, A.; Sandow, J.;
+model quantifying drug release. Eur. J. Pharm. Sci. 2002, 15 (4), 355−              Kissel, T. In vitro and in vivo correlation of buserelin release from
+366.                                                                                biodegradable implants using statistical moment analysis. J. Controlled
+  (29) Berchane, N.; Carson, K.; Rice-Ficht, A.; Andrews, M. Effect of              Release 2004, 94 (1), 25−37.
+mean diameter and polydispersity of PLG microspheres on drug                         (52) Bhardwaj, R.; Blanchard, J. In vitro characterization and in vivo
+release: Experiment and theory. Int. J. Pharm. 2007, 337 (1−2), 118−                release profile of a poly (d,l-lactide-co-glycolide)-based implant
+126.                                                                                delivery system for the α-MSH analog, melanotan-I. Int. J. Pharm.
+  (30) Raman, C.; Berkland, C.; Kim, K. K.; Pack, D. W. Modeling                    1998, 170 (1), 109−117.
+small-molecule release from PLG microspheres: effects of polymer                     (53) Bhardwaj, R.; Blanchard, J. In vitro evaluation of Poly(d,l-lactide-
+degradation and nonuniform drug distribution. J. Controlled Release                 co-glycolide) polymer-based implants containing the α-melanocyte
+2005, 103 (1), 149−158.                                                             stimulating hormone analog, Melanotan-I. J. Controlled Release 1997,
+  (31) Thombre, A. G.; Himmelstein, K. A simultaneous transport-                    45 (1), 49−55.
+reaction model for controlled drug delivery from catalyzed bioerodible               (54) Cantor, L. B. Brimonidine in the treatment of glaucoma and
+polymer matrices. AIChE J. 1985, 31 (5), 759−766.                                   ocular hypertension. Ther. Clin. Risk Manage. 2006, 2 (4), 337−346.
+  (32) Joshi, A.; Himmelstein, K. J. Dynamics of controlled release from             (55) Toris, C. B.; Gleason, M. L.; Camras, C. B.; Yablonski, M. E.
+bioerodible matrices. J. Controlled Release 1991, 15 (2), 95−104.                   Effects of brimonidine on aqueous humor dynamics in human eyes.
+  (33) Siepmann, J.; Faisant, N.; Benoit, J.-P. A new mathematical                  Arch. Ophthalmol. 1995, 113 (12), 1514−1517.
+model quantifying drug release from bioerodible microparticles using                 (56) Bhagav, P.; Deshpande, P.; Pandey, S.; Chandran, S. Develop-
+Monte Carlo simulations. Pharm. Res. 2002, 19 (12), 1885−1893.                      ment and validation of stability indicating UV spectrophotometric
+  (34) Lemaire, V.; Belair, J.; Hildgen, P. Structural modeling of drug             method for the estimation of brimonidine tartrate in pure form,
+release from biodegradable porous matrices based on a combined                      formulations and preformulation studies. Pharm. Lett. 2010, 2 (3),
+diffusion/erosion process. Int. J. Pharm. 2003, 258 (1−2), 95−107.                  106−122.
+  (35) Zhang, M.; Yang, Z.; Chow, L. L.; Wang, C. H. Simulation of drug              (57) Shiah, J.-G. C. P. Sustained Drug Delivery Implant. U.S. Patent.
+release from biodegradable polymeric microspheres with bulk and                     US0113458A1, 2021.
+surface erosions. J. Pharm. Sci. 2003, 92 (10), 2040−2056.                           (58) Sanders, L.; Kell, B.; McRae, G.; Whitehead, G. Prolonged
+  (36) Prabhu, S.; Hossainy, S. Modeling of degradation and drug                    controlled-release of nafarelin, a luteinizing hormone-releasing
+release from a biodegradable stent coating. J. Biomed. Mater. Res., Part A          hormone analogue, from biodegradable polymeric implants: influence
+2007, 80A (3), 732−741.                                                             of composition and molecular weight of polymer. J. Pharm. Sci. 1986, 75
+  (37) Rothstein, S. N.; Federspiel, W. J.; Little, S. R. A simple model            (4), 356−360.
+framework for the prediction of controlled release from bulk eroding                 (59) Wang, Y.; Qin, B.; Xia, G.; Choi, S. H. FDA’s Poly (Lactic-Co-
+polymer matrices. J. Mater. Chem. 2008, 18 (16), 1873−1880.                         Glycolic Acid) Research Program and Regulatory Outcomes. AAPS J.
+  (38) Rothstein, S. N.; Federspiel, W. J.; Little, S. R. A unified                 2021, 23 (4), No. 92.
+mathematical model for the prediction of controlled release from                     (60) Garner, J.; Skidmore, S.; Park, H.; Park, K.; Choi, S.; Wang, Y.
+surface and bulk eroding polymer matrices. Biomaterials 2009, 30 (8),               Beyond Q1/Q2: The Impact of Manufacturing Conditions and Test
+1657−1664.                                                                          Methods on Drug Release From PLGA-Based Microparticle Depot
+  (39) Zhao, A.; Hunter, S.; Rodgers, V. Theoretical prediction of                  Formulations. J. Pharm. Sci. 2018, 107 (1), 353−361.
+induction period from transient pore evolvement in polyester-based                   (61) Giolando, P. A.; Hopkins, K.; Davis, B. F.; Vike, N.;
+microparticles. J. Pharm. Sci. 2010, 99 (11), 4477−4487.                            Ahmadzadegan, A.; Ardekani, A. M.; Vlachos, P. P.; Rispoli, J. V.;
+  (40) Ford, A. N.; Pack, D. W.; Braatz, R. D. Multi-Scale Modeling of              Solorio, L.; Kinzer-Ursem, T. L. Mechanistic Computational Modeling
+PLGA Microparticle Drug Delivery Systems. In Computer Aided                         of Implantable, Bioresorbable Drug Release Systems. Adv. Mater. 2023,
+Chemical Engineering; Elsevier, 2011; Vol. 29, pp 1475−1479.                        35 (51), No. 2301698.
+  (41) Casalini, T.; Rossi, F.; Lazzari, S.; Perale, G.; Masi, M.                    (62) Costello, M. A.; Liu, J.; Chen, B.; Wang, Y.; Qin, B.; Xu, X.; Li, Q.;
+Mathematical Modeling of PLGA Microparticles: From Polymer                          Lynd, N. A.; Zhang, F. Drug release mechanisms of high-drug-load,
+Degradation to Drug Release. Mol. Pharmaceutics 2014, 11 (11),                      melt-extruded dexamethasone intravitreal implants. Eur. J. Pharm.
+4036−4048.                                                                          Biopharm. 2023, 187, 46−56.
+  (42) Koursari, N.; Arjmandi-Tash, O.; Trybala, A.; Starov, V. M.                   (63) Costello, M. A.; Liu, J.; Wang, Y.; Qin, B.; Xu, X.; Li, Q.; Smith,
+Drying of Foam under Microgravity Conditions. Microgravity Sci.                     W. C.; Lynd, N. A.; Zhang, F. Manufacturing dexamethasone
+                                                                                    intravitreal implants: Process control and critical quality attributes.
+Technol. 2019, 31 (5), 589−601.
+                                                                                    Int. J. Pharm. 2023, 647, No. 123515.
+  (43) McCabe, W. L.; Smith, J. C.; Harriott, P. Unit Operations of
+Chemical Engineering; McGraw-Hill, 1993.
+  (44) Zhu, X.; Braatz, R. D. A mechanistic model for drug release in
+PLGA biodegradable stent coatings coupled with polymer degradation
+and erosion. J. Biomed. Mater. Res., Part A 2015, 103 (7), 2269−2279.
+  (45) Busatto, C.; Pesoa, J.; Helbling, I.; Luna, J.; Estenoz, D.
+Heterogeneous hydrolytic degradation of poly(lactic-co-glycolic acid)
+microspheres: Mathematical modeling. J. Appl. Polym. Sci. 2017, 134
+(43), No. 45464.
+  (46) Wang, J.; Flanagan, D. R. General solution for diffusion-
+controlled dissolution of spherical particles. 1. Theory. J. Pharm. Sci.
+1999, 88 (7), 731−738.
+  (47) Noyes, A. A.; Whitney, W. R. The Rate of Solution of Solid
+Substances in Their Own Solutions. J. Am. Chem. Soc. 1897, 19 (12),
+930−934.
+  (48) Nernst, W. Theorie der Reaktionsgeschwindigkeit in Hetero-
+genen Systemen. Z. Phys. Chem. 1904, 47U (1), 52−55.
+
+                                                                             7465                                              https://doi.org/10.1021/acsabm.4c01054
+                                                                                                                               ACS Appl. Bio Mater. 2024, 7, 7453−7465
+

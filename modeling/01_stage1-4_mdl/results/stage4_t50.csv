@@ -1,0 +1,18 @@
+case,formulation,t50_h,note,model,t50_lo_h,t50_hi_h,data_bracket_h
+C1_Jin2023_morphine,MGM (optimised),,normalisation not relative to a documented initial amount,,,,
+C2_Saravanan2011_diclofenac,GM1,573.5709016236686,model-based; data bracket shows observed crossing interval,F,547.5772073598458,602.155445193561,"(504.0, 576.0)"
+C2_Saravanan2011_diclofenac,GM2,233.3505858170161,model-based; data bracket shows observed crossing interval,F,217.27469000362848,251.9954277042906,"(216.0, 288.0)"
+C2_Saravanan2011_diclofenac,GM3,124.98820221495772,model-based; data bracket shows observed crossing interval,F,118.04779847521976,132.79568062934263,"(72.0, 144.0)"
+C3_Kodra2026_ketoprofen,MS/K-1,11.481272434298354,model-based; data bracket shows observed crossing interval,F,9.359840799436272,14.84620166070847,"(5.0, 24.0)"
+C3_Kodra2026_ketoprofen,MS/K-2,2.650733141646517,model-based; data bracket shows observed crossing interval,F,1.5113831869501408,10.768590427006218,"(3.0, 5.0)"
+C3_Kodra2026_ketoprofen,MS/K-3,0.9398637356126719,model-based; data bracket shows observed crossing interval,F,0.46907552961892424,30546524298.045773,"(1.0, 3.0)"
+C4_Zhang2023_vancomycin,pH 6.0,52.893460428678445,model-based; data bracket shows observed crossing interval,FB,42.15194864696925,70.98157969958226,"(24.0, 48.0)"
+C4_Zhang2023_vancomycin,pH 7.4,87.12107441646079,model-based; data bracket shows observed crossing interval,FB,64.22928713518826,135.36678618677763,"(48.0, 72.0)"
+C5_Chang2023_gentamicin,0.5dM-G,,normalisation not relative to a documented initial amount,,,,
+C5_Chang2023_gentamicin,1.0dM-G,,normalisation not relative to a documented initial amount,,,,
+C5_Chang2023_gentamicin,2.5dM-G,,normalisation not relative to a documented initial amount,,,,
+C6_Hu2024_gentamicin,m-EmG net (raw - background),,normalisation not relative to a documented initial amount,,,,
+C7_Lan2017_bFGF,A porous GMS,413.56374419626934,model-based; data bracket shows observed crossing interval,F,296.9224298247438,681.138185247361,"(215.52, 288.0)"
+C7_Lan2017_bFGF,B normal GMS,64.02007193693053,model-based; data bracket shows observed crossing interval,F,45.351478187739225,108.81150809283359,"(72.0, 119.76)"
+C8_Liu2022_icariin,GM-1 0.25 mM,141.7860989155638,model-based; data bracket shows observed crossing interval,F,125.55857692060447,162.8307786755512,"(72.0, 168.0)"
+C8_Liu2022_icariin,GM-2 0.5 mM,62.50270977514144,model-based; data bracket shows observed crossing interval,F,57.15338618802384,68.95678312137126,"(24.0, 72.0)"

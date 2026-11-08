@@ -1,0 +1,177 @@
+   formulation                          model          variant  scope   k_per_h  k_eq_per_h          beta   RMSE_fit  test_RMSE       aicc  corr_k_beta beta_at_bound
+0       MS/K-1                  C: constant D                -   full  0.002661         NaN           NaN   3.362786        NaN -30.590670          NaN           NaN
+1       MS/K-1                  C: constant D                -  train  0.003673         NaN           NaN   1.662173   9.013524 -18.582267          NaN           NaN
+2       MS/K-1  W-Q: index-driven Fujita form           linear   full       NaN    0.002661  7.042966e-20   3.362786        NaN -23.924004     0.460690          True
+3       MS/K-1  W-Q: index-driven Fujita form           linear  train       NaN    0.004816  7.157565e-01   0.692102  13.415572        inf     0.865829         False
+4       MS/K-1  W-Q: index-driven Fujita form             step   full       NaN    0.002661  9.517398e-17   3.362786        NaN -23.924004     0.298098          True
+5       MS/K-1  W-Q: index-driven Fujita form             step  train       NaN    0.010178  8.254431e+00   0.194792  21.728300        inf     0.984735         False
+6       MS/K-1  W-Q: index-driven Fujita form  linear_monotone   full       NaN    0.002661  3.486996e-19   3.362786        NaN -23.924004     0.389789          True
+7       MS/K-1  W-Q: index-driven Fujita form  linear_monotone  train       NaN    0.004816  7.157565e-01   0.692102  13.644384        inf     0.865829         False
+8       MS/K-1  W-Q: index-driven Fujita form    step_monotone   full       NaN    0.002661  2.754048e-15   3.362786        NaN -23.924004     0.243974          True
+9       MS/K-1  W-Q: index-driven Fujita form    step_monotone  train       NaN    0.010178  8.254431e+00   0.194792  23.670608        inf     0.984735         False
+10      MS/K-2                  C: constant D                -   full  0.011524         NaN           NaN  13.087883        NaN -17.001500          NaN           NaN
+11      MS/K-2                  C: constant D                -  train  0.005413         NaN           NaN   4.183381  28.951410 -13.044303          NaN           NaN
+12      MS/K-2  W-Q: index-driven Fujita form           linear   full       NaN    0.027447  3.176517e+00   8.987388        NaN -14.093479     0.811874         False
+13      MS/K-2  W-Q: index-driven Fujita form           linear  train       NaN    0.009794  1.523551e+00   1.582480  24.218680        inf     0.847131         False
+14      MS/K-2  W-Q: index-driven Fujita form             step   full       NaN    0.063356  1.127252e+01  11.046706        NaN -12.030379     0.905808         False
+15      MS/K-2  W-Q: index-driven Fujita form             step  train       NaN    0.014914  5.817588e+00   2.540573  29.973324        inf     0.944770         False
+16      MS/K-2  W-Q: index-driven Fujita form  linear_monotone   full       NaN    0.026996  4.023096e+00   7.494542        NaN -15.909952     0.702492         False
+17      MS/K-2  W-Q: index-driven Fujita form  linear_monotone  train       NaN    0.009794  1.523551e+00   1.582480  21.081935        inf     0.847131         False
+18      MS/K-2  W-Q: index-driven Fujita form    step_monotone   full       NaN    0.041608  1.206258e+01   5.001776        NaN -19.953770     0.731281         False
+19      MS/K-2  W-Q: index-driven Fujita form    step_monotone  train       NaN    0.014914  5.817588e+00   2.540573  17.203953        inf     0.944770         False
+20      MS/K-3                  C: constant D                -   full  0.032501         NaN           NaN  18.649765        NaN -13.460033          NaN           NaN
+21      MS/K-3                  C: constant D                -  train  0.027790         NaN           NaN  22.788865  10.787294  -2.873389          NaN           NaN
+22      MS/K-3  W-Q: index-driven Fujita form           linear   full       NaN    0.228075  7.247942e+00   7.848314        NaN -15.448714     0.898932         False
+23      MS/K-3  W-Q: index-driven Fujita form           linear  train       NaN    0.221104  8.270397e+00   8.511061   8.473849        inf     0.888908         False
+24      MS/K-3  W-Q: index-driven Fujita form             step   full       NaN    0.032501  6.694747e-17  18.649765        NaN  -6.793367          NaN          True
+25      MS/K-3  W-Q: index-driven Fujita form             step  train       NaN    0.027790  1.614217e-14  22.788865  10.787494        inf          NaN          True
+26      MS/K-3  W-Q: index-driven Fujita form  linear_monotone   full       NaN    0.134059  7.680205e+00   2.149552        NaN -28.399107     0.752739         False
+27      MS/K-3  W-Q: index-driven Fujita form  linear_monotone  train       NaN    0.134052  7.679204e+00   2.774391   0.016508        inf     0.754461         False
+28      MS/K-3  W-Q: index-driven Fujita form    step_monotone   full       NaN    0.032580  2.344647e+01  18.616105        NaN  -6.811431          NaN         False
+29      MS/K-3  W-Q: index-driven Fujita form    step_monotone  train       NaN    0.027800  2.083681e+01  22.784204  10.790934        inf          NaN         False
+                           case                   formulation       t50_h                                                        note model    t50_lo_h      t50_hi_h   data_bracket_h
+0           C1_Jin2023_morphine               MGM (optimised)         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+1   C2_Saravanan2011_diclofenac                           GM1  573.570404  model-based; data bracket shows observed crossing interval     F  547.575909  6.021559e+02   (504.0, 576.0)
+2   C2_Saravanan2011_diclofenac                           GM2  233.350580  model-based; data bracket shows observed crossing interval     F  217.274825  2.519952e+02   (216.0, 288.0)
+3   C2_Saravanan2011_diclofenac                           GM3  124.988182  model-based; data bracket shows observed crossing interval     F  118.047786  1.327957e+02    (72.0, 144.0)
+4       C3_Kodra2026_ketoprofen                        MS/K-1   11.481272  model-based; data bracket shows observed crossing interval     F    9.359841  1.484620e+01      (5.0, 24.0)
+5       C3_Kodra2026_ketoprofen                        MS/K-2    2.650733  model-based; data bracket shows observed crossing interval     F    1.511383  1.076859e+01       (3.0, 5.0)
+6       C3_Kodra2026_ketoprofen                        MS/K-3    0.939864  model-based; data bracket shows observed crossing interval     F    0.469076  3.054652e+10       (1.0, 3.0)
+7       C4_Zhang2023_vancomycin                        pH 6.0   52.893456  model-based; data bracket shows observed crossing interval    FB   42.151941  7.098159e+01     (24.0, 48.0)
+8       C4_Zhang2023_vancomycin                        pH 7.4   87.121073  model-based; data bracket shows observed crossing interval    FB   64.229288  1.353668e+02     (48.0, 72.0)
+9       C5_Chang2023_gentamicin                       0.5dM-G         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+10      C5_Chang2023_gentamicin                       1.0dM-G         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+11      C5_Chang2023_gentamicin                       2.5dM-G         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+12         C6_Hu2024_gentamicin  m-EmG net (raw - background)         NaN   normalisation not relative to a documented initial amount   NaN         NaN           NaN              NaN
+13              C7_Lan2017_bFGF                  A porous GMS  413.563786  model-based; data bracket shows observed crossing interval     F  296.922348  6.811388e+02  (215.52, 288.0)
+14              C7_Lan2017_bFGF                  B normal GMS   64.020072  model-based; data bracket shows observed crossing interval     F   45.351477  1.088115e+02   (72.0, 119.76)
+15           C8_Liu2022_icariin                  GM-1 0.25 mM  141.786097  model-based; data bracket shows observed crossing interval     F  125.558574  1.628308e+02    (72.0, 168.0)
+16           C8_Liu2022_icariin                   GM-2 0.5 mM   62.502710  model-based; data bracket shows observed crossing interval     F   57.153388  6.895678e+01     (24.0, 72.0)
+{
+ "coupled_solver_check": {
+  "beta0_max_err_vs_analytical": 0.0005226439634626878,
+  "mass_balance_max": 8.548717289613705e-15
+ },
+ "synthetic": {
+  "diclofenac-like (12 points) | noise=0.0": {
+   "k_app_over_kdeq": 0.27556486256806423,
+   "RMSE_constD_vs_truth": 2.3543872103757986,
+   "RMSE_constD_fit": 2.3543872103757986,
+   "burst_b": 8.927338630585808e-12
+  },
+  "diclofenac-like (12 points) | noise=0.01": {
+   "k_app_over_kdeq": 0.27308567274757495,
+   "RMSE_constD_vs_truth": 2.3602503354935926,
+   "RMSE_constD_fit": 2.5465664232051313,
+   "burst_b": 9.177794052867477e-12
+  },
+  "diclofenac-like (12 points) | noise=0.02": {
+   "k_app_over_kdeq": 0.25690284226164056,
+   "RMSE_constD_vs_truth": 2.690271690379447,
+   "RMSE_constD_fit": 2.0007730860212516,
+   "burst_b": 3.220702165273067e-13
+  },
+  "Kodra-like (5 points) | noise=0.0": {
+   "k_app_over_kdeq": 0.24985637337096134,
+   "RMSE_constD_vs_truth": 1.6423370047806303,
+   "RMSE_constD_fit": 1.6423370047806303,
+   "burst_b": 2.0249792506679574e-09
+  },
+  "Kodra-like (5 points) | noise=0.01": {
+   "k_app_over_kdeq": 0.23903137729853632,
+   "RMSE_constD_vs_truth": 1.8161443339474483,
+   "RMSE_constD_fit": 1.8849202124706321,
+   "burst_b": 2.9690893635580436e-09
+  },
+  "Kodra-like (5 points) | noise=0.02": {
+   "k_app_over_kdeq": 0.230023993020545,
+   "RMSE_constD_vs_truth": 2.1877797632049143,
+   "RMSE_constD_fit": 1.7487205464911064,
+   "burst_b": 3.4816196996571476e-13
+  }
+ },
+ "identifiability_grid": {
+  "scale": [
+   0.6,
+   0.7,
+   0.8,
+   0.9,
+   1.0,
+   1.1,
+   1.2000000000000002,
+   1.3,
+   1.4,
+   1.5,
+   1.6
+  ],
+  "beta": [
+   4.0,
+   5.0,
+   6.0,
+   7.0,
+   8.0,
+   9.0,
+   10.0,
+   11.0,
+   12.0,
+   13.0
+  ],
+  "SSR": [
+   [
+    0.04372150626870576,
+    0.010694633975298745,
+    0.001832509698745197,
+    0.00747748152444692,
+    0.02190116934272413,
+    0.04156575548152833,
+    0.06428345553104518,
+    0.08868958233329353,
+    0.11398676015023736,
+    0.13960307531120475,
+    0.16513372550844882
+   ],
+   [
+    0.06905316554105455,
+    0.02278204216308821,
+    0.003937851178134523,
+    0.0020211654840385446,
+    0.01062693063473142,
+    0.025736188810346644,
+    0.044841075560588015,
+    0.06631871508226364,
+    0.08918745455771226,
+    0.11280419499061087,
+    0.136666739787767
+   ],
+   [
+    0.09142727148809032,
+    0.03510357632283042,
+    0.008684957872807576,
+    0.0009793306083716814,
+    0.0051193211113218515,
+    0.016735791501168246,
+    0.03303868718860497,
+    0.05227184109840651,
+    0.07327915488611066,
+    0.09532607800324258,
+    0.117891225332814
+   ],
+   [
+    0.1128107490731523,
+    0.047770727612163943,
+    0.01477927023284484,
+    0.0020272177669209794,
+    0.0022469339104226296,
+    0.010798279472096566,
+    0.02464414400865159,
+    0.04187538130807917,
+    0.06126233013891239,
+    0.08193544529140499,
+    0.10332869291900891
+   ],
+   [
+    0.13410896911843811,
+    0.061046655818950676,
+    0.021905971809470764,
+    0.004471522430897107,
+    0.0010089956500301

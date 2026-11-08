@@ -1,0 +1,19 @@
+{
+ "C1_Jin2023_morphine|MGM (optimised)": "F",
+ "C2_Saravanan2011_diclofenac|GM1": "F",
+ "C2_Saravanan2011_diclofenac|GM2": "F",
+ "C2_Saravanan2011_diclofenac|GM3": "F",
+ "C3_Kodra2026_ketoprofen|MS/K-1": "F",
+ "C3_Kodra2026_ketoprofen|MS/K-2": "F",
+ "C3_Kodra2026_ketoprofen|MS/K-3": "F",
+ "C4_Zhang2023_vancomycin|pH 6.0": "FB",
+ "C4_Zhang2023_vancomycin|pH 7.4": "FB",
+ "C5_Chang2023_gentamicin|0.5dM-G": "F",
+ "C5_Chang2023_gentamicin|1.0dM-G": "F",
+ "C5_Chang2023_gentamicin|2.5dM-G": "F",
+ "C6_Hu2024_gentamicin|m-EmG net (raw - background)": "F",
+ "C7_Lan2017_bFGF|A porous GMS": "F",
+ "C7_Lan2017_bFGF|B normal GMS": "F",
+ "C8_Liu2022_icariin|GM-1 0.25 mM": "F",
+ "C8_Liu2022_icariin|GM-2 0.5 mM": "F"
+}

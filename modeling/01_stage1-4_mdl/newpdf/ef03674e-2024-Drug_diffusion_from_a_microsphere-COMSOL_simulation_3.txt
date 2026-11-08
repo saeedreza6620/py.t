@@ -1,0 +1,97 @@
+   Drug diffusion from a microsphere-COMSOL simulation
+What's the duration required for a medication to disappear from a microsphere?
+Biodegradable microsphere-based drug delivery methods have been thoroughly studied. By
+administering therapy at a regulated speed over an extended period, these devices can minimize
+the frequency of administration, maintain and stabilize the medicine, and enhance patient
+compliance. Drug delivery applications use biodegradable polymeric microspheres and are
+emerging as a major means of delivering medicinal medicines. The benefits of microspheres
+include the protection of encapsulated medications, the convenience of noninvasive injectable
+delivery, and prolonged drug release over hours, months, or even years. Predicting the release
+performance of a drug delivery device is a major difficulty in biological science and
+pharmaceutics.
+To simulate the question "How long does it take for a drug to deplete from a microsphere?" using
+COMSOL simulation, the following conditions must be met: the external liquid medium is well
+mixed; the microsphere has spherical symmetry; the drug is evenly distributed throughout the drug
+capsule, or, in other words, at the initial time point, the drug has well diffused throughout the entire
+microsphere such that the concentration in the capsule is constant; and there is no membrane layer
+or anything similar that could cause an increase or decrease in diffusivity throughout or along the
+radius of the sphere (constant diffusivity throughout the capsule).
+A circle and 2700 are selected as the geometry and rotation angles, respectively.
+
+
+
+
+                            Figure 1: Geometry of the microsphere
+
+
+The physics used in this simulation was chosen to be the transport of diluted organisms. Diffusion
+of a medication with a modest molecular weight was taken into account here. Transporting diluted
+species is hence appropriate. The question, "How long will this drug take to diffuse out of this
+microsphere?" needed to be answered in terms of time. Thus, the study's time-dependent model
+was chosen. The microsphere can be defined by a number of factors.
+
+
+1. Diffusion coefficient (D)-0.01 µm2/s
+2. Radius of the capsule (R)- 100 µm
+3. Initial concentration of the drug (C0)- 100 mol/m3
+There was an axial symmetry across the R=0 axis. There was no flux boundary condition. So, in
+this case, the drugs will not even be able to diffuse out of the microsphere. So, the boundary
+conditions were updated. It was important to get the constant boundary condition at the interface.
+        𝜕𝐶
+At r=0, 𝜕𝑥 = 0
+
+At r=R, C=0
+
+
+
+
+                              Figure 2: Boundary condition
+
+
+
+
+The mesh is important to break down the complex shape into smaller pieces. These pieces help
+to solve equations and simulate physical behavior accurately. The normal physics-controlled
+mesh was selected as the mesh.
+                               Figure 3: Normal physics-controlled mesh
+
+
+Examining drug diffusion outside of the microsphere was the goal of the simulation. The starting
+time of the time-dependent study was set to 0, and the stop time was set to 24 hours. This model
+allows one to watch how the diffusion happens over a day. Consequently, a high drug
+concentration within the microsphere and a diminishing concentration as it exits through the
+surface are visible.
+In figure 4, it shows the 2D model of drug diffusion through the microsphere, and in figure 5, it
+shows the 3D model of drug diffusion through the microsphere. Figure 6 shows the drug diffusion
+through the microsphere with time.
+
+
+
+
+     Figure 4: 2D model of the microsphere                 Figure 5: 3D model of the microsphere
+Time: 3.1304h                          Time: 6.2609h                             Time: 9.3913h
+
+
+
+
+   Time: 12.522h                           Time: 19.826h                             Time: 24h
+
+
+
+                Figure 6: 2D model of the drug diffusion through the microsphere when radius=100 µm
+
+
+ According to this model, diffusion can be observed by changing the radius of the microsphere. The
+ figures below indicate the concentrations after changing the radius of the microsphere to 50 µm.
+ Then the diffusion is fast due to the high area-to-volume ratio.
+Time: 3.1304h                        Time: 6.2609h                             Time: 9.3913h
+
+
+
+
+Time: 12.522h                        Time: 19.826h                             Time: 24h
+
+
+
+         Figure 7: 2D model of the drug diffusion through microsphere when the radius =50 µm
+

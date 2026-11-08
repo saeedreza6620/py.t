@@ -1,0 +1,208 @@
+case_id,formulation,time_value,time_unit,time_h,y_value,y_unit,evidence,y_uncertainty_digitization,y_reported_error,include_in_fit,exclusion_reason,note
+C1_Jin2023_morphine,MGM (optimised),5.0,min,0.0833,0.0,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),10.0,min,0.1667,5.0,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),30.0,min,0.5,12.0,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),45.0,min,0.75,21.5,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),60.0,min,1.0,25.8,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),90.0,min,1.5,37.2,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),120.0,min,2.0,40.0,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),240.0,min,4.0,47.0,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),480.0,min,8.0,55.0,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),720.0,min,12.0,56.0,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),1440.0,min,24.0,57.1,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),2160.0,min,36.0,57.5,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),2880.0,min,48.0,58.1,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),3600.0,min,60.0,58.5,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C1_Jin2023_morphine,MGM (optimised),4320.0,min,72.0,59.2,% cumulative (paper: Mt/Minf),DIRECT_FIGURE_DATA_LABEL,0.05,,True,,"Fig.2 data row, p.7"
+C2_Saravanan2011_diclofenac,GM1,1.0,day,24.0,9.981,% of loaded drug,VECTOR_EXTRACTED,0.05,1.813,True,,Fig.6 p.102; raw x=1.009 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,2.0,day,48.0,15.039,% of loaded drug,VECTOR_EXTRACTED,0.05,2.104,True,,Fig.6 p.102; raw x=1.992 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,3.0,day,72.0,20.021,% of loaded drug,VECTOR_EXTRACTED,0.05,1.988,True,,Fig.6 p.102; raw x=2.999 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,6.0,day,144.0,25.004,% of loaded drug,VECTOR_EXTRACTED,0.05,1.922,True,,Fig.6 p.102; raw x=5.998 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,9.0,day,216.0,30.993,% of loaded drug,VECTOR_EXTRACTED,0.05,2.096,True,,Fig.6 p.102; raw x=8.995 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,12.0,day,288.0,35.976,% of loaded drug,VECTOR_EXTRACTED,0.05,2.03,True,,Fig.6 p.102; raw x=11.992 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,15.0,day,360.0,41.033,% of loaded drug,VECTOR_EXTRACTED,0.05,2.487,True,,Fig.6 p.102; raw x=15.012 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,18.0,day,432.0,45.017,% of loaded drug,VECTOR_EXTRACTED,0.05,3.094,True,,Fig.6 p.102; raw x=18.009 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,21.0,day,504.0,48.012,% of loaded drug,VECTOR_EXTRACTED,0.05,3.71,True,,Fig.6 p.102; raw x=21.008 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,24.0,day,576.0,51.007,% of loaded drug,VECTOR_EXTRACTED,0.05,4.126,True,,Fig.6 p.102; raw x=24.005 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,27.0,day,648.0,53.993,% of loaded drug,VECTOR_EXTRACTED,0.05,4.201,True,,Fig.6 p.102; raw x=27.001 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM1,30.0,day,720.0,55.989,% of loaded drug,VECTOR_EXTRACTED,0.05,3.202,True,,Fig.6 p.102; raw x=30.001 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,1.0,day,24.0,16.045,% of loaded drug,VECTOR_EXTRACTED,0.05,1.996,True,,Fig.6 p.102; raw x=1.006 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,2.0,day,48.0,26.011,% of loaded drug,VECTOR_EXTRACTED,0.05,1.922,True,,Fig.6 p.102; raw x=1.989 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,3.0,day,72.0,32.0,% of loaded drug,VECTOR_EXTRACTED,0.05,2.096,True,,Fig.6 p.102; raw x=2.996 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,6.0,day,144.0,38.047,% of loaded drug,VECTOR_EXTRACTED,0.05,2.529,True,,Fig.6 p.102; raw x=5.995 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,9.0,day,216.0,45.026,% of loaded drug,VECTOR_EXTRACTED,0.05,3.094,True,,Fig.6 p.102; raw x=8.992 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,12.0,day,288.0,51.015,% of loaded drug,VECTOR_EXTRACTED,0.05,2.096,True,,Fig.6 p.102; raw x=11.989 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,15.0,day,360.0,56.996,% of loaded drug,VECTOR_EXTRACTED,0.05,1.822,True,,Fig.6 p.102; raw x=15.009 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,18.0,day,432.0,63.052,% of loaded drug,VECTOR_EXTRACTED,0.05,1.53,True,,Fig.6 p.102; raw x=18.006 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,21.0,day,504.0,68.034,% of loaded drug,VECTOR_EXTRACTED,0.05,1.389,True,,Fig.6 p.102; raw x=21.005 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,24.0,day,576.0,72.027,% of loaded drug,VECTOR_EXTRACTED,0.05,1.714,True,,Fig.6 p.102; raw x=24.002 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,27.0,day,648.0,76.012,% of loaded drug,VECTOR_EXTRACTED,0.05,1.921,True,,Fig.6 p.102; raw x=26.999 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM2,30.0,day,720.0,80.004,% of loaded drug,VECTOR_EXTRACTED,0.05,2.387,True,,Fig.6 p.102; raw x=29.998 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,1.0,day,24.0,25.004,% of loaded drug,VECTOR_EXTRACTED,0.05,2.063,True,,Fig.6 p.102; raw x=1.009 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,2.0,day,48.0,35.976,% of loaded drug,VECTOR_EXTRACTED,0.05,1.672,True,,Fig.6 p.102; raw x=1.992 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,3.0,day,72.0,44.02,% of loaded drug,VECTOR_EXTRACTED,0.05,1.597,True,,Fig.6 p.102; raw x=2.999 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,6.0,day,144.0,52.005,% of loaded drug,VECTOR_EXTRACTED,0.05,1.098,True,,Fig.6 p.102; raw x=5.998 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,9.0,day,216.0,58.984,% of loaded drug,VECTOR_EXTRACTED,0.05,1.389,True,,Fig.6 p.102; raw x=8.995 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,12.0,day,288.0,66.03,% of loaded drug,VECTOR_EXTRACTED,0.05,1.888,True,,Fig.6 p.102; raw x=11.992 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,15.0,day,360.0,73.017,% of loaded drug,VECTOR_EXTRACTED,0.05,2.105,True,,Fig.6 p.102; raw x=15.012 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,18.0,day,432.0,78.0,% of loaded drug,VECTOR_EXTRACTED,0.05,1.78,True,,Fig.6 p.102; raw x=18.009 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,21.0,day,504.0,81.984,% of loaded drug,VECTOR_EXTRACTED,0.05,2.105,True,,Fig.6 p.102; raw x=21.008 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,24.0,day,576.0,84.979,% of loaded drug,VECTOR_EXTRACTED,0.05,1.813,True,,Fig.6 p.102; raw x=24.005 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,27.0,day,648.0,88.04,% of loaded drug,VECTOR_EXTRACTED,0.05,1.389,True,,Fig.6 p.102; raw x=27.001 d; bars = SE (n=6)
+C2_Saravanan2011_diclofenac,GM3,30.0,day,720.0,91.034,% of loaded drug,VECTOR_EXTRACTED,0.05,2.496,True,,Fig.6 p.102; raw x=30.001 d; bars = SE (n=6)
+C3_Kodra2026_ketoprofen,MS/K-1,0.5,h,0.5,12.9,% of encapsulated drug (Kr/Ke),DIGITIZED_VISUAL,2.0,,True,,Fig.7c p.17; overlapping markers
+C3_Kodra2026_ketoprofen,MS/K-1,1.0,h,1.0,17.4,% of encapsulated drug (Kr/Ke),DIGITIZED_VISUAL,1.5,,True,,Fig.7c p.17; overlapping markers
+C3_Kodra2026_ketoprofen,MS/K-1,3.0,h,3.0,33.9944,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-1,5.0,h,5.0,35.5644,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-1,24.0,h,24.0,62.254,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-2,0.5,h,0.5,10.6,% of encapsulated drug (Kr/Ke),DIGITIZED_VISUAL,2.0,,True,,Fig.7c p.17; overlapping markers
+C3_Kodra2026_ketoprofen,MS/K-2,1.0,h,1.0,22.2826,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-2,3.0,h,3.0,41.8822,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-2,5.0,h,5.0,84.8392,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-2,24.0,h,24.0,100.0,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-3,0.5,h,0.5,9.0,% of encapsulated drug (Kr/Ke),DIGITIZED_VISUAL,2.0,,True,,Fig.7c p.17; overlapping markers
+C3_Kodra2026_ketoprofen,MS/K-3,1.0,h,1.0,37.0724,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-3,3.0,h,3.0,99.597,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-3,5.0,h,5.0,99.7659,% of encapsulated drug (Kr/Ke),DIGITIZED_AUTO,0.5,,True,,Fig.7c p.17
+C3_Kodra2026_ketoprofen,MS/K-3,24.0,h,24.0,100.0,% of encapsulated drug (Kr/Ke),DIGITIZED_VISUAL,2.0,,True,,marker hidden under MS/K-2 marker; line ends at 100%
+C4_Zhang2023_vancomycin,pH 7.4,0.25,day,6.0,,% of loaded drug (M0),DIGITIZED_AUTO,,,False,marker occluded by the other series,Fig.8B p.4362
+C4_Zhang2023_vancomycin,pH 7.4,0.5,day,12.0,25.4095,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=0.495 d
+C4_Zhang2023_vancomycin,pH 7.4,1.0,day,24.0,37.2386,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=0.998 d
+C4_Zhang2023_vancomycin,pH 7.4,2.0,day,48.0,45.8944,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=2.004 d
+C4_Zhang2023_vancomycin,pH 7.4,3.0,day,72.0,52.33,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=3.003 d
+C4_Zhang2023_vancomycin,pH 7.4,4.0,day,96.0,56.1609,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=3.998 d
+C4_Zhang2023_vancomycin,pH 7.4,6.0,day,144.0,59.6192,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=6.001 d
+C4_Zhang2023_vancomycin,pH 7.4,8.0,day,192.0,62.1759,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=7.997 d
+C4_Zhang2023_vancomycin,pH 7.4,10.0,day,240.0,63.9188,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=9.999 d
+C4_Zhang2023_vancomycin,pH 7.4,12.0,day,288.0,65.1082,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=11.986 d
+C4_Zhang2023_vancomycin,pH 7.4,14.0,day,336.0,66.5222,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=13.988 d
+C4_Zhang2023_vancomycin,pH 6.0,0.25,day,6.0,21.458,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=0.254 d
+C4_Zhang2023_vancomycin,pH 6.0,0.5,day,12.0,29.6291,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=0.505 d
+C4_Zhang2023_vancomycin,pH 6.0,1.0,day,24.0,40.9712,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=1.000 d
+C4_Zhang2023_vancomycin,pH 6.0,2.0,day,48.0,52.3715,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=2.004 d
+C4_Zhang2023_vancomycin,pH 6.0,3.0,day,72.0,60.0654,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=3.005 d
+C4_Zhang2023_vancomycin,pH 6.0,4.0,day,96.0,65.989,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=4.002 d
+C4_Zhang2023_vancomycin,pH 6.0,6.0,day,144.0,70.6131,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=5.997 d
+C4_Zhang2023_vancomycin,pH 6.0,8.0,day,192.0,74.1012,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=7.998 d
+C4_Zhang2023_vancomycin,pH 6.0,10.0,day,240.0,75.9665,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=9.999 d
+C4_Zhang2023_vancomycin,pH 6.0,12.0,day,288.0,77.1731,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=11.991 d
+C4_Zhang2023_vancomycin,pH 6.0,14.0,day,336.0,78.008,% of loaded drug (M0),DIGITIZED_AUTO,0.4,,True,,Fig.8B; detected x=13.990 d
+C4_Zhang2023_vancomycin,pH 6.0,0.0833,day,1.9992,1.6,% of loaded drug (M0),DIGITIZED_AUTO,1.0,,False,cluster of 0.5-2 h markers at the axis; times not resolvable,shows near-zero release in the first hours (lag)
+C5_Chang2023_gentamicin,0.5dM-G,1.0,h,1.0,,mg/mL (cumulative concentration),DIGITIZED_AUTO,,,False,marker occluded by darker series,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,2.0,h,2.0,,mg/mL (cumulative concentration),DIGITIZED_AUTO,,,False,marker occluded by darker series,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,4.0,h,4.0,,mg/mL (cumulative concentration),DIGITIZED_AUTO,,,False,marker occluded by darker series,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,8.0,h,8.0,4.3196,mg/mL (cumulative concentration),DIGITIZED_AUTO,,,False,marker occluded by darker series,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,1.0,day,24.0,4.3945,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.15,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,2.0,day,48.0,4.3986,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.15,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,4.0,day,96.0,4.4089,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.15,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,8.0,day,192.0,4.4204,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.15,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,16.0,day,384.0,4.3313,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.15,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,0.5dM-G,32.0,day,768.0,5.0288,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.15,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,1.0,h,1.0,2.4597,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.15,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,2.0,h,2.0,3.8241,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,4.0,h,4.0,3.9366,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,8.0,h,8.0,3.9642,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,1.0,day,24.0,3.9905,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,2.0,day,48.0,3.9667,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,4.0,day,96.0,3.9625,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,8.0,day,192.0,3.9511,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,16.0,day,384.0,4.0334,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,1.0dM-G,32.0,day,768.0,4.7933,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,1.0,h,1.0,2.6501,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,2.0,h,2.0,4.0114,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,4.0,h,4.0,4.1066,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,8.0,h,8.0,4.1286,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,1.0,day,24.0,4.1596,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,2.0,day,48.0,4.1577,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,4.0,day,96.0,4.1585,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,8.0,day,192.0,4.1596,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,16.0,day,384.0,4.5284,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C5_Chang2023_gentamicin,2.5dM-G,32.0,day,768.0,7.7186,mg/mL (cumulative concentration),DIGITIZED_AUTO,0.06,,True,,Fig.5 p.14
+C6_Hu2024_gentamicin,m-EmG raw,1.0,h,1.0,0.1364,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,1.0,h,1.0,0.0299,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),1.0,h,1.0,0.1065,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,2.0,h,2.0,0.2211,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,2.0,h,2.0,0.0491,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),2.0,h,2.0,0.172,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,4.0,h,4.0,0.3004,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,4.0,h,4.0,0.0675,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),4.0,h,4.0,0.2329,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,8.0,h,8.0,0.3717,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,8.0,h,8.0,0.0872,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),8.0,h,8.0,0.2845,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,1.0,day,24.0,0.4392,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,1.0,day,24.0,0.1418,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),1.0,day,24.0,0.2974,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,2.0,day,48.0,0.503,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,2.0,day,48.0,0.1887,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),2.0,day,48.0,0.3143,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,4.0,day,96.0,0.5663,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,4.0,day,96.0,0.2284,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),4.0,day,96.0,0.3379,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,8.0,day,192.0,0.5914,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,8.0,day,192.0,0.2336,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),8.0,day,192.0,0.3578,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,12.0,day,288.0,0.5967,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,12.0,day,288.0,0.247,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),12.0,day,288.0,0.3497,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,16.0,day,384.0,0.5967,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,16.0,day,384.0,0.2466,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),16.0,day,384.0,0.3501,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,20.0,day,480.0,0.6059,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,20.0,day,480.0,0.2441,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),20.0,day,480.0,0.3619,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,24.0,day,576.0,0.6271,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,24.0,day,576.0,0.2558,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),24.0,day,576.0,0.3713,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,28.0,day,672.0,0.6014,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,28.0,day,672.0,0.3159,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),28.0,day,672.0,0.2855,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C6_Hu2024_gentamicin,m-EmG raw,32.0,day,768.0,0.6276,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,raw signal; fit uses background-corrected series,Fig.5 p.10
+C6_Hu2024_gentamicin,m-Em background,32.0,day,768.0,0.3222,mg (cumulative mass),DIGITIZED_AUTO,0.002,,False,drug-free background,Fig.5 p.10
+C6_Hu2024_gentamicin,m-EmG net (raw - background),32.0,day,768.0,0.3054,mg (cumulative mass),DIGITIZED_AUTO,0.003,,True,,"net = m-EmG - m-Em, as instructed in the paper's text"
+C7_Lan2017_bFGF,B normal GMS,0.42,day,10.08,3.3612,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,0.98,day,23.52,6.8763,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,2.0,day,48.0,30.6041,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,3.0,day,72.0,45.1039,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,4.99,day,119.76,64.7954,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,7.0,day,168.0,82.3809,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,9.0,day,216.0,91.4336,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,12.0,day,288.0,94.6994,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,15.0,day,360.0,95.3015,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,19.99,day,479.76,96.2238,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,B normal GMS,29.0,day,696.0,97.067,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3 p.9; filled squares
+C7_Lan2017_bFGF,A porous GMS,4.99,day,119.76,15.6528,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3; hollow-circle centre
+C7_Lan2017_bFGF,A porous GMS,6.98,day,167.52,28.8579,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3; hollow-circle centre
+C7_Lan2017_bFGF,A porous GMS,8.98,day,215.52,40.9647,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3; hollow-circle centre
+C7_Lan2017_bFGF,A porous GMS,12.0,day,288.0,51.207,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3; hollow-circle centre
+C7_Lan2017_bFGF,A porous GMS,14.99,day,359.76,55.3612,% of encapsulated (fluorescence),DIGITIZED_AUTO,0.3,,True,,Fig.3; hollow-circle centre
+C7_Lan2017_bFGF,A porous GMS,0.42,day,10.08,1.0,% of encapsulated (fluorescence),DIGITIZED_VISUAL,1.0,,True,,Fig.3; error bar crosses hollow marker
+C7_Lan2017_bFGF,A porous GMS,1.0,day,24.0,2.8,% of encapsulated (fluorescence),DIGITIZED_VISUAL,1.0,,True,,Fig.3; error bar crosses hollow marker
+C7_Lan2017_bFGF,A porous GMS,2.0,day,48.0,5.1,% of encapsulated (fluorescence),DIGITIZED_VISUAL,1.0,,True,,Fig.3; error bar crosses hollow marker
+C7_Lan2017_bFGF,A porous GMS,3.0,day,72.0,8.0,% of encapsulated (fluorescence),DIGITIZED_VISUAL,1.0,,True,,Fig.3; error bar crosses hollow marker
+C7_Lan2017_bFGF,A porous GMS,20.0,day,480.0,62.1,% of encapsulated (fluorescence),DIGITIZED_VISUAL,1.0,,True,,Fig.3; error bar crosses hollow marker
+C7_Lan2017_bFGF,A porous GMS,29.0,day,696.0,65.7,% of encapsulated (fluorescence),DIGITIZED_VISUAL,1.0,,True,,Fig.3; error bar crosses hollow marker
+C8_Liu2022_icariin,GM-1 0.25 mM,1.0,day,24.0,19.3378,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-1 0.25 mM,3.0,day,72.0,36.0477,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-1 0.25 mM,7.0,day,168.0,55.481,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-1 0.25 mM,10.0,day,240.0,65.8264,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-1 0.25 mM,14.0,day,336.0,69.9282,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-1 0.25 mM,21.0,day,504.0,74.9013,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-2 0.5 mM,1.0,day,24.0,32.0993,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-2 0.5 mM,3.0,day,72.0,57.1653,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-2 0.5 mM,7.0,day,168.0,69.7732,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-2 0.5 mM,10.0,day,240.0,79.9402,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-2 0.5 mM,14.0,day,336.0,88.2304,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-2 0.5 mM,21.0,day,504.0,94.7218,% of loaded drug,DIGITIZED_AUTO,0.6,,True,,Fig.1A p.4
+C8_Liu2022_icariin,GM-3 1 mM,1.0,day,24.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-3 1 mM,3.0,day,72.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-3 1 mM,7.0,day,168.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-3 1 mM,10.0,day,240.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-3 1 mM,14.0,day,336.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-3 1 mM,21.0,day,504.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-4 2 mM,1.0,day,24.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-4 2 mM,3.0,day,72.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-4 2 mM,7.0,day,168.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-4 2 mM,10.0,day,240.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-4 2 mM,14.0,day,336.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A
+C8_Liu2022_icariin,GM-4 2 mM,21.0,day,504.0,,% of loaded drug,DIGITIZED_AUTO,,,False,markers occluded by GM-1/GM-2 markers; not digitized to avoid guessing,Fig.1A

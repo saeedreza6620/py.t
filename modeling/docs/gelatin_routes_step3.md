@@ -1,0 +1,7 @@
+# Step 3 - three crosslinking routes plus degradation (gelatin), 12 Aban 1405
+Model gelatin_routes_model.py (proposal Eq. 4-8): free C (diffuses), reversibly bound S (Langmuir, sites S_max0*g(t)), strongly bound P (freed only by degradation r=-g'/g). D(t)=D_w*MM(phi0*g(t)); option D=D_w*Eq.26(Q(t)); boundary perfect sink or membrane h.
+Verification: no binding = Crank (1e-5); fast linear binding = Crank with D/(1+K_b) (7e-5); strong pool under linear degradation freed in proportion.
+Route activation: Chang 2023 gentamicin(+)/type B/GA route 2 active (modelled); Hu 2024 same; Lan 2017 bFGF/formaldehyde (isotherm saturates ~2.1 mg/g; 35 % unreleased 28 d); Zhang 2023 vancomycin/EDC weak, dialysis-bag barrier, plateau <100 %; Kodra 2026 ketoprofen(-)/tannic acid, TA-drug binding (modelled); Saravanan 2011 and Liu 2022 inactive (dispersed drug); Jin 2023 morphine: unknown.
+Chang 2023: free fraction 0.83 / 0.54; free pool out in ~2 h; proportional freeing of strong pool is too early (day 16 predicted 94/77 %, data 84/59 %). Next: tie liberation to crosslink scission; microspheres are hollow.
+Kodra 2026 full integration: Q(t) from SD%, EE 38.9/22.5/15.2, g(t)=DR%(t), R=7.5 um*Q^(1/3); initial retained drug all bound. k_off = 2.7e-5 1/s fitted on K-1 t<=5 h; others scaled ln(1/EE). K-2 RMSE 12.5 % (19.7 without scaling), K-3 12.4 % (17.4); K-1 24 h predicted 100 % vs 62 % data (~38 % bound to soluble fragments).
+Files: 04_gelatin_routes/

@@ -1,0 +1,913 @@
+DESIGNED MONOMERS AND POLYMERS
+2023, VOL. 26, NO. 1, 1–14
+https://doi.org/10.1080/15685551.2022.2158571
+
+
+
+
+Preparation and characterization of morphine gelatine microspheres
+Xin Jina, Jun Jia and Yonghai Sun                        b
+
+
+a
+  Anesthesiology Department, the Chinese PLA Air Force Medical Center, Beijing, Hebei, China; bDepartment of Comprehensive Treatment, the
+Second Medical Center of the Chinese PLA General Hospital, Beijing, Hebei, China
+
+
+    ABSTRACT                                                                                                                                       ARTICLE HISTORY
+    Morphine is a widely used opioid analgesic. However, standard morphine dosages and adminis­                                                    Received 19 July 2022
+    tration methods exhibit a short half-life and pose a risk of respiratory depression. Sustained-release                                         Accepted 10 December 2022
+    microspheres can deliver prolonged efficacy and reduce side effects. We present a new controlled-                                              KEYWORDS
+    release morphine gelatine microsphere (MGM) prepared using an emulsification-crosslinking                                                      Morphine; microspheres;
+    strategy. The gelatine microsphere design improves the bioavailability of morphine. And it not                                                 biological availability;
+    only increases the clinical analgesic efficacy but also the safety of clinical medication through                                              analgesia; pharmacokinetics
+    a gradual, sustained release. Besides, we describe MGMs’ preparation, release, pharmacodynamics,
+    and pharmacokinetics. And the drug metabolism pathway. We calculate the release rate of
+    morphine by measuring plasma morphine concentration over time and pharmacokinetic para­
+    meters. It optimized the manufacturing process of MGMs, which makes the analgesic effect have
+    a longer duration. MGMs analgesic effect shows dose dependence. After they were administrated,
+    MGMs were released more slowly. Peak concentration was reduced, and the relative bioavailability
+    improved. It even reached 88.84%. Its pharmacokinetic process was consistent with the two-
+    component first-order absorption model. MGMs deliver sustained-release and long-action phar­
+    macokinetics. It shows design goals of improving drug bioavailability, prolonging drug residence
+    time in vivo, and maintaining stable blood drug concentration.
+
+
+
+1. Introduction
+                                                                                             components. There are few reports on locally adminis­
+With the gradual maturity of the controlled drug release                                     tered controlled-release morphine [6,8,9].
+system, the system has become the first choice for                                              Currently, there are mainly two kinds of morphine
+improved drug deliveries [1]. Because it overcomes the                                       sustained-release preparations widely used in the clinic.
+shortcomings of conventional drugs, such as the short                                        At first, oral sustained-release preparations, such as
+half-life of sustained release, high systemic toxicity, and                                  MethcontinR (Mengdi Pharmaceutical), were invented
+frequent administration [2], and its flexible delivery                                       and applied to clinical practice, benefiting many cancer
+methods, such as intramuscular, intravenous, and pul­                                        pain patients [9]. However, clinical experience and litera­
+monary inhalation [3].                                                                       ture reports [10,11] have shown that long-term oral
+    As a classical opioid analgesic, morphine has been                                       administration of these drugs can cause severe gastro­
+widely used in postoperative analgesia and chronic can­                                      intestinal irritation reactions in patients. For example,
+cer pain treatment [3]. The most commonly used clinical                                      constipation, nausea, vomiting, and other gastrointest­
+administration method is a single dose or continuous                                         inal symptoms are common after prolonged use [11].
+infusion of an analgesic pump, both of which have                                            The symptoms mentioned above can be relieved by
+a good analgesic effect. Some disadvantages were                                             administering a controlled-release suppository via the
+found with the above administration, such as a short                                         rectal route. As an alternative method of treating cancer
+half-life (1.7–3 h) with a single dose [4]. Repeated admin­                                  pain, the morphine sulfate suppository MoraxenR has
+istration leads to high plasma concentration and respira­                                    become popular [12]. These complications are excruciat­
+tory depression. An Analgesic pump administration                                            ing for doctors and patients. Subsequently, as an alter­
+results in more stable blood levels, less likely to cause                                    native method of treating cancer pain, the morphine
+respiratory depression [5]. However, due to its external                                     sulfate suppository Moraxen R has been used. It can
+equipment, it is not convenient to move. So morphine                                         alleviate not only cancer pain but also the above gastro­
+sustained-release formulations have been designed [6–                                        intestinal symptoms. It acts as a solid embolism into the
+8] with both fast-release and sustained-release                                              rectum that melts rapidly due to the temperature of the
+
+CONTACT Yonghai Sun           sunyonghai68@aliyun.com                Department of Comprehensive Treatment, the Second Medical Center of the Chinese PLA General
+Hospital, Beijing 100853, China
+© 2022 The Author(s). Published by Informa UK Limited, trading as Taylor & Francis Group.
+This is an Open Access article distributed under the terms of the Creative Commons Attribution License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use,
+distribution, and reproduction in any medium, provided the original work is properly cited.
+2      X. JIN ET AL.
+
+
+    Table 1. Orthogonal experiment factors and levels.
+                            A                            B                                 C                           D
+     Factor            Gelatine (%)      (Feed ratio = morphine:gelatine)        (Emulsion: Span 85 %)       Stirring speed (rpm)
+     Level 1                20                          1:2                                1                          1000
+     Level 2                25                         1:2.5                               2                           800
+     Level 3                30                          1:3                                3                           700
+
+
+
+cavity, and the analgesic efficiency is acceptable. But the           School. They lived in a soundproof animal laboratory at
+drug-containing matrix lacks adhesion, leading to the                 a room temperature of 24–25°C. The daily cycle alter­
+partial outflow or transfer to the formation depth and                nated over 12 h. They could eat and drink freely and
+absorption through the colon endothelium to produce                   were acclimatized to the environment for one week. The
+the first-pass effect [13]. There is no doubt that this               experimental animals fasted for 12 h before being
+process reduces the bioavailability of the drug.                      drugged and caged. Institutional Animal Care and Use
+   It is well known that the way to improve drug bioa­                Committee and the PLA Ethics Committee approved the
+vailability is to apply drugs locally or directly to the              animal study. The approval document is batch Number
+affected area, which can enhance the local therapeutic                2018-X14-10.
+effect and reduce the number of drugs entering the
+systemic circulation and the loss of first-pass impact
+[14–16]. The morphine microspheres we designed are                    2.3. Microspheres preparation
+a localized slow-release system administered by local                 According to the orthogonal experimental design, an
+injection.                                                            appropriate amount of gelatine (20%, 25%, 30%) was
+   In recent years, more and more studies have been                   weighed and dissolved in distilled water.
+conducted on the drug slow-release system with poly­                  Simultaneously, a proper amount of morphine was con­
+mers such as PLA/PLGA as the carrier, which has a longer              sidered and dried for three hours at a constant tempera­
+degradation time and more foreign body reactions in                   ture (105°C) (Table 1). Next, morphine and gelatine were
+the injection site pathology [17–20]. Gelatin is a natural            combined in a ratio of 1:2,1:2.5, and 1:3 in a water bath at
+material readily degraded in vivo and is better biocom­               55°C(sample A). Liquid paraffin and sorbitan trioleate
+patible and more stable in release than gels and poly­                (Sigma)mixed well (Sample B). Sample A was slowly
+mers [21–23]. Therefore, the gelatin morphine                         dropped into sample B with agitation to even mixing.
+microspheres were designed and tested.                                The sample was emulsified and cooled on ice. And then,
+                                                                      the filtrate was cleaned four times with acetone and
+2. Materials and methods                                              diethyl ether, dried under a vacuum, classified, weighed,
+                                                                      and packaged separately until stored. Thermal steriliza­
+2.1. Reagents and instruments                                         tion was performed at 60°C. The method used to prepare
+Morphine hydrochloride injection (Shenyang No. 1                      blank microspheres was the same as the way, except
+Pharmaceutical Factory of Northeast Pharmaceutical                    morphine was not included. There are specific steps in
+Group, batch number: 070606), medical gelatine                        the supplement material.
+(Chemical Reagent Company of Beijing), span 85, iso­                     Orthogonal experiment: Based on a preliminary test
+propanol (IPA); precision balance (Sartorius Bp211D,                  and single-factor inspection, we chose four target vari­
+Germany), LC-10Avp high-performance liquid chromato­                  ables: gelatine concentration, feed ratio, Span 85 con­
+graph (Shimadzu, Japan), KQ-50 DB ultrasonic cleaner                  centration, and stirring speed. Three levels were set for
+(Kunshan Ultrasonic Instruments Co. Ltd), RW20 electric               each factor (Table 1).
+mixer (IKA Company), and electric heating constant tem­
+perature water-bath (Shazhou Medical Apparatus                        3. Microsphere characterization
+Factory in Jiangsu Province).
+                                                                      3.1 Morphology
+
+2.2. Experimental animals                                             Microspheres were coated on a slide, dispersed with an
+                                                                      appropriate amount of double distilled water, observed,
+Sixteen New Zealand rabbits (eight males and eight                    and imaged at a magnification of 400× using a scanning
+females) with an average weight of 2.71 ± 0.28 kg were                electron microscope.
+used in this study. The experimental rabbits were graded
+as the ‘cleanest’ and were provided by the Experimental                                                  D90 D10
+                                                                                        SpanðS1Þ ¼                                  (1)
+Animal Centre of Chinese PLA Postgraduate Medical                                                           D50
+                                                                                   DESIGNED MONOMERS AND POLYMERS              3
+
+
+PS: D90, D50, and D10 indicate the numbers of micro­                                          wt of entrapped morphine
+                                                                  Encapsulation rateðS3Þ ¼
+spheres with diameters of less than 90%, 50%, and 10%                                            wt of morphine used
+of all the microspheres, respectively.                                                        � 100%                   (4)
+
+                                                                                            wt of entrapped morphine
+                                                                  Drug LoadingðS4Þ ¼
+3.2 Stability                                                                           wt of microspheres used for dosing
+                                                                                        � 100%
+We investigate the sample stability by placing samples in                                                                     (5)
+stable conditions, such as intense light and high tem­
+perature and humidity. Then, we need to recheck the
+pieces to find their changes in content and morphology.
+                                                                 3.4. Characteristics of drug release in vitro
+   High-temperature experiments Morphine gelatin
+microspheres (MGMs) were spread as a 5 mm thin layer             MGMs’ in vitro release curves were fitted by zero-order,
+in a petri dish and placed in an electric thermostatic           first-order, Higuchi equation, and Ritger-Peppas index
+incubator at 20°C,30°C,40°C,50°C and 60°C for ten days.          model. The equations for each released model are
+   High humidity tests The test products were placed in          given below.
+a constant humidity closed container at 25°C, relative
+                                                                                                         Mt
+humidity (RH) 90 ± 5% for ten days. Samples were taken                             Zero Orderkt ¼                             (6)
+                                                                                                         M1
+on the 5th and 10th days for detection. The tested para­
+meters should include hygroscopic weight gain.                                                      �              �
+                                                                                                      1       Mt
+A constant humidity condition can be achieved by                              First order    kt ¼ ln                          (7)
+                                                                                                          M1
+using a constant temperature and humidity box or pla­
+cing a saturated salt solution under a closed container.
+                                                                                                         Mt
+According to different humidity requirements,                                      Higuchikt1=2 ¼                             (8)
+                                                                                                         M1
+a saturated solution of NaCl (15.5–60°C, RH 75 ± 5%) or
+KNO3 (25°C, RH 92.5 ± 5%) was selected.                                                                        Mt
+   Illumination experiments The samples were placed in                       Ritger    Peppasindexktn ¼                       (9)
+                                                                                                               M1
+a lightbox or another suitable light container for ten
+days under illuminance (4500 ± 500) lx. Samples were             Here t is the release time, k is a constant, Mt is the
+taken on the 1,3,5,7 and 10 days for testing.                    cumulative release at time t, M 1 is the cumulative
+                                                                 release at time 1, and Mt /M 1 is the cumulative release
+                                                                 percentage.
+
+3.3 Assessment of microspheres
+Assessment of microspheres was based on sum value (S)            4. Pharmacodynamics – Measurement of
+of span (S1), yield (S2), encapsulation rate (S3), and drug      cumulative pain scores
+loading (S4) of microspheres, as follows [2]:                    4.1 Experimental animal grouping
+
+                 S¼    S1 þ S2 þ S3 þ S4                (2)      A total of 24 New Zealand rabbits were randomly
+                                                                 divided into six groups, with four rabbits in each
+The calculation method for span (S1) is mentioned                group. Before the experiment, they fasted for 12 hs
+above under the morphology section in equation (1).              and drank water freely. A 4 x 4cm2 square was shaved
+                                                                 on one side of the midline of their backs. The grouping is
+                  wt of dry ingredients ðmgÞ                     shown in Table 2.
+ Yield ðS2Þ ¼                                   � 100% (3)
+                wt of all ingredients used ðmgÞ                     The dosage of morphine hydrochloride injection was
+                                                                 calculated following its instructions in animal tests. In
+
+
+       Table 2. Pharmacodynamics experimental animal grouping.
+        Group                  Effect factor                  Drug                 Dosing method                    Dosage
+        A                     sham (control)             1.5% isoflurane              Inhalation                     5 min
+        B               Blank microspheres (control)   Blank microspheres       Subcutaneous injection              5 mg/kg
+        C                 Morphine hydrochloride       Morphine injection       Subcutaneous injection              1 mg/kg
+        D                 Morphine hydrochloride       Morphine injection       Subcutaneous injection              3 mg/kg
+        E                  Morphine microspheres             MGMs               Subcutaneous injection              5 mg/kg
+        F                  Morphine microspheres             MGMs               Subcutaneous injection             15 mg/kg
+4      X. JIN ET AL.
+
+
+contrast, the dose of morphine gelatin microspheres was      tissue damage and pain brought on by a subcutaneous
+chosen based on their entrapment efficiency. The encap­      injection of chemical inflammatory agents.
+sulation efficiency of produced microspheres was
+around 20.94%, according to earlier pilot studies. We
+increased the dose of the morphine gelatin micro­            4.5. Pain threshold determination
+spheres to equalize the morphine content of the injec­       The rabbits were placed on a shelf in a special cage
+tion of morphine hydrochloride and the microspheres.         before preoperative and postoperative administration,
+                                                             and the pain threshold was measured at 5, 10, 20, 30,
+                                                             40, 50, 60, 90, 120, 180, 240, 300, 360, 420, 480 min after
+4.2. Model building                                          administration. The laser pulse duration was fixed at
+This study adopted a hind plantar incision mode [9,24].      25 ms, and the power was increased gradually. The
+Except for group A, all rabbits were anesthetized by         pain threshold was set by placing the pain meter on
+inhaling 1.5% isoflurane for about 2 min. After the left     the soles of the feet and irradiating the soles on both
+hind paw of the rabbit was disinfected, a 1 cm long          sides to cause the power value of lifting the feet to avoid
+incision was made from 0.5 cm of the proximal plantar        reflex or neigh. The bilateral mean value was taken as
+to the toe under inhalation anesthesia. After the skin was   the pain threshold at this point.
+cut, the plantar muscles were lifted and cut longitudin­
+ally while keeping the muscle intact and attached. The
+                                                             5. Pharmacokinetics
+pressure was applied to stop the bleeding, and the skin
+was sutured.                                                 The experimental scheme Sixteen New Zealand rabbits
+                                                             were randomly divided into four groups, with four rabbits
+                                                             in each group. Before the experiment, the rabbits were
+4.3. Dosing method                                           fasted for twelve hours; they could drink water, and one
+                                                             side of the midline of their back was shaved (4 cm × 4 cm).
+After the establishment of the plantar pain model, the
+                                                             The following groups were designed: A (morphine hydro­
+rats were subcutaneously injected with morphine as well
+                                                             chloride group 1 mg/kg), B (morphine hydrochloride
+as the suspension of blank or morphine microspheres in
+                                                             group 3 mg/kg), C (morphine microsphere group 5 mg/
+the shaved areas while they were awake.
+                                                             kg), and D (morphine microsphere group 15 mg/kg). 1 mL
+                                                             blood was taken from each ear marginal vein of the
+4.4. Pain rating                                             rabbits after the treatment (at intervals of 5,10, 20, 30,
+                                                             40, 50 min and 1, 1.5, 2, 3, 4, 6, 8, 12, 16 and 24 h), treated
+A rabbit model of incisional pain was given medicine         with heparin anticoagulant, and centrifuged for 10 min at
+one hour after surgery. The pain behavior was                2000 rpm. Plasma was collected and stored at −20 ° C.
+assessed by a cumulative pain score [3,25] which indi­
+cated that rabbits were weight-bearing when their
+hind claws had been pale with pressing. If the rear          5.1. Statistical methods
+claws were off the ground, two points were given; if         The microsphere’s pharmacokinetic data were analyzed
+the rear claws were on the ground but not carrying           by 3P97 software. Other statistical analyses were per­
+weight, one point was given; if the hind claws were on       formed using the SPSS statistical software package for
+the ground and carrying weight, zero point was given.        the Social Sciences, version 17.0, SPSS Inc., Chicago, IL,
+The two rear claws were observed on the ground, and          USA). Measurement data were expressed as mean ±
+the loading condition was observed. Observations             standard deviation (SD). One-way analysis of variance
+were made once every five mins for one min each              (ANOVA) was used to compare the differences between
+time; the most common posture in 1 min was taken             the groups. Two independent-sample t-tests were
+as the standard, and observation continued for a total       applied to analyze the difference from the control
+of one hour (24 time points). The cumulative pain            group. The significance level (α) was set at 0.05.
+score was calculated by subtracting the lateral foot
+score.
+   Many academics [25–27] use the model of pain              6. Results and discussion
+caused by chemical and inflammatory stimuli in their
+                                                             6.1. Microspheres production technology
+research on pain. However, the mechanism and the
+course of pain differ significantly between the common       In our study, New Zealand rabbits were selected for the
+causes of postoperative pain in clinical patients and the    preliminary investigation of the pharmacokinetics of
+                                                                                         DESIGNED MONOMERS AND POLYMERS           5
+
+
+morphine microspheres in vivo. In our pharmacody­                            dissolving trials served as the basis for the results’
+namics experiments, a pain model was used that was                           mean values (Table 3).
+established by Brennan in 1996 [7]. The pain which is
+caused by cutting is deep, complex, and persistent. This             4) Stirring velocity The average microsphere particle size
+model is similar to human trauma or postoperative pain               shrank, and the effectiveness of drug encapsulation mar­
+and is easy to repeat and reproduce. It is one of the ideal          ginally improved as the stirring speed was increased.
+models for studying the treatment of postoperative                   A significant share of the microspheres with particle
+pain.                                                                sizes of 50 um to 80 um could be generated when the
+    The morphine package dose designed for this study                stirring speed was 700–800 rpm.
+was 5–15 mg. The dose design is based on the clinical                    The drug loading rate was higher in the 50–80 um
+injection dose of morphine [8]. We chose morphine                    microspheres, but there was less ejection of foreign
+injections of 1 and 3 mg/kg for observation and compar­              bodies [4].
+ison in the preliminary experiment. Since the mean drug
+loading of the morphine microspheres was 20.94%, the
+equivalent doses of morphine in the microspheres group               6.3. Orthogonal experiment
+were about 5 and 15 mg/kg. The preparation method of
+morphine microspheres in this study is the emulsifica­               The results of drug loading, encapsulation rate, and
+tion cross-linking method. Since many variables are                  burst release effect of microspheres with different feed­
+involved in the manufacture of microspheres, the final               ing ratios are given in Table 3.
+product quality could alter if some of the significant                  According to each feeding ratio, we made at least 3–5
+variables change. We considered the influence of the                 batches of microspheres to evaluate each index. Among
+following factors and calculated the process of micro­               them, the pellet with a feed ratio of 1:1.5 had the highest
+sphere fabrication, which are described as follows.                  burst release, while the pellet with a feed ratio of
+                                                                     1:2.5 had a similar burst release to the pellet with
+                                                                     a feed ratio of 1:3, but its drug loading was relatively
+6.2. A single-factor survey of the prescription                      high. So the above feeding ratio parameters are better
+process                                                              for the feed ratio of 1:2.5 microspheres.
+1) Concentration of the emulsifier: With an increase in                                            Yi    Ymin
+                                                                                           di ¼                               (10)
+emulsifier content, the microspheres’ particle size                                               Ymax    Ymin
+shrank. The synthesis of microspheres with a significant
+share of particle sizes between 50 um and 80 um was                                     DF ¼ ðd1 � d2 � d3Þ1=3                (11)
+possible when the emulsifier concentration reached 1%
+to 1.5%. However, the emulsifier concentration is too                where Yi is the experimentally measured value of three
+high to result in microsphere adherence. So an emulsifier            indexes; Ymax and Ymin are the maximum and mini­
+at 1% was selected.                                                  mum acceptable values of Yi, respectively; di is the
+   2) Concentration: Gelatine content is the critical factor         optimization index of a single index, and DF is the total
+affecting microsphere particle size. When the gelatine               optimization index of the three indexes (Tables 4–6).
+concentration was higher, the pellet size was larger;                   The optimal process conditions for morphine gelatin
+when it was lower, it was the opposite. A significant                microspheres were A1B2C1D3, which meant that the
+                                                                     gelatin concentration was 20%, the feed ratio was
+amount of the microspheres with a particle size of 50
+                                                                     1:2.5, the emulsifier concentration was 1%, and the stir­
+um to 80 um could be generated when the gelatine
+                                                                     ring speed was 700 rpm. The influencing order of factors
+concentration was 15%–25% (W/V).                                     affecting the quality of morphine gelatin microspheres
+                                                                     was A > D > B > C.
+   (1) Feed ratio (morphine: gelatine) Variable feeding                 In the preparation of microspheres, each step affects the
+       ratios resulted in microspheres with different                final properties of the microspheres, and the properties are
+       burst release effects, drug loading, and encapsu­             interdependent. For example, we found that particle size
+       lation efficiency. Each set of data samples’ in vitro         affects the encapsulation efficiency and the release rate
+
+
+             Table 3. Results of different feeding ratio microspheres (�x � s).
+                                           1:1.5                   1:2                 1:2.5                    1:3
+              Loading rate (%)         33.10 � 2.31           19.36 � 4.44         21.44 � 4.11           17.26 � 5.12
+              Recovery rate (%)        78.21 � 6:22           79.45 � 5.32         80.63 � 6.28           78.34 � 3.45
+              Burst effect (%)         56.61 � 5:08           47.31 � 6.07         44.03 � 4.10           44.11. � 5.16
+6         X. JIN ET AL.
+
+
+                                     Table 4. Acceptable maximum and minimum of the three
+                                     indicators.
+                                      Indicator                                    Ymin             Ymax
+                                      50 ~ 80 μm distribution percentage            40               90
+                                         of the microsphere size (%)
+                                      Drug-loading rate (%)                          5               25
+                                      Recovery rate (%)                             95               30
+
+
+
+Table 5. Orthogonal experiment result.
+                                                                                           Indicator under study
+                                                      Recovery rate            Drug-loading
+    No.          A        B      C          D          (30%–95%)              rate (5%–25%)            Distribution of size (40%–90%)    DF
+    1            1        1      1          1              77                       17.3                              70                0.66
+    2            1        2      2          2              85                       17.1                              77                0.74
+    3            1        3      3          3              81                       15.5                              83                0.72
+    4            2        1      2          3              83                       15.2                              75                0.68
+    5            2        2      3          1              82                       15.4                              63                0.59
+    6            2        3      1          2              79                       12.3                              71                0.57
+    7            3        1      3          2              74                       10.7                              68                0.49
+    8            3        2      1          3              72                       10.1                              75                0.50
+    9            3        3      2          1              69                        9.5                              60                0.39
+
+
+
+                                     Table 6. Range analysis for orthogonal experiment.
+                                      No.             A                B             C                D
+                                      I              58.1             54.5          53.7             51.5
+                                      II             55.1             55.2          54.5             54.9
+                                      III            49.8             53.4          54.7             56.6
+                                      Rj              8.3              1.8           1.0              5.1
+
+
+
+during our experiments. Due to the low stirring speed in                   adhesion, good fluidity, and uniform distribution. Their
+the process of oil phase volatilization, the particle size of              average particle size is 63.11 ± 9.61 µm (Figure 1).
+microspheres produced by our previous batch was large,
+so the release rate and encapsulation rate of microspheres
+                                                                           7.2. Drug loading and encapsulation rate
+in this batch could have been better. Later, we increased
+the rate, improving both the encapsulation and release                     HPLC determined the morphine content in the micro­
+rates. The same findings were found in the literature [9,10].              spheres, and the drug loading and encapsulation rate
+   Different concentrations of gelatin were also used in our               were calculated according to the formula above. The
+previous experiments. It was found that the higher the                     average drug loading was 20.94%, and the average
+gelatin concentration, the larger the particle size. The rea­              encapsulation rate was 86.27%. The above results are
+son is that the increase of gelatin concentration in the                   better than the experimental results under orthogonal
+organic phase leads to faster deposition at the oil-water                  conditions, which indicates that the microspheres pre­
+interface, which causes rapid solidification of the surface of             pared under this condition are stable and reproducible.
+the microspheres and increases the particle size. In other
+words, forming a porous structure on its surface affects the
+                                                                           7.3. In vitro drug release
+drug release rate [10,11]. The same as the volatilizing
+speed, the gelatin concentration also affects the diffusion                The in vitro release curve of the microspheres prepared
+rate of the drug. That is to say, all the factors affecting the            by the optimized process is shown in Figure 2. The self-
+particle size affect the diffusion rate of the drug [12].                  assembled MGMs exhibit a slow-release effect. The
+                                                                           microspheres were released rapidly at the initial stage,
+                                                                           with a sudden release at four h; the microspheres were
+7. Microsphere characteristics                                             released slowly, with more than 68% drug released
+                                                                           at 72 h.
+7.1. Appearance morphology
+                                                                              The drug release data were fitted by the zero-order
+MGMs were seen as light-yellow powders. Using scan­                        kinetic equation, first-order kinetic equation, Higuchi
+ning electron microscopy (SEM) (100×), MGMs were                           kinetic equation, and the Ritger-Peppas exponential
+round with a smooth surface, no adhesion or little                         model, respectively (Table 7). The zero-order kinetic
+                                                                                                                          DESIGNED MONOMERS AND POLYMERS           7
+
+
+
+
+Figure 1. Microscopic photograph of MGMs (×400).
+
+
+                                                       70
+                                                       60                                                                     57.1    57.5    58.1   58.5   59.2
+                                                                                                                  55     56
+                                                       50                                                  47
+                 Cumulative release(%)
+
+
+
+
+                                                       40                                    37.2
+                                                                                                    40
+
+                                                       30                                                              y = 26.439ln(x) - 9.8481
+                                                                                      25.8
+                                                       20                      21.5                                          R² = 0.9467
+                                                                          12
+                                                       10
+                                                                     5
+                                                         0     0
+
+                                                      -10
+                                                      -20
+                                                                                                      144 216 288 360 432
+                                                              5mi 10m 30m 45m 60m 90m 120 240 480 720
+                                                                                                      0mi 0mi 0mi 0mi 0mi
+                                                               n   in  in  in  in  in min min min min
+                                                                                                       n   n   n   n   n
+                                         Cumulative release    0    5     12 21.5 25.8 37.2 40            47      55     56 57.1 57.5 58.1 58.5 59.2
+                                                                                                         t(min)
+
+Figure 2. Release profiles of morphine from microspheres in vitro.
+
+
+                                              Table 7. In vitro release model fit.
+                                               model                                            Equation                                R
+                                               Zero-order kinetic equation                Q = 0.319 + 0.621 t                        0.8568
+                                               First-order kinetic equation            ln (1-Q) = −0.522–0.632 t                     0.8843
+                                               Higuchi kinetic equation                 Q = 9.37 t1 /2 + 0. 8659                     0.9765
+                                               Ritger-Peppas                                 Q = 7.47 t1.56                          0.8311
+
+
+
+
+equation, first-order kinetic equation, and Ritger-Peppas                                        Drug release from microspheres is a complex process
+exponential model could be used to describe micro­                                            that can be achieved in many ways, such as surface
+spheres with poor goodness of fit. In contrast, the                                           erosion, skeleton diffusion, hydration expansion, disso­
+Higuchi kinetic equation better described the release                                         ciation diffusion, disintegration, and desorption [13].
+curve. Therefore, the release of MGMs in vitro conforms                                       many factors affect drug releases, such as the state of
+to the Higuchi release equation, and the primary                                              the drug in microspheres, the type and quantity of pel­
+mechanism is diffusion.                                                                       let-forming materials, the size and density of
+8      X. JIN ET AL.
+
+
+microspheres, the degree of cross-linking, the size and           gelatin, is higher than the diffusion rate of the drug,
+concentration of the drug molecules, the use of addi­             the release rate of the microspheres is mainly related
+tives, the interaction between drug and carrier materials,        to the degradation rate of the carrier. If the rate of drug
+and the release environment [28,29].                              diffusion is higher than the rate of carrier polymer degra­
+    In this study, morphine microspheres released the             dation, the loaded drug controls its release rate [28].
+drug slowly after administration; the peak time was
+significantly prolonged while the peak concentration
+                                                                  7.4. Stability
+was reduced. The plasma concentration-time diagram
+indicated a burst release process of microspheres in              We randomly selected three batches of microspheres
+rabbits. The release is then maintained at a relatively           with a feeding ratio of 1:2.5 to test their stability under
+low concentration. With the increase in the dose, the             different conditions.
+sustained release time and concentration of the drug                 High temperature Under the light microscope (400x),
+in vivo increased correspondingly. According to the               We found that the burst effect, color, and other char­
+in vitro release characteristics of the microspheres, we          acteristics of microspheres at 30°C were not signifi­
+speculate that the drug molecules adsorbed to the                 cantly different from those at 20°C. At 40°C, the color
+surface are released rapidly, and the blood drug con­             of the microspheres was slightly deepened, and the
+centration rises quickly after the microspheres enter             other indexes had no significant change. At 50°C, the
+the body. The encased drug is then slowly released                color, shape, and burst effect of the microspheres
+by diffusion as the microspheres dissolve. The drug               changed, but also some microspheres condensed.
+release curve was more consistent with the Higuchi                The changes in microspheres were more evident at
+drug release equation.                                            60°C(Table 8).
+    The release of microspheres often has no ideal release           High humidity Under the RH 90%±5% and RH 75%
+environment and release mode. So it takes a lot of work           ±5% conditions, the weight of the microspheres
+to describe the release process in an equation. It’s              increased significantly (Table 9). The hygroscopic color
+a compound way to work. The drug release of most                  of the particles on the surface of the petri dish dee­
+microspheres presents a three-stage release mode: (1)             pened, and adhesion occurred.
+the drug adsorbed on the surface is released rapidly,                Illumination experiments morphine is perishable
+which is also the leading cause of sudden release; (2)            under solid light (4500 lx ± 500 lx). After 1 to 10 days
+the polymer begins to degrade, the molecular weight               of illumination, the area under the degradation peak
+decreases continuously, and the drug is released slowly,          curve of the chromatogram of the microspheres
+but the whole system is still insoluble; (3) When the             increased (Figure 3).
+molecular weight of the polymer decreases to                         The results of this experiment suggest that morphine
+a specific value, a large amount of water penetrates the          gelatin microspheres are suitable for storage below 30 °C
+system, leading to the collapse of the skeleton and the           in a cool and dry place. The microspheres’ release and
+release of the drug in large quantities [30,31].                  degradation rates were mainly affected by temperature
+    This sudden release effect should be minimized                and light. And the main effect of humidity on it, we only
+during the fabrication of microspheres. By controlling            examined its impact on weight. We thus speculate that
+the particle size of the microspheres and the gelatin             poor storage conditions may affect the development of
+concentration of the organic phase, we held the den­              microspheres.
+sity of holes on the surface of the microspheres. We
+reduced the amount of sudden release so that the
+                                                                  7.5. Pharmacokinetics
+encapsulated drug could be released continuously at
+a more uniform rate.                                              After subcutaneous injection of morphine, the plasma
+    Furthermore, the polymer grade and drug loading               concentration of rabbits reached the peak at 30 min,
+affected the release rate of microspheres [26,27]. When           then decreased gradually. The average blood drug con­
+the degradation rate of the carrier polymer, such as              centrations of the morphine injection group are shown
+
+
+           Table 8. The change of microspheres in high temperature conditions (�x � s).
+            Temperature(°C)           Burst effect (%)         Colour           Deformation          Aggregation
+            20                       44.03 � 4.10             normal                no                     no
+            30                       44.53 � 3.46             normal                no                     no
+            40                       48.71 � 5:73             deepen                no                   hardly
+            50                       67.29 � 8.99             deepen                yes           partial aggregation
+            60                       72.05 � 11.41            deepen                yes                  cluster
+                                                                                                                  DESIGNED MONOMERS AND POLYMERS   9
+
+
+Table 9. Gained weight rate of microspheres under high humid­                              group 1 mg/kg), B (morphine hydrochloride group
+ity conditions (�x � s).                                                                   3 mg/kg), C (morphine microsphere group 5 mg/kg),
+ Gained weight %                                          5th day           10th day       and D (morphine microsphere group 15 mg/kg).
+ RH 90%±5%                                             6.73 � 3.35       20.47 � 4.98
+ RH 75%±5%                                             5.69 � 2.10       10.22 � 3.14
+                                                                                              Determination of morphine plasma concentration in
+                                                                                           rabbits (morphine microspheres group) by HPLC
+                                                                                              Ps: A (morphine hydrochloride group 1 mg/kg),
+in Table 10, and data of the morphine microspheres                                         B (morphine hydrochloride group 3 mg/kg),
+group are shown in Table 11. The variation trends of                                       C (morphine microsphere group 5 mg/kg), and
+the drug plasma concentration are shown in Figure 4.                                       D (morphine microsphere group 15 mg/kg).
+The calculation of the pharmacokinetic model was pro­                                         It can be seen from Tables 11 and 12 that after sub­
+cessed by 3P97 pharmacokinetic software. The pharma­                                       cutaneous injection of MGMs in New Zealand rabbits,
+cokinetic process was consistent with the two-                                             the microspheres were quickly absorbed into the blood,
+compartment first-order absorption model, and the spe­                                     and the blood concentration could be detected within
+cific parameters are shown in Table 12. The following                                      10 min. In addition, the greater the dose, the higher the
+groups were designed: A (morphine hydrochloride                                            measured ±relationship. Absorption peaks could be
+
+
+
+                                                      10                                                          9.677
+                   Exposure time(days)
+
+
+
+
+                                                       7                                                  8.345
+
+                                                       5                                          7.364
+
+                                                       3                           5.231
+
+                                                       1                 3.812
+
+                                                       0             3.202
+
+                                                           0         2            4           6              8            10          12
+
+
+                                                                                 Area under
+Figure 3. Changes in AUC of the chromatogram of microspheres under high light for 10 days.
+
+
+                                               0.6
+                   µg /ml)
+
+
+
+
+                                               0.5
+
+                                               0.4
+                   Drug plasma concentration
+
+
+
+
+                                               0.3
+
+                                               0.2
+
+                                               0.1
+
+                                                 0
+
+                                               -0.1
+
+                                                                     Group A            Group B            Group C          Group D
+
+                                                                                           t(min)
+
+Figure 4. Drug plasma concentration at different times (n = 4).
+10      X. JIN ET AL.
+
+
+                                      Table 10. Drug plasma concentration after subcutaneous mor­
+                                      phine injection (n = 4).
+                                                                     Drug plasma concentration (μg /ml)
+                                       Time points                    Group A                    Group B
+                                       5 min                       0.086 ± 0.017              0.159 ± 0.070
+                                       10 min                    0.153 ± 0.022              0.271 ± 0.058
+                                       20 min                      0.242 ± 0.051              0.352 ± 0.095
+                                       30 min                      0.355 ± 0.102              0.512 ± 0.173
+                                       40 min                      0.243 ± 0.084              0.387 ± 0.093
+                                       50 min                      0.176 ± 0.061              0.249 ± 0.071
+                                       60 min                      0.097 ± 0.025              0.132 ± 0.057
+                                       1.5 h                       0.062 ± 0.033              0.074 ± 0.033
+                                       Two h                       0.035 ± 0.011              0.044 ± 0.018
+                                       Three h                     0.019 ± 0.013              0.024 ± 0.011
+                                       Four h                       undetected                 undetected
+                                       Six h                        undetected                 undetected
+                                       Eight h                      undetected                 undetected
+                                       12 h                         undetected                 undetected
+                                       16 h                         undetected                 undetected
+                                       24 h                         undetected                 undetected
+
+
+
+                                      Table 11. Drug plasma concentration after subcutaneous
+                                      injection of MGMs (X� � S,n = 4).
+                                                             Drug plasma concentration (μg/mL ± SD)
+                                       Time                    Group C                         Group D
+                                       5 min                 undetected                      undetected
+                                       10 min               0.032 ± 0.018                   0.057 ± 0.020
+                                       20 min               0.085 ± 0.034                   0.112 ± 0.026
+                                       30 min               0.132 ± 0.067                   0.206 ± 0.081
+                                       40 min               0.215 ± 0.058                   0.387 ± 0.057
+                                       50 min               0.273 ± 0.042                   0.468 ± 0.063
+                                       60 min               0.251 ± 0.033                   0.441 ± 0.088
+                                       1.5 h                0.229 ± 0.016                   0.405 ± 0.071
+                                       2h                   0.220 ± 0.028                   0.379 ± 0.016
+                                       3h                   0.231 ± 0.041                   0.335 ± 0.024
+                                       4h                   0.214 ± 0.016                   0.339 ± 0.051
+                                       6h                   0.187 ± 0.036                   0.307 ± 0.028
+                                       8h                   0.112 ± 0.024                   0.275 ± 0.033
+                                       12 h                 0.093 ± 0.011                   0.218 ± 0.043
+                                       16 h                 0.069 ± 0.025                   0.185 ± 0.019
+                                       24 h                 0.025 ± 0.012                   0.166 ± 0.047
+
+
+
+     Table 12. Pharmacokinetic parameters (X� � S, n = 4).
+      Parameters             Unit                  Group A                    Group B                   Group C          Group D
+      tl/2α                min                   19.26 ± 4.15               21.44 ± 2.82              40.32 ± 5.33      43.64 ± 3.29
+      tl/2β                min                  146.31 ± 7.46              143.56 ± 5.21             337.25 ± 10.36    345.51 ± 8.53
+      Cmax                 μg/mL                 0.362 ± 0.045              0.529 ± 0.032             0.275 ± 0.021     0.474 ± 0.035
+      Tmax                 min                   31.83 ± 2.30               33.21 ± 3.54              55.22 ± 3.69      59.01 ± 8.24
+      CL                   L /h/ kg              0.412 ± 0.107              0.525 ± 0.085             0.235 ± 0.077     0.229 ± 0.094
+      AUC                  μg /L/ h             287.39 ± 36.87             327.51 ± 65.36           1235.04 ± 42.36   1502.45 ± 25.69
+
+
+
+
+observed 50 min after administration (Figure 5).                             Here D is the administration dose, t is the experimental
+Compared with a morphine injection, the t1/2α (distrib­                      preparation, and r is the control preparation. F was cal­
+uted half-life) and t1/2β (eliminated half-life) of the MGMs                 culated to be 88.84%.
+were prolonged, AUC (area under the curve of drug                               The data show that the plasma concentration of the
+duration) increased, Tmax (peak time) increased, and                         morphine injection group reached the peak value 30 min
+Cmax (peak concentration) decreased. The relative bioa­                      after administration and then decreased rapidly until four
+vailability (F) of MGM capsules versus a morphine injec­                     h after administration, until the concentration was unde­
+tion can be calculated as follows:                                           tectable. The plasma concentration of the microsphere
+                                                                             group produced a peak value at 50 min after administra­
+                             AUCt � Dr
+                        F¼                                        (12)       tion, which was generated by the burst release of the
+                             AUCr � Dt
+                                                                             microspheres. Then the plasma concentration decreased
+                                                                                              DESIGNED MONOMERS AND POLYMERS         11
+
+
+                                          30
+
+                                          25
+
+
+
+                  Cumulative pain score
+                                          20
+
+                                          15
+
+                                          10
+
+                                           5
+
+                                           0
+                                               Group A   Group B   Group C       Group D       Group E      Group F
+                                                                         Group
+Figure 5. Cumulative pain score.
+
+
+
+slowly and remained low until 24 h. Statistical analysis                     4X4cm2 on the midline side of the back. The groups were
+showed that the peak concentration of the microsphere                        divided as follows: Group A (sham operation group, 1.5%
+group was significantly lower than that of the control group                 isoflurane inhalation for 5 min without treatment), group
+(P < 0.05); t1/2 in the microsphere group was considerably                   B (blank microsphere control group), group C (morphine
+longer than that in the control group (P < 0.01).                            injection group 1 mg/kg), group D (morphine injection
+   Bioavailability (BA) is the degree and rate at which a drug’s             group 3 mg/kg), group E (morphine microsphere group
+active ingredient is released from the product and absorbed                  5 mg/kg), and group F (morphine microsphere group
+into the systemic circulation [32–34]. It is a kinetic property of           15 mg/kg).
+a drug that needs to be considered when calculating the
+dose of a non-intravenous medicine (BA is deemed to be
+100% by intravenous dosing) [35,36]. When the drug is taken
+                                                                             8.2. Cumulative pain score
+by other means, its bioavailability is reduced due to incom­
+plete absorption and first-pass effects. The area under the                  New Zealand rabbits in group A moved as usual, with
+drug-hour curve (AUC) represents the total amount of                         both hind paws touching the ground and bearing
+absorption after a single administration, reflecting the                     weight. The New Zealand rabbits in group B had
+degree of absorption of the drug, and can be used to                         upturned feet that could not maintain weight and
+remember the bioavailability of the drug. A large AUC indi­                  occasionally landed on the surgically operated side.
+cates a high bioavailability, and vice versa [34,37]. In this                The cumulative pain scores are shown in Figure 5.
+study, compared with the subcutaneous injection of mor­                      The cumulative pain scores of all surgical groups
+phine hydrochloride injection, the AUC of New Zealand                        were higher than that of group A (0.312 ± 0.256
+rabbits increased after a single local subcutaneous injection.               P < 0.01); The cumulative pain scores of each admin­
+The F value reached 88.84%, which was more similar to the                    istration group were lower than that of group
+effect of intravenous injection of morphine; Tmax time was                   B (21.204 ± 1.315 P < 0.01);
+longer, t1/2α and t1/2β were also relatively prolonged. The                      There was no significant difference in cumulative pain
+above data suggest that MGMs improve the bioavailability of                  scores between groups C and E, D and F; The cumulative
+morphine for topical application.                                            pain scores in groups D and F were significantly lower
+                                                                             than those in groups C and E (P < 0.01). As can be seen
+                                                                             from Figure 6, morphine gelatine microspheres can
+8. Pharmacodynamics                                                          effectively reduce the cumulative pain score, similar to
+                                                                             morphine hydrochloride injection. The cumulative pain
+8.1. Experimental animal grouping                                            score decreased with the increase in dosage, indicating
+Twenty-four New Zealand rabbits were randomly                                that the analgesic effect of morphine gelatine micro­
+divided into six groups of four rabbits per group. Shave                     spheres was dose-dependent.
+12          X. JIN ET AL.
+
+
+                                       3.60
+
+                                       3.50
+
+                                       3.40
+
+                                       3.30
+                      pain threshold   3.20
+
+                                       3.10
+
+                                       3.00
+
+
+
+                                                                                T(min)
+
+                                              Group A   Group B       Group C          Group D        Group E       Group F
+
+Figure 6. Comparison of pain threshold. Ps: Group A (sham operation group, 1.5% isoflurane inhalation for 5 min without treatment),
+group B (blank microsphere control group), group C (morphine injection group 1 mg/kg), group D (morphine injection group 3 mg/
+kg), group E (morphine microsphere group 5 mg/kg), and group F (morphine microsphere group 15 mg/kg).
+
+8.3. Pain threshold                                                             later and lasted longer (30 min-480 min after adminis­
+                                                                                tration and lasted longer). The above characteristics
+The pain threshold of group A was significantly higher
+                                                                                determine that morphine injection is more suitable for
+than that of group B at all times. The pain threshold of
+                                                                                early immediate analgesia in acute pain, such as intrao­
+group C and GROUP D began to increase 5 minutes after                           perative analgesia under general anesthesia or auxiliary
+subcutaneous injection, peaked at 30 minutes, and                               analgesia for wound debridement under local anesthe­
+lasted until 120 minutes after subcutaneous injection.                          sia. Morphine microspheres are more suitable for post­
+The pain threshold of groups E and F began to increase                          operative local analgesia.
+30 min after subcutaneous injection, peaked at 90 min,                              In general, when the patient has just been extubated
+and lasted until 360 min after subcutaneous injection.                          and sent to the ward, the patient still has some analgesic
+The pain thresholds of groups D and F were significantly                        effect of opioids in the body. Because the anesthetic in
+higher than those of groups C and E (figure 7 and                               their body is not completely metabolized until 2 hours
+Table 13). As can be seen from Figure 6, morphine                               later. However, after the drug is completely metabolized,
+gelatin microspheres and morphine hydrochloride injec­                          the patient will develop hyperalgesia in the surgical area,
+tion can enhance the pain threshold. And the pain                               which is more obvious after 3–12 hours [25,38].
+                                                                                    At present, many surgeons are used to administer
+threshold increased gradually with the increase of dose.
+                                                                                morphine hydrochloride injection into the joint cavity
+   The analgesic effect of morphine injection appeared
+                                                                                at the end of arthroscopic surgery. It is well known that
+earlier (5–120 min after administration), while the
+                                                                                its analgesic effect reaches its peak at 30 minutes, and its
+analgesic effect of morphine gelatin microspheres was
+
+
+ Table 13. Comparison of pain threshold(X� � S,n = 4).
+     Time points                           Group A        Group B          Group C            Group D             Group E         Group F
+     0 min                               3.34 ± 0.03    3.25 ± 0.05      3.24 ± 0.04         3.26 ± 0.03        3.28 ± 0.04     3.26 ± 0.04
+     5 min                               3.35 ± 0.04    3.26 ± 0.08      3.33 ± 0.03         3.35 ± 0.05        3.26 ± 0.07     3.27 ± 0.03
+     10 min                              3.33 ± 0.04    3.24 ± 0.03      3.36 ± 0.05         3.41 ± 0.04        3.28 ± 0.05     3.24 ± 0.06
+     20 min                              3.35 ± 0.03    3.29 ± 0.07      3.39 ± 0.08         3.46 ± 0.07        3.26 ± 0.06     3.25 ± 0.09
+     30 min                              3.35 ± 0.06    3.27 ± 0.06      3.46 ± 0.06         3.54 ± 0.05        3.30 ± 0.04     3.30 ± 0.05
+     40 min                              3.32 ± 0.07    3.23 ± 0.05      3.44 ± 0.04         3.52 ± 0.04        3.31 ± 0.06     3.36 ± 0.04
+     50 min                              3.34 ± 0.04    3.26 ± 0.04      3.42 ± 0.06         3.50 ± 0.06        3.34 ± 0.05     3.44 ± 0.02
+     60 min                              3.32 ± 0.06    3.27 ± 0.03      3.41 ± 0.07         3.47 ± 0.03        3.28 ± 0.04     3.48 ± 0.06
+     90 min                              3.36 ± 0.05    3.24 ± 0.05      3.38 ± 0.04         3.45 ± 0.05        3.43 ± 0.05     3.51 ± 0.03
+     120 min                             3.34 ± 0.06    3.26 ± 0.05      3.36 ± 0.05         3.39 ± 0.06        3.41 ± 0.03     3.49 ± 0.05
+     180 min                             3.35 ± 0.04    3.28 ± 0.06      3.31 ± 0.04         3.34 ± 0.07        3.39 ± 0.06     3.46 ± 0.04
+     240 min                             3.31 ± 0.05    3.26 ± 0.03      3.29 ± 0.06         3.31 ± 0.05        3.36 ± 0.04     3.44 ± 0.05
+     360 min                             3.32 ± 0.06    3.24 ± 0.05      3.25 ± 0.03         3.27 ± 0.04        3.34 ± 0.05     3.39 ± 0.07
+     480 min                             3.34 ± 0.05    3.25 ± 0.04      3.27 ± 0.05         3.32 ± 0.08        3.32 ± 0.06     3.35 ± 0.03
+                                                                                      DESIGNED MONOMERS AND POLYMERS              13
+
+
+analgesic effect is greatly weakened after 2 hours. In             ORCID
+other words, when the patient returned to the ward,
+                                                                   Yonghai Sun      http://orcid.org/0000-0002-1224-9212
+morphine injection analgesia began, and the patient’s
+anesthetic was completely metabolized within 2 hours,
+and the analgesic effect of morphine injection basically           Author contributions
+ended. Although patients feel the double analgesic
+effect in the early stage, their hyperalgesia will be aggra­       SYH conceived and designed the experiments; LJJ performed
+vated after the end of analgesia.                                  the experiments; LJJ and JX analyzed the data; JX wrote and
+                                                                   reviewed the paper. All authors read and approved the final
+   Hypothetically, if the surgeon changed the application          manuscript.
+of morphine microspheres into the joint cavity, the
+analgesic effect of the microspheres would take effect
+before the patient had completely metabolized the anes­            References
+thetic (50 minutes after the end of surgery), and the
+analgesic effect of the microspheres would last for                  [1] Gonvers E, El-Boghdadly K, Grape S, et al. Efficacy and
+6 hours or even longer. The above characteristics of mor­                safety of intrathecal morphine for analgesia after lower
+                                                                         joint arthroplasty: a systematic review and meta-analysis
+phine microspheres can make the blood concentration of
+                                                                         with meta-regression and trial sequential analysis.
+morphine more stable, improve the analgesic effect, and                  Anaesthesia. 2021;76(12):1648–1658.
+reduce addiction. It also makes patients more comfortable            [2] Zolnik BS, Burgess DJ. Evaluation of in vivo-in vitro
+after surgery, improves the early postoperative exercise                 release of dexamethasone from PLGA microspheres.
+rehabilitation rate, and prevents joint ossification [39–41].            J Control Release. 2008;127(2):137–145.
+   In addition, the analgesic effect of morphine micro­              [3] Kim K, Bou-Ghannam S, Thorp H, et al. Human mesench­
+                                                                         ymal stem cell sheets in xeno-free media for possible
+spheres was enhanced as the dose of morphine                             allogenic applications. Sci Rep. 2019;9(1):14415.
+increased. The pellet release time and drug concentra­               [4] Liu G, Dong L, Lu K, et al. Preparation and in vivo phar­
+tion increased accordingly. However, it is still necessary               macokinetics of the tongshu suppository. Biomed Res
+to be careful not to overdo it                                           Int. 2016;2016:1691579.
+                                                                     [5] Sampath SS, Garvin K, Robinson DH. Preparation and char­
+                                                                         acterization of biodegradable poly(l-lactic acid) gentamicin
+                                                                         delivery systems. Int J Pharm. 1992;78(2–3):165–174.
+9. Conclusion                                                        [6] Tao M, Wang J, Pharmacy DO. Preparation optimization
+                                                                         of curcumin bovine serum albumin nanoparticles by
+Gelatin morphine microspheres prepared in this study                     central composite design and response surface
+have better-sustained release and longer analgesic time                  method. China Pharm. 2019;10;1841–1845 .
+than the same dose of morphine hydrochloride injec­                  [7] Brennan TJ, Vandermeulen EP, Gebhart GF.
+                                                                         Characterization of a rat model of incisional pain. PAIN.
+tion. After the trial, it was found that the blood concen­
+                                                                         1996;64(3):493.
+tration of morphine in patients was more stable, the                 [8] Koning MV, Teunissen A, van der Harst E, et al.
+analgesic effect was better, the bioavailability of mor­                 Intrathecal morphine for laparoscopic segmental colonic
+phine was improved, the addiction was reduced, and the                   resection as part of an enhanced recovery protocol:
+bioavailability was improved.                                            a randomized controlled trial. Reg Anesth Pain Med.
+                                                                         2018;43(2):166–173.
+                                                                     [9] Gu B, Burgess DJ. Prediction of dexamethasone release
+                                                                         from PLGA microspheres prepared with polymer blends
+Acknowledgments                                                          using a design of experiment approach. Int J Pharm.
+                                                                         2015;495(1):393–403.
+This work is supported by PLA General Hospital of China             [10] Peng X, Yang L, Heng Z, et al. Surface modification by
+(Science and Technology Innovation Nursery Fund No. ZY21)                microencapsule coating and grafting to prepare high
+                                                                         hydrophilic polytetrafluoroethylene micropowder.
+                                                                         React Funct Polym. 2021;167:105029.
+                                                                    [11] Xiao WA, Zhuang DA, Yz A, et al. Effects of lutein particle
+Disclosure statement                                                     size in embedding emulsions on encapsulation effi­
+                                                                         ciency, storage stability, and dissolution rate of micro­
+No potential conflict of interest was reported by the author(s).
+                                                                         encapsules through spray drying. Lwt. 2021;146
+                                                                         (7):111430.
+                                                                    [12] Wang D, Fang J, Liu W, et al. Preparation and character­
+Funding                                                                  ization of Poly(L-lactide-co-glycolide-co-ε-caprolactone)
+                                                                         /1,4-Butanediamine modified maleated poly(D,L-lactide-
+This work was supported by the Chinese PLA general hospital              co-glycolide) blend porous films. J Macromol Sci.
+[Innovation Fund Project No. ZY21].                                      2020;59(6):1–11.
+14       X. JIN ET AL.
+
+
+ [13] George A, Shah PA, Shrivastav PS. Natural biodegradable        [29] Hare JM, Traverse JH, Henry TD, et al. A randomized,
+      polymers based nano-formulations for drug delivery: a               double-blind, placebo-controlled, dose-escalation
+      review. Int J Pharm. 2019;561:244–264.                              study of intravenous adult human mesenchymal stem
+ [14] Ma Y, Wise AK, Shepherd RK, et al. New molecular thera­             cells (prochymal) after acute myocardial infarction. J Am
+      pies for the treatment of hearing loss. Pharmacol Ther.             Coll Cardiol. 2009;54(24):2287–2289.
+      2019;200:190–209.                                              [30] Butreddy A, Gaddam RP, Kommineni N, et al. PLGA/PLA-
+ [15] Ma X, Li SJ, Liu Y, et al. Bioengineered nanogels for cancer        Based Long-Acting injectable depot microspheres in clin­
+      immunotherapy. Chem Soc Rev. 2022;51(12):5136–5174.                 ical use: production and characterization overview for
+ [16] Hu T, Yang J, Cui K, et al. Controlled Slow-Release                 protein/peptide delivery. Int J Mol Sci. 2021;22(16):8884.
+      Drug-Eluting stents for the prevention of coronary rest­       [31] Kardos P, Khaletskaya O, Kropova O. Efficacy and safety
+      enosis: recent progress and future prospects. ACS Appl              of Cineole (Soledum) in the treatment of patients with
+      Mater Interfaces. 2015;7(22):11695–11712.                           acute bronchitis: results of an open-label randomized
+ [17] Su Y, Zhang B, Sun R, et al. PLGA-based biodegradable               clinical phase III study. Clin Phytosci. 2021;7(1). DOI: 10.
+      microspheres in drug delivery: recent advances in                   1186/s40816-021-00319-8.
+      research and application. Drug Deliv. 2021;28                  [32] Zhou Y, Ma Y, Qi C, et al. Superhydrophobic surface
+      (1):1397–1418.                                                      based on nano-engineering for enhancing the durability
+ [18] Ding D, Zhu Q. Recent advances of PLGA micro/nano­                  of anticorrosion. Surf Eng. 2020;37(3):1–11.
+      particles for the delivery of biomacromolecular                [33] Ji EC, Kim JS, Choi MJ, et al. Effects of different physico­
+      therapeutics. Mater Sci Eng C Mater Biol Appl.                      chemical characteristics and supersaturation principle of
+      2018;92:1041–1060.                                                  solidified SNEDDS and surface-modified microspheres
+ [19] Lai Y, Li Y, Cao H, et al. Osteogenic magnesium incorpo­            on the bioavailability of carvedilol. Int J Pharm.
+      rated into PLGA/TCP porous scaffold by 3D printing for              2021;597(5):120377.
+      repairing challenging bone defect. Biomaterials.               [34] Martinez-Zelaya VR, Zarranz L, Herrera EZ, et al. In vitro
+      2019;197:207–219.                                                   and in vivo evaluations of nanocrystalline Zn-doped
+ [20] Rocha CV, Gonçalves V, da Silva MC, et al. PLGA-Based               carbonated hydroxyapatite/alginate microspheres: zinc
+      composites for various biomedical applications. Int J Mol           and calcium bioavailability and bone regeneration.
+      Sci. 2022;23(4):2034.                                               Int J Nanomedicine. 2019;14:3471–3490.
+ [21] Al-Nimry S, Dayah AA, Hasan I, et al. Cosmetic, biomedi­       [35] Telange DR, Pandharinath RR, Pethe AM, et al. Calcium
+      cal and pharmaceutical applications of fish gelatin/                Ion-Sodium alginate-piperine-based microspheres: evi­
+      hydrolysates. Mar Drugs. 2021;19(3):145.                            dence of enhanced encapsulation efficiency,
+ [22] Samatra MY, Noor N, Razali U, et al. Bovidae-based gela­            bio-adhesion, controlled delivery, and oral bioavailabil­
+      tin: extractions method, physicochemical and functional             ity of isoniazid. AAPS PHARMSCITECH. 2022;23(4).
+      properties, applications, and future trends. Compr Rev              DOI:10.1208/s12249-022-02236-6
+      Food Sci Food Saf. 2022;21(4):3153–3176.                       [36] Shenoy PA. Suitability of stimuli evoked hypersensitiv­
+ [23] Ionescu OM, Mignon A, Minsart M, et al. Gelatin-Based               ities in hind paws as a clinically relevant pain beha­
+      versus alginate-based hydrogels: providing insight in               vioural measure in rat model of walker 256 breast
+      wound healing potential. Macromol Biosci. 2021;21(11):              cancer cellinduced bone pain: an overview. American
+      e2100230.                                                           J Pharmacol Pharmacotherapeutics. 2018;5(1). DOI: 10.
+ [24] Keating D. Regulator of Calcineurin 1 (RCAN1) helps                 21767/2393-8862.100014.
+      coordinate whole body metabolism and limit energy              [37] Shenoy P. Establishment, optimization and characterization
+      expenditure. Obes Res Clin Pract. 2019;13(3):262.                   of a rat model of breast cancer induced bone pain. 2018.
+ [25] Hyo-Jeong L, Jae-Ho, Lee, J. H., Lee, E. O., Lee, H. J.,       [38] Soppimath KS, Kulkarni AR, Aminabhavi TM.
+      Kim, K. H., Kim, S. H., & Kim, S. H. Retraction: substance          Encapsulation       of    antihypertensive       drugs    in
+      P and beta-endorphin mediate electro-acupuncture                    cellulose-based matrix microspheres: characterization
+      induced analgesia in mouse cancer pain model. J Exp                 and release kinetics of microspheres and tableted
+      Clin Cancer Res. 2009;28(1)137.                                     microspheres. J Microencapsul. 2001;18(3):397–409.
+ [26] Staahl C, Christrup LL, Andersen SD, et al. A comparative      [39] Wang J, Sun H, Sun WT, et al. Efficacy and safety of
+      study of oxycodone and morphine in a multi-modal,                   intrathecal morphine for pain control after spinal sur­
+      tissue-differentiated experimental pain model. PAIN.                gery: a systematic review and meta-analysis. 2021;25(6)
+      2006;123(1–2):28–36.                                                2674–2684 .
+ [27] Roberts K, Shenoy R, Anand P. A novel human volunteer          [40] Park SY, Choi GS, Park JS, et al. Efficacy and safety of
+      pain model using contact heat evoked potentials (CHEP)              udenafil for the treatment of erectile dysfunction after
+      following topical skin application of transient receptor            total mesorectal excision of rectal cancer: a randomized,
+      potential      agonists       capsaicin,   menthol      and         double-blind, placebo-controlled trial. Surgery (Oxf).
+      cinnamaldehyde. J Clin Neurosci. 2011;18(7):926–932.                2015;157(1):64–71.
+ [28] Wright JC, Burgess DJ. Long acting injections and              [41] Kan T, Xu J, Xie J. Condensation heat transfer deteriora­
+      implants ||. Advances in Delivery Science and                       tion on superhydrophobic surface with dense
+      Technology. New York: Springer US; 2012:1–11.                       nanostructures. J Phys. 2022;2230(1):012027.
+

@@ -1,0 +1,924 @@
+                                                                                           Volume 4
+                                                                                           Number 19
+                                                                                           7 October 2023
+
+
+
+
+Materials
+                                                                                           Pages 4261–4622
+
+
+
+
+Advances
+rsc.li/materials-advances
+
+
+
+
+                            ISSN 2633-5409
+
+
+
+
+                            PAPER
+                            Yubao Li, Qin Zou et al.
+                            Injectable gelatin microspheres for osteomyelitis treatment:
+                            osteogenic and anti-inflammatory effect
+Materials
+Advances
+                                                                                                               Published on 09 August 2023
+    PAPER                                                                                                        Licensed under CC-BY 4.0
+
+
+                                          Injectable gelatin microspheres for osteomyelitis
+                                          treatment: osteogenic and anti-
+Cite this: Mater. Adv., 2023,
+4, 4349                                   inflammatory eﬀect
+                                          Rui Zhang,a Li Chen,b Yijing Stehle,c Mingyue Lin,a Chenxin Wang,a Yufan Li,a
+                                          Min Huang,d Yubao Li*a and Qin Zou *a
+
+                                          The clinical treatment of osteomyelitis usually involves surgical debridement, necrotic bone removal,
+                                          and subsequent biomaterial transplantation to fill the void. The transplanted biomaterials need to be
+                                          able to fight the pathogens invading the infection after trauma, orthopedic surgery or joint replace-
+                                          ment and be able to relay regenerative events. Here, injectable vancomycin (Van)-loaded gelatin/
+                                          nanohydroxyapatite (Gel/n-HA) composite microspheres (VM) with both antibacterial and bone
+                                          regenerative properties were prepared for osteomyelitis treatment. The impact of Gel/n-HA-injectable
+                                          composite microspheres (M) on cell recruitment, proliferation, and osteogenic diﬀerentiation was
+                                          evaluated. Osteoblasts were successfully recruited by M to the bone defect area in vivo. Furthermore,
+                                          the release kinetics of Van from VM in vitro and anti-inflammatory activity in vivo were assessed as the
+Received 3rd June 2023,                   eﬃcacy of the released antibiotics, which inhibited cell wall synthesis in Staphylococcus aureus, thereby
+Accepted 23rd July 2023                   lysing the bacterial cells. When administered topically to rabbit tibia osteomyelitis defects, the injectable
+DOI: 10.1039/d3ma00279a                   VM enhanced in vivo bone healing and fracture resistance. Thus, owing to the injectability and
+                                          coordinated therapeutic actions of VM, they are considered promising biomaterials with osteogenic and
+rsc.li/materials-advances                 anti-inflammatory potential for osteomyelitis treatment.
+
+
+
+
+1. Introduction                                                                  Consequently, an avascular area inaccessible to antibiotics
+                                                                                 and inflammatory cells is formed that provides a suitable
+Osteomyelitis occurs because of microbial invasion or autoin-                    environment for continued bacterial growth.6 The first task in
+flammatory processes and can drastically compromise the                          the treatment of osteomyelitis is to clear the bacterial infection.
+functionality and regenerative capacity of osseous tissues.1                     Systemic antibiotic application can help reduce infection;
+Gram-positive Staphylococci constitute the most common                           however, the local ischemic condition and the presence of the
+pathogen of osteomyelitis (B75%) and can cause bone destruc-                     ‘‘blood–bone’’ barrier cause poor antibiotic penetration at the
+tion at the infection site by inducing osteoblast apoptosis,2                    site of interest.7 Clinical treatment usually includes surgical
+activating osteoclast formation, and secreting toxins.3                          debridement, necrotic bone removal, and subsequent autolo-
+Sequestrum formation following infection produces bone                           gous bone transplantation to fill the void.
+defects not conducive to local infection control, with hema-                         Therefore, numerous bone implantable biomaterials, such
+toma formation in these defects creating opportunities for                       as microspheres, have been developed with antibiotics8,9 (i.e.,
+bacterial colonization.4 In the later stages of osteomyelitis,                   gentamicin sulfate,10 ibuprofen,11 or lysozyme12) incorporated
+dead bone almost fully covers the original living bone. Ischemia                 for administration to localized defective sites to protect against
+can potentially induce bone necrosis by obliterating the                         bacterial infection while simultaneously enabling bone
+bone vascular channels, thereby reducing blood supply.5 The                      repair.13 Spherical microspheres have versatile applications
+separation of ischemic bone segments forms sequestra.                            either as suspensions or (colloidal) gels that can be applied
+                                                                                 using minimally invasive surgery.14 The microsphere-type scaf-
+a
+  Research Center for Nano Biomaterials, Analytical & Testing Center, Sichuan    fold is easily applied via syringe needle injection into the bone
+  University, Chengdu 610064, P. R. China. E-mail: nic7504@scu.edu.cn,           defect sites for repairing irregular and complex defects. Gelatin
+  zouqin80913@126.com
+b
+                                                                                 is derived from collagen by breaking down the triple-helical
+  Analytical & Testing Center, Sichuan University, Chengdu 610064, P. R. China
+c
+  Department of Mechanical Engineering, Union College, 807 Union St.,
+                                                                                 structure of collagen. Gelatin contains the sequence of argi-
+  Schenectady, NY 12308, USA                                                     nine–glycine–aspartic acid (RGD) which is the specific recogni-
+d
+  Sichuan Institute of Atomic Energy, Chengdu, 610101, P. R. China               tion site of integrins and is involved in regulating the
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                                          Mater. Adv., 2023, 4, 4349–4368 | 4349
+Paper                                                                                                                      Materials Advances
+
+interactions between cells and the extracellular matrix.15 Incor-           loaded into gelatin microspheres via diffusion, which avoids
+poration of nanohydroxyapatite (n-HA) into gelatin was                      the contact with harsh organic substances during the cross-
+shown to generate composite microspheres with increased                     linking reaction.19 Vancomycin (Van) is a glycopeptide antibio-
+hydrophilicity and osteoconductivity. With the increase of                  tic that inhibits bacterial cell wall synthesis through a five-
+n-HA content, the protein adsorption capacity of the composite              hydrogen bond interaction between the heptapeptide backbone
+microspheres significantly increased.16 The architecture of n-              of the antibiotic and the C-terminal D-alanyl–D-alanine (D-Ala–
+HA can offer biophysical information for the adjustment                     D-Ala) dipeptide, consequently lysing the bacterial cell walls and
+of cell behaviors (e.g., cell attachment, spreading, proliferation,         causing cell death.20 A nanocomposite fibrous scaffold (silica-
+or differentiation) and the subsequent process of osteogenesis              coated n-HA-gelatin reinforced with poly(L-lactic acid) yarns)
+for bone regeneration.17 Previously, we reported the pre-                   containing Van for treating osteomyelitis in a rat model was
+paration of gelatin/nanohydroxyapatite (Gel/n-HA) (10 wt%)                  shown to be highly efficacious.21 In recent years, bone tissue
+composite microspheres using a water-in-oil emulsifica-                     regeneration through endogenous stem cell ‘‘homing’’ and
+tion process and subsequent crosslinking with 1-ethyl-3-                    recruitment has received more attention.22 It utilizes the body’s
+(3-dimethylaminopropyl)carbodiimide (EDC).18 These micro-                   own regeneration capacity to repair bone tissue while avoiding
+spheres exhibited superior cytocompatibility as they possessed              exogenous cell-associated limitations. The appropriate selec-
+sustainable regenerative effects for bone healing with the zero-            tion of cell-adhesion signaling molecules and the identification
+length crosslinking agent (EDC) and are entirely degradable.                of a suitable linking strategy that ensures efficient and reliable
+Studies have shown that drug and biomolecules can be readily                mobilization of the selected adhesion signaling molecules
+
+
+
+
+Scheme 1 Schematic illustration of the preparation of vancomycin-loaded microspheres (VM) for osteomyelitis treatment. (A) Preparation of gelatin/
+nanohydroxyapatite composite microspheres (M) and VM; (B) illustration of the bone regeneration promotion of M in a rabbit femoral condyle model; (C)
+anti-infection mechanism of VM in the back muscles; and (D) illustration of the antibacterial and osteogenic mechanisms of VM in an osteomyelitis
+model. n-HA, nanohydroxyapatite; Gel, gelatin; Van, vancomycin.
+
+
+
+
+4350 | Mater. Adv., 2023, 4, 4349–4368                                      © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                                 Paper
+
+while preserving their biochemical functions are key considera-        completely dissolved in distilled water (10 mL) at 40 1C to form
+tions when designing cell instructive biomaterials.23 Many             a homogeneous aqueous Gel solution before the addition of
+strategies, such as native ECM proteins and protein fragments          n-HA slurry (30 w/v%, Gel : n-HA = 9 : 1). Next, the solution was
+of gelatin, are popular choices for promoting the adhesion of          poured into olive oil in a three-neck round-bottom flask and
+stem cells to the surfaces of biomaterials, regulating immune          further stirred with an upper stirrer for 15 min (400 rpm)
+cell infiltration and reducing the inflammatory effects of             followed by chilling to below 10 1C for 30 min. To form this
+biomaterials.24 Ke et al. described the production of a 3D             W/O emulsion, acetone (100 mL) was added to the suspension
+gelatin microsphere scaffold with multiple voids designed              mixture and stirred for 15 min. The microspheres were sepa-
+and manufactured on the basis of facile fabrication of gelatin         rated by centrifugation at 4 1C, and fully washed with acetone to
+microspheres. The effective production of this scaffold can be         remove oil. Finally, the microspheres (dried at 45 1C for 12 h in
+used to promote tissue migration and nerve recovery after              an oven in air) were crosslinked in EDC/acetone aqueous
+spinal cord injury.25 Limited stem cell sources restrict the           solution (0.1%, w/v) at room temperature for 12 h.
+ex vivo expansion of exogenous stem cells and in vivo delivery             The swellable properties of the drug carrier loaded Van in
+of growth factors for osteomyelitis treatment. Hence, the most         the M have been reported.28 Briefly, the Van was loaded
+effective and feasible strategy to apply this treatment is by          allowing the microspheres (1 g) to swell at 37  0.2 1C under
+exploiting injectable scaffolds loaded with targeted antibacter-       continuous magnetic stirring (120 rpm) in a water solution of
+ials against local infection and cell recruitment activities           Van (1 g/125 mL) for 6 h. The resulting Van-loaded Gel/n-HA
+reflecting the osteogenic cell niche that can interact with the        composite microspheres (VM) were finally washed 3 times with
+surrounding host tissue to achieve rapid homeostasis by                ethanol by centrifiltration and lyophilization.
+recruiting embryonic stem cells and promoting angiogenesis
+and osteogenesis.26                                                    2.3   Characterization of microspheres
+    Here, we exploited the water-in-oil emulsification method to       The particle size distribution of M and VM was measured by
+fabricate Gel/n-HA-injectable composite Van-loaded micro-              laser diﬀractometry (laser particle size analyzer, Mastersizer
+spheres (VM) as a local delivery system (Scheme 1). We aimed           2000, Malvern, UK). Scanning electron microscopy (SEM, Apreo
+to examine whether the targeted antibacterial and cell recruit-        S, Thermo Scientific, USA) was used to observe the surface of
+ment activities in vitro of VM translate to an eﬀective osteo-         M and VM and observe the cross-section of M and VM
+myelitis treatment. Further, we tested the hypothesis that EDC         which were embedded in the glycol methacrylate monomer29
+crosslinked microspheres support osteogenesis. Microsphere             (Technovits7200 VLC, Germany). Energy-dispersive X-ray
+degradation and bone formation supported by the microscaf-             spectroscopy (EDS, X-MaxN 80, Oxford, UK) was used for
+folds in the femoral condyle defect group were monitored using         elemental analysis. The phase composition and crystallinity
+microcomputed tomography (Micro-CT) and histology. We                  of samples were analyzed by X-ray diﬀraction (XRD, PANalytical
+validated the feasibility of Van delivery for antibacterial activity   B.V, EMPYREAN, Netherlands). The infrared spectra of samples
+via VM. The drug release kinetics and antibacterial mechanism          were collected by Fourier transform infrared spectrometry
+of VM were assessed using the drug release profile and scan-           (FT-IR, Invenio R, BRUKER, Germany). The M and VM filled
+ning electron microscopy (SEM), transmission electron micro-           in bones were scanned by microcomputed tomography (Micro-
+scopy (TEM), and live/dead staining of bacteria. Finally, a rabbit     CT, Viva CT80, SCANCO Medical AG, Switzerland).
+model of osteomyelitis was employed to assess the overall
+hypothesis of the targeted antibacterial, inflammation modu-           2.4   Biocompatibility and osteogenic diﬀerentiation of M
+latory, osteoblast recruitment, and bone regenerative properties          2.4.1 Cell proliferation assay of MG63 in vitro. To evaluate
+of VM in vivo. The inflammation modulatory eﬀect, particularly         the cell adhesion and proliferation of the M, the human
+in killing bacteria, and the morphology of bone formation in           osteosarcoma MG63 cells (a non-transformed cell line that
+the osteomyelitis model following treatment were evaluated             exhibits an osteoblastic phenotype) cultured in F-12 nutrient
+using end-point histology and sequence fluorescent labeling.           mixture medium (Gibco, Life Technologies, USA) containing
+                                                                       10% newborn calf serum (NBCS, Gibco, Life Technologies, USA)
+                                                                       and 1% penicillin–streptomycin antibiotic solution (MP Bio-
+2. Materials and methods                                               medicals, USA) were seeded on the M at a seeding density
+2.1   Materials and reagents                                           of 1.6  104 cells per well followed by incubation at 37 1C with
+                                                                       5% CO2. After incubating for 4 days, the cell/microsphere
+Gel type A was purchased from Sigma-Aldrich, USA. n-HA slurry          samples were observed by SEM. Cell attachment, spreading,
+was synthesized by a wet chemical method in our laboratory.27          and morphology were assessed by fluorescent staining of
+All chemical reagents obtained from commercial routes were of          actin (Alexa Flours 532 phalloidin, Invitrogen), mitochondria
+analytical grade and were used without further purification.           (mitochondria-selective probes, Mito Trackers probes, Invitro-
+                                                                       gen), and nuclei (Hoechst dyes, Invitrogen). The samples were
+2.2   Preparation of microspheres                                      visualized using a confocal laser scanning microscope (CLSM,
+The injectable Gel/n-HA microspheres (M) were prepared by a            A1R MP +, Nikon). The cells were labeled with a live/dead
+water-in-oil emulsion method.18 Briefly, Gel (1.5 g) was               reagent (a viability/cytotoxicity kit, Life Technologies, USA) after
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                                Mater. Adv., 2023, 4, 4349–4368 | 4351
+Paper                                                                                                                 Materials Advances
+
+culture for 7 days and the morphology of cells was imaged by               60 1C for 60 s, and 95 1C for 15 s. Reaction specificity was
+using an inverted fluorescence microscope (Ti-U, Nikon, Japan)             confirmed by analyzing the melting curves of the products and
+to reveal the cell viability on M.                                         the electrophoresis of the products on a 1.0% agarose gel. The
+   2.4.2 Osteogenesis analysis of BMSCs in vitro. Bone mar-                relative changes in gene expression were analyzed via the
+row stromal cells (BMSCs) were isolated from 100 g of healthy              2(Delta Delta C(T)) method and normalized according to the
+SD rats. After euthanasia, femurs were detached under sterile              expression of the housekeeping gene b-actin.
+conditions, and BMSCs were harvested from the metaphysis of                   2.4.3 Degradation and osteogenesis of M in vivo. New
+both ends. Then, cells were cultured in a-modified Eagle’s                 Zealand white rabbits (2–3 kg) were obtained from the
+medium (a-MEM; Gibco, Life Technologies, USA) containing                   Sichuan University Laboratory Animal Center. All the experi-
+10% NBCS and 1% penicillin–streptomycin antibiotic solution.               ments were approved by the Ethics Committee of Sichuan
+The cells were incubated in a humidified atmosphere of 5%                  University. A total of 24 skeletally mature New Zealand White
+CO2 and 95% air at 37 1C, and the culture medium was changed               rabbits were randomly assigned to 5 groups for 10, 16, 28, or
+every two days. Cells were subcultured when they grew to 80%               56 days implantation of ethylene oxide sterilized M and the
+of the bottom of the cell culture flask. BMSCs at a density of             blank control, respectively. M was inserted into the bone defect
+2  104 cells per mL were seeded on the M for 14 days and the              (F 6 mm  6 mm) created in the medial femoral condyle.32
+cells were harvested and fixed in 2.5% paraformaldehyde at                 The incision was sutured layer upon layer. After surgery, each
+4 1C overnight. Then, the cells were dehydrated stepwise in                rabbit was intramuscularly injected with penicillin (1 
+ethanol and embedded in epoxy resin. The fixed samples                     105 units per day) which lasted for 3 days. 10, 16, 28, or 56 days
+were cut into ultrathin sections using an Ultracut ultramicro-             after implantation, three femur samples with implants in each
+tome (Leica, Germany) and lightly stained with 1% uranyl                   group were harvested and the immobilized (in 4% buffered
+acetate and lead citrate for transmission electron microscopy              paraformaldehyde) samples were scanned using microcom-
+(TEM, G2F20S-TWIN, USA) observation.                                       puted tomography (Micro-CT, Viva CT80, SCANCO Medical
+   For the quantitative real-time polymerase chain reaction                AG, Switzerland). Based on the original CT scans of each
+(qPCR) assay,30,31 after BMSCs were seeded on the M at 5                  sample, three-dimensional images were reconstructed. The
+104 cells per mL for 7 and 14 days, total RNAs of BMSCs                    quantitative evaluation of osteogenesis such as bone volume/
+were extracted and collected by using the Trizol reagent (Life             total volume (BV/TV) and bone mineral density (BMD) was done
+Technologies), the quantity of RNA was detected by the OD                  based on the SCANO MEDICAL mCT Evaluation Program soft-
+value, and the integrity of RNA was determined by 1% agarose               ware. A cylindrical region of interest (ROI with the same size as
+gel electrophoresis. The first-strand cDNA was synthesized                 the bone defect) was selected to characterize the degradation of
+using the Super-Script First-Strand Synthesis System (Gene                 M and characterize the new bone formation inside the bone
+seed), followed by the amplification of the cDNA product using             defect. Samples for histological analysis were embedded in
+Platinum Taq DNA polymerase (Gene seed). The first-strand                  paraffin. After cutting, the sections were stained with hematox-
+complementary DNA (cDNA) was synthesized by using the                      ylin and eosin (HE) and Masson, and finally observed by using a
+reaction fluid (4 mL of 5  RT buﬀer, 2 mL of geneseeds enzyme             stereoscope (SMZ800N, Nikon, Japan) and a microscope (Ti-U,
+mix, 1 mL of reverse transcription primer, 1 mg of total RNA, and          Nikon, Japan).
+20 mL of RNase free ddH2O) at 25 1C for 10 min, 42 1C for
+60 min, and 85 1C for 5 min, respectively. b-Actin was consid-             2.5 Antibacterial ability and release evaluation of Van of the
+ered as the internal control gene in this analysis. The primer             VM
+sequences of the genes are summarized in Table 1.                             2.5.1 Bacteria cultured with VM in vitro. The morphologies
+   The qPCR reaction system was prepared using 10 mL of 2                 of bacteria treated with samples (M, VM) were observed by
+SYBR Green PCR Master Mix, 0.4 mL of forward primer, 0.4 mL of             SEM. The samples (5 mg) were sterilized with ethylene oxide
+reverse primer, and 20 mL of ddH2O. The PCR initiated dena-                and transferred to a 24 well plate. Then, 200 mL of bacterial
+turation at 95 1C for 5 min. Then 40 cyclic reactions were                 solution containing 1  107–108 CFU mL1 Staphylococcus
+carried out, each of which was composed of denaturation at                 aureus (S. aureus, CMCC26003) and Escherichia coli (E. coli,
+95 1C for 10 s and acquisition signals at 60 1C for 34 s.                  CMCC(B)44102) was dripped separately. After incubating
+Eventually, the dissolution was reacted at 95 1C for 15 s,                 for 24 h, the bacteria were immobilized with 2.5% (v/v)
+
+
+
+Table 1   Primers designed for selected genes in relation to osteogenic diﬀerentiation of BMSCs
+
+mRNA                                      Forward primer                                                     Reverse primer
+b-actin                                   GGCCGGGACCTGACAGACTACCTC                                           GTCACGCACGATTTCCTTCTCAGC
+COL 1                                     ACGGCTGCACGAGTCACAC                                                GATGGGOAGGCGGGAGGTCITG
+RLNX 2                                    GCCQTAGAGAGCAGGGAAGAC                                              CTGGCTTGGATTAGGGAGTCAC
+ALP                                       CGGGCAGTGTGACGGTAAATA                                              ACATCGGGGGCAGGCAGACT
+OCN                                       ACCGGGAGCAGTGTGAGC                                                 GATGCGTTTGTAGGCGGTCTTC
+OPN                                       TGGCTGAATTCTGAGGGACTAACT                                           ACTTTCACCGGGAGGGAGGAG
+
+
+
+
+4352 | Mater. Adv., 2023, 4, 4349–4368                                      © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                              Paper
+
+paraformaldehyde and dehydrated gradually with gradient              then air-dried. S. aureus (1 mL, 108 CFU mL1) was seeded on
+ethanol (20, 40, 60, 80, and 100% v/v) for 10 min. After freeze-     the prepared agar plate and the prepared filter paper samples
+drying, the bacteria on the surface of the samples were              were placed on the agar plate. The zones of inhibition were
+observed by SEM. In addition, bacterial cells were also analyzed     measured after 24 h incubation at 37 1C.
+by TEM.33 After the mixture of bacteria and samples cocultured          2.5.3 Treatment of infected wound of back muscle in vivo.
+for 24 hours was centrifuged (1000 r min1, 5 min), the super-       In order to evaluate the antibacterial eﬀect of VM in vivo, a
+natant was discarded, and 2.5% glutaraldehyde was added to           rabbit back muscle S. aureus infection model was established.37
+fix the samples for 2 hours. The samples were dehydrated             New Zealand white rabbits, weighing 2–3 kg, were anesthetized
+stepwise in ethanol and embedded in epoxy resin. The fixed           by intravenous administration of 3% (w/w, 30 mg kg1) pento-
+samples were cut into ultrathin sections using an Ultracut           barbital sodium. The muscular incision of approximately
+ultramicrotome and were lightly stained with 1% uranyl acetate       10 mm on the back of rabbits was exposed under aseptic
+and lead citrate for TEM. Live/dead staining was used                conditions. The rabbit muscle without infection was set as
+to visually observe the live/dead states of bacteria. The bacteria   control. The other rabbits’ back muscles were then infected
+(1  108 CFU mL1) blended with samples (5 mg) were                  with 50 mL of S. aureus (1  108 CFU mL1). After infection, the
+cocultured for 24 h. After that, the bacteria after different        samples were divided into 4 groups: an infected group that did
+treatments were stained with SYTO9 and PI (LIVE/DEAD bac-            not receive any treatment as blank; Van group that received a
+terial viability kit, Thermofisher) for 15 min. Finally, photo-      single treatment with Van; and another two groups that were
+graphs were taken under a fluorescence microscope. Living            injected M (100 mg) and VM (100 mg) at the same dosage as the
+bacteria appear green, and dead bacteria appear red. The             single Van treated group, respectively. On the fourth day, all the
+intensity of fluorescent staining was semi-quantitatively ana-       rabbits were sacrificed and photographed and the tissues at the
+lyzed by Image J software.34                                         wound site were sliced, followed by H&E staining. According to
+    2.5.2 Release evaluation of Van from VM. The antibiotic          the method of Jia et al.,38 a sterile cotton swab was used to
+concentration and encapsulation eﬀectiveness were deter-             collect the mucus from the infected area and then transfer it
+mined by dissolving 1 g of VM completely in 4 mL of PBS (pH          into a centrifuge tube containing 10 mL of sterile physiological
+7.4), centrifuging the supernatant, and measuring the absor-         saline. Serial dilutions of the bacterial suspension (101, 102,
+bance at 280 nm using ultraviolet-visible (UV) spectroscopy (UV-     103, . . .107) were made, and finally a pipette gun was used to
+Vis V-2401, Japan). The three average values were used to            transfer 50 mL of each dilution onto the solid medium and
+quantify the antibiotic content and encapsulation eﬀectiveness       spread well. The plates were incubated in an incubator at 37 1C
+using a calibration curve that was created using the known           for 24 h and then counted. Plates with three parallel groups of
+vancomycin concentration. To evaluate the release character-         three per dilution and colonies in the range of 30–300 were
+istics of VM, the microspheres (200 mg, n = 4) were dispersed in     considered valid.
+a dialysis bag (8000 Da) containing 5 mL of PBS with pH
+7.4 or pH 6.0 and then immersed in brown sample bottles              2.6   Treatment of rabbit osteomyelitis
+containing 10 mL of release medium (pH 7.4 or pH 6.0). All the       Next, we developed an animal model with induced infection to
+samples were placed in a constant temperature shaker                 evaluate its potential as a promising adjuvant therapy for
+(37 1C, 120 rpm min1). At designated time intervals (0.5 h,         osteomyelitis (Fig. 1A). The rabbit tibia osteomyelitis model
+1 h, 2 h. . .. . .14 d), 4 mL of the solution was taken out for      was established according to the literature.39–41 All surgical
+analysis and replaced with the same volume of fresh solution to      procedures were approved and performed by the Ethics Com-
+ensure a constant volume. According to the maximum absorp-           mittee of West China Hospital at Sichuan University. Ten adult
+tion wavelength of the full spectrum of UV absorption of Van         pathogen-free New Zealand white rabbits (B3.0 kg per each)
+solution (280 nm),35 the content of Van was detected at 280 nm       were anesthetized with 3% (w/w, 30 mg kg1) pentobarbital
+by UV spectroscopy. The VM cumulative release ratio (%) was          sodium. After anesthesia, the hair was removed from the hind
+calculated using eqn (1):36                                          legs and the skin was disinfected. A skin incision was made in
+                                                                     the medial tibia of the rabbits. The skin and musculature were
+                                           X
+                                           t
+                                             Mt                      dissected and the tibia was exposed (Fig. 1B1). A bone defect
+     Cumulative release percentage ð%Þ ¼               100   (1)
+                                           t¼0
+                                                 M0                  model (2 mm in diameter, deep into the medullary cavity) was
+                                                                     created on the medial side of the anterior tibia using a drill.
+where Mt is the cumulative amount of Van released at each            Two longitudinally connected and partially overlapped bone
+sampling time point, t is the time of the release, and M0 is the     holes were drilled here to reach the medullary cavity to make a
+initial weight of the Van loaded in the sample.                      rectangular bone window (Fig. 1B2). Osteomyelitis was induced
+   The KB disk diﬀusion method was used to evaluate the              by injecting 0.1 mL of S. aureus suspension (1  108 CFU mL1)
+bioactivity of the Van released under diﬀerent pH conditions.        and 0.1 mL of 5% sodium morrhuate (Xinyi Pharmaceutical,
+The bacterial zone of inhibition (killed bacteria) is related        China) into the tibia of the rabbits (Fig. 1B3). After sealing the
+to the quantity and eﬃcacy of the released antibiotic. For           bone window with bone wax and washing the wound with
+this, about 30 mL of the released Van at diﬀerent time points        normal saline, the musculature and the skin were closed with
+(0–14 days) was added to a 6 mm sterile filter-paper disk and        sutures separately. After 6 weeks, the rabbits were sacrificed to
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                             Mater. Adv., 2023, 4, 4349–4368 | 4353
+Paper                                                                                                                        Materials Advances
+
+
+
+
+Fig. 1 Schematic diagram of rabbit osteomyelitis modeling and treatment. (A) Schedule of rabbit osteomyelitis surgery. (B) Surgical procedure for
+osteomyelitis: (B1) blunt dissection of subcutaneous muscle; (B2) creation of bone defects; (B3) injection of S. aureus.
+
+
+
+
+confirm the presence of osteomyelitis through microbiological                modeling. SEM examination (Fig. 2A5) revealed the presence
+and X-ray imaging, according to the method described by                      of S. aureus clusters within the biofilm on the implant
+Norden et al.40                                                              surface, densely packed within a thin necrosed bone. Under
+   Six weeks following surgery, a yellow viscous purulent liquid             strictly sterile conditions, after subcutaneous abscess removal,
+and granular purulent tissue can be seen around the site of the              the loose and necrotic bone and soft tissue were delicately
+previous operation and a large number of bacterial colonies can              debrided in the area of osteomyelitis infection (Fig. 2B1). For
+be observed after incubation of the purulent liquid (Fig. 2A1                diﬀerent treatments, Van solution was used to wash the infected
+and A2). Obvious bone abscesses can be found by exposing the                 site repeatedly in the control group and the VM group was
+tibia (Fig. 2A3). Radiographic features (Fig. 2A4) of osteomyelitis          washed with Van solution and injected with VM into the
+including osteoporosis, peripheral osteosclerosis, cortical bone             intramedullary canal (Fig. 2B2 and B3). Finally, the bone defect
+thinning, and bone destruction were observed in osteomyelitis                was sealed by bone wax, and then the wounds were sutured.
+
+
+
+
+Fig. 2 Evaluation and treatment of the rabbit osteomyelitis model. (A1) Gross observation around osteomyelitis modeling; (A2) Identification of the pus
+near osteomyelitis infection: morphology of pus samples after culturing on the agar plate; (A3) General photos, (A4) X-ray radiographs of osteomyelitis
+modeling tibia, and (A5) SEM images of S. aureus adhered on the bone infection area (white circle: osteomyelitis modeling area, yellow arrow: S. aureus
+biofilm). (B1) surgical debridement of infectious tissue; (B2) implantation of microspheres into the bone defects; (B3) Implanted microspheres.
+
+
+
+
+4354 | Mater. Adv., 2023, 4, 4349–4368                                       © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                                                Paper
+
+    The sequence fluorescent labeling investigation was con-                  2.7   Statistical analysis
+ducted to detect the rate of new bone formation and                           All the data were expressed as means  standard deviations
+mineralization.42,43 Briefly, after VM implantation for 4 weeks,              (SDs). One-way analysis of variance (ANOVA) was used
+the animals were subjected to intramuscular injection of                      to determine the statistical significance among diﬀerent
+30 mg kg1 Alizarin red solution (Sigma, USA). Besides, addi-                 groups. When the p-value was o0.05, the statistics was con-
+tional calcein solution at a dose of 20 mg kg1 (Sigma, USA) was              sidered significant, and p o 0.01 was considered remarkably
+also injected two weeks before sacrifice. At 8 weeks, the rabbits             significant.
+were sacrificed and the tibias were harvested. Fresh bone
+tissues were fixed in 4% buﬀered paraformaldehyde, embedded
+in resin and sliced. The cut sections stained by HE were                      3. Results
+observed by using a microscope. The other sections without
+staining were then imaged by CLSM.                                            3.1   Characterization of M and VM
+    8 weeks after the microsphere treatment, all animals                      The particle sizes of M range between 8.7 and 51.8 mm (D50 =
+were sacrificed and the tibias were harvested. The immobi-                    31.1 mm) and those of VM range from 8.8 to 53.8 mm (D10 and
+lized (in 4% buﬀered paraformaldehyde) samples were                           D90, respectively), with a median size of 27.4 mm (D50) (Fig. 3A).
+scanned using Micro-CT. Based on the original CT scans                        Gel/n-HA composite microspheres (M) showed a very smooth
+of each sample, three-dimensional images were recon-                          spherical appearance with a few microwrinkles on the surface
+structed. The micro-morphological bone evaluation para-                       (Fig. 3B(top, left)). Both calcium (red) and phosphorus (green)
+meters include BMD and BV/TV. Samples for histological                        elements were evenly distributed on the microsphere. The Van-
+analysis were decalcified in 10% EDTA decalcifying solution                   loaded M (VM) sample was comprised of some miniscule
+for 2 months, then embedded in resin and cut into 5 mm                        particles compared to the unloaded microsphere. The large
+sections after washing, dehydration, and wax immersion.                       pores on the sphere interior and chloride elements (blue dots)
+Finally, the cut sections were stained by HE and Masson                       on the surface and inside of the VM (Fig. 3B) were formed
+staining and then observed by using a microscope to analyze                   during the drug loading. The broad XRD diﬀraction peak of Gel
+histopathological characteristics.                                            and Van powder was located around 221 and 211, respectively,
+
+
+
+
+Fig. 3 Physicochemical properties of microspheres. (A) Particle size distribution curve of M and VM, (B) SEM (left) and EDS elemental map (right) of Ca/P/
+Cl of M and VM, (C) XRD patterns (left) and IR spectra (right) of Van, Gel, HA, M, and VM, (D) digital photos and 3D Micro-CT reconstructed images of bone
+defects, M and VM injection and filling of the femoral condyle, tuberosity tibia, and corpus tibia, (E) crosslinking reaction of Gel with EDC.
+
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                                          Mater. Adv., 2023, 4, 4349–4368 | 4355
+Paper                                                                                                              Materials Advances
+
+which proves the amorphous structure of Gel and Van. The                mapping further proved the existence of Ca/P elements in n-HA,
+diﬀraction peaks at 24.71, 31.61, 32.81, 341, and 39.61                 as shown in the higher-magnification images (Fig. 4D2).
+(JCPDS#09-0432) indicated the presence of n-HA in M.44 No                  RUNX2 is a prominent transcription factor that regulates
+apparent changes in the crystalline structure during the EDC            the expression of osteogenic marker genes and promotes
+crosslinking can be identified in the XRD spectral comparison.          bone formation. Although no significant diﬀerence in expres-
+The addition of Van did not alter the crystallinity of the M or         sion levels was observed among the M and control groups
+form new bonding according to Fig. 3C. According to IR                  (Fig. 4E), normal RUNX2 mRNA expression in M indicated that
+spectra, the phosphate bands at 1030, 602, and 559 cm1 which           M can support the diﬀerentiation of adherent cells along the
+arise from the phosphate asymmetric bending vibrations                  osteogenic lineage. COLI is a component of the extracellular
+slightly shift after crosslinking with EDC. The CQO absorption          matrix and is an intermediate osteogenesis index.49 The eﬀect
+peak of the amide I band shifted from 1630 to 1640 cm1and              of M on COLI mRNA expression was less prominent for 7 days
+that of the amide A band shifted from 3277 to 3287 cm1.45 VM           of treatment. However, M upregulated COLI expression at later
+exhibited a specific band at 1062 cm1 corresponding to the             time points (day 14, p o 0.05). As an essential marker of early
+stretching bending of C–O for Van (Fig. 3C).46 Following the            osteogenesis, ALP expression on day 7 showed particular
+implantation of M and VM into the rabbit bone defect ex vivo            improvements compared with the control group (p o 0.05).
+model, a random stacking of both M and VM effectively filled            On day 14, ALP expression in the experimental group osteo-
+the defect site completely, which demonstrated good inject-             blasts with M was slightly lower than that on day 7 but higher
+ability and plasticity and potential as an ideal injectable bone-       than that of the control group (p o 0.01). OCN and OPN are
+filling material (Fig. 3D).47                                           late-stage osteogenic markers for bone maturation and bone
+                                                                        formation.44 Both these markers exhibited high mRNA expres-
+                                                                        sion levels on day 14 (p o 0.05). Thus, M accelerates osteogenic
+3.2 Biocompatibility of M and associated eﬀects on                      diﬀerentiation at an early stage and promotes extracellular
+osteogenic diﬀerentiation of BMSCs                                      matrix formation.
+When MG63 cells were in close proximity with randomly
+distributed M, the cells explored their environment by extend-          3.3   Degradation and osteogenesis of M in vivo
+ing filopodia and spikes, with numerous long multiple filopo-              3.3.1 Micro-CT of the femoral condyle. The microspheres
+dia extending from the cell bodies connecting to distant M,             without Van (M) were implanted into the femoral condylar
+leading to bridging (Fig. 4A1, black arrow). High-resolution            bone defects in rabbits to evaluate their degradation and
+imaging (Fig. 4A2) revealed that the MG63 cells were                    osteogenesis abilities in vivo. All the animals survived until
+attached to the surface of M via pseudopodia to form tight,             the end of the study and no perioperative period complications
+compact layers till the surface was well-coated. In the live/dead       were encountered. Clinical and macroscopic evaluations
+staining assay (Fig. 4B), numerous live cells (Fig. 4B1, green          revealed neither necrosis nor infection before bone sample
+fluorescence) and a few dead cells (Fig. 4B2, red fluorescence)         retrieval. No apparent congestion, necrosis, suppuration, or
+were observed, revealing that coated cells exhibited high               other phenomena around the bone defect were observed at
+viability and suﬃcient maturity to jointly form a layered film          each time point of M implantation (Fig. 5A1–E1, bottom right).
+around the agglomerated M. Confocal microscopy staining was             The 3D reconstruction of the femoral condyle revealed a
+used to visualize the migration and proliferation of the cells          smooth bone surface without any apparent collapse or damage
+that coated the three-dimensional (4C) structure of M. Diﬀuse and       (Fig. 5A1–E1). At the beginning of the operation, the implanted
+brightly stained nuclei (Fig. 4C1, blue) were observed on and           M almost filled the entire femoral condyle defect area (Fig. 5A1–
+around the M. Strong mitochondrial staining (green) indicated           A3). Bone defect reconstruction in Fig. 5B7–E7 demonstrated
+potential cell viability and proliferation on M (Fig. 4C2). The         only a small amount of bone tissue being formed throughout
+cells exhibited a fusiform and spreading morphology, with               the study period in the control group (not injected with M) even
+multiple elongated filopodia and lamellipodia. Cell growth on the       at 8 weeks following injury onset, and this fact suggested that
+surface of M exhibited elongated, clustered, and multilayered           the femoral condyle defect was of a critical size (unable to self-
+morphologies alongside extended spreading of the cytoskeleton,          heal). Conversely, bone tissue regeneration was observed in the
+as shown by F-actin staining (red) (Fig. 4C3). The 3D reconstruction    M-treated groups with increased healing time. After 10 days,
+of the images showed that several cellular layers covered the           some M began to degrade and none exhibited direct contact
+agglomerated M (Fig. 4C4 and C5). On TEM of bone marrow-                with the surrounding bone (Fig. 5B2 and B3). Although a
+derived mesenchymal stem cells (BMSCs) cultured with M for              small amount of new bone had formed, the bone mass was
+14 days, mitochondria that approximated the rough endoplasmic           relatively low. After 16 days, 62.62%  1.94% of M was
+reticulum exhibited characteristic double membranes with granule-       degraded (Fig. 5F) and fine trabecular-like structures were
+free cristae (Fig. 4D1).48 Following interaction with M, n-HA entered   visible around M (Fig. 5C2 and C3) and new trabecular bone
+BMSCs cells via endocytosis. Intracellular n-HA accumulation was        formation had filled the bone defect area with a lot of gaps
+demonstrated by the appearance of electron-dense granules               (Fig. 5C5). Twenty-eight days later, quantitative analysis showed
+surrounded by the rough endoplasmic reticulum. The nano-                that 85.21%  1.09% of M had degraded (Fig. 5F) and that the
+crystals maintained a uniform rod-like morphology and EDS               trabecular-like structures had become sophisticated over time
+
+
+
+4356 | Mater. Adv., 2023, 4, 4349–4368                                  © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                                            Paper
+
+
+
+
+Fig. 4 Proliferation and osteogenic diﬀerentiation of cells following coculture with Gel/n-HA composite microspheres (M). SEM images (A1) and (A2)
+show MG63 cells cultured with M for 4 days (black arrow: cell bridge); fluorescence microscopy images (B1) live cells: green; (B2) dead cells: red and
+granular aggregates of M exhibit strong fluorescence) of MG63 cells cultured with M for 7 days. White arrows indicate autofluorescence of M; confocal
+laser scanning microscopy (C1, blue: nucleus labeled with Hoechst dyes, ex/em B350 nm/B461 nm); C2, green: mitochondria labeled with MitoTrackers
+probes (ex/em B490 nm/B516 nm); C3, red: F-actin labeled with phalloidin (ex/em B531 nm/B554 nm); C4, red: autofluorescence of M (ex/em
+B488 nm/B561 nm); C5, merge graphs show MG63 cells cultured with M for 4 days. (D) TEM images of BMSCs cultured with M for 14 days and the EDS
+mapping of n-HA endocytosed by BMSCs; (E) Quantitative gene expression of BMSCs cultured in M after 7 and 14 days via real-time polymerase chain
+reaction: RUNX2, COLI, ALP, OCN, and OPN (n = 3, NS: not significant; *p o 0.05; **p o 0.01).
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                                        Mater. Adv., 2023, 4, 4349–4368 | 4357
+Paper                                                                                                                        Materials Advances
+
+
+
+
+Fig. 5 Eﬀect of injectable gelatin/nanohydroxyapatite composite microspheres (M) on bone regeneration in vivo. Micro-CT images of femoral condyle
+after M implantation at day 0 (M degradation: A1–A3), 10 (M degradation: B1–B3, osteogenesis: B4–B7), 16 (M degradation: C1–C3, osteogenesis: C4–C7),
+28 (M degradation: D1–D3, osteogenesis: D4–D7), and 56 (M degradation: E1–E3, osteogenesis: E4–E7) (red circle: bone defect area; yellow: M; white: new
+bone); M degradation rate (F) and the bone volume/total volume (BV/TV) (G), bone mineral density (BMD) results of bone defect (H) in vivo via Micro-CT
+analysis (n = 3, *p o 0.05, **p o 0.01, ***p o 0.001).
+
+
+
+(Fig. 5D2 and D3). Although the M group exhibited a large area               control group, without injected M as support, demonstrated
+filled with new bone, a large gap remained (Fig. 5D5). By the 8th            only a small amount of bone tissue formation and still
+week, the M group showed a large amount of high-density bone                 presented a bare cavity following the procedure (Fig. 6E4). At
+(Fig. 5E2) where the partially residual M (B5.45%) were directly             the 8th week following surgery, only sparse new bone tissue
+integrated with the bone trabeculae (Fig. 5E3). The BMD results              formed with minimum increase around the defect in the
+showed that the M group produced a high BMD at the 8th week                  control group (Fig. 6G4). However, newly formed bones were
+(Fig. 5H). The newly formed bone tissue was thicker with                     clearly visible in the M group that even covered the central
+almost no space between the trabecular bone, and the new                     region of the defects (Fig. 6H4).
+bone tissue was dense (Fig. 5E5). Quantitative and BV/TV
+analysis confirmed the previous results (Fig. 5G).                           3.4   Antibacterial eﬀect of the VM
+    3.3.2 Histological evaluation of femoral condyle. H&E and                    3.4.1 VM cultured with bacteria in vitro. The control (nor-
+Masson’s staining was conducted for the histological analysis                mal) S. aureus remained intact, retaining its smooth surface
+of the repair acceleration eﬃcacy of M. At 10 and 16 days,                   and typical spherical shape (Fig. 7A). S. aureus treated with
+the contours of the incompletely degraded M (blue arrow)                     M without Van presented an intact and smooth cell membrane
+and an abundance of osteoblasts (red arrow) were observed in                 without deformation (Fig. 7B1). The damage caused directly by
+the M group, along with small, sparse blue collagen fibers                   M to bacteria was negligible because of the good adherence of
+(Fig. 6B4 and D4). The osteoblasts were recruited and                        bacteria on the surface of M (Fig. 7B2). Conversely, several holes
+surrounded by microspheres. In the control group, a large                    and lesions in the bacterial cell walls/membranes appeared
+number of inflammatory cells around the bone defect were                     following VM treatment (Fig. 7C1). More importantly, the
+observed (Fig. 6A2 and C2). On day 28, abundant deep-stained                 bacterial cell wall demonstrated severe destruction, causing
+collagen fibers were detected in the bone matrix alongside                   cytoplasmic outflow (orange arrows) (Fig. 7C2). Nevertheless,
+some red weaves in M; the yellow arrows point to the                         some well-shaped bacteria remained in the VM group (blue
+integration of the new bone tissue and M. These findings                     arrows) (Fig. 7C2). The ultrastructure of the control S. aureus
+proved the formation of new bone (Fig. 6F4). Conversely, the                 remained intact, with a smooth cell membrane and the dense
+
+
+
+4358 | Mater. Adv., 2023, 4, 4349–4368                                       © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                                         Paper
+
+
+
+
+Fig. 6 Hematoxylin and eosin (H&E) and Masson’s staining images of femoral condyle following gelatin/nanohydroxyapatite microsphere (M)
+implantation in vivo at day 10 (control: A1–A4, M: B1–B4); 16 (control: C1–C4, M: D1–D4); 28 (control: E1–E4, M: F1–F4); 56 (control: G1–G4, M: H1–
+H4). Blue arrow: M; red arrow: osteoblasts; yellow arrow: trabecular; green arrow: inflammatory cells; NB: new bone.
+
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                                     Mater. Adv., 2023, 4, 4349–4368 | 4359
+Paper                                                                                                                             Materials Advances
+
+
+
+
+Fig. 7 Bactericidal activity of vancomycin-loaded microspheres (VM) in vitro with Staphylococcus aureus (1  106 CFU mL1) treated with microspheres
+for 24 h. A–C SEM images: A, normal (pure culture media); B, M; C, VM; D–F TEM images: D, normal; E, M; F, VM. Live/dead staining: G1, normal; G2, M;
+G3, VM; live cells stained positive for SYTO 9 (green), whereas dead cells were visualized via PI staining (red). G4: SYTO-stained live bacteria were counted
+using ImageJ software and expressed as the percentages of total cells. Escherichia coli (1  106 CFU mL1) treated with VM for 24 h: H, normal; I, M; J,
+VM. Arrows: orange: leaked cytoplasm; blue: normal bacteria; red: clear holes; black: unevenly distributed cytoplasm; yellow: damaged cell wall; white:
+abnormal division; green: deformed cell membrane.
+
+
+
+
+4360 | Mater. Adv., 2023, 4, 4349–4368                                           © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                              Paper
+
+and homogeneous cytoplasm; several bacteria exhibited septa          proved its high biological activity (Fig. 8C and D). The diameter
+forming in the middle of the cell and underwent division             of the formed inhibition ring gradually increased on the first
+with an intact cell wall (Fig. 7D). As illustrated in Fig. 7E and    day and then eventually decreased. The largest diameters of the
+F, S. aureus treated with M presented an intact and smooth cell      zones were 18 mm (pH 6.0) and 15 mm (pH 7.4) at 24 h in the
+membrane while S. aureus treated with VM exhibited                   agar plates; thus, the rapid release of Van can produce an
+damaged cell walls. Holes were visible in the bacteria and the       initially rapid period of bacterial death. After a longer release
+cytoplasm appeared empty (red arrow) (Fig. 7F1), which may be        time (14 days), the diameters of the inhibition rings were only
+due to the leakage of the cytoplasmic substrate from the broken      8 mm (pH 6.0) and 7 mm (pH 7.4), although VM still main-
+cell envelope. In addition, although several bacteria had            tained antibacterial activity. The bioactivity of Van at both pH
+maintained a spherical structure, their internal cytoplasm           values was similar within the 14 day period. However, the
+was unevenly distributed (black arrow) (Fig. 7F2), and the cell      antibacterial eﬀect of Van at pH 6.0 sharply increased and
+wall structure was unstable, resulting in the leakage of cell        was more eﬀective than that of Van at pH 7.4 within 14 days of
+contents (yellow arrow) (Fig. 7F2). In addition, the septal          release (except for the first 30 min).
+cell wall of partially divided S. aureus cells altered to a less         3.4.3 Antibacterial activity evaluation of VM in vivo. The
+clearly defined state (white arrow). Several wrinkled and            rabbit back muscle S. aureus infection model was applied to
+deformed cell membranes were also present (green arrow)              evaluate the antibacterial ability of Van-loaded microspheres
+(Fig. 7F2). All live bacteria were stained with SYTO-9 and           (VM) in vivo as shown in Fig. 9. After 4 days of treatment, the
+fluoresced green, whereas the dead bacteria labeled with PI          bacteria were separated from the infected wound and spread on
+fluoresced red.50 Compared with the green fluorescence               agar broth plates to culture for 24 h. No bacterial growth was
+observed in the normal (Fig. 7G1) and M (Fig. 7G2) cells,            observed in the culture plate of the control group (Fig. 9A1),
+the fluorescence of all bacteria in the VM group was red             thereby confirming the sterility of the operation. As coagulation
+(Fig. 7G3). Green and red fluorescence was simultaneously            factors attract neutrophils and monocytes to the wound during
+present in the M- and VM-treated groups due to the strong            the wound-healing process,51 a small number of inflammatory
+green and red fluorescence of gelatin. Further analysis              cells appeared on day 4 in the control group (Fig. 9C1). Multiple
+showed that the number of live bacteria decreased from 30%           bacterial cells were observed in the blank (Fig. 9A2) and
+(M group) to 1.6% (VM group) (Fig. 7G4). To verify the specific      microspheres without Van(M) treatment groups (Fig. 9A4),
+antibacterial property of Van with S. aureus, we also cultured       indicating high bacterial growth in the infected tissue. In the
+Escherichia coli with microspheres for 24 h and found that E. coli   infected muscle (Fig. 9A2), yellow pus and exudates were
+continued to grow normally and showed morphological integrity        observed at the wound site. No pus was observed in the
+in the normal, M without Van, and VM groups (Fig. 7H–J,              wound treated with M (Fig. 9A4); however, inflammation was
+respectively).                                                       still present. Large numbers of inflammatory cells were
+    3.4.2 Drug release behavior and antibacterial activity of VM     observed in the blank (Fig. 9C2) and M (Fig. 9C4) groups,
+in vitro. According to UV spectrophotometry, the antibiotic          indicating that serious inflammation remained uncontrolled
+content and encapsulation eﬃciency of VM were 31.02%                owing to the absence of antibacterial activity of the treatments.
+0.86% and 96.95%  1.24%, respectively. Its eﬀective drug            Most bacteria were killed following treatment with Van
+loading and encapsulation made it simple for further drug            (Fig. 9A3) or VM (Fig. 9A5). Moreover, the surfaces of the VM-
+release studies. The in vitro release profile of VM was monitored    treated wounds (Fig. 9A5) were moist, bright, and devoid of
+in phosphate-buﬀered saline at pH 6.0 and 7.4 for 14 days            inflammation and the muscle defects were filled with fibrous
+(Fig. 8A). The Van release behavior of VM at pH 6.0 was similar      connective tissue. Only a mild inflammatory response appeared
+to the behavior of VM at 7.4, and VM showed an initial burst on      in the wound tissues of the muscle treated with Van (Fig. 9C3),
+the 1st day (41.00%  1.93%, pH 6.0; 37.29%  2.15%, pH 7.4),        which was attributed to the highly eﬀective antibiotic action of
+followed by sustained release. Notably, the release rate of Van      Van against S. aureus. The infected muscle tissue with VM
+from all the samples at pH 6.0 was slower than that at pH 7.4 in     treatment (Fig. 9C5) appeared to contain a large number of
+the initial 30 min. The amount of cumulative release increased       fibroblasts, scattered macrophage infiltration, and a small
+following a parabolic curve within 4 days to B66.02%  1.73%         proportion of neutrophils. Clear granulation tissue was
+(pH 6.0) and 56.14%  2.40% (pH 7.4). Following this, the            particularly apparent around the VM samples. Thus, these
+release rate gradually decreased, and the cumulative release         results illustrated the excellent antibacterial activity of VM
+was B77.95% (pH 6.0) and B66.32% (pH 7.4) at 14 days.                in vivo.
+However, the samples immersed in acidic solution exhibited
+higher release kinetics than those at pH 7.4. At pH 7.4 and 6.0,     3.5   Treatment of osteomyelitis in vivo
+M swelled rapidly within 15 minutes and reached equilibrium          By the 8th week, the infected rabbit exhibited distorted periosteum
+after 24 h of immersion with similar trends. M in a more acidic      and progressive cortical bone destruction (Fig. 10A1); purulent
+environment (pH 6) exhibited a higher equilibrium swelling           material at the modeling medullary cavity site can be observed in
+ratio than that in a neutral pH environment (pH 7.4) (Fig. 8B).      the sagittal photo (Fig. 10A2). MicroCT images revealed that the
+    The released Van can produce visible bacterial inhibition        control group had almost no new bone formation in the defect site.
+rings after 14 days of release at both pH values, which further      Typical osteomyelitis manifestations, including severe trabecular
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                              Mater. Adv., 2023, 4, 4349–4368 | 4361
+Paper                                                                                                                          Materials Advances
+
+
+
+
+Fig. 8 Drug release and inhibition rings of vancomycin (Van)-loaded microspheres (VM) in vitro. (A) Van antibiotic cumulative release rate from VM at pH
+6.0 and 7.4; (B) swelling behaviors of M at pH 7.4 and 6.0; (C) inhibition rings and (D) diameter of Van released from VM against Staphylococcus aureus at
+pH 6.0 and 7.4. (n = 3, *p o 0.05, **p o 0.01).
+
+
+
+disorder (Fig. 10A3), osteoporosis (Fig. 10A4), and osteolysis                of the microCT images) exhibited similar trends (Fig. 10G) where
+(Fig. 10A5), were observed. In the VM group, the bone cortex was              the VM group (BV/TV: 32.24%; BMD: 0.45 g/cm3) was significantly
+smooth and intact (Fig. 10B1) without swelling or ulceration                  diﬀerent (p o 0.01) from the control group (BV/TV: 5.23%; BMD:
+(Fig. 10B2). CT analysis showed that the VM group exhibited                   0.12 g cm3). Severe cortical bone destruction and fracture were
+good bone repair with almost complete healing of the bone                     observed in the control group via H&E staining (Fig. 10C).
+defect, including the cortical bone (Fig. 10B3). In addition, the             Conversely, in the VM group, instead of further bone destruction,
+shape of the radiopacity area in the intramedullary bone (Fig. 10B4)          regenerated cortical bone was observed at the infection site
+was similar to that of the original compact bone, i.e., the bone              (Fig. 10D). Subsequently, sequential fluorescent labeling was used
+tissue was dense (Fig. 10B5). BV/TV and BMD (quantitative analyses            to observe new bone formation by applying two types of
+
+
+
+4362 | Mater. Adv., 2023, 4, 4349–4368                                         © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                                                 Paper
+
+
+
+
+Fig. 9 Anti-inflammation of rabbit back muscles in vivo. (A) Representative photos of Staphylococcus aureus colonies on agar broth plates separated
+from infected wounds with diﬀerent treatments on day 4 (bottom right: photocapture of rabbit muscle repair under diﬀerent treatments on day 4). (B)
+The colony count of S. aureus from the diﬀerent groups. (C) HE-stained images at 4 days of treatment.
+
+
+
+fluorochromes: alizarin red (red) and calcein (green). As                      (Fig. 10E). In the VM group, the fluorescence images showed
+fluorochromes can bind to calcium ions of the newly formed                     the complete outline of M that had not completely degraded
+bone and incorporate into the mineralization area, the new bone                together with new bone tissue around these M (Fig. 10F, white
+formed at diﬀerent periods can be discriminated using diﬀerent                 arrow). Strong fluorescence intensity (Fig. 10H) and dense bone
+fluorochrome colors.53 The new bone tissue was thin, and the                   tissue indicated a strong bone regeneration capability induced by
+fluorescence intensity was low in the control group after 8 weeks              treatment with VM.
+
+
+
+
+Fig. 10 In vivo treatment of osteomyelitis after 8 weeks. Gross observation photos and Micro-CT 3D reconstruction: (A) control; (B) VMs. Hematoxylin
+and eosin (H&E) staining of newly formed bone tissue: (C) control; (D) VMs. Fluorescent staining of newly formed bone tissue: (E) control; (F) VMs. Green:
+calcein, red: alizarin red. Black circle: bone defect; yellow arrow: modeling area; white arrow: microspheres. The bone volume/total volume and bone
+mineral density results of the defect area of bone modeling (G) in vivo via Micro-CT analysis. Summary of fluorescent labeling (H). Histological analysis of
+newly formed bone tissue: (I) H&E staining of the control group; (J) Masson staining of the control group; (K) H&E staining of the VM group; (L) Masson
+staining of the VM group. Black arrow: inflammatory cells, white arrow: microspheres, red arrow: osteoblasts, yellow arrow: trabecular, purple arrow:
+blood vessels, NB: new bone, LB: lamellar bone, WB: woven bone. (M) The percentage of trabecular bone area in the diﬀerent treatment groups after 8
+weeks; (N) for the semiquantitative assessment of the severity of infection and lack of tissue integration,52 histological scores were determined based on
+the histological sections J and L (1: few; 2: moderate/focal; 3: numerous and diﬀuse). n = 3, **p o 0.01.
+
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                                            Mater. Adv., 2023, 4, 4349–4368 | 4363
+Paper                                                                                                          Materials Advances
+
+    The H&E staining showed that bone destruction (Fig. 10I1)       the COOH groups of Gel exist as COO ions and electrostati-
+was present at 8 weeks. A severe inflammatory (Fig. 10I2)           cally bind with the Ca2+ ions of n-HA,58 and this process
+response was observed in the control group, including dead          produced a slight shift of P (Fig. 3C). The water-soluble zero-
+bone, large accumulation of lymphocytes and monocytes, and          length crosslinker, EDC, promoted the formation of amide
+neutrophil infiltration into the bone tissues. The bone defect      bonds between the carboxyl and amino groups (–NH2) of Gel
+area reached 80.56%  2.78% (Fig. 10M). Noticeably,                 and but was not incorporated into the crosslinked structure
+neutrophils were in evidence (Fig. 10I3, black arrow), possibly     (Fig. 3E), which is preferable for crosslinking Gel microsphere
+as a result of the ongoing and severe bacterial infection. Bone     carriers.59 After EDC crosslinking, changes in the amide bonds
+defects were displayed via the blue-stained collagen fibrous        of M occurred because of the enhanced interaction of the
+tissues using Masson’s staining (Fig. 10J1, J2). In the VM          amide functional groups in the Gel (Fig. 3C). The formation
+group, bone infection was considerably suppressed (Fig. 10K1)       of small porous structures (Fig. 3B) on the surface of M resulted
+and the defect was completely reconstructed (Fig. 10L1) at          from the dispersion of n-HA in M or phase separation due to
+8 weeks (new bone remodeling area reached 45.65%  1.9%)            the exchange of water solvent and acetone (nonsolvent) during
+(Fig. 10M). A substantial number of new blood vessels had           the polymer solution precipitation process.60 The strategy of
+formed (Fig. 10K2, K3, purple arrow). Several new blood vessels     incorporating antimicrobials into biomaterials was achieved
+were present around the newly formed trabeculae (yellow             via physisorption in this study by immersing the substrate in
+arrow) aligned by osteoblasts (red arrow), suggesting active        the antimicrobial-containing solution. The infrared spectrum
+bone formation. Osteocytes and the lamellar features of the         of VM (Fig. 3C) revealed that Van did not react with Gel and n-
+newly synthesized bone around M (white arrow) indicated bone        HA. n-HA particles exhibit greater solubility, higher surface
+maturation. A thick layer of randomly oriented woven bone           energy, and stronger adsorption.61 By adding positively charged
+was gradually translated into compact and stress-oriented           Van, n-HA, which can bind with neutral, positively charged, and
+lamellar bone (Fig. 10L2, L3). The histological scores (Fig. 10N)   negatively charged molecules, adsorbed more Van and formed
+demonstrated that VM exhibited the ability to eliminate existing    more pores (Fig. 3B) in the inner structure. These interior pores
+infections and guide bone tissue regeneration.                      facilitate water uptake from the media, providing diffusion
+                                                                    channels for drugs.
+                                                                        The release kinetics of Van at pH 6.0 and 7.4 were analyzed
+4. Discussion                                                       by fitting the cumulative release data (solid line) to an expo-
+                                                                    nential equation (dashed line) as shown in Fig. 11A. The fitted
+The clinical treatment of osteomyelitis usually includes            equations of Van release before 60% were Mt/MN = 0.1218 
+surgical debridement, necrotic bone removal, and subsequent         (t  0.5) 0.5646 + 0.0692 (r 2 = 0.9774) (pH 6.0) (Fig. 11A1) and
+biomaterial transplantation to fill the void. It is critical to     Mt/MN = 0.0894  (t  0.5) 0.5395 + 0.0915 (r 2 = 0.9669) (pH 7.4)
+develop new therapeutic strategies for antibiotic delivery with     (Fig. 11A2). As both release exponents were between 0.43 and
+sustained release characteristics alongside high bioactivity that   0.85, their release mechanism was the superposition of Fickian
+can neutralize the negative eﬀects of high local antibiotic         diﬀusion and Case-II transport.62 The simple adsorption of Van
+concentrations.54 Here, we have developed an antibiotic deliv-      on the surface of microspheres created a relatively fast burst
+ery microcarrier consisting of Gel/n-HA microspheres loaded         release at pH 6.0 and 7.4 that occurred via diﬀusion.63 The
+with Van that simultaneously exhibits an improved ability to        presence of bacteria lowers the environmental pH value (pH o
+induce cell recruitment and targeted antimicrobial character-       6.5) due to the release of lactic or acetic acid. The isoelectric
+istics for eﬀective osteomyelitis treatment.                        point (pI) of Van is B8.30, and the compound is positively
+                                                                    charged in an acidic solution.64 The repulsive forces between
+4.1 Preparation and sustained drug release of Van-loaded Gel/       the positive charges of Van and high protonation in acidic
+n-HA microspheres                                                   solution could limit the release rate of Van at pH 6.0; thus, the
+Topical delivery systems tend to exhibit suboptimal release         release rate at pH 7.4 was higher in the first 30 min. The
+characteristics that produce antibiotic concentrations that are     swelling property is essential for microspheres in tissue
+thousand times higher than those required to inhibit bacterial      engineering, and most microspheres, especially those with a
+growth.55 Synthetic conditions and crosslinking of Gel micro-       large amount of amino groups (such as Gel), will swell in
+spheres considerably aﬀect drug release from M by impacting         an aqueous solution, resulting in Gel expansion.65 Here,
+the particle size and drug distribution The sizes of Gel micro-     microspheres swelled rapidly in aqueous solution within 15
+spheres formed via chemical crosslinking using the water-in-oil     min (Fig. 6B). The crosslinking of Gel with EDC can form a
+emulsion method can be adjusted from 10 to 400 mm by tuning         large number of amide bond-crosslinking networks (Fig. 11B-
+the preparation conditions, such as the viscosity of the Gel        II). However, amide bonds are sensitive to H+ in the acidic
+solution, type and concentration of organic solvent and surfac-     phosphate-buﬀered saline (Fig. 11B-IV). The breaking of amide
+tant and oil, and the stirring speed.56,57 The conditions applied   bonds under acidic conditions facilitates the penetration of
+here synthesized Gel microspheres in the size range of 8.7–         water molecules into the Gel network structure, yielding
+51.8 mm (Fig. 3A). The smooth surface of M indicated a tight        both a shortened swelling equilibrium time and an enhanced
+surface structure (Fig. 3B). In the composite formation stage,      equilibrium swelling ratio.66 With the increase in the volume of
+
+
+
+4364 | Mater. Adv., 2023, 4, 4349–4368                              © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                                     Paper
+
+
+
+
+Fig. 11 Van release mechanism from Van-loaded microspheres (VM). (A) Release kinetics of Van from VM in diﬀerent pH environments, (B) Schematic
+diagram of pH-responsive release behavior of VM.
+
+
+
+absorbed water, the mobility of Gel macromolecules and the               intricate network of hydrogen bonds with the D-Ala–D-Ala
+free volume available for diﬀusion increase, which further               region to kill E. coli (Fig. 12B), as confirmed by SEM images
+facilitates buﬀer penetration and high drug release.67 At low            (Fig. 7), indicating the inefficiency of VMs against E. coli. In the
+pH, Van exhibited a higher release rate from VM than normal,             rabbit traumatic infection model, the pure Van group exhibited
+which will benefit the delivery system for treating infections           rapid killing of bacteria at the infected site in a short time, but
+associated with localized acidity.                                       the infection may return after 1–3 days. The sustained and
+                                                                         targeted drug release from inside the VM particle after absorb-
+4.2 Targeted antibacterial eﬀect of Van-loaded Gel/n-HA                  ing water demonstrates the sustained antibacterial activity of
+microspheres                                                             VM.
+As elaborated in Section 3.4.2, the as-prepared Van-loaded Gel/
+n-HA microspheres (VM) exhibit continuous drug release and               4.3 Cell recruitment and osteoblast activity of Gel/n-HA
+eﬀective antibacterial activity against S. aureus (Gram-positive).       microspheres
+Following VM treatment, the cell membranes of some S. aureus             The survival of anchorage-dependent cells, such as MG63 and
+were disrupted, causing cytoplasm leakage (Fig. 7C). Ultrastruc-         BMSCs, initially depends on the successful ligation between
+tural analysis revealed that the internal structure of bacteria          cell surface receptors and specific protein domains on sub-
+treated with VM had altered (Fig. 7F1 and F2). Live/dead                 strates. As a denatured collagen product, Gel contains bioactive
+staining diﬀerence in Fig. 7G further confirmed that these               sequences that can be recognized and integrated by integrins,
+bacteria had died. Gram-positive bacteria, which have                    such as RGD peptides.72 As expected, SEM (Fig. 4A) and CLSM
+peptidoglycan precursors on the surface of their cytoplasmic             (Fig. 4C) showed the rapid recruitment and attachment of
+membrane (Fig. 12A), and Van, which can form an intricate                MG63 cells on the surface of M. Unlike other chemical cross-
+network of hydrogen bonds with the D-Ala–D-Ala region of lipid           linked Gel microspheres, the cell-friendliness of the EDC cross-
+II in S. aureus, will interfere with the maturation process of the       linker avoids the potential cytotoxicity of conventional
+peptidoglycan layer.68,69 This will further weaken the cell wall of      chemical crosslinkers, such as glutaraldehyde,73 and thus sup-
+the bacteria, and render the cells susceptible to lysis due to           ports cell survival and growth better (as shown by live/dead
+alterations in osmotic pressure.70 Gram-negative bacteria, such          staining, Fig. 4B). This triggers the focal adhesion and cytoske-
+as E. coli, are protected by the outer lipopolysaccharide                letal organization of successfully recruited cells, which in turn
+membrane that is impermeable to large biomolecules, such                 induces cell spreading and regulates numerous other cellular
+as Van, and hydrophobic compounds from the environment                   behaviors, such as proliferation and diﬀerentiation.74 Granules
+(Fig. 12B).71 Therefore, Van released from VM cannot form an             normally gain intracellular access via one of three pathways:
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                                   Mater. Adv., 2023, 4, 4349–4368 | 4365
+Paper                                                                                                                   Materials Advances
+
+
+
+
+Fig. 12   Antibacterial mechanism of Van against two bacteria. (A) Staphylococcus aureus; (B) Escherichia coli.
+
+
+
+
+pinocytosis, receptor-mediated pinocytotic process, and                      and ossified with their hierarchical micro/nanostructures,
+‘‘swallowing.’’ Owing to the higher phase activity of n-HA,                  thereby demonstrating excellent osteoinduction and osseoin-
+it was easy to enter cells via ‘‘swallowing’’.44 TEM images                  tegration abilities.78
+(Fig. 4D) showed a close interaction of n-HA released from M
+with cells, followed by an internalization process via endo-                 4.4    Treatment of rabbit osteomyelitis
+cytosis pathways. n-HA can promote osteogenesis via the                      An ideal local delivery system should provide a sustained
+WNT/b-catenin pathway, favoring the induction of osteo-                      release of antibiotics against S. aureus (10–20-fold above the
+genic transcription factor expression75 (Fig. 13). Treatment                 minimum inhibitory concentration) during osteomyelitis
+with M caused a significant increase in the mRNA expression                  treatment.70 Here, the Van concentration was maintained at
+of the osteoblastic markers ALP, OCN, OPN, and COLI                          B50 mg mL1 14 days after VM release in vitro (Fig. 8A) (where
+(Fig. 4E). In summary, the significant increase in the mRNA                  the Van MIC for S. aureus was 42 mg mL1).79 A rabbit model of
+expression of these osteogenesis-related genes suggests                      osteomyelitis was utilized to assess the targeted antibacterial,
+enhanced ossification of BMSCs cocultured in M. The ran-                     inflammation modulatory, osteoblast recruitment, and bone
+dom accumulation of M can maintain a 3D configuration                        regenerative properties of VM in vivo. The surgical debridement
+that can fill a void (Micro-CT results; Fig. 5) and guide the                of osteomyelitis leaves a large void, which is caused by the
+migration and growth of tissues.76 The pore channels built                   removal of sequestra and resection of the scarred and infected
+between M were reported to play a critical role in accelerating              bone and soft tissue. The void needs to be filled to prevent
+bone recovery.77 Here, M can provide important physical                      recurrence and bone instability after significant bone loss.
+support within the empty bone space, which can prevent                       Herein, with the recurrence of osteomyelitis by S. aureus strains
+secondary fracture and modulate and accelerate osteoinduc-                   (Fig. 2A1–A5), debridement alone cannot effectively remove
+tion, and by this means the formation and thickening of                      bacteria and guide bone tissue regeneration (Fig. 10A and C).
+new bone tissue were facilitated. By the 8th week, the micro-                The micrometer size and carrying capability of M empowered
+spheres of the treatment groups were nearly all degraded,                    them to deliver drugs to infected sites with sustained release,
+even though a large amount of mature bone was growing                        which makes them a promising drug delivery system. The as-
+from the Gel residue. Osteogenesis tended to occur at the                    prepared Gel microspheres exhibited a good injectability
+microsphere locations in addition to the periphery of the                    (Fig. 3D) and could be injected into the bone defect through
+defective areas. The degraded, uneven microspheres                           a minimally invasive surgery to fill irregular bone defects for
+were directly integrated with the bone trabeculae (Fig. 6),                  subsequent cell adhesion, proliferation, and osteogenesis.80
+indicating that microspheres were retained at the target site                According to the osteomyelitis in vivo model, it was confirmed
+
+
+
+4366 | Mater. Adv., 2023, 4, 4349–4368                                        © 2023 The Author(s). Published by the Royal Society of Chemistry
+Materials Advances                                                                                                             Paper
+
+
+
+
+Fig. 13   Schematic diagram of osteogenic diﬀerentiation of M.
+
+
+
+that the VM group is more effective in eliminating the existing     Zou: conceptualization, methodology, writing—review and edit-
+infection than unloaded M (Fig. 10K). The sustained Ca2+ and        ing, and funding acquisition.
+P release induced by the degradation of M which can stimulate
+both cell proliferation and aggregation18 is important for
+producing a critical cell mass required to initiate bone tissue
+                                                                    Conflicts of interest
+formation. The large number of osteoblasts revealed in the H&E      The authors declare that they have no known competing
+staining (Fig. 10K and L) assay confirmed the cell recruitment      financial interests or personal relationships that could have
+effect of M. Hence, the assembled system promotes osteogenic        appeared to influence the work reported in this paper.
+factor secretion and osteogenic gene expression, thereby accel-
+erating new bone formation.
+                                                                    Acknowledgements
+                                                                    We would like to thank Guiping Yuan, Shanling Wang, and Yi
+5. Conclusions                                                      He at the Analytical &Testing Center of Sichuan University for
+In this study, an eﬀective drug release system and experimental     their help with TEM and SEM analysis. This work was sup-
+model based on injectable Gel/n-HA composite microspheres           ported by the China NSFC project [no. 32171338], Innovation
+(M) for treating severe osteomyelitis caused by S. aureus was       and Reform Project of Postgraduate Education of Sichuan
+designed and fabricated. Specifically, Van was loaded in the M      University in 2021, Experimental Technology Research Project
+(VM) to ensure the sustained release of the drug from VM for an     of Sichuan University [no. SCU221099] and Analysis and Test
+extended period to support bone tissue regeneration without         Technology Innovation Project of Analytical & Testing Center.
+inflammation. In vitro and in vivo experiments indicated that
+the VM could specifically target S. aureus and demonstrated its     References
+eﬃcient localized antibacterial activities in a rabbit back mus-
+cle model. In summary, our injectable VM exhibited a success-        1 J. M. Sadowska and K. J. Genoud, et al., Mater. Today, 2021,
+ful treatment outcome via targeted antibacterial, inflammation         46, 136–154.
+modulatory, osteoblast recruitment, and bone regenerative            2 Y. Yang and M. Li, et al., Bioact. Mater., 2023, 25, 594–614.
+properties to treat osteomyelitis. In the future, our research       3 N. Kavanagh and E. J. Ryan, et al., Clin. Microbiol. Rev., 2018,
+will focus on infection and anti-infection, and examine the            31(2), e00084–17.
+angiogenesis mechanism of VM in a controlled delivery system         4 X. Qu and H. Yang, et al., Bioact. Mater., 2021, 6, 4607–4624.
+for osteomyelitis treatment.                                         5 D. P. Lew and F. A. Waldvogel, Lancet, 2004, 364, 369–379.
+                                                                     6 D. K. Mills and U. Jammalamadaka, et al., Bioact. Mater.,
+                                                                       2018, 3, 157–166.
+Author contributions                                                 7 S. Ghosh and S. Mukherjee, et al., Biomacromolecules, 2022,
+                                                                       23, 592–608.
+Rui Zhang: conceptualization, methodology, investigation,            8 Y. Gao and Q. Ma, Smart Med., 2022, 1(1), e20220012.
+writing—original draft, and writing—review and editing. Li           9 H. A. Durr and N. D. Leipzig, Mater. Adv., 2023, 4,
+Chen: resources investigation and project administration. Yij-         1249–1257.
+ing Stehle: resources investigation and project administration.     10 P. F. Wei and Z. Y. Yuan, et al., Biomater. Sci., 2018, 7,
+Mingyue Lin: investigation and methodology. Chenxin Wang:              272–286.
+investigation and methodology. Yufan Li: investigation and          11 F. Tian and B. Chi, et al., Biomater. Sci., 2020, 8, 6212–6224.
+methodology. Min Huang: resources investigation and project         12 X. Zhao and L. Wang, et al., Biomater. Sci., 2020, 8,
+administration. Yubao Li: conceptualization, methodology,              1702–1710.
+writing—review and editing, and funding acquisition. Qin            13 L. Cai and D. Xu, et al., Eng. Regen, 2021, 2, 109–115.
+
+
+
+© 2023 The Author(s). Published by the Royal Society of Chemistry                            Mater. Adv., 2023, 4, 4349–4368 | 4367
+Paper                                                                                                              Materials Advances
+
+14 T. Wu and L. Liu, et al., Biomater. Sci., 2023, 11, 2877–2885.     45 T. Liu and N. Dan, et al., RSC Adv., 2015, 5, 34511–34516.
+15 A. Maihemuti and H. Zhang, et al., Bioact. Mater., 2023, 26,       46 X. Yu and Q. Pan, et al., RSC Adv., 2018, 8, 37424–37432.
+   77–87.                                                             47 H. Wang and S. C. Leeuwenburgh, et al., Tissue Eng., Part B,
+16 O. Song and X. Luo, Mater. Adv., 2022, 3, 8323–8331.                  2012, 18, 24–39.
+17 L. Liu and W. Jia, et al., Int. J. Biol. Macromol., 2022, 206,     48 D. D. Pei and J. L. Sun, et al., Adv. Sci., 2018, 5, 1800873.
+   277–287.                                                           49 B. Jia and H. Yang, et al., Bioact. Mater., 2021, 6, 1588–1604.
+18 R. Zhang and M. Lin, et al., Int. J. Polym. Mater., 2022, 1–12.    50 X. Qi and Y. Huang, et al., Adv. Sci., 2022, 9, e2106015.
+19 F. Tao and S. Ma, et al., Carbohydr. Polym., 2021,                 51 Z. Ming and L. Han, et al., Adv. Sci., 2021, 8, e2102545.
+   251, 117063.                                                       52 J. Min and K. Y. Choi, et al., ACS Nano, 2016, 10, 4441–4450.
+20 V. Yarlagadda and P. Sarkar, et al., Angew. Chem., Int. Ed.,       53 B. Liu and J. Li, et al., Mater. Sci. Eng., C, 2020, 112, 110905.
+   2016, 55, 7836–7840.                                               54 M. Diba and B. Pape, et al., Acta Biomater., 2017, 58, 67–79.
+21 S. Zhang and G. Chen, et al., Mater. Sci. Eng., C, 2022,           55 S. Sankaran and J. Becker, et al., Small, 2019, 15, e1804717.
+   135, 112681.                                                       56 M. Nouri-Felekori and M. Khakbiz, et al., Int. J. Pharm.,
+22 J. Chen and Y. Zhang, et al., Colloids Surf., B, 2015, 135,           2019, 557, 208–220.
+   581–587.                                                           57 D. Zhang and W. Li, et al., Eng. Regen, 2022, 3, 258–261.
+23 C. A. Custodio and R. L. Reis, et al., Adv. Healthcare Mater.,     58 F. Wang and Y. Wen, et al., Mater. Sci. Eng., C, 2016, 69,
+   2014, 3, 797–810.                                                     268–275.
+24 Y. Yu and R. X. Wu, et al., J. Mater. Chem. B, 2016, 4,            59 A. Bigi and G. Cojazzi, et al., Biomaterials, 2001, 22, 763–768.
+   569–584.                                                           60 X. Liu and Y. Won, et al., Biomaterials, 2006, 27, 3980–3987.
+25 H. Ke and H. Yang, et al., Adv. Sci., 2023, 10(3), e2204528.       61 X. Dong and Y. Sun, et al., Small, 2021, 17, e2007672.
+26 Z. Mu and K. Chen, et al., Adv. Healthcare Mater., 2020,           62 P. L. Ritger and N. A. Peppas, J. Controlled Release, 1987, 5,
+   9, e1901469.                                                          23–36.
+27 B. Cai and Q. Zou, et al., RSC Adv., 2016, 6, 85735–85744.         63 N. Kamaly and B. Yameen, et al., Chem. Rev., 2016, 116,
+28 M. A. Vandelli and F. Rivasi, et al., Int. J. Pharmaceut., 2001,      2602–2663.
+   215, 175–184.                                                      64 N. Hassani Besheli and F. Mottaghitalab, et al., ACS Appl.
+29 Q. Zou and J. Li, et al., Int. J. Biol. Macromol., 2015, 79,          Mater. Interfaces, 2017, 9, 5128–5138.
+   736–747.                                                           65 G. Li and S. Liu, et al., Nat. Commun., 2023, 14, 3159.
+30 J. Liu and Q. Zou, et al., Mater. Design, 2021, 210, 110047.       66 J. Chen and J. S. Caserto, et al., Bioact. Mater., 2022, 14,
+31 X. Li and Q. Zou, et al., Small, 2019, 15, e1901617.                  52–60.
+32 J. Baek and H. Lee, et al., ACS Biomater. Sci. Eng., 2018, 4,      67 Y. Xue and L. Xu, et al., J. Controlled Release, 2023, 357,
+   846–856.                                                              196–209.
+33 Y. Qiao and J. He, et al., ACS Nano, 2020, 14, 3299–3315.          68 J. Zhu and W. Chen, et al., Mater. Adv., 2022, 3, 7687–7708.
+34 A. S. Ram and K. Matuszewska, et al., Front. Vet. Sci., 2021,      69 Z. Wu and Z. Zhong, et al., Mater. Adv., 2022, 3, 4295–4309.
+   8, 758295.                                                         70 B. Cao and F. Xiao, et al., Small, 2018, 14, e1802008.
+35 A. Dinache and M. Boni, et al., Colloids Surf., A, 2015, 480,      71 S. Xiao and L. Yuan, et al., Surf. Coat Tech., 2023,
+   328–335.                                                              463, 129525.
+36 Q. Zhang and Y. Du, et al., Carbohydr. Polym., 2022,               72 J. W. Nichol and S. T. Koshy, et al., Biomaterials, 2010, 31,
+   277, 118880.                                                          5536–5544.
+37 S. Cao and L. Li, et al., Colloids Surf., B, 2021, 207, 112013.    73 J. Sun and D. Wei, et al., Biomaterials, 2014, 35, 4759–4768.
+38 B. Jia and Z. Zhang, et al., Biomaterials, 2022, 287, 121663.      74 J. Jiang and A. Liu, et al., Colloids Surf., B, 2020, 188, 110798.
+39 L. A. Poultsides and L. K. Papatheodorou, et al., J. Orthop.       75 D. Cheng and R. Ding, et al., ACS Appl. Mater. Interfaces,
+   Res., 2008, 26, 1355–1362.                                            2023, 15, 19951–19965.
+40 C. W. Norden and R. L. Myerowitz, et al., Int. J. Exp. Pathol.,    76 D. Wei and R. Qiao, et al., Small, 2018, 14, e1800063.
+   1980, 61, 451–460.                                                 77 A. K. Kudva and A. D. Dikina, et al., Acta Biomater., 2019, 90,
+41 X. Zhang and W. Jia, et al., Biomaterials, 2010, 31, 5865–5874.       287–299.
+42 Y. Sun and Q. Zhou, et al., Small, 2022, 18(36), 2201656.          78 L. Wu and Y. Xu, et al., Chem. Eng. J., 2022, 439, 135692.
+43 M. Lei and X. Qu, et al., Adv. Funct. Mater., 2019,                79 S. J. van Hal and T. P. Lodise, et al., Clin. Infect. Dis., 2012,
+   29(18), 1900065.                                                      54, 755–771.
+44 Y. Li and Y. Wang, et al., ACS Biomater. Sci. Eng., 2020, 6,       80 P. Du and A. D. S. Da Costa, et al., Mater. Sci. Eng., C, 2020,
+   320–328.                                                              113, 110961.
+
+
+
+
+4368 | Mater. Adv., 2023, 4, 4349–4368                                © 2023 The Author(s). Published by the Royal Society of Chemistry
+

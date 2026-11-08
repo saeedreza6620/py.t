@@ -1,0 +1,140 @@
+                              International Journal of Pharmaceutics 242 (2002) 247– 249
+                                                                                               www.elsevier.com/locate/ijpharm
+
+
+
+
+                                                             Note
+     Biodegradation and drug release studies of BSA loaded
+                      gelatin microspheres
+           K. Mladenovska, E.F. Kumbaradzi, G.M. Dodov, L. Makraduli,
+                                 K. Goracinova *
+Institute of Pharmaceutical Technology, Department of Biopharmacy, Faculty of Pharmacy, Uni6ersity ‘‘Ss Cyril and Methodious’’,
+                                            Vodnjanska 17, 1000 Skopje, Macedonia
+
+                Received 14 January 2002; received in revised form 31 January 2002; accepted 4 February 2002
+
+
+
+Abstract
+
+  Certain variations in the process parameters (emulsification time, surfactant concentration) were performed in order
+to prepare BSA-loaded gelatin microspheres with high loading efficacy and particle size ranging from 1 to 10 mm
+using a procedure originally employed by Tabata and Ikada. The mathematical modelling of drug release in the
+presence of collagenase showed a biphasic release pattern, where the rate constant for the initial time release
+confirmed the influence of the particle size and/or enzymatic degradation rate on drug release rate. © 2002 Elsevier
+Science B.V. All rights reserved.
+
+Keywords: Gelatin microspheres; BSA; Collagenase; Biodegradation; Drug release
+
+
+   Polymer based microparticulated delivery sys-                    subepithelia regions, while the control of mechan-
+tems intended for oral antigen delivery should                      ical characteristics as well degradation kinetics via
+maintain the integrity and activity of the antigen,                 glutaraldehyde crosslinking could be achieved
+augment the immunopotentiating effect and mod-                      (Friess, 1998). Parameters strictly linked to the
+ulate the type of antibody response by acting as                    drug release kinetics from the gelatin matrix are
+regulated and sustained release systems (Alpar et                   the rate of water uptake, drug dissolution/diffu-
+al., 2000). Gelatin microspheres proved to evoke                    sion rate and the polymer glass-rubbery transition
+immune response at the mucosal effector tissues,                    including matrix erosion/degradation rate (Brazel
+suggesting the possibility to develop the oral vac-                 and Peppas, 2000). Gelatin degradation by all cell
+cine (Nakamura et al., 1998). Variations in parti-                  types can occur either after phagocytosis or by
+                                                                    extracellular protease acting at either neutral or
+cle size can control particle uptake into mucosa
+                                                                    acid pH. At neutral pH, only specific collagenases
+                                                                    simply attack the Gly-X-Y sequence. Thus, the
+  * Corresponding author. Tel.: +389-2-126-032; fax: + 389-
+2-123-054
+                                                                    adjuvant effect is derived not only from the func-
+  E-mail address: katerina.goracinova@baba.ff.ukim.edu.mk           tion of gelatin itself as an accelerator of Mf
+(K. Goracinova).                                                    phagocytosis, but also from the function of cross-
+
+0378-5173/02/$ - see front matter © 2002 Elsevier Science B.V. All rights reserved.
+PII: S 0 3 7 8 - 5 1 7 3 ( 0 2 ) 0 0 1 6 7 - 9
+248                 K. Mladeno6ska et al. / International Journal of Pharmaceutics 242 (2002) 247–249
+
+
+linked gelatin microspheres as carriers in the GIT
+to protect the antigen from enzymatic degradation
+and to deliver it to the immune-inductive sites
+(Peyer’s patches) in a controlled manner.
+   Variations in the process parameters were per-
+formed in order to prepare microspheres with
+high loading efficiency and an optimal size for
+uptake into mucosa subepithelia: 1– 10 mm (Alpar
+et al., 1998). ‘‘Model’’ protein, BSA, had facili-
+tated the understanding of the release kinetics. A
+key parameter appears to be particle size, so the              Fig. 1. Degradation profiles of gelatin microspheres with dif-
+correlation between the biodegradation and drug                ferent mean diameters; (A) 7.03 mm; (B) 5.89 mm; (C) 4.63 mm;
+release rates in a presence of collagenase, and                (D) 3.20 mm; (E) 2.29 mm; (F) 1.99 mm.
+drug and polymer particle size was established.
+   The microspheres were prepared by emulsifica-               intervals. In vitro release profiles were described
+tion of aqueous solution of gelatin (10% w/V) and              using biexponential function (Kreuter, 1994).
+radiolabelled [131I]BSA (2.5% w/V) into the parti-                Degradation data (Fig. 1) showed that the
+cles in an oil (Kreuter, 1994) and stabilized by               preparation procedure provides prolonged enzy-
+crosslinking with glutaraldehyde-saturated tolu-               matic degradation at all series of gelatin micro-
+ene (0.05 mg/mg gelatin) at 0 °C for 4 h. By                   spheres, suggesting complete in vivo degradation.
+variations in the process parameters, time of                  During 72 h at 37 °C, between 84 and 90% of
+emulsification and sorbitan monooleate concen-                 gelatin microspheres were degraded.
+tration, particles in a range of 7.0391.23 to                     After 24 h at 37 °C the release of BSA from
+1.19 91.96 mm were prepared (laser diffractome-                glutaraldehyde treated gelatin microspheres in the
+try; Fritsh particle size analysette D LAB/22,                 presence of collagenase was between 80 and 93%
+Germany). Two factorial analysis of variance                   of the total amount of the encapsulated drug (Fig.
+(h =0.05) confirmed the differences in particle size           2). In all series the drug release profiles showed a
+due to the extended time of emulsification and                 biphasic modulation characterized by an initial
+interaction between process variables. High per-               relatively rapid release period, followed by a
+centage of encapsulation, calculated as a percent              slower release phase. Namely, at the series of
+of total radioactivity present in the supernatant              gelatin microspheres with mean diameter smaller
+and in the filtrate after microsphere isolation                than 4 mm, in the initial time release (3 h) between
+(‘‘well’’ counter Scaler Type N 529 D, EKCO
+Electronics, UK) was observed at all series of
+microspheres      (80– 95%,   respectively).    The
+biodegradation (of blank microspheres) and re-
+lease studies (of BSA-loaded gelatin microspheres)
+were carried out in calcium containing phosphate
+buffered dispersion of microspheres (0.5 mg/ml)
+in the presence of collagenase (0.1 mg/ml) by
+simulating in vivo conditions (37 °C, 75 Str/min).
+At regular time intervals, the dispersion of blank
+microspheres was centrifuged (8000 rpm for 15
+min), and the amount of gelatin in the sediments
+was determined according to a ninhydrin method
+(Sawicki et al., 1961). The amount of BSA re-                  Fig. 2. BSA release (%) from gelatin microspheres with differ-
+leased was determined by measuring the radioac-                ent mean diameters; (A) 7.03 mm; (B) 5.89 mm; (C) 4.63 mm;
+tivity present in the supernatants at regular time             (D) 3.20 mm; (E) 2.29 mm; (F) 1.99 mm.
+                    K. Mladeno6ska et al. / International Journal of Pharmaceutics 242 (2002) 247–249                     249
+
+
+30 and 55% of total drug was released. The initial             ters, as well, enable preparation of microspheres
+time release for the same percent of total drug                with high drug-loading efficacy and an optimal
+( : 37%) at the series of gelatin microspheres with            size for an uptake into the gut-associated
+mean diameter higher than 5 mm was : 6 h.                      lymphoid tissues and systemic immunoresponsive
+   These data are in correlation with biodegrada-              organs. The biodegradation and drug release rates
+tion rate, so the higher percent released at the               data support the potential adjuvant efficacy of
+series of gelatin microspheres with mean diameter              gelatin microspheres.
+smaller than 4 mm in the initial time release is
+probably a result of the complete water penetra-
+tion into the spheres supported by the faster
+                                                               References
+enzymatic degradation and thus, more free drug
+liberation. Thus, high correlation coefficients be-            Alpar, H.O., Eyles, J.E., Wiliamson, E.D., 1998. Oral and
+tween the particle size and degradation rate (r =                 nasal immunization with microencapsulated clinically rele-
+0.970) and, also, the particle size and drug release              vant proteins. S.T.P. Pharm. Sci. 8, 31 – 39.
+rate were noticed (r=0.945), confirming the                    Alpar, H.O, Ward, K.R., Williamson, E.D., 2000. New strate-
+                                                                  gies in vaccine delivery. S.T.P. Pharm. Sci. 10, 269 – 278.
+statistically significant difference among the series
+                                                               Brazel, C.S., Peppas, N.A., 2000. Modelling of drug release
+with different particle size.                                     from swellable polymers. Eur. J. Pharm. Biopharm. 49,
+   The drug release constants obtained by the                     47 – 58.
+semilogarithmic plots confirmed that the drug re-              Friess, F., 1998. Collagen —biomaterial for drug delivery. Eur.
+lease rate in the initial time (0.058B h B 3.21 h − 1)            J. Pharm. Biopharm. 45, 113 – 136.
+                                                               Kreuter, J., 1994. Colloidal Drug Delivery Systems. Marcel
+is faster at series with lower values for mean                    Dekker, New York, pp. 219 – 315.
+diameter, suggesting the influence of degradation              Nakamura, M., Yamashita, S., Tsume, Y., Nadai, T., Sezaki,
+and diffusive processes, while the drug liberation                H., Kohno, T., Tabata, Y., Ikada, Y., 1998. Potential
+in the late release time (0.066B i B0.078 h − 1) is               efficacy of gelatin microspheres as a new adjuvant for oral
+influenced by the diffusive processes, only.                      vaccination. S.T.P. Pharm. Sci. 8, 67 – 73.
+                                                               Sawicki, E., Hanser, T.R., Stanley, T.W., Elbert, W., 1961.
+   In conclusion, emulsification of aqueous solu-                  3-Methyl-2-benzothiazolinone hydrazone test-sensitive new
+tion of gelatine and BSA into the particles in oil                 methods for the detection, rapid estimation, and determi-
+and proposed variations in the process parame-                     nation of aliphatic aldehydes. Anal. Chem. 33, 93 – 96.
+

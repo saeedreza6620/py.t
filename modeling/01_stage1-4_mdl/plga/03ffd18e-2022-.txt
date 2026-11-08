@@ -1,0 +1,682 @@
+     Downloaded from https://iranpaper.ir
+
+
+                                                             International Journal of Pharmaceutics 624 (2022) 121994
+
+
+                                                                      Contents lists available at ScienceDirect
+
+
+                                                   International Journal of Pharmaceutics
+                                                           journal homepage: www.elsevier.com/locate/ijpharm
+
+
+
+
+Levonorgestrel loaded biodegradable microparticles for injectable
+contraception: Preparation, characterization and modelling of drug release
+Sowmya Sivasankaran , Sriramakamal Jonnalagadda *
+Department of Pharmaceutical Sciences, University of the Sciences in Philadelphia, United States
+
+
+
+
+A R T I C L E I N F O                                       A B S T R A C T
+
+Keywords:                                                   The integration of mechanistic modeling and machine learning facilitates the understanding and engineering of
+Spray drying                                                drug release from controlled release systems. Here, we present hybrid models to predict the effect of drug loading
+Controlled release                                          on levonorgestrel release from spray-dried poly(L-lactic acid) microparticles. We developed three Monte Carlo
+Contraception
+                                                            methods that differ in the consideration of polymer’s degradability and crystallinity, to simulate drug release
+Injectable
+Monte Carlo simulation
+                                                            from the matrices using the Python programming language. To build each method, we utilized data from the
+Regression modelling                                        characterization of the particles, such as the actual drug content (ranges from 6% to 52%), size (Dv(50) ~ 5 μm),
+Mechanistic modelling                                       and polymer crystallinity (ranges from 0% to 15%). We trained each method using drug release data from
+Microparticles                                              particles of 4 batches and derived appropriate machine learning models through regression analysis. Results
+Machine learning                                            indicate the contribution of drug diffusion and polymer degradation to drug release for particles of lower drug
+                                                            content (<20 %w/w). At higher drug loadings, particles encountered a combination of burst and diffusional
+                                                            release. We validated the predictive powers of the machine learning models by testing them against experimental
+                                                            data. This paper specifically highlights the power of hybrid modeling to engineer drug release for long-term
+                                                            contraception.
+
+
+
+
+1. Introduction                                                                                    offers to improve processes and results, through understanding patterns
+                                                                                                   in the system behavior. Machine learning (ML) methods include
+    Long-acting formulations offer controlled and continuous release of                            regression analysis, wherein the algorithm is trained on labeled data to
+the active ingredient within the therapeutic range for several months,                             allow the prediction of an outcome (Camacho, 2018). The pharmaceu­
+while minimizing systemic side effects and increasing patient compli­                              tical sector has lagged in the adoption of ML strategies; however,
+ance (Lee et al., 2019). The success of such a formulation relies on the                           implementing ML at different stages of drug discovery and development
+engineering of design parameters to regulate drug release rate, which is                           can greatly drive business by lowering attrition and costs (Vamathevan,
+often expensive and time-consuming through experimental approaches.                                2019).
+This leverages computational techniques for accelerating formulation                                   Several studies have used Monte Carlo simulation or ML to assess
+development through accurate comprehension and prediction of release                               drug release (Siepmann et al., 2002; Kosmidis and Macheras, 2007;
+kinetics. In this paper, we present a hybrid model, combining the ca­                              Martínez, 2009; Hadjitheodorou and Kalosakas, 2013; Galata, 2021;
+pabilities of mechanistic and machine learning approaches, for pre­                                Kaur, 2020). Besides the combined handling of the two modeling
+dicting the effect of levonorgestrel (LNG) loading on its release from                             methods, the usage of Python programming language to develop the
+Poly(L-lactic acid) (PLLA) microparticles.                                                         model makes our study distinctive. Python is an open-source program­
+    Monte Carlo simulation, a reliable mechanistic approach helps in                               ming language consisting of many libraries such as NumPy, SciPy,
+understanding the principles that govern drug release. Mechanisms that                             Matplotlib, Scikit-Learn, and Pandas that facilitate scientific and math­
+can be simulated through Monte Carlo methods include spatial diffusion                             ematical computations, data analysis and visualization, and statistical
+of drug and random scission of polymer chains (Sivasankaran and Jon­                               and machine learning modeling. Python’s simplicity and brevity make it
+nalagadda, 2021). Machine learning, a subset of artificial intelligence,                           approachable to pharmaceutical scientists. Scientists at Astra Zeneca
+
+
+    Abbreviations: LNG, Levonorgestrel; PLLA, Poly(L-lactic acid); ML, Machine Learning; PBS, Phosphate Buffered Saline; DCM, Methylene chloride; DSC, Differ­
+ential Scanning Calorimetry; RAF, Rigid Amorphous Fraction.
+ * Corresponding author.
+    E-mail address: s.jonnal@usciences.edu (S. Jonnalagadda).
+
+https://doi.org/10.1016/j.ijpharm.2022.121994
+Received 28 March 2022; Received in revised form 3 July 2022; Accepted 4 July 2022
+Available online 6 July 2022
+0378-5173/© 2022 Elsevier B.V. All rights reserved.
+      Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                              International Journal of Pharmaceutics 624 (2022) 121994
+
+
+Table 1                                                                               chloride and ethanol, the surfactant – Tween 20, as well as powdered
+LNG Content in the spray-dried particles.                                             phosphate buffered saline (PBS) were obtained from Sigma Aldrich.
+  Batch      Theoretical Drug Loading (% w/w of   Actual Drug Loading (% w/w of
+  #          total solid content)                 total solid content)
+                                                                                      2.2. Methods
+  1          0                                    NA
+  2          5                                    5.72 ± 0.01
+                                                                                      2.2.1. Preparation of microparticles
+  3          10                                   11.95 ± 0.34
+  4          20                                   19.90 ± 1.83
+                                                                                          PLLA and LNG were dissolved in 50 mL of methylene chloride (DCM)
+  5          30                                   34.93 ± 0.73                        using a magnetic stirrer to prepare a 1% w/v solution. Six such solutions
+  6          50                                   51.46 ± 0.32                        were prepared with varying LNG content – 0% w/w, 5% w/w, 10% w/w,
+                                                                                      20% w/w, 30 %w/w, and 50 %w/w of the total solid content, as pre­
+                                                                                      sented in Table 1. The solutions were then spray dried using a Buchi Mini
+               Table 2                                                                Spray Dryer model 190 to obtain microparticles. The parameters used
+               Parameters for spray drying.                                           for spray drying are specified in Table 2.
+                  Parameters                             Values
+                                                                                      2.2.2. Characterization of the microparticles
+                  Aspirator                              100%
+                  Pump                                   10%                             Drug Loading: Drug loaded in the spray-dried microparticles was
+                  Inlet Temp.                            47–49 ◦ C                    quantified using a validated protocol. Briefly, known amounts of the
+                  Outlet Temp.                           36–39 ◦ C                    particles (about 5 mg) were dissolved in 2 mL of DCM, to which, 8 mL of
+                                                                                      95% ethanol was added. The resulting cloudy solution was centrifuged
+                                                                                      at 13000RPM for 30 min at 4 ◦ C to precipitate the polymer. The su­
+have reported a positive experience working with Python in identifying
+                                                                                      pernatant was analyzed at 240 nm using a UV spectrophotometer and
+drug candidates (Boyer et al.).
+                                                                                      the amount of LNG present was quantified using a pre-established cali­
+    Levonorgestrel is a synthetic progesterone used for contraception.
+                                                                                      bration curve. Actual drug loading (ADL) was calculated as below –.
+For decades, scientists have explored the entrapment of LNG within
+polymeric microparticles to sustain its release when injected and pro­                                            Amount of drug in the sample (mg)
+vide long-term contraception. The remarkable increase in injectable                   Actual drug loading(%) =                                     *100
+                                                                                                                      Amount of sample( 5 mg)
+contraceptive users over years and the limitations of the currently
+available injectable validate the efforts of developing a long-acting                     Differential Scanning Calorimetry (DSC): A DSC analysis of the mi­
+formulation (Contraceptive Use by Method, 2019; Baumgartner, 2007;                    croparticles, PLLA pellet, and pure LNG was carried out using a TA In­
+Ruminjo, 2005). We fabricate PLLA microparticles of different LNG                     struments Discovery DSC2500 with nitrogen as the purge gas at a flow
+loadings using a spray dryer and assess their physical characteristics                rate of 20 mL/min. About 5 mg of sample was taken in a Tzero pan and
+such as particle size distribution, crystallinity, and drug release. We then          sealed with a Tzero lid using a Tzero press. An empty, sealed, and
+use data from these characterizations to build the hybrid model. Overall,             crimped Tzero pan was taken as the reference for all DSC runs. Sample
+we provide insights on the relationship between LNG loading and its                   pans were heated to 250 ◦ C at the rate of 10 ◦ C/min, cooled back to 25 ◦ C
+release from PLLA microparticles through our novel hybrid model.                      at 40 ◦ C /min, and reheated to 250 ◦ C at 10 ◦ C/min. The resulting
+                                                                                      thermal curves were analyzed for glass transition temperature of the
+2. Materials and methods                                                              polymer (Tg), change in heat capacity at Tg of the polymer (ΔCp), the
+                                                                                      temperature of melting of the polymer and drug (Tm,p and Tm,d),
+2.1. Materials                                                                        enthalpy of melting of the polymer and drug (ΔHm,p and ΔHm,d) and the
+                                                                                      temperature and enthalpy associated with cold crystallization of the
+   Levonorgestrel was purchased from Sigma Aldrich and was stored at                  polymer (Tc and ΔHcc) using the Trios software.
+the recommended temperature of 4 ◦ C. Poly-L-lactic acid pellets were                     Particle Size: A 0.1% w/v dispersion of microparticles in 1% v/v
+procured from Filabot. The solvents used in the study – methylene                     Tween 20 solution was prepared and sonicated for 5mins. The sample
+                                                                                      was analyzed for its particle size distribution using a Malvern
+
+
+
+
+                       Fig. 1. A) A sphere represented as voxels, B) The center of the sphere is placed at origin to reduce computational time.
+
+                                                                                  2
+    Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                               International Journal of Pharmaceutics 624 (2022) 121994
+
+
+
+
+Fig. 2. Blank microparticle - inert, degradable (κ = 0.1), semicrystalline and degradable (κ1 = 0.1, κ2 = 0.5), before exposure to water (left) and 10 timesteps after
+exposure to water (right).
+
+
+Instruments Mastersizer 3000. The values of Dv(10), Dv(50), Dv(90),                   ‘D’ with a probability of 0.2. All assignments were averaged over 10,000
+and span index of the particles produced were compared.                               randomizations to correctly mimic the system, based on Law of large
+    Drug release study: An in vitro drug release study was carried out for 4          numbers (Kroese, 2014). We defined the boundaries of the particles
+weeks in a release medium (pH = 7.4) consisting of 50% EtOH and 0.1%                  (where the distance from the center is greater than the radius), to
+Tween 20, adjusted to 100% with 0.01 M PBS buffer. Microparticles                     monitor drug efflux from the system.
+equivalent to 1 mg of LNG were approximately weighed into a 50 mL                         Three different scenarios were considered to simulate drug release
+Pyrex glass bottle. The bottles were filled with 50 mL of release medium              from the particles.
+and placed in a shaking water bath (37 ◦ C , 50RPM). At predetermined                     Case 1: Diffusion of drug from an inert spherical polymer matrix
+intervals, 2 mL of the medium was withdrawn from the bottle and                           When the system gets in contact with water, the drug is expected to
+immediately replaced with 2 mL of fresh medium. The withdrawn                         leave the spherical boundary following Fick’s diffusion. The polymer
+sample was analyzed at 240 nm using a UV spectrophotometer, and LNG                   was considered non-degradable in this scenario. A random walk model
+released was quantified using an established calibration curve that was               assuming excluded volume interactions was used to simulate the release
+linear between 2 µg/mL and 40 µg/mL (included in Supplemental Ma­                     of the drug. Each drug voxel was attempted to move to its neighboring
+terials Section). Appropriate dilutions were made to the sample to                    voxel, provided the neighbor is a ‘pore’ or the boundary. The probability
+facilitate quantification of the drug within the linear range of the curve.           to move was defined by ‘p’, where 0 ≤ p ≤ 1. If the attempt was suc­
+Both blank PLLA particles and LNG were used as controls.                              cessful, the original position of the drug was redefined as a ‘pore’. When
+                                                                                      the drug reaches the boundary of the particle, it is released from the
+2.2.3. Statistical analyses                                                           system. Time in the system is incremented by 1/C after each voxel is
+    All experiments were performed in triplicates (n = 3). Welch’s                    allowed to move to its neighboring site, where C is the number of drug
+ANOVA followed by Games-Howell post hoc test was used to evaluate                     voxels remaining in the matrix. This is typical of Monte Carlo simulation
+differences in means between the batches of spray-dried particles. Sta­               and indicates that all drug voxels in the sphere are statistically allowed
+tistical significance was established at p < 0.05.                                    to move once in one time unit (Kosmidis and Dassios, 2019). The
+                                                                                      number of drug voxels leaving the boundary was monitored as a func­
+2.2.4. Monte Carlo simulation                                                         tion of time to plot the drug release profile obtained through simulation.
+    We performed a random walk Monte Carlo simulation using Python                        Case 2: Diffusion of drug from a degradable spherical polymer
+under the Spyder environment. We assumed particles from all batches to                matrix
+be spherical and mono-disperse with a diameter of 5 units. Using                          In this scenario, the polymer was considered degradable. A Poisson
+computational techniques, we created a three-dimensional spherical                    first-order process equation was used to define the lifetime of polymer
+particle with its center placed at the origin of the coordinate system. This          voxels before simulation.
+makes a quarter of the sphere representative of the entire system (Fig. 1)                tlifetime = − 1κ *ln(1 − ε).
+due to rotational symmetry around any axis and helps in reducing                          Here κ is a constant that is characteristic of the physical state of the
+computational time.                                                                   polymer, and ε is a random number between 0 and 1.
+    We created five such spherical particles, one for each drug loading                   Like Case 1, drug release was monitored through the random walk of
+studied in this research. The spherical space was divided into finite cubic           drug voxels to the boundary or the nearby pore. However, if the assigned
+elements called voxels with an edge of 0.5 units. Each voxel in the sphere            lifetime of a polymer voxel expired during simulation, the voxel was
+was randomly assigned to be either a polymeric voxel ‘P’ or a drug voxel              assumed to disappear instantaneously creating a new ‘pore’. Drug voxels
+‘D’. The probability of assigning a voxel as ‘P’ or ‘D’ depended on                   hence had chances to move to additional pores.
+experimentally determined drug loadings. For instance, to represent                       Case 3: Diffusion of drug from a degradable spherical, semi-
+particles produced from batch #4, each voxel was randomly assigned as                 crystalline polymer matrix
+
+
+                                                                                  3
+    Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                         International Journal of Pharmaceutics 624 (2022) 121994
+
+
+                                                               PLLA- 1st Heating Curve
+
+
+
+
+                             Exo Up
+
+
+                                                   Fig. 3. First heating DSC thermogram of PLLA pellet.
+
+
+
+                                                               LNG 1st Heating Curve
+
+
+
+
+                             Exo Up
+
+
+
+                                                      Fig. 4. First heating DSC thermogram of LNG.
+
+
+    In this case, the crystallinity of the polymer was considered. Polymer       always smaller than that of κ2. The disappearance of the polymeric
+voxels were randomly assigned to be either amorphous (AP) or crys­               voxels based on their lifetimes during simulation, created additional
+talline (CP) based on results obtained from DSC. The lifetimes of the            channels for the drug voxels to move around.
+crystalline and amorphous voxels were given by the following two                    Fig. 2 represents blank microparticles (consisting of polymeric voxels
+equations, respectively.                                                         alone), under the three cases of simulation – inert, degradable, and semi-
+    tlifetime,CP = − κ11 *ln(1 − ε).                                             crystalline and degradable.
+    tlifetime,AP = − κ12 *ln(1 − ε).                                                Drug release from particles of batches #2, #3, #5 and #6 was
+                                                                                 simulated for various values of ’p’ for Case 1, various values of ‘p’ and ‘κ’
+   As the amorphous regions are more susceptible to hydrolytic attack
+                                                                                 for Case 2, and various values of ‘p’, ‘κ1′ , and ‘κ2′ for Case 3. All
+and quicker erosion than the crystalline regions, the value of κ1 was
+
+
+                                                                             4
+    Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                              International Journal of Pharmaceutics 624 (2022) 121994
+
+
+                                                            Spray dried PLLA-LNG particles - 1 st Heating
+
+
+
+
+                                                                                                                        Blank
+
+
+                                                                                                                          5% DL
+
+
+                                                                                                                         10% DL
+
+
+                                                                                                                         20% DL
+
+
+                                                                                                                         30% DL
+
+
+                                                                                                                         50% DL
+
+
+
+
+                                Fig. 5. First heating DSC thermogram of spray dried PLLA particles with different drug loadings (DL).
+
+
+simulations were averaged over 10,000 runs. The polyfit() function from               (Budhian et al., 2005). Moreover, the hydrophobicity of the polymer
+the NumPy module was accessed to fit a logarithmic trendline on each of               thermodynamically favors the drug to be entrapped within the polymer
+the simulated drug releases. A similar trendline for experimental data                matrix (Holgado, 2008).
+was obtained in Microsoft Excel. The sum of the squared errors between
+the two regression lines (experimental and simulated) was calculated for
+each simulation performed. The parameters corresponding to the min­                   3.2. Differential Scanning Calorimetry
+imum sum of squared errors in each of the 3 cases were considered
+optimal.                                                                                  Samples were heated in the DSC at a standard heating rate of 10 ◦ C
+   The scikit-learn module was then accessed to build a regression                    /min. Fig. 3 and Fig. 4 show the first heating DSC thermograms of pure
+equation relating the optimized parameters and drug loading for each                  PLLA and pure LNG, respectively. PLLA is a semicrystalline polymer
+case. The drug release profile for batch #4 particles was predicted using             possessing a crystalline phase, a mobile amorphous phase, and an in­
+the equations.                                                                        termediate rigid amorphous phase (Craig, 2001). The mobile amorphous
+                                                                                      phase of PLLA is characterized by a glass transition region involving an
+3. Results and discussion                                                             increase in specific heat capacity (ΔCp = 0.51 ± 0.03 J/g. ◦ C). The
+                                                                                      temperature of this step transition (Tg) is 59.26 ± 0.36 ◦ C. Upon further
+    Spray drying is an inexpensive, scalable, and reproducible technique              heating, we observe an exothermic peak signifying cold crystallization.
+that can be used to fabricate polymeric microparticles consisting of                  This results from PLLA chains acquiring sufficient mobility beyond the
+hydrophobic drugs (Ziaee, 2019). PLLA is an FDA-approved biode­                       Tg to rearrange themselves into ordered structures. The enthalpy of cold
+gradable hydrophobic polymer that is frequently used in the                           crystallization (ΔHcc) of PLLA is 33.30 ± 2.64 J/g. The melting of PLLA
+manufacturing of microparticles through spray drying (Fitzgerald, 2018;               crystals begins around 155 ◦ C and peaks at 177.52 ± 0.61 ◦ C. The
+Arpagaus, 2019). Longer degradation time makes PLLA a good candi­                     enthalpy of melting (ΔHm,p), which amounts to 47.20 ± 2.87 J/g, is
+date for formulating a long-acting injectable. The solubility of PLLA and             aided both by the crystalline phase of the polymer and the cold-
+LNG in DCM makes the latter an ideal solvent choice. Moreover, PLLA’s                 crystallized amorphous phase. The crystallinity of PLLA (χc,p)(Matta,
+low glass transition temperature of 59 ◦ C, demands processing at lower               2014) and the mobile amorphous fraction of PLLA (Wa)(Magoń and
+inlet temperature. DCM presents a low boiling point of 39 ◦ C, thus                   Pyda, 2009), normalized to the weight fraction of the polymer in the
+enabling processing at a lower temperature. In this study, we prepare                 sample (wp), are given by equations (1) and (2) respectively.
+particles with different drug loadings ranging from 0% to 50%. We chose                         ΔHm,p − ΔHcc
+this design space to understand the effect of polymer/drug amount on                  χ c,p =                                                                        (1)
+                                                                                                 wp *ΔHm,p0
+the characteristic of the particles, as well as the pattern of drug release.
+                                                                                                   ΔCp
+                                                                                      Wa =                                                                           (2)
+                                                                                                wp *ΔCp,0
+3.1. Drug Loading
+                                                                                         We considered the melting enthalpy of 100% crystalline PLLA (ΔHm,
+    Table 1 presents the actual drug loading (%) values. It is evident that           p0) to be 93.7 J/g (Patricio and Bártolo, 2013) while the change in
+                                                                                                                                                          -
+the % LNG loaded onto the particles is influenced by the amount of LNG                specific heat capacity of 100% amorphous PLLA (ΔCp,0) to be 0.61Jg
+                                                                                      1
+dissolved in DCM during synthesis. The free carboxylic end groups of                    K-1(Magoń and Pyda, 2009). Accordingly, PLLA’s crystallinity calcu­
+PLLA increase the likelihood of the formation of hydrogen bonds with                  lates to 0.15 and the mobile amorphous fraction to 0.84. Hence the rigid
+LNG, thereby facilitating drug incorporation into the polymeric matrix                amorphous fraction (RAF) amounts to 1% of the PLLA structure. The
+
+                                                                                  5
+      Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                                       International Journal of Pharmaceutics 624 (2022) 121994
+
+
+Table 3                                                                                     respectively. LNG’s melting peak temperature reduced from 240.5 ◦ C to
+LNG melting parameters from first heating run in DSC.                                       234.53 ± 0.91⁰ C at 50 % polymer content within the spray-dried
+  Batch #            Tm,d (◦ C)                  ΔHm,d (J/g)             χc,d               sample. We witnessed a consistent reduction in melting point with
+                                                                                            increasing polymer content. Melting onset/peak temperature depression
+  2                  ND                          ND                      0.00
+  3                  198.09 ± 0.26               2.88 ± 0.27             0.13 ± 0.01        with increasing polymer content indicates the enhanced solubility be­
+  4                  215.02 ± 0.86               11.83 ± 0.82            0.33 ± 0.02        tween the polymer and the drug. The miscibility of the amorphous PLLA
+  5                  224.93 ± 0.30               24.39 ± 1.24            0.39 ± 0.02        with crystalline LNG can decrease the chemical potential of the drug
+  6                  234.53 ± 0.91               53.56 ± 2.44            0.59 ± 0.03        crystals causing melting point depression (Rask, 2018; Sharma, 2021).
+ND: Not Detected; Tm,d: Temperature of drug melting; ΔHm,d: Enthalpy of drug                   The reduction in melting enthalpy of the drug with increasing
+melting; χc,d: crystallinity of drug.                                                       polymer content conveys a similar idea (Abu-Diak et al., 2012). Particles
+                                                                                            from batch #6 possess 58.57 ± 2.69 % crystalline LNG, and this value
+
+Table 4
+PLLA transition parameters from first heating run in DSC.                                   Table 5
+  Batch #      ΔHsr (J/g)         ΔHcc (J/g)        Tm,p (◦ C)          ΔHm,p (J/g)         Glass transition temperature (Tg), the mobile amorphous fraction (Wa), the
+                                                                                            crystalline fraction (χc), and the rigid amorphous fraction (RAF) of PLLA in the
+  1            4.48 ± 0.61        27.89 ± 1.19      173.07 ± 0.20       41.31 ± 1.97        spray-dried samples.
+  2            2.60 ± 0.34        30.90 ± 2.58      171.22 ± 0.62       44.93 ± 5.01
+  3            3.08 ± 0.35        35.06 ± 2.83      171.13 ± 0.22       37.47 ± 2.16         Batch #       Tg (◦ C)           Wa                 χc                RAF
+  4            4.77 ± 0.41        46.20 ± 5.22      170.87 ± 0.26       36.47 ± 1.49
+                                                                                             1             59.9 ± 0.50        0.83 ± 0.03        0.14 ± 0.01       0.03 ± 0.04
+  5            6.59 ± 0.24        37.20 ± 3.97      170.45 ± 0.10       34.04 ± 0.54
+                                                                                             2             58.14 ± 0.50       0.81 ± 0.08        0.15 ± 0.03       0.03 ± 0.01
+  6            6.57 ± 0.42        39.34 ± 5.11      170.16 ± 0.42       25.18 ± 0.89
+                                                                                             3             56.68 ± 0.38       0.85 ± 0.04        0.04 ± 0.01       0.10 ± 0.07
+ΔHsr: enthalpy of structural relaxation; ΔHcc: enthalpy of cold crystallization;             4             54.49 ± 0.32       0.95 ± 0.05        ND                ND
+Tm,p: temperature of melting of PLLA; ΔHm,p: enthalpy of melting of PLLA.                    5             54.13 ± 1.03       0.95 ± 0.02        ND                ND
+                                                                                             6             56.07 ± 0.16       1.00 ± 0.02        ND                ND
+
+rigid phase includes amorphous portions of PLLA with restricted                             ND: Not Detected.
+mobility resulting from the stress exerted by the nearby crystalline
+portions (Righetti and Tombari, 2011).
+                                                                                            Table 6
+    The crystalline drug LNG melts with an enthalpy of 179.30 ± 0.71 J/                     Size distribution of the spray-dried particles using laser diffraction.
+g at 240.5 ◦ C. The crystallinity of LNG (χc,d) is given by equation (3).
+                                                                                             Batch #       D10               D50*               D90                Span Index
+          ΔHm,d                                                                              1             2.54 ± 0.01       5.08 ± 0.04        10.60 ± 0.41       1.59 ± 0.06
+χ c,d =                                                                           (3)
+        wd *ΔHm,d0                                                                           2             2.74 ± 0.04       5.52 ± 0.04        13.44 ± 0.65       1.94 ± 0.10
+                                                                                             3             2.70 ± 0.01       5.16 ± 0.05        10.09 ± 0.35       1.43 ± 0.05
+   Here, wd is the weight fraction of the drug in the spray-dried sample,                    4             2.88 ± 0.00       4.91 ± 0.01        8.27 ± 0.04        1.09 ± 0.01
+and ΔHm,d0 is the enthalpy of melting of pure LNG (179.3 J/g).                               5             1.07 ± 0.01       4.11 ± 0.01        8.56 ± 0.07        1.83 ± 0.01
+   Fig. 5 shows the first heating DSC run of spray-dried PLLA-LNG                            6             0.92 ± 0.02       4.31 ± 0.01        9.74 ± 0.08        2.04 ± 0.02
+
+particles. Table 3 and Table 4 list several transition parameters from the                  *Significant difference between blank and drug-loaded particles. Also, a signif­
+analysis of the first heating curve for the drug and the polymer,                           icant decrease in volume median diameter from batch #2 to batch #5. n = 3.
+
+
+
+                                                                    Spray dried PLLA-LNG particles - 2 nd Heating
+
+
+
+
+                                                                                                                                     Blank
+
+
+                                                                                                                                       5% DL
+
+
+                                                                                                                                      10% DL
+
+                                                                                                                                       20% DL
+
+
+                                                                                                                                      30% DL
+
+
+                                                                                                                                      50% DL
+
+
+
+
+                                      Fig. 6. Second heating DSC thermogram of spray-dried PLLA particles of different drug loading.
+
+                                                                                        6
+      Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                              International Journal of Pharmaceutics 624 (2022) 121994
+
+
+
+
+                                                Fig. 7. Cumulative LNG release profile from the spray dried particles.
+
+
+                                                                                      first heating run. This happens as the amorphous PLLA relaxes over time
+Table 7
+                                                                                      towards an equilibrium state and is characterized by a decrease in free
+Mass Balance - Drug release study.
+                                                                                      energy, entropy, and free volume. The processing of samples such as the
+  Batch #              % Drug released at 28 days            % Drug remaining         drying of DCM in the spray dryer can also induce structural relaxation
+  2                    72.21 ± 0.81                          27.05 ± 1.44             (Flügel et al., 2020). The extent of the endothermic peak representing
+  3                    73.13 ± 1.25                          24.23 ± 0.18             structural relaxation (ΔHsr presented in Table 4), suggests the miscibility
+  4                    96.02 ± 3.68                          1.88 ± 0.77              of the drug and polymer in the sample (Sharma, 2021). Samples of
+  5                    99.65 ± 1.96                          1.09 ± 0.43
+  6                    99.19 ± 1.46                          0.91 ± 0.74
+                                                                                      higher drug loading possess a larger endothermic peak overlapping the
+                                                                                      glass transition, indicating greater molecular mobility and lower
+                                                                                      miscibility with the drug. Conversely, samples with low drug loading
+                                                                                      show an endothermic transition of smaller magnitude, implying
+Table 8
+                                                                                      restricted mobility and greater miscibility with the drug. This trend
+Optimized simulation parameters.
+                                                                                      aligns with LNG’s melting point depression and melting enthalpy
+  Batch #       Case 1       Case 2                 Case 3                            reduction results.
+                p            p         κ            p        κ1         κ2                The overlap of peaks challenges the determination of polymer glass
+  2             0.3          0.3       0.4          0.35     0.4        0.5
+                                                                                      transition. So, we use the second heating curve from the DSC run to
+  3             0.35         0.35      0.1          0.55     0.05       0.1           analyze the Tg, as the thermal history of the sample is removed during
+  5             0.5          0.5       0.0085       0.8      0.006      0.0009        the first heating cycle (Siepmann et al., 2006; Sohel, 2017).
+  6             0.65         0.68      0.0001       NA       NA         NA                Fig. 6 presents an overlay of thermograms of the spray-dried samples
+                                                                                      from the second heating cycle, while Table 5 shows the Tg values. The Tg
+reduces significantly with increasing polymer content.                                of spray-dried PLLA with no drug is 59.9 ± 0.5 ◦ C. This consistently
+    PLLA exhibits both glass transition and melting transition in all the             reduces with increasing drug content up to 20% drug loading. Aitken-
+spray-dried samples. Additionally, we noticed the presence of two peaks               Nichol et al. observed similar results in the Eudragit E100 films loaded
+in the cold crystallization region of samples of higher drug loading (20%             with lidocaine HCl (Aitken-Nichol et al., 1996). This results from the
+and beyond). We postulate LNG’s contribution to this phenomenon, as                   small drug molecules making their way in between the polymer chains
+PLLA’s melting region in these samples does not show two peaks. Be­                   to increase flexibility. Several other researchers have also reported
+sides, the magnitude of cold crystallization enthalpy in these samples                drugs’ plasticizing ability on a polymer (Siepmann et al., 2006; Crowley,
+exceeds the polymer melting enthalpy, strengthening our theory.                       2004; Wu and McGinity, 1999; Zhu, 2002).
+Amorphous LNG possesses increased enthalpy, entropy, and Gibb’s free                      There is no significant reduction in the Tg of PLLA with a further
+energy, which can enable phase transitions such as crystallization to                 increase in drug content indicating LNG’s solubility limit in PLLA.
+achieve greater stability (Din, 2020). Considering our assumption, we                 Similar results were reported by Baiardo et al., wherein segregation of
+acknowledge the possibility of overestimation of χc,d values reported in              the plasticizer was observed beyond its solubility limit in polylactic acid
+Table 3.                                                                              (Baiardo, 2003).
+    An endothermic peak resulting from structural relaxation of the                       Table 5 also reports the mobile amorphous fraction, the rigid
+polymer overlaps the glass transition region of the samples during the                amorphous fraction (RAF), and the crystallinity of PLLA in the spray-
+
+
+                                                                                  7
+    Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                            International Journal of Pharmaceutics 624 (2022) 121994
+
+
+
+
+                    Fig. 8. Comparison of LNG release profile from experimentation and the three cases of simulation at optimized parameters.
+
+
+
+
+            Fig. 9. Comparison of LNG release profile from experimentation and simulation for batch #5 and #6 after correcting for initial timepoints.
+
+
+dried samples. We could not determine the crystallinity and RAF of PLLA             decrease in crystallinity of the polymer, supporting the theory of PLA’s
+in particles of higher drug loading owing to the presence of two cold               increased mobility due to plasticization.
+crystallization peaks. We calculated 83% of the blank microparticles to
+be mobile amorphous. The addition of LNG up to 10% does not signif­
+icantly change this value. However, we observe an increase in RAF and a
+
+
+                                                                                8
+      Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                               International Journal of Pharmaceutics 624 (2022) 121994
+
+
+Table 9                                                                                 Dv(90) values being 3.8 ± 0.2 μm, 11.4 ± 0.5 μm, and 30.0 ± 0.6 μm
+Mathematical relationship between drug loading and optimized simulation                 (Zhou, 2018). It is administered through a 23G, 1.5 in. needle. We
+parameters.                                                                             predict the usage of smaller needle sizes for the particles fabricated in
+  Simulation         Relationship between simulation         Predicted parameters       this study as they are more narrowly distributed (span indices ≤ 2) and
+  Case #             parameters and drug loading             for batch #4               possess smaller Dv(90) values (<14 μm).
+  1                  p = 0.0074*DL + 0.255                   p = 0.4
+  2                  p = 0.008*DL + 0.2475κ =                p = 0.41                   3.4. Drug release
+                     1.1227e− 0.168*DL                       κ = 0.39
+  3                  p = 0.23ln(DL) − 0.02κ1 =               p = 0.67
+                                                             κ1 = 0.02                      We used an in vitro method to study LNG release from the spray-
+                     11.909*DL− 2.152 κ2 = 156.49*DL− 3.29
+                                                             κ2 = 0.008                 dried particles. LNG’s poor solubility in aqueous media (Jain, 2005;
+                                                                                        Chen and Singh, 2005) demands an alternative to the typically used
+                                                                                        phosphate buffered saline (PBS) as a release medium. Hence, we added
+3.3. Particle size                                                                      ethanol as a co-solvent to PBS. Tween 20 was added to reduce the sur­
+                                                                                        face tension of the floating particles and make them sink in the medium.
+    The size and size distribution of the particles affect the performance              Fig. 7 shows the cumulative drug release profile from particles of
+of the end product like the pattern of drug release (Budhian et al., 2007),             different batches. Both blank particles (not shown) and pure LNG were
+in addition to the processability and the stability of the product. In this             used as controls.
+study, we use laser diffraction to assess the particle size distribution of                 The effect of drug loading on drug release is evident. Drug release
+the samples. The diffracted laser beam from particles’ surface results in a             rate increases with drug loading, with batch #2 particles releasing LNG
+specific pattern, which is then fitted with a mathematical model                        at the slowest pace. At the end of 4 weeks, particles from batch #2 and
+explaining the Mie theory, to obtain size and size distribution (Wischke                #3 had released about ~ 73% LNG while batch #4 had released almost
+and Schwendeman, 2008). Table 6 presents the Dv(10), Dv(50), Dv(90),                    100% LNG. Batch #5 released 100% at 12 days while #6 at 4 days. Pure
+and span index values of each of the batches.                                           LNG (not entrapped within the polymeric matrix) solubilized itself in the
+    Factors like feed flow rate, use of an organic solvent, and solid                   medium within 4 h of the study and remained stable throughout the
+concentration in the feed can affect the particle size distribution of the              study. We determined the LNG remaining within the polymer matrix at
+spray-dried product (Rattes and Oliveira, 2007; Santos, 2017). Polymer                  the end of the study (Table 7) to establish mass balance.
+concentration in the solution has been previously positively correlated                     The faster LNG release from particles of higher drug loading can be a
+with particle size (Budhian et al., 2007). Increased polymer content in                 consequence of several factors. Lower polymer content in the feed so­
+the solution resists atomization in the spray dryer through increased                   lution can result in inadequate entrapment of LNG within the polymer
+viscosity, leading to larger droplet formation, hence increasing the                    matrix during spray drying. As a result, loosely bound drug molecules
+particle size. We observe this trend in the Dv(50) values from batch #2                 are likely to release quickly. Also, particles from batches of higher drug
+to batch #5. However, we notice an anomaly with batch #6 particles.                     loading possess reduced diffusional pathlength due to their smaller sizes,
+    The size distribution of the particles also determines the injection                leading to quicker drug release (Silva, 2010). Krishnamachari et al. have
+needle size. Smaller needles are less likely to cause pain and bleeding                 presented similar results wherein the larger particle size at higher
+than large needles (Gill and Prausnitz, 2007). Lupron Depot®, the PLGA                  polymer concentrations resulted in slowing budesonide release from
+microsphere injection has a span index of 2.3, with Dv(10), Dv(50), and                 PLGA microparticles (Krishnamachari et al., 2007). The increased
+
+
+
+
+                                           Fig. 10. Predicted LNG release from batch #4 particles Vs Experimental LNG release.
+
+                                                                                    9
+    Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                                 International Journal of Pharmaceutics 624 (2022) 121994
+
+
+plasticity of the PLLA chains in particles of higher drug loading could             the machine learning model. Fig. 10 represents the experimental and
+also play a role in faster LNG release (Park, 2020). Such particles are also        simulated release profile (with parameters obtained through machine
+exposed to more pores generated from the release of LNG during the                  learning). The method that considers both drug diffusion and
+study, further accelerating the release. For similar reasons, LNG release           crystallinity-dependent polymer degradation, predicts LNG release the
+at 1 h, which can be considered as burst release, increases with drug               best.
+loading. It is 23% for particles from batch #2 and 49% for batch #6.                    We acknowledge that machine learning is data-driven and that the
+Several other studies have reported the inverse relationship between                use of limited data points constrains our model. The use of additional
+drug release rate and polymer content (Krishnamachari et al., 2007;                 data points and independent variables can improve predictions. We also
+Jelvehgari, 2010).                                                                  recognize the significance of assessing the correlation between drug
+    The uniform and controlled release of LNG from batch #2 and #3                  release at in vitro and physiological conditions, to validate the appli­
+particles could be a result of the increased polymer-drug miscibility               cability of the models. Nevertheless, the hybrid models enable drug
+indicated by DSC results. Yuan et al. reported comparable results in                release predictions as well as mechanistic realizations. We envision
+which doxorubicin release from PLA electrospun fiber mat slowed with                future approaches to focus on in vitro- in vivo correlation studies and the
+increasing miscibility between the two components (Yuan, 2018).                     enhancement of predictions through machine learning.
+
+3.5. Monte Carlo simulation                                                         4. Conclusion
+
+    Monte Carlo methods predict the outcome of an event that involves                   This research demonstrates the use of a spray dryer to prepare PLLA
+some uncertainty. Diffusional flux and polymer erosion can contribute               microparticles entrapped with LNG and the application of a combined
+to LNG release from the microparticles. Since both the processes are                mechanistic and machine learning model to predict drug release. The
+associated with some randomness, a Monte Carlo method can be used to                narrow size distribution of particles warrants the use of spray drying to
+model them (Sivasankaran and Jonnalagadda, 2021).                                   prepare injectable microparticles. Particles with higher polymer content
+    Table 8 presents the optimized values of ‘p’ for Case 1, ‘p’ and ‘κ’ for        led to a slow and well-controlled drug release. The hybrid model
+Case 2, and ‘p’, ‘κ1′ and ‘κ2′ for Case 3, obtained through the comparison          confirmed the influence of drug diffusion and polymer degradation on
+of experimental results with the simulated results. Fig. 8 presents the             drug release from such particles. Burst release was encountered in par­
+plots of cumulative drug release Vs time obtained from experimentation              ticles of lower polymer content due to the presence of unentrapped LNG.
+and the three cases of simulation.                                                  The model, though limited by the usage of a small dataset, aids in the
+    The probability of the drug voxel relocating to a pore (p) increases            engineering of microparticles to provide controlled drug release for
+with drug loading in all three cases of simulation. Drug voxels in par­             long-term contraception.
+ticles of higher drug loading are likely to be surrounded by more pores,
+and hence have a higher probability of escaping their initial position.
+                                                                                    CRediT authorship contribution statement
+Conversely, the increased presence of polymer voxels restricts the
+mobility of drug voxels in particles of low drug loading. In all the sys­
+                                                                                        Sowmya Sivasankaran: Conceptualization, Methodology, Soft­
+tems represented, there exists an error between experimentation and
+                                                                                    ware, Validation, Formal analysis, Investigation, Data curation, Visual­
+Case 1 simulation (Fig. 8), which indicates that diffusion might not be
+                                                                                    ization, Writing – original draft. Sriramakamal Jonnalagadda:
+solely responsible for drug release.
+                                                                                    Conceptualization, Methodology, Formal analysis, Resources, Writing –
+    The constant characterizing the physical state of polymer in case 2
+                                                                                    review & editing, Supervision, Project administration.
+(κ) decreased from 0.4 to 0.0001 with increasing drug loadings. This
+implies particles with higher drug content have increased polymer
+lifetimes and refutes the effect of polymer degradation on drug release             Declaration of Competing Interest
+from such particles. Fig. 8 (C and D) reinforces the finding since the
+errors in case 2 have barely improved. However, the reduced errors for                  The authors declare that they have no known competing financial
+particles of lower drug content suggest the role of polymer degradation             interests or personal relationships that could have appeared to influence
+on drug release.                                                                    the work reported in this paper.
+    In Case 3, polymer voxels were assigned either amorphous or crys­
+talline based on Wa and χc values obtained from the DSC analysis. We                Appendix A. Supplementary material
+differentiated the κ values for the two physical states to improve the
+model. The polymer in batch #6 particles was calculated to be 100%                     Supplementary data to this article can be found online at https://doi.
+amorphous, and hence could not be modeled using Case 3. Errors were                 org/10.1016/j.ijpharm.2022.121994.
+marginal for particles of lower drug content, confirming the contribu­
+tion of both drug diffusion and polymer degradation in drug release.                References
+Furthermore, this case had the lowest errors for such particles among all.
+    Overall, none of the models explained drug release from particles of            Abu-Diak, O.A., Jones, D.S., Andrews, G.P., 2012. Understanding the performance of
+higher drug loading well. Hence, we negated the drug released at initial                melt-extruded poly (ethylene oxide)–bicalutamide solid dispersions: characterisation
+                                                                                        of microstructural properties using thermal, spectroscopic and drug release methods.
+time points (30 min for batch #5 and 60 min for batch #6) from such                     J. Pharm. Sci. 101 (1), 200–213.
+particles and found the errors to be improved considerably (Fig. 9). We             Aitken-Nichol, C., Zhang, F., McGinity, J.W., 1996. Hot melt extrusion of acrylic films.
+postulate drug release from batch #5 and #6 particles to be driven by                   Pharm. Res. 13 (5), 804–808.
+                                                                                    Arpagaus, C., 2019. PLA/PLGA nanoparticles prepared by nano spray drying. J. Pharm.
+diffusion of LNG entrapped within the matrix and dissolution of unen­                   Invest. 49 (4), 405–426.
+trapped LNG. The negligible κ values for such particles disprove the                Baiardo, M., et al., 2003. Thermal and mechanical properties of plasticized poly (L-lactic
+contribution of polymer degradation.                                                    acid). J. Appl. Polym. Sci. 90 (7), 1731–1738.
+                                                                                    Baumgartner, J.N., et al., 2007. Timeliness of contraceptive reinjections in South Africa
+    Next, we aimed to build a machine learning model using regression
+                                                                                        and its relation to unintentional discontinuation. Int. Fam. Plan. Perspect. 33 (2),
+analysis. We deduced a mathematical relationship between drug loading                   66–74.
+and the optimized simulation parameters, as presented in Table 9. Here              Boyer, S., A. Dalke, P. Bruneau. Python for Collaborative Drug Discovery. Available from:
+drug loading is the independent variable that helps in predicting the                   https://www.python.org/success-stories/python-for-collaborative-drug-discovery/.
+                                                                                    Budhian, A., Siegel, S.J., Winey, K.I., 2005. Production of haloperidol-loaded PLGA
+simulation parameters – p, κ, κ1, and κ2. We then simulated each Monte                  nanoparticles for extended controlled drug release of haloperidol. J. Microencapsul.
+Carlo case for batch #4 particles using the parameters predicted through                22 (7), 773–785.
+
+
+                                                                               10
+     Downloaded from https://iranpaper.ir
+
+
+S. Sivasankaran and S. Jonnalagadda                                                                                                  International Journal of Pharmaceutics 624 (2022) 121994
+
+Budhian, A., Siegel, S.J., Winey, K.I., 2007. Haloperidol-loaded PLGA nanoparticles:                 Magoń, A., Pyda, M., 2009. Study of crystalline and amorphous phases of biodegradable
+     systematic study of particle size and drug content. Int. J. Pharm. 336 (2), 367–375.                poly (lactic acid) by advanced thermal analysis. Polymer 50 (16), 3967–3973.
+Camacho, D.M., et al., 2018. Next-generation machine learning for biological networks.               Martínez, L., et al., 2009. Monte Carlo simulations for the study of drug release from
+     Cell 173 (7), 1581–1592.                                                                            cylindrical matrix systems with an inert nucleus. Int. J. Pharm. 369 (1–2), 38–46.
+Chen, S., Singh, J., 2005. In vitro release of levonorgestrel from phase sensitive and               Matta, A., et al., 2014. Preparation and characterization of biodegradable PLA/PCL
+     thermosensitive smart polymer delivery systems. Pharm. Dev. Technol. 10 (2),                        polymeric blends. Procedia Mater. Sci. 6, 1266–1270.
+     319–325.                                                                                        Park, K., et al., 2020. Potential Roles of the Glass Transition Temperature o wf PLGA
+Contraceptive Use by Method 2019. 2019, United Nations. Department of Economic and                       Microparticles in Drug Release Kinetics. Mol. Pharm.
+     Social Affairs.                                                                                 Patricio, T., Bártolo, P., 2013. Thermal stability of PCL/PLA blends produced by physical
+Craig, D.Q., et al., 2001. The measurement of small quantities of amorphous material-                    blending process. Proc. Eng. 59, 292–297.
+     should we be considering the rigid amorphous fraction? Pharm. Res. 18 (8),                      Rask, M.B., et al., 2018. Comparison of two DSC-based methods to predict drug-polymer
+     1081–1082.                                                                                          solubility. Int. J. Pharm. 540 (1–2), 98–105.
+Crowley, M.M., et al., 2004. The influence of guaifenesin and ketoprofen on the                      Rattes, A.L.R., Oliveira, W.P., 2007. Spray drying conditions and encapsulating
+     properties of hot-melt extruded polyethylene oxide films. Eur. J. Pharm. Sci. 22 (5),               composition effects on formation and properties of sodium diclofenac microparticles.
+     409–418.                                                                                            Powder Technol. 171 (1), 7–14.
+Din, S.U., et al., 2020. Investigation into the Stability, Crystallization Kinetics, and             Righetti, M.C., Tombari, E., 2011. Crystalline, mobile amorphous and rigid amorphous
+     Heating Rate Dependent Crystallization of Amorphous Posaconazole. Cryst. Growth                     fractions in poly (L-lactic acid) by TMDSC. Thermochimica acta 522 (1–2), 118–127.
+     Des. 20 (8), 5129–5142.                                                                         Ruminjo, J.K., et al., 2005. Comparative acceptability of combined and progestin-only
+Fitzgerald, R., et al., 2018. Physiochemical Characteristics of Poly-L-Lactic Acid (PLLA).               injectable contraceptives in Kenya. Contraception 72 (2), 138–145.
+     Aesthet Surg J 38 (suppl_1), S13–S17.                                                           Santos, D., et al., 2017. Spray Drying: An Overview. in Biomaterials-Physics and
+Flügel, K., Hennig, R., Thommes, M., 2020. Impact of structural relaxation on mechanical                 Chemistry-New Edition, IntechOpen.
+     properties of amorphous polymers. Eur. J. Pharm. Biopharm. 154, 214–221.                        Sharma, J., et al., 2021. Correlationship of Drug-Polymer Miscibility, Molecular
+Galata, D.L., et al., 2021. Real-time release testing of dissolution based on surrogate                  Relaxation and Phase Behavior of Dipyridamole Amorphous Solid Dispersions.
+     models developed by machine learning algorithms using NIR spectra, compression                      J. Pharm. Sci. 110 (4), 1470–1479.
+     force and particle size distribution as input data. Int. J. Pharm. 597, 120338.                 Siepmann, J., Faisant, N., Benoit, J.-P., 2002. A new mathematical model quantifying
+Gill, H.S., Prausnitz, M.R., 2007. Does needle size matter? J. Diabetes Sci. Technol. 1 (5),             drug release from bioerodible microparticles using Monte Carlo simulations. Pharm.
+     725–729.                                                                                            Res. 19 (12), 1885–1893.
+Hadjitheodorou, A., Kalosakas, G., 2013. Quantifying diffusion-controlled drug release               Siepmann, F., Le Brun, V., Siepmann, J., 2006. Drugs acting as plasticizers in polymeric
+     from spherical devices using Monte Carlo simulations. Mater. Sci. Eng., C 33 (2),                   systems: a quantitative treatment. J. Control Release 115 (3), 298–306.
+     763–768.                                                                                        Silva, A.R.d., et al., Drug release from microspheres and nanospheres of poly (lactide-co-
+Holgado, M.A., et al., 2008. Synthesis of lidocaine-loaded PLGA microparticles by flow                   glycolide) without sphere separation from the release medium. J. Braz. Chem. Soc.
+     focusing. Effects on drug loading and release properties. Int. J. Pharm. 358 (1–2),                 21(2) (2010) 214-225.
+     27–35.                                                                                          Sivasankaran, S., Jonnalagadda, S., 2021. Advances in controlled release hormonal
+Jain, S., et al., 2005. Proultraflexible lipid vesicles for effective transdermal delivery of            technologies for contraception: A review of existing devices, underlying
+     levonorgestrel: development, characterization, and performance evaluation. AAPS                     mechanisms, and future directions. J. Control Release 330, 797–811.
+     PharmSciTech 6 (3), E513–E522.                                                                  Sohel, M.A., et al., 2017. Thermal analysis of ABS/PA6 polymer blend using differential
+Jelvehgari, M., et al., 2010. Effect of formulation and processing variables on the                      scanning calorimetry. J. Therm. Anal. Calorim. 129 (3), 1689–1695.
+     characteristics of tolmetin microspheres prepared by double emulsion solvent                    Vamathevan, J., et al., 2019. Applications of machine learning in drug discovery and
+     diffusion method. Indian J. Pharm. Sci. 72 (1), 72–78.                                              development. Nat. Rev. Drug Discov. 18 (6), 463–477.
+Kaur, S., et al., 2020. Determinants of zero-order release kinetics from acetaminophen-              Wischke, C., Schwendeman, S.P., 2008. Principles of encapsulating hydrophobic drugs in
+     layered Suglet® pellets, Wurster-coated with plasticized Aquacoat® ECD (ethyl                       PLA/PLGA microparticles. Int. J. Pharm. 364 (2), 298–327.
+     cellulose dispersion). Int. J. Pharm. 573, 118873.                                              Wu, C., McGinity, J.W., 1999. Non-traditional plasticization of polymeric films. Int. J.
+Kosmidis, K., Dassios, G., 2019. Monte Carlo simulations in drug release.                                Pharm. 177 (1), 15–27.
+     J. Pharmacokinet. Pharmacodyn. 46 (2), 165–172.                                                 Yuan, Y., et al., 2018. Early stage release control of an anticancer drug by drug-polymer
+Kosmidis, K., Macheras, P., 2007. Monte Carlo simulations for the study of drug release                  miscibility in a hydrophobic fiber-based drug delivery system. RSC Adv. 8 (35),
+     from matrices with high and low diffusivity areas. Int. J. Pharm. 343 (1–2), 166–172.               19791–19803.
+Krishnamachari, Y., Madan, P., Lin, S., 2007. Development of pH- and time-dependent                  Zhou, J., et al., 2018. Reverse Engineering the 1-Month Lupron Depot®. AAPS J. 20 (6),
+     oral microparticles to optimize budesonide delivery to ileum and colon. Int. J.                     105.
+     Pharm. 338 (1–2), 238–247.                                                                      Zhu, Y., et al., 2002. Solid-state plasticization of an acrylic polymer with
+Kroese, D.P., et al., 2014. Why the Monte Carlo method is so important today. Wiley                      chlorpheniramine maleate and triethyl citrate. Int. J. Pharm. 241 (2), 301–310.
+     Interdiscip. Rev. Comput. Stat. 6 (6), 386–392.                                                 Ziaee, A., et al., 2019. Spray drying of pharmaceuticals and biopharmaceuticals: Critical
+Lee, W.Y., Asadujjaman, M., Jee, J.-P., 2019. Long acting injectable formulations: The                   parameters and experimental process optimization approaches. Eur. J. Pharm. Sci.
+     state of the arts and challenges of poly (lactic-co-glycolic acid) microsphere,                     127, 300–318.
+     hydrogel, organogel and liquid crystal. J. Pharm. Invest. 49 (4), 459–476.
+
+
+
+
+                                                                                                11
+

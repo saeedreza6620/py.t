@@ -1,0 +1,278 @@
+=================== jin
+ 7.2. Drug loading and encapsulation rate
+ Drug LoadingðS4Þ ¼
+ Furthermore, the polymer grade and drug loading concentration of rabbits reached the peak at 30 min,
+ a feed ratio of 1:3, but its drug loading was relatively
+ burst release effects, drug loading, and encapsu­ interdependent. For example, we found that particle size
+ hydrolysates. Mar Drugs. 2021;19(3):145. dence of enhanced encapsulation efficiency,
+ lation efficiency. Each set of data samples’ in vitro affects the encapsulation efficiency and the release rate
+ release equation, and the primary the drug in microspheres, the type and quantity of pel­
+ release morphine gelatine microsphere (MGM) prepared using an emulsification-crosslinking Morphine; microspheres;
+chosen based on their entrapment efficiency. The encap­ injection of chemical inflammatory agents.
+degradation time and more foreign body reactions in ture (105°C) (Table 1). Next, morphine and gelatin
+microspheres, the degree of cross-linking, the size and gelatin, is higher than the diffusion rate of the drug,
+morphine microspheres in this study is the emulsifica­ The results of drug loading, encapsulation rate, and
+previous experiments. It was found that the higher the average drug loading was 20.94%, and the average
+rates. The same findings were found in the literature [9,10]. spheres, and the drug loading and encapsulation rate
+release of the drug in large quantities [30,31]. degradation rates were mainly affected by temperature
+the degradation rate of the carrier polymer, such as centrations of the morphine injection group are shown
+the polymer begins to degrade, the molecular weight of illumination, the area under the degradation peak
+tion cross-linking method. Since many variables are burst release effect of microspheres with different feed
+tives, the interaction between drug and carrier materials, to the degradation rate of the carrier. If the rate of drug
+was 5–15 mg. The dose design is based on the clinical The drug loading rate was higher in the 50–80 um
+=================== sar
+ After 1 and 7 days of postinjection, animals (n =3) were the percentage of entrapment and encapsulation, which
+ Drug loading, entrapment and encapsulation
+ Gelatin, type B, 300 Bloom strength was purchased from by using the formula:
+ Japan). Drug loading in the microspheres was estimated
+ Percentage of drug loading
+ Qp is the quantity of drug encapsulated in microspheres tem for glutaraldehyde determination as explained in our
+ Remi, Mumbai, India). Ten milliliters of glutaraldehyde-
+ Shimadzu, VP series to estimate diclofenac sodium as microspheres with lower drug loading and vice versa. The
+ Test for absence of glutaraldehyde
+ The cross-linked microspheres were collected by filtra-
+ The solution was centrifuged (3000 rpm; Remi) and 20 and with varying degree of cross-linking. Microspheres
+ Theoretical Actuala entrapmenta encapsulationa mean)
+ X-ray diffraction (XRD) to find out the physical nature Determination of drug loading and encapsulation
+ absence, the microspheres were tested for glutaraldehyde
+ analyzed. The content of the synovium that has received surface of microspheres with higher drug loading, which
+ contents were transferred to a 1 ml syringe with 27-gauge in Table 1. During the cross-linking process, the gelatin
+ drug loading produced larger particles that resulted in
+ encapsulated in the microspheres was determined using Gas chromatography to test residual glutaraldehyde
+ evident that particle size and carrier type are the most Preparation of gelatin microspheres loaded with
+ found to be free from residual glutaraldehyde.
+ in rabbits. The microspheres showed drug loading of 9.8, 18.3, and 26.7% w/w with an average size range
+ isopropyl alcohol, toluene, span 80, and glutaraldehyde
+ linking method, characterized by drug loading, size distribution, scanning electron microscopy (SEM), Fourier
+ loaded with diclofenac sodium (c). glutaraldehyde, which is toxic and produce irritation/
+ loaded with diclofenac sodium was transferred to 50 ml of entrapment and encapsulation at higher drug loading.
+ much less intense and disappeared in the XRD of drug- influenced by the drug loading as shown in Figure 6.
+ pain and stress to animals. sulation process. Moreover, higher drug loading lowered
+ prepared by emulsification–glutaraldehyde cross-linking
+ reveals the amorphous form of entrapped drug in the higher drug loading (18.3 and 26.7% w/w) released the
+ sonicated for 2 min to get uniform suspension. Then, the of entrapment and encapsulation efficiency as given
+ tube and shaken well with 5 ml of methanol for 30 min. different drug loading, gelatin content, stirring speed,
+ ual glutaraldehyde. The formulated microspheres could prolong the drug release up to 30 days in vitro. About
+ unreacted glutaraldehyde and the cross-linking was in the range of 20–70 µm to get maximum retention at the
+ was used to remove the unreacted glutaraldehyde from
+=================== kod
+ (31 ± 2%), which was exposed to the crosslinker for a longer time. However, this difference
+ (b) and crosslinking parameters (c). Reported values represent the mean ± SD (n = 3).
+ 0.01 M PBS, 0.01% (w/v) sodium azide and 0.005% (w/v) polyvinyl alcohol. Samples were
+ 1 h and almost complete release within 3 h. In contrast, longer crosslinking times allowed
+ 2, and 4 h) to assess its effect on encapsulation efficiency and release [87] (Table 1).
+ 2.10. Encapsulation Efficiency
+ 2.6. Crosslinking Degree
+ 2.9. Degradation Resistance
+ 3.4. Crosslinking Degree
+ 3.7. Degradation Resistance
+ 3.8. Encapsulation Efficiency and Release Kinetics of K from MS/K
+ < 0.001), and MS-11, crosslinked for 0.5 h (223 ± 10%; padj < 0.001). The difference between
+ A similar trend was observed at a TA:PHC ratio of 1:4. MS-14, crosslinked for 0.5 h,
+ Ahmady, A.; Anuar, N.K.; Ariffin, S.A.; Abu Samah, N.H. Mucoadhesive Enhancement of Gelatine by Tannic Acid Crosslinking
+ As it regards the effect of crosslinker content, the TA:PHC ratio influenced the apparent
+ CD% Degree of Crosslinking
+ Controlled Release of Resveratrol to Adipose Tissue and the Impact of Drug Loading on Particle Morphology and Drug Release.
+ Cross-Linked Gelatin Microspheres for Intra-Articular Delivery. J. Drug Target. 2013, 21, 200–210. [CrossRef] [PubMed]
+ Cross-Linking System. J. Mater. Sci. Mater. Med. 2011, 22, 63–69. [CrossRef] [PubMed]
+ Cross-Linking. J. Microencapsul. 2010, 27, 747–754. [CrossRef] [PubMed]
+ Crosslinking degree showed high values (>90%) confirming that K loading did not reduce
+ DMSO whereas release testing was performed in PBS. Under the tested conditions, TA and
+ DR% Degradation Resistance
+ Degradation resistance was instead quantitatively estimated by mean of a colorimetric
+ Drug-loaded MS (MS/K-1 to MS/K-3) showed degradation-resistance profiles that
+ EE% Encapsulation Efficiency
+ Figure 1. Production process workflow of TA crosslinked MSs loaded with K via W/O single
+ Figure 3. Representative SEM images of empty MSs at varying homogenization (a) and crosslinking
+ Figure 6. Swelling degree of MSs in relation to homogenization parameters (a) and crosslinker
+ Figure 8. Representative optical microscopy images of MSs during in vitro degradation over time
+ Homogenization Homogenization TA: PHC Crosslinking
+ In contrast, crosslinking parameters significantly modulated particle architecture and
+ In contrast, crosslinking time emerged as a critical determinant of degradation re-
+ In-Situ Polymer Crosslinking Method: A Potential Vehicle for Controlled Drug Delivery. Res. Rev. J. Pharm. Pharm. Sci. 2013,
+ M.V.R.; et al. Gelatin-Based Microspheres Crosslinked with Glutaraldehyde and Rutin Oriented to Cosmetics. Braz. J. Pharm. Sci.
+ MS-10 also showed significantly higher degradation resistance than MS-11 (padj < 0.001).
+ MS-14) further amplified this effect, confirming that reduced crosslinker density facilitates
+ MS-6 as the best experimental condition. Thus, the effects of crosslinking time and TA:PHC
+ MS/K-1, crosslinked for 4 h, reached an SD% of 1942 ± 140% and was statistically com-
+ MS/K-3, crosslinked for 0.5 h, exhibited significantly lower SD% than MS-14 (379 ± 25%
+=================== zha
+ bonds with the D-Ala–D-Ala region of lipid linked Gel microspheres, the cell-friendliness of the EDC cross-
+ colonization.4 In the later stages of osteomyelitis, gentamicin sulfate,10 ibuprofen,11 or lysozyme12) incorporated
+(3-dimethylaminopropyl)carbodiimide (EDC).18 These micro- own regeneration capacity to repair bone tissue while avoiding
+28 (M degradation: D1–D3, osteogenesis: D4–D7), and 56 (M degradation: E1–E3, osteogenesis: E4–E7) (red circle: bone defect area; yellow: M; white: new
+7.4 or pH 6.0 and then immersed in brown sample bottles 2.6 Treatment of rabbit osteomyelitis
+G3, VM; live cells stained positive for SYTO 9 (green), whereas dead cells were visualized via PI staining (red). G4: SYTO-stained live bacteria were counted
+Gel type A was purchased from Sigma-Aldrich, USA. n-HA slurry samples were observed by SEM. Cell attachment, sp
+However, the samples immersed in acidic solution exhibited
+P release induced by the degradation of M which can stimulate
+a dialysis bag (8000 Da) containing 5 mL of PBS with pH
+after 24 h of immersion with similar trends. M in a more acidic and progressive cortical bone destruction (Fig. 10A1); purule
+after M implantation at day 0 (M degradation: A1–A3), 10 (M degradation: B1–B3, osteogenesis: B4–B7), 16 (M degradation: C1–C3, osteogenesis: C4–C7),
+apparent changes in the crystalline structure during the EDC the expression of osteogenic marker genes and promotes
+area reached 80.56%  2.78% (Fig. 10M). Noticeably, and but was not incorporated into the crosslinked structure
+as a result of the ongoing and severe bacterial infection. Bone carriers.59 After EDC crosslinking, changes in the amide bonds
+bone); M degradation rate (F) and the bone volume/total volume (BV/TV) (G), bone mineral density (BMD) results of bone defect (H) 
+bone, large accumulation of lymphocytes and monocytes, and length crosslinker, EDC, promoted the formation of amide
+conditions, and BMSCs were harvested from the metaphysis of 2.4.3 Degradation and osteogenesis of M in vivo. New
+crosslinked microspheres support osteogenesis. Microsphere (Technovits7200 VLC, Germany). Energy-dispersive
+crosslinking can be identified in the XRD spectral comparison. bone formation. Although no significant diﬀer
+defects, M and VM injection and filling of the femoral condyle, tuberosity tibia, and corpus tibia, (E) crosslinking reaction of Gel with EDC.
+degradation and bone formation supported by the microscaf- spectroscopy (EDS, X-MaxN 80, Oxford, UK) was used
+distributed M, the cells explored their environment by extend- 3.3 Degradation and osteogenesis of M in vivo
+emulsion method can be adjusted from 10 to 400 mm by tuning large number of amide bond-crosslinking networks (Fig. 11B-
+esis. The first-strand cDNA was synthesized the bone defect) was selected to characterize the degradation of
+fluoresced green, whereas the dead bacteria labeled with PI bacteria were separated from the infected wound and spread on
+growth.55 Synthetic conditions and crosslinking of Gel micro- large amount of amino groups (such as Gel), will swell in
+ing to bridging (Fig. 4A1, black arrow). High-resolution bone defects in rabbits to evaluate their degradation and
+length crosslinking agent (EDC) and are entirely degradable. of a suitable linking strategy that ensures efficient and reliab
+mined by dissolving 1 g of VM completely in 4 mL of PBS (pH into a centrifuge tube containing 10 mL of sterile physiological
+myelitis treatment. Further, we tested the hypothesis that EDC which were embedded in the glycol methacrylate monomer29
+natant was discarded, and 2.5% glutaraldehyde was added to rabbit back muscle S. aureus infection model was established.37
+neutrophils were in evidence (Fig. 10I3, black arrow), possibly (Fig. 3E), which is preferable for crosslinking Gel microsphere
+peptidoglycan layer.68,69 This will further weaken the cell wall of chemical crosslinkers, such as glutaraldehyde,73 and thus sup-
+recruitment and targeted antimicrobial character- 6.5) due to the release of lactic or acetic acid. The isoelectric
+sections after washing, dehydration, and wax immersion. pores on the sphere interior and chloride elements (blue dots)
+slightly shift after crosslinking with EDC. The CQO absorption matrix and is an intermediate osteogenesis index.49 The eﬀect
+solution, type and concentration of organic solvent and surfac- phosphate-buﬀered saline (Fig. 11B-IV). The breaking of 
+spheres formed via chemical crosslinking using the water-in-oil min (Fig. 6B). The crosslinking of Gel with EDC can form a
+staining and then observed by using a microscope to analyze during the drug loading. The broad XRD diﬀraction peak of Gel
+=================== cha
+ (Figures 3c and 5). The drug release in the first 1 to 2 h of immersion was mainly due to
+ 0.5 dM-G and 1.0 dM-G until the microspheres showed a significant difference after soaking
+ 2.4.2. Crosslinking Index Changes
+ 2.4.3. Degradation of Microspheres In Vitro
+ 3.4. Degradation of DAP-Modified Microspheres
+ 3c and 5). The drug release in the first 1 to 2 h of immersion was mainly due to the rapid
+ DAP-modified microspheres with different concentrations soaked in PBS for 32 days (n = 3).
+ Figure 2 shows the biocompatibility of the crosslinked microspheres modified with
+ Gelatin (type B from bovine hide, average molar mass 40,000–50,000 g/mole, Sigma-
+ In this experiment, post-crosslinked gelatin-based microspheres were successfully
+ Japan). Glutaraldehyde crosslinker, gentamicin antibiotic, and diammonium phosphate
+ Ninhydrin (2,2-dihydroxy-1,3-indanedione, Sigma-Aldrich® , St. Louis, MO, USA)
+ The free amine group before crosslinking is (amine-reactive)fresh , and the free amine
+ The microspheres in each group were soaked in S. aureus and E. coli suspensions for 1,
+ The modified microspheres were immersed in deionized water and phosphate-buffered
+ The total degradation time of the emulsified microspheres prepared in this study
+ Weight loss (%) = × 100 %
+ ability of drug loading and secondary release after modification with DAP. In the future,
+ activity and biocompatibility of synergistically cross-linked gelatin-alginate hydrogel beads as gentamicin carriers. J. Drug Deliv.
+ and diammonium phosphate (DAP) were chosen to modify post-crosslinked microspheres.
+ antibiotics. In terms of weight loss, 0.5 dM and 2.5 dM were completely degraded in
+ at room temperature. The microspheres were soaked in PC and DAP solutions for 24 h. The
+ biocompatibility of post-crosslinked microspheres. The cell morphology of the NIH-3T3
+ cantly crosslinking
+ centrations of DAP to evaluate the degree of crosslinking (n = 3, p > 0.05). (c) Weight loss of DAP-
+ concentrations of DAP to evaluate the degree of crosslinking (n = 3, p > 0.05). (c) Weight loss of
+ crosslinker glutaraldehyde have an O-H absorption peak at the 3343 cm−1 band. Although
+ crosslinker glutaraldehyde have an O‒H absorption peak at the 3343 cm−1 band. Althou
+ crosslinker, and microspheres modified
+ crosslinking reaction
+ crosslinkingwaswasapproximately
+ degradation
+ degree thecrosslinking,
+ evident until 16 days after soaking. On the 32nd day, the drug release amounts of 0.5 dM-G,
+ for 16 days. Given the obvious degradation of the microspheres, the drug was slowly
+ gelatin also has O-H absorption, the microspheres could be free of glutaraldehyde residues
+ gentamicin released from the microspheres in PBS was recorded within a certain period.
+ glutaraldehyde. The degree
+ glutaraldehyde. degreeof ofcrosslinking
+ group (Figure 7). The gentamicin group had obvious antibacterial ability after soaking for
+=================== hu
+ 2.3.3. Changes in Immersion Weight of Hydrogel Microspheres
+ 2.3.4. Crosslinking Index Changes
+ 3.1.3. Degradation Measurement of Em and m-Em
+ After cross-linking, hydrogel microspheres were formed and then washed three times with
+ Figure 13. Release curve of gentamicin from the m-EmG@CPC composite immersed in diH2 O
+ Figure 3. Weight loss curve of hydrogel microspheres Em and m-Em after complete degradation after
+ Figure 5. Comparison of gentamicin release from m-EmG after immersion in diH2 O and m-Em
+ Figure 9. Diffraction patterns of different m-EmG@CPC composites after soaking in Tris buffer for
+ In this experiment, 0.01 g of microspheres from different groups were soaked in diH2 O
+ Ninhydrin (2,2-dihydroxy-1,3-indanedione, Sigma-Aldrich® , St. Louis, MO, USA)
+ Residual amino groups of the microspheres before and after cross-linking were determined
+ Taipei City, Taiwan), a solution of 25% glutaraldehyde for gelatin crosslinking (GA, Panreac
+ The XRD analysis of m-EmG@CPC composites after soaking in Tris buffer for one day
+ The free amine group before crosslinking is (amine-reactive)fresh , and the free amine
+ The hydrogel microspheres were soaked in a 1 g/250 mL of ADP solution and reacted
+ The raw materials used in this study included the following: gelatin (type B from
+ The weight loss of hydrogel microspheres Em and m-Em following immersion in
+ a reaction. The presence of more amino groups leads to a lower degree of cross-linking.
+ alone: immediately and after 24 h of immersed observation.
+ bitol [26]. Chemical cross-linking with glutaraldehyde (GA) reacts quickly with gelatin and
+ composites compared to CPC alone after soaking in Tris buffer for 1 day (red arrowhead: HA product
+ effectively cross-linked by GA. The presence of CH2 absorption bands at 2848 cm−1 and
+ exacerbations. This study involved the preparation and modification of emulsified (Em) crosslinking-
+ for FTIR analysis. Liquid samples (paraffin oil, Span 80, glutaraldehyde, and gentamicin)
+ glass transition temperature (Tg) post-cross-linking. Typically, the Tg of the gel falls within
+ glutaraldehyde, gentamicin) and each emulsified gel microsphere (Em, mEm, and m-EmG).
+ group after crosslinking is (amine-reactive)residual .
+ immersed in a Tris-buffer solution, an artificial body fluid, at a 1 g to 10 mL ratio. After
+ immersed in diH2 O.
+ immersion in diH2 O (n = 10).
+ in the weight loss pattern of the emulsified microspheres was observed between pre- and
+ inconsequential, aligning with the findings on cross-linking degrees.
+ m-EmG@CPC were immersed in the cell culture medium according to the extracting ratio
+ measured; approximately 0.08 mg of gentamicin was released after 20 days of immersion.
+ microspheres and subsequent degradation of the gel molecules, resulting in sustained
+ mold within 15 min of the initial setting. The resulting samples were immersed in the
+ nated into m-EmG microspheres. The total degradation time of m-EmG reached 30 days,
+ occurred approximately 2 days after immersion, transitioning from an initial rapid release
+ p > 0.05), respectively. These findings collectively indicate that the degradation of Em
+ posite immersion and compression, although adding gel microspheres did not hinder the
+=================== lan
+ 3h to crosslink the microspheres. The microspheres were collected by centrifugation at rate of
+ All reagents used in this study were commercially available. Gelatin A with an isoelectric point
+ Encapsulation efficiency
+ Encapsulation efficiency was determined by using an ELISA kit (Sigma-Aldrich). In brief, an
+ Gelatin microspheres were prepared by w/o emulsion crosslinking reaction as previously
+ Just prior to injection, sterile phosphate buffer solution (PBS, pH 7.4) was added to dry bFGF-
+ PBS to maintain a constant volume. The fluorescence intensity of samples at different time
+ allowed to easily encapsulating bFGF through immersing porous GMSs in the aqueous bFGF
+ enzymatic degradation [28]. New delivery strategies and technologies have been developed to
+ face was highly valuable for drug loading in free organic solvent medium. As a control, the
+ fibroblast growth factor (bFGF) with an isoelectric point of 9.6 was ordered from Gelusite Biol-
+ gelatin microsphere was prepared by s/o emulsion crosslinking method using NaCl as porous-
+ if systemic administration is likely to be related to enzymes degradation, and not easy to pass
+ isoelectric point of 5.0 while bFGF with an isoelectric point of 9.6.
+ lation of bFGF in microspheres, because of gelatin with an isoelectric point of 5.0 while bFGF
+ loading efficiency, and its ability of the sustained-release of its payload. In this study, a porous
+ microspheres sample was dispersed in 1.5 mL of PBS and placed in thermostatic oscillator. At
+ polypeptide antibody (NF200, 1/5000)) at 4˚C overnight, then washed with PBS three times.
+ spheres was calculated using the following formula: Loading efficiency (%) = (total bFGF-
+ unloaded dry microspheres were hydrated by adding sterile PBS.
+ were measured using the ELISA kit. The loading efficiency of bFGF-loaded gelatin micro-
+ with an isoelectric point of 9.6. The prepared microspheres have an optimal diameter with
+gelatin microspheres sustained release of bFGF prepared by a W/O emulsion template, followed by cross-linking, washing and drying. The
+=================== liu
+ 5 mL of PBS solution and gently shaken at 100 rpm at 37 °C. At predetermined time
+ Encapsulation efficiency
+ Encapsulation efficiency % = Entrapped amount of drug / Theoratical amount of drug ×100%
+ Encapsulation efficiency (%) 68.48 ± 3.41 76.26 ± 3.97 75.32 ± 0.92 75.2 ± 1.14
+ GMs were prepared by using W/O emulsion chemically crosslinking method. Briefly, 3 g
+ GMs(ICA) and F CPC/GMs(ICA) after 1 week of soaking
+ It can be seen that the amount of ICA had a significant effect on encapsulation efficiency
+ Learn more biomedcentral.com/submissions
+ Table 2 Encapsulation efficiency of gelatin microspheres
+ Three samples of calcium phosphate cement with 0.5 mM ICA were immersed in
+ as control. After 7 days of culture, cells were washed three times twice with PBS and
+ at 3000 rpm for 5 min, all supernatants were collected and fresh PBS was replaced,
+ degradation products. CCK-8 assay was performed on days 1, 3, 5 and 7. It was observed
+ each group were fixed with 2.5% glutaraldehyde at 4 °C overnight, dehydrated in a
+ gelatin microspheres had good adhesion with the CPC matrix. After 1 week of soaking,
+ gelatin microspheres with 0.25, 0.5, 1 and 2 mM ICA were immersed in 5 mL of
+ high cost and rapid degradation of such expensive growth factors limit their widespread
+ in situ degradation of the microspheres without unacceptably affecting the handling
+ of ICA from the interior region of GMs and the degradation of GMs, the concentration
+ of fresh PBS was replaced. The cumulative release ratio of ICA released from cement
+ of gelatin microspheres (Table 2). The encapsulation efficiency of microspheres was vari-
+ phosphate-buffered saline (PBS) solution and gently shaken at 100 rpm at 37 °C. At
+ rienced a series of sterilization process. Then, 0.1 g cements were soaking in 10 mL
+ samples were washed twice with PBS and fixed in 4% paraformaldehyde for 30 min,
+ slow degradation over time [12]. Ideally the hardened CPCs should have a suitable com-
+ spheres readily dissolved in PBS. After this time period, the cumulative release amount
+ spheres were cross-linked for 15 min using 50% glutaraldehyde solution, collected by filtra-
+ the encapsulation efficiency reached the maximum value of 76.26 ± 3.97%.
+ to the amount of ICA by using standard calibration curve. The encapsulation efficiency was
+ with PBS. The culture medium was refreshed every 3 days, and BMSCs were expanded
+ with the CPC matrix (Fig. 2D, E). After 1 week of soaking, a matrix of small apatite-like
+ without 0.5 mM ICA. After 1 week of soaking in PBS, the hydration products of CPC/

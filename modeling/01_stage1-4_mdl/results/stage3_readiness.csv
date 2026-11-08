@@ -1,0 +1,9 @@
+case,Q1_Cw_or_data,Q2_same_formulation_medium,Q3_volume_or_radius_vs_time,Q4_network_mass_constant,Q5_covers_initial_transient,determinable,decision
+C1 Jin 2023 morphine,no,—,no,not reported,no,k only (lumped D_app/R^2),constant radius; Fujita model not testable
+C2 Saravanan 2011 diclofenac,no,—,no,not reported,no,k per batch; D_app with assumed R uncertainty,constant radius; Fujita model not testable
+C3 Kodra 2026 ketoprofen,partial: gravimetric SD% = (Wt-Wi)/Wi only; no wet volume -> C_w not computable,"yes (MS/K-1..3, PBS pH 7.4, 37 C)",no (single hydrated size distribution of empty MS; MS/K Table S2 unavailable),no (DR% -> ~0 at 24 h; apparent SD falls after its peak),no (first swelling point 1 h; 10-38% of drug already released by 1 h),"k; exploratory (k_eq, beta) of a gravimetric-index model only, weakly identifiable",constant radius retained; Fujita C_w model not testable; index model = candidate only
+C4 Zhang 2023 vancomycin,partial: 'swelling rate' of drug-free M only,no (M vs VM),no,not reported,partial (M: 15 min resolved),k (lumped with dialysis membrane),constant radius; not testable
+C5 Chang 2023 gentamicin,no,—,no,no (weight loss of drug-free dM reported),no,"k, A",constant radius; not testable
+C6 Hu 2024 gentamicin,no (weight change of drug-free m-Em),no,no,no,no,"k, A",constant radius; not testable
+C7 Lan 2017 bFGF,no,—,no,not reported,no,k,constant radius; not testable
+C8 Liu 2022 icariin,no,—,no,not reported,no,k (no reference radius),constant radius; not testable

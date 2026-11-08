@@ -1,0 +1,2000 @@
+[
+ {
+  "case": "C1_Jin2023_morphine",
+  "formulation": "MGM (optimised)",
+  "model": "A\u00b7F",
+  "kind": "F",
+  "amp_free": true,
+  "n": 15,
+  "p": 2,
+  "full_RMSE": 4.112803561695521,
+  "full_MAE": 2.9675820453619335,
+  "params": {
+   "k_per_h": 0.024601351708254615,
+   "A": 0.5847849684346694
+  },
+  "se": {
+   "k_per_h": 0.004217372458433681,
+   "A": 0.01863813177003819
+  },
+  "ci95": {
+   "k_per_h": [
+    0.015490272436425064,
+    0.03371243098008417
+   ],
+   "A": [
+    0.5445197327436555,
+    0.6250502041256834
+   ]
+  },
+  "corr": [
+   [
+    0.9999999999999998,
+    -0.586074578640027
+   ],
+   [
+    -0.586074578640027,
+    0.9999999999999999
+   ]
+  ],
+  "cond": 30.841135707245215,
+  "aicc": -90.73195774680106,
+  "early_RMSE": 6.063328123443546,
+  "late_RMSE": 0.7674800184780313,
+  "early_window_h": [
+   0.0833,
+   1.5
+  ],
+  "late_window_h": [
+   12.0,
+   72.0
+  ],
+  "points_within_tol": 8,
+  "fick_adequate_until_h": null,
+  "residual_signs": "-----++++----++",
+  "train_params": {
+   "k_per_h": 0.01431643370662658,
+   "A": 0.715298854640788
+  },
+  "train_RMSE": 5.052513777533657,
+  "test_RMSE": 12.348244213574187,
+  "test_MAE": 12.165817563713304,
+  "test_identifiable": true,
+  "R_um": 31.555,
+  "R_rel_unc": 0.1522738076374584,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 6.804447037576018e-11,
+  "Dapp_rel_unc": 0.3494810088181337,
+  "Dapp_low": 3.430114344679493e-11,
+  "Dapp_high": 1.3498237911221394e-10
+ },
+ {
+  "case": "C1_Jin2023_morphine",
+  "formulation": "MGM (optimised)",
+  "model": "A\u00b7F+burst",
+  "kind": "FB",
+  "amp_free": true,
+  "n": 15,
+  "p": 3,
+  "full_RMSE": 4.112803561708569,
+  "full_MAE": 2.9675823853665273,
+  "params": {
+   "k_per_h": 0.024601335772634104,
+   "b": 4.500453578362004e-13,
+   "A": 0.58478501093309
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -87.55013956488769,
+  "early_RMSE": 6.063326672935688,
+  "late_RMSE": 0.7674816923105078,
+  "early_window_h": [
+   0.0833,
+   1.5
+  ],
+  "late_window_h": [
+   12.0,
+   72.0
+  ],
+  "points_within_tol": 8,
+  "fick_adequate_until_h": null,
+  "residual_signs": "-----++++----++",
+  "train_params": {
+   "k_per_h": 0.014316434365347127,
+   "b": 1.1293233767513047e-14,
+   "A": 0.7152988426479704
+  },
+  "train_RMSE": 5.052513777533879,
+  "test_RMSE": 12.348243169873035,
+  "test_MAE": 12.16581654800366,
+  "test_identifiable": true,
+  "R_um": 31.555,
+  "R_rel_unc": 0.1522738076374584,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 6.80444262996919e-11,
+  "Dapp_rel_unc": NaN,
+  "Dapp_low": NaN,
+  "Dapp_high": NaN
+ },
+ {
+  "case": "C2_Saravanan2011_diclofenac",
+  "formulation": "GM1",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 12,
+  "p": 1,
+  "full_RMSE": 1.3125009052597942,
+  "full_MAE": 1.138126670507765,
+  "params": {
+   "k_per_h": 5.325675380598013e-05
+  },
+  "se": {
+   "k_per_h": 1.2898561053049732e-06
+  },
+  "ci95": {
+   "k_per_h": [
+    5.041779965955029e-05,
+    5.6095707952409976e-05
+   ]
+  },
+  "corr": [
+   [
+    0.9999999999999999
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -101.59765873879056,
+  "early_RMSE": 1.6567610151883905,
+  "late_RMSE": 1.0126528978954967,
+  "early_window_h": [
+   24.0,
+   216.0
+  ],
+  "late_window_h": [
+   432.0,
+   720.0
+  ],
+  "points_within_tol": 12,
+  "fick_adequate_until_h": 720.0,
+  "residual_signs": "--+----+++++",
+  "train_params": {
+   "k_per_h": 4.876528493556789e-05
+  },
+  "train_RMSE": 1.0015966162463776,
+  "test_RMSE": 2.754662776081818,
+  "test_MAE": 2.721718347277796,
+  "test_identifiable": true,
+  "R_um": 18.945,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 5.309595169495721e-14,
+  "Dapp_rel_unc": 0.400732564138165,
+  "Dapp_low": 2.4207557077983517e-14,
+  "Dapp_high": 1.1645867764811511e-13
+ },
+ {
+  "case": "C2_Saravanan2011_diclofenac",
+  "formulation": "GM1",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 12,
+  "p": 2,
+  "full_RMSE": 1.3125009052881769,
+  "full_MAE": 1.138126173528418,
+  "params": {
+   "k_per_h": 5.325676257426264e-05,
+   "b": 1.0139368251759732e-12
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -98.66432540493823,
+  "early_RMSE": 1.6567625016276377,
+  "late_RMSE": 1.0126496995364365,
+  "early_window_h": [
+   24.0,
+   216.0
+  ],
+  "late_window_h": [
+   432.0,
+   720.0
+  ],
+  "points_within_tol": 12,
+  "fick_adequate_until_h": 720.0,
+  "residual_signs": "--+----+++++",
+  "train_params": {
+   "k_per_h": 4.8765284836885033e-05,
+   "b": 7.521289735189057e-14
+  },
+  "train_RMSE": 1.0015966162476988,
+  "test_RMSE": 2.7546628160211966,
+  "test_MAE": 2.721718387397646,
+  "test_identifiable": true,
+  "R_um": 18.945,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 5.309596043676498e-14,
+  "Dapp_rel_unc": NaN,
+  "Dapp_low": NaN,
+  "Dapp_high": NaN
+ },
+ {
+  "case": "C2_Saravanan2011_diclofenac",
+  "formulation": "GM2",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 12,
+  "p": 1,
+  "full_RMSE": 2.524032592991525,
+  "full_MAE": 2.26930405508447,
+  "params": {
+   "k_per_h": 0.00013090399662423022
+  },
+  "se": {
+   "k_per_h": 4.941546412627519e-06
+  },
+  "ci95": {
+   "k_per_h": [
+    0.00012002772630213297,
+    0.00014178026694632747
+   ]
+  },
+  "corr": [
+   [
+    0.9999999999999999
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -85.90349587590946,
+  "early_RMSE": 2.3782461931355,
+  "late_RMSE": 2.49227613022119,
+  "early_window_h": [
+   24.0,
+   216.0
+  ],
+  "late_window_h": [
+   432.0,
+   720.0
+  ],
+  "points_within_tol": 9,
+  "fick_adequate_until_h": 144.0,
+  "residual_signs": "-++-----++++",
+  "train_params": {
+   "k_per_h": 0.00011740931865930065
+  },
+  "train_RMSE": 1.7593120613610485,
+  "test_RMSE": 4.7405142294199205,
+  "test_MAE": 4.432235855234088,
+  "test_identifiable": true,
+  "R_um": 20.31,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 1.49992744671967e-13,
+  "Dapp_rel_unc": 0.4017773222460047,
+  "Dapp_low": 6.824494548336093e-14,
+  "Dapp_high": 3.2966285334223277e-13
+ },
+ {
+  "case": "C2_Saravanan2011_diclofenac",
+  "formulation": "GM2",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 12,
+  "p": 2,
+  "full_RMSE": 2.5240325929963365,
+  "full_MAE": 2.269304029652486,
+  "params": {
+   "k_per_h": 0.0001309040026202387,
+   "b": 4.825013104441975e-13
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -82.97016254253036,
+  "early_RMSE": 2.3782465590150466,
+  "late_RMSE": 2.4922753160510758,
+  "early_window_h": [
+   24.0,
+   216.0
+  ],
+  "late_window_h": [
+   432.0,
+   720.0
+  ],
+  "points_within_tol": 9,
+  "fick_adequate_until_h": 144.0,
+  "residual_signs": "-++-----++++",
+  "train_params": {
+   "k_per_h": 0.00010872840611890422,
+   "b": 0.02231642712592887
+  },
+  "train_RMSE": 1.610092166842649,
+  "test_RMSE": 5.758178389265933,
+  "test_MAE": 5.467987180272571,
+  "test_identifiable": true,
+  "R_um": 20.31,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 1.4999275154232846e-13,
+  "Dapp_rel_unc": NaN,
+  "Dapp_low": NaN,
+  "Dapp_high": NaN
+ },
+ {
+  "case": "C2_Saravanan2011_diclofenac",
+  "formulation": "GM3",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 12,
+  "p": 1,
+  "full_RMSE": 2.0334771727157355,
+  "full_MAE": 1.5681429861294498,
+  "params": {
+   "k_per_h": 0.00024439526096641016
+  },
+  "se": {
+   "k_per_h": 7.331005611557082e-06
+  },
+  "ci95": {
+   "k_per_h": [
+    0.0002282598264068245,
+    0.0002605306955259958
+   ]
+  },
+  "corr": [
+   [
+    1.0
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -91.09015116717767,
+  "early_RMSE": 2.744182100002886,
+  "late_RMSE": 0.8809477413874852,
+  "early_window_h": [
+   24.0,
+   216.0
+  ],
+  "late_window_h": [
+   432.0,
+   720.0
+  ],
+  "points_within_tol": 11,
+  "fick_adequate_until_h": 48.0,
+  "residual_signs": "+++-----++++",
+  "train_params": {
+   "k_per_h": 0.0002400747140388466
+  },
+  "train_RMSE": 2.5320168276466406,
+  "test_RMSE": 1.12633390406311,
+  "test_MAE": 0.8907079027089203,
+  "test_identifiable": true,
+  "R_um": 22.705,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 3.499719940486177e-13,
+  "Dapp_rel_unc": 0.40112316162173883,
+  "Dapp_low": 1.594374588009313e-13,
+  "Dapp_high": 7.682033917217094e-13
+ },
+ {
+  "case": "C2_Saravanan2011_diclofenac",
+  "formulation": "GM3",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 12,
+  "p": 2,
+  "full_RMSE": 1.83512516020588,
+  "full_MAE": 1.5604477708292572,
+  "params": {
+   "k_per_h": 0.00023203640286848851,
+   "b": 0.03270671595691095
+  },
+  "se": {
+   "k_per_h": 1.0677110057812085e-05,
+   "b": 0.021693449577273274
+  },
+  "ci95": {
+   "k_per_h": [
+    0.000208246319121744,
+    0.00025582648661523304
+   ],
+   "b": [
+    -0.015629301879816843,
+    0.08104273379363874
+   ]
+  },
+  "corr": [
+   [
+    0.9999999999999999,
+    -0.7727233665710846
+   ],
+   [
+    -0.7727233665710846,
+    1.0
+   ]
+  ],
+  "cond": 10245995.56000204,
+  "aicc": -90.62004665732823,
+  "early_RMSE": 2.241671033693578,
+  "late_RMSE": 1.314416630501955,
+  "early_window_h": [
+   24.0,
+   216.0
+  ],
+  "late_window_h": [
+   432.0,
+   720.0
+  ],
+  "points_within_tol": 10,
+  "fick_adequate_until_h": 48.0,
+  "residual_signs": "-++----+++++",
+  "train_params": {
+   "k_per_h": 0.00020597467195633705,
+   "b": 0.06312117729497983
+  },
+  "train_RMSE": 1.7632364518341905,
+  "test_RMSE": 3.1178828581146467,
+  "test_MAE": 3.0304091867424843,
+  "test_identifiable": true,
+  "R_um": 22.705,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 3.3227421138462405e-13,
+  "Dapp_rel_unc": 0.40263800412925166,
+  "Dapp_low": 1.509260644999865e-13,
+  "Dapp_high": 7.315247496649838e-13
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-1",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 5,
+  "p": 1,
+  "full_RMSE": 3.3627861228208697,
+  "full_MAE": 2.495516328808118,
+  "params": {
+   "k_per_h": 0.0026605521707501073
+  },
+  "se": {
+   "k_per_h": 0.00030766372004710637
+  },
+  "ci95": {
+   "k_per_h": [
+    0.0018063407411783746,
+    0.0035147636003218397
+   ]
+  },
+  "corr": [
+   [
+    1.0
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -30.5906701905821,
+  "early_RMSE": 0.8517792124939394,
+  "late_RMSE": 2.9425161634710166,
+  "early_window_h": [
+   0.5,
+   1.0
+  ],
+  "late_window_h": [
+   5.0,
+   24.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": 1.0,
+  "residual_signs": "++++-",
+  "train_params": {
+   "k_per_h": 0.003673228836442702
+  },
+  "train_RMSE": 1.6621728949028731,
+  "test_RMSE": 9.013522716673464,
+  "test_MAE": 8.304901732777356,
+  "test_identifiable": true,
+  "R_um": 7.5,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 4.1571127667970427e-13,
+  "Dapp_rel_unc": 0.4163801020831866,
+  "Dapp_low": 1.8380694094322977e-13,
+  "Dapp_high": 9.402031537647164e-13
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-1",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 5,
+  "p": 2,
+  "full_RMSE": 2.641295136681221,
+  "full_MAE": 2.1099089746032624,
+  "params": {
+   "k_per_h": 0.0022308645057620103,
+   "b": 0.04428220839703213
+  },
+  "se": {
+   "k_per_h": 0.0003900366275148132,
+   "b": 0.03185014752789132
+  },
+  "ci95": {
+   "k_per_h": [
+    0.0009895938816021754,
+    0.0034721351299218453
+   ],
+   "b": [
+    -0.05707917592584663,
+    0.1456435927199109
+   ]
+  },
+  "corr": [
+   [
+    1.0,
+    -0.7545199056704934
+   ],
+   [
+    -0.7545199056704934,
+    1.0000000000000002
+   ]
+  ],
+  "cond": 15485.01702663459,
+  "aicc": -26.339008070496917,
+  "early_RMSE": 1.8494019896698306,
+  "late_RMSE": 1.1958036280294169,
+  "early_window_h": [
+   0.5,
+   1.0
+  ],
+  "late_window_h": [
+   5.0,
+   24.0
+  ],
+  "points_within_tol": 4,
+  "fick_adequate_until_h": 1.0,
+  "residual_signs": "--++-",
+  "train_params": {
+   "k_per_h": 0.0036732284640963835,
+   "b": 3.130414220697871e-20
+  },
+  "train_RMSE": 1.6621728949032222,
+  "test_RMSE": 9.013520665269018,
+  "test_MAE": 8.304899642744987,
+  "test_identifiable": true,
+  "R_um": 7.5,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 3.485725790253141e-13,
+  "Dapp_rel_unc": 0.43654073705759006,
+  "Dapp_low": 1.4815020015915502e-13,
+  "Dapp_high": 8.201328295056679e-13
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-2",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 5,
+  "p": 1,
+  "full_RMSE": 13.087883160613814,
+  "full_MAE": 11.897738713421004,
+  "params": {
+   "k_per_h": 0.011523802158021705
+  },
+  "se": {
+   "k_per_h": 0.004432229857337019
+  },
+  "ci95": {
+   "k_per_h": [
+    -0.0007820407344931758,
+    0.023829645050536585
+   ]
+  },
+  "corr": [
+   [
+    0.9999999999999998
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -17.001500000489294,
+  "early_RMSE": 12.062849798438211,
+  "late_RMSE": 15.020235880851835,
+  "early_window_h": [
+   0.5,
+   1.0
+  ],
+  "late_window_h": [
+   5.0,
+   24.0
+  ],
+  "points_within_tol": 0,
+  "fick_adequate_until_h": null,
+  "residual_signs": "---++",
+  "train_params": {
+   "k_per_h": 0.0054131504322678286
+  },
+  "train_RMSE": 4.183380528893322,
+  "test_RMSE": 28.95141011404087,
+  "test_MAE": 27.111536713596266,
+  "test_identifiable": true,
+  "R_um": 7.5,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 1.8005940871908916e-12,
+  "Dapp_rel_unc": 0.5549133966740505,
+  "Dapp_low": 6.068257488385828e-13,
+  "Dapp_high": 5.342784272144024e-12
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-2",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 5,
+  "p": 2,
+  "full_RMSE": 13.087883160614984,
+  "full_MAE": 11.897745932757868,
+  "params": {
+   "k_per_h": 0.011523834760908309,
+   "b": 1.9019934366778577e-14
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -10.334833333821734,
+  "early_RMSE": 12.062885515233456,
+  "late_RMSE": 15.020185959111352,
+  "early_window_h": [
+   0.5,
+   1.0
+  ],
+  "late_window_h": [
+   5.0,
+   24.0
+  ],
+  "points_within_tol": 0,
+  "fick_adequate_until_h": null,
+  "residual_signs": "---++",
+  "train_params": {
+   "k_per_h": 0.005413151528695866,
+   "b": 7.470694684041527e-18
+  },
+  "train_RMSE": 4.183380528894007,
+  "test_RMSE": 28.951406232439048,
+  "test_MAE": 27.111532478986348,
+  "test_identifiable": true,
+  "R_um": 7.5,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 1.8005991813919232e-12,
+  "Dapp_rel_unc": NaN,
+  "Dapp_low": NaN,
+  "Dapp_high": NaN
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-3",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 5,
+  "p": 1,
+  "full_RMSE": 18.64976453693605,
+  "full_MAE": 15.734469704568212,
+  "params": {
+   "k_per_h": 0.03250101386041174
+  },
+  "se": {
+   "k_per_h": 0.01664269424336103
+  },
+  "ci95": {
+   "k_per_h": [
+    -0.013706513108871485,
+    0.07870854082969496
+   ]
+  },
+  "corr": [
+   [
+    1.0000000000000002
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -13.460033320099933,
+  "early_RMSE": 23.010413435096986,
+  "late_RMSE": 8.497544446560042,
+  "early_window_h": [
+   0.5,
+   1.0
+  ],
+  "late_window_h": [
+   5.0,
+   24.0
+  ],
+  "points_within_tol": 1,
+  "fick_adequate_until_h": null,
+  "residual_signs": "--+++",
+  "train_params": {
+   "k_per_h": 0.02778984076923964
+  },
+  "train_RMSE": 22.788865054015446,
+  "test_RMSE": 10.787497712074135,
+  "test_MAE": 7.669873022830553,
+  "test_identifiable": true,
+  "R_um": 7.5,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 5.078283415689334e-12,
+  "Dapp_rel_unc": 0.6497788363729453,
+  "Dapp_low": 1.4210652620355684e-12,
+  "Dapp_high": 1.8147627092878612e-11
+ },
+ {
+  "case": "C3_Kodra2026_ketoprofen",
+  "formulation": "MS/K-3",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 5,
+  "p": 2,
+  "full_RMSE": 18.649764536460527,
+  "full_MAE": 15.734478815268549,
+  "params": {
+   "k_per_h": 0.03250077198696831,
+   "b": 1.048243024339873e-11
+  },
+  "se": {
+   "k_per_h": 0.021071088875120048,
+   "b": 0.09970269131272842
+  },
+  "ci95": {
+   "k_per_h": [
+    -0.03455683695196213,
+    0.09955838092589875
+   ],
+   "b": [
+    -0.31729846158455216,
+    0.31729846160551706
+   ]
+  },
+  "corr": [
+   [
+    1.0,
+    -0.41015401092498593
+   ],
+   [
+    -0.41015401092498593,
+    1.0
+   ]
+  ],
+  "cond": 27.339114362762153,
+  "aicc": -6.793366653688242,
+  "early_RMSE": 23.010286668849062,
+  "late_RMSE": 8.497648481264527,
+  "early_window_h": [
+   0.5,
+   1.0
+  ],
+  "late_window_h": [
+   5.0,
+   24.0
+  ],
+  "points_within_tol": 1,
+  "fick_adequate_until_h": null,
+  "residual_signs": "--+++",
+  "train_params": {
+   "k_per_h": 0.027789629301195332,
+   "b": 6.799685063678059e-17
+  },
+  "train_RMSE": 22.78886505387633,
+  "test_RMSE": 10.78761342315851,
+  "test_MAE": 7.669956940218159,
+  "test_identifiable": true,
+  "R_um": 7.5,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 5.078245622963799e-12,
+  "Dapp_rel_unc": 0.7617915318514488,
+  "Dapp_low": 1.1409422427004757e-12,
+  "Dapp_high": 2.2602878254478915e-11
+ },
+ {
+  "case": "C4_Zhang2023_vancomycin",
+  "formulation": "pH 6.0",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 11,
+  "p": 1,
+  "full_RMSE": 6.291365597153805,
+  "full_MAE": 5.68815879864815,
+  "params": {
+   "k_per_h": 0.0005155156005217418
+  },
+  "se": {
+   "k_per_h": 5.247909532289905e-05
+  },
+  "ci95": {
+   "k_per_h": [
+    0.0003985848893156993,
+    0.0006324463117277844
+   ]
+  },
+  "corr": [
+   [
+    1.0
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -58.40738027658501,
+  "early_RMSE": 5.668847672031884,
+  "late_RMSE": 7.7468488214587685,
+  "early_window_h": [
+   6.0,
+   48.0
+  ],
+  "late_window_h": [
+   192.0,
+   336.0
+  ],
+  "points_within_tol": 2,
+  "fick_adequate_until_h": null,
+  "residual_signs": "+++++++----",
+  "train_params": {
+   "k_per_h": 0.0007034290660626258
+  },
+  "train_RMSE": 1.2760239347818942,
+  "test_RMSE": 12.410088564445584,
+  "test_MAE": 11.94800896240851,
+  "test_identifiable": true,
+  "R_um": 13.7,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 2.68769786283127e-13,
+  "Dapp_rel_unc": 0.4127506327825385,
+  "Dapp_low": 1.1968508000092197e-13,
+  "Dapp_high": 6.035605943374169e-13
+ },
+ {
+  "case": "C4_Zhang2023_vancomycin",
+  "formulation": "pH 6.0",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 11,
+  "p": 2,
+  "full_RMSE": 4.306684256744105,
+  "full_MAE": 3.8429911621961708,
+  "params": {
+   "k_per_h": 0.00037632637160768664,
+   "b": 0.14107170085797566
+  },
+  "se": {
+   "k_per_h": 4.892787277961287e-05,
+   "b": 0.04132174312920639
+  },
+  "ci95": {
+   "k_per_h": [
+    0.00026564383373880605,
+    0.00048700890947656723
+   ],
+   "b": [
+    0.04759542365893392,
+    0.23454797805701738
+   ]
+  },
+  "corr": [
+   [
+    1.0000000000000002,
+    -0.7519382932438093
+   ],
+   [
+    -0.7519382932438093,
+    1.0
+   ]
+  ],
+  "cond": 1641219.8235817759,
+  "aicc": -63.69004162238916,
+  "early_RMSE": 3.8710467375040603,
+  "late_RMSE": 4.34214849946072,
+  "early_window_h": [
+   6.0,
+   48.0
+  ],
+  "late_window_h": [
+   192.0,
+   336.0
+  ],
+  "points_within_tol": 5,
+  "fick_adequate_until_h": null,
+  "residual_signs": "--++++++---",
+  "train_params": {
+   "k_per_h": 0.0006474643800279508,
+   "b": 0.030568433672421604
+  },
+  "train_RMSE": 0.8339679945661018,
+  "test_RMSE": 11.311721243348751,
+  "test_MAE": 10.77901166475566,
+  "test_identifiable": true,
+  "R_um": 13.7,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 1.9620193524179637e-13,
+  "Dapp_rel_unc": 0.4205992887984629,
+  "Dapp_low": 8.603634339971354e-14,
+  "Dapp_high": 4.474295149176949e-13
+ },
+ {
+  "case": "C4_Zhang2023_vancomycin",
+  "formulation": "pH 7.4",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 10,
+  "p": 1,
+  "full_RMSE": 7.755194730688327,
+  "full_MAE": 7.128307798722615,
+  "params": {
+   "k_per_h": 0.00030668108148405285
+  },
+  "se": {
+   "k_per_h": 3.975441544768725e-05
+  },
+  "ci95": {
+   "k_per_h": [
+    0.0002167503458262115,
+    0.0003966118171418942
+   ]
+  },
+  "corr": [
+   [
+    1.0
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -48.63614558669278,
+  "early_RMSE": 8.72089173070672,
+  "late_RMSE": 7.849862437522986,
+  "early_window_h": [
+   12.0,
+   72.0
+  ],
+  "late_window_h": [
+   192.0,
+   336.0
+  ],
+  "points_within_tol": 2,
+  "fick_adequate_until_h": null,
+  "residual_signs": "++++++----",
+  "train_params": {
+   "k_per_h": 0.0004446849680900531
+  },
+  "train_RMSE": 3.930087679796858,
+  "test_RMSE": 16.04709208671684,
+  "test_MAE": 15.729709695999208,
+  "test_identifiable": true,
+  "R_um": 13.7,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 1.5989158939928297e-13,
+  "Dapp_rel_unc": 0.42047994572049535,
+  "Dapp_low": 7.013032702863607e-14,
+  "Dapp_high": 3.6454015607527255e-13
+ },
+ {
+  "case": "C4_Zhang2023_vancomycin",
+  "formulation": "pH 7.4",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 10,
+  "p": 2,
+  "full_RMSE": 3.847615506549126,
+  "full_MAE": 3.205116101280961,
+  "params": {
+   "k_per_h": 0.00016455909753733443,
+   "b": 0.2159186237013455
+  },
+  "se": {
+   "k_per_h": 2.9923502476666196e-05,
+   "b": 0.04089523368559559
+  },
+  "ci95": {
+   "k_per_h": [
+    9.555537708635009e-05,
+    0.00023356281798831877
+   ],
+   "b": [
+    0.12161404571222138,
+    0.31022320169046963
+   ]
+  },
+  "corr": [
+   [
+    1.0,
+    -0.8405390800668883
+   ],
+   [
+    -0.8405390800668884,
+    1.0
+   ]
+  ],
+  "cond": 6363873.7874841895,
+  "aicc": -59.44004585596361,
+  "early_RMSE": 4.597132005659841,
+  "late_RMSE": 2.816577626676141,
+  "early_window_h": [
+   12.0,
+   72.0
+  ],
+  "late_window_h": [
+   192.0,
+   336.0
+  ],
+  "points_within_tol": 5,
+  "fick_adequate_until_h": null,
+  "residual_signs": "--+++++---",
+  "train_params": {
+   "k_per_h": 0.00031262247606841595,
+   "b": 0.11301907938686324
+  },
+  "train_RMSE": 2.378716864856155,
+  "test_RMSE": 11.073701020968436,
+  "test_MAE": 10.712724688095479,
+  "test_identifiable": true,
+  "R_um": 13.7,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 8.579471393550638e-14,
+  "Dapp_rel_unc": 0.43939271040961014,
+  "Dapp_low": 3.6261177661366005e-14,
+  "Dapp_high": 2.0299210930255499e-13
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "0.5dM-G",
+  "model": "A\u00b7F",
+  "kind": "F",
+  "amp_free": true,
+  "n": 6,
+  "p": 2,
+  "full_RMSE": 0.23451908645671826,
+  "full_MAE": 0.17304115230436778,
+  "params": {
+   "k_per_h": 0.012613656550383306,
+   "A": 4.521308147455175
+  },
+  "se": {
+   "k_per_h": 0.009682438395468231,
+   "A": 0.13107122767801815
+  },
+  "ci95": {
+   "k_per_h": [
+    -0.014269102139093642,
+    0.03949641523986025
+   ],
+   "A": [
+    4.157396078936276,
+    4.885220215974074
+   ]
+  },
+  "corr": [
+   [
+    1.0,
+    -0.4371440184943712
+   ],
+   [
+    -0.4371440184943712,
+    1.0000000000000002
+   ]
+  ],
+  "cond": 227.01626716052897,
+  "aicc": -9.402619627221277,
+  "early_RMSE": 0.08224984924437226,
+  "late_RMSE": 0.3831782069081739,
+  "early_window_h": [
+   24.0,
+   48.0
+  ],
+  "late_window_h": [
+   384.0,
+   768.0
+  ],
+  "points_within_tol": 5,
+  "fick_adequate_until_h": 384.0,
+  "residual_signs": "+----+",
+  "train_params": {
+   "k_per_h": 0.023896414649524474,
+   "A": 4.403784138288813
+  },
+  "train_RMSE": 0.0041917883957859284,
+  "test_RMSE": 0.36339825011248794,
+  "test_MAE": 0.2380386205703958,
+  "test_identifiable": true,
+  "R_um": 10.28,
+  "R_rel_unc": 0.37986381322957197,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 3.702752895538965e-12,
+  "Dapp_rel_unc": 1.0800090908551085,
+  "Dapp_low": 4.45864025389481e-13,
+  "Dapp_high": 3.075013507413072e-11
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "0.5dM-G",
+  "model": "A\u00b7F+burst",
+  "kind": "FB",
+  "amp_free": true,
+  "n": 6,
+  "p": 3,
+  "full_RMSE": 0.16037168333052032,
+  "full_MAE": 0.12504847003359965,
+  "params": {
+   "k_per_h": 1.4301676959588925e-19,
+   "b": 2.3641423063613887e-07,
+   "A": 17699576.3747002
+  },
+  "se": {
+   "k_per_h": 0.0,
+   "b": 0.0,
+   "A": 0.0
+  },
+  "ci95": {
+   "k_per_h": [
+    1.4301676959588925e-19,
+    1.4301676959588925e-19
+   ],
+   "b": [
+    2.3641423063613887e-07,
+    2.3641423063613887e-07
+   ],
+   "A": [
+    17699576.3747002,
+    17699576.3747002
+   ]
+  },
+  "corr": [
+   [
+    NaN,
+    NaN,
+    NaN
+   ],
+   [
+    NaN,
+    NaN,
+    NaN
+   ],
+   [
+    NaN,
+    NaN,
+    NaN
+   ]
+  ],
+  "cond": 3.53828534403711e+64,
+  "aicc": -3.963133643688124,
+  "early_RMSE": 0.08088227142151519,
+  "late_RMSE": 0.2599430843580383,
+  "early_window_h": [
+   24.0,
+   48.0
+  ],
+  "late_window_h": [
+   384.0,
+   768.0
+  ],
+  "points_within_tol": 6,
+  "fick_adequate_until_h": 768.0,
+  "residual_signs": "+++--+",
+  "test_identifiable": false,
+  "test_note": "n_train=3 <= p=3: not identifiable on training set",
+  "R_um": 10.28,
+  "R_rel_unc": 0.37986381322957197,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 4.198273162239507e-29,
+  "Dapp_rel_unc": 0.7597276264591439,
+  "Dapp_low": 9.47059972408462e-30,
+  "Dapp_high": 1.8610751228306295e-28
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "1.0dM-G",
+  "model": "A\u00b7F",
+  "kind": "F",
+  "amp_free": true,
+  "n": 10,
+  "p": 2,
+  "full_RMSE": 0.2860326056318331,
+  "full_MAE": 0.2157746642330761,
+  "params": {
+   "k_per_h": 0.06803202626964396,
+   "A": 4.108563003959471
+  },
+  "se": {
+   "k_per_h": 0.017440144842458833,
+   "A": 0.11906162060916622
+  },
+  "ci95": {
+   "k_per_h": [
+    0.02781498014437428,
+    0.10824907239491363
+   ],
+   "A": [
+    3.8340064144906245,
+    4.383119593428318
+   ]
+  },
+  "corr": [
+   [
+    1.0000000000000002,
+    -0.4533413891632613
+   ],
+   [
+    -0.4533413891632613,
+    1.0000000000000002
+   ]
+  ],
+  "cond": 59.18984199944013,
+  "aicc": -19.3187036648089,
+  "early_RMSE": 0.25663172035513154,
+  "late_RMSE": 0.36077805838646293,
+  "early_window_h": [
+   1.0,
+   8.0
+  ],
+  "late_window_h": [
+   96.0,
+   768.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": null,
+  "residual_signs": "-+-------+",
+  "train_params": {
+   "k_per_h": 0.07385501536182863,
+   "A": 4.018953643441057
+  },
+  "train_RMSE": 0.21206673612739843,
+  "test_RMSE": 0.3897473886762857,
+  "test_MAE": 0.22827500000000023,
+  "test_identifiable": true,
+  "R_um": 10.545,
+  "R_rel_unc": 0.4243717401612138,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 2.101377479418405e-11,
+  "Dapp_rel_unc": 0.8866125617107745,
+  "Dapp_low": 3.6966150305826694e-12,
+  "Dapp_high": 1.1945488709195728e-10
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "1.0dM-G",
+  "model": "A\u00b7F+burst",
+  "kind": "FB",
+  "amp_free": true,
+  "n": 10,
+  "p": 3,
+  "full_RMSE": 0.28603260563732963,
+  "full_MAE": 0.21577489543535985,
+  "params": {
+   "k_per_h": 0.06803177080999366,
+   "b": 4.609153527327522e-13,
+   "A": 4.108563794255415
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -15.03298937871029,
+  "early_RMSE": 0.256631755878654,
+  "late_RMSE": 0.3607778907853006,
+  "early_window_h": [
+   1.0,
+   8.0
+  ],
+  "late_window_h": [
+   96.0,
+   768.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": null,
+  "residual_signs": "-+-------+",
+  "train_params": {
+   "k_per_h": 0.0738548935979274,
+   "b": 3.293097841903809e-10,
+   "A": 4.018954221554338
+  },
+  "train_RMSE": 0.21206673617778915,
+  "test_RMSE": 0.3897471422684107,
+  "test_MAE": 0.22827500000000023,
+  "test_identifiable": true,
+  "R_um": 10.545,
+  "R_rel_unc": 0.4243717401612138,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 2.1013695887647603e-11,
+  "Dapp_rel_unc": NaN,
+  "Dapp_low": NaN,
+  "Dapp_high": NaN
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "2.5dM-G",
+  "model": "A\u00b7F",
+  "kind": "F",
+  "amp_free": true,
+  "n": 10,
+  "p": 2,
+  "full_RMSE": 1.0393556368370296,
+  "full_MAE": 0.6802723254416885,
+  "params": {
+   "k_per_h": 0.047530683449842195,
+   "A": 4.73375456364128
+  },
+  "se": {
+   "k_per_h": 0.035315937756849096,
+   "A": 0.4469735117205451
+  },
+  "ci95": {
+   "k_per_h": [
+    -0.03390801505606475,
+    0.12896938195574914
+   ],
+   "A": [
+    3.7030317972869753,
+    5.764477329995584
+   ]
+  },
+  "corr": [
+   [
+    1.0,
+    -0.47459895623457804
+   ],
+   [
+    -0.47459895623457804,
+    1.0
+   ]
+  ],
+  "cond": 207.3402712497819,
+  "aicc": 6.486304537683762,
+  "early_RMSE": 0.36369892676369764,
+  "late_RMSE": 1.5501648341144247,
+  "early_window_h": [
+   1.0,
+   8.0
+  ],
+  "late_window_h": [
+   96.0,
+   768.0
+  ],
+  "points_within_tol": 0,
+  "fick_adequate_until_h": null,
+  "residual_signs": "-+-------+",
+  "train_params": {
+   "k_per_h": 0.07761698754738985,
+   "A": 4.191671942507202
+  },
+  "train_RMSE": 0.20484377766804188,
+  "test_RMSE": 1.7716331656623134,
+  "test_MAE": 0.9822250000000001,
+  "test_identifiable": true,
+  "R_um": 8.68,
+  "R_rel_unc": 0.4222350230414747,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 9.947432679864974e-12,
+  "Dapp_rel_unc": 1.1248105024545578,
+  "Dapp_low": 1.0971170886731665e-12,
+  "Dapp_high": 9.019221188151916e-11
+ },
+ {
+  "case": "C5_Chang2023_gentamicin",
+  "formulation": "2.5dM-G",
+  "model": "A\u00b7F+burst",
+  "kind": "FB",
+  "amp_free": true,
+  "n": 10,
+  "p": 3,
+  "full_RMSE": 0.686937010992829,
+  "full_MAE": 0.5967807770356959,
+  "params": {
+   "k_per_h": 1.5227934525610004e-22,
+   "b": 1.1787098563426227e-09,
+   "A": 2815728641.196077
+  },
+  "se": {
+   "k_per_h": 1.2963262201778112e-13,
+   "b": 0.00619161262615366,
+   "A": 1.4790663679966342e+16
+  },
+  "ci95": {
+   "k_per_h": [
+    -3.065324416685266e-13,
+    3.065324419730853e-13
+   ],
+   "b": [
+    -0.014640836193561173,
+    0.014640838550980887
+   ],
+   "A": [
+    -3.4974359219072344e+16,
+    3.4974364850529624e+16
+   ]
+  },
+  "corr": [
+   [
+    1.0,
+    0.999999999999998,
+    -0.9999999999999989
+   ],
+   [
+    0.9999999999999972,
+    1.0,
+    -0.9999999999999994
+   ],
+   [
+    -0.9999999999999983,
+    -0.9999999999999998,
+    1.0
+   ]
+  ],
+  "cond": 7.244941942404385e+72,
+  "aicc": 2.4897464396227065,
+  "early_RMSE": 0.5974971521546699,
+  "late_RMSE": 0.8972613506700391,
+  "early_window_h": [
+   1.0,
+   8.0
+  ],
+  "late_window_h": [
+   96.0,
+   768.0
+  ],
+  "points_within_tol": 10,
+  "fick_adequate_until_h": 768.0,
+  "residual_signs": "-+++++---+",
+  "train_params": {
+   "k_per_h": 0.07761674298544108,
+   "b": 9.293619279280458e-14,
+   "A": 4.191673058836249
+  },
+  "train_RMSE": 0.20484377766899495,
+  "test_RMSE": 1.7716325673053552,
+  "test_MAE": 0.9822250000000001,
+  "test_identifiable": true,
+  "R_um": 8.68,
+  "R_rel_unc": 0.4222350230414747,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 3.1869698172286645e-32,
+  "Dapp_rel_unc": 851281713.8776624,
+  "Dapp_low": 8.76029485426051e-75,
+  "Dapp_high": 115941036059.84024
+ },
+ {
+  "case": "C6_Hu2024_gentamicin",
+  "formulation": "m-EmG net (raw - background)",
+  "model": "A\u00b7F",
+  "kind": "F",
+  "amp_free": true,
+  "n": 14,
+  "p": 2,
+  "full_RMSE": 0.02455982451153535,
+  "full_MAE": 0.021050491480081878,
+  "params": {
+   "k_per_h": 0.01583106755216731,
+   "A": 0.33449443115105654
+  },
+  "se": {
+   "k_per_h": 0.0032356433199147356,
+   "A": 0.008511836236702364
+  },
+  "ci95": {
+   "k_per_h": [
+    0.00878120637451002,
+    0.0228809287298246
+   ],
+   "A": [
+    0.315948733154503,
+    0.35304012914761007
+   ]
+  },
+  "corr": [
+   [
+    1.0000000000000002,
+    -0.39326285075742934
+   ],
+   [
+    -0.39326285075742934,
+    0.9999999999999998
+   ]
+  ],
+  "cond": 8.607028890475851,
+  "aicc": -98.69510389777733,
+  "early_RMSE": 0.018540242020005464,
+  "late_RMSE": 0.031164612445225875,
+  "early_window_h": [
+   1.0,
+   48.0
+  ],
+  "late_window_h": [
+   288.0,
+   768.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": null,
+  "residual_signs": "-+++--++++++--",
+  "train_params": {
+   "k_per_h": 0.0165866746792306,
+   "A": 0.32984375334009186
+  },
+  "train_RMSE": 0.01781194501676117,
+  "test_RMSE": 0.031923541300144874,
+  "test_MAE": 0.03040208221996939,
+  "test_identifiable": true,
+  "R_um": 8.05,
+  "R_rel_unc": 0.29813664596273287,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 2.8497020973592286e-12,
+  "Dapp_rel_unc": 0.6303295487503261,
+  "Dapp_low": 8.284229432574013e-13,
+  "Dapp_high": 9.80272469490304e-12
+ },
+ {
+  "case": "C6_Hu2024_gentamicin",
+  "formulation": "m-EmG net (raw - background)",
+  "model": "A\u00b7F+burst",
+  "kind": "FB",
+  "amp_free": true,
+  "n": 14,
+  "p": 3,
+  "full_RMSE": 0.024559824511537164,
+  "full_MAE": 0.021050484961037043,
+  "params": {
+   "k_per_h": 0.015831083824899606,
+   "b": 8.940708790926525e-61,
+   "A": 0.3344944142983278
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -95.38601298868436,
+  "early_RMSE": 0.018540235408008105,
+  "late_RMSE": 0.031164613971396315,
+  "early_window_h": [
+   1.0,
+   48.0
+  ],
+  "late_window_h": [
+   288.0,
+   768.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": null,
+  "residual_signs": "-+++--++++++--",
+  "train_params": {
+   "k_per_h": 0.016586660989290455,
+   "b": 4.6203810540835107e-17,
+   "A": 0.32984378067088105
+  },
+  "train_RMSE": 0.01781194501677874,
+  "test_RMSE": 0.03192353490235011,
+  "test_MAE": 0.03040207310970633,
+  "test_identifiable": true,
+  "R_um": 8.05,
+  "R_rel_unc": 0.29813664596273287,
+  "R_unc_source": "reported SD",
+  "Dapp_cm2_s": 2.8497050265640474e-12,
+  "Dapp_rel_unc": NaN,
+  "Dapp_low": NaN,
+  "Dapp_high": NaN
+ },
+ {
+  "case": "C7_Lan2017_bFGF",
+  "formulation": "A porous GMS",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 11,
+  "p": 1,
+  "full_RMSE": 9.812453135956888,
+  "full_MAE": 9.036239767979332,
+  "params": {
+   "k_per_h": 7.386170747972768e-05
+  },
+  "se": {
+   "k_per_h": 1.4803781647696059e-05
+  },
+  "ci95": {
+   "k_per_h": [
+    4.087682643417471e-05,
+    0.00010684658852528065
+   ]
+  },
+  "corr": [
+   [
+    1.0
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -48.62894889013252,
+  "early_RMSE": 12.31862209554695,
+  "late_RMSE": 7.6485482460400585,
+  "early_window_h": [
+   10.08,
+   72.0
+  ],
+  "late_window_h": [
+   288.0,
+   696.0
+  ],
+  "points_within_tol": 0,
+  "fick_adequate_until_h": null,
+  "residual_signs": "------+++++",
+  "train_params": {
+   "k_per_h": 2.116500662043202e-05
+  },
+  "train_RMSE": 5.54242585932231,
+  "test_RMSE": 27.139202180934834,
+  "test_MAE": 26.84905902034253,
+  "test_identifiable": true,
+  "R_um": 17.5,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 6.283374421018501e-14,
+  "Dapp_rel_unc": 0.44740411950371506,
+  "Dapp_low": 2.6142966402956375e-14,
+  "Dapp_high": 1.5101879987974472e-13
+ },
+ {
+  "case": "C7_Lan2017_bFGF",
+  "formulation": "A porous GMS",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 11,
+  "p": 2,
+  "full_RMSE": 9.812453135973419,
+  "full_MAE": 9.036235277468633,
+  "params": {
+   "k_per_h": 7.386179971000749e-05,
+   "b": 7.481970268891682e-15
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -45.57339333453991,
+  "early_RMSE": 12.31863211957533,
+  "late_RMSE": 7.648523689130056,
+  "early_window_h": [
+   10.08,
+   72.0
+  ],
+  "late_window_h": [
+   288.0,
+   696.0
+  ],
+  "points_within_tol": 0,
+  "fick_adequate_until_h": null,
+  "residual_signs": "------+++++",
+  "train_params": {
+   "k_per_h": 2.1164998989328478e-05,
+   "b": 2.4322626483198567e-17
+  },
+  "train_RMSE": 5.542425859322788,
+  "test_RMSE": 27.1392068379084,
+  "test_MAE": 26.849063640438185,
+  "test_identifiable": true,
+  "R_um": 17.5,
+  "R_rel_unc": 0.2,
+  "R_unc_source": "assumed 20% (not reported)",
+  "Dapp_cm2_s": 6.283382266997165e-14,
+  "Dapp_rel_unc": NaN,
+  "Dapp_low": NaN,
+  "Dapp_high": NaN
+ },
+ {
+  "case": "C7_Lan2017_bFGF",
+  "formulation": "B normal GMS",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 11,
+  "p": 1,
+  "full_RMSE": 12.452840808017648,
+  "full_MAE": 10.070834235788473,
+  "params": {
+   "k_per_h": 0.0004771397996575425
+  },
+  "se": {
+   "k_per_h": 0.00010020969274183284
+  },
+  "ci95": {
+   "k_per_h": [
+    0.00025385868991385785,
+    0.0007004209094012272
+   ]
+  },
+  "corr": [
+   [
+    1.0
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -43.38642661416671,
+  "early_RMSE": 17.66262310398092,
+  "late_RMSE": 6.279560791111334,
+  "early_window_h": [
+   10.08,
+   72.0
+  ],
+  "late_window_h": [
+   288.0,
+   696.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": null,
+  "residual_signs": "----++++++-",
+  "train_params": {
+   "k_per_h": 0.00035362065870860813
+  },
+  "train_RMSE": 13.892993112213611,
+  "test_RMSE": 13.817284196928581,
+  "test_MAE": 12.15652205813581,
+  "test_identifiable": true
+ },
+ {
+  "case": "C7_Lan2017_bFGF",
+  "formulation": "B normal GMS",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 11,
+  "p": 2,
+  "full_RMSE": 12.45284080810774,
+  "full_MAE": 10.070804086633883,
+  "params": {
+   "k_per_h": 0.00047714276136400803,
+   "b": 1.2964175121619124e-14
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -40.330871058451976,
+  "early_RMSE": 17.662708994227874,
+  "late_RMSE": 6.279466707014689,
+  "early_window_h": [
+   10.08,
+   72.0
+  ],
+  "late_window_h": [
+   288.0,
+   696.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": null,
+  "residual_signs": "----++++++-",
+  "train_params": {
+   "k_per_h": 0.0003536210123178853,
+   "b": 1.050848589771901e-11
+  },
+  "train_RMSE": 13.892993112521383,
+  "test_RMSE": 13.817264493914998,
+  "test_MAE": 12.156501698281376,
+  "test_identifiable": true
+ },
+ {
+  "case": "C8_Liu2022_icariin",
+  "formulation": "GM-1 0.25 mM",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 6,
+  "p": 1,
+  "full_RMSE": 2.9929457227761853,
+  "full_MAE": 2.642058656128855,
+  "params": {
+   "k_per_h": 0.00021544089675708822
+  },
+  "se": {
+   "k_per_h": 1.420619914690189e-05
+  },
+  "ci95": {
+   "k_per_h": [
+    0.00017892269927663012,
+    0.0002519590942375463
+   ]
+  },
+  "corr": [
+   [
+    0.9999999999999999
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -39.10694510405107,
+  "early_RMSE": 2.650392157091885,
+  "late_RMSE": 2.906814406400687,
+  "early_window_h": [
+   24.0,
+   72.0
+  ],
+  "late_window_h": [
+   336.0,
+   504.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": null,
+  "residual_signs": "--+++-",
+  "train_params": {
+   "k_per_h": 0.00021057178523699037
+  },
+  "train_RMSE": 2.4059193310853755,
+  "test_RMSE": 3.543003915317626,
+  "test_MAE": 3.179817756747061,
+  "test_identifiable": true
+ },
+ {
+  "case": "C8_Liu2022_icariin",
+  "formulation": "GM-1 0.25 mM",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 6,
+  "p": 2,
+  "full_RMSE": 2.992945722776421,
+  "full_MAE": 2.6420587168390646,
+  "params": {
+   "k_per_h": 0.00021544089236903962,
+   "b": 2.3240684807145392e-14
+  },
+  "se": null,
+  "ci95": null,
+  "corr": null,
+  "cond": null,
+  "aicc": -34.106945104050126,
+  "early_RMSE": 2.650391924105214,
+  "late_RMSE": 2.906814122681564,
+  "early_window_h": [
+   24.0,
+   72.0
+  ],
+  "late_window_h": [
+   336.0,
+   504.0
+  ],
+  "points_within_tol": 3,
+  "fick_adequate_until_h": null,
+  "residual_signs": "--+++-",
+  "train_params": {
+   "k_per_h": 0.00021057187465072302,
+   "b": 1.403837527985011e-13
+  },
+  "train_RMSE": 2.40591933109947,
+  "test_RMSE": 3.543001685322647,
+  "test_MAE": 3.1798144483186,
+  "test_identifiable": true
+ },
+ {
+  "case": "C8_Liu2022_icariin",
+  "formulation": "GM-2 0.5 mM",
+  "model": "F",
+  "kind": "F",
+  "amp_free": false,
+  "n": 6,
+  "p": 1,
+  "full_RMSE": 2.09646693861818,
+  "full_MAE": 1.5020599097195333,
+  "params": {
+   "k_per_h": 0.0004887231994891895
+  },
+  "se": {
+   "k_per_h": 2.3338008158859777e-05
+  },
+  "ci95": {
+   "k_per_h": [
+    0.00042873093963609245,
+    0.0005487154593422866
+   ]
+  },
+  "corr": [
+   [
+    1.0
+   ]
+  ],
+  "cond": 1.0,
+  "aicc": -43.37900001938286,
+  "early_RMSE": 3.075042299757117,
+  "late_RMSE": 0.20122665446661991,
+  "early_window_h": [
+   24.0,
+   72.0
+  ],
+  "late_window_h": [
+   336.0,
+   504.0
+  ],
+  "points_within_tol": 5,
+  "fick_adequate_until_h": 24.0,
+  "residual_signs": "-+--++",
+  "train_params": {
+   "k_per_h": 0.0004935898294698035
+  },
+  "train_RMSE": 2.9163785790910164,
+  "test_RMSE": 0.6000452940859877,
+  "test_MAE": 0.3917892942073416,
+  "test_identifiable": true
+ },
+ {
+  "case": "C8_Liu2022_icariin",
+  "formulation": "GM-2 0.5 mM",
+  "model": "F+burst",
+  "kind": "FB",
+  "amp_free": false,
+  "n": 6,
+  "p": 2,
+  "full_RMSE": 2.06911884542091,
+  "full_MAE": 1.5983043724431545,
+  "params": {
+   "k_per_h": 0.00047793492047462107,
+   "b": 0.014998737030666042
+  },
+  "se": {
+   "k_per_h": 4.142823101270351e-05,
+   "b": 0.04569206090371939
+  },
+  "ci95": {
+   "k_per_h": [
+    0.000362911711262397,
+    0.0005929581296868451
+   ],
+   "b": [
+    -0.11186276181186514,
+    0.1418602358731972
+   ]
+  },
+  "corr": [
+   [
+    1.0000000000000002,
+    -0.7888783911986286
+   ],
+   [
+    -0.7888783911986286,
+    1.0
+   ]
+  ],
+  "cond": 3220888.2353473604,
+  "aicc": -38.5365681745392,
+  "early_RMSE": 3.0668099296539117,
+  "late_RMSE": 0.42382166814742456,
+  "early_window_h": [
+   24.0,
+   72.0
+  ],
+  "late_window_h": [
+   336.0,
+   504.0
+  ],
+  "points_within_tol": 5,
+  "fick_adequate_until_h": 24.0,
+  "residual_signs": "-+--++",
+  "train_params": {
+   "k_per_h": 0.0004746303552147329,
+   "b": 0.017862876597858027
+  },
+  "train_RMSE": 2.8844299820821027,
+  "test_RMSE": 0.5061703474856635,
+  "test_MAE": 0.49353222846928446,
+  "test_identifiable": true
+ }
+]

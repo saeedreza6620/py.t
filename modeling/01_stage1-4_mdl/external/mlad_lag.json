@@ -1,0 +1,43 @@
+{
+ "tau_fit": {
+  "A": 5.69,
+  "B": 4.7,
+  "C": 3.03,
+  "D": 2.67,
+  "E": 2.25,
+  "F": 1.57
+ },
+ "tau_exponent": 0.9,
+ "predict_from_A": {
+  "A": {
+   "tau": 5.69,
+   "rmse": 6.5,
+   "rmse_totalloss_nolag": 31.2
+  },
+  "B": {
+   "tau": 4.77,
+   "rmse": 5.7,
+   "rmse_totalloss_nolag": 31.1
+  },
+  "C": {
+   "tau": 3.75,
+   "rmse": 5.4,
+   "rmse_totalloss_nolag": 25.3
+  },
+  "D": {
+   "tau": 2.59,
+   "rmse": 3.6,
+   "rmse_totalloss_nolag": 24.9
+  },
+  "E": {
+   "tau": 1.85,
+   "rmse": 4.8,
+   "rmse_totalloss_nolag": 24.2
+  },
+  "F": {
+   "tau": 1.61,
+   "rmse": 5.7,
+   "rmse_totalloss_nolag": 22.2
+  }
+ }
+}

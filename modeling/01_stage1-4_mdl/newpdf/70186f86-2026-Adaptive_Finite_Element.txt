@@ -1,0 +1,1271 @@
+Advances in Applied Mathematics and Mechanics                       DOI: 10.4208/aamm.OA-2024-0219
+Adv. Appl. Math. Mech., Vol. 18, No. 3, pp. 897-922                 June 2026
+
+
+
+
+Adaptive Finite Element Solutions of a Diffusion Model
+for Drug Release in PLGA Microspheres
+Hongyu Chen1 , Guanghui Hu1,2,3,∗ and Defang Ouyang4,5, ∗
+1 Department of Mathematics, Faculty of Science and Technology, University of Macau,
+
+Macao SAR, China
+2 Zhuhai UM Science and Technology Research Institute, Guangdong, China
+3 Guangdong-Hong Kong-Macao Joint Laboratory for Data-Driven Fluid Mechanics and
+
+Engineering Applications, University of Macau, Macao SAR, China
+4 State Key Laboratory of Mechanism and Quality of Chinese Medicine, Institute of
+
+Chinese Medical Sciences (ICMS), University of Macau, Macao SAR, China
+5 Department of Public Health and Medicinal Administration, Faculty of Health Sciences
+
+(FHS), University of Macau, Macao SAR, China
+Received 8 October 2024; Accepted (in revised version) 4 July 2025
+
+
+
+           Abstract. Poly (lactic-co-glycolic acid) copolymer (PLGA) microspheres are crucial in
+           drug delivery due to their ability to provide controlled release of a wide range of ther-
+           apeutic agents while minimizing side effects and enhancing biocompatibility. In this
+           paper, a mathematical model is proposed and numerically studied for the drug release
+           process in PLGA microspheres. A three-dimensional diffusion model is constructed
+           based on Fick’s law, being different from the traditional one-dimensional model in the
+           past and fitting the configuration from the drug delivery system, while an h-adaptive
+           finite element method is designed and realized using a C++ library AFEPack for nu-
+           merical solutions of the proposed model. A notable feature is that the h-adaptivity
+           makes the proposed model and numerical method a quality tool for studying con-
+           cerned phenomena such as initial bursts in drug delivery. In numerical experiments,
+           besides demonstrating the convergence of the numerical method, a case on proges-
+           terone release from PLGA is also studied using the proposed model, from which the
+           potential of the model and the method towards the practical application is shown suc-
+           cessfully.
+
+AMS subject classifications: 65N30, 65N50, 92C45, 35K57
+
+Key words: PLGA microspheres, drug delivery, diffusion model, h-adaptive finite element method.
+
+
+
+∗ Corresponding author.
+Emails: garyhu@um.edu.mo (G. Hu), defangouyang@um.edu.mo (D. Ouyang)
+
+
+https://www.global-sci.com/aamm                       897                    c 2026 Global Science Press
+898                   H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+1     Introduction
+Poly(lactic-co-glycolic acid) (PLGA) is the copolymer first approved by the FDA in Jan-
+uary 1989 [1]. Because of its superb biodegradability and biocompatibility, it has been
+popularly researched as a biological material in drug delivery systems [2, 3]. By slowly
+releasing drug molecules over an extensive period starting from a single administration,
+these systems can control the drug concentrations between the target scopes, decrease
+side effects caused by extraordinary concentrations and repeated administrations, and
+enhance patient compliance in contrast with traditional therapies [4, 5]. Intending to ob-
+tain a required dosage depending on the type of medication, the degradation time of the
+polymer matrix can be controlled by modifying some parameter values, such as molecu-
+lar weight of the polymer, drug concentration, and proportion of lactide to glycolide [6,7].
+In spite of these benefits, the characterization and design of PLGA mainly rely on plenty
+of trial experiments and error modification, and it is still being explored that the interac-
+tion among complicated processes that influence the drug release [8].
+    With the development of drug delivery systems, it is critical to optimize therapeu-
+tic effects by accurately controlling the release rate of drugs. Mathematical modeling
+provides a powerful tool for predicting and optimizing drug release kinetics, as they can
+quantitatively demonstrate the complicated interactions between drug properties, design
+of the delivery system, and environmental factors [9]. By combining experimental data
+with mathematical models, a deeper understanding of the mechanisms will be gained by
+underlying drug release and more efficient and effective delivery systems [10]. Thus, the
+integration of mathematical modeling with drug release research is essential for advanc-
+ing drug delivery technology and improving the prognosis of patients.
+    In order to reduce the multitudinous experiments predicting the unknown trial re-
+sults, establishing a suitable mathematical model is a practical approach to address the
+problem. With the inspiration from heat conduction, Fick first founded the diffusion
+equation in 1855. The main idea of this equation is that the transition rate of diffusive
+material through per unit cross-sectional area proportionate to the concentration gradi-
+ent with the measurement from perpendicular to the cross-section [11]. In 1975, Crank
+collected the previous mathematical theories of diffusion, including the discussion of the
+solution and the numerical experiments [12]. Since 2000, a common method has built
+a relevance between the effective drug diffusivity and molecular weight with exponen-
+tial decline, which is on account of the pseudo-first-order degradation kinetics [13–15].
+Ford et al. (2011) developed a reaction-diffusion model to generate quadratic autocat-
+alytic degradation of the matrix of polymer and evolution in the pore structure [16].
+Casalini et al. and Busatto et al. considered the acid-catalyzed hydrolysis mechanism
+to consist of the polymer degradation process as a system of partial differential equa-
+tions(PDEs), the model also takes the autocatalytic influence into consideration [17–19].
+Recently, the machine learning method has also been utilized for the estimation of effec-
+tive diffusion coefficients in a one-dimensional diffusion-erosion model [20]. Notwith-
+standing the methodology of building the mathematical model has become increasingly
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922              899
+
+
+sophisticated in drug release from the polymeric matrix, the traditional equations and
+simulation results are focused on the one-dimensional case, which lacks multidimen-
+sional considerations and multi-level observations.
+     The aim of this paper is to construct a three-dimensional diffusion model and de-
+velop the corresponding numerical methods, for the exploration of the mechanism of the
+drug release from PLGA-based microparticles. Mathematically, to simplify the model,
+the region of the microsphere is regarded as a uniform sphere that is bounded. The di-
+mensionless form is utilized to modify the diffusion model and generalize the analysis
+of the delivery process. The motivation for focusing on the diffusion model stems from
+its fundamental role in accurately capturing the mechanisms of drug transport within the
+microsphere. Diffusion is a primary driving force in the release of drugs from solid matri-
+ces, particularly in polymeric systems where the drug must migrate through the polymer
+network before reaching the surrounding medium. By employing a diffusion-based strat-
+egy, the concentration gradients can be effectively accounted for with the development of
+the drug released, which is critical for predicting the release kinetics. In contrast to other
+models, such as swelling models, the diffusion model allows for a more precise analysis
+of the temporal changes in drug concentration. This is particularly significant in applica-
+tions where controlled release is desired, as it provides insights into how varying factors,
+such as the size of the microsphere, the solubility of the drug, and the properties of the
+polymer matrix, affect the overall release profile. Furthermore, the three-dimensional
+diffusion equation enables us to simulate the spatial distribution of the drug within the
+microsphere over time. This capability is essential for understanding how the drug is
+released in a non-uniform manner, this can occur due to factors like uneven drug dis-
+tribution or variations in polymer density. By focusing on this model, the optimization
+of drug formulations and therapeutic outcomes can be enhanced, thereby ensuring that
+drugs are delivered at the right rate and concentration to achieve maximum efficacy. Nu-
+merically, the governing equation in the polymeric matrix is discretized in a matrix for-
+mulation system. After this process, the corresponding algorithms can be developed for
+solving the proposed model in AFEPack [21], which is a free and flexible computer pro-
+gram implemented in C++ [22, 23]. This package is a set of tools and libraries with FEM
+for solving PDEs. The design of the error indicator is calculated for each grid unit based
+on the distance from two specific points, where the indicator value is set to its volume if
+the distance to both points is less than a specified threshold. The AFEM will be utilized
+to show the detailed regions where the concentration is higher than its surroundings.
+The simulation results provide insights into the potential singularity caused by the initial
+burst phenomenon, which refers to the dramatic release of the drug at the beginning of
+the delivery process. To elucidate this phenomenon, we first construct an array consist-
+ing of grid elements, ensuring that each element corresponds to a specific region within
+the microsphere. This array is designed to store the concentration values for each grid
+element, allowing us to analyze the concentration gradients effectively. Next, we calcu-
+late the concentration gradients for each grid element and its neighboring elements. By
+determining the difference between these gradients, the concentration can be assessed
+900                   H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+and how changes from one element to another. This difference is then multiplied by the
+corresponding normal vector to create an indicator that reflects the rate and direction of
+drug release. This detailed approach not only helps in quantifying the initial burst but
+also enhances our understanding of the underlying mechanisms driving drug release in
+the microsphere. By analyzing these indicators, valuable insights can be gained into op-
+timizing drug delivery systems for improved therapeutic efficacy. The computational
+geometry is generated by Gmsh, an open-source software to create 3D and 2D meshes
+for numerical simulations and finite element analysis [24]. In addition, the numerical re-
+sults for all discretizing points can handle the complicated regions (like the microsphere)
+and understand data from different sources, including simulations, measurements, and
+experiments [25]. The convergence and stability analysis are designed to verify the feasi-
+bility of this standard model. Also, the comparison of the different diffusion coefficients
+in various directions is developed to research the influence of the velocity of drug release
+to the outer atmosphere. Furthermore, the results of the numerical simulation can quali-
+tatively fit the experimental data, which is optimized by polynomial fitting methodology.
+This research can be further utilized on other models, including the oral extended-release
+hydrophilic matrix tablets, for further research.
+    The rest of this paper is demonstrated as follows. In Section 2, we introduced the
+model geometry and the government equation. Then, a well-designed indicator in the
+Adaptive finite element and discretizing form is proposed in Section 3. In section 4, the
+optimization method is derived from the Newton method. In Section 5, we present the
+numerical results and the comparison with the experimental data.
+
+
+2     A diffusion model for drug release
+2.1   Model geometry
+The information on the PLGA microsphere can be found in [1], and the PLGA structure
+of the interior and boundary is assumed with homogeneity and isotropy. Fig. 1 presents
+the site between the drug and PLGA in the interior region and on the surface.
+
+
+2.2   The diffusion model with dimensional case
+Based on Fick’s law [12], the three-dimensional diffusion model with the constant diffu-
+sion coefficient is
+                                ∂C     ∂2 C ∂2 C ∂2 C 
+                                   =D       +     +       ,                        (2.1)
+                                ∂t      ∂x2 ∂y2 ∂z2
+
+where C is the concentration of drug and D is diffusion coefficient, t is the time, x, y and
+z are the spatial coordinates.
+    To clearly describe the physical phenomena and analyze the problems, a dimension-
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                 901
+
+
+
+
+             (a) The adhesion of drug on the sur-    (b) The drug in the interior part and
+             face of PLGA                            on the surface
+
+                               Figure 1: The drug distribution on PLGA.
+
+
+less form can be derived by [27]:
+                         t           x                                       C
+                       T= ,      x̃ = (the same with y and z),        C̃ =      ,
+                         a           r                                       C0
+the normalized values of radius a = 35day, r = 7.2 × 10−4 cm, initial concentration C0 =
+3mg/ml and diffusion coefficient D = 4.6 × 10−14 cm2 /s [26]. Then the above equation is
+                            1 ∂C̃ D  ∂2 C̃ ∂2 C̃ ∂2 C̃ 
+                                 =           +     +        ,                       (2.2)
+                             a ∂T r2 ∂ x̃2 ∂ỹ2 ∂z̃2
+With the transformations, the dimensionless form can also be
+                              ∂C̃       ∂2 C̃ ∂2 C̃ ∂2 C̃ 
+                                  = D̃        +     +        ,                               (2.3)
+                              ∂T         ∂ x̃2 ∂ỹ2 ∂z̃2
+where D̃ = aD/r2 is the number that can observe the significance of the diffusion influ-
+ences.
+
+
+3     An adaptive finite element framework
+3.1   Weak form
+For the convenience of the symbol, the discretizing part will be utilized with u and t
+which represent the concentration and time, respectively. Then the 3D-diffusion equation
+can be
+                              ∂u
+                                  = D ∇2 u in Ω ×(0,T ],                            (3.1)
+                               ∂t
+902                         H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+with the boundary conditions:
+
+                                           u=0    on Γ D ×(0,T ]
+
+and the initial condition:
+                                     u( x,y,z,0) = u0 ( x,y,z)   in Ω,
+where Ω is the 3D computational domain, (0,T ) represents the time interval of interest,
+Γ D is the prescribed Dirichlet boundary, u0 ( x,y,z) is the initial condition, the diffusion
+coefficient D can be a scalar or a tensor, depending on the specific problem. The equation
+is in a bounded space-time sphere with the cross-section Ω ⊂ R3 , and it has a Lipschitz
+boundary Γ.
+    To derive the weak form, we first multiply the diffusion equation by the test function
+v ∈ H01 (Ω)(Hilbert space) and integrate over the entire computational domain Ω :
+                                      Z                Z
+                                            ∂u
+                                               vdΩ = D v∇2 udΩ.                                     (3.2)
+                                          Ω ∂t        Ω
+
+Then we apply Green’s formula and the boundary condition [28]. The result is:
+                    Z                     Z                  Z
+                          ∂u
+                             vdΩ + D ∇u ·∇vdΩ − D    (∇u · n)vdS = 0.                               (3.3)
+                        Ω ∂t        Ω             ∂Ω
+
+Here, ∂Ω represents the boundary of the computational domain, and n is the outward
+unit normal vector on the boundary. By involving the boundary condition, the form will
+be                          Z             Z
+                                ∂u
+                                   vdΩ + D ∇u ·∇vdΩ = 0.                         (3.4)
+                              Ω ∂t          Ω
+
+
+3.2   Temporal discretization
+For the discretization of time, let partition I = {[tn ,tn+1 ] : 1 ≤ n ≤ NI } of the time inter-
+val [0,T ], with the sub-intervals demonstrated by 0 = t0 < ··· < t NI = T. and Tn is the
+corresponding partitions of Ω, then the n-th subinterval and its length are denoted by
+In = [tn ,tn+1 ] and by τn = tn+1 − tn for every n with 1 ≤ n ≤ NI , respectively [29], unTn refer
+to the values of the variable u at the specific time partitions Tn , and unTn+1 is the vari-
+able u at the next time partition. Furthermore, The temporal discretization is achieved
+through the application of the backward Euler method [30], where the time derivative is
+approximated using the time step size to represent the temporal evolution, as expressed
+by
+                              ∂u    1  n +1         
+                                 =      uTn+1 − unTn   on (tn ,tn+1 ] .                      (3.5)
+                              ∂t τn
+Substituting the term of temporal discretization into the weak form, we can obtain
+                              1  n +1
+                        Z                             Z
+                                 uTn+1 − uTn vdΩ + D ∇unT+
+                                          n                 1
+                                                         n +1
+                                                              ·∇vdΩ = 0.                            (3.6)
+                            Ω n
+                             τ                    Ω
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                                 903
+
+
+3.3   Spatial discretization
+For the domain Ω, it can be divided into finite element mesh Th , then the finite element
+space Vh can be defined on the Th , where Vh = {v( x,y) is continuous in Ω and piecewise
+linear with v( x,y)|∂Ω = 0} [31]. Then the approximated solution uh can be found and
+calculated in this space. Also, the solution uh can be approximated by using a piecewise
+linear finite element, which can be represented as:
+                                                          N
+                                             uh = ∑ ui ψi ,                                                  (3.7)
+                                                         i =1
+
+where the N denotes the total number of basic functions used in each finite element,
+{ui }iN=1 is the unknown scalars to be determined, {ψi }iN=1 ∈ Vh is the basis functions which
+is defined by                                
+                                               1, when i = j,
+                                ψi ( x j ) =                                              (3.8)
+                                               0, otherwise.
+The bilinear form can be defined with
+                                     1 n +1
+                                 Z                              
+                      B(uh ,v) =       uTn+1 v + D ∇unT+  1
+                                                       n +1
+                                                            ·∇ v   dΩ,                                       (3.9)
+                                  Ω τn
+
+and the linear form is
+                                                           1 n
+                                                     Z
+                                        L(v) =                uTn vdΩ.                                      (3.10)
+                                                         Ω τn
+Then the linear form can be shown by
+
+                1 N                      N
+                                                             1
+                   ∑
+                τn i=1
+                       u i ( ψ ,ψ
+                              i j )+ D ∑    ui (∇ψi , ∇ψj ) = (unTn ,ψj ),
+                                                             τn
+                                                                                          j = 1, ··· , N.   (3.11)
+                                       i =1
+
+
+3.4   A posteriori error estimate
+The error indicator is produced by the numerical solution within individual elements,
+which includes three constituent parts: the local residual arising from the governing
+equation and its numerical approximation, the discontinuity in saturation gradient at the
+element boundary, and the variation in saturations between neighboring time intervals.
+                          2      −
+   The residual R (uh )∈ L 0,T; H (Ω) with the function uh can be set for v∈ H01 (Ω) [32]
+                                   1
+                                       
+
+                                                 Z                   Z
+                             h R (uh ) ,vi = −           ∂t uh v −           D ∇uh ·∇v.                     (3.12)
+                                                     Ω                   Ω
+
+Next, a temporal residual can be defined by Rτ (uh )∈ L2 0,T; H −1 (Ω) with the condition
+                                                                             
+
+on (tn ,tn+1 ] for all n ∈ {1, ··· , NI } and all v ∈ H01 (Ω) [33]
+                                                Z        h             i
+                                h Rτ (uh ) ,vi = D ∇ unT+      1
+                                                            n +1
+                                                                 − u h   ·∇v       (3.13)
+                                                     Ω
+904                             H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+and a spatial residual is set to Rh (uh ) ∈ L2 0,T; H −1 (Ω)
+                                                                                
+
+                                            1  n +1
+                                              Z                          Z
+                        h Rh (uh ),vi = −      uTn+1 − unTn v − D ∇ unT+  1
+                                                                       n +1
+                                                                              ·∇v.                        (3.14)
+                                          Ω τn                 Ω
+
+Because ∂t uh is a constant with piecewise property and it equals τ1n (unT+  1
+                                                                          n +1
+                                                                               −unTn ) on (tn ,tn+1 ],
+then the decomposition can be obtained by
+
+                                              R (uh ) = Rτ (uh )+ Rh (uh ) .                              (3.15)
+
+Then, we define a jump                                             
+                                            J1,e = ne · D ∇ unT+  1
+                                                               n +1
+                                                                      ,     e ∈ E,                        (3.16)
+
+where E represents the set of element edges, and ne is the outer normal of the unit form.
+                                     n of residual space-time can be shown by [34]
+Then an error estimator denoted by η1,h
+                                                                                                  1
+                                    1                                  2                      2
+                  ∑ˆ                                                                ∑ hE kJ1,e k2E  ,
+         n
+        η1,h =               h2K −        unT+  1
+                                             n +1
+                                                  − unTn + D∆ unT+  1
+                                                                 n +1
+                                                                                +                         (3.17)
+                                     τn                                     K          ˆ
+                     K ∈Tn                                                          E∈Fn,Ω
+
+
+where the Tˆn is the set of shape-regular partition of the element K, and Fn,Ωˆ represents
+the set of all interior faces.
+                                                    n is set to the element volume in the
+    In the adaptive process, the error indicator η1,h
+initial mesh Th . Based on the error indicator ηh , the elements in the set of elements M
+are refined to generate the new mesh Th+1 . In this new mesh, the weak form of the dif-
+fusion equation will be rediscretized to obtain a new matrix equation and a new solution
+uh+1 . For each element, the calculation of the error indicator is based on the difference in
+gradient of the current element and its neighbor element. Then it is set to the product of
+the calculated gradient and normal vector. Each marked tetrahedron is then subdivided
+into eight smaller tetrahedra by connecting the midpoints of each edge, resulting in a
+uniform refinement across the marked elements, and tetrahedra that are not marked for
+refinement remain unchanged, ensuring that the mesh adapts selectively based on the
+computed error indicators. Afterward, the error indicator for each element is set with the
+                                                                                       n +1
+comparison of these updates with a given threshold. If the new error indicator η1,h         is
+less than the tolerance, it will be regarded as convergence. Otherwise, it will be contin-
+ually refined. In detail, the marking strategy primarily relies on the error indicators of
+each element. Specifically, the strategy includes two main steps:
+
+      1. Local Refinement: when the error indicator of a certain element exceeds a preset
+         threshold, that element is subdivided into smaller elements to improve computa-
+         tional accuracy. This means that the mesh becomes finer in areas with larger errors.
+
+      2. Local Coarsening: if all the sub-elements of an element have error indicators below
+         a specified lower threshold, these sub-elements are merged into a larger element.
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922             905
+
+
+      This process helps optimize the mesh structure, thereby reducing unnecessary com-
+      plexity in regions where the solution is stable [23]. The following algorithm shows
+      one-step refinement.
+
+
+
+Algorithm 3.1 The refinement of One-step mesh.
+Data: unTn with mesh Tn , TOL
+Result: Th+1
+                                    0 = 0, solving the equation(14) to obtain the initial so-
+ 1: Initialize the error indicator η1,h
+    lution u(0) on the mesh Th , the mesh adaptor tolerance TOL = 1.0 × 10−3 ;
+ 2: for each element K, do
+ 3:   Calculate the volume V, the gradient of current element grad0 , the gradient of its
+      neighbor element grad1 and the unit normal vector u~n ;
+ 4:   for each dimension k, do
+ 5:      Calculate the gradient difference ∆gk = grad0 [k ]− grad1 [k];
+ 6:      Update the error indicator η1,h1 = η 0 + V ×(0.5 × ∆g × u [ k ]);
+                                             1,h              k     ~n
+ 7:   end for
+ 8: end for
+             1 > TOL for some K do
+ 9: while η1,h
+10:   Adaptively refining the mesh Tn .
+11: end while
+12: return T h+1
+
+
+
+
+4    The reproduction of diffusion coefficient from experimental
+     data
+
+The precise reproduction of the diffusion coefficient from experimental data is funda-
+mental for the validation and refinement of diffusion models that have shown substan-
+tial predictive accuracy. While existing models effectively encapsulate the underlying
+mechanisms of diffusion, their integration with empirical data is essential for enhancing
+their robustness and applicability in real-world scenarios. In pursuit of this objective,
+we have implemented advanced optimization techniques to systematically adjust model
+parameters. This iterative refinement not only facilitates a more accurate alignment be-
+tween theoretical predictions and experimental results but also contributes to a deeper
+understanding of diffusion phenomena. By bridging the gap between model simulations
+and empirical observations, we aim to enhance the predictive power of diffusion models,
+thereby advancing their utility across various scientific and engineering disciplines.
+906                    H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+4.1   The optimization problem
+In this optimization process, we need to determine the two crucial parameters through
+experiments to achieve the desired effects. However, conducting experiments directly
+is often expensive and time-consuming. A more effective approach is to obtain a small
+amount of experimental data, after using polynomial fitting to get the relationship be-
+tween the parameters, and then perform numerical simulations to optimize the appro-
+priate parameter combination based on this relationship. Specifically, we first randomly
+try the parameters of diffusion coefficient D and radius r to the numerical experiment
+and obtain an initial result of D and r. However, we find that this set of data cannot fully
+meet the requirements. After this, the polynomial fitting method can be utilized to estab-
+lish a relationship model with 30 testing data between D and r. Then the minimum value
+of data in each group can be calculated, and the update D and r will be used to resolve
+the governing equation, where the new numerical simulations with the optimization pa-
+rameters can obtain more ideal effects.
+    The objective function f (x) to be minimized is the sum of squared differences be-
+tween the numerical simulation results and the experimental data. This is a least-squares
+problem, which can be formulated by [35, 36]:
+
+                                             1 n  N                        2
+                                             2 i∑
+                                                                  E
+                                   f (x) =         y i ( x i )− y i ( x i )    ,               (4.1)
+                                                =1
+
+where yiN (xi ) is the numerical results output for the i-th data point, which depends on
+the optimization variables xi = [ Di ,ri ] T , yiE xi is the corresponding experimental data, n is
+the total number of data points.
+    Furthermore, the polynomial function can be expressed as [37, 38]
+
+                               yiN (xi ) = a0 + a1 xi + a2 xi 2 +···+ an xi n ,                (4.2)
+
+where the coefficient ai (i = 0,1,2, ··· n) can be determined utilizing the least-squares fitting
+strategy. Then, the objective problem will be
+
+                               1 n                                                 2
+                               2 i∑
+                                                           2             n      E
+                     f (x) =         ( a 0 + a  x
+                                               1 i + a  x
+                                                       2 i   +···+ a  x
+                                                                     n i   )− y   x
+                                                                                i i    .       (4.3)
+                                  =1
+
+
+4.2   The optimization method
+The BFGS method is a second-order optimization technique that can update the calcula-
+tion of the Hessian matrix at each iteration rather than recalculating it [39]. This method
+can improve the approximation ratio of the loss function in the Hessian matrix, with-
+out requiring direct computation. Instead, it relies on evaluations of the gradient by a
+generalized secant method [40].
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                   907
+
+
+      This starts from the Taylor’s expansion, where the twice-differentiable function of
+f ( x ) is
+                                                             1
+                      f ( x + ∆x ) ≈ f ( x )+ ∆x T ∇ f ( x )+ ∆x T ∇2 f ( x ) ∆x,
+                                                                             
+                                                                                               (4.4)
+                                                             2
+where ∇ f ( x ) and ∇2 f ( x ) are the gradient and Hessian of f ( x ) at the point x, respectively.
+                                                      1
+                                  pn (∆x ) = ∆x T gn + ∆x T Hn ∆x,                             (4.5)
+                                                      2
+where Hn is Hessian of f ( x ) at xn , the gn is corresponding gradient. In order to obtain
+the ∆x of the f ( x ), the differentiation of the above function is ∆x.
+                                        ∂pn (∆x )
+                                                  = gn + Hn ∆x.                                (4.6)
+                                          ∂∆x
+For calculating the minima/maxima of the equation, the left-hand side of the above equa-
+     ∂pn (∆x )
+tion ∂∆x       is set to be 0 and Hn is assumed to be positive definite. This can give
+
+                                             ∆x = −H− 1
+                                                    n gn .                                     (4.7)
+
+Then, The BFGS method addresses this by constructing an approximation Bn to the Hes-
+sian matrix Hn , thereby avoiding the direct computation of the Hessian. The update
+formula for Bn is [39]:
+                                        yn y T Bn sn s T Bn
+                             Bn+1 = Bn + T n − T n ,                            (4.8)
+                                        yn sn   sn Bn sn
+where sn = xn+1 − xn , yn = ∇ f ( xn+1 )−∇ f ( xn ). By using the approximation Bk to approx-
+imate Hk−1 , the BFGS update formula can be derived as
+
+                                     xn+1 = xn − αn Bn−1 ∇ f ( xn ) ,                          (4.9)
+
+where αk is the step size determined by a line search. Then the minimum value of yiN (xi )−
+yiE (xi ) can be calculated, with the optimization parameters of new x∗ = [ D ∗ ,r ∗ ] T .
+
+
+5     Numerical experiments
+5.1   Numerical convergence
+The computation region is defined as a unit sphere, with its spherical center located at
+(0.5,0.5,0.5) and the dimensionless radius is 0.5. The initial condition and the Dirichlet
+boundary condition are chosen by the exact solution with the following equation:
+                                                   2
+                         C̃ ( x̃, ỹ, z̃;0) = e−0.81π T ∗ sinπ x̃ ∗ sinπ ỹ ∗ sinπ z̃.         (5.1)
+
+In Fig. 2, the drug distribution within the sphere is displayed. As the refinement level of
+the computational mesh increases, the solutions with the refined meshes are more and
+908                       H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+
+
+      (a) The change of concentration with 133 nodes   (b) The change of concentration with 756 nodes
+
+
+
+
+      (c) The change of concentration with 4991        (d) The change of concentration with 36029
+      nodes                                            nodes
+
+Figure 2: The changes of concentration with the uniformly refined meshes. (a) 133 nodes, (b) 756 nodes, (c)
+4991 nodes, and (d) 36029 nodes.
+
+
+more smooth in a uniform state. This is a steady state with T = 1e−4 . The concentration of
+the drug is depicted in red, particularly surrounding the central part of the sphere, since
+the central part is highest with the setting initial condition. And the drug distribution
+can be controlled by adjusting the diffusion coefficients to achieve the desired effects.
+Fig. 3 shows the cross-section of the mesh grid of the drug distribution, from around the
+inner microsphere to the whole region, which demonstrates the numerical convergence.
+Specifically, in order to show how the numerical solution approaches the analytical so-
+lution as the mesh is refined, the L2 norms of errors can be obtained by quantifying the
+difference between the numerical and analytical solution in the different mesh elements.
+Furthermore, the decreasing trend of a second-order line of L2 norm of error is given
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                              909
+
+
+
+
+                    (a) The initial mesh                    (b) The second mesh by refining once
+
+
+
+
+            (c) The third mesh by refining twice            (d) The fourth mesh by refining thrice
+
+Figure 3: The initial mesh and three successively refined meshes, with (a) 379 elements, (b) 3032 elements, (c)
+24256 elements, (d) 194048 elements.
+
+
+in Fig. 4, which guarantees the convergence numerically. Here, the x and y coordinate
+axes are set with logarithm scales. The red line with the circles represents the numerical
+results, where the black points are the theoretical curve.
+    Furthermore, a series of tests were conducted utilizing various time steps to evalu-
+ate the dynamics of the diffusion model. At T = 1, the maximum concentration (C̃h,max )
+observed in the central region demonstrated a high degree of consistency with the corre-
+sponding L2 norms of errors. This finding suggests that the results exhibit stability and
+reliability at this particular time step, indicating that the model effectively captures the
+underlying diffusion process with minimal discrepancies in concentration values. Such
+910                    H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+
+                                              1E-01
+                                                                                ∥u − uh ∥
+                                                                   Second order accuracy
+
+
+
+
+                           L2 norm of error
+                                              1E-02
+
+
+
+
+                                              1E-03
+
+
+
+
+                                              1E-04
+                                                      1000           10000                  100000
+                                                             Number of elements
+
+
+                 Figure 4: The L2 norm of error with the different meshes in T = 1e−4 .
+
+
+                      Table 1: The steady state at T = 1 with various time steps.
+                             Time-step                   C̃h,max      L2 norms of errors
+                               1e−1                     1.926e−3          2.10918e−4
+                               1e−2                     3.526e−4           5.6484e−6
+                               1e−3                     2.972−4            2.639e−5
+                               1e−4                     2.923e−4          2.20338e−5
+                               1e−5                     2.918e−4          2.21719e−5
+
+
+consistency reinforces the validity of the numerical approach employed in this analysis.
+The results are shown in the following chart:
+
+
+5.2   Results for mesh adaptivity
+
+Based on the diffusion properties of the microsphere, it is observed that the drug con-
+centration within the interior region is significantly higher than that at the surface. This
+characteristic allows the microsphere to maintain a prolonged drug release over an ex-
+tended period [41]. In this subsection, we employ the AFEM to effectively reduce the
+computational cost while simultaneously improving the computational efficiency specif-
+ically in the interior part of the microsphere (see Fig. 5). By focusing on this area, more
+accurate simulations can be achieved without unnecessary computational overhead. To
+facilitate this process, we define a steady and elevated concentration within the central
+region of the microsphere. The error indicator for each finite element is then calculated
+using the gradient and unit vector associated with the drug concentration distribution.
+This can be an effective strategy to study the influence of the initial burst since the regions
+experiencing higher indicator values may indicate areas where the initial burst effect is
+more pronounced. Moreover, the new L2 norm of error is compared with the refined one
+and theoretical result, as shown in Fig. 6.
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                   911
+
+
+
+
+                     (a) The initial mesh            (b) The adaptive mesh by refining once
+
+
+
+
+           (c) The adaptive mesh by refining twice   (d) The adaptive mesh by refining thrice
+
+
+
+
+           (e) The adaptive mesh by refining four    (f) The adaptive mesh by refining five
+           times                                     times
+
+                          Figure 5: The mesh generated by AFEM at T = 1e−4 .
+912                    H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+
+                                              1E+00
+                                                                               ∥u − uh ∥
+                                                                  Second order accuracy
+                                                                        Adaptive result
+
+
+
+
+                           L2 norm of error
+                                              1E-01
+
+
+
+
+                                              1E-02
+
+
+
+
+                                              1E-03
+                                                      1000          10000                  100000
+                                                             Number of elements
+
+
+                   Figure 6: The L2 norm of error of the adaptive mesh in T = 1e−4 .
+
+
+5.3   Variable diffusion coefficient
+In this part, the different diffusion coefficients are set to control the drug release. Fol-
+lowing the Z coordinate axis, D is equal to 50 when the plane is Z > 0.5 and D is equal
+to 0.5 when Z < 0.5. The results are shown in Fig. 7 with time steps. By examining the
+figure, it is clear that the drug concentration in the lower regions of the Z coordinate axis
+still exists, despite the use of a smaller diffusion coefficient. It indicates that the smaller
+diffusion coefficient results in a slower rate of drug diffusion, which in turn leads to a
+longer duration of drug release.
+
+
+5.4   The comparison between numerical results and experimental data
+In the previous research [42], the quantity of drug released details with the time was de-
+termined by the function of Mt /M∞ , and the details of deduction in the spherical regions
+are in the Appendix.
+    In our numerical model, the relevant parameter to describe the drug released with
+time can be proposed by 1 − C̃h,max , where the C̃h,max represents the maximum value of
+concentration obtained by the simulated results at the specific moment. Out of the con-
+sideration of consistency in our algorithm, the simulated values of C̃h will only appear at
+the internal regions of all tetrahedrons. The parameter value 1 − C̃h can demonstrate the
+amount of drug release in every tetrahedron. Therefore, with the vanishment of the high-
+est concentration in the specific tetrahedron (that is C̃h,max = 0), the release process is con-
+sidered to be finished. In Fig. 8, the diffusion coefficient ranges from D = 4.6 × 10−14 cm2 /s
+to D = 2 × 10−12 cm2 /s, and the experimental data are similar with a range from 7.2µm to
+53µm [26], which is represented by the red triangles. The numerical results of the initial
+mesh are shown with the green sign of the cross, and the refined mesh indicated by the
+blue hollow square is closer to the experimental data from the detailed diagram, which
+means the refined mesh can optimize the simulated results. In order to fit the experimen-
+tal data, thirty numerical results are collected by assuming the continuity of the change.
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                              913
+
+
+
+
+                            (a) T = 0                                   (b) T = 1e−3
+
+
+
+
+                          (c) T = 2e−3                                  (d) T = 3e−3
+
+
+
+
+                          (e) T = 4e−3                                  (f) T = 5e−3
+
+Figure 7: The change of drug distribution of the different diffusion coefficient along the various regions with
+time T.
+914                       H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+
+
+                                             1
+
+
+                                            0.8
+                                                                                      0.4
+
+                            Drug released
+
+
+
+
+                                                                    Drug released
+                                            0.6
+
+
+                                            0.4                                      0.38
+                                                                                            2            2.2
+                                                                                           Time(day)
+                                            0.2                                      Numerical result0
+                                                                                     Numerical result1
+                                                                                    Experimental data
+                                             0
+                                                  0   5   10   15                    20         25   30        35
+                                                               Time(day)
+
+
+Figure 8: The numerical results of drug release curve with r =7.2µm compared with experimental data. Numerical
+resulti , i = 0,1 represents the results simulated by the refined meshes. For example, numerical result0 is the
+initial mesh with no refinement.
+
+
+
+
+               Figure 9: The distribution of the thirty scatter points in the dimensionless form.
+
+
+
+
+The L2 norms of the amount of drug released between the numerical results and experi-
+mental data are calculated. After that, the polynomial fitting methodology is utilized to
+optimize the fitting algorithm and find the coordinate of the minimum value. If abundant
+unknown parameters are discussed in the government equation, the optimization of pa-
+rameter value can be combined with machine learning to obtain the simulation results.
+The update parameter is x ∗ = [1.11 × 10−12 ,52.56], where the two values are the new dif-
+fusion coefficient and radius, respectively. Fig. 9 shows the figure of scattered dots with
+the number of thirty and Fig. 10 shows the comparison of the fitting simulation with the
+former results and the fitting data is represented by the solid purple square.
+    In another example, it is compared to the release process of progesterone at different
+radii. Similar to the above strategy, the optimization’s numerical results can better match
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                               915
+
+
+
+
+                                            1
+
+
+                                           0.8
+
+
+
+
+                           Drug released
+                                           0.6
+
+
+                                           0.4
+
+
+                                           0.2                      Numerical result0
+                                                                       Fitting result
+                                                                   Experimental data
+                                            0
+                                                 0   5   10   15     20      25         30   35
+                                                              Time(day)
+
+
+                    Figure 10: The fitting result with compared the former two results.
+
+
+
+
+                          (a)                                                                (b)
+
+    Figure 11: The two distributions of scatter points of progesterone release in the dimensionless case.
+
+
+the experimental results than the random tests. Moreover, by fitting the L2 norm of the
+difference of concentration near various radii and calculating its minimum value, the
+distributions of the scatter plots are shown in Fig. 11. Fig. 12 gives a comparison of the
+different simulation results.
+    To assess the influence of the radii of the drug release from the PLGA microsphere,
+the different curves are shown in Fig. 13. With the increases of the spherical radius(10µm
+to 100µm [19]), and setting the fixed diffusion coefficient D = 1.0 × 10−12 cm2 /s [43] the
+period of the drug degradation will become longer, resulting in a controllable effect and
+optimized treatments. Fig. 14 gives another view of the rate of drug release affected by
+different diffusion coefficients, the range is 4.6 × 10−14 cm2 /s to 2.0 × 10−12 cm2 /s [26]. The
+916                                               H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+
+
+                      1                                                                                                  1
+
+
+                     0.8                                                                                                0.8
+     Drug released
+
+
+
+
+                                                                                                        Drug released
+                     0.6                                                                                                0.6
+
+
+                     0.4                                                                                                0.4
+
+
+                     0.2                               Numerical result                                                 0.2                            Numerical result
+                                                          Fitting result                                                                                  Fitting result
+                                                      Experimental data                                                                               Experimental data
+                      0                                                                                                  0
+                           0         2       4                        6           8       10                                  0         5           10            15       20
+                                                 Time(day)                                                                                       Time(day)
+
+    (a) The comparison among the numerical result,                                                     (b) The comparison among the numerical result,
+    fitting result, and experimental data with d = 9.3±                                                fitting result, and experimental data with d =
+    4.4µm                                                                                              71.6 ± 19.3µm
+
+Figure 12: The numerical result [19], fitting result, and experimental data of progesterone in vitro: (a) The
+average diameter is 9.3 ± 4.4µm; (b) The average diameter is 71.6 ± 19.3µm.
+
+
+
+                                                                          1
+
+
+                                                                      0.8
+                                                      Drug released
+
+
+
+
+                                                                      0.6
+
+
+                                                                      0.4
+
+                                                                                                                               r=10um
+                                                                      0.2                                                      r=35um
+                                                                                                                               r=50um
+                                                                                                                               r=75um
+                                                                                                                              r=100um
+                                                                          0
+                                                                              0       5           10                              15        20
+                                                                                               Time(day)
+
+
+                               Figure 13: The comparison of different radius of drug release with D = 1.0 × 10−12 cm2 /s.
+
+
+order of magnitude is coincident with the literature proposed on similar drug delivery
+systems [44, 45]. Finding a suitable relationship between the drug release and diffusion
+coefficient is significant. The smaller diffusion coefficient will prolong the period of drug
+storage, which can cause some side effects. On the other hand, poor treatment results can
+occur since the rapid release of the drug is influenced by the larger diffusion coefficient.
+
+
+6                    Conclusions
+In summary, a clear and concrete 3D computational model of drug distribution is con-
+structed with verification of the convergence and stability. This strategy can be a founda-
+tion and guide to research other complicated and irregular diagrams. The mechanism of
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                             917
+
+
+
+                                              1
+
+
+                                             0.8
+
+
+
+
+                             Drug released
+                                             0.6
+
+
+                                             0.4                   D=4.6e-14cm2 /s
+                                                                    D=1e-13cm2 /s
+                                                                    D=5e-13cm2 /s
+                                                                    D=1e-12cm2 /s
+                                             0.2                    D=2e-12cm2 /s
+
+
+                                              0
+                                                   0   5      10           15        20
+                                                           Time(day)
+
+
+       Figure 14: The comparison of the different diffusion coefficients of drug release with r = 50µm.
+
+
+the initial burst effect can be understood by the design of AFEM since it can highlight the
+region where the drug concentration sharply changes, this can develop more effective
+drug delivery systems and optimize therapeutic outcomes. Furthermore, a new mea-
+surement of the amount of drug released by the FEM results is proposed to compare the
+traditional parameter value in the sphere. Optimizing the values of diffusion coefficients
+and radii can predict the behaviors in drug release and minimize potential side effects.
+
+
+Appendix
+By assuming that the diffusion is radial with isotropic media, the diffusion equation can
+be proposed by [42]:                                      
+                                    ∂C 1 ∂           2 ∂C
+                                         =       Dr          .                         (A.1)
+                                     ∂t r2 ∂r          ∂r
+Here, if the diffusivity is constant, the model is simplified by the derivation of composite
+functions:                                  2             
+                                    ∂C       ∂ C 2 ∂C
+                                        =D        +           .                        (A.2)
+                                    ∂t       ∂r2 r ∂r
+There is the standard form if U = Cr is taken:
+                                               2 
+                                        ∂U       ∂ U
+                                           =D            .                             (A.3)
+                                        ∂t        ∂r2
+To solve the above equation, we need three assumptions: The concentration is constant
+on the surface with the infinite transfer coefficient of the material. And the surrounding
+concentration is constant with a finite transfer coefficient of the material. Also, the well-
+stirred volume with its surroundings is finite.
+    The initial and boundary conditions are set as follows:
+                                
+                                    t = 0, r < R, C = Cin ,
+                                                                                        (A.4)
+                                    t > 0, r = R, C = C∞ .
+918                    H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+Then the drug distribution can be solved by the separation of variables, and the result is
+
+                   Cr,t − C∞ 2R ∞ (−1)n                  n2 π 2
+                                                               
+                                              nπr
+                   Cin − C∞ πr n∑
+                            =  ·        · sin     · exp − 2 Dt .                              (A.5)
+                                 =1 n          R          R
+
+In the center of the spherical part, sinx
+                                       x = 1 as x → 0, then
+
+                                        ∞
+                          C0,t − C∞                   n2 π 2
+                                                            
+                                    = 2 ∑ (−1) · exp − 2 Dt ,
+                                              n
+                                                                                              (A.6)
+                          Cin − C∞     n =1
+                                                       R
+
+where R is the spherical radius.
+    Since the Mt is the calculation with the time of integration of the drug flux through
+the surface, the Mt can be showed with
+                                         Z t
+                                                   ∂C
+                                  Mt =         D           dt       for r = R.                (A.7)
+                                          0        ∂r r= R
+
+The derivation of C = Cr,t − C∞ with r is
+
+                  2R|Cin − C∞ | 1 ∞ (−1)n                           n2 π 2
+                                                                             
+             ∂C                                       nπr
+                =              · 2∑             · sin     · exp − 2 Dt
+             ∂r        π        − r n =1 n             R             R
+                                      ∞       n
+                      2R|Cin − C∞ |       (−1) nπ                        n2 π 2
+                                                                               
+                                                          nπr
+                    +               ·∑          ·     cos      · exp − 2 Dt .                 (A.8)
+                           πr        n =1
+                                            n      R        R              R
+
+By setting the r = R, it is clear to deduce that
+
+                          2|Cin − C∞ | ∞                         n2 π 2
+                                                                       
+                ∂C                                   nπR
+                        =             · ∑ (−1) · cos
+                                              n
+                                                          · exp − 2 Dt
+                ∂r r= R        R       n =1
+                                                        R         R
+                          2|Cin − C∞ | ∞          n2 π 2
+                                                         
+                        =             · ∑ exp − 2 Dt .                                        (A.9)
+                               R       n =1
+                                                   R
+
+Because of (−1)n · cosnπ = 1, the above equation can be derived by
+                             Z t
+                                       ∂C
+                      Mt =         D           dt
+                              0        ∂r r= R
+                                                   Z t ∞
+                           2|Cin − C∞ | D                   n2 π 2
+                                                                     
+                         =
+                                 R             ∑ exp − R2 Dt dt
+                                            0 n =1
+
+                           2|Cin − C∞ | D ∞ − R2                  n2 π 2
+                                                                           
+                                                                              t
+                         =
+                                 R         ∑   Dn2 π 2
+                                                         exp   −
+                                                                   R2
+                                                                         Dt
+                                                                              0
+                                          n =1
+                                           ∞                       2  2
+                           2|Cin − C∞ | R      1               n π       
+                         =
+                                 π 2      ∑    n 2
+                                                     1 − exp − 2 Dt .
+                                                                   R
+                                                                                             (A.10)
+                                          n =1
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                          919
+
+
+M∞ is the drug amount at the infinite time, which can be calculated by
+                                                 |Cin − C∞ | R
+                                          M∞ =                 ,                                   (A.11)
+                                                       3
+because of the series ∑∞   1          2
+                       n=1 n2 = 6 . After this, the form of the ratio of Mt and M∞ is
+                                π
+
+
+                                     6 ∞ 1              n2 π 2
+                                                                
+                          Mt
+                              = 1 − 2 · ∑ 2 · exp − 2 Dt .                            (A.12)
+                         M∞         π n =1 n             R
+
+Another form is
+                                      6 ∞ 1          n2 π 2
+                                                           
+                             Mt
+                                = 1 − 2 · ∑ 2 · exp − 2 Dt ,                                       (A.13)
+                             M∞      π n =1 n         R
+where Mt and M∞ represents the corresponding quantity of drug released after time t
+and infinite time, respectively [14].
+
+
+Acknowledgements
+The first and third author would like to thank the support from The University of
+Macau Research Grant (MYRG-CRG2022-00008-ICMS), and the second author would
+like to thank financial support from The Science and Technology Development Fund,
+Macao SAR (No. 0068/2024/RIA1), National Natural Science Foundation of China
+(No. 11922120). The authors would like to thank the support National Natural Sci-
+ence Foundation of China (No. 11922120), MYRG of University of Macau (No. MYRG-
+GRG2024-00198-FST), and the Macau Science and Technology Development Fund
+(0037/2025/RIB1).
+
+
+References
+ [1] K. PARK , S. S KIDMORE AND J. H ADAR ET AL ., Injectable, long-acting PLGA formulations:
+     Analyzing PLGA and understanding microparticle formation, Journal of Controlled Release, 304
+     (2019), pp. 125–134.
+ [2] W. G UO , P. Q UAN AND L. FANG ET AL ., Sustained release donepezil loaded PLGA microspheres
+     for injection: preparation, in vitro and in vivo study, ASIAN Journal of Pharmaceutical Sciences,
+     2015, 10(5) (2015), pp. 405–414.
+ [3] D. K APOOR , A. B HATIA AND P. K AUR ET AL ., PLGA: a unique polymer for drug delivery,
+     Therapeutic Delivery, 6(1) (2015), pp. 41–58.
+ [4] U. E DLUND , A.-C. A LBERTSSON , Degradable polymer microspheres for controlled drug delivery,
+     Adv. Polym. Sci., 157 (2002), pp. 67–112.
+ [5] V. R. S INHA , AND A. T REHAN , Biodegradable microspheres for protein delivery, J. Control.
+     Release, 90 (2003), pp. 261–280.
+ [6] D. B LANCO AND M. A LONSO , Protein encapsulation and release from poly (lactide-co-glycolide)
+     microspheres: effect of the protein and polymer properties and of the co-encapsulation of surfactants,
+     European Journal of Pharmaceutics and Biopharmaceutics, 45(3) (1998), pp. 285–294.
+920                     H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+ [7] M. Z ILBERMAN AND O. G RINBERG , HRP-loaded bioresorbable microspheres: effect of copolymer
+     composition and molecular weight on microstructure and release profile, Journal of Biomaterials
+     Applications, 22(5) (2008), pp. 391–407.
+ [8] A. V ERSYPT, D. PACK AND R. B RAATZ , Mathematical modeling of drug delivery from auto-
+     catalytically degradable PLGA microspheres—A review, Journal of Controlled Release, 165(1)
+     (2013), pp. 29–37.
+ [9] J. S IEPMANN AND N. P EPPAS , Modeling of drug release from delivery systems based on hydrox-
+     ypropyl methylcellulose (HPMC), Advanced Drug Delivery Reviews, 64 (2012), pp. 163–174.
+[10] G. P ERALE , P. A ROSIO AND D. M OSCATELLI ET AL ., A new model of resorbable device degra-
+     dation and drug release: Transient 1-dimension diffusional model, Journal of Controlled Release,
+     136(3) (2009), pp. 196–205.
+[11] A. F ICK , Ueber diffusion, Annalen der Physik, 170(1) (1855), pp. 59–86.
+[12] J. C RANK , The Mathematics of Diffusion, Oxford, England: Clarendon, 1975.
+[13] A. C HARLIER , B. L ECLERC AND G. C OUARRAZE , Release of mifepristone from biodegradable ma-
+     trices: experimental and theoretical evaluations, International Journal of Pharmaceutics, 200(1)
+     (2000), pp. 115–120.
+[14] N. FAISANT, J. S IEPMANN AND J. B ENOIT, PLGA-based microparticles: elucidation of mecha-
+     nisms and a new, simple mathematical model quantifying drug release, European Journal of Phar-
+     maceutical Sciences, 15(4) (2002), pp. 355–366.
+[15] C. R AMAN , C. B ERKLAND AND K. K IM ET AL ., Modeling small-molecule release from PLG mi-
+     crospheres: effects of polymer degradation and nonuniform drug distribution, Journal of Controlled
+     Release, 103(1) (2005), pp. 149–158.
+[16] A. F ORD , D. PACK AND R. B RAATZ , Multi-scale modeling of PLGA microparticle drug delivery
+     systems, Computer Aided Chemical Engineering, Elsevier, 29 (2011), pp. 1475–1479.
+[17] T. C ASALINI , F. R OSSI AND S. L AZZARI ET AL ., Mathematical modeling of PLGA microparticles:
+     from polymer degradation to drug release, Molecular Pharmaceutics, 11(11) (2014), pp. 4036–
+     4048.
+[18] C. B USATTO , J. P ESOA AND I. H ELBLING ET AL ., Heterogeneous hydrolytic degradation of
+     poly (lactic-co-glycolic acid) microspheres: Mathematical modeling, Journal of Applied Polymer
+     Science, 134(43) (2017), 45464.
+[19] C. B USATTO , J. P ESOA AND I. H ELBLING ET AL ., Effect of particle size, polydispersity and poly-
+     mer degradation on progesterone release from PLGA microparticles: Experimental and mathematical
+     modeling, International Journal of Pharmaceutics, 536(1) (2018), pp. 360–369.
+[20] R. S TIEPEL , E. P ENA AND S. E HRENZELLER ET AL ., A predictive mechanistic model of drug
+     release from surface eroding polymeric nanoparticles, Journal of Controlled Release, 351 (2022),
+     pp. 883–895.
+[21] Z HENNING C AI , Y UN C HEN , YANA D I , G UANGHUI H U , R UO L I , W ENBIN L IU , H EYU
+     WANG , FANYI YANG , C HENGBAO YAO AND H ONGFEI Z HAN , AFEPack: A general-purpose
+     C++ library for numerical solutions of partial differential equations, Communications in Compu-
+     tational Physics, 36(1) (2024), pp. 274–318.
+[22] R. L I , W. L IU AND H. M A ET AL ., Adaptive finite element approximation for distributed elliptic
+     optimal control problems, SIAM Journal on Control and Optimization, 41(5) (2002), pp. 1321–
+     1349.
+[23] R. L I , On multi-mesh h-adaptive methods, Journal of Scientific Computing, 24 (2005), pp. 321–
+     341.
+[24] https://gmsh.info/doc/texinfo/gmsh.html.
+[25] H. C HEN , G. H U AND D. O UYANG , A numerical study of the distribution of chemotherapeutic
+H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922                          921
+
+
+     drug carmustine in brain glioblastoma, Drug Delivery and Translational Research, (2021), pp.
+     1–14.
+[26] J. S IEPMANN , K. E LKHARRAZ AND F. S IEPMANN ET AL ., How autocatalysis accelerates drug re-
+     lease from PLGA-based microparticles: a quantitative treatment, Biomacromolecules, 6(4) (2005),
+     pp. 2312–2319.
+[27] C. J I AND W. D AI , Numerical algorithm with fourth-order spatial accuracy for solving the time-
+     fractional dual-phase-lagging nanoscale heat conduction equation, Numer. Math. Theor. Meth.
+     Appl., 16 (2023), pp. 511–540.
+[28] B. B RENNER , The Mathematical Theory of Finite Element Methods, Springer, 2008.
+[29] H. B IAN , Y. S HEN AND G. H U , An h-adaptive finite element solution of the relaxation non-
+     equilibrium model for gravity-driven fingers, Advances in Applied Mathematics and Mechanics,
+     13(6) (2021), pp. 1418–1440.
+[30] B. L IU , L. Z HU AND Z. YANG ET AL ., Quantum implementation of numerical methods for
+     convection-diffusion equations: toward computational fluid dynamics, Comput. Phys., 33 (2023),
+     pp. 425–451.
+[31] G. H U , Z. Q IAO AND T. TANG , Moving finite element simulations for reaction-diffusion systems,
+     Advances in Applied Mathematics and Mechanics, 4(3) (2012), pp. 365–381.
+[32] F. R ÜDIGER , A Posteriori Error Estimation Techniques for Finite Element Methods, Oxford,
+     2013; online edn, Oxford Academic, 23 May 2013.
+[33] Y. G UO AND J. H UANG , A posteriori error analysis of a P 2-CDG space-time finite element method
+     for the wave equation, Numerical Mathematics: Theory, Methods and Applications, 15(3)
+     (2022).
+[34] R. V ERF ÜRTH , A posteriori error estimates for finite element discretizations of the heat equation,
+     Calcolo, 40(3) (2003), pp. 195–212.
+[35] A. A BDULLE , AND G. WANNER , 200 years of least squares method, Elem. Math., 57 (2002), pp.
+     45–60.
+[36] C. L AWSON , AND R. H ANSON , Solving Least Squares Problems; SIAM: Philadelphia, PA,
+     USA, 1995.
+[37] A. C HEN , AND C. C HEN , Evaluation of piecewise polynomial equations for two types of thermo-
+     couples, Sensors, 13 (2013), pp. 17084–17097.
+[38] I. I ZONIN , R. T KACHENKO , N. K RYVINSKA , AND P. T KACHENKO , Multiple linear regression
+     based on coefficients identification using non-iterative SGTM neural-like structure, In International
+     Work-Conference on Artificial Neural Networks; Springer: Berlin/Heidelberg, Germany,
+     (2019), pp. 467–479.
+[39] R. F LETCHER , Practical Methods of Optimization (2nd ed.), New York: John Wiley & Sons,
+     ISBN 978-0-471-91547-8, 1987.
+[40] J. D ENNIS , J R . AND R. S CHNABEL , Secant methods for unconstrained minimization, Numerical
+     Methods for Unconstrained Optimization and Nonlinear Equations, Englewood Cliffs, NJ:
+     Prentice-Hall, (1983), pp. 194–215, ISBN 0-13-627216-9
+[41] B. P RASAD , V. G UPTA AND N. D EVANNA ET AL ., Microspheres as drug delivery system-a re-
+     view, J. Glob. Trends Pharm. Sci., 5(3) (2014), pp. 1961–1972.
+[42] J. V ERGNAUD , Controlled Drug Release of Oral Dosage Forms, CRC Press, 1993.
+[43] C. K IPARISSIDES , A. VASILEIADOU AND F. K ARAGEORGOS ET AL ., A computational systems
+     approach to rational design of nose-to-brain delivery of biopharmaceutics, Industrial and Engineer-
+     ing Chemistry Research, 59(6) (2019), pp. 2548–2565.
+[44] C. P ITT, A. J EFFCOAT AND R. Z WEIDINGER ET AL ., Sustained drug delivery systems. I. The per-
+     meability of poly (e-caprolactone), poly (DL-lactic acid), and their copolymers, Journal of Biomedi-
+922                     H. Chen, G. Hu and D. Ouyang / Adv. Appl. Math. Mech., 18 (2026), pp. 897-922
+
+
+     cal Materials Research, 13(3) (1979), pp. 497–507.
+[45] J. K ANG AND S. S CHWENDEMAN , Determination of diffusion coefficient of a small hydrophobic
+     probe in poly (lactide-co-glycolide) microparticles by laser scanning confocal microscopy, Macro-
+     molecules, 36(4) (2003), pp. 1324–1330.
+

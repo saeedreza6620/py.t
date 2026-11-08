@@ -1,0 +1,39 @@
+                  MW  V_LeBas  r_s_A  Dw_WilkeChang_37C  Dw_StokesEinstein_37C
+verapamil        455      573    6.1           5.04e-06               5.39e-06
+rhodamine B      444      526   5.93            5.3e-06               5.55e-06
+morphine         285      287   4.85           7.63e-06               6.79e-06
+diclofenac       296      303   4.93           7.38e-06               6.67e-06
+ketoprofen       254      290   4.86           7.58e-06               6.77e-06
+gentamicin       478      543   5.99            5.2e-06               5.49e-06
+icariin          677      692    6.5            4.5e-06               5.06e-06
+vancomycin  1.45e+03 1.48e+03   8.37           2.85e-06               3.93e-06
+bFGF        1.72e+04      NaN   20.2                NaN               1.63e-06
+                                                                     check  reference value  this code  ratio
+             Verapamil in dextran, Q = 12 (Abdekhodaie & Wu 2006, p. 3660)         3.21e-06   3.24e-06   1.01
+    Rhodamine in water, 25 °C — Wilke–Chang vs measured R6G (Gendron 2008)            4e-06   3.95e-06  0.988
+Rhodamine in water, 25 °C — Stokes–Einstein vs measured R6G (Gendron 2008)            4e-06   4.14e-06   1.03
+                Rhodamine B in GelMA 5 % (Dogan 2023; mean of low/high MA)         4.15e-06   3.41e-06  0.821
+                Rhodamine B in GelMA 7 % (Dogan 2023; mean of low/high MA)         3.81e-06   3.21e-06  0.843
+               Rhodamine B in GelMA 10 % (Dogan 2023; mean of low/high MA)         3.29e-06   2.94e-06  0.893
+
+Verapamil: V_LeBas = 573.0 cm3/mol, r_s = 6.10 Å, D_w(25 °C) = 3.75e-06, D/D_w = 0.864
+Eq. 26 reproduces 3.21e-6 only with r_s in ångström; with r_s in nm or cm it gives 0.086 and ~1e-8.
+tau50 = 0.03055
+      drug       formulation  R_um    Q       Dw  D_step1  eq26_ratio  D_step2  t50_step1_s  t50_step2_s  t50_data_h  gap_step1
+  morphine               MGM  31.6  NaN 7.63e-06 3.72e-06         NaN      NaN       0.0821          NaN        1.17   5.12e+04
+diclofenac        GM1 (9.8%)  18.9  NaN 7.38e-06  3.6e-06         NaN      NaN       0.0303          NaN         180   2.14e+07
+diclofenac       GM2 (18.3%)  20.3  NaN 7.38e-06  3.6e-06         NaN      NaN        0.035          NaN         276   2.84e+07
+diclofenac       GM3 (26.7%)  22.7  NaN 7.38e-06  3.6e-06         NaN      NaN       0.0438          NaN         126   1.04e+07
+ketoprofen   MS/K-1 (4 h XL)  22.6 27.2 7.58e-06 6.54e-06       0.393 2.98e-06       0.0238       0.0522        2.66   4.02e+05
+ketoprofen   MS/K-2 (2 h XL)  21.6   24 7.58e-06 6.41e-06        0.43 3.26e-06       0.0223       0.0438        3.38   5.46e+05
+ketoprofen MS/K-3 (0.5 h XL)  17.9 13.6 7.58e-06 5.64e-06       0.636 4.82e-06       0.0173       0.0203        1.41   2.94e+05
+vancomycin            pH 7.4  25.3 6.27 2.85e-06  1.5e-06        1.75 4.98e-06         0.13       0.0683          20   5.52e+05
+vancomycin            pH 6.0  25.6 6.54 2.85e-06 1.54e-06        1.71 4.87e-06         0.13       0.0703          43   1.19e+06
+gentamicin           1.0dM-G  10.5  NaN  5.2e-06 2.53e-06         NaN      NaN       0.0133          NaN           1   2.71e+05
+gentamicin           2.5dM-G   8.7  NaN  5.2e-06 2.53e-06         NaN      NaN      0.00912          NaN        1.89   7.46e+05
+gentamicin         m-EmG net  8.05  NaN  5.2e-06 2.53e-06         NaN      NaN      0.00781          NaN        2.44   1.13e+06
+      bFGF          A porous  17.5  NaN 1.63e-06 7.95e-07         NaN      NaN        0.118          NaN         183   5.61e+06
+      bFGF          B normal  17.5  NaN 1.63e-06 7.95e-07         NaN      NaN        0.118          NaN        83.9   2.57e+06
+   icariin    GM-1 (0.25 mM)    30  NaN  4.5e-06 2.19e-06         NaN      NaN        0.125          NaN        78.9   2.26e+06
+   icariin     GM-2 (0.5 mM)    30  NaN  4.5e-06 2.19e-06         NaN      NaN        0.125          NaN        58.3   1.67e+06
+figures in figures_stepD

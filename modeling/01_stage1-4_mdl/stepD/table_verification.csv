@@ -1,0 +1,7 @@
+check,reference value,this code,ratio
+"Verapamil in dextran, Q = 12 (Abdekhodaie & Wu 2006, p. 3660)",3.21e-06,3.2437288274370453e-06,1.010507422877584
+"Rhodamine in water, 25 °C — Wilke–Chang vs measured R6G (Gendron 2008)",4e-06,3.9529688326293265e-06,0.9882422081573317
+"Rhodamine in water, 25 °C — Stokes–Einstein vs measured R6G (Gendron 2008)",4e-06,4.136629603504761e-06,1.0341574008761902
+Rhodamine B in GelMA 5 % (Dogan 2023; mean of low/high MA),4.151954961220076e-06,3.408427207726308e-06,0.8209210455223055
+Rhodamine B in GelMA 7 % (Dogan 2023; mean of low/high MA),3.8096607460507557e-06,3.211934207190978e-06,0.8431024233642315
+Rhodamine B in GelMA 10 % (Dogan 2023; mean of low/high MA),3.2890396774742622e-06,2.937699786436777e-06,0.8931785793148934

@@ -1,0 +1,17 @@
+λ = 40.67, C0 = 1.8 mg/ml data plateau 0.069 t90 173 s
+    1. Fick only (D from formula, Mackie–Mea {'rms': 0.86, 'plateau': 0.976, 't90_s': 6.53}
+    2. + crosslinked network (D from Eq. 26, {'rms': 0.86, 'plateau': 0.976, 't90_s': 5.41}
+    3. + Langmuir equilibrium (K, C_max from {'rms': 0.095, 'plateau': 0.069, 't90_s': 1.822}
+    4. + Langmuir kinetics (K_ads, one curve {'rms': 0.029, 'plateau': 0.069, 't90_s': 114.269}
+λ = 82.33, C0 = 1.8 mg/ml data plateau 0.370 t90 197 s
+    1. Fick only (D from formula, Mackie–Mea {'rms': 0.578, 'plateau': 0.988, 't90_s': 6.618}
+    2. + crosslinked network (D from Eq. 26, {'rms': 0.578, 'plateau': 0.988, 't90_s': 5.483}
+    3. + Langmuir equilibrium (K, C_max from {'rms': 0.098, 'plateau': 0.332, 't90_s': 4.794}
+    4. + Langmuir kinetics (K_ads, one curve {'rms': 0.072, 'plateau': 0.332, 't90_s': 87.34}
+λ = 40.67, C0 = 3.6 mg/ml data plateau 0.317 t90 173 s
+    1. Fick only (D from formula, Mackie–Mea {'rms': 0.622, 'plateau': 0.976, 't90_s': 6.53}
+    2. + crosslinked network (D from Eq. 26, {'rms': 0.622, 'plateau': 0.976, 't90_s': 5.41}
+    3. + Langmuir equilibrium (K, C_max from {'rms': 0.089, 'plateau': 0.288, 't90_s': 4.991}
+    4. + Langmuir kinetics (K_ads, one curve {'rms': 0.052, 'plateau': 0.288, 't90_s': 101.252}
+{'Dw': '3.75e-06', 'D_MM': '2.69e-06', 'D_26': '3.24e-06', 'D_paper': '3.21e-06', 'tau_ads_s': '32.8'}
+figures done

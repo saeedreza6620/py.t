@@ -1,0 +1,870 @@
+             materials
+Article
+Mechanical Properties, Drug Release, Biocompatibility, and
+Antibacterial Activities of Modified Emulsified Gelatin
+Microsphere Loaded with Gentamicin Composite Calcium
+Phosphate Bone Cement In Vitro
+Ming-Hsien Hu 1,2 , Bo-Sin Shih 3 , Shih-Ming Liu 3 , Ssu-Meng Huang 3 , Chia-Ling Ko 3,4
+and Wen-Cheng Chen 3,4,5, *
+
+                                         1   Orthopedic Department, Show Chwan Memorial Hospital, Changhua 500, Taiwan; minghsienhu@gmail.com
+                                         2   Department of Post-Baccalaureate Medicine, College of Medicine, National Chung Hsing University,
+                                             Taichung City 402, Taiwan
+                                         3   Advanced Medical Devices and Composites Laboratory, Department of Fiber and Composite Materials,
+                                             Feng Chia University, Taichung City 407, Taiwan; a12345935661@gmail.com (B.-S.S.);
+                                             0203home@gmail.com (S.-M.L.); dream161619192020@gmail.com (S.-M.H.);
+                                             rayko1024.rb@gmail.com (C.-L.K.)
+                                         4   School of Dentistry, College of Dental Medicine, Kaohsiung Medical University, Kaohsiung 807, Taiwan
+                                         5   Department of Fragrance and Cosmetic Science, College of Pharmacy, Kaohsiung Medical University,
+                                             Kaohsiung 807, Taiwan
+                                         *   Correspondence: wincheng0925@yahoo.com.tw or wencchen@mail.fcu.edu.tw
+
+
+                                         Abstract: Bone defects are commonly addressed with bone graft substitutes; however, surgical
+                                         procedures, particularly for open and complex fractures, may pose a risk of infection. As such,
+                                         a course of antibiotics combined with a drug carrier is often administered to mitigate potential
+                                         exacerbations. This study involved the preparation and modification of emulsified (Em) crosslinking-
+Citation: Hu, M.-H.; Shih, B.-S.; Liu,
+                                         gelatin (gel) microspheres (m-Em) to reduce their toxicity. The antibiotic gentamicin was impregnated
+S.-M.; Huang, S.-M.; Ko, C.-L.; Chen,
+W.-C. Mechanical Properties, Drug
+                                         into gel microspheres (m-EmG), which were incorporated into calcium phosphate bone cement (CPC).
+Release, Biocompatibility, and           The study investigated the effects of m-EmG@CPC on antibacterial activity, mechanical properties,
+Antibacterial Activities of Modified     biocompatibility, and proliferation and mineralization of mouse progenitor osteoblasts (D1 cells).
+Emulsified Gelatin Microsphere           The average size of the gel microspheres ranged from 22.5 to 16.1 µm, with no significant difference
+Loaded with Gentamicin Composite         between the groups (p > 0.05). Most of the oil content within the microspheres was transferred through
+Calcium Phosphate Bone Cement In         modification, resulting in reduced cytotoxicity. Furthermore, antibiotic-impregnated m-EmG did
+Vitro. Materials 2024, 17, 3578.         not compromise the intrinsic properties of the microspheres and exhibited remarkably antibacterial
+https://doi.org/10.3390/                 effects. After combining with CPC (m-EmG@CPC), the microspheres did not significantly hinder
+ma17143578
+                                         the CPC reaction and produced the main product, hydroxyapatite (HA). However, the compressive
+Academic Editors: Javier Gil and         strength of the largest microsphere content of 0.5 wt.% m-EmG in CPC decreased significantly from
+Jakub Szabelski                          59.8 MPa of CPC alone to 38.7 MPa of 0.5m-EmG@CPC (p < 0.05). The 0.5m-EmG@CPC composite
+                                         was effective against Staphylococcus aureus (S. aureus) and Escherichia coli (E. coli) in drug release
+Received: 13 June 2024
+Revised: 15 July 2024
+                                         and antibacterial tests. Compared with m-EmG alone, the 0.5m-EmG@CPC composite showed no
+Accepted: 17 July 2024                   toxicity to mouse fibroblast cells (L929). Additionally, the proliferation and mineralization of mouse
+Published: 19 July 2024                  osteoblastic osteoprogenitor cells (D1 cells) did not have a negative impact on the 0.5m-EmG@CPC
+                                         composite over time in culture compared with CPC alone. Results suggest that the newly developed
+                                         antibacterial 0.5m-EmG@CPC composite bone cement did not negatively affect the performance of
+                                         osteoprogenitor cells and could be a new option for bone graft replacement in surgeries.
+Copyright: © 2024 by the authors.
+Licensee MDPI, Basel, Switzerland.       Keywords: calcium phosphate bone cement (CPC); emulsification; hydrogels; microspheres; antibiotic;
+This article is an open access article
+                                         in vitro; composite
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+
+
+
+
+Materials 2024, 17, 3578. https://doi.org/10.3390/ma17143578                                            https://www.mdpi.com/journal/materials
+Materials 2024, 17, 3578                                                                                            2 of 24
+
+
+
+                           1. Introduction
+                                 In today’s clinical operations, bone repair surgeries are often treated with bone graft
+                           substitutes. Bone substitutes can generally be divided into two categories: ceramic-based
+                           and polymer-based. Ceramics come in different forms, such as block, granular, cement,
+                           etc. Most notably, calcium phosphate (CaP) ceramics are chemically very similar to bone
+                           minerals, are biocompatible, and are now widely used clinically as CaP has been shown to
+                           be reliable and safe in bone regeneration applications [1–3]. Bone substitutes can also be
+                           divided into autologous grafts, allogeneic grafts, and synthetic bone substitutes, according
+                           to the source of the grafts [4]. Of the three categories, synthetic bone substitutes have
+                           better biocompatibility and mechanical properties than the two other bone grafts and are
+                           chemically similar to human bone. In addition, composite bone substitutes can even be
+                           adapted by bone tissue for resorption and regeneration. Osteoconductive prostheses reduce
+                           the risk that a second surgery may be required, which may reduce postoperative infection.
+                           These advantages allow the reuse of synthetic bone substitutes in clinical applications [5–7].
+                                 Calcium phosphate bone cement (CPC) is a slurry of powder mixed with a self-
+                           hardening solution that reacts to form hydroxyapatite (HA). It is applied as a bone-filling
+                           material and has excellent biocompatibility, osteoconductivity, injectability, and plasticity.
+                           However, traditional CPC has shortcomings, such as insufficient mechanical strength, long
+                           hardening time, and difficulty in controlling the final product phase [8–10]. Therefore,
+                           many strategies have been developed by combining it with other medical devices to modify
+                           its performance and provide versatility [11–13].
+                                 Oral or intravenous antibacterial or anti-inflammatory drugs are often given during
+                           the recovery and treatment of complex fractures. However, the effective absorption of
+                           drugs is extremely low and often cannot effectively reach the affected area. To improve
+                           these shortcomings, drug carriers are used to efficiently improve the body’s absorption
+                           of drugs, accurately deliver drugs to the recovery area, and reduce the dosage and the
+                           risk of side effects [14–18]. Studies have confirmed that drugs combined with acellular
+                           perichondrium hydrogel can be antibacterial and effectively promote bone repair [19].
+                                 Hydrogel-based microspheres are commonly used as drug carriers. Various prepara-
+                           tion strategies include freeze-drying, freeze-sublimation of lyophilization, emulsification,
+                           electrospray, and 3D bioprinting. Hydrogel microspheres prepared by emulsification have a
+                           relatively simple process and a low cost. In addition, the microsphere structure is relatively
+                           stable, and the drug release and degradation cycle is long. Therefore, this method was
+                           chosen to prepare microspheres in the present experiment [20–22].
+                                 Emulsification combines two immiscible phases, such as oil and water, by using sur-
+                           factants (emulsifiers) to create a uniform dispersion or emulsion. This study implemented
+                           a water-in-oil (w/o) emulsification method to produce hydrogels. In microsphere man-
+                           ufacturing, gelatin (gel) serves as the aqueous phase, while paraffin oil is utilized as the
+                           oil phase. Gelatin is a hydrolyzed derivative of collagen and is generally derived from
+                           the skin, bones, and connective tissue of animals. It has good degradability, plasticity,
+                           and non-toxicity and is often used in the fields of food and tissue engineering. Gelatin is
+                           widely used to prepare drug carriers because of its easy-to-form adhesive properties [23,24].
+                           Paraffin oil, also known as liquid paraffin or white oil, is a colorless, odorless, transparent
+                           mineral oil. It is a product of the high-temperature fractionation of petroleum. Paraffin oil
+                           has good chemical stability, and fewer impurities are produced when used in the oil phase
+                           of an emulsion [25].
+                                 Span80 is a surfactant suitable for preparing without emulsified microspheres; it is a
+                           biodegradable surfactant based on natural fatty acids (oleic acid) and the sugar alcohol sor-
+                           bitol [26]. Chemical cross-linking with glutaraldehyde (GA) reacts quickly with gelatin and
+                           is therefore used in this study to improve the stability of the gelatin structure. Compared
+                           with other chemical cross-linking agents, GA leads to a shortened process time. Paraffin oil,
+                           Span80, and GA have certain toxicity [27], so ammonium dihydrogen phosphate (ADP)
+                           has been added to modify gel microspheres. The phase produces a saponification reaction
+Materials 2024, 17, 3578                                                                                          3 of 24
+
+
+
+                           to achieve a washing effect, thereby removing the oil phase and excess GA cross-linking
+                           agent [28].
+                                Gentamicin is an antibiotic with good antibacterial effects against Gram-negative and
+                           some Gram-positive bacteria. The antibacterial mechanism is that when the drug enters
+                           the human body, it will enter the interior of the bacteria through the hydrophilic channels
+                           on the bacterial surface, thereby inhibiting bacterial ribosomes from synthesizing proteins
+                           and causing bacterial death [29]. The present study aims to prepare an emulsified micro-
+                           sphere, which was further modified with ADP and impregnated with gentamicin to exert
+                           anti-inflammatory effects, especially for open-wound restorations. Finally, considering
+                           clinical applicability, modified gentamicin-emulsified gel microspheres composited with
+                           commercially available calcium phosphate bone cement (CPC) and their performance,
+                           antibacterial properties, and in vitro biocompatibility were characterized. In the future, it
+                           can be directly used to repair complex open bone defect wounds, shorten the inflammation
+                           time, and achieve rapid healing.
+
+                           2. Materials and Methods
+                           2.1. Raw Materials
+                                The raw materials used in this study included the following: gelatin (type B from
+                           bovine skin, with an average molar mass of 40,000–50,000 g/mol and a protein purity
+                           specification of about 75%, Sigma-Aldrich, Saint Louis, MO, USA), paraffin oil (Macron,
+                           Avantor, Radnor, PA, USA), sorbitan monooleate (Span 80, Emperor Chemical Co., Ltd.,
+                           Taipei City, Taiwan), a solution of 25% glutaraldehyde for gelatin crosslinking (GA, Panreac
+                           AppliChem, Barcelona, Spain), ammonium dihydrogen phosphate for modification (ADP,
+                           Katayama Chemical, Osaka, Japan), and gentamicin for microsphere impregnation (Siu
+                           Guan Chemical Industrial Co., Ltd., Chiayi, Taiwan). The main components of calcium
+                           phosphate bone cement (CPC) are tetracalcium phosphate (TTCP) and anhydrous dicalcium
+                           phosphate (DCPA). The source of the material is the commercial CPC of the product
+                           “REALBONE”, an absorbable calcium phosphate bone graft substitute (injectable type)
+                           provided by a domestic medical device manufacturer (Realbone Technology Co., Ltd.,
+                           Kaohsiung, Taiwan).
+
+                           2.2. Preparation of Gel Microspheres (Em, m-Em, and m-EmG) and CPC Composites (m-Em@CPC
+                           and m-EmG@CPC)
+                           2.2.1. Emulsified Gel Microspheres (Em)
+                                The process began by mixing 1.5 g of gel with 10 mL of deionized water (diH2 O), and
+                           the solution was heated to 60 ◦ C to obtain a 15% (w/v) gel solution. Subsequently, 0.2 mL
+                           of Span 80 was added to 20 mL of paraffin oil, and the mixture was stirred and heated
+                           to 60 ◦ C. About 2 mL of the gel solution was slowly dripped through a syringe into the
+                           prepared water-in-oil solution under continuous stirring for 30 min. The resulting mixture
+                           was then placed in an ice bath at 5 ◦ C and cross-linked with 1.5 mL of GA for 30 min.
+                           After cross-linking, hydrogel microspheres were formed and then washed three times with
+                           acetone and diH2 O to remove excess oil-phase substances. Further filtered and dried to
+                           obtain emulsified microspheres (Em).
+
+                           2.2.2. Em Modification (m-Em) and Antibiotic Impregnation (m-EmG)
+                                The hydrogel microspheres were soaked in a 1 g/250 mL of ADP solution and reacted
+                           for 24 h to remove the residual oil phase and modify Em. Suctioning and filtration were
+                           performed to obtain the modified microspheres (m-Em). About 0.02 g of m-Em micro-
+                           spheres were taken and immersed directly in 10 mg/mL gentamicin for 24 h before being
+                           lyophilized for another 24 h to obtain m-EmG microspheres.
+
+                           2.2.3. m-EmG Composite CPC Process
+                                The mixed powder of CPC consisting of TTCP to DCPA molar ratio of Ca/P was
+                           1.67 [30]. About 0.8 g of CPC powder was mixed with 0.1 wt.%, 0.3 wt.%, and 0.5 wt.%
+Materials 2024, 17, 3578                                                                                               4 of 24
+
+
+
+                           m-EmG microspheres, followed by adding 380 µL of 0.067M dilute phosphate hardening
+                           solution to form a paste. The plate was transferred into a stainless-steel cylinder mold
+                           measuring 6 mm in diameter and 12 mm in height and then processed to remove the
+                           mold within 15 min of the initial setting. The resulting samples were immersed in the
+                           simulated body fluid of Tris buffer solution and subjected to relevant mechanical, physical,
+                           and chemical tests, along with in vitro cellular reaction tests for comparative analysis.
+
+                           2.3. Physiochemical Properties
+                           2.3.1. Microstructure Observations
+                               A scanning electron microscope (SEM; S-3400N, Hitachi, Tokyo, Japan) was used to
+                           analyze differences in the surface morphology of Em, m-Em, and m-EmG.
+
+                           2.3.2. Spectral Analysis by Fourier Transform Infrared Spectroscopy (FTIR)
+                                The analyzed solid samples (gelatin powder, m, m-Em, m-EmG, and m-EmG@CPC)
+                           were ground and thoroughly mixed with optical-grade KBr powder at a ratio of 1/100 (w/w)
+                           for FTIR analysis. Liquid samples (paraffin oil, Span 80, glutaraldehyde, and gentamicin)
+                           were tested by reflections from the diamond surfaces using an attenuated total reflection-
+                           FTIR (ATR-FTIR; Nicolet iS5, Thermo Fisher Scientific, Waltham, MA, USA). It was scanned
+                           from 400 cm−1 to 4000 cm−1 to analyze changes in the spectrum.
+
+                           2.3.3. Changes in Immersion Weight of Hydrogel Microspheres
+                                In this experiment, 0.01 g of microspheres from different groups were soaked in diH2 O
+                           and kept at 37 ◦ C. Excess water was removed before the samples were weighed at different
+                           time points until complete degradation. The calculation formula is as follows:
+
+                                                                              W0 − Wt
+                                                      weight changes (%) =            × 100%
+                                                                                W0
+
+                           where W 0 is the initial weight, and Wt is the weight of the sample after different immer-
+                           sion days.
+
+                           2.3.4. Crosslinking Index Changes
+                                Ninhydrin (2,2-dihydroxy-1,3-indanedione, Sigma-Aldrich® , St. Louis, MO, USA)
+                           reacts with free amine groups to form a blue-purple product, with a darker color indicating
+                           a reaction. The presence of more amino groups leads to a lower degree of cross-linking.
+                           Residual amino groups of the microspheres before and after cross-linking were determined
+                           at an optical density wavelength (OD570 ) of 570 nm by using an enzyme-linked immunosor-
+                           bent assay microplate (ELISA) reader (SPECTROstar Nano, BMG LABTECH, Offenburg,
+                           Germany). Fixation index was calculated as follows [31]:
+
+                                                         (activated amino)fresh − (activated amino)residual
+                                  Fixation index(%) =                                                         × 100%
+                                                                       (activated amino)fresh
+
+                               The free amine group before crosslinking is (amine-reactive)fresh , and the free amine
+                           group after crosslinking is (amine-reactive)residual .
+
+                           2.3.5. Thermal Stability
+                                 Thermogravimetric analysis and a differential scanning calorimeter (TGA-DSC; TA-
+                           MDSC, TA Instrument, New Castle, DE, USA) were employed to assess the structural
+                           stability of m-Em following drug impregnation of m-EmG, up to a temperature of 400 ◦ C
+                           at a heating rate of 2 ◦ C/min.
+
+                           2.3.6. Gentamicin Release
+                               The measured 0.01 g of m-EmG microspheres and 1 cm cubes of m-EmG@CPC were
+                           soaked in 3 mL of deionized water (diH2O) and then tested using ultraviolet-visible
+Materials 2024, 17, 3578                                                                                             5 of 24
+
+
+
+                           spectroscopy (UV-Vis; UV1800, Shimadzu, Kyoto, Japan) to measure the release of each
+                           group. The optical density of gentamicin was recorded at a wavelength of 193.2 nm
+                           (OD193.2 ). The calibration curve formula is:
+
+                                                             y = 0.002622 x − 0.000047.
+
+                                To obtain the y value, substitute OD193.2 into x and convert it to antibiotic concentration.
+
+                           2.3.7. Phase Identification
+                                The sample was analyzed using an x-ray diffractometer (XRD; XRD-6000, Shimadzu,
+                           Kyoto, Japan) to study changes in the crystallization of m-EmG@CPC composites. The
+                           diffraction conditions included Ni-filtered Cu target Kα with 30 kV and 20 mA. The scan
+                           angle ranged from 20◦ to 60◦ , and the 2θ scan rate was 2◦ .
+
+                           2.3.8. Working/Setting Time Measurements
+                                During the mixing of one cement, the slurry gradually hardened without any mutual
+                           adhesion between the powders. This period is known as the working time. The setting
+                           time was determined by using a dental phosphoric acid standard, ISO 9917-1 [32]. This
+                           involved pressing down on the sample vertically with a 400 g Gillmore needle at 37 ◦ C and
+                           60–70% humidity until no visible indentation was found on the surface. This marked the
+                           end of the hardening period.
+
+                           2.3.9. Injectability and Disintegration
+                                After mixing the composite paste for 1 min, it was immediately transferred into a 5 mL
+                           syringe. A vertical force of 250 N was applied to the syringe barrel, and the bone cement
+                           was injected into diH2 O at 37 ◦ C within 3 min to achieve injectability and disintegration.
+                           Pictures were captured to observe changes after the composite cement was injected into
+                           the water. If no disintegration was observed after soaking for one day, it was considered
+                           disintegration resistant.
+
+                           2.3.10. Compressive Strength and Fracture Surface Observation
+                                The sample’s strength was tested in accordance with ASTM F451-16 [33]. The m-
+                           Em@CPC and m-EmG@CPC samples with a diameter of 6 mm and height of 12 mm were
+                           immersed in a Tris-buffer solution, an artificial body fluid, at a 1 g to 10 mL ratio. After
+                           being placed at 37 ◦ C for 1 day, it was removed, and the compressive strength of the wet
+                           composite specimens was measured using a universal testing machine (HT-2402, Hung Ta,
+                           Taichung, Taiwan) at a crosshead speed of 1 mm/min. After the test, the fractured sample
+                           was immersed in ethanol to stop the reaction. The fracture surface of the m-EmG@CPC
+                           composite after high vacuum metal evaporation coating was observed using SEM.
+
+                           2.4. Antibacterial Tests
+                           2.4.1. Qualitative Antibacterial Testing
+                               Staphylococcus aureus (S. aureus; ATCC number: 25923) and Escherichia coli (E. coli;
+                           ATCC number: 10798) were selected for qualitative and quantitative testing. The culture
+                           environment of the strain was maintained at 37 ◦ C without CO2 to avoid bacterial over-
+                           growth. In addition, control CPC alone and experimental m-EmG/CPC composites were
+                           autoclaved before the experiments.
+
+                           2.4.2. Quantitative Antibacterial Testing
+                                 Antimicrobial quantification was tested using the broth dilution method. First, 0.8 g
+                           of a cylindrical sample with a diameter of 6 mm was placed in 2 mL of bacterial suspension
+                           with a density of approximately 1.0 × 107 cells/mL and incubated with bacteria at 37 ◦ C
+                           for 1 day. About 100 µL of the bacterial suspension was transferred to a 96-well plate.
+Materials 2024, 17, 3578                                                                                            6 of 24
+
+
+
+                           Absorbance (OD595 ) was recorded using an enzyme-linked immunosorbent assay (ELISA)
+                           reader (EZ Read-400, Biochrom, Holliston, MA, USA) to reflect the antibacterial effect.
+
+                           2.5. In Vitro Cytotoxicity and Osteoprogenitor Cell Activities
+                           2.5.1. Cell Culture
+                                Fibroblast L929 cells (National Institute of Health, Miaoli, Taiwan) were used in the
+                           study. The test followed the rules outlined in ISO 10993-5:2009 [34]. L929 cells were
+                           cultured in an incubator at 37 ◦ C with 5% CO2 and subcultured at a cell concentration
+                           of 0.8–1.0 × 106 cells/mL. The minimal essential medium alpha (Gibco, Thermo Fisher
+                           Scientific Inc., Waltham, MA, USA) containing 10% horse serum was used, which was
+                           changed every 2 days. Bone marrow mesenchymal stem cells were cloned from Balb/C mice
+                           with osteoprogenitor D1 cells from the American Type Culture Collection (ATCC). Short-
+                           term D1 cell attachment, proliferation, semi-quantitative, and qualitative measurements
+                           for alkaline phosphatase (ALP) were evaluated to assess the biological response between
+                           composites and D1 cells. The culture medium used was Dulbecco’s modified Eagle’s
+                           medium (Thermo Fisher, Waltham, MA, USA) containing 10% fetal bovine serum (Thermo
+                           Fisher, Waltham, MA, USA).
+
+                           2.5.2. Cytotoxicity Tests
+                                 According to the ISO 10993-5 specification, Em, m-Em, and m-EmG were extracted
+                           in the cell culture medium according to the ratio of 1 g/10 mL, while m-Em@CPC and
+                           m-EmG@CPC were immersed in the cell culture medium according to the extracting ratio
+                           of 1 g/5 mL. After 24 h of incubation at 37 ◦ C, the culture medium was extracted for the
+                           cytotoxicity test. The control group consisted of a blank cell culture medium, while the
+                           positive control group was exposed to 15% dimethyl sulfoxide (DMSO; Sigma-Aldrich,
+                           St. Louis, MO, USA), and the negative control group was exposed to high-density polyethy-
+                           lene (HDPE). All samples used for subsequent in vitro cell culture were sterilized under
+                           γ-radiation at 25 kGy (China Biotechnology Co., Ltd., Taichung, Taiwan).
+                                 In the quantitative cytotoxicity assay, each group of extracts (100 µL/well) was added
+                           to L929 cells at a concentration of 1 × 104 cells, and the cells were cultured for 24 h. After
+                           that, the medium was removed, and 100 µL of fresh medium was mixed with 50 µL of XTT
+                           cell proliferation assay kit (Biological Industries, Kibbutz Beit Haemek, Israel) for a 4-h
+                           reaction. Subsequently, the samples were processed using an ELISA reader (SPECTROstar
+                           Nano, BMG LABTECH, Offenburg, Germany). The measured absorbance from OD492 was
+                           directly proportional to cell viability. In the qualitative cytotoxicity, the same extract was
+                           used to culture L929 cells (1000 µL/well) with a cell concentration of 1 × 105 cells for 24 h,
+                           and then the cell morphology was observed.
+
+                           2.5.3. D1 Cell Proliferation, Mineralization, and ALP Staining
+                                Composite surfaces were cultured with D1 cells at a D1 cell concentration of 1 × 105 cells
+                           for 1, 4, 7, 10, and 14 days to allow for proliferation. After incubation, the samples were
+                           washed with PBS, and the new culture medium was added to the detecting assays. Cell
+                           metabolic activity and ALP (an early marker of osteogenesis) were tested using an ala-
+                           mar Blue assay (Bio-Rad, Hercules, CA, USA) and p-nitrophenyl phosphate kits (pNPP;
+                           Sigma-Aldrich, St. Louis, MO, USA). The absorbance of alamar Blue at OD570 was directly
+                           proportional to the metabolic activity of the cells, and OD590 was used as the reference
+                           wavelength. The absorbance of the reaction solution was determined at OD405 by the
+                           measurement of the ALP amount by the ELISA reader. ALP staining was carried out using
+                           SIGMAFAST BCIP/NBT tablets (N2770, Sigma-Aldrich, St. Louis, MO, USA). The com-
+                           posites, after the cell culture, served as the ALP staining substrate. The composite samples
+                           were washed three times with water before being examined under a light microscope
+                           (IVM-3AFL, Sage vision Co., New Taipei City, Taiwan). A darker color indicates a higher
+                           ALP content.
+Materials 2024, 17, 3578                                                                                                 7 of 24
+
+
+
+                           2.6. Statistical Analysis
+                                An Analysis of Variance (ANOVA) was conducted using IBM SPSS Statistics version
+                           20 (SPSS Inc., Chicago, IL, USA) to assess the properties of Em, m-Em, and m-EmG micro-
+                           spheres and m-Em@CPC and m-EmG@CPC composites. ANOVA was utilized to determine
+                           the significance of differences among the means of multiple groups. The comparison of
+                           differences relied on the estimates of two distinct variables.
+
+                           3. Results and Discussion
+                           3.1. Analysis of Different Gel Microspheres
+                           3.1.1. Observation of Em, mEm, and m-EmG Microspheres
+                                Upon examination of the microstructure (Figure 1), it was apparent that Em before
+                           modification exhibited significant agglomeration, with most of the microspheres being
+                           coated or interlocked with the oil. However, despite the slight agglomeration in m-Em, it
+                           was discernible that the surface of the m-Em appeared smooth and non-porous, indicating
+                           the removal of a substantial amount of the oil among the microspheres. This observation
+                           confirmed the capability of ADP to eliminate the oil from the microspheres’ surface. Mi-
+                           crospheres of m-EmG with gentamicin were still in an agglomerated state, and the extra
+                           phase among m-EmG microspheres was visible after being impregnated with gentamicin.
+                           However, no significant statistical difference was found in particle size among the Em,
+                           m-Em, and m-EmG groups. The average particle size of the gel microspheres in the Em,
+                           m-Em, and m-EmG groups ranged from 22.5, 19.6, and 16.1 µm, but there was no significant
+                           difference between the groups (p > 0.05).
+
+
+
+
+                           Figure 1. SEM microstructure of each emulsified gel microsphere (left to right: (a) Em, (b) mEm, and
+                           (c) m-EmG); the particle sizes of the three groups of Em, m-Em, and m-EmG are 22.5 ± 5.7, 19.6 ± 5.2,
+                           and 16.1 ± 4.8 µm, respectively (n = 20, p > 0.05).
+
+                           3.1.2. Absorption IR Spectra
+                               Based on the infrared spectra (Figure 2), Em, m-Em, and m-EmG microspheres dis-
+                           played absorption bands, indicating amide II (C–C; C–N) absorption at 1536 cm−1 with
+                           characteristic C=N at 1630 cm−1 . These spectral features provide evidence that the gel was
+Materials 2024, 17, 3578                                                                                               8 of 24
+
+
+
+                           effectively cross-linked by GA. The presence of CH2 absorption bands at 2848 cm−1 and
+                           2949 cm−1 , along with the smaller CH2 absorptions of m-Em compared to Em, indicated
+                           the significant removal of the paraffin oil from ADP-modified gel spheres. Gentamicin
+                           absorption was found to be insignificant. Observing the hydroxyl (O–H) at 3269 cm−1
+                           confirms the successful preparation of emulsified microspheres.
+
+
+
+
+                           Figure 2. ATR−FTIR spectrum analysis of each raw material (Gel: gelatin, paraffin oil, Span 80, GA:
+                           glutaraldehyde, gentamicin) and each emulsified gel microsphere (Em, mEm, and m-EmG).
+
+                           3.1.3. Degradation Measurement of Em and m-Em
+                                The weight loss of hydrogel microspheres Em and m-Em following immersion in
+                           diH2 O was quantified, and the results are presented in Figure 3. No noticeable difference
+                           in the weight loss pattern of the emulsified microspheres was observed between pre- and
+                           post-modification. The Em group underwent complete degradation after 28 days, whereas
+                           the m-Em group exhibited degradation after approximately 31 days. The cross-linking
+                           degrees of the two groups by GA were determined to be 86.7 ± 2.5 and 85.1 ± 3.4% (n = 6,
+                           p > 0.05), respectively. These findings collectively indicate that the degradation of Em
+                           microspheres remains unaltered following modification.
+Materials 2024, 17, 3578                                                                                              9 of 24
+
+
+
+
+                           Figure 3. Weight loss curve of hydrogel microspheres Em and m-Em after complete degradation after
+                           immersion in diH2 O (n = 10).
+
+                           3.1.4. TGA and DSC Analysis of m-Em and m-EmG
+                                The TGA and DSC results for m-Em and m-EmG are depicted in Figure 4. The
+                           variation in cross-linking degree led to a rise in the temperature range for thermal cracking
+                           rather than a specific temperature. Notably, no discernible disparity was found before
+                           (m-Em) and after gentamicin impregnation (m-EmG). As indicated by the DSC analysis,
+                           both groups presented distinct endothermic bands at 80 ◦ C, corresponding to the gel’s
+                           glass transition temperature (Tg) post-cross-linking. Typically, the Tg of the gel falls within
+                           the range of 30 to 40 ◦ C [35]. These outcomes suggest no substantial differentiation in
+                           the thermal characteristics of m-Em and m-EmG. Furthermore, the disparity in DSC was
+                           inconsequential, aligning with the findings on cross-linking degrees.
+
+
+
+
+                           Figure 4. Cont.
+Materials 2024, 17, 3578                                                                                           10 of 24
+
+
+
+
+                           Figure 4. (a) TGA and (b) DSC analysis of modified gel microspheres (m-Em) and after antibiotic
+                           impregnation (m-EmG).
+
+                           3.1.5. Antibiotic Release of m-EmG
+                                The drug release profile of gentamicin within the 0.01 g of m-EmG gel microspheres,
+                           along with the background value of m-Em, is illustrated in Figure 5. The background
+                           value of m-Em should be subtracted from the measured value of m-EmG to obtain the
+                           actual drug release measurement. In the m-EmG group, a substantial release of gentamicin
+                           occurred approximately 2 days after immersion, transitioning from an initial rapid release
+                           to a sustained release pattern. The process involved gel backbone slippage within the
+                           microspheres and subsequent degradation of the gel molecules, resulting in sustained
+                           release. The release of m-EmG exhibited stability and sustained release relative to the Em
+                           value for a period of approximately 2–24 days. The final release was attributed to releasing
+                           the remaining bonds within the microspheres after degradation.
+
+
+
+
+                           Figure 5. Comparison of gentamicin release from m-EmG after immersion in diH2 O and m-Em
+                           background (n = 10).
+Materials 2024, 17, 3578                                                                                               11 of 24
+
+
+
+                           3.1.6. Antibacterial Efficiency of m-EmG
+                                To further confirm the antibacterial effect of m-EmG, Figure 6a shows the qualitative
+                           antibacterial effect of m-Em and m-EmG on E. coli and S. aureus after 1 day of culture.
+                           m-EmG had an obvious inhibitory zone, while the m-Em group had no inhibition zone,
+                           showing the effective impregnation and release of antibiotics in the modified gel micro-
+                           spheres. Figure 6b shows the quantitative antibacterial test, and the results showed that
+                           the antibacterial efficiency of the m-EmG group was similar to that of the positive control,
+                           DMSO. The m-EmG group demonstrates stronger antibacterial ability and drug release
+                           compared with the m-Em group. This finding confirms that the measured gentamicin
+                           values in m-Em (Figure 5) should be considered interference background values for the
+                           release of paraffin oil.
+
+
+
+
+                           Figure 6. Comparison of antibacterial effects of m-Em and m-EmG against E. coli and S. aureus after
+                           one day of incubation: (a) qualitative and (b) quantitative (n = 3) testing.
+Materials 2024, 17, 3578                                                                                              12 of 24
+
+
+
+                           3.1.7. Biocompatibilities of Em, m-Em, and m-EmG
+                                The quantitative cytotoxicity test of each microsphere extract and L929 cells cultured
+                           for 1 day is shown in Figure 7a. According to ISO 10993-5, when the cell survival rate is
+                           lower than 70% or the cell morphology changes significantly, the sample extract has a toxic
+                           effect on the cells [34]. The cell survival rate of the HDPE group was higher than 70%,
+                           indicating the effectiveness of sterilization conducted in the study; the cell survival rates
+                           after Em, m-Em, and m-EmG modifications were all lower than 70%, which showed that
+                           the extract was cytotoxic to L929 cells. This phenomenon could be due to the residual oil
+                           phase of paraffin oil, Span 80, or GA.
+
+
+
+
+                           Figure 7. Comparison of cytotoxicity of m-Em and m-EmG extracts after one day of L929 cell culture:
+                           (a) quantitative (n = 6) and (b) qualitative testing.
+
+                                The cell morphology of extracts cultured with L929 cells for one day is shown in
+                           Figure 7b. The appearance of the cells in the control group was plump and spindle-shaped,
+                           indicating good cell morphology. However, the different microsphere extracts of Em, m-Em,
+                           and m-EmG showed that the cells were shrinking and spherical. The results were similar
+Materials 2024, 17, 3578                                                                                         13 of 24
+
+
+
+                           to those of DMSO, indicating the presence of cytotoxicity. This result is consistent with the
+                           quantitative test results.
+
+                           3.2. Characterizations of m-EmG@CPC Composites
+                           3.2.1. IR Spectra of Different Microsphere Ratios of m-EmG@CPC Composites
+                                The FTIR spectra of the m-EmG composite CPC are displayed in Figure 8. The two
+                           groups of CPC alone and m-EmG@CPC composites all showed the formation of HA
+                           products after immersion. In addition, no difference was found between the spectra,
+                           indicating that no new compounds were produced among the m-EmG@CPC composites.
+
+
+
+
+                           Figure 8. Infrared spectra of different microsphere proportions of m-EmG@CPC composites after
+                           soaking in Tris buffer for 1 day.
+
+                           3.2.2. Diffraction Patterns of m-EmG@CPC Composites
+                                The XRD analysis of m-EmG@CPC composites after soaking in Tris buffer for one day
+                           is depicted in Figure 9. Aside from the presence of HA (JCPDS 090432), only a small amount
+                           of DCPD peak (JCPDS 010395) diffraction was observed. No discernible differences were
+                           found in the diffraction patterns between the groups. This finding was further supported by
+                           the FTIR analysis, which demonstrated that the inclusion of m-EmG microsphere composite
+                           CPC did not alter the major HA product, nor did it result in the formation of any additional
+                           product phases compared with CPC alone.
+Materials 2024, 17, 3578                                                                                             14 of 24
+
+
+
+
+                           Figure 9. Diffraction patterns of different m-EmG@CPC composites after soaking in Tris buffer for
+                           1 day.
+
+                           3.2.3. Injectability and Disintegration of m-EmG@CPC Composites
+                                 CPC is in the form of a paste before hardening and can be delivered by injection to
+                           repair irregular bone defects in clinical applications. However, if the CPC working or
+                           setting time is too short, then it will harden in the delivered tooling and become impossible
+                           to inject. In addition, if CPC is exposed to a large amount of blood after injection, then it
+                           causes disintegration. This means that its anti-disintegration ability is poor, and its clinical
+                           application will be more limited [36].
+                                 The results of the injectability and disintegration resistance of m-EmG@CPC com-
+                           posites are shown in Figure 10. According to the above-mentioned experimental method,
+                           injection of bone cement paste into water, and observation, the residual rate in each group
+                           was less than 15%, indicating that each m-EmG@CPC composite had excellent injectability.
+                           There was no obvious disintegration after 1 min and 24 h of m-EmG@CPC composites
+                           immersed in diH2 O.
+
+
+
+
+                           Figure 10. Injectability and disintegration of different m-EmG@CPC composites compared to CPC
+                           alone: immediately and after 24 h of immersed observation.
+Materials 2024, 17, 3578                                                                                                15 of 24
+
+
+
+                           3.2.4. Compressive Strength and Fractural Surface Observation of m-EmG@CPC Composites
+                                 The strength of bone grafts should be at least close to the compressive strength of
+                           human trabecular bone, which is approximately 30 MPa [37]. The compression results of
+                           the m-EmG@CPC composite after soaking in Tris buffer for one day is shown in Figure 11a.
+                           The highest value of CPC alone was 59.82 ± 15.33 MPa. With the addition of m-EmG,
+                           the compressive strength showed a downward trend, as CPC is a ceramic material. After
+                           adding emulsified microspheres, there will be an interface due to different material proper-
+                           ties after compositing. Therefore, the interface generally has large stress in compression
+                           and produces cracks, resulting in reduced compressive strength [15,16,38], but there was no
+                           statistical significance between m-EmG@CPC composites. The strength of 0.5m-EmG@CPC
+                           was 38.74 ± 9.59 MPa, which still meets the clinical application standards.
+
+
+
+
+                           Figure 11. (a) compression test (n = 10) and (b) fracture surface observation of different m-EmG@CPC
+                           composites compared to CPC alone after soaking in Tris buffer for 1 day (red arrowhead: HA product
+                           phase morphology; yellow arrowhead: pore).
+Materials 2024, 17, 3578                                                                                         16 of 24
+
+
+
+                                The microstructure of the fracture surface of m-EmG@CPC post-compression is illus-
+                           trated in Figure 11b. The presence of the apatite phase after the CPC reaction was consistent
+                           across all groups. The red arrow denotes the coral reef-like crystal structure, signifying
+                           that the incorporation of m-EmG microspheres with CPC did not impede the reaction of
+                           the HA products. Furthermore, conspicuous pores, indicated by yellow arrows, became
+                           increasingly evident with the addition of m-EmG microspheres.
+
+                           3.2.5. Qualitative and Quantitative Antibacterial Testing
+                                The m-EmG@CPC composites were incubated with E. coli and S. aureus for 1 day
+                           for qualitative and quantitative antibacterial testing (Figure 12). No inhibition zone was
+                           produced in the qualitative contact culture, regardless of the gentamicin-containing groups
+                           (Figure 12a). The antibiotics in m-EmG microspheres were difficult to diffuse and release.
+
+
+
+
+                           Figure 12. Cont.
+Materials 2024, 17, 3578                                                                                                  17 of 24
+
+
+
+
+                           Figure 12. (a) Qualitative antibacterial testing of different m-EmG@CPC composites versus CPC
+                           alone exposed to E. coli and S. aureus for one day. (b) Quantitative antibacterial testing of different
+                           m-EmG@CPC composites compared to CPC alone cultured in E. coli and S. aureus broths for one day
+                           (n = 3).
+
+                                From the quantitative antibacterial results of E. coli and S. aureus broth cultured for
+                           one day, the antibacterial effect of the 0.5m-EmG@CPC containing gentamicin group was
+                           the most obvious, and the effect was enhanced with the increase of m-EmG microspheres.
+                           The significantly improved antibacterial ability means that after the gentamicin-loaded
+                           gel microspheres composite CPC, spreads, the antibacterial properties can be successfully
+                           released, effectively inhibiting E. coli and S. aureus.
+
+                           3.2.6. Gentamicin Release of 0.5m-EmG@CPC Composite
+                                The above tests showed that the 0.5m-EmG@CPC group had the lowest compres-
+                           sive strength required for clinical surgery, and the antibacterial test showed that only this
+                           group had apparent antibacterial ability; so, subsequent experiments were all on this 0.5m-
+                           EmG@CPC. Compared with 0.5m-Em@CPC (without antibiotics) as a control, none showed
+                           antibacterial effects. From Figure 13, the release of gentamicin from 0.5m-EmG@CPC was
+                           measured; approximately 0.08 mg of gentamicin was released after 20 days of immersion.
+                           The total release amount was significantly lower than that of pure m-EmG gel microspheres,
+                           indicating that m-EmG composite CPC could slow down the initial burst release of gen-
+                           tamicin and further sustain release over several days. This phenomenon enables research
+                           designs to prevent postoperative bacterial infections.
+Materials 2024, 17, 3578                                                                                        18 of 24
+
+
+
+
+                           Figure 13. Release curve of gentamicin from the m-EmG@CPC composite immersed in diH2 O
+                           (n = 10).
+
+                           3.2.7. Working/Setting Times
+                                The working and setting times of each gel microspheres composite CPC are shown in
+                           Table 1. The working time was about 5 min, and the setting time was about 10 min. No
+                           noticeable difference was found among the groups (p > 0.05). For clinical applications, the
+                           expected working time is 4 to 10 min, and the appropriate setting time is 10 to 20 min; the
+                           results showed that each group in this experiment met this requirement.
+
+                           Table 1. Working and setting times of CPC alone, m-Em@CPC, and m-EmG@CPC (n = 10).
+
+                                                                    Working Time                Setting Time
+                                      Samples
+                                                                       (min)                        (min)
+                                        CPC                           5.18 ± 0.09                10.26 ± 0.12
+                                   0.5m-Em@CPC                        5.24 ± 0.08                10.29 ± 0.03
+                                  0.5m-EmG@CPC                        5.24 ± 0.09                10.30 ± 0.07
+
+
+                           3.3. In Vitro Cytotoxicity and D1 Cell Interactions
+                           3.3.1. Cytotoxicity
+                                 The results in Figure 14a confirmed that the extract of m-EmG@CPC had no cytotox-
+                           icity to L929 cells. Cell morphology was observed after one day of culturing L929 with
+                           m-EmG@CPC extract. The cells were revealed in a complete spindle shape, indicating that
+                           they were in good shape. Therefore, m-EmG@CPC had no cytotoxicity.
+Materials 2024, 17, 3578                                                                                              19 of 24
+
+
+
+
+                           Figure 14. (a) quantitative cytotoxicity (n = 6) and (b) qualitative cell morphology of CPC alone,
+                           0.5m-Em@CPC, and 0.5m-EmG@CPC extracts cultured with L929 cells for one day.
+
+                           3.3.2. Osteoprogenitor-D1 Cell Proliferation and Mineralization
+                                The proliferation ability of D1 cells during the period of 14 days was measured by
+                           detecting CPC alone and gel microspheres@CPC with or without impregnated gentamicin
+                           in contact with D1 cells for 14 days. The comparison results with the blank group are shown
+                           in Figure 15a, and cell proliferation increased with time. On day 14, all groups began to
+                           reach the plateau phase and no longer proliferated, indicating that osteoprogenitor-D1 cells
+                           began mineralizing. Observation of cells on the 10th day showed that when CPC alone and
+                           0.5m-EmG@CPC were compared, cell proliferation was significantly greater than that of
+                           0.5m-EmG@CPC, indicating that the release of gentamicin had a certain negative impact
+                           on D1 cells.
+Materials 2024, 17, 3578                      20 of 24
+
+
+
+
+                           Figure 15. Cont.
+Materials 2024, 17, 3578                                                                                              21 of 24
+
+
+
+
+                           Figure 15. (a) Proliferation of CPC alone, 0.5m-Em@CPC, and 0.5m-EmG@CPC composites cultured
+                           with D1 cells for 14 days. The symbol * indicates a significant difference between groups based
+                           on a one-way ANOVA (p < 0.05, n = 3). (b) ALP secretion (OD450 ) of CPC alone, 0.5m-Em@CPC,
+                           and 0.5m-EmG@CPC composites cultured with D1 cells for 14 days; symbol * indicates a significant
+                           difference between groups based on one-way ANOVA (p < 0.05, n = 3). (c) Semi-quantitative analysis
+                           of ALP secretion of CPC alone, 0.5m-Em@CPC, and 0.5m-EmG@CPC composites cultured with
+                           D1 cells for 14 days. The symbol * indicates a significant difference between groups based on a
+                           one-way ANOVA (p < 0.05, n = 3). (d) Qualitative ALP staining of CPC alone, 0.5m-Em@CPC, and
+                           0.5m-EmG@CPC composites cultured with D1 cells for 14 days.
+Materials 2024, 17, 3578                                                                                                  22 of 24
+
+
+
+                                 ALP is a phosphatase produced by bone cells. It can help hydrolyze phosphate
+                           monoesters in the body. When bone cells enter mineralization, they secrete ALP in large
+                           quantities and release phosphates to participate in bone matrix construction [16]. In order
+                           to confirm the effect of m-EmG@CPC on the mineralization ability of bone cells, the ALP
+                           secretion ability can be measured as a mineralization index. As shown in Figure 15b, a
+                           small amount of ALP was secreted on days 1, 4, and 7. The ALP secretion of the 0.5m-
+                           EmG@CPC group reached its maximum on the 14th day of culture. Figure 15c shows a
+                           semi-quantitative analysis of ALP, where the relative ability of a single cell to secrete ALP
+                           is obtained by dividing ALP production by the number of cells. The changing trend was
+                           the same as that of ALP secretion in Figure 15b. The ALP secretion of the D1 cells cultured
+                           on 0.5m-EmG@CPC reached its highest on the 14th day, but the peak time was delayed
+                           compared with the 10 days culture on CPC alone and 0.5m-Em@CPC. Overall, gentamicin
+                           released from 0.5m-EmG@CPC did not significantly affect the proliferation or ability of D1
+                           cells to secrete ALP, except for the delayed effect.
+
+                           4. Conclusions
+                                Emulsified gel microspheres were prepared, and ADP greatly removed paraffin oil.
+                           The drug release and antibacterial tests showed that gentamicin was successfully impreg-
+                           nated into m-EmG microspheres. The total degradation time of m-EmG reached 30 days,
+                           and gentamicin was released slowly and sustainably, but m-EmG microspheres were still
+                           cytotoxic to L929 cells. Obvious pores were found inside the m-EmG@CPC after com-
+                           posite immersion and compression, although adding gel microspheres did not hinder the
+                           product phase HA generation. From the mechanical tests, the compressive strength of
+                           m-EmG@CPChe decreased but still met clinical requirements. No obvious differences were
+                           detected compared with CPC alone, especially in terms of working/setting, injectability,
+                           and disintegration resistance in operations. For antibacterial activity and drug release,
+                           m-EmG@CPC was observed to effectively release gentamicin, resulting in antibacterial
+                           effects against S. aureus and E. coli. From in vitro cell testing, the maximum addition group
+                           of 0.5 wt.% m-EmG composite CPC was not cytotoxic and had no negative impact on
+                           the proliferation of D1 cells; hence, the mineralization of ALP secretion with CPC alone
+                           confirmed comparability. Based on the results, 0.5m-EmG@CPC was selected as the best
+                           group and is expected to become a new composite bone cement choice in future bone
+                           restorations and generations.
+
+                           Author Contributions: Conceptualization, M.-H.H. and W.-C.C.; Data Curation, M.-H.H., B.-S.S.,
+                           S.-M.L., S.-M.H., C.-L.K. and W.-C.C.; Formal analysis, M.-H.H., B.-S.S., S.-M.L., S.-M.H., C.-L.K. and
+                           W.-C.C.; Funding acquisition, M.-H.H. and W.-C.C.; Investigation, M.-H.H., B.-S.S., S.-M.L., S.-M.H.,
+                           C.-L.K. and W.-C.C.; Methodology, M.-H.H., C.-L.K. and W.-C.C.; Project administration, M.-H.H.
+                           and W.-C.C.; Resources, W.-C.C.; Software, M.-H.H., B.-S.S., S.-M.L., S.-M.H., C.-L.K. and W.-C.C.;
+                           Supervision, W.-C.C.; Validation, M.-H.H. and W.-C.C.; Visualization, W.-C.C.; Writing—original
+                           draft, M.-H.H., B.-S.S., S.-M.L., S.-M.H., C.-L.K. and W.-C.C.; Writing—review & editing, M.-H.H.
+                           and W.-C.C. All authors have read and agreed to the published version of the manuscript.
+                           Funding: This research was majorly supported by the Ministry of Science and Technology, Taiwan
+                           grant numbers MOST [110-2221-E-035-013, 109-2622-E-035-043, 109-2622-E-035-014-CC2] and Show
+                           Chwan Memorial Hospital [SRD109016]. This study was also partially supported by a research fund
+                           from the Southern Taiwan Science Park Bureau, National Science and Technology Council [grant
+                           number 112CB-1-02]. The authors acknowledge and appreciate the Precision Instrument Support
+                           Center of Feng Chia University, which provided the fabrication and measurement facilities. The
+                           assistance of the participants in this research is also acknowledged.
+                           Institutional Review Board Statement: Not applicable.
+                           Informed Consent Statement: Not applicable.
+                           Data Availability Statement: The original contributions presented in the study are included in the
+                           article, further inquiries can be directed to the corresponding authors.
+Materials 2024, 17, 3578                                                                                                             23 of 24
+
+
+
+                                   Acknowledgments: The authors acknowledge and appreciate Realbone Technology Co., Ltd., Kaoh-
+                                   siung, Taiwan, for their generosity in providing the fast-setting, high-strength raw material of the
+                                   bioabsorbable tunable calcium phosphate bone cement used in this study. Their help to the partici-
+                                   pants in this study was also acknowledged.
+                                   Conflicts of Interest: The authors declare no conflicts of interest.
+
+References
+1.    Ginebra, M.-P.; Canal, C.; Espanol, M.; Pastorino, D.; Montufar, E.B. Calcium phosphate cements as drug delivery materials. Adv.
+      Drug Deliv. Rev. 2012, 64, 1090–1110. [CrossRef] [PubMed]
+2.    Kurashina, K.; Ogiso, A.; Kotani, A.; Takeuchi, H.; Hirano, M. Histological and microradiographic evaluation of hydrated and
+      hardened α-tricalcium phosphate/calcium phosphate dibasic mixtures. Biomaterials 1994, 15, 429–432. [CrossRef]
+3.    Apelt, D.; Theiss, F.; El-Warrak, A.O.; Zlinszky, K.; Bettschart-Wolfisberger, R.; Bohner, M.; Matter, S.; Auer, J.A.; von Rechenberg,
+      B. In vivo behavior of three different injectable hydraulic calcium phosphate cements. Biomaterials 2004, 25, 1439–1451. [CrossRef]
+      [PubMed]
+4.    Li, C.; Lv, H.; Du, Y.; Zhu, W.; Yang, W.; Wang, X.; Wang, J.; Chen, W. Biologically modified implantation as therapeutic
+      bioabsorbable materials for bone defect repair. Regen. Ther. 2022, 19, 9–23. [CrossRef] [PubMed]
+5.    Wang, P.; Wang, X. Mimicking the native bone regenerative microenvironment for in situ repair of large physiological and
+      pathological bone defects. Eng. Regen. 2022, 3, 440–452. [CrossRef]
+6.    Zhang, J.; Jiang, Y.; Shang, Z.; Zhao, B.; Jiao, M.; Liu, W.; Cheng, M.; Zhai, B.; Guo, Y.; Liu, B.; et al. Biodegradable metals for
+      bone defect repair: A systematic review and meta-analysis based on animal studies. Bioact. Mater. 2021, 6, 4027–4052. [CrossRef]
+      [PubMed]
+7.    Zhang, L.; Yang, G.; Johnson, B.N.; Jia, X. Three-dimensional (3D) printed scaffold and material selection for bone repair. Acta
+      Biomater. 2019, 84, 16–33. [CrossRef] [PubMed]
+8.    Chohayeb, A.A.; Chow, L.C.; Tsaknis, P.J. Evaluation of calcium phosphate as a root canal sealer-filler material. J. Endod. 1987, 13,
+      384–387. [CrossRef] [PubMed]
+9.    Chow, L.C. Development of self-setting calcium phosphate cements. J. Ceram. Soc. Jpn. 1991, 99, 954–964. [CrossRef]
+10.   Costantino, P.D.; Friedman, C.D.; Jones, K.; Chow, L.C.; Pelzer, H.J.; Sisson, G.A., Sr. Hydroxyapatite Cement: I. Basic Chemistry
+      and Histologic Properties. Arch. Otolaryngol. Head Neck Surg. 1991, 117, 379–384. [CrossRef]
+11.   Ewald, A.; Fuchs, A.; Boegelein, L.; Grunz, J.-P.; Kneist, K.; Gbureck, U.; Hoelscher-Doht, S. Degradation and Bone-Contact
+      Biocompatibility of Two Drillable Magnesium Phosphate Bone Cements in an In Vivo Rabbit Bone Defect Model. Materials 2023,
+      16, 4650. [CrossRef] [PubMed]
+12.   Sasaki, K.; Ninomiya, Y.; Takechi, M.; Tsuru, K.; Ishikawa, K.; Shigeishi, H.; Ohta, K.; Aikawa, T. Physical Properties and
+      Antimicrobial Release Ability of Gentamicin-Loaded Apatite Cement/α-TCP Composites: An In Vitro Study. Materials 2023,
+      16, 995. [CrossRef] [PubMed]
+13.   Cho, E.; Kim, J.E.; Lee, J.; Park, S.; Lee, S.; Chung, J.H.; Kim, J.; Seonwoo, H. Development of 3D Printable Calcium Phosphate
+      Cement Scaffolds with Cockle Shell Powders. Materials 2023, 16, 6154. [CrossRef] [PubMed]
+14.   Feldman, G.; Young, D.; Freeman, T.; Israel, L.; Taub, D.; Diecidue, R. Geranylgeraniol (GGOH), incorporated into a bone cement
+      pellet promotes osteoclast function and healing in a model of medication-related osteonecrosis of the jaw. J. Oral Biol. Craniofac.
+      Res. 2024, 14, 126–132. [CrossRef]
+15.   Liu, S.-M.; Chen, J.-C.; Huang, S.-M.; Lin, S.-H.; Chen, W.-C. Enhanced Cell Osteogenic Differentiation in Alendronate Acid and
+      Flufenamic Acid Drug-Impregnated Nanoparticles of Mesoporous Bioactive Glass Composite Calcium Phosphate Bone Cement
+      In Vitro. Pharmaceuticals 2023, 16, 680. [CrossRef]
+16.   Huang, S.-M.; Chen, W.-C.; Wu, C.-C.; Liu, S.-M.; Ko, C.-L.; Chen, J.-C.; Shih, C.-J. Synergistic effect of drug/antibiotic-impregnated
+      micro/nanohybrid mesoporous bioactive glass/calcium phosphate composite bone cement on antibacterial and osteoconductive
+      activities. Biomater. Adv. 2023, 152, 213524. [CrossRef] [PubMed]
+17.   Jaberifard, F.; Arsalani, N.; Ghorbani, M.; Mostafavi, H. Incorporating halloysite nanotube/carvedilol nanohybrids into gelatin
+      microsphere as a novel oral pH-sensitive drug delivery system. Colloids Surf. A Physicochem. Eng. Asp. 2022, 637, 128122.
+      [CrossRef]
+18.   Moura, M.J.; Gil, M.H.; Figueiredo, M.M. Cisplatin delivery systems based on different drug encapsulation techniques. Eur.
+      Polym. J. 2019, 113, 357–364. [CrossRef]
+19.   Dong, Q.; Chen, S.; Zhou, J.; Liu, J.; Zou, Y.; Lin, J.; Yao, J.; Cai, D.; Tao, D.; Wu, B.; et al. Design of functional vancomycin-
+      embedded bio-derived extracellular matrix hydrogels for repairing infectious bone defects. Nanotechnol. Rev. 2023, 12, 20220524.
+      [CrossRef]
+20.   Choi, M.J.; Briançon, S.; Andrieu, J.; Min, S.G.; Fessi, H. Effect of Freeze-Drying Process Conditions on the Stability of Nanoparti-
+      cles. Dry. Technol. 2004, 22, 335–346. [CrossRef]
+21.   Dong, Z.; Meng, X.; Yang, W.; Zhang, J.; Sun, P.; Zhang, H.; Fang, X.; Wang, D.-A.; Fan, C. Progress of gelatin-based microspheres
+      (GMSs) as delivery vehicles of drug and cell. Mater. Sci. Eng. C 2021, 122, 111949. [CrossRef] [PubMed]
+Materials 2024, 17, 3578                                                                                                             24 of 24
+
+
+
+22.   Cai, R.; Gimenez-Camino, N.; Xiao, M.; Bi, S.; DiVito, K.A. Technological advances in three-dimensional skin tissue engineering.
+      Rev. Adv. Mater. Sci. 2023, 62, 20220289. [CrossRef]
+23.   Li, L.; Du, Y.; Yin, Z.; Li, L.; Peng, H.; Zheng, H.; Yang, A.; Li, H.; Lv, G. Preparation and the hemostatic property study of porous
+      gelatin microspheres both in vitro and in vivo. Colloids Surf. B 2020, 187, 110641. [CrossRef] [PubMed]
+24.   Sionkowska, A. Collagen blended with natural polymers: Recent advances and trends. Prog. Polym. Sci. 2021, 122, 101452.
+      [CrossRef]
+25.   Uyen, N.T.T.; Hamid, Z.A.A.; Tram, N.X.T.; Ahmad, N. Fabrication of alginate microspheres for drug delivery: A review. Int. J.
+      Biol. Macromol. 2020, 153, 1035–1046. [CrossRef] [PubMed]
+26.   Alves, A.A.S.; Cruz, P.F.; Brito, R.M.M.; Feitosa, E.; Antunes, F.E. Development of sugar based biodegradable nanoencapsulators:
+      Understanding the role of the alcohol injection method on the preparation of aqueous dispersions of sorbitan ester vesicles. J. Mol.
+      Liq. 2019, 277, 481–489. [CrossRef]
+27.   Chen, C.; Chen, Y.; Wu, P.; Chen, B. Update on new medicinal applications of gentamicin: Evidence-based review. J. Formos. Med.
+      Assoc. 2014, 113, 72–82. [CrossRef] [PubMed]
+28.   Li, X.; Xu, D.; Yang, J.; Yan, Z.; Luo, T.; Li, X.; Zhang, Z.; Wang, X. Utilization of FBRM and PVM to analyze the effects of different
+      additives on the crystallization of ammonium dihydrogen phosphate. J. Cryst. Growth 2021, 576, 126378. [CrossRef]
+29.   Al Thaher, Y. Tailored gentamicin release from silica nanocarriers coated with polyelectrolyte multilayers. Colloids Surf. A
+      Physicochem. Eng. Asp. 2021, 614, 126210. [CrossRef]
+30.   Ko, C.-L.; Chen, J.-C.; Hung, C.-C.; Wang, J.-C.; Tien, Y.-C.; Chen, W.-C. Biphasic products of dicalcium phosphate-rich cement
+      with injectability and nondispersibility. Mater. Sci. Eng. C 2014, 39, 40–46. [CrossRef]
+31.   Sung, H.-W.; Chang, Y.; Chiu, Y.-T.; Hsu, H.-L.; Shih, C.-C.; Lu, J.-H.; Yang, P.-C. Evaluation of an epoxy-fixed biological patch
+      with ionically bound heparin as a pericardial substitute. Biomaterials 1996, 17, 1693–1701. [CrossRef] [PubMed]
+32.   ISO 9917-1: 2007; Dentistry—Water Based Cements Part 1: Powder/Liquid. International Organization for Standardization:
+      Geneva, Switzerland, 2007.
+33.   ASTM F451-16; Standard Specification for Acrylic Bone Cement. ASTM International: West Conshohocken, PA, USA, 2019.
+34.   ISO 10993-5:2009; Biological Evaluation of Medical Devices—Part 5: Tests for In Vitro Cytotoxicity. International Organization for
+      Standardization: Geneve, Switzerland, 2009.
+35.   Loyo, C.; Palza, H.; Saavedra, M.; Canales, D.; García-Herrera, C.; Olate-Moya, F.; Melo, F.; Cordova, L.; Solano, L.; Zapata,
+      P.A. Electrospun polycaprolactone/graphene oxide scaffolds with secondary surface porosity and gelatin-coating. Mater. Today
+      Commun. 2024, 39, 109057. [CrossRef]
+36.   Lodoso-Torrecilla, I.; Stumpel, F.; Jansen, J.A.; van den Beucken, J.J.J.P. Early-stage macroporosity enhancement in calcium
+      phosphate cements by inclusion of poly(N-vinylpyrrolidone) particles as a porogen. Mater. Today Commun. 2020, 23, 100901.
+      [CrossRef]
+37.   Marinozzi, F.; Bini, F.; Marinozzi, A. Evidence of entropic elasticity of human bone trabeculae at low strains. J. Biomech. 2011, 44,
+      988–991. [CrossRef]
+38.   Tian, K.V.; Nagy, P.M.; Chass, G.A.; Fejerdy, P.; Nicholson, J.W.; Csizmadia, I.G.; Dobó-Nagy, C. Qualitative assessment of
+      microstructure and Hertzian indentation failure in biocompatible glass ionomer cements. J. Mater. Sci. Mater. Med. 2012, 23,
+      677–685. [CrossRef]
+
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.
+

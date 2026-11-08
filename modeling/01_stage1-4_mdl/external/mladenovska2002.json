@@ -1,0 +1,65 @@
+{
+ "series": {
+  "A": {
+   "diam": 7.03,
+   "t50_data": 9.08,
+   "rmse_fick": 63.1,
+   "rmse_totalloss": 31.2,
+   "rmse_netloss": 20.7,
+   "lag_1h": 49.5,
+   "lag_13h": 0.2,
+   "lag_24h": -3.5
+  },
+  "B": {
+   "diam": 5.89,
+   "t50_data": 6.63,
+   "rmse_fick": 58.1,
+   "rmse_totalloss": 31.1,
+   "rmse_netloss": 24.0,
+   "lag_1h": 53.0,
+   "lag_13h": 1.0,
+   "lag_24h": -6.5
+  },
+  "C": {
+   "diam": 4.63,
+   "t50_data": 5.17,
+   "rmse_fick": 51.4,
+   "rmse_totalloss": 25.3,
+   "rmse_netloss": 27.8,
+   "lag_1h": 52.0,
+   "lag_13h": 0.0,
+   "lag_24h": -7.0
+  },
+  "D": {
+   "diam": 3.2,
+   "t50_data": 4.47,
+   "rmse_fick": 47.6,
+   "rmse_totalloss": 24.9,
+   "rmse_netloss": 28.4,
+   "lag_1h": 54.5,
+   "lag_13h": -0.5,
+   "lag_24h": -5.0
+  },
+  "E": {
+   "diam": 2.29,
+   "t50_data": 3.33,
+   "rmse_fick": 45.0,
+   "rmse_totalloss": 24.2,
+   "rmse_netloss": 34.0,
+   "lag_1h": 56.5,
+   "lag_13h": -2.5,
+   "lag_24h": -5.5
+  },
+  "F": {
+   "diam": 1.99,
+   "t50_data": 2.81,
+   "rmse_fick": 40.2,
+   "rmse_totalloss": 22.2,
+   "rmse_netloss": 39.3,
+   "lag_1h": 54.0,
+   "lag_13h": -5.0,
+   "lag_24h": -8.5
+  }
+ },
+ "t50_exponent": 0.83
+}

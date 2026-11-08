@@ -1,0 +1,1016 @@
+             polymers
+Article
+In Vitro Characterizations of Post-Crosslinked Gelatin-Based
+Microspheres Modified by Phosphatidylcholine or
+Diammonium Phosphate as Antibiotic Delivery Vehicles
+Kai-Chi Chang 1 , Pei-Jheng Chang 1 , Jian-Chih Chen 2,3 , Ssu-Meng Huang 1 , Shih-Ming Liu 1 , Chi-Jen Shih 4,5,6, *
+and Wen-Cheng Chen 1,4,7, *
+
+                                         1   Advanced Medical Devices and Composites Laboratory, Department of Fiber and Composite Materials,
+                                             Feng Chia University, Taichung 407, Taiwan
+                                         2   Department of Orthopedics, Faculty of Medical School, College of Medicine, Kaohsiung Medical University,
+                                             Kaohsiung 807, Taiwan
+                                         3   Department of Orthopedics, Kaohsiung Municipal Siaogang Hospital, Kaohsiung 807, Taiwan
+                                         4   Department of Fragrance and Cosmetic Science, College of Pharmacy, Kaohsiung Medical University,
+                                             Kaohsiung 807, Taiwan
+                                         5   Drug Development and Value Creation Research Center, Kaohsiung Medical University,
+                                             Kaohsiung 807, Taiwan
+                                         6   Department of Medical Research, Kaohsiung Medical University Hospital, Kaohsiung 807, Taiwan
+                                         7   Dental Medical Devices and Materials Research Center, College of Dental Medicine, Kaohsiung Medical University,
+                                             Kaohsiung 807, Taiwan
+                                         *   Correspondence: cjshih@kmu.edu.tw (C.-J.S.); wencchen@mail.fcu.edu.tw (W.-C.C.)
+
+
+                                         Abstract: Hydrogel-based microspheres prepared by emulsification have been widely used as drug
+                                         carriers, but biocompatibility remains a challenging issue. In this study, gelatin was used as the water
+                                         phase, paraffin oil was used as the oil phase, and Span 80 was used as the surfactant. Microspheres
+                                         were prepared using a water-in-oil (W/O) emulsification. Diammonium phosphate (DAP) or phos-
+Citation: Chang, K.-C.; Chang, P.-J.;
+                                         phatidylcholine (PC) were further used to improve the biocompatibility of post-crosslinked gelatin
+Chen, J.-C.; Huang, S.-M.; Liu, S.-M.;   microspheres. The biocompatibility of DAP-modified microspheres (0.5–10 wt.%) was better than
+Shih, C.-J.; Chen, W.-C. In Vitro        that of PC (5 wt.%). The microspheres soaked in phosphate-buffered saline (PBS) lasted up to 26 days
+Characterizations of Post-Crosslinked    before fully degrading. Based on microscopic observation, the microspheres were all spherical and
+Gelatin-Based Microspheres               hollow inside. The particle size distribution ranged from 19 µm to 22 µm in diameter. The drug
+Modified by Phosphatidylcholine or       release analysis showed that the antibiotic gentamicin loaded on the microspheres was released in
+Diammonium Phosphate as                  a large amount within 2 h of soaking in PBS. It was stabilized until the amount of microspheres
+Antibiotic Delivery Vehicles. Polymers
+                                         integrated was significantly reduced after soaking for 16 days and then released again to form a
+2023, 15, 1504. https://doi.org/
+                                         two-stage drug release curve. In vitro experiments showed that DAP-modified microspheres at
+10.3390/polym15061504
+                                         concentrations less than 5 wt.% had no cytotoxicity. Antibiotic-impregnated and DAP-modified
+Academic Editor: Denise Freitas          microspheres had good antibacterial effects against Staphylococcus aureus and Escherichia coli, but these
+Siqueira Petri                           drug-impregnated groups hinder the biocompatibility of hydrogel microspheres. The developed
+Received: 14 February 2023
+                                         drug carrier can be combined with other biomaterial matrices to form a composite for delivering
+Revised: 13 March 2023                   drugs directly to the affected area in the future to achieve local therapeutic effects and improve the
+Accepted: 14 March 2023                  bioavailability of drugs.
+Published: 17 March 2023
+                                         Keywords: hydrogel; microspheres; emulsification; modification; drug release; antibiotic; biocompatibility
+
+
+Copyright: © 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+                                         1. Introduction
+This article is an open access article
+distributed under the terms and
+                                              For centuries, routes of drug administration have generally been categorized according
+conditions of the Creative Commons       to the site of drug application, such as oral, intramuscular, and intravenous. Although
+Attribution (CC BY) license (https://    these methods can play a therapeutic role in the affected area, they must be administered
+creativecommons.org/licenses/by/         continuously to maintain the drug concentration, which not only depends on convenience
+4.0/).                                   but also on the properties and pharmacokinetics of the drug. The delivery of the drug
+
+
+
+
+Polymers 2023, 15, 1504. https://doi.org/10.3390/polym15061504                                                https://www.mdpi.com/journal/polymers
+Polymers 2023, 15, 1504                                                                                            2 of 20
+
+
+
+
+                          can lead to the problem of overdosing, which increases the negative effects of the drug on
+                          the body. Therefore, some researchers began to study drug carriers for controlled drug
+                          release [1,2]. In this method, the drug can be released directly and locally through the drug
+                          carrier, which can control the drug release concentration and avoid the loss caused by a
+                          large number of passages and metabolism after delivery [3,4].
+                                The use of drug carriers can overcome some problems related to the development
+                          and application of new drugs, but their use still has limitations, such as fast drug release,
+                          differences in solubility and biodistribution, etc., which will affect the interaction between
+                          the drug and the treatment site [5–7]. To optimize drug efficiency and reduce its side
+                          effects, many studies have prepared drug carriers by using natural or synthetic polymers
+                          through different techniques, such as emulsification, solvent evaporation, ionic gelation,
+                          self-assembly, nanoprecipitation, and supercritical fluid technology [8,9]. Emulsification is
+                          the most commonly used strategy to prepare polymer-based drug carriers. Related research
+                          and application of functional polymer colloids prepared by emulsification in biomedicine
+                          are increasing [10]. In an emulsion system, if the hydrophilic–lipophilic balance value of
+                          the surfactant is between 3.0 and 7.5, then it is suitable for water-in-oil (W/O) emulsion. A
+                          common surfactant is sorbitan oleate (span 80), which is an emulsifier/surfactant widely
+                          used in food and oral pharmaceuticals [11,12]. Paraffin oil is a type of mineral oil that is
+                          a by-product of the distillation of crude oil. Paraffin oil is often used as the oil phase of
+                          emulsions due to its good chemical stability and higher purity than other oils [13].
+                                In this experiment, W/O emulsification was used to prepare micron-sized drug car-
+                          riers, and gelatin was selected as the basic hydrogel for preparing microspheres. Gelatin
+                          is non-toxic, non-irritating, biodegradable, and easy to gel, resulting in a good molding
+                          effect; it has been widely used in the production of various drug delivery systems in recent
+                          years [14]. As a crosslinking agent, glutaraldehyde can quickly react with gelatin to form
+                          new covalent bonds and form a network connection structure [15]. However, microspheres
+                          made from materials, such as glutaraldehyde and paraffin oil, are cytotoxic during treat-
+                          ment, hampering their therapeutic efficacy [16,17]. In this regard, phosphatidylcholine (PC)
+                          and diammonium phosphate (DAP) were chosen to modify post-crosslinked microspheres.
+                          PC is a lipid mainly extracted from soybeans or egg yolks. It is commonly used in drug
+                          coatings and is a major component of the extracellular matrix [18], thus potentially provid-
+                          ing the ability to modify the cellular affinity of microspheres. DAP is a water-soluble salt
+                          that is often used as a fertilizer to increase the pH of soil. Accordingly, microspheres can be
+                          modified after DAP is dissolved, mainly to adjust the pH value of the microspheres and
+                          improve cell compatibility [19].
+                                In this study, W/O emulsification was used to prepare micron-sized spherical particles
+                          as drug carriers, which were modified with PC or DAP to improve their biocompatibility.
+                          Gentamicin was impregnated to observe its antibiotic release behavior and evaluate its
+                          bacteriostatic effect. The expected drug release effect of the modified microspheres was
+                          determined to evaluate the possible application of its combination with other biomaterial
+                          matrices in the affected area for topical treatment. In this regard, cytotoxicity was initially
+                          assessed in vitro.
+
+                          2. Materials and Methods
+                          2.1. Materials
+                               Gelatin (type B from bovine hide, average molar mass 40,000–50,000 g/mole, Sigma-
+                          Aldrich® , St. Louis, MO, USA), parafilm oil, and phosphatidylcholine (PC) were pur-
+                          chased from Sigma-Aldrich Co. (St. Louis, MO, USA). Sorbitan monooleate-based Span
+                          80 biodegradable nonionic surfactant was obtained from Nihon Shiyaku Reagent (Kyoto,
+                          Japan). Glutaraldehyde crosslinker, gentamicin antibiotic, and diammonium phosphate
+                          (DAP) were supplied by Panreac Química SLU (Barcelona, Spain), Zhaoguan Chemical
+                          Industry Co., Ltd. (Chiayi, Taiwan), and High Standard Enterprise Co., Ltd. (Taichung,
+                          Taiwan), respectively.
+Polymers 2023, 15, 1504                                                                                          3 of 20
+
+
+
+
+                          2.2. Microsphere Preparations
+                               Gelatin-based microspheres were prepared by water-in-oil (W/O) emulsified solvent
+                          diffusion method with surfactant Span 80 as an auxiliary agent. About 1.5 g of gelatin
+                          powder was dissolved in 10 mL of deionized water under constant stirring at 50–60 ◦ C to
+                          prepare 15% (w/v) gelatin solution as the water phase. Span 80 (0.2 mL) was dispersed into
+                          20 mL of paraffin oil evenly and heated to 60 ◦ C to form an oil phase.
+                               About 3 mL of the gelatin solution was slowly dropped into the oil phase solution
+                          under constant stirring for 30 min to form emulsified droplets in the W/O emulsion. The
+                          emulsified droplets turned into gel particles during the cooling-down phase to 5 ◦ C, which
+                          ensured that the emulsified droplets would not become a gelatin solution again. The gelatin
+                          microspheres were post-crosslinked by immersion into 1.5 mL of 15 wt.% glutaraldehyde
+                          for 30 min. Microspheres were collected by filtration, washed three times with acetone to
+                          remove excess oil phase substances, washed three times with deionized water, and then
+                          dried to obtain microspheres (Ms) before modification.
+
+                          2.3. Microsphere Modification
+                          2.3.1. Solutions for Microsphere Modification
+                                In this experiment, 5 wt.% PC and 1 wt.% DAP were used to modify the microspheres
+                          at room temperature. The microspheres were soaked in PC and DAP solutions for 24 h. The
+                          powder-to-solution ratio was 1/250 (g/mL), and PC-modified microspheres (denoted as pc-
+                          M) and DAP-modified microspheres (dap-M) were obtained after drying. The cytotoxicity
+                          of the modified microspheres was compared. The choice of modifying the microspheres
+                          with 0.5, 1, 2.5, 5, and 10 wt.% DAP concentrations was verified in detail, and expressed as
+                          0.5, 1, 2.5, 5, and 10 dM groups, respectively. The cytotoxicity of the modified microspheres
+                          with different DAP concentrations was also compared.
+
+                          2.3.2. DAP-Modified Microspheres as Antibiotic Carriers
+                                The antibiotic gentamicin was selected as the impregnated drug for release and an-
+                          tibacterial tests. Gentamicin at a stock concentration of 40 mg/mL was mixed into double-
+                          distilled water (ddH2 O) to obtain 50 mL gentamicin (2 mg/mL) solution. The microspheres
+                          were immersed in the gentamicin solution at a liquid ratio of 1/50 (g/mL) for 24 h and
+                          freeze-dried to obtain microspheres loaded with gentamicin (0.5 dM-G, 1.0 dM-G, and
+                          2.5 dM-G).
+
+                          2.4. Characterization of Modified Microspheres
+                          2.4.1. Analysis of Infrared Spectroscopy and Morphologies
+                               Fourier-transform infrared spectroscopy (FTIR; Nicolet 6700, Thermo Fisher Scientific,
+                          Waltham, MA, USA) was used to analyze changes in the functional groups of the gelatin
+                          microspheres after glutaraldehyde crosslinking and determine the crosslinking efficiency of
+                          the microspheres. Post-crosslinking and modified microsphere morphology were examined
+                          by scanning electron microscopy (SEM; Hitachi S-3400N, Hitachi, Tokyo, Japan).
+
+                          2.4.2. Crosslinking Index Changes
+                               Ninhydrin (2,2-dihydroxy-1,3-indanedione, Sigma-Aldrich® , St. Louis, MO, USA)
+                          reacts with free amine groups to form a blue-purple product, with darker color indicating
+                          reaction. The presence of more amino groups leads to a lower degree of crosslinking. Resid-
+                          ual amino groups of the microspheres before and after crosslinking were determined at an
+                          optical density wavelength (OD570 ) of 570 nm by using an enzyme-linked immunosorbent
+                          assay microplate (ELISA) reader (EZ Read 400, Biochrom, Cambridge, UK). Fixation index
+                          was calculated as follows [20]:
+Polymers 2023, 15, 1504                                                                                          4 of 20
+
+
+
+
+                                                        (activated amino)fresh − (activated amino)residual
+                               Fixation index (%) =                                                        × 100 %
+                                                                     (activated amino)fresh
+
+                              The free amine group before crosslinking is (amine-reactive)fresh , and the free amine
+                          group after crosslinking is (amine-reactive)residual .
+
+                          2.4.3. Degradation of Microspheres In Vitro
+                               The modified microspheres were immersed in deionized water and phosphate-buffered
+                          saline (PBS) for the degradation test. About 0.01 g of each group of microspheres was
+                          mixed with 1 mL of degradation solution into a microcentrifuge tube. Daily weight loss
+                          was recorded and converted to weight loss rate by using the following formula [21]:
+
+                                                                            W0 − Wx
+                                                        Weight loss (%) =           × 100 %
+                                                                              W0
+
+                          where W 0 is the weight of the microspheres accurately measured, and Wx is the weight of
+                          the microspheres soaked in the degradation solution on the x-th day.
+
+                          2.5. Antibiotic Release
+                               Gentamicin released from the microspheres was measured using an ultraviolet/visible
+                          spectrophotometer (UV/Vis; UV1800, Shimadzu, Kyoto, Japan). The OD202 value of the
+                          gentamicin released from the microspheres in PBS was recorded within a certain period.
+                          Since gentamicin has the highest characteristic absorption at an optimal wavelength of
+                          202 nm [22], a drug calibration curve was made and the absorptions at each time point
+                          were observed to determine the drug release profile.
+
+                          2.6. Antibacterial Activity
+                               Antimicrobial activity was measured by agar diffusion test using tryptic soy broth and
+                          agar (Neogen, Lansing, MI, USA). Anti-active bacteria were selected from Staphylococcus
+                          aureus and Escherichia coli. About 0.003 g of the sample powder was pasted on an agar
+                          culture plate and incubated at 37 ◦ C for 24 h. The size of the inhibition zone was measured.
+                          The samples were cultured in the bacterial suspension for 1, 4, 8, 24, and 48 h to evaluate
+                          antibacterial growth ability [23]. About 100 µL of the suspension was collected to measure
+                          optical density with OD595 by ELISA microplate reader.
+
+                          2.7. Cytotoxicity In Vitro
+                                Fibroblast NIH-3T3 and L929 cells were used for cytotoxicity assays. Media and serum
+                          were purchased from Gibco® , Thermo Fisher Scientific Inc., Waltham, MA, USA. NIH-3T3
+                          cells were cultured in Dulbecco’s modified Eagle medium (DMEM) containing 10% bovine
+                          serum. L929 cells were cultured in minimal essential medium alpha medium (MEMα)
+                          containing 10% horse serum.
+                                NIH-3T3 and L9292 cells cultured in pure medium were set as control groups. The
+                          positive control was 15 vol.% dimethyl sulfoxide (DMSODMSO), and the negative control
+                          was high-density polyethylene (HDPE) extract to verify sample sterility. The microspheres
+                          were soaked in the medium at a ratio of 1:10 for 24 h as sample extracts. The cells were
+                          inoculated in a 96-well culture plate at a concentration of 1 × 104 and cultured for 24 h.
+                          XTT reagent (Biological Industries, Kibbutz Beit Haemek, Israel; 50 µL/wells) was used to
+                          measure cell viability at OD492 by ELISA reader. Cell morphology was observed under an
+                          optical microscope (IVM-3AFL, SAGE VISION Co., Ltd., New Taipei City, Taiwan).
+Polymers 2023, 15, 1504                                                                                             5 of 20
+
+
+
+
+                          2.8. Statistical Analysis
+                               Analysis of variance (ANOVA) and two-sample t-test in IBM SPSS Statistics Version
+                          20 (IBM, New York, NY, USA) were used to evaluate differences between groups. Values at
+                          p < 0.05 were considered statistically significant.
+
+                          3. Results and Discussion
+                          3.1. Evaluation of Modified Microspheres by Cytotoxicity Assay
+                                According to the ISO 10993-5 regulation, cell viability maintained above 70% compared
+                          with the control group indicates no cytotoxicity, and values between 50–70% and 30–50%
+                          indicate slight and mild reactivity, respectively [24]. As shown in Figure 1a, the cell viability
+                          of the unmodified microspheres (Ms) against NIH-3T3 was only 14%, indicating that they
+                          had obvious cytotoxicity to the tested NIH-3T3 cells. The phosphatidylcholine-modified
+                          microspheres (pc-Ms) showed a cell survival rate of 47%, while the cell viability of DAP-
+                          modified microspheres (dap-Ms) improved, reaching 83% non-toxicity. The viability of
+                          L929 cells also showed the same trend (Figure 1b), and the value in the dap-M group
+                          reached as high as 106%, confirming that DAP instead of PC can greatly improve the
+                          biocompatibility of post-crosslinked microspheres. The cell morphology of the NIH-3T3
+                          and L929 cultures in the pc-M group extracts was dead spheres, while the DAP-modified
+                          cells showed a good spindle shape, confirming that the cytotoxicity of the microspheres
+                          can be improved by modifying DAP (Figure 1c,d).
+                                Figure 2 shows the biocompatibility of the crosslinked microspheres modified with
+                          different concentrations of DAP. The viability of NIH-3T3 cells in the 0.5 dM, 1.0 dM, 2.5 dM,
+                          and 5.0 dM groups exceeded 70%, indicating that all the groups, except for the 10 dM group
+                          that had the highest DAP concentration, were not cytotoxic (Figure 2a). Similarly, L929
+                          cells showed the same viability trend (Figure 2b). In the qualitative observation, cells in all
+                          groups, except for the 10 dM group, had a good spindle shape (Figure 2c,d).
+                                The unmodified microspheres (Ms) had a pH of 7.02. The DAP-modified microspheres
+                          showed the same trend as DAP in the 0.5 dM, 1.0 dM, and 2.5 dM groups, which had pH
+                          of 7.66, 7.71, and 7.80, respectively, with increasing concentrations. Hence, the pH of the
+                          microspheres affects cytotoxicity.
+                                In this experiment, the biomolecule PC was expected to be used as a surface modifier
+                          to increase the affinity of the microspheres to cells, but it was insufficient to attenuate the
+                          toxicity of the microspheres in NIH-3T3 and L929 cells. This finding may be caused by
+                          the acid stimulation of paraffin oil through the oil phase of the microsphere emulsification
+                          preparation [25,26]. However, basic DAP used for microsphere modification attenuated
+                          paraffin-stimulated cytotoxicity. In addition, the alkaline environment provided by DPA
+                          induced Span 80 to undergo saponification with paraffin oil to achieve the washing effect in
+                          the oil phase [27–29]. The resulting DAP-modified microspheres possess good compatibility
+                          without adverse effects on cells. To ensure the safety of DAP-modified microspheres, this
+                          study selected 0.5 dM, 1.0 dM, and 2.5 dM groups for subsequent experiments.
+
+                          3.2. Characterization of DAP-Modified Microspheres
+                          FTIR Analysis
+                               As shown in Figure 3a, gelatin has the absorption bands of amide I and amide II at
+                          1550 and 1645 cm−1 , respectively. Amide I is the stretching vibrations of C=O and C-N,
+                          and amide II is mainly due to the stretching vibrations of C-C and C-N [30–32]. Groups M,
+                          0.5 dM, 1 dM, and 2.5 dM have gelatin absorptions of amide I and amide II. Functional
+                          groups, including paraffin oil and Span 80, were found in the oil phase residues because
+                          microspheres were prepared from W/O emulsions. Therefore, the prepared microspheres
+                          have C-H2 absorption at 2865 and 2930 cm−1 bands. In addition, the microspheres and
+                          crosslinker glutaraldehyde have an O-H absorption peak at the 3343 cm−1 band. Although
+                          gelatin also has O-H absorption, the microspheres could be free of glutaraldehyde residues
+                          because of a lack of tendency for an increase in O-H density.
+olymers 2023, 15, x FOR PEER REVIEW                                     6
+        Polymers 2023, 15, 1504                               6 of 20
+
+
+
+
+                                                        (a)
+
+
+
+
+                                                        (b)
+
+                                      Figure 1. Cont.
+mers 2023, 15, x FOR PEER REVIEW                                                                                                              7 of
+       Polymers 2023, 15, 1504                                                                                                      7 of 20
+
+
+
+
+                                                                      (c)
+
+
+
+
+                                                                      (d)
+                                 FigureFigure
+                                         1. Cytotoxicity    of gelatin-based microspheres modified with 5% PC (pc-M) and 1% DA
+                                              1. Cytotoxicity of gelatin-based microspheres modified with 5% PC (pc-M) and 1% DAP
+                                 (dap-M):  quantifications
+                                       (dap-M):               of of
+                                                 quantifications (a)(a)
+                                                                     3T33T3and
+                                                                            and(b)
+                                                                                (b) L929  (n==3)3)and
+                                                                                    L929 (n        and  qualitative
+                                                                                                      qualitative    observation
+                                                                                                                  observation        of (c)
+                                                                                                                              of (c) 3T3 and3T3 and (
+                                 L929 cell lines.
+                                       (d) L929 cell lines.
+ymers 2023, 15, x FOR PEER REVIEW                                     8 o
+       Polymers 2023, 15, 1504                              8 of 20
+
+
+
+
+                                                      (a)
+
+
+
+
+                                                      (b)
+
+                                    Figure 2. Cont.
+ymers 2023, 15, x FOR PEER REVIEW                                                                                                               9 of
+       Polymers 2023, 15, 1504                                                                                                      9 of 20
+
+
+
+
+                                                                       (c)
+
+
+
+
+                                                                      (d)
+                                 Figure  2. Cytotoxicity
+                                      Figure  2. Cytotoxicityofofmodified   microspheres
+                                                                 modified microspheres     withwith  different
+                                                                                                different         concentrations
+                                                                                                          concentrations           of3T3
+                                                                                                                           of DAP (a) DAPand(a) 3T3 a
+                                 (b) L929  (n =(n3)=and
+                                      (b) L929            qualitative
+                                                     3) and qualitative observation
+                                                                        observation of of
+                                                                                       (c) (c)
+                                                                                           3T33T3
+                                                                                               and and   (d) cell
+                                                                                                    (d) L929  L929   cell lines.
+                                                                                                                  lines.
+
+
+                                 3.2. Characterization of DAP-Modified Microspheres
+                                 3.2.1. FTIR Analysis
+                                      As shown in Figure 3a, gelatin has the absorption bands of amide I and amide II
+                                 1550 and 1645 cm−1, respectively. Amide I is the stretching vibrations of C═O and C‒
+                                 and amide II is mainly due to the stretching vibrations of C‒C and C‒N [30–32]. Grou
+                                 M, 0.5 dM, 1 dM, and 2.dAM have gelatin absorptions of amide I and amide II. Functio
+                                 groups, including paraffin oil and Span 80, were found in the oil phase residues becau
+                                 microspheres were prepared from W/O emulsions. Therefore, the prepared microsphe
+                                 have C‒H2 absorption at 2865 and 2930 cm−1 bands. In addition, the microspheres a
+                                 crosslinker glutaraldehyde have an O‒H absorption peak at the 3343 cm−1 band. Althou
+Polymers 2023, 15, x FOR PEER REVIEW                        10 of 21
+  Polymers 2023, 15, 1504                                 10 of 20
+
+
+
+
+                                                    (a)
+
+
+
+
+                                                    (b)
+
+                                  Figure 3. Cont.
+Polymers 2023, 15, x FOR PEER REVIEW                                                                                                   11 of 21
+  Polymers 2023, 15, 1504                                                                                                           11 of 20
+
+
+
+
+                                                                    (c)
+                                 Figure
+                                  Figure 3.
+                                          3. (a)
+                                              (a)FTIR
+                                                  FTIRspectra
+                                                       spectraof
+                                                               ofraw
+                                                                  raw materials,
+                                                                      materials, crosslinker, and microspheres
+                                                                                 crosslinker, and microspheres modified
+                                                                                                               modifiedwith
+                                                                                                                         withdiffer-
+                                                                                                                               different
+                                 concentrations of DAP. (b) Fixation of amine groups on microspheres modified with different con-
+                                  ent concentrations of DAP. (b) Fixation of amine groups on microspheres modified with different
+                                 centrations of DAP to evaluate the degree of crosslinking (n = 3, p > 0.05). (c) Weight loss of DAP-
+                                  concentrations of DAP to evaluate the degree of crosslinking (n = 3, p > 0.05). (c) Weight loss of
+                                 modified microspheres with different concentrations soaked in PBS for 32 days (n = 3).
+                                  DAP-modified microspheres with different concentrations soaked in PBS for 32 days (n = 3).
+
+                                 3.3.
+                                  3.3.Fixation
+                                       Fixation of
+                                                of Free Amine
+                                                        Amine
+                                       The
+                                        The amine
+                                             amine fixation index
+                                                               indexindicates
+                                                                       indicatesthat
+                                                                                  thatthe
+                                                                                        thecrosslinking
+                                                                                             crosslinking   reaction
+                                                                                                         reaction  waswas  carried
+                                                                                                                        carried  outout
+                                                                                                                                      by by
+                                  glutaraldehyde. The degree
+                                 glutaraldehyde.          degreeof  ofcrosslinking
+                                                                       crosslinkingwaswasapproximately
+                                                                                           approximately   between
+                                                                                                             between51%  of the
+                                                                                                                       51%       2.5 2.5
+                                                                                                                             of the  dMdM
+                                  group and
+                                 group    and 56%
+                                               56% ofof the
+                                                        the M
+                                                            Mgroup
+                                                                group(Figure
+                                                                         (Figure3b).
+                                                                                  3b).The
+                                                                                       Thedifference   in in
+                                                                                              difference  amine  immobilization
+                                                                                                             amine  immobilization  waswas
+                                  not statistically significant  (p > 0.05), indicating  that DAP   modification  did not significantly
+                                 not statistically significant (p > 0.05), indicating that DAP modification did not signifi-
+                                  affect the
+                                 cantly      crosslinking
+                                         affect             of microspheres.
+                                                the crosslinking     of microspheres.
+                                  3.4. Degradation of DAP-Modified Microspheres
+                                 3.4. Degradation of DAP-Modified Microspheres
+                                        As shown in Figure 3c, 0.5 dM and 2.5 dM were completely degraded within 32 days,
+                                  whileAs1.0
+                                           shown
+                                              dM wasin Figure    3c, 0.5within
+                                                           degraded      dM and  262.5  dM were
+                                                                                     days.   Duringcompletely     degraded
+                                                                                                       this period,            withinof32mi-
+                                                                                                                       each group          days,
+                                 while   1.0  dM   was    degraded     within   26   days.  During    this  period,
+                                  crospheres did not degrade suddenly and rapidly but degraded in a linear manner:    each    group   of micro-
+                                 spheres
+                                  0.5 dM (ydid= not   degrade
+                                                2.9807x          suddenly
+                                                           − 4.5438,          and rapidly
+                                                                       R2 = 0.9735),    1.0 dMbut(ydegraded
+                                                                                                     = 3.1905xin+a13.844,
+                                                                                                                     linear manner:      0.5 dM
+                                                                                                                               R2 = 0.9434),
+                                 (y = 2.9807x
+                                  and  2.5 dM (y− 4.5438,
+                                                   = 2.9257xR += 3.8528,
+                                                              2             2
+                                                                  0.9735),R1.0= dM    (y =From
+                                                                                0.9865).   3.1905x
+                                                                                                the +perspective
+                                                                                                       13.844, R of
+                                                                                                                  2 = 0.9434),   and 2.5 dM (y
+                                                                                                                       linear relationships,
+                                 =no
+                                   2.9257x   + 3.8528,
+                                     significant         R2 = 0.9865).
+                                                  difference    was foundFrom   the perspective
+                                                                            among                   of linear
+                                                                                     the three groups.         relationships,
+                                                                                                          However,    the initialno  significant
+                                                                                                                                  minimum
+                                  degradation
+                                 difference     rate
+                                              was     was 0.5
+                                                   found        dM, indicating
+                                                            among                 that the modified
+                                                                      the three groups.    However,   microspheres     of 0.5 dM degradation
+                                                                                                         the initial minimum       exhibited
+                                  the best
+                                 rate  was resistance    to degradation.
+                                            0.5 dM, indicating       that the modified microspheres of 0.5 dM exhibited the best
+                                 resistance to degradation.
+                                  3.5. Observation of Gelatin-Based Microspheres via DAP Modification
+                                        Based on the
+                                 3.5. Observation       observation ofMicrospheres
+                                                     of Gelatin-Based     the microstructure
+                                                                                         via DAPof the   unmodified microsphere group
+                                                                                                    Modification
+                                  M (Figure 4a), gelatin emulsification formed spherical microspheres, which have smooth
+                                       Based on the observation of the microstructure of the unmodified microsphere group
+                                  surfaces without pits and are fine-grained. However, the oil phase dispersion was observed
+                                 Mamong the4a),
+                                    (Figure        gelatin emulsification
+                                                gelatin-based     microspheres  formed    spherical
+                                                                                    because           microspheres,
+                                                                                              microspheres                which have
+                                                                                                                were prepared           smooth
+                                                                                                                                   by W/O
+                                 surfaces   without
+                                  emulsification.       pitsmodifying
+                                                    After    and are the fine-grained.
+                                                                             microsphere  However,
+                                                                                            groups with thedifferent
+                                                                                                             oil phaseDAP dispersion    was ob-
+                                                                                                                             concentrations
+                                 served
+                                  of 0.5 dM, 1.0 dM, and 2.5 dM, the microspheres in each group were still spherical and by
+                                          among     the   gelatin-based     microspheres      because    microspheres      were   prepared
+                                 W/O    emulsification.
+                                  the surface   was smooth.AfterAfter
+                                                                  modifying     the microsphere
+                                                                        modification,                groups with
+                                                                                         oil phase dispersion     wasdifferent
+                                                                                                                         not foundDAP   concen-
+                                                                                                                                     around
+                                 trations  of 0.5 dM, 1.0
+                                  the microspheres.          dM, and
+                                                          Several       2.5 dM,
+                                                                   groups          the microspheres
+                                                                             of microspheres             in each group
+                                                                                                 impregnated               were still spherical
+                                                                                                                  with gentamicin       were
+                                 and   the surface
+                                  oval-shaped,    andwasa fewsmooth.     After modification,
+                                                                microspheres                      oil phaseThe
+                                                                                 had wrinkled surfaces.         dispersion     was may
+                                                                                                                    microspheres     not found
+                                                                                                                                          be
+                                 around the microspheres. Several groups of microspheres impregnated with gentamicin
+                                 were oval-shaped, and a few microspheres had wrinkled surfaces. The microspheres may
+                                 be deformed due to tension changes caused by ice sublimation during the use of freeze-
+Polymers 2023, 15, 1504                                                                                                    12 of 20
+
+
+
+
+                                       deformed due to tension changes caused by ice sublimation during the use of freeze-drying
+                                       to dehydrate under low pressure; most of the microspheres remained spherical after freeze-
+                                       drying [33]. The ruptured microspheres are presented in Figure 4b. The interior of the
+                                       hydrogel microspheres was hollow, except for the drug attached on the outside of the
+                          Polymers 2023, 15, x FOR PEER REVIEW                                                          13 of 21
+                                       microspheres, thereby increasing the drug loading inside and controlling the release effect
+                                       of the microspheres [34].
+
+
+
+
+                                                                           (a)
+
+                                   Figure 4. Cont.
+Polymers 2023, 15, 1504                                                                                                                        13 of 20
+                          Polymers 2023, 15, x FOR PEER REVIEW                                                                                     14 of 21
+
+
+
+
+                                                                                        (b)
+
+
+
+
+                                                                                         (c)
+                                                     Figure 4. Morphology of unmodified microspheres and microspheres modified with different con-
+                               Figure 4. Morphologycentrations
+                                                       of unmodified
+                                                                   of DAP microspheres        and microspheres
+                                                                           and PC: (a) SEM image,    (b) microspheresmodified
+                                                                                                                      with crackswith  different
+                                                                                                                                  observed         con-
+                                                                                                                                           to further  con-
+                               centrations of DAP andfirm
+                                                        PC:that
+                                                             (a)the
+                                                                  SEM   image,
+                                                                    interior      (b) microspheres
+                                                                             is hollow,                 withdiameter
+                                                                                        and (c) microsphere   cracksmeasurement
+                                                                                                                      observed to(nfurther
+                                                                                                                                     = 100, p >confirm
+                                                                                                                                                0.05).
+                               that the interior is hollow, and (c) microsphere diameter measurement (n = 100, p > 0.05).
+
+                                     The average size of the modified microspheres was calculated by SEM analysis
+                               (Figure 4c; n = 100). The particle sizes of 0.5 dM-, 1.0 dM-, and 2.5 dM-modified mi-
+                               crospheres were 21.54 ± 9.09, 22.32 ± 7.97, and 19.81 ± 8.67 µm, respectively; the particle
+                               sizes of gentamicin microspheres impregnated with 0.5 dM-G, 1.0 dM-G, and 2.5 dM-G
+                               decreased slightly, with values of 20.56 ± 7.81, 21.09 ± 8.95, and 17.36 ± 7.33 µm, respec-
+                               tively. Statistical analysis was carried out in each group, and no significant difference was
+                               found (p > 0.05).
+                                     The modified hydrogel microspheres have the advantages of simple preparation
+                               process, uniform particle size, large specific surface area, long degradation time, and slow
+                               drug release. Microspheres in bioinks or hydrogels are used as injectable biomaterials
+                               for tissue engineering, such as in hard bone, cartilage, and liver. The particle size should
+                               be in an appropriate range of 20–200 µm [35–37]. Figure 4 shows that microspheres with
+                               uniform shape and small particle size (~20 µm) were successfully prepared by simple W/O
+                               emulsification. By contrast, conventional needle with 18-gauge injection had difficulty
+                               delivering particles with diameters greater than 200 µm. Hence, microspheres prepared
+                               in this study are suitable for co-injection with other biological fluids. Microspheres with
+                               tailored porosity exhibit greater surface area, lower mass density, and better attachment
+                               and cellular interactions for cell proliferation, drug absorption, and drug release kinetics
+                               compared with macrospheres [38]. Dong et al. [39] showed that gelatin-based microspheres
+                               have great potential as cell carriers and 3D scaffold components in tissue engineering and
+                               regenerative medicine because they not only have excellent injectability but can also be
+                               integrated with large-scale structures loaded with cells.
+
+                               3.6. Antibiotic Release
+                                    From the release curve of gentamicin (Figure 5), the release amount in the three groups
+                               of drugs in the first 2 h was about 4 mg/mL, which was mainly via surface diffusion
+Polymers 2023, 15, 1504                                                                                                    14 of 20
+
+
+
+
+                          release, and the release amount remained unchanged. The second drug release was not
+                          evident until 16 days after soaking. On the 32nd day, the drug release amounts of 0.5 dM-G,
+                          1.0 dM-G, and 2.5 dM-G reached 4.9, 4.7, and       (b) 7.7 mg/mL, respectively. When each group
+                          of microspheres began to degrade and the hydrogel underwent structural slippage, the
+                          drug encapsulated in the microspheres was released, resulting in two-stage drug release
+                          behavior [40].
+                               The cumulative antibiotic release of 2.5 dM-G was not significantly higher than that of
+                          0.5 dM-G and 1.0 dM-G until the microspheres showed a significant difference after soaking
+                          for 32 days. The release was not significant for a period of time, but the cumulative antibiotic
+                          dose was effective for 4–8 h of antibacterial ability, and the release amount maintained a
+                          plateau for 16 days. Compared with the degradation of DAP-modified microspheres after
+                          soaking, the post-crosslinked hydrogel resulted in less than half of the degradation of the
+                          dense network structure (Figure 3c), thereby efficiently decreasing the swelling rate and
+                          the drug release rate of the hydrogel microsphere matrix [41].
+                               Prolonged drug release was observed in this study, possibly because of freer void
+                          spaces available, through which fewer drug molecules will be transported. The cumulative
+                          release percentage of 2.5 dM-G was higher than that of 0.5 dM-G and 1.0 dM-G. The increase
+                          in DCP in the hydrogel matrix helps to carry        (c)large doses of antibiotics, resulting in higher
+                          release from gentamicin      in the matrix.
+                                           Figure 4. Morphology           This secondary
+                                                                    of unmodified             release
+                                                                                     microspheres     explains that
+                                                                                                  and microspheres    the explicit
+                                                                                                                    modified with different co
+                          release behavior    of post-crosslinked
+                                           centrations  of DAP and PC: hydrogel
+                                                                          (a) SEM microspheres      depends
+                                                                                    image, (b) microspheres   notcracks
+                                                                                                            with   onlyobserved
+                                                                                                                        on many  to further c
+                          factors, such as firm thatof
+                                           degree    thecrosslinking,
+                                                         interior is hollow,
+                                                                         but and
+                                                                              also(c)drug
+                                                                                      microsphere
+                                                                                          loadingdiameter
+                                                                                                   amountmeasurement
+                                                                                                            and method(n[42].
+                                                                                                                           = 100, p > 0.05).
+
+
+
+
+                          Figure 5. Antibiotic release of DAP-modified microspheres impregnated with antibiotic gentamicin
+                          (n = 6).
+
+                          3.7. Antibacterial Abilities
+                                Figure 6 shows the qualitative antibacterial results of sample groups against S. au-
+                          reus and E.coli. The groups not impregnated with gentamicin had no zone of inhibition.
+                          However, the gentamicin-impregnated groups had obvious antibacterial zone formation,
+                          indicating a good antibacterial effect.
+                                The microspheres in each group were soaked in S. aureus and E. coli suspensions for 1,
+                          4, 8, 24, and 48 h. Based on the comparison of S. aureus and E. coli, the antibacterial activity
+                          was lower in 0.5 dM-G, 1.0 dM-G, and 2.5 dM-G than in the non-impregnated gentamicin
+                          group (Figure 7). The gentamicin group had obvious antibacterial ability after soaking for
+                                   longer (about 30 days) compared with those of other hydrocolloid microspheres (Figures
+                                   3c and 5). The drug release in the first 1 to 2 h of immersion was mainly due to the rapid
+                                   release of the drug on the surface of the adsorbed microspheres. The drug was slowly
+                                   diffused and released due to the swelling of the microspheres until 16 days. The structure
+                                   of the microspheres was then greatly disassembled, causing the drug to undergo second-
+Polymers 2023, 15, 1504            ary release as the hydrogel structure slips [43,44]. Microspheres with sustained release  15 of 20
+                                   capability are especially suitable for drug delivery in long-term clinical treatment opera-
+                                   tions to control the release of locally delivered drugs and improve the treatment efficiency
+                                   [45].h,For
+                                  4–8         example,that
+                                           indicating  cartilage  regeneration requires more
+                                                            the antibiotic-impregnated        than 30 days
+                                                                                          microspheres     of growth factor
+                                                                                                        successfully         re- the
+                                                                                                                      released
+                                   lease  to achieve repair [46].
+                                  drug to achieve the antibacterial effect.
+
+
+
+
+  Polymers 2023, 15, x FOR PEER REVIEW                                                                                            16 of 21
+
+
+                                                                            (a)
+
+
+
+
+                                                                            (b)
+                                  Figure 6.
+                                  Figure 6. Antibacterial
+                                            Antibacterial activities
+                                                            activitiesofofantibiotic-free
+                                                                           antibiotic-freeand
+                                                                                            andDAP-modified
+                                                                                                 DAP-modified   microspheres
+                                                                                                                   microspheresimpregnated
+                                                                                                                                    impregnated
+                                  with antibiotics against (a) S. aureus and (b) E. coli for a zone of inhibition of 1 day (n = 3).
+                                  with antibiotics against (a) S. aureus and (b) E. coli for a zone of inhibition of 1 day (n = 3).
+
+                                       The total degradation time of the emulsified microspheres prepared in this study
+                                  was longer (about 30 days) compared with those of other hydrocolloid microspheres
+                                  (Figures 3c and 5). The drug release in the first 1 to 2 h of immersion was mainly due to
+                                  the rapid release of the drug on the surface of the adsorbed microspheres. The drug was
+                                  slowly diffused and released due to the swelling of the microspheres until 16 days. The
+                                  structure of the microspheres was then greatly disassembled, causing the drug to undergo
+Polymers 2023, 15, 1504                                                                                                                          16 of 20
+
+
+
+
+                                       secondary release as the hydrogel structure slips [43,44]. Microspheres with sustained
+                                       release capability are especially suitable for drug delivery in long-term clinical treatment
+                                       operations to control the release of locally delivered     (b)           drugs and improve the treatment
+                                       efficiency [45]. For  example,     cartilage     regeneration      requires     more than 30 days of growth
+                                                        Figure 6. Antibacterial activities of antibiotic-free and DAP-modified microspheres impregnated
+                                       factor release towith
+                                                         achieve    repair   [46].
+                                                             antibiotics against (a) S. aureus and (b) E. coli for a zone of inhibition of 1 day (n = 3).
+
+
+
+
+                          Polymers 2023, 15, x FOR PEER REVIEW                                                                                      17 of 21
+
+
+                                                                                         (a)
+
+
+
+
+                                                                                         (b)
+                                                       Figure analysis:
+                                       Figure 7. Quantitative 7. Quantitative analysis: antibacterial
+                                                                         antibacterial   activities ofactivities of antibiotic-free
+                                                                                                         antibiotic-free            and DAP-modified
+                                                                                                                            and DAP-modified          micro-
+                                                                                                                                                    micro-
+                                                       spheres impregnated with antibiotics against (a) S. aureus and (b) E. coli for 48 h (n = 3).
+                                       spheres impregnated with antibiotics against (a) S. aureus and (b) E. coli for 48 h (n = 3).
+                                                           3.8. Biocompatibility of Microspheres Impregnated with Antibiotic
+                                       3.8. Biocompatibility of Microspheres Impregnated with Antibiotic
+                                                                 As shown in Figure 8a, the cell viability of each group of microspheres was lower
+                                           As shownthan
+                                                     in Figure  8a, theobvious
+                                                         20%, showing    cell viability of each
+                                                                               cytotoxicity.       groupmay
+                                                                                             This finding  of microspheres      was release
+                                                                                                               be due to the sudden   lowerof
+                                       than 20%, showing
+                                                    excessobvious  cytotoxicity.
+                                                           gentamicin             This finding
+                                                                      from the microspheres   duringmaythebe due to the
+                                                                                                           preparation of sudden    release
+                                                                                                                           the extract, thereby
+                                                           reducing the cell viability. Based on the analysis of the morphology of 3T3 cells (Figure
+                                                           8b), the extracts of microspheres impregnated with gentamicin caused apoptosis, leading
+                                                           to spherical and ruptured cells. Thus, the release of gentamicin will be toxic to NIH3T3
+                                                           cells. In this study, DAP modification enhanced the cytotoxicity of the microspheres.
+                                                           However, the biocompatibility of the microspheres deteriorated after drug impregnation.
+                                                           Micro-hydrogels have certain limitations in repairing large-area wound defects so they
+Polymers 2023, 15, 1504                                                                                                     17 of 20
+
+
+
+
+                                    of excess gentamicin from the microspheres during the preparation of the extract, thereby
+                                    reducing the cell viability. Based on the analysis of the morphology of 3T3 cells (Figure 8b),
+                                    the extracts of microspheres impregnated with gentamicin caused apoptosis, leading to
+                                    spherical and ruptured cells. Thus, the release of gentamicin will be toxic to NIH3T3 cells.
+                                    In this study, DAP modification enhanced the cytotoxicity of the microspheres. However,
+                                    the biocompatibility of the microspheres deteriorated after drug impregnation. Micro-
+                                    hydrogels have certain limitations in repairing large-area wound defects so they cannot
+                                    form accurate shapes to repair damage due to flow under blood infiltration [21–24,47].
+                                    Therefore, drug-impregnated microspheres as drug carriers can be composited into other
+                                    biomaterials, such as artificial skin for burns or fractures, membranes for protein
+ Polymers 2023, 15, x FOR PEER REVIEW                                                                            18 of 21
+                                                                                                                          capture
+                                    and wound healing, bone cement or polymethylmethacrylate for bone defect repair, and
+                                    bioink for tissue engineering applications [48–50].
+
+
+
+
+                                                                         (a)
+
+
+
+
+                                                                        (b)
+                              Figure 8. Extract culture with NIH 3T3 cells for 1 day; (a) quantitative (n = 3) and (b) qualitative
+                               Figure 8. Extract culture with NIH 3T3 cells for 1 day; (a) quantitative (n = 3) and (b) qualitative
+                              measurements of antibiotic-impregnated microspheres.
+                               measurements of antibiotic-impregnated microspheres.
+                              4. Conclusions
+                                   In this experiment, post-crosslinked gelatin-based microspheres were successfully
+                              prepared as drug carriers by W/O emulsification. Basic DAP modification could effec-
+                              tively improve the cytotoxicity of the microspheres and confer them with good biocom-
+                              patibility. The surface of the microspheres was smooth, spherical in shape, and hollow
+                              inside. The size of the microspheres impregnated with gentamicin was not different from
+Polymers 2023, 15, 1504                                                                                                                18 of 20
+
+
+
+
+                                  4. Conclusions
+                                        In this experiment, post-crosslinked gelatin-based microspheres were successfully
+                                  prepared as drug carriers by W/O emulsification. Basic DAP modification could effectively
+                                  improve the cytotoxicity of the microspheres and confer them with good biocompatibility.
+                                  The surface of the microspheres was smooth, spherical in shape, and hollow inside. The
+                                  size of the microspheres impregnated with gentamicin was not different from that without
+                                  antibiotics. In terms of weight loss, 0.5 dM and 2.5 dM were completely degraded in
+                                  32 days and 1.0 dM was degraded in 26 days, indicating that each group of microspheres
+                                  has the potential to be applied to long-acting drug delivery systems. From the drug
+                                  release profile of gentamicin, the release curves of the 0.5 dM-G, 1 dM-G, and 2.5 dM-G
+                                  groups were approximately the same. The release busted in the first 2 h; then, the release
+                                  was stopped, and the amount reached a plateau until the microspheres were soaked
+                                  for 16 days. Given the obvious degradation of the microspheres, the drug was slowly
+                                  released again after soaking for 16–32 days, and this phenomenon is called secondary
+                                  release. The gentamicin impregnation group of DAP-modified microspheres all achieved an
+                                  antibacterial effect, which proved that the microspheres were successfully impregnated with
+                                  drugs and released drugs to achieve the antibacterial effect. However, the biocompatibility
+                                  of the drug-containing microspheres was not good. In summary, the gelatin microspheres
+                                  prepared by W/O emulsification not only have good biocompatibility but also have the
+                                  ability of drug loading and secondary release after modification with DAP. In the future,
+                                  these microspheres are expected to be combined with other biomaterials as a carrier of
+                                  drugs or growth factors for clinical applications.
+
+                                  Author Contributions: Conceptualization, J.-C.C., C.-J.S. and W.-C.C.; Data curation, K.-C.C., P.-J.C.,
+                                  S.-M.H. and S.-M.L.; Formal analysis, K.-C.C., P.-J.C., J.-C.C., S.-M.H., S.-M.L., C.-J.S. and W.-C.C.;
+                                  Funding acquisition, J.-C.C. and W.-C.C.; Investigation, K.-C.C., P.-J.C., J.-C.C., S.-M.H., S.-M.L., C.-J.S.
+                                  and W.-C.C.; Funding acquisition, J.-C.C. and W.-C.C.; Methodology, K.-C.C., J.-C.C., C.-J.S. and
+                                  W.-C.C.; Project administration, J.-C.C. and W.-C.C.; Resources, K.-C.C., J.-C.C., C.-J.S. and W.-C.C.;
+                                  Supervision, C.-J.S. and W.-C.C.; Validation, W.-C.C.; Visualization, W.-C.C.; Writing—original draft,
+                                  K.-C.C., J.-C.C., S.-M.H., S.-M.L., C.-J.S. and W.-C.C.; Writing—review and editing, K.-C.C., C.-J.S.
+                                  and W.-C.C. All authors have read and agreed to the published version of the manuscript.
+                                  Funding: This research was supported by the National Science and Technology Council, Taiwan
+                                  (grant numbers NSTC 111-2314-B-035-002-MY3, 110-2221-E-035-013, 109-2314-B-037-027, and 108-
+                                  2745-8-035-003).
+                                  Institutional Review Board Statement: Not applicable.
+                                  Informed Consent Statement: Not applicable.
+                                  Data Availability Statement: The data presented in this study are available on request from the
+                                  corresponding author.
+                                  Acknowledgments: The authors acknowledge and appreciate the Precision Instrument Support
+                                  Center of Feng Chia University, which provided the fabrication and measurement facilities. The
+                                  assistance of the participants in this research is also acknowledged.
+                                  Conflicts of Interest: The authors declare no conflict of interest.
+
+References
+1.    Coelho, J.F.; Ferreira, P.C.; Alves, P.; Cordeiro, R.; Fonseca, A.C.; Góis, J.R.; Gil, M.H. Drug delivery systems: Advanced
+      technologies potentially applicable in personalized treatments. EPMA J. 2010, 1, 164–209. [CrossRef] [PubMed]
+2.    Ranote, S.; Musioł, M.; Kowalczuk, M.; Joshi, V.; Chauhan, G.S.; Kumar, R.; Chauhan, S.; Kumar, K. Functionalized Moringa
+      oleifera Gum as pH-Responsive Nanogel for Doxorubicin Delivery: Synthesis, Kinetic Modelling and In Vitro Cytotoxicity Study.
+      Polymers 2022, 14, 4697. [CrossRef] [PubMed]
+3.    Jain, K.K. Drug Delivery Systems; Springer: Berlin/Heidelberg, Germany, 2008; Volume 251.
+4.    Khafagy, E.-S.; Almutairy, B.K.; Abu Lila, A.S. Tailoring of Novel Bile Salt Stabilized Vesicles for Enhanced Transdermal Delivery
+      of Simvastatin: A New Therapeutic Approach against Inflammation. Polymers 2023, 15, 677. [CrossRef] [PubMed]
+5.    Lysik, M.A.; Wu-Pong, S. Innovations in Oligonucleotide Drug Delivery. J. Pharm. Sci. 2003, 92, 1559–1573. [CrossRef] [PubMed]
+Polymers 2023, 15, 1504                                                                                                             19 of 20
+
+
+
+
+6.    Persson, E.M.; Gustafsson, A.-S.; Carlsson, A.S.; Nilsson, R.G.; Knutson, L.; Forsell, P.; Hanisch, G.; Lennernäs, H.; Abrahamsson,
+      B. The effects of food on the dissolution of poorly soluble drugs in human and in model small intestinal fluids. Pharm. Res. 2005,
+      22, 2141–2151. [CrossRef]
+7.    Liu, S.-M.; Chen, W.-C.; Huang, S.-M.; Chen, J.-C.; Lin, C.-L. Characterization of electrospun fibers and electrospray vancomycin-
+      containing beads through the interstitial or lamellar separation of bead composite fiber membranes to evaluate their biomedical
+      application in vitro. J. Ind. Text. 2022, 52, 1–23. [CrossRef]
+8.    Pinto Reis, C.; Neufeld, R.J.; Ribeiro, A.J.; Veiga, F. Nanoencapsulation, I. Methods for preparation of drug-loaded polymeric
+      nanoparticles. Nanomedicine, 2006; 2, 8–21. [CrossRef]
+9.    Lee, L.Y.; Wang, C.H.; Smith, K.A. Supercritical antisolvent production of biodegradable micro- and nanoparticles for controlled
+      delivery of paclitaxel. J. Control. Release 2008, 125, 96–106. [CrossRef]
+10.   Lovell, P.A.; Schork, F.J. Fundamentals of emulsion polymerization. Biomacromolecules 2020, 21, 4396–4441. [CrossRef]
+11.   Li, X.; Su, Y.; He, C.; Wang, H.; Fong, H.; Mo, X. Sorbitan monooleate and poly (l-lactide-co-ε-caprolactone) electrospun nanofibers
+      for endothelial cell interactions. J. Biomed. Mater. Res. A 2009, 91, 878–885. [CrossRef]
+12.   Kim, H.; Kim, K.; Lee, H.-R.; Jo, H.; Jeong, D.-W.; Ryu, J.; Gweon, D.-G.; Choi, S.Q. Formation of stable adhesive water-in-oil
+      emulsions using a phospholipid and cosurfactants. J. Ind. Eng. Chem. 2017, 55, 198–203. [CrossRef]
+13.   Qi, M.; Wu, X.; Zhang, F.; Zhang, J.; Wang, Y.; Zhang, Z.; Chen, Q. Paraffin oil emulsions for the absorption of toluene gas. Chem.
+      Eng. Technol. 2016, 39, 1438–1444. [CrossRef]
+14.   Vandelli, M.A.; Rivasi, F.; Guerra, P.; Forni, F.; Arletti, R. Gelatin microspheres crosslinked with d,l-glyceraldehyde as a potential
+      drug delivery system: Preparation, characterisation, in vitro and in vivo studies. Int. J. Pharm. 2001, 215, 175–184. [CrossRef]
+15.   Elzoghby, A.O. Gelatin-based nanoparticles as drug and gene delivery systems: Reviewing three decades of research. J. Control.
+      Release 2013, 172, 1075–1091. [CrossRef] [PubMed]
+16.   Peng, Z.; Li, Z.; Shen, Y. Influence of chemical cross-linking on properties of gelatin/chitosan microspheres. Polym. Plast. Technol.
+      Eng. 2012, 51, 381–385. [CrossRef]
+17.   Islam, M.A.; Firdous, J.; Choi, Y.-J.; Yun, C.-H.; Cho, C.-S. Design and application of chitosan microspheres as oral and nasal
+      vaccine carriers: An updated review. Int. J. Nanomed. 2012, 2012, 6077–6093. [CrossRef]
+18.   Lindén, M.V.; Wiedmer, S.K.; Hakala, R.M.S.; Riekkola, M.-L. Stabilization of phosphatidylcholine coatings in capillary elec-
+      trophoresis by increase in membrane rigidity. J. Chromatogr. A 2004, 1051, 61–68. [CrossRef]
+19.   Marcilla, A.; Beltran, M.I.; Gómez-Siurana, A.; Martinez-Castellanos, I.; Berenguer, D.; Pastor, V.; García, A.N. TGA/FTIR study
+      of the pyrolysis of diammonium hydrogen phosphate–tobacco mixtures. J. Anal. Appl. Pyrolysis 2015, 112, 48–55. [CrossRef]
+20.   Sung, H.-W.; Chang, Y.; Chiu, Y.-T.; Hsu, H.-L.; Shih, C.-C.; Lu, J.-H.; Yang, P.-C. Evaluation of an epoxy-fixed biological patch
+      with ionically bound heparin as a pericardial substitute. Biomaterials 1996, 17, 1693–1701. [CrossRef] [PubMed]
+21.   Zolfagharzadeh, V.; Ai, J.; Soltani, H.; Hassanzadeh, S.; Khanmohammadi, M. Sustain release of loaded insulin within biomimetic
+      hydrogel microsphere for sciatic tissue engineering in vivo. Int. J. Biol. Macromol. 2023, 225, 687–700. [CrossRef] [PubMed]
+22.   Naveed, S.; Shah, S.N.; Qamar, F.; Waheed, N.; Nazeer, S. Simple UV spectrophotometric assay of new formulation gentamycin.
+      J. Appl. Pharm. 2014, 6, 407–410.
+23.   Huang, S.-M.; Liu, S.-M.; Chen, W.-C.; Ko, C.-L.; Shih, C.-J.; Chen, J.-C. Morphological Changes, Antibacterial Activity, and
+      Cytotoxicity Characterization of Hydrothermally Synthesized Metal Ions-Incorporated Nanoapatites for Biomedical Application.
+      Pharmaceuticals 2022, 15, 885. [CrossRef] [PubMed]
+24.   Hu, M.-H.; Chu, P.-Y.; Huang, S.-M.; Shih, B.-S.; Ko, C.-L.; Hu, J.-J.; Chen, W.-C. Injectability, processability, drug loading, and
+      antibacterial activity of gentamicin-impregnated mesoporous bioactive glass composite calcium phosphate bone cement in vitro.
+      Biomimetics 2022, 7, 121. [CrossRef] [PubMed]
+25.   Adewunmi, A.A.; Solling, T.; Sultan, A.S.; Saikia, T. Emulsified acid systems for oil well stimulation: A review. J. Pet. Sci. Eng.
+      2022, 208, 109569. [CrossRef]
+26.   Chacon, O.G.; Pournik, M. Matrix Acidizing in Carbonate Formations. Processes 2022, 10, 174. [CrossRef]
+27.   Nosheen, A.; Naz, R.; Tahir, A.T.; Yasmin, H.; Keyani, R.; Mitrevski, B.; Bano, A.; Tong Chin, S.; Marriott, P.J.; Hussain, I.
+      Improvement of safflower oil quality for biodiesel production by integrated application of PGPR under reduced amount of NP
+      fertilizers. PLoS ONE 2018, 13, e0201738. [CrossRef] [PubMed]
+28.   Sadecka, E.; Szelag,˛ H. One-Step Synthesis of W/O and O/W Emulsifiers in the Presence of Surface Active Agents. J. Surfactants
+      Deterg. 2013, 16, 305–315. [CrossRef]
+29.   Chaiyana, W.; Leelapornpisid, P.; Phongpradist, R.; Kiattisin, K. Enhancement of antioxidant and skin moisturizing effects of
+      olive oil by incorporation into microemulsions. Nanomater. Nanotechnol. 2016, 6, 1847980416669488. [CrossRef]
+30.   Fu, P.-S.; Wang, J.-C.; Lai, P.-L.; Liu, S.-M.; Chen, Y.-S.; Chen, W.-C.; Hung, C.-C. Effects of gamma radiation on the sterility
+      assurance, antibacterial ability, and biocompatibility of impregnated hydrogel macrosphere protein and drug release. Polymers
+      2021, 13, 938. [CrossRef]
+31.   Cheng, C.-H.; Chen, Y.-S.; Chang, H.-T.; Chang, K.-C.; Huang, S.-M.; Liu, S.-M.; Chen, W.-C. In vitro evaluation of antibacterial
+      activity and biocompatibility of synergistically cross-linked gelatin-alginate hydrogel beads as gentamicin carriers. J. Drug Deliv.
+      Sci. Technol. 2023, 79, 104078. [CrossRef]
+32.   Haung, S.-M.; Lin, Y.-T.; Liu, S.-M.; Chen, J.-C.; Chen, W.-C. In vitro evaluation of a composite gelatin–hyaluronic acid–alginate
+      porous scaffold with different pore distributions for cartilage regeneration. Gels 2021, 7, 165. [CrossRef] [PubMed]
+Polymers 2023, 15, 1504                                                                                                           20 of 20
+
+
+
+
+33.   Gruber, S.; Vorhauer-Huget, N.; Foerst, P. In situ micro-computed tomography to study microstructure and sublimation front
+      during freeze-drying. Food Struct. 2021, 29, 100213. [CrossRef]
+34.   Zhang, G.-H.; Hou, R.-X.; Zhan, D.-X.; Cong, Y.; Cheng, Y.-J.; Fu, J. Fabrication of hollow porous PLGA microspheres for controlled
+      protein release and promotion of cell compatibility. Chin. Chem. Lett. 2013, 24, 710–714. [CrossRef]
+35.   Li, Q.; Chang, B.; Dong, H.; Liu, X. Functional microspheres for tissue regeneration. Bioact. Mater. 2022. [CrossRef]
+36.   Lin, F.; Li, Y.; Cui, W. Injectable hydrogel microspheres in cartilage repair. Biomed. Technol. 2023, 1, 18–29. [CrossRef]
+37.   Choi, M.H.; Blanco, A.; Stealey, S.; Duan, X.; Case, N.; Sell, S.A.; Rai, M.F.; Zustiak, S.P. Micro-clotting of platelet-rich plasma
+      upon loading in hydrogel microspheres leads to prolonged protein release and slower microsphere degradation. Polymers 2020,
+      12, 1712. [CrossRef] [PubMed]
+38.   Hossain, K.M.Z.; Patel, U.; Ahmed, I. Development of microspheres for biomedical applications: A review. Prog. Biomater. 2015, 4,
+      1–19. [CrossRef] [PubMed]
+39.   Dong, Z.; Meng, X.; Yang, W.; Zhang, J.; Sun, P.; Zhang, H.; Fang, X.; Wang, D.-A.; Fan, C. Progress of gelatin-based microspheres
+      (GMSs) as delivery vehicles of drug and cell. Mater. Sci. Eng. C 2021, 122, 111949. [CrossRef]
+40.   Elsawy, M.A.; Wychowaniec, J.K.; Castillo Díaz, L.A.; Smith, A.M.; Miller, A.F.; Saiani, A. Controlling doxorubicin release from a
+      peptide hydrogel through fine-tuning of drug–peptide fiber interactions. Biomacromolecules 2022, 23, 2624–2634. [CrossRef]
+41.   Banerjee, S.; Siddiqui, L.; Bhattacharya, S.S.; Kaity, S.; Ghosh, A.; Chattopadhyay, P.; Pandey, A.; Singh, L. Interpenetrating
+      polymer network (IPN) hydrogel microspheres for oral controlled release application. Int. J. Biol. Macromol. 2012, 50, 198–206.
+      [CrossRef]
+42.   Soppimath, K.S.; Kulkarni, A.R.; Aminabhavi, T.M. Controlled release of antihypertensive drug from the interpenetrating network
+      poly (vinyl alcohol)–guar gum hydrogel microspheres. J. Biomater. Sci. Polym. Ed. 2000, 11, 27–43. [CrossRef]
+43.   Long, T.; Tan, W.; Tian, X.; Tang, Z.; Hu, K.; Ge, L.; Mu, C.; Li, X.; Xu, Y.; Zhao, L.; et al. Gelatin/alginate-based mi-crospheres
+      with sphere-in-capsule structure for spatiotemporal manipulative drug release in gastrointestinal tract. Int. J. Biol. Macromol.
+      2023, 226, 485–495. [CrossRef]
+44.   Chen, L.; Ahmed, A.M.Q.; Deng, Y.; Cao, D.; Du, H.; Cui, J.; Lee, B.-J.; Cao, Q. Novel triptorelin acetate-loaded microspheres
+      prepared by a liquid/oil/oil method with high encapsulation efficiency and low initial burst release. J. Drug Deliv. Sci. Technol.
+      2019, 54, 101390. [CrossRef]
+45.   Ruan, L.; Su, M.; Qin, X.; Ruan, Q.; Lang, W.; Wu, M.; Chen, Y.; Lv, Q. Progress in the application of sustained-release drug
+      microspheres in tissue engineering. Mater. Today Bio 2022, 16, 100394. [CrossRef]
+46.   Sulaiman, S.B.; Idrus, R.B.H.; Hwei, N.M. Gelatin microsphere for cartilage tissue engineering: Current and future strategies.
+      Polymers 2020, 12, 2404. [CrossRef]
+47.   Ma, X.; Wang, M.; Ran, Y.; Wu, Y.; Wang, J.; Gao, F.; Liu, Z.; Xi, J.; Ye, L.; Feng, Z. Design and fabrication of polymeric hydrogel
+      carrier for nerve repair. Polymers 2022, 14, 1549. [CrossRef] [PubMed]
+48.   Kanungo, M.; Wang, Y.; Hutchinson, N.; Kroll, E.; DeBruine, A.; Kumpaty, S.; Ren, L.; Wu, Y.; Hua, X.; Zhang, W. Development of
+      Gelatin-Coated Microspheres for Novel Bioink Design. Polymers 2021, 13, 3339. [CrossRef] [PubMed]
+49.   Lei, L.; Wang, X.; Zhu, Y.; Su, W.; Lv, Q.; Li, D. Antimicrobial hydrogel micospheres for protein capture and wound healing. Mater.
+      Des. 2022, 215, 110478. [CrossRef]
+50.   Ressler, A. Chitosan-Based Biomaterials for Bone Tissue Engineering Applications: A Short Review. Polymers 2022, 14, 3430.
+      [CrossRef] [PubMed]
+
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.
+

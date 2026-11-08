@@ -1,0 +1,621 @@
+                                                                                                        Journal of Drug Targeting, 2011; 19(2): 96–103
+
+
+                                                                                                        o r i g i n a l AR T I C L E
+
+
+
+                                                                                                        Development of gelatin microspheres loaded with
+                                                                                                        diclofenac sodium for intra-articular administration
+                                                                                                        Muniyandy Saravanan1, Kesavan Bhaskar2, Gomathinayagam Maharajan3, and
+                                                                                                        Kalathil Sadasivan Pillai4
+Journal of Drug Targeting Downloaded from informahealthcare.com by Serials Unit - Library on 10/17/12
+
+
+
+
+                                                                                                        1
+                                                                                                         Medicine and Health Sciences, Monash University, Selangor Darul Ehsan, Malaysia, 2Department of Pharmaceutics,
+                                                                                                        Vels University, Chennai, India, 3Department of Physiology, Chettinad University, Chettinad Health City, Chennai,
+                                                                                                        India, and 4Frontier Tissueline Pvt. Ltd, Chennai, India
+
+
+                                                                                                                       Abstract
+                                                                                                                       We have previously reported on the targeting of diclofenac sodium in joint inflammation using gelatin
+                                                                                                                       magnetic microspheres. To overcome complications in the administration of magnetic microspheres and
+                                                                                                                       achieve higher targeting efficiency, the present work focuses on the formulation of gelatin microspheres
+                                                                                                                       for intra-articular administration. Drug-loaded microspheres were prepared by the emulsification/cross-
+                                                                                                                       linking method, characterized by drug loading, size distribution, scanning electron microscopy (SEM), Fourier
+                                                                                                                       transform infrared (FT-IR) spectroscopy, differential scanning calorimetry (DSC), X-ray diffraction (XRD), gas
+                                       For personal use only.
+
+
+
+
+                                                                                                                       chromatography, and in vitro release studies. The targeting efficiency of microspheres was studied in vivo
+                                                                                                                       in rabbits. The microspheres showed drug loading of 9.8, 18.3, and 26.7% w/w with an average size range
+                                                                                                                       of 37–46 µm, depending upon the drug–polymer ratio. They were spherical in nature and free from surface
+                                                                                                                       drug as evidenced by the SEM photographs. FT-IR, DSC, and XRD revealed the absence of drug–polymer
+                                                                                                                       interaction and amorphous nature of entrapped drug. Gas chromatography confirms the absences of resid-
+                                                                                                                       ual glutaraldehyde. The formulated microspheres could prolong the drug release up to 30 days in vitro. About
+                                                                                                                       81.2 and 43.7% of administered drug in the microspheres were recovered from the target joint after 1 and
+                                                                                                                       7 days of postintra-articular injection, respectively, revealing good targeting efficiency.
+                                                                                                                       Keywords: Targeted delivery; diclofenac sodium; gelatin microspheres; intra-articular administration;
+                                                                                                                       depot injection
+
+
+
+                                                                                                        Introduction                                                                  localize diclofenac sodium by direct injection into an
+                                                                                                                                                                                      arthritic joint (compartmental targeting), where the drug
+                                                                                                        Diclofenac sodium is one of the few approved nonster-                         will be released slowly to elicit its action.
+                                                                                                        oidal anti-inflammatory drugs available for parenteral                            Intra-articular delivery of drug-loaded microspheres
+                                                                                                        administration to treat inflammatory arthritis. Gastric                       has been developed by many researchers (Ratcliffe et al.,
+                                                                                                        ulcers, gastrointestinal bleeding, blood dyscrasias, and                      1987; Pavanetto et al., 1994; Tunçay et al., 2000a; 2000b;
+                                                                                                        anaphylaxis are potential life-threatening side effects of                    Bozdag et al., 2001) for targeting drugs into arthritic joint
+                                                                                                        diclofenac sodium (Carson et al., 1990). We have previ-                       and to achieve a prolonged therapeutic effect. Recently,
+                                                                                                        ously reported (Saravanan et al., 2004; 2008b) about the                      Larsen et al. (2008) reviewed the potential application
+                                                                                                        possibility of targeting diclofenac sodium using gelatin                      of intra-articular depot formulation. The drugs that are
+                                                                                                        magnetic microspheres. Intra-arterial administration                          administered intra-articularly have a poor biological half-
+                                                                                                        and application of strong magnetic field at the target site                   life as they escape from the synovium into the systemic
+                                                                                                        are potential practical problems associated with clini-                       circulation; therefore, it is necessary to administer them
+                                                                                                        cal application of magnetic microspheres. To overcome                         in an immobilized form using suitable carriers. Larsen
+                                                                                                        the problems associated with magnetic targeting, in the                       et al. (2008) listed various drugs and carriers used in
+                                                                                                        present study, gelatin microspheres were formulated to                        intra-articular delivery, and from the literature, it is
+
+
+                                                                                                        Address for Correspondence: Muniyandy Saravanan. E-mail: msaravanan72@hotmail.com
+
+                                                                                                        (Received 10 November 2009; revised 11 February 2010; accepted 26 February 2010)
+
+                                                                                                        ISSN 1061-186X print/ISSN 1029-2330 online © 2011 Informa UK, Ltd.
+                                                                                                        DOI: 10.3109/10611861003733979                                                                           http://www.informahealthcare.com/drt
+                                                                                                                                                       Development of gelatin microspheres for intra-articular administration   97
+
+                                                                                                         evident that particle size and carrier type are the most               Preparation of gelatin microspheres loaded with
+                                                                                                         important factors in achieving higher level of targeting. In           diclofenac sodium
+                                                                                                         general, particles less than 5 microns had poor ­retention
+                                                                                                                                                                                As shown in Table 1, the required quantity of gelatin was
+                                                                                                         in the joint and showed less sustained action.
+                                                                                                                                                                                dissolved in 3 ml of phosphate buffer (pH 7.4) preheated
+                                                                                                            There are few articles (Brown et al., 1998; Larsen et al.,
+                                                                                                                                                                                to 60°C. The specified quantity of diclofenac sodium was
+                                                                                                         2008) available pertaining to intra-articular delivery of
+                                                                                                                                                                                dissolved separately in 3 ml of phosphate buffer (pH 7.4)
+                                                                                                         drugs using gelatin microspheres. Microspheres formu-
+                                                                                                                                                                                preheated to 60°C and added to the gelatin solution that
+                                                                                                         lated using gelatin and albumin showed greater com-
+                                                                                                                                                                                was maintained at 60°C. Then the mixture was added
+                                                                                                         patibility than the microspheres of synthetic polymers
+                                                                                                                                                                                dropwise to 100 ml of sesame oil with 1% w/v Span 80
+                                                                                                         when injected intra-articularly (Ratcliffe et al., 1984).
+                                                                                                                                                                                preheated to 60°C and emulsified by stirring with the
+                                                                                                         In our previous work, we have formulated and analyzed
+                                                                                                                                                                                help of a hand blender (5000 rpm/3 min). Then the sta-
+                                                                                                         albumin and gelatin magnetic microspheres (Saravanan
+                                                                                                                                                                                bilized emulsion was allowed to cool and stirred at room
+                                                                                                         et al., 2008a) for stability and consistency in terms of their
+Journal of Drug Targeting Downloaded from informahealthcare.com by Serials Unit - Library on 10/17/12
+
+
+
+
+                                                                                                                                                                                temperature using a mechanical stirrer (∼1000 rpm;
+                                                                                                         release kinetics. Gelatin microspheres were found to be
+                                                                                                                                                                                Remi, Mumbai, India). Ten milliliters of glutaraldehyde-
+                                                                                                         more stable than albumin microspheres.
+                                                                                                                                                                                saturated toluene solution were added dropwise and
+                                                                                                            After analyzing compatibility and stability, in the
+                                                                                                                                                                                the stirring was continued at room temperature for 6 h.
+                                                                                                         present work, gelatin was selected as the carrier of choice,
+                                                                                                                                                                                The cross-linked microspheres were collected by filtra-
+                                                                                                         and microspheres loaded with diclofenac sodium were
+                                                                                                                                                                                tion using Whatman filter paper (no. 41). After filtration,
+                                                                                                         prepared by emulsification–glutaraldehyde cross-linking
+                                                                                                                                                                                the microspheres were washed with anhydrous ether to
+                                                                                                         method. The formulated microspheres were systemati-
+                                                                                                                                                                                remove sesame oil. Then it was washed with 3 × 10 ml
+                                                                                                         cally characterized by drug content, encapsulation effi-
+                                                                                                                                                                                of 5% w/v sodium metabisulphite, 2 × 10 ml water, and
+                                                                                                         ciency, size distribution, scanning electron microscopy
+                                                                                                                                                                                2 × 10 ml of isopropyl alcohol. After washing, the micro-
+                                                                                                         (SEM) for shape and surface characters, and in vitro
+                                                                                                                                                                                spheres were dried at 45°C, transferred to glass vials and
+                                                                                                         release studies. The formulated microspheres were
+                                                                                                                                                                                stored in a desiccator.
+                                       For personal use only.
+
+
+
+
+                                                                                                         analyzed by Fourier transform infrared spectroscopy
+                                                                                                         (FT-IR), differential scanning calorimetry (DSC), and
+                                                                                                         X-ray diffraction (XRD) to find out the physical nature                Determination of drug loading and encapsulation
+                                                                                                         of entrapped drug in the microspheres. The in vivo tar-                efficiency
+                                                                                                        geting efficiency of microspheres after intra-articular
+                                                                                                        ­administration was studied in healthy rabbits.                         Drug-loaded microspheres (100 mg) were digested with
+                                                                                                                                                                                10 ml of 1N sodium hydroxide at room temperature for
+                                                                                                                                                                                12 h. After filtration and suitable dilution, diclofenac
+                                                                                                        Materials and methods                                                   sodium present in the solution was determined
+                                                                                                                                                                                (Saravanan et al., 2004) at 277 nm using a UV visible
+                                                                                                        Materials                                                               spectrophotometer (Shimadzu 1601; Shimadzu, Kyoto,
+                                                                                                                                                                                Japan). Drug loading in the microspheres was estimated
+                                                                                                        Gelatin, type B, 300 Bloom strength was purchased from                  by using the formula:
+                                                                                                        Sigma Chemicals, St. Louis, MO. Diclofenac sodium was
+                                                                                                        a gift from MARAL, Chennai, India. Anhydrous ether,
+                                                                                                                                                                                 L = Qm /Wm × 100
+                                                                                                        isopropyl alcohol, toluene, span 80, and glutaraldehyde
+                                                                                                        were purchased from S.D. Fine Chemicals Ltd, Boisar,
+                                                                                                        India, and sesame oil (Idhayam) was purchased from                      where L is the percentage loading of microspheres, Qm
+                                                                                                        Food World, Chennai, India. All other reagents used were                is the quantity of the diclofenac sodium present in Wm g
+                                                                                                        of analytical grade.                                                    of microspheres. The amount of diclofenac sodium
+
+                                                                                                        Table 1. Physical and chemical parameters of gelatin microspheres loaded with diclofenac sodium.
+                                                                                                                                                                                                                              Average particle size
+                                                                                                                                                                                                                                  µm (n = 300)
+                                                                                                                                                                Percentage of drug loading
+                                                                                                                                      Diclofenac                                             Percentage of    Percentage of    (volume–surface
+                                                                                                        Batch no. Gelatin (mg) sodium (mg)         Yield (mg)
+                                                                                                                                                       a
+                                                                                                                                                                Theoretical      Actuala     entrapmenta     encapsulationa         mean)
+                                                                                                        GM0            1500              —          1466 ± 82      —                —             —                —                 31.01
+                                                                                                        GM1            1500              180        1630 ± 43      10.7          9.8 ± 0.9     91.6 ± 8.4       88.7 ± 8.2           37.89
+                                                                                                        GM2            1500              380        1770 ± 52      20.2         18.3 ± 1.3     90.6 ± 6.4       85.2 ± 6.1           40.62
+                                                                                                        GM3            1500              650        1980 ± 65      30.2         26.7 ± 1.8     88.4 ± 5.9       81.3 ± 5.5           45.41
+                                                                                                        a
+                                                                                                         Values are mean ± SE (n = 6).
+                                                                                                        98   Muniyandy Saravanan et al.
+
+                                                                                                        encapsulated in the microspheres was determined using          Gas chromatography to test residual glutaraldehyde
+                                                                                                        the formula:
+                                                                                                                                                                       One gram of microspheres, from each of the different
+                                                                                                        E = Qp /Qt × 100                                               batches, was extracted with 25 ml of water by shaking
+                                                                                                                                                                       occasionally for 24 h. Then, the extract was filtered and 2
+                                                                                                        where E is the percentage encapsulation of microspheres,       µl of filtrate was injected into gas chromatographic sys-
+                                                                                                        Qp is the quantity of drug encapsulated in microspheres        tem for glutaraldehyde determination as explained in our
+                                                                                                        (g), Qt is the quantity of drug added for encapsulation (g).   previous work (Saravanan et al., 2008b).
+
+                                                                                                        Particle size analysis
+                                                                                                                                                                       In vitro release of diclofenac sodium
+                                                                                                        The particle size of microspheres was measured by optical
+                                                                                                                                                                       The in vitro release studies (Saravanan et al., 2004) of
+                                                                                                        microscopy. The microspheres were dispersed in water
+                                                                                                                                                                       drug-loaded microspheres were carried out at 37°C in the
+                                                                                                        and a smear was made on a glass slide, and the size of 300
+Journal of Drug Targeting Downloaded from informahealthcare.com by Serials Unit - Library on 10/17/12
+
+
+
+
+                                                                                                                                                                       phosphate buffer (pH 7.4). Each batch of microspheres,
+                                                                                                        particles was measured by using a micrometer attached
+                                                                                                                                                                       equivalent to 20 mg of diclofenac sodium, was individu-
+                                                                                                        (Saravanan et al., 2008b) with a microscope. The parti-
+                                                                                                                                                                       ally added to 100 ml of the phosphate buffer (pH 7.4) in
+                                                                                                        cle size distribution of microspheres was plotted, and
+                                                                                                                                                                       flasks. The flasks were shaken (60 oscillations/min) in
+                                                                                                        volume–surface mean diameter was determined using
+                                                                                                                                                                       an incubator (Remi) at 37°C. One milliliter of sample
+                                                                                                        (Patrick, 2006) the following equation:
+                                                                                                                                                                       was withdrawn at regular time intervals and the same
+                                                                                                                                                                       volume of phosphate buffer was replaced. After suitable
+                                                                                                        dvs = ∑ nd 3/∑ nd
+                                                                                                                            2
+
+                                                                                                                                                                       dilution, diclofenac sodium content in phosphate buffer
+                                                                                                        where d is the diameter of particle and n is the number        (pH 7.4) was estimated at 277 nm using a UV visible
+                                                                                                        of particles present in diameter d.                            ­spectrophotometer (Shimadzu 1601).
+                                       For personal use only.
+
+
+
+
+                                                                                                        SEM                                                            Release kinetics
+                                                                                                        The sample for the SEM analysis was prepared by sprin-         Data obtained from in vitro release studies were fitted to
+                                                                                                        kling the microspheres on to one side of double-adhesive       various kinetic (Costa and Sousa Lobo, 2001; Saravanan
+                                                                                                        stub. The stub was then coated with gold using Jeol JFC        et al., 2004) equations. The kinetic models used are
+                                                                                                        1100 sputter coater (Jeol Ltd, Tokyo, Japan). The SEM          zero-order, first-order, and Higuchi equations. The fol-
+                                                                                                        analysis of the microspheres was carried out by using Jeol     lowing plots were made: Qt versus t (zero-order kinetic
+                                                                                                        JSM 5300 (Jeol Ltd). The microspheres were viewed at an        model); log (Q0 − Qt) versus t (first-order kinetic model);
+                                                                                                        accelerating voltage of 15–20 kV.                              Qt versus square root of t (Higuchi model) where Qt is
+                                                                                                                                                                       the amount of diclofenac sodium released at a time t and
+                                                                                                        FT-IR                                                          Q0 is the initial amount of the diclofenac sodium present
+                                                                                                                                                                       in microspheres. Further, to find out the mechanism
+                                                                                                        Infrared spectra of diclofenac sodium and gelatin micro-
+                                                                                                                                                                       of drug release, first 60% drug release was fitted to the
+                                                                                                        spheres were taken by using KBr pellet technique and
+                                                                                                                                                                       Korsmeyer–Peppas model:
+                                                                                                        were recorded on Bomem MB-II FT-IR spectrometer,
+                                                                                                        Quebec, Canada.                                                M t /M α = kt n
+
+                                                                                                        DSC                                                            where Mt/Mα is the fraction of drug released at a
+                                                                                                        DSC of diclofenac sodium and microspheres was ­performed       time t, k is the rate constant, and n is release exponent.
+                                                                                                        using PerkinElmer DSC7 model, Waltham, MA, USA. The            The n value is used to characterize different release
+                                                                                                        instrument was calibrated with indium. All the samples         mechanisms.
+                                                                                                        (∼5 mg) were heated in aluminum pans using dry nitrogen
+                                                                                                        as the effluent gas. The analysis was performed with a heat-   Determination of targeting efficiency
+                                                                                                        ing range of 50–350°C and at a rate of 20°C/min.
+                                                                                                                                                                       The percentage of injected drug available at the site of
+                                                                                                                                                                       action was determined in normal rabbits (n = 6) as fol-
+                                                                                                        XRD
+                                                                                                                                                                       lows. The institutional ethical committee for animal
+                                                                                                        Diclofenac sodium and microspheres were subjected to           experimentation, Vel’s College of Pharmacy, Chennai,
+                                                                                                        XRD study in an X-ray diffractometer (XD-D1; Shimadzu),        India approved all experimental procedures. The gela-
+                                                                                                        within the range 5–70° of 2θ. The working conditions were      tin microspheres (batch no: GM2) equivalent to 10 mg
+                                                                                                        CuKα radiation, 30 kV, 20 mA and with a slit of 1-1-0.3 mm.    of drug were dispersed in 0.5 ml of normal saline and
+                                                                                                                                                  Development of gelatin microspheres for intra-articular administration   99
+
+                                                                                                        sonicated for 2 min to get uniform suspension. Then, the      of entrapment and encapsulation efficiency as given
+                                                                                                        contents were transferred to a 1 ml syringe with 27-gauge     in Table 1. During the cross-linking process, the gelatin
+                                                                                                        needle and injected into the left knee joint (target site).   microspheres will shrink and expel the drug molecules
+                                                                                                        All injections were done under anesthesia (phenobarbi-        along with the water into the oil phase. This could be the
+                                                                                                        tone 15–25 mg/kg, intraperitoneal) in order to avoid the      reason for the loss of 10–20% of the drug during the encap-
+                                                                                                        pain and stress to animals.                                   sulation process. Moreover, higher drug loading lowered
+                                                                                                           After 1 and 7 days of postinjection, animals (n =3) were   the percentage of entrapment and encapsulation, which
+                                                                                                        sacrificed (intraperitoneal injection of phenobarbitone,      indicates the wastage of drug during the microencapsula-
+                                                                                                        45–55 mg/kg) and the drug present in the target area was      tion process. This may be due to the drug present in the
+                                                                                                        analyzed. The content of the synovium that has received       surface of microspheres with higher drug loading, which
+                                                                                                        an intra-articular injection of gelatin microspheres          might be removed during washing and thus reducing the %
+                                                                                                        loaded with diclofenac sodium was transferred to 50 ml        of entrapment and encapsulation at higher drug loading.
+                                                                                                        of 1N sodium hydroxide. The microspheres present
+Journal of Drug Targeting Downloaded from informahealthcare.com by Serials Unit - Library on 10/17/12
+
+
+
+
+                                                                                                        in the synovial content were allowed to digest by the
+                                                                                                                                                                      Particle size analysis
+                                                                                                        sodium hydroxide at room temperature for 12 h. After the
+                                                                                                        digestion process, the contents were filtered to remove       In our series of work (Saravanan et al., 2003; 2004; 2008a;
+                                                                                                        suspended matters. 5 ml of filtrate was taken in a test       2008b), we have formulated gelatin microspheres with
+                                                                                                        tube and shaken well with 5 ml of methanol for 30 min.        different drug loading, gelatin content, stirring speed,
+                                                                                                        The solution was centrifuged (3000 rpm; Remi) and 20          and with varying degree of cross-linking. Microspheres
+                                                                                                        µl of clear supernatant liquid was injected into HPLC,        loaded with high % of drug showed a faster release than the
+                                                                                                        Shimadzu, VP series to estimate diclofenac sodium as          microspheres with lower drug loading and vice versa. The
+                                                                                                        explained in our previous work (Saravanan et al., 2004).      percentage of gelatin solution used to make microspheres
+                                                                                                                                                                      also influences the particle size and in vitro release.
+                                                                                                                                                                      Gelatin solution of 25% w/v or more are required to make
+                                       For personal use only.
+
+
+
+
+                                                                                                        Results and discussion                                        microspheres in order to get the drug release for more than
+                                                                                                                                                                      30 days. As viscosity is high for a solution prepared with
+                                                                                                        Preparation of microspheres                                   20–25% w/v of gelatin, high stirring speed is required to get
+                                                                                                                                                                      smaller microspheres. Based on our experience, we have
+                                                                                                         The microencapsulation process adopted in the study          selected suitable formulation conditions such as drug/
+                                                                                                         was good as indicated by the high yield of microspheres      gelatin ratio, volume of internal phase, external phase,
+                                                                                                         in Table 1. Higher yield reflects low wastage and high       addition of surfactant and stirring speed to get a particle
+                                                                                                         efficiency in the encapsulation process. The formulated      size range of 10–60 micrometer. Smaller microspheres, less
+                                                                                                         microspheres were free flowing in nature. The usage of       than 5 microns in size, were rapidly cleared from the joint
+                                                                                                         sesame oil with span 80 was found to be effective in dis-    after intra-articular administration. Moreover, smaller par-
+                                                                                                         persing aqueous globules containing drug and gelatin.        ticles will have less sustained drug release than larger size
+                                                                                                         The stirring conditions were optimized to get the required   particles due to a difference in surface area. At the same
+                                                                                                         size (below 60 µm) by observing the globule size under       time, the particle size should be within the range that can
+                                                                                                         the microscope. The temperature was maintained at            be injected using a conventional needle and should be
+                                                                                                         60°C until the completion of emulsification to facilitate    accommodated within the synovium. Particles in the range
+                                                                                                         microsphere formation. At 60°C, the gelatin solution is      of 1–70 µm have been employed in intra-articular delivery
+                                                                                                         pourable and diclofenac sodium is soluble at specified       and larger size particles have shown better retention time/
+                                                                                                         concentrations as shown in Table 1. At the end of prepa-     sustained effect (Larsen et al., 2008). Based on this informa-
+                                                                                                        ration, sodium metabisulphite was added to neutralize         tion, we have attempted to formulate gelatin microspheres
+                                                                                                        unreacted glutaraldehyde and the cross-linking was            in the range of 20–70 µm to get maximum retention at the
+                                                                                                        ­terminated (Öner and Groves, 1993).                          injected joint and prolonged drug release.
+                                                                                                                                                                          The size distribution of formulated gelatin microsphere
+                                                                                                                                                                      loaded with diclofenac sodium for intra-articular injec-
+                                                                                                        Drug loading, entrapment and encapsulation
+                                                                                                                                                                      tion (Figure 1) was between 1 and 60 µm with an average
+                                                                                                        efficiency
+                                                                                                                                                                      size of 31–45 µm. The average size of unloaded gelatin
+                                                                                                        Sodium hydroxide solution was used to digest the gelatin      microspheres was smaller than the drug-loaded micro-
+                                                                                                        in order to extract the encapsulated diclofenac sodium.       spheres. The average size of gelatin microspheres with 0,
+                                                                                                        Because the drug is soluble in sodium hydroxide, it is pos-   9.8, 18.3, 26.7, and 33.1% of diclofenac sodium were 31.01,
+                                                                                                        sible to get complete extraction of drug from the micro-      37.89, 40.62, and 45.41 µm, respectively. The particle size
+                                                                                                        spheres (Saravanan et al., 2004). Gelatin microspheres,       distribution of drug-loaded microspheres was more or
+                                                                                                        based on the drug–polymer ratio, have shown 81–91%            less the same irrespective of drug content. Increase in
+                                                                                                        100   Muniyandy Saravanan et al.
+
+                                                                                                                                                          40
+
+                                                                                                                                                          35
+
+
+
+
+                                                                                                                                Number of Particles (%)
+                                                                                                                                                          30
+
+                                                                                                                                                          25
+
+                                                                                                                                                          20
+
+                                                                                                                                                          15
+
+                                                                                                                                                          10
+
+                                                                                                                                                           5
+
+                                                                                                                                                           0
+Journal of Drug Targeting Downloaded from informahealthcare.com by Serials Unit - Library on 10/17/12
+
+
+
+
+                                                                                                                                                               1–10   11–20   21–30     31–40       41–50      51–60       61–70
+                                                                                                                                                                               Particle size range (µm)
+
+                                                                                                        Figure 1. Particle size distribution of gelatin microspheres loaded with , 9.8 , 18.3 , and 26.7 % w/w of diclofenac sodium.
+
+
+                                                                                                        drug loading produced larger particles that resulted in
+                                                                                                        an increase in the average particle size. All formulated
+                                                                                                        microspheres were well below the size limit that can be
+                                                                                                        injected intra-articularly using a conventional needle.
+
+
+                                                                                                        SEM
+                                       For personal use only.
+
+
+
+
+                                                                                                                                                                                              A                             D
+                                                                                                        The compact nature and spherical shape of the gelatin
+                                                                                                        microspheres were confirmed (Figure 2) by SEM. The
+                                                                                                        particle size of the formulated gelatin microspheres was
+                                                                                                        less than 50 µm as evidenced by the SEM photographs
+                                                                                                        (Figure 2A and 2D). The surface of gelatin microspheres
+                                                                                                        was smooth and showed no surface drug or particles
+                                                                                                        (Figure 2B, 2C, 2E, and 2F). The gelatin microspheres                                B                               E
+                                                                                                        showed only a little aggregation.
+
+
+                                                                                                        FT-IR spectroscopy
+                                                                                                        The IR spectrum of unloaded gelatin microsphere is shown
+                                                                                                        in Figure 3, a. The IR spectrum of diclofenac sodium
+                                                                                                        (Figure 3, b) showed characteristic peaks at 1167 and
+                                                                                                                                                                                              C                             F
+                                                                                                        682 cm−1 for aromatic –C-Cl. The stretches between 800
+                                                                                                        and 600 cm−1 also support the presence of –C-Cl group.
+                                                                                                        The strong peaks in the region of 1600–1700–1800 cm−1                             Figure 2. SEM photographs of (A–C) unloaded gelatin microspheres
+                                                                                                        indicate the presence of -C = O. Moreover, the presence                           and (D–F) diclofenac sodium–loaded gelatin microspheres. A and D
+                                                                                                        of peaks in the region of 1250, 1283, and 1044 cm−1 con-                          show the particle size distribution of unloaded and loaded micro-
+                                                                                                        firms the –C-O- group. The peaks at 1603, 1507, and 869–                          spheres, respectively. B and E show spherical geometry of formulated
+                                                                                                                                                                                          microspheres. C and F show the surface characters of unloaded and
+                                                                                                        716 cm−1 confirm the presence of an aromatic ring. The                            loaded gelatin microspheres, respectively.
+                                                                                                        peaks of diclofenac sodium–loaded gelatin microspheres
+                                                                                                        (Figure 3, c) were similar (but with lesser intensity) to the
+                                                                                                        spectrum of diclofenac sodium. The peaks of various func-                         interaction and the stability of the encapsulated drug in
+                                                                                                        tional groups as described in the IR spectrum of diclofenac                       the gelatin microspheres were confirmed.
+                                                                                                        sodium were also present in the gelatin microspheres
+                                                                                                        loaded with diclofenac sodium (Figure 3) without any shift
+                                                                                                                                                                                          DSC
+                                                                                                        or change. These observations revealed the intact nature
+                                                                                                        of the diclofenac sodium present in the gelatin micro-                            The thermogram of the diclofenac sodium and physi-
+                                                                                                        spheres. From these results, the absence of drug–polymer                          cal mixture of diclofenac sodium/unloaded gelatin
+                                                                                                                                                      Development of gelatin microspheres for intra-articular administration   101
+
+
+
+
+                                                                                                                                                                 c
+
+
+
+
+                                                                                                                                                                              Heat fLow endo up (mW)
+                                                                                                          %Transmittance
+
+
+
+
+                                                                                                                                                                                                              A
+Journal of Drug Targeting Downloaded from informahealthcare.com by Serials Unit - Library on 10/17/12
+
+
+
+
+                                                                                                                                                                     b
+                                                                                                                                                                                                              B
+
+
+                                                                                                                                                                                                              C
+                                                                                                                                                                                                       50   100   150    200      250   300   350
+                                                                                                                                                                     a                                             Temperature (ºC)
+
+                                                                                                                                                                            Figure 4. Differential scanning calorimetry of diclofenac sodium, (A)
+                                                                                                                                                                            physical mixture of diclofenac sodium and unloaded gelatin micro-
+                                                                                                                                                                            spheres (1:1) (B) and gelatin microspheres loaded with diclofenac
+                                                                                                                                                                            sodium (C).
+                                                                                                                             1500              1000               500
+                                       For personal use only.
+
+
+
+
+                                                                                                                               Wave number (cm−1)
+                                                                                                                                                                            Test for absence of glutaraldehyde
+                                                                                                        Figure 3. Fourier transform infrared spectrum of unloaded gelatin
+                                                                                                                                                                            The formulated microspheres must be free from residual
+                                                                                                        microspheres (a), diclofenac sodium (b), and gelatin microspheres
+                                                                                                        loaded with diclofenac sodium (c).                                  glutaraldehyde, which is toxic and produce irritation/
+                                                                                                                                                                            inflammation at the site of injection. To confirm its
+                                                                                                                                                                            absence, the microspheres were tested for glutaraldehyde
+                                                                                                        microspheres showed (Figure 4, a and b) a peak at
+                                                                                                                                                                            residue by gas chromatography. Sodium metabisulphite
+                                                                                                        297°C that is the melting point of diclofenac sodium.
+                                                                                                                                                                            was used to remove the unreacted glutaraldehyde from
+                                                                                                        The thermograms of gelatin microspheres loaded with
+                                                                                                                                                                            the microspheres. All formulated microspheres were
+                                                                                                        diclofenac sodium showed no peak (Figure 4, c) at 297°C
+                                                                                                                                                                            found to be free from residual glutaraldehyde.
+                                                                                                        and indicated amorphous nature of diclofenac sodium
+                                                                                                        in the formulated microspheres. We have previously
+                                                                                                        published similar effect observed with diclofenac sodi-             Diclofenac sodium release from gelatin microspheres
+                                                                                                        um–loaded gelatin magnetic microspheres (Saravanan                  The in vitro release of diclofenac sodium from formulated
+                                                                                                        et al., 2004).                                                      microspheres was tested in the phosphate buffer (pH 7.4).
+                                                                                                                                                                            The in vitro release of drug from gelatin microspheres
+                                                                                                                                                                            loaded with 9.8, 18.3, and 26.7% w/w diclofenac sodium
+                                                                                                        XRD
+                                                                                                                                                                            was presented in Figure 6. In the phosphate buffer, the
+                                                                                                        XRD patterns of gelatin microspheres without drug,                  release was slow and extended for 30 days depending on
+                                                                                                        diclofenac sodium, and diclofenac sodium–loaded gela-               the drug/gelatin ratio. The release was biphasic with an
+                                                                                                        tin microspheres are shown in Figure 5, a–c, respectively.          initial burst effect, which may be useful to produce an
+                                                                                                        XRD pattern of diclofenac sodium produced charac-                   immediate therapeutic effect; later, the release became
+                                                                                                        teristic peaks as shown in Figure 5, b. These peaks are             very slow and prolonged. The release rate of drug was
+                                                                                                        much less intense and disappeared in the XRD of drug-               influenced by the drug loading as shown in Figure 6.
+                                                                                                        loaded gelatin microspheres (Figure 5, c), suggesting the           Gelatin microspheres prepared with 9.8% w/w of drug
+                                                                                                        presence of drug as molecular dispersion in the gelatin             loading released the drug very slowly in the phosphate
+                                                                                                        microspheres. This, in support with the DSC study, clearly          buffer (pH 7.4), whereas the microspheres prepared with
+                                                                                                        reveals the amorphous form of entrapped drug in the                 higher drug loading (18.3 and 26.7% w/w) released the
+                                                                                                        microspheres.                                                       drug at a higher rate.
+                                                                                                        102   Muniyandy Saravanan et al.
+
+                                                                                                        Release kinetics                                                        gelatin microspheres was diffusion controlled. To confirm
+                                                                                                                                                                                the release mechanism, the data from the first 60% drug
+                                                                                                        The data obtained from the first 90% release were fitted to
+                                                                                                                                                                                release were applied to the Korsmeyer–Peppas equa-
+                                                                                                        various kinetic equations to determine the mechanism of
+                                                                                                                                                                                tion to find out the release exponent n that indicates the
+                                                                                                        drug release and release rate. As indicated by the higher
+                                                                                                                                                                                mechanism of drug diffusion. The data were well fitted
+                                                                                                        correlation coefficient (r2), the drug release from gelatin
+                                                                                                                                                                                with the equation as indicated by the high correlation
+                                                                                                        microspheres (Table 2) followed the Higuchi model rather
+                                                                                                                                                                                coefficient (r2) and the n values were between 0.27 and
+                                                                                                        than the first-order and zero-order equations. These find-
+                                                                                                                                                                                0.5 indicating the Fickian model. This confirms the drug-
+                                                                                                        ings indicated that the drug release from the formulated
+                                                                                                                                                                                release mechanism as diffusion as it adheres to Fick’s law
+                                                                                                                                                                                (Patrick, 2006), and this prediction is further supported
+                                                                                                                                                                                by high correlation obtained in the square root equation
+                                                                                                                                                                                (Higuchi model).
+Journal of Drug Targeting Downloaded from informahealthcare.com by Serials Unit - Library on 10/17/12
+
+
+
+
+                                                                                                                                                                                In vivo studies
+                                                                                                                                                                                About 81.2 ± 7.4 and 43.7 ± 9.1% of administered drug
+                                                                                                                                                                                in the microspheres were recovered from the target
+                                                                                                                                                                                joint after 1 and 7 days of postinjection, respectively.
+                                                                                                                                                                                The remaining might be released/distributed/excreted
+
+                                                                                                                                                                  a                                     100
+
+                                                                                                                                                                                                         90
+                                                                                                        Intensity (CPS)
+                                       For personal use only.
+
+
+
+
+                                                                                                                                                                                                         80
+
+                                                                                                                                                                                                         70
+                                                                                                                                                                                 Cumulative % release
+
+
+
+
+                                                                                                                                                                                                         60
+
+                                                                                                                                                                 b                                       50
+
+                                                                                                                                                                                                         40
+
+                                                                                                                                                                                                         30
+
+                                                                                                                                                                                                         20
+
+                                                                                                                                                                                                         10
+
+                                                                                                                                                                     c
+                                                                                                                                                                                                         0
+                                                                                                                                                                                                              0   3   6   9   12 15 18       21   24   27      30
+                                                                                                                          0   10   20    30      40    50       60       70                                                   Time in days
+                                                                                                                                        2θ (Degrees)
+                                                                                                                                                                                 Figure 6. The in vitro release of diclofenac sodium from gelatin
+                                                                                                        Figure 5. X-ray diffraction patterns of unloaded gelatin microspheres    microspheres with 9.8 ( ), 18.3 ( ), and 26.7 ( ) % w/w drug load-
+                                                                                                        (a), diclofenac sodium (b), and 26.7% w/w drug-loaded gelatin            ing in the phosphate buffer (pH 7.4). Values represent a mean of six
+                                                                                                        ­microspheres (c).                                                       determinations and bars represent ± SE.
+
+
+                                                                                                        Table 2. Square parameters of the model equations applied to the release of diclofenac sodium from gelatin microspheres formulated for
+                                                                                                        ­intra-articular administration in the phosphate buffer pH 7.4.
+                                                                                                                            Zero-order equation                 First-order equation             Higuchi model             Korsmeyer–Peppas
+                                                                                                         Batch no.          r2              k0 (d−1)            r2             k1 (d−1)     r2             kH (d−1/2)        r2        n
+                                                                                                        GM1           0.9289            1.67            0.9742            0.0256           0.9975               10.30            0.9960                 0.50
+                                                                                                        GM2           0.9158            2.27            0.9871            0.0479           0.9932               14.01            0.9730                 0.43
+                                                                                                        GM3           0.8462            2.63            0.9827            0.0707           0.9747               15.92            0.9686                 0.38
+                                                                                                        GM1, GM2, and GM3 indicate gelatin microspheres loaded with 9.8, 18.3, and 26.7% w/w of diclofenac sodium, respectively.
+                                                                                                                                                Development of gelatin microspheres for intra-articular administration   103
+
+                                                                                                        during the time period between the administration            References
+                                                                                                        and estimation of drug. The formulated microspheres
+                                                                                                        showed higher percentage (81.2%) of targeting than           Bozdag S, Calis S, Kas HS, Ercan MT, Peksoy I, Hincal AA. (2001). In
+                                                                                                                                                                          vitro evaluation and intra-articular administration of biodegrada-
+                                                                                                        the gelatin magnetic microspheres administered via                ble microspheres containing naproxen sodium. J Microencapsul,
+                                                                                                        intravenous (1.1%) and intra-arterial (70.7%) route as            18, 443–456.
+                                                                                                        reported (Saravanan et al., 2004; 2008b) in our previ-       Brown KE, Leong K, Huang CH, Dalal R, Green GD, Haimes HB,
+                                                                                                                                                                          Jimenez PA, Bathon J. (1998). Gelatin/chondroitin 6-sulfate
+                                                                                                        ous study. This could be due to the size of the particles         microspheres for the delivery of therapeutic proteins to the joint.
+                                                                                                        employed in the study that is trapped inside the syn-             Arthritis Rheum, 41, 2185–2195.
+                                                                                                        ovium after the injection. As the majority of particles      Carson J, Notis WM, Orris ES. (1990). Colonic ulceration and bleeding
+                                                                                                                                                                          during diclofenac therapy. N Engl J Med, 323, 135.
+                                                                                                        are larger than 10 µm, upon intra-articular injection, the   Costa P, Sousa Lobo JM. (2001). Modeling and comparison of dissolu-
+                                                                                                        chance of entering into systemic circulations becomes             tion profiles. Eur J Pharm Sci, 13, 123–133.
+                                                                                                        highly unlikely and therefore, the particles are retained    Larsen C, Ostergaard J, Larsen SW, Jensen H, Jacobsen S, Lindegaard
+                                                                                                                                                                          C, Andersen PH. (2008). Intra-articular depot formulation princi-
+                                                                                                        in the joint for more than a week. Apart from intra-
+Journal of Drug Targeting Downloaded from informahealthcare.com by Serials Unit - Library on 10/17/12
+
+
+
+
+                                                                                                                                                                          ples: role in the management of postoperative pain and arthritic
+                                                                                                        articular administration, the formulated microspheres             disorders. J Pharm Sci, 97, 4622–4654.
+                                                                                                        can be injected intramuscularly to form a depot, from        Öner L, Groves MJ. (1993). Optimization of conditions for prepar-
+                                                                                                                                                                          ing 2- to 5-micron-range gelatin microparticles by using chilled
+                                                                                                        which the drug will be released for a prolonged period,           dehydration agents. Pharm Res, 10, 621–626.
+                                                                                                        which could be useful in polyarthritis where multiple        Patrick JS. (2006). Martins Physical Pharmacy and Pharmaceutical
+                                                                                                        joints are affected.                                              Sciences. 5th ed. Baltimore, MD: Lippincott Williams & Wilkins.
+                                                                                                                                                                     Pavanetto F, Genta I, Giunchedi P, Conti B, Conte U. (1994). Spray-
+                                                                                                                                                                          dried albumin microspheres for the intra-articular delivery of
+                                                                                                                                                                          dexamethasone. J Microencapsul, 11, 445–454.
+                                                                                                                                                                     Ratcliffe JH, Hunneyball IM, Smith A, Wilson CG, Davis SS. (1984).
+                                                                                                        Conclusion                                                        Preparation and evaluation of biodegradable polymeric systems
+                                                                                                                                                                          for the intra-articular delivery of drugs. J Pharm Pharmacol, 36,
+                                                                                                        Diclofenac sodium–loaded gelatin microspheres                     431–436.
+                                                                                                                                                                     Ratcliffe JH, Hunneyball IM, Wilson CG, Smith A, Davis SS. (1987).
+                                                                                                        were formulated for intra-articular administration
+                                       For personal use only.
+
+
+
+
+                                                                                                                                                                          Albumin microspheres for intra-articular drug delivery: inves-
+                                                                                                        with acceptable physicochemical properties. The                   tigation of their retention in normal and arthritic knee joints of
+                                                                                                        microspheres showed spherical geometry with fewer                 rabbits. J Pharm Pharmacol, 39, 290–295.
+                                                                                                                                                                     Saravanan M, Akhilesh Vijay V, Pradeep Kumar PD, Sushma A, Priya S,
+                                                                                                        aggregations. The amorphous nature of entrapped                   Maharajan G, Sadasivan Pillai K, Pandey S. (2008a). Comparative
+                                                                                                        diclofenac sodium in gelatin microsphere was con-                 studies on diclofenac sodium loaded albumin/gelatin magnetic
+                                                                                                        firmed by the DSC and XRD studies. The formulated                 microspheres for intra-arterial administration. Acta Pharm
+                                                                                                                                                                          Sciencia, 50, 189–195.
+                                                                                                        microspheres could prolong the drug release up to 30         Saravanan M, Anbu J, Maharajan G, Pillai KS. (2008b). Targeted delivery
+                                                                                                        days. In vivo study revealed the capability of formu-             of diclofenac sodium via gelatin magnetic microspheres formu-
+                                                                                                        lated gelatin microspheres to be localized in the target          lated for intra-arterial administration. J Drug Target, 16, 366–378.
+                                                                                                                                                                     Saravanan M, Bhaskar K, Maharajan G, Pillai KS. (2004). Ultrasonically
+                                                                                                        area. Further in vivo studies are required with a greater         controlled release and targeted delivery of diclofenac sodium via
+                                                                                                        number of animals to find out the feasibility for clinical        gelatin magnetic microspheres. Int J Pharm, 283, 71–82.
+                                                                                                        application.                                                 Saravanan M, Bhaskar K, Narayanan NV, Maharajan G, Pillai KS.
+                                                                                                                                                                          (2003). Diclofenac sodium loaded gelatin magnetic microspheres
+                                                                                                                                                                          for intra-arterial administration: formulation, characterization
+                                                                                                                                                                          and in vitro release studies. Boll Chim Farm, 142, 347–351.
+                                                                                                                                                                     Tunçay M, Calis S, Kas HS, Ercan MT, Peksoy I, Hincal AA. (2000a). In
+                                                                                                        Declaration of interest                                           vitro and in vivo evaluation of diclofenac sodium loaded albumin
+                                                                                                                                                                          microspheres. J Microencapsul, 17, 145–155.
+                                                                                                        The authors report no conflicts of interest. The authors     Tunçay M, Calis S, Kas HS, Ercan MT, Peksoy I, Hincal AA. (2000b).
+                                                                                                                                                                          Diclofenac sodium incorporated PLGA (50:50) microspheres:
+                                                                                                        alone are responsible for the content and writing of the          formulation considerations and in vitro/in vivo evaluation. Int J
+                                                                                                        paper.                                                            Pharm, 195, 179–188.
+

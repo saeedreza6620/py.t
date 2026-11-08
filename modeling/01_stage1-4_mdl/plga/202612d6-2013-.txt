@@ -1,0 +1,1345 @@
+                   NIH Public Access
+                   Author Manuscript
+                   J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Published in final edited form as:
+                   J Control Release. 2013 January 10; 165(1): 29–37. doi:10.1016/j.jconrel.2012.10.015.
+
+
+
+                  Mathematical Modeling of Drug Delivery from Autocatalytically
+                  Degradable PLGA Microspheres—A Review**
+                  Ashlee N. Ford Versypta,b, Daniel W. Packa,c, and Richard D. Braatza,b,*
+$watermark-text
+
+
+
+
+                  aDepartment of Chemical and Biomolecular Engineering, University of Illinois at Urbana-
+
+                  Champaign, Urbana, IL 61801, USA
+                  bDepartment of Chemical Engineering, Massachusetts Institute of Technology, Cambridge, MA
+
+                  02139, USA
+                  cDepartment of Chemical and Materials Engineering and Department of Pharmaceutical
+
+                  Sciences, University of Kentucky, Lexington, KY 40506, USA
+
+                  Abstract
+                       PLGA microspheres are widely studied for controlled release drug delivery applications, and
+                       many models have been proposed to describe PLGA degradation and erosion and drug release
+$watermark-text
+
+
+
+
+                       from the bulk polymer. Autocatalysis is known to have a complex role in the dynamics of PLGA
+                       erosion and drug transport and can lead to size-dependent heterogeneities in otherwise uniformly
+                       bulk-eroding polymer microspheres. The aim of this review is to highlight mechanistic,
+                       mathematical models for drug release from PLGA microspheres that specifically address
+                       interactions between phenomena generally attributed to autocatalytic hydrolysis and mass transfer
+                       limitation effects. Predictions of drug release profiles with mechanistic models are useful for
+                       understanding mechanisms and designing drug release particles.
+
+
+                  Keywords
+                       modeling; controlled release drug delivery; PLGA; autocatalysis; bulk degradation; degradable
+                       polymer
+$watermark-text
+
+
+
+
+                  1. Introduction
+                                    Poly(lactic-co-glycolic acid) (PLGA) microspheres are controlled-release drug delivery
+                                    alternatives to conventional drug therapy regimens. By releasing drug molecules in a
+                                    controlled manner over extended periods of time from a single administration, controlled-
+                                    release systems have the potential to maintain drug concentrations within target ranges,
+                                    diminish side effects caused by concentration extremes and repeated administrations, and
+                                    improve patient compliance as compared to conventional regimens. Despite these
+                                    advantages, the implementation of controlled-release drug delivery devices composed of
+
+                  **Research carried out at the Department of Chemical and Biomolecular Engineering, University of Illinois at Urbana-Champaign, 66
+                  South Mathews Ave., Urbana, IL 61801, USA.
+                  © 2012 Elsevier B.V. All rights reserved.
+                  *
+                    Corresponding author at: 77 Massachusetts Ave., MIT 66-372, Cambridge, MA 02139, USA. Tel.: +1 617 253 3112; fax: +1 617 258
+                  0546. braatz@mit.edu (R.D. Braatz). .
+                  Publisher's Disclaimer: This is a PDF file of an unedited manuscript that has been accepted for publication. As a service to our
+                  customers we are providing this early version of the manuscript. The manuscript will undergo copyediting, typesetting, and review of
+                  the resulting proof before it is published in its final citable form. Please note that during the production process errors may be
+                  discovered which could affect the content, and all legal disclaimers that apply to the journal pertain.
+                  Versypt et al.                                                                                              Page 2
+
+
+                                   PLGA microspheres for human patients has been gradual as the characterization and design
+                                   of the microspheres depends heavily on trial- and-error experiments, and the interplay
+                                   between complex phenomena that contribute to the drug release is still being deciphered.
+
+                                   PLGA microspheres have been extensively studied for controlled-release drug delivery [1-4]
+                                   mainly because of the biodegradable and bioabsorbable qualities that allow for the passive
+                                   degradation of the polymer in aqueous environments such as living tissues and for the
+                                   harmless incorporation of degradation products into the surrounding media [5-7].
+
+                                   Several processes contribute to the overall kinetics of drug release from PLGA microspheres
+                                   including chemical degradation of the polymer by autocatalytic ester hydrolysis, polymer
+$watermark-text
+
+
+
+
+                                   erosion, evolution of pore structure as a result of mass erosion, and diffusive transport of the
+                                   drug through the polymer matrix and the aqueous pore structure [8]. In the present work, the
+                                   term degradation refers to the process through which the polymer chain bonds are
+                                   hydrolyzed to form oligomers and monomers. The term erosion refers to the loss of mass
+                                   due to diffusion of water-soluble, small oligomers and monomers out of the polymer matrix.
+                                   The definitions of degradation and erosion are the same as those given by Göpferich [5] and
+                                   have been widely adopted in the literature.
+
+                                   Three main phenomena—PLGA degradation, PLGA erosion, and drug transport—are
+                                   discussed in Section 2, and mathematical models that mechanistically address these
+                                   phenomena and the interactions between them are described in Section 3. The coupling
+                                   between the three phenomena is important for understanding how a phenomenon may
+                                   dominate or work in conjunction with the others under different conditions. The
+$watermark-text
+
+
+
+
+                                   autocatalytic degradation mechanism may lead to acceleration of degradation and erosion in
+                                   the center of microspheres and size-dependent drug transport enhancements. The complex
+                                   effects of autocatalysis are difficult to predict without understanding of the relative strengths
+                                   of the phenomena and their dynamics.
+
+                                   Mathematical models can reduce the number of experiments needed to deepen the
+                                   understanding of the physical and chemical mechanisms of drug release, particularly when
+                                   the effects of different phenomena are coupled, and to probe different conditions and
+                                   designs. Empirical or correlative models, which are commonly applied in the drug delivery
+                                   field, have very limited predictive capability outside of the specific experimental conditions
+                                   used to fit parameters in the models [9]. In contrast, mechanistic models aim to account for
+                                   the physical and chemical phenomena that contribute to the overall drug release kinetics [10]
+                                   and are applicable over a wide range of conditions to be used in the model-based design of
+$watermark-text
+
+
+
+
+                                   microspheres to produce desired release profiles (e.g., constant rate of release for uniform
+                                   therapeutic dosage). Here, only semi-empirical and mechanistic models are addressed.
+
+                     2. Background concepts
+                                   Polymeric drug delivery can be categorized based on the mechanisms of drug release
+                                   [11-13]: diffusion-controlled systems (diffusion from non-degrading polymers), swelling-
+                                   controlled systems (enhanced diffusion from polymers that swell in aqueous media), and
+                                   erosion-controlled systems (release as a result of degradation and erosion of polymers). For
+                                   biodegradable polyesters such as PLGA, drug release occurs through a combination of
+                                   degradation and erosion of polymer and transport of drug and is classified as being erosion-
+                                   controlled. Drug transport through and release from the microspheres can occur by diffusion
+                                   through the polymer matrix and/or water-filled pores depending on the water-solubility and
+                                   molecular weight of the drug molecule. The mechanisms of each of these processes for
+                                   erosion-controlled drug release from PLGA microspheres and how their effects are
+                                   combined are overviewed in this section.
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                             Page 3
+
+
+                     2.1. PLGA degradation
+                                   PLGA is a poly(α-hydroxy-ester) (see Fig. 1) that is depolymerized in the presence of water.
+                                   The hydrolysis reaction cleaves the ester bonds of polymer chains. The reaction can be
+                                   catalyzed by acids or bases, but experimental data on the acidic local pH within PLGA
+                                   particles [14-18] suggest that only the reaction mechanism catalyzed by acid is relevant. The
+                                   acid-catalyzed ester hydrolysis proceeds by the bimolecular, acyl-oxygen cleavage AAC2
+                                   mechanism [19,20] summarized by
+
+                                                                                                                          (1.1)
+
+                                   where Pn, Pm, and Pn–m denote polymer chains with degrees of polymerization n,m, and n –
+$watermark-text
+
+
+
+
+                                   m, respectively, and H+ is the acid catalyst.
+
+                                   The source of the acid catalyst can be external from strong acid in the medium (non-
+                                   autocatalytic reaction) or internal from the carboxylic acid end groups of the polymer chains
+                                   (autocatalytic reaction)[21]. In autocatalysis, the reaction product catalyzes further
+                                   hydrolysis in the manner
+
+                                                                                                   (1.2)
+
+                                   where A is water and B is acidic polymer chains in the context of PLGA degradation.
+
+                     2.2. PLGA erosion
+                                   Polymer erosion is classified as surface-eroding or bulk-eroding [4,5,22,23]. For surface-
+$watermark-text
+
+
+
+
+                                   eroding polymers such as polyanhydrides, the rate of polymer degradation at the surface is
+                                   faster than the rate of penetration of water from bodily fluids in vivo or from the buffer
+                                   medium in vitro into the polymer bulk. Surface-eroding polymers react from the surface
+                                   inward. Bulk-eroding polymers exhibit a faster rate of water penetration than rate of
+                                   polymer degradation. The degradation and erosion in bulk-eroding polymers occurs
+                                   throughout the polymer bulk. PLGA is a bulk-eroding polymer at the length scales used in
+                                   drug delivery microspheres (10s to 100s of microns) as the hydration time scale is on the
+                                   order of a few minutes compared to weeks or months for degradation [24-26].
+
+                                   Erosion depends on the degradation, dissolution, and diffusion processes [27]. For PLGA,
+                                   the dissolution of water-soluble oligomers up to nonamers [28-30] and of drug molecules is
+                                   often assumed to occur with faster time scales than diffusion and polymer degradation in
+$watermark-text
+
+
+
+
+                                   many mathematical models and is neglected. A few models propose that dissolution is rate-
+                                   limiting for PLGA oligomers [31].
+
+                     2.3. Drug transport
+                                   An “initial burst” of drug release often occurs wherein a significant percentage of the drug is
+                                   released during the early stage of the release process. This effect has been reported for many
+                                   formulations of PLGA microspheres. The initial burst can be diminished or eliminated by
+                                   adjusting the fabrication technique [32-34].
+
+                                   The subsequent controlled release of drug molecules from PLGA microspheres depends on
+                                   the transport properties of the drug and the dynamic conditions of the degrading polymer.
+                                   The drug compound in PLGA microspheres may be released by some combination of
+                                   diffusion through the polymer matrix, diffusion through aqueous pores, and dissolution
+                                   coincident with polymer dissolution [8]. Diffusion through the dense polymer matrix is
+                                   possible [35] but is limited to small, hydrophobic molecules [8] as the PLGA matrix is
+                                   hydrophobic. For highly water-soluble and macromolecular drugs such as protein and
+                                   peptides, diffusion through the aqueous pores is an important mode of transport [36].
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                              Page 4
+
+
+                                   Dissolution of the polymer matrix to release the drug without mass transport is typical of
+                                   surface-eroding polymers rather than bulk-eroding polymers. Drug dissolution dynamics
+                                   may need to be considered for drug compounds with low water solubility [37,38].
+
+                                   Drug diffusion through the PLGA matrix and through the aqueous pores can be considered
+                                   as the parallel modes of release from the polymer microsphere to treat small and large drug
+                                   molecules and to account for transport prior to and after significant development of the pore
+                                   network. Water-soluble drugs diffuse more easily through aqueous pores than in the polymer
+                                   matrix, so the effective diffusivity of the drug increases as the pore network develops. After
+                                   the pore network is sufficiently developed such that the pores are larger than the size of the
+                                   drug molecules, the drug transport increases rapidly.
+$watermark-text
+
+
+
+
+                     2.4. Coupling between phenomena for drug release
+                                   PLGA can sometimes exhibit heterogeneous erosion behavior where the interior degrades
+                                   faster than the surface of the polymer. This phenomenon is size-dependent: larger
+                                   microspheres and thicker slabs have been observed to experience faster erosion in their
+                                   centers than smaller microspheres and thinner films [17,39-43]. The effective diffusivity has
+                                   been observed to increase with increasing microsphere diameter [35,43]. The cause of the
+                                   heterogeneous mass loss in bulk-eroding polymers is generally attributed to the combined
+                                   effects of autocatalytic degradation and mass transport limitations [17,43-46].
+
+                                   The coupled mechanism for PLGA degradation and erosion consists of three stages [26]. In
+                                   the first stage, the polymer solid is hydrated, and degradation proceeds predominantly by
+$watermark-text
+
+
+
+
+                                   non-catalytic hydrolysis homogeneously throughout the polymer bulk while the
+                                   concentration of carboxylic acid end groups on the polymer chains is low. In the second
+                                   stage, the autocatalytic hydrolysis reaction becomes important as the catalyst concentration
+                                   is significant. The third stage involves dissolution of small oligomers and monomers into the
+                                   aqueous medium. Significant mass loss of the polymer occurs as more oligomers are
+                                   solubilized into the pores and are transported through the growing pore network.
+
+                                   Drug release profiles can exhibit different shapes, such as zero-order, monophasic, biphasic,
+                                   and triphasic, depending on the dynamics of the initial burst, diffusion through the polymer
+                                   matrix and pores, and the stages of degradation and erosion [8]. Diffusion of acidic
+                                   degradation products may occur quickly in small or porous microspheres suppressing the
+                                   heterogeneities in internal pH and erosion due to autocatalysis [6,47]. Drug release rates
+                                   under these conditions are diffusion-controlled with relatively smaller microspheres
+$watermark-text
+
+
+
+
+                                   releasing drugs faster than larger microspheres as the diffusion pathways are shorter and the
+                                   concentration gradients are larger in smaller microspheres. Contrary to this intuitive
+                                   diffusion-controlled behavior, the autocatalytic polymer degradation and erosion can
+                                   influence the drug release rates in such a way to allow larger microspheres to release drugs
+                                   at a faster rate than smaller microspheres [32].
+
+                                   In domains close to the external surfaces of microspheres (indicated with arrows in Fig. 2),
+                                   the diffusion lengths are sufficiently small for the acidic oligomer hydrolysis byproducts to
+                                   diffuse out of the microspheres without reacting with the polymer; in smaller microspheres,
+                                   the entire volume can have such short diffusion lengths. Acidic polymer fragments that
+                                   remain in the microspheres have hindered mobility in regions farther from the external
+                                   surfaces where transport is limited by greater diffusion lengths. This leads to an
+                                   accumulation of acidic degradation byproducts in the interior of larger microspheres, which
+                                   results in a decrease in the microenvironment pH. The acidic end groups further catalyze the
+                                   hydrolysis reaction leading to accelerated degradation particularly in the interior of large
+                                   microspheres due to the limited acid transport out of the center (illustrated by lighter interior
+                                   in larger microsphere in Fig. 2). Over time, the autocatalytic effect becomes more
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                            Page 5
+
+
+                                   pronounced, and microspheres can form heterogeneous, hollow interiors [32,46]. Small
+                                   microspheres without long diffusion lengths are less susceptible to acidic buildup and
+                                   heterogeneous degradation.
+
+                                   Polymer microsphere size plays a strong role in the coupling between degradation, erosion,
+                                   and drug transport and the effects of autocatalysis. Descriptions of factors in addition to
+                                   microsphere size that affect degradation and release kinetics can be found in the literature
+                                   [8,23,48,49].
+
+                     3. Mathematical models
+$watermark-text
+
+
+
+
+                                   Several mathematical models have been developed for the in vitro drug release kinetics from
+                                   polymeric drug delivery devices (see Tables 1 and 2). This review aims to highlight
+                                   mechanistic, mathematical models that address the role of autocatalysis in the mass transport
+                                   and chemical reaction phenomena of drug delivery from PLGA microspheres. The place of
+                                   these types of models in the broader context of mathematical models for polymeric drug
+                                   delivery systems is illustrated in Fig. 3. In vivo drug delivery is outside the scope of the
+                                   present article, and the reader is referred to Grassi et al. [50] for a review of mathematical
+                                   models for simultaneous drug release and in vivo drug absorption. For comprehensive
+                                   coverage of both empirical and mechanistic mathematical models including stochastic
+                                   methods for PLGA microspheres as well as thorough discussions of mathematical models
+                                   for diffusion-controlled and swelling-controlled drug delivery systems, the reader is referred
+                                   to the reviews listed in Table 1 and citations therein.
+$watermark-text
+
+
+
+
+                                   In this review, mathematical models are categorized by the phenomena on which they focus:
+                                   degradation, erosion, and drug transport (see Table 2). Models that treat the phenomena in a
+                                   coupled manner are discussed separately. Some models for polymeric drug delivery systems
+                                   other than PLGA microspheres are discussed if they explicitly address autocatalysis in a
+                                   manner consistent with the mechanisms of PLGA. Particularly, hydrolysis kinetics for
+                                   poly(lactic acid) (PLA) are often used as the basis of hydrolytic degradation theory for
+                                   poly(α-hydroxy acids) including PLGA [53].
+
+                     3.1. Mathematical models for PLGA degradation
+                                   Often polymer degradation is assumed to follow well-mixed, pseudo-first-order kinetics
+                                   where degradation rate is a function of the concentration of only one of the three species
+                                   involved—water, polymer (or ester bonds), and acid catalyst—with the other two
+$watermark-text
+
+
+
+
+                                   concentrations either ignored or assumed constant and polymer molecular weight decreases
+                                   exponentially with time [35,43,47,78,79]. The assumption of constant water concentration is
+                                   reasonable in polyester solids as the concentration is determined by water solubility[26].
+                                   Pseudo-first-order kinetics are appropriate for general non-catalytic depolymerization
+                                   reactions [80-82] and do not include the mathematics of autocatalytic behavior [57]. Pseudo-
+                                   first-order kinetics should only be used in the early stages of degradation when the ester
+                                   bond concentration and molecular weight have not decreased significantly [47]. Siparsky et
+                                   al. [54] showed that pseudo-first-order kinetics approximated hydrolysis catalyzed by an
+                                   external strong acid well but was insufficient for modeling autocatalysis where the catalyst
+                                   was the internal weak carboxylic acid from the polymer end groups.
+
+                                   Autocatalytic hydrolysis kinetics have been studied for polyester hydrolysis reactions in
+                                   solution [54,55] and for the hydrolytic degradation of solid PLGA microspheres without
+                                   drug diffusion [26,62,83]. According to Lyu and Unterker [26], hydrolysis in solid
+                                   polyesters is controlled by chemical reactions rather than constraints on molecular mobility
+                                   as the diffusion of water is faster than the reaction time scale. This allows for analyses of
+
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                              Page 6
+
+
+                                   solution hydrolysis kinetics to be applied to solid polyester hydrolysis for the kinetics of
+                                   degradation. The dissolution and diffusion effects should also be considered for solids.
+
+                                   Second-order, autocatalytic hydrolysis kinetics for PLA and PLGA have been modeled in
+                                   several reports [53-55,57] where the catalyst and ester bond concentration are allowed to
+                                   vary while the water concentration is assumed constant for the duration of degradation.
+                                   Nishida et al. [55] solved the differential equation for the total polymer concentratration
+                                   subject to catalysis by carboxylic acid end groups using moment analysis. The moments
+                                   were coupled with assumptions on the molecular weight distribution in order to determine
+                                   approximations for the average degree of polymerization, the polymer polydispersity, and
+                                   the weight-average molecular weight as functions of time. Antheunis et al. [53] proposed a
+$watermark-text
+
+
+
+
+                                   kinetic model explicitly calculating the full distribution of ester bonds and polymer chains
+                                   subject to autocatalysis through coupled ordinary differential equations. The model was
+                                   simplified [57] to treat the total ester bonds concentration and the acid catalyst concentration
+                                   rather than the full distribution of polymer chains. The model accurately predicted sigmoidal
+                                   curves for the decrease of number-average molecular weight for PLA and PLGA before
+                                   polymer mass loss occurred. The limitation of second-order kinetics for autocatalysis is the
+                                   inability to capture the effects of partial dissociation of the carboxylic acid end groups [54].
+
+                                   Siparsky et al. [54] derived an 1.5th-order kinetic expression for PLA hydrolysis that
+                                   included partial dissociation effects with square-root dependence on carboxylic acid by the
+                                   theory of equilibrium dissociation of weak acids. This model fit the kinetic data very well
+                                   except near the extrema of the data set. Lyu et al. [56] observed that the hydrolysis kinetics
+                                   of amorphous PLA transitioned after long times at some critical molecular weight from
+$watermark-text
+
+
+
+
+                                   third-order with variable water concentration to 2.5th-order kinetics consistent with Siparsky
+                                   et al. [54] with variable water concentration.
+
+                     3.2. Mathematical models for PLGA erosion
+                                   Mechanistic models for erosion-controlled drug delivery systems often are sorted into two
+                                   categories [10]: discrete stochastic models and continuum-scale deterministic models. The
+                                   first category considers erosion as a random process using Monte Carlo simulations and
+                                   cellular automata, while the second treats the overall polymer erosion process as a
+                                   combination of transport and chemical reactions through use of deterministic equations.
+                                   Models that consider stochastic or deterministic PLGA erosion in tandem with drug
+                                   transport are described in Section 3.4.
+$watermark-text
+
+
+
+
+                                   3.2.1. Stochastic models for PLGA erosion—Stochastic models have been used to
+                                   model the evolution of pore structure through hydrolytic degradation and dissolution of a
+                                   polymer and subsequent drug transport from surface-eroding and bulk-eroding systems
+                                   [9,25]. Göpferich [58] proposed a model for PLGA based on stochastic mass erosion as an
+                                   alternative to autocatalytically accelerated degradation to explain sigmoidal profiles of
+                                   polymer mass loss. Erosion with first-order hydrolysis kinetics resulted in early polymer
+                                   molecular weight loss followed by subsequent onset and burst of polymer mass loss. The
+                                   delay in mass loss was explained by the lag time needed for pores to form a continous
+                                   network to the surface to enable mass loss. The model underestimated mass loss during late
+                                   mass erosion. Göpferich attributed the discrepancy to neglecting polymer swelling and loss
+                                   of contiguous small polymer pieces, but alternatively, it could have been due to autocatalytic
+                                   effects that were not considered.
+
+                                   Chen et al. [59] combined stochastic hydrolysis [58] with diffusion-governed autocatalysis
+                                   through the use of an empirical factor to relate the carboxylic acid concentration and the
+                                   autocatalytic effect to simplify the exponential coupling of the diffusivity of polymer
+                                   degradation products to the mass of degraded polymer chains. Realistic size-dependent
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                           Page 7
+
+
+                                   degradation and erosion behavior was predicted with the model when the parameter for
+                                   autocatalysis was fitted to experimental data with a value representing a significant
+                                   autocatalytic effect.
+
+                                   3.2.2. Deterministic models for PLGA erosion—Batycky et al. [28] proposed a
+                                   model that calculated the amount of initial drug burst via a desorption mechanism,
+                                   accounted for pseudo-first-order degradation kinetics using a combined random and chain-
+                                   end scission mechanism, and simulated pore creation mechanistically. The erosion portion
+                                   of the model related pore growth to the rate of coalescence of small pores caused by
+                                   breaking of polymer chains. The rate of coalescence was experimentally estimated based on
+                                   polymer erosion to determine the induction time when the average pore size became larger
+$watermark-text
+
+
+
+
+                                   than the Stokes-Einstein radius of the drug. Drug transport was not allowed to begin until
+                                   after the induction period and was represented as simple diffusion with a constant effective
+                                   diffusivity after the pores were formed. Diffusion was not coupled to erosion after it began.
+
+                                   Ding et al. [60] derived an equation for calculating the average microclimate pH in thin
+                                   PLGA films using the charge balance on species and the mole balance on water-soluble
+                                   acidic PLGA degradation products in the polymer matrix involving equilibrium partitioning
+                                   of the acidic products from the polymer bulk into aqueous pores and dissociation of the
+                                   acidic products giving the acidic microclimate in the pores. Parameters that were
+                                   straightforward to measure were used in the calculation of microclimate pH. The knowledge
+                                   of the microclimate pH is useful for characterizing autocatalytic degradation and erosion of
+                                   PLGA even though the microclimate pH calculation did not explicitly involve autocatalysis
+                                   as the water-soluble acid content was measured experimentally rather than predicted from
+$watermark-text
+
+
+
+
+                                   autocatalytic degradation kinetics.
+
+                                   Arosio et al. [61] developed a model for cylindrical PLA that imposed the autocatalytic
+                                   effects of interior erosion geometrically. The cylindrical geometry consisted of an inner core
+                                   of degraded polymer surrounding by an outer layer of non-degraded polymer with the
+                                   interface between the layers moving such that the inner core grew over time. Two kinetic
+                                   models were used with the first considering only the production of monomers and the
+                                   second treating the production of oligomers and monomers. The equilibrium between the
+                                   forward depolymerization reaction and the reverse polymerization reaction was included in
+                                   the degradation model, but the hydrolysis kinetics were not catalytic. The reactions and mass
+                                   transport were assumed to occur only along the moving interface between the degraded and
+                                   non-degraded polymer. The model failed to predict published data well, and the authors
+$watermark-text
+
+
+
+
+                                   pointed to the need to model the diffusional processes throughout the device structure to
+                                   improve the model accuracy.
+
+                                   Wang et al. [62] modeled monomer diffusivity as a linear function of the porosity, which
+                                   was approximated by concentrations of the ester and monomer. The ester concentration
+                                   depended on degradation, while the monomer concentration depended on degradation and
+                                   diffusion. The hydrolytic degradation proceeded both with and without a catalyst. A
+                                   biodegradation map for planar and cylindrical geometries was constructed to quantitatively
+                                   show the zones where diffusion and reaction have strong or weak influences depending on
+                                   the nondimensional parameters characterizing monomer diffusivity and the relative reaction
+                                   rate between non-catalytic and autocatalytic degradation. The map presented zones where
+                                   erosion was controlled by non-catalytic degradation when degradation products diffused
+                                   rapidly or the degradation was fast, autocatalytic degradation when the degradation products
+                                   diffused rapidly and the non-catalytic degradation was not fast, and by combinations of
+                                   autocatalytic and non-catalytic degradation and monomer diffusion in intermediate
+                                   conditions.
+
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                              Page 8
+
+
+                     3.3. Mathematical models for drug transport
+                                   The discrepancy between widely used theoretical predictions made from classic diffusion
+                                   models with constant drug diffusivity and actual drug release experimental data has been
+                                   attributed to the models’ failure to adequately treat size-dependent effects of autocatalysis
+                                   [43]. Models that propose non-constant drug diffusivity in some manner are reviewed here.
+                                   Models that focus mechanistically on the effects of polymer erosion on the drug diffusivity
+                                   are described in Section 3.4.
+
+                                   A common approach has been to correlate the effective diffusivity of drug to the
+                                   exponentially decreasing molecular weight based on an empirical fit to data [35,63-65]. The
+                                   exponential dependence on molecular weight was based on pseudo-first-order degradation
+$watermark-text
+
+
+
+
+                                   kinetics. The variable effective diffusivity in each model was used in an analytical solution
+                                   to the equation for Fick’s second law of diffusion.
+
+                                   He et al. [66] used the correlation for effective diffusivity of drug proposed by Charlier et al.
+                                   [63] in an approximate solution to the Fickian diffusion equation for time-dependent,
+                                   exponentially-growing diffusivity with an empirical factor accounting for the contribution of
+                                   the autocatalytic matrix erosion process on drug release. The model predicted triphasic drug
+                                   release with contributions from initial burst, diffusion-controlled release, and accelerated
+                                   release due to erosion.
+
+                                   Siepmann et al. [43] proposed a slightly different empirical method for drug transport where
+                                   each microsphere size was fitted with its own effective diffusivity using the analytical
+                                   solution for diffusion. The effective diffusivity was observed to vary significantly with the
+$watermark-text
+
+
+
+
+                                   size of the microspheres. They correlated diffusion coefficient to microsphere radius and
+                                   concluded that the strong dependence of drug mobility on microsphere size illustrated the
+                                   importance of autocatalysis. The solution to the Fickian diffusion equation with a single
+                                   value for the effective diffusivity for the entire range of microsphere sizes did not match the
+                                   experimental data. This failure to predict the drug release profiles was attributed to the need
+                                   to incorporate autocatalytic effects into models to explain drug release behavior from bulk-
+                                   eroding, polyester microspheres.
+
+                                   Mollica et al. [67] presented a model that described the time-dependent radial concentration
+                                   profiles for two populations of a protein dispersed in a PLGA microsphere. The immobile
+                                   fraction of protein was stationary in unopened pores not connected to the microsphere
+                                   surface through hydrated pores. The mobile fraction of protein was able to diffuse through
+$watermark-text
+
+
+
+
+                                   the open, hydrated pores resulting from a degradation front that extended with time from the
+                                   microsphere center to the surface. The model assumed that the conversion from immobile to
+                                   mobile populations followed first-order kinetics within the front boundary. The immobile
+                                   species concentration only changed due to the conversion between populations. The mobile
+                                   species concentration changed as a result of diffusion and conversion from immobile to
+                                   mobile protein. The diffusion coefficient for the protein was treated as a piecewise constant
+                                   function with the larger diffusion coefficient outside the reaction front to capture the
+                                   accelerated diffusion of mobile protein through the hydrated pores between the eroded
+                                   interior and the surface of the microsphere. The erosion front moved with the square root of
+                                   time multiplied by an adjustable parameter. The erosion front geometrically represented
+                                   autocatalytic erosion from the center of the microsphere towards the surface.
+
+                     3.4. Mathematical models with coupling between phenomena for drug release
+                                   As illustrated by the models reviewed in the previous sections, many models focus on only
+                                   one of the processes involved in the drug release from PLGA microspheres or treat the
+                                   processes independently rather than in a coupled manner. The nonlinearity, tight coupling,
+                                   and dynamics of the processes contributing to drug release make it critical to model the
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                            Page 9
+
+
+                                   effects in a coupled manner rather than independently to obtain models that are predictive
+                                   rather than merely correlative. Models that have treated polymer erosion and drug transport
+                                   simultaneously to better approximate the interplay between the physical and chemical
+                                   processes are highlighted in this section in chronological order.
+
+                                   Thombre and Himmelstein [68] developed a model for simultaneous reaction within and
+                                   diffusive transport from a 1-dimensional slab of surface-eroding poly(orthoester) with an
+                                   encapsulated anhydrous acid source, and Joshi and Himmelstein [69] extended the model for
+                                   disc geometries. While the reaction mechanisms for degradation of PLGA and
+                                   poly(orthoester) differ, both polymers experience autocatalytic degradation via an acidic
+                                   reaction product in the polymer. The model included autocatalytic effects by having the
+$watermark-text
+
+
+
+
+                                   acidic reaction product as the only acid source and having second-order reaction terms for
+                                   each species produced or consumed by catalytic reactions with the acidic reaction product.
+                                   The partial differential equations for the mass balance of each species coupled the
+                                   generation of the species by reaction to the Fickian diffusion for transport of drug, acid, and
+                                   acid-producing species out of the slab and water into the slab. The polymer was assumed to
+                                   degrade but not to diffuse. Rather than using constant diffusion coefficients in the diffusion
+                                   equation, the effective diffusivity of each species increased exponentially as a function of
+                                   the extent of polymer degradation. The diffusivities for each mobile species ranged between
+                                   the diffusivity through the polymer and the diffusivity in water. The model used the Thiele
+                                   modulus, the ratio of time scales for diffusion and reaction, to characterize the transition
+                                   between surface and bulk erosion by competition between the degradation and transport
+                                   phenomena.
+$watermark-text
+
+
+
+
+                                   Siepmann et al. [70] used a model for stochastic degradation and erosion to quantify the
+                                   heterogeneities in the porosity throughout a three-dimensional microsphere. The effective
+                                   diffusivity of the drug was assumed to be a product of a critical diffusion coefficient and the
+                                   porosity at each position and time from the stochastic erosion simulation. The eroding
+                                   polymer pixel lifetime and the critical diffusion coefficient enabled the model to be sensitive
+                                   to autocatalysis. Drug diffusion was modeled with Fick’s second law for cylindrical
+                                   geometry with axial and radial mass transfer and the variable effective diffusivity functions.
+                                   Drug solubility was accounted for by limiting the amount of drug available for diffusion at
+                                   each grid point at each time step dependent on the local concentrations of water and drug.
+                                   The model predicted triphasic drug release with initial burst, approximately zero-order
+                                   release, and final accelerated release due to diffusion through the eroded microsphere,
+                                   consistent with release mechanisms where autocatalysis plays a role.
+$watermark-text
+
+
+
+
+                                   Lemaire et al. [71] described a microstructural model involving the effects of porous
+                                   networks on diffusion rates of drug. An aqueous pore was approximated as a cylinder
+                                   surrounded by a concentric cylinder of degrading polymer. The drug was assigned constant
+                                   effective diffusivities in each of these domains, with smaller effective diffusivity in the
+                                   polymer phase. The moving interface between the domains was calculated through the
+                                   average pore size as the pores grew by erosion. Lemaire et al. approximated the expression
+                                   for average pore size from Batycky et al. [28] as a linear function of time with some
+                                   constant erosion velocity and initial pore radius. Varying the parameters for the erosion
+                                   velocity and the effective diffusivity of drug in the pores allows for modeling of the
+                                   transition from diffusion-controlled to erosion-controlled drug release regimes.
+
+                                   Zhang et al. [72] presented a model for drug diffusion, dissolution, and erosion based on
+                                   mathematical expressions for dissolution and erosion rather than the polymer degradation
+                                   and erosion mechanisms. They explored the effects of the functional forms for linear, S-
+                                   shaped, and hyperbolic erosion profiles on drug transport. Solid and dissolved phases were
+                                   tracked to calculate the porosity of the microsphere. The effective diffusivity was defined as
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                              Page 10
+
+
+                                   proportional to the porosity. The effects of parameters for relative strength of the coupled
+                                   phenomena on the drug cumulative release profiles under the different erosion models were
+                                   explored.
+
+                                   Prabhu and Hossainy [73] modified the reaction-diffusion model proposed by Thombre and
+                                   Himmelstein [68] to treat the kinetics for PLA degradation rather than poly(orthoester). The
+                                   kinetic mechanism included non-catalytic hydrolysis dependent on the concentrations of
+                                   polymer (non-diffusing bulk and soluble oligomers) and water in parallel with autocatalytic
+                                   hydrolysis additionally dependent on the acidic monomer concentration. The non-catalytic
+                                   and autocatalytic mechanisms had different rate constants. The concentrations of water, non-
+                                   diffusing polymer bulk, soluble oligomers, soluble monomers, and drug were tracked with
+$watermark-text
+
+
+
+
+                                   the reaction-diffusion model. The effective diffusivity of each water-soluble species
+                                   increased exponentially as a function of the extent of polymer degradation in the same
+                                   manner as in Thombre and Himmelstein [68].
+
+                                   Rothstein et al. [74] developed a model to simulate drug diffusion through a bulk-eroding
+                                   polymer with effective diffusivity defined as the product of the polymer matrix porosity and
+                                   the maximum diffusivity through the porous matrix. The time-dependent porosity was
+                                   assumed to follow a cumulative normal distribution with two fitted parameters—the mean
+                                   time for pore formation and the variance in time required to form pores. The mean time for
+                                   pore formation depended on pseudo-first-order degradation kinetics and a critical molecular
+                                   weight of polymer that permitted diffusion of the drug through the pore structure of the
+                                   polymer. The maximum diffusivity through the porous matrix was correlated to polymer
+                                   microsphere radius, and the critical molecular weight of polymer was correlated to drug
+$watermark-text
+
+
+
+
+                                   molecular weight. The model includes initial burst of drug from a domain close to the
+                                   surface subject to constant effective diffusivity. The authors acknowledged that their
+                                   correlation of effective drug diffusivity to particle size lacked a physically relevant
+                                   expression to incorporate size-dependent autocatalytic effects. The model was later extended
+                                   [75] to apply to surface-eroding polymers as well as bulk-eroding polymers. In addition to
+                                   drug transport, the extended model included drug dissolution kinetics and water transport
+                                   and contribution of water concentration on the degradation kinetics. The model results
+                                   showed good agreement between theory and experiments for bulk- and surface-eroding
+                                   polymers for short release periods (up to 30 days).
+
+                                   Zhao et al. [76] presented a mechanistic method for coupling degradation and variable
+                                   effective diffusivity through hindered diffusion and pore evolution. The model proposed a
+                                   proportional relationship between the rate of growth of average pore size and the rate of
+$watermark-text
+
+
+
+
+                                   generation of soluble monomers and oligomers. The mechanistic relationship improved
+                                   upon the empirical correlations between pore growth and erosion rate given by Batycky et
+                                   al. [28] and Lemaire et al. [71]. Though the model used non-catalytic pseudo-first-order
+                                   degradation kinetics, the pore growth expression could be generalized for autocatalysis with
+                                   the appropriate degradation kinetics. Zhao et al. linked the transient average radius of
+                                   eroding pores to drug diffusivities using hindered diffusion theory, where aqueous transport
+                                   of solutes in fine pores is reduced from the diffusion of the solute in water at infinite dilution
+                                   due to hydrodynamic and steric restrictions [84]. Zhao et al. proposed using the variable
+                                   effective diffusivity for the drug in Fick’s second law of diffusion but showed no results for
+                                   the drug concentration or amount of drug released.
+
+                                   Ford et al. [77] proposed a reaction-diffusion model similar to Thombre and Himmelstein
+                                   [68] to treat second-order, autocatalytic degradation for PLGA microspheres. The
+                                   concentrations of water-soluble small oligomers up to length of nine, the carboxylic acid end
+                                   groups, non-diffusing polymer bulk, and drug were tracked with the reaction-diffusion
+                                   model. The effective diffusivity of each water-soluble species increased linearly as a
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                                        Page 11
+
+
+                                   function of the void fraction in the polymer bulk due to transport of soluble oligomers. The
+                                   effective diffusivity was bounded by the diffusivity of the soluble species in the bulk
+                                   polymer at the initial porosity and the diffusivity of the soluble species at infinite dilution in
+                                   water. The numerical solutions to the model equations were compared to the drug release
+                                   profiles with constant diffusivity at different values of the initial time constant for diffusion.
+                                   Cumulative release profiles for constant diffusivity scaled by fraction of total release time
+                                   collapsed onto a single curve as expected while release profiles with variable effective
+                                   diffusivity scaled in the same manner showed size-dependence. Larger microspheres were
+                                   predicted to release drugs faster than smaller microspheres with sigmoidal release profiles
+                                   consistent with autocatalytic, erosion-controlled drug release.
+$watermark-text
+
+
+
+
+                     4. Conclusions
+                                   Numerous mathematical models have been published for predicting degradation, erosion,
+                                   and drug transport and overall drug release from PLGA microspheres. In this review, models
+                                   that incorporated autocatalysis have been categorized according to the phenomena they
+                                   treated. Collectively, the models have provided insights into the mechanisms of drug release
+                                   occurring under different conditions. The more sophisticated models that treated the coupled
+                                   interactions between phenomena brought predictive capability to the regimes where
+                                   autocatalysis plays a significant role in drug release dynamics. Models could be improved
+                                   further by considering the effects of autocatalysis on degradation kinetics and oligomer
+                                   transport and by continuing to explore the mechanistic coupling between polymer erosion
+                                   and increasing effective diffusivity of the drug.
+$watermark-text
+
+
+
+
+                                   With accurate predictions of the effects of many possible PLGA microsphere fabrication
+                                   designs under a range of conditions, the optimum design for producing microspheres
+                                   exhibiting a desired drug release profile could be determined for use in patients. Mixing
+                                   monodisperse microspheres of different sizes yields release profiles that are mass-weighted
+                                   averages of the release profiles for the individual sizes [85,86]. Predictive, high accuracy
+                                   models that rigorously include autocatalytic effects could decrease the number of
+                                   experimental trials needed to explore release from different microsphere distributions by
+                                   optimizing controlled drug release in silico.
+
+                     Acknowledgments
+                                   This work was made possible through the support of the National Institutes of Health (NIBIB 5RO1EB005181) and
+                                   the National Science Foundation (Grant #0426328). A.N. Ford Versypt acknowledges the support of the U.S.
+$watermark-text
+
+
+
+
+                                   Department of Energy Computational Science Graduate Fellowship Program of the Office of Science and National
+                                   Nuclear Security Administration in the Department of Energy under contract DE-FG02-97ER25308.
+
+
+                     References
+                                   [1]. Edlund U, Albertsson A-C. Degradable polymer microspheres for controlled drug delivery. Adv.
+                                         Polym. Sci. 2002; 157:67–112.
+                                   [2]. Sinha VR, Trehan A. Biodegradable microspheres for protein delivery. J. Controlled Release.
+                                         2003; 90:261–280.
+                                   [3]. Freiberg S, Zhu XX. Polymer microspheres for controlled drug release. Int. J. Pharm. 2004;
+                                         282:1–18. [PubMed: 15336378]
+                                   [4]. Varde NK, Pack DW. Microspheres for controlled release drug delivery. Expert Opin. Biol. Ther.
+                                         2004; 4:35–51. [PubMed: 14680467]
+                                   [5]. Göpferich A. Mechanisms of polymer degradation and erosion. Biomaterials. 1996; 17:103–114.
+                                         [PubMed: 8624387]
+                                   [6]. Anderson JM, Shive MS. Biodegradation and biocompatibility of PLA and PLGA microspheres.
+                                         Adv. Drug Delivery Rev. 1997; 28:5–24.
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                                 Page 12
+
+
+                                   [7]. Lipsa R, Tudorachi N, Vasile C. Poly(alpha-hydroxyacids) in biomedical applications: Synthesis
+                                         and properties of lactic acid polymers. e-Polym. 2010:1–43.
+                                   [8]. Fredenberg S, Wahlgren M, Reslow M, Axelsson A. The mechanisms of drug release in
+                                         poly(lactic-co-glycolic acid)-based drug delivery systems—A review. Int. J. Pharm. 2011;
+                                         415:34–52. [PubMed: 21640806]
+                                   [9]. Siepmann J, Siepmann F. Mathematical modeling of drug delivery. Int. J. Pharm. 2008; 364:328–
+                                         343. [PubMed: 18822362]
+                                   [10]. Arifin DY, Lee LY, Wang CH. Mathematical modeling and simulation of drug release from
+                                         microspheres: Implications to drug delivery systems. Adv. Drug Delivery Rev. 2006; 58:1274–
+                                         1325.
+                                   [11]. Langer R, Peppas N. Chemical and physical structure of polymers as carriers for controlled
+$watermark-text
+
+
+
+
+                                         release of bioactive agents: A review. J. Macromol. Sci., Rev. Macromol. Chem. Phys. 1983;
+                                         C23:61–126.
+                                   [12]. Leong KW, Langer R. Polymeric controlled drug delivery. Adv. Drug Delivery Rev. 1988;
+                                         1:199–233.
+                                   [13]. Kanjickal DG, Lopina ST. Modeling of drug release from polymeric delivery systems—A
+                                         review. Crit. Rev. Ther. Drug Carrier Syst. 2004; 21:345–386. [PubMed: 15717734]
+                                   [14]. Brunner A, Mäder K, Göpferich A. pH and osmotic pressure inside biodegradable microspheres
+                                         during erosion. Pharm. Res. 1999; 16:847–853. [PubMed: 10397604]
+                                   [15]. Fu K, Pack DW, Klibanov AM, Langer R. Visual evidence of acidic environment within
+                                         degrading poly(lactic-co-glycolic acid) (PLGA) microspheres. Pharm. Res. 2000; 17:100–106.
+                                         [PubMed: 10714616]
+                                   [16]. Shenderova A, Ding AG, Schwendeman SP. Potentiometric method for determination of
+                                         microclimate pH in poly(lactic-co-glycolic acid) films. Macromolecules. 2004; 37:10052–10058.
+$watermark-text
+
+
+
+
+                                   [17]. Grayson ACR, Cima MJ, Langer R. Size and temperature effects on poly(lactic-co-glycolic acid)
+                                         degradation and microreservoir device performance. Biomaterials. 2005; 26:2137–2145.
+                                         [PubMed: 15576189]
+                                   [18]. Ding A, Schwendeman SP. Acidic microclimate pH distribution in PLGA microspheres
+                                         monitored by confocal laser scanning microscopy. Pharm. Res. 2008; 25:2041–2052. [PubMed:
+                                         18622692]
+                                   [19]. Lowry, TH.; Richardson, KS. Mechanism and Theory in Organic Chemistry. 2nd ed.. Harper and
+                                         Row; New York: 1981.
+                                   [20]. Houchin ML, Topp EM. Chemical degradation of peptides and proteins in PLGA: A review of
+                                         reactions and mechanisms. J. Pharm. Sci. 2008; 97:2395–2404. [PubMed: 17828756]
+                                   [21]. Siegel, RA.; Rathbone, MJ. Overview of controlled release mechanisms. In: Siepmann, J.; Siegel,
+                                         RA.; Rathbone, MJ., editors. Fundamentals and Applications of Controlled Release Drug
+                                         Delivery. Springer; New York: 2012. p. 19-43.
+$watermark-text
+
+
+
+
+                                   [22]. Alexis F. Factors affecting the degradation and drug-release mechanism of poly(lactic acid) and
+                                         poly[(lactic acid)-co-(glycolic acid)]. Polym. Int. 2005; 54:36–46.
+                                   [23]. Lao LL, Peppas NA, Boey FYC, Venkatraman SS. Modeling of drug release from bulk-
+                                         degrading polymers. Int. J. Pharm. 2011; 418:28–41. [PubMed: 21182912]
+                                   [24]. Wada R, Hyon S-H, Ikada Y. Kinetics of diffusion-mediated drug release enhanced by matrix
+                                         degradation. J. Controlled Release. 1995; 37:151–160.
+                                   [25]. Siepmann J, Göpferich A. Mathematical modeling of bioerodible, polymeric drug delivery
+                                         systems. Adv. Drug Delivery Rev. 2001; 48:229–247.
+                                   [26]. Lyu S, Untereker D. Degradability of polymers for implantable biomedical devices. Int. J. Mol.
+                                         Sci. 2009; 10:4033–4065. [PubMed: 19865531]
+                                   [27]. Sackett CK, Narasimhan B. Mathematical modeling of polymer erosion: Consequences for drug
+                                         delivery. Int. J. Pharm. 2011; 418:104–114. [PubMed: 21130849]
+                                   [28]. Batycky RP, Hanes J, Langer R, Edwards DA. A theoretical model of erosion and
+                                         macromolecular drug release from biodegrading microspheres. J. Pharm. Sci. 1997; 86:1464–
+                                         1477. [PubMed: 9423163]
+
+
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                                    Page 13
+
+
+                                   [29]. Van Nostrum CF, Veldhuis TFJ, Bos GW, Hennink WE. Hydrolytic degradation of oligo(lactic
+                                         acid): A kinetic and mechanistic study. Polymer. 2004; 45:6779–6787.
+                                   [30]. Kulkarni A, Reiche J, Lendlein A. Hydrolytic degradation of poly(rac-lactide) and poly[(rac-
+                                         lactide)-co-glycolide]at the air-water interface. Surf. Interface Anal. 2007; 39:740–746.
+                                   [31]. Körber M. PLGA erosion: Solubility- or diffusion-controlled? Pharm. Res. 2010; 27:2414–20.
+                                         [PubMed: 20721605]
+                                   [32]. Berkland C, Pollauf E, Raman C, Silverman R, Kim K, Pack DW. Macromolecule release from
+                                         monodisperse PLG microspheres: Control of release rates and investigation of release
+                                         mechanism. J. Pharm. Sci. 2007; 96:1176–1191. [PubMed: 17455338]
+                                   [33]. Allison SD. Analysis of initial burst in PLGA microparticles. Expert Opin. Drug Delivery. 2008;
+                                         5:615–628.
+$watermark-text
+
+
+
+
+                                   [34]. Rothstein SN, Little SR. A “tool box” for rational design of degradable controlled release
+                                         formulations. J. Mater. Chem. 2011; 21:29.
+                                   [35]. Raman C, Berkland C, Kim K, Pack DW. Modeling small-molecule release from PLG
+                                         microspheres: Effects of polymer degradation and nonuniform drug distribution. J. Controlled
+                                         Release. 2005; 103:149–158.
+                                   [36]. Fredenberg S, Jönsson M, Laakso T, Wahlgren M, Reslow M, Axelsson A. Development of mass
+                                         transport resistance in poly(lactide-co-glycolide) films and particles—A mechanistic study. Int. J.
+                                         Pharm. 2011; 409:194–202. [PubMed: 21392561]
+                                   [37]. Zhang L, Long C, Pan J, Qian Y. A dissolution-diffusion model and quantitative analysis of drug
+                                         controlled release from biodegradable polymer microspheres. Can. J. Chem. Eng. 2006; 84:558–
+                                         566.
+                                   [38]. Perale G, Arosio P, Moscatelli D, Barri V, Muller M, Maccagnan S, et al. A new model of
+                                         resorbable device degradation and drug release: Transient 1-dimension diffusional model. J.
+$watermark-text
+
+
+
+
+                                         Controlled Release. 2009; 136:196–205.
+                                   [39]. Li SM, Garreau H, Vert M. Structure-property relationships in the case of the degradation of
+                                         massive aliphatic poly-(alpha-hydroxy acids) in aqueous media—Part 1: Poly(D,L-lactic acid). J.
+                                         Mater. Sci.: Mater. Med. 1990; 1:123–130.
+                                   [40]. Grizzi I, Garreau H, Li S, Vert M. Hydrolytic degradation of devices based on poly(DL-lactic
+                                         acid) size-dependence. Biomaterials. 1995; 16:305–311. [PubMed: 7772670]
+                                   [41]. Li SM. Hydrolytic degradation characteristics of aliphatic polyesters derived from lactic and
+                                         glycolic acids. J. Biomed. Mater. Res. 1999; 48:342–353. [PubMed: 10398040]
+                                   [42]. Berkland C, Kim K, Pack DW. PLG microsphere size controls drug release rate through several
+                                         competing factors. Pharm. Res. 2003; 20:1055–1062. [PubMed: 12880292]
+                                   [43]. Siepmann J, Elkharraz K, Siepmann F, Klose D. How autocatalysis accelerates drug release from
+                                         PLGA-based microparticles: A quantitative treatment. Biomacromolecules. 2005; 6:2312–2319.
+                                         [PubMed: 16004477]
+$watermark-text
+
+
+
+
+                                   [44]. Von Burkersroda F, Schedl L, Göpferich A. Why degradable polymers undergo surface erosion
+                                         or bulk erosion. Biomaterials. 2002; 23:4221–4231. [PubMed: 12194525]
+                                   [45]. Klose D, Siepmann F, Elkharraz K, Krenzlin S, Siepmann J. How porosity and size affect the
+                                         drug release mechanisms from PLGA-based microparticles. Int. J. Pharm. 2006; 314:198–206.
+                                         [PubMed: 16504431]
+                                   [46]. Klose D, Siepmann F, Elkharraz K, Siepmann J. PLGA-based drug delivery systems: Importance
+                                         of the type of drug and device geometry. Int. J. Pharm. 2008; 354:95–103. [PubMed: 18055140]
+                                   [47]. Sansdrap P, Moës AJ. In vitro evaluation of the hydrolytic degradation of dispersed and
+                                         aggregated poly(DL-lactide-co-glycolide) microspheres. J. Controlled Release. 1997; 43:47–58.
+                                   [48]. Wu, XS. Synthesis and properties of biodegradable lactic/glycolic acid polymers. In: Wise, DL.;
+                                         Trantolo, DJ.; Altobelli, DE.; Yaszemski, MJ.; Gresser, JD.; Schwartz, ER., editors.
+                                         Encyclopedic Handbook of Biomaterials and Bioengineering Part A: Biomaterials. Marcel
+                                         Dekker; New York: 1995. p. 1015-1054.
+                                   [49]. Vert M, Li S, Garreau H, Mauduit J, Boustta M, Schwach G, et al. Complexity of the hydrolytic
+                                         degradation of aliphatic polyesters. Angew. Makromol. Chem. 1997; 247:239–253.
+                                   [50]. Grassi M, Lamberti G, Cascone S, Grassi G. Mathematical modeling of simultaneous drug
+                                         release and in vivo absorption. Int. J. Pharm. 2011; 418:130–41. [PubMed: 21237258]
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                                  Page 14
+
+
+                                   [51]. Aguzzi C, Cerezo P, Salcedo I, Sánchez R, Viseras C. Mathematical models describing drug
+                                         release from biopolymeric delivery systems. Mater. Technol. 2010; 25:205–211.
+                                   [52]. Siepmann J, Siepmann F. Modeling of diffusion controlled drug delivery. J. Controlled Release.
+                                         2012; 161:351–362.
+                                   [53]. Antheunis H, van der Meer J-C, de Geus M, Kingma W, Koning CE. Improved mathematical
+                                         model for the hydrolytic degradation of aliphatic polyesters. Macromolecules. 2009; 42:2462–
+                                         2471.
+                                   [54]. Siparsky GL, Voorhees KJ, Miao FD. Hydrolysis of polylactic acid (PLA) and polycaprolactone
+                                         (PCL) in aqueous acetonitrile solutions: Autocatalysis. J. Environ. Polym. Degrad. 1998; 6:31–
+                                         41.
+                                   [55]. Nishida H, Yamashita M, Nagashima M, Hattori N, Endo T, Tokiwa Y. Theoretical prediction of
+$watermark-text
+
+
+
+
+                                         molecular weight on autocatalytic random hydrolysis of aliphatic polyesters. Macromolecules.
+                                         2000; 33:6595–6601.
+                                   [56]. Lyu S, Schley J, Loy B, Lind D, Hobot C, Sparer R, et al. Kinetics and time-temperature
+                                         equivalence of polymer degradation. Biomacromolecules. 2007; 8:2301–2310. [PubMed:
+                                         17579477]
+                                   [57]. Antheunis H, van der Meer J-C, de Geus M, Heise A, Koning CE. Autocatalytic equation
+                                         describing the change in molecular weight during hydrolytic degradation of aliphatic polyesters.
+                                         Biomacromolecules. 2010; 11:1118–1124. [PubMed: 20187614]
+                                   [58]. Göpferich A. Polymer bulk erosion. Macromolecules. 1997; 30:2598–2604.
+                                   [59]. Chen Y, Zhou S, Li Q. Mathematical modeling of degradation for bulk-erosive polymers:
+                                         Applications in tissue engineering scaffolds and drug delivery systems. Acta Biomaterialia. 2011;
+                                         7:1140–1149. [PubMed: 20937415]
+                                   [60]. Ding AG, Shenderova A, Schwendeman SP. Prediction of microclimate pH in poly(lactic-co-
+$watermark-text
+
+
+
+
+                                         glycolic acid) films. J. Am. Chem. Soc. 2006; 128:5384–5390. [PubMed: 16620110]
+                                   [61]. Arosio P, Busini V, Perale G, Moscatelli D, Masi M. A new model of resorbable device
+                                         degradation and drug release—Part I: Zero order model. Polym. Int. 2008; 57:912–920.
+                                   [62]. Wang Y, Pan J, Han X, Sinka C, Ding L. A phenomenological model for the degradation of
+                                         biodegradable polymers. Biomaterials. 2008; 29:3393–3401. [PubMed: 18486970]
+                                   [63]. Charlier A, Leclerc B, Couarraze G. Release of mifepristone from biodegradable matrices:
+                                         Experimental and theoretical evaluations. Int. J. Pharm. 2000; 200:115–120. [PubMed:
+                                         10845692]
+                                   [64]. Faisant N, Siepmann J, Benoit JP. PLGA-based microparticles: Elucidation of mechanisms and a
+                                         new, simple mathematical model quantifying drug release. Eur. J. Pharm. Sci. 2002; 15:355–366.
+                                         [PubMed: 11988397]
+                                   [65]. Berchane NS, Carson KH, Rice-Ficht AC, Andrews MJ. Effect of mean diameter and
+                                         polydispersity of PLG microspheres on drug release: Experiment and theory. Int. J. Pharm. 2007;
+$watermark-text
+
+
+
+
+                                         337:118–126. [PubMed: 17289316]
+                                   [66]. He JT, Zhong CL, Mi JG. Modeling of drug release from bioerodible polymer matrices. Drug
+                                         Delivery. 2005; 12:251–259. [PubMed: 16188723]
+                                   [67]. Mollica F, Biondi M, Muzzi S, Ungaro F, Quaglia F, La Rotonda MI, et al. Mathematical
+                                         modelling of the evolution of protein distribution within single PLGA microspheres: Prediction
+                                         of local concentration profiles and release kinetics. J. Mater. Sci.: Mater. Med. 2008; 19:1587–
+                                         1593. [PubMed: 17992472]
+                                   [68]. Thombre AG, Himmelstein KJ. A simultaneous transport-reaction model for controlled drug
+                                         delivery from catalyzed bioerodible polymer matrices. AIChE J. 1985; 31:759–766.
+                                   [69]. Joshi A, Himmelstein KJ. Dynamics of controlled release from bioerodible matrices. J.
+                                         Controlled Release. 1991; 15:95–104.
+                                   [70]. Siepmann J, Faisant N, Benoit JP. A new mathematical model quantifying drug release from
+                                         bioerodible microparticles using Monte Carlo simulations. Pharm. Res. 2002; 19:1885–1893.
+                                         [PubMed: 12523670]
+                                   [71]. Lemaire V, Bélair J, Hildgen P. Structural modeling of drug release from biodegradable porous
+                                         matrices based on a combined diffusion/erosion process. Int. J. Pharm. 2003; 258:95–107.
+                                         [PubMed: 12753757]
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                                 Page 15
+
+
+                                   [72]. Zhang M, Yang Z, Chow L, Wang C. Simulation of drug release from biodegradable polymeric
+                                         microspheres with bulk and surface erosions. J. Pharm. Sci. 2003; 92:2040–2056. [PubMed:
+                                         14502543]
+                                   [73]. Prabhu S, Hossainy S. Modeling of Degradation and Drug Release from a Biodegradable Stent
+                                         Coating. Journal of Biomedical Materials Research Part A. 2007; 80A:732–741. [PubMed:
+                                         17167794]
+                                   [74]. Rothstein SN, Federspiel WJ, Little SR. A simple model framework for the prediction of
+                                         controlled release from bulk eroding polymer matrices. J. Mater. Chem. 2008; 18:1873–1880.
+                                   [75]. Rothstein SN, Federspiel WJ, Little SR. A unified mathematical model for the prediction of
+                                         controlled release from surface and bulk eroding polymer matrices. Biomaterials. 2009; 30:1657–
+                                         64. [PubMed: 19101031]
+$watermark-text
+
+
+
+
+                                   [76]. Zhao A, Hunter SK, Rodgers VGJ. Theoretical prediction of induction period from transient pore
+                                         evolvement in polyester-based microparticles. J. Pharm. Sci. 2010; 99:4477–4487. [PubMed:
+                                         20845447]
+                                   [77]. Ford, AN.; Pack, DW.; Braatz, RD. In: Pistikopoulos, EN.; Georgiadis, MC.; Kokossis, AC.,
+                                         editors. Multi-scale modeling of PLGA microparticle drug delivery systems; 21st European
+                                         Symposium on Computer Aided Process Engineering: Part B, Interscience; New York. 2011; p.
+                                         1475-1479.
+                                   [78]. Kenley RA, Lee MO, Mahoney TR, Sanders LM. Poly(lactide-co-glycolide) decomposition
+                                         kinetics in vivo and in vitro. Macromolecules. 1987; 20:2398–2403.
+                                   [79]. Siegel SJ, Kahn JB, Metzger K, Winey KI, Werner K, Dan N. Effect of drug type on the
+                                         degradation rate of PLGA matrices. Eur. J. Pharm. Biopharm. 2006; 64:287–293. [PubMed:
+                                         16949804]
+                                   [80]. Ziff RM, McGrady ED. Kinetics of polymer degradation. Macromolecules. 1986; 19:2513–2519.
+$watermark-text
+
+
+
+
+                                   [81]. McCoy BJ, Madras G. Degradation kinetics of polymers in solution: Dynamics of molecular
+                                         weight distributions. AIChE J. 1997; 43:802–810.
+                                   [82]. Staggs JEJ. Discrete bond-weighted random scission of linear polymers. Polymer. 2006; 47:897–
+                                         906.
+                                   [83]. Lyu S, Sparer R, Untereker D. Analytical solutions to mathematical models of the surface and
+                                         bulk erosion of solid polymers. J. Polym. Sci., Part B: Polym. Phys. 2005; 43:383–397.
+                                   [84]. Deen WM. Hindered transport of large molecules in liquid-filled pores. AIChE J. 1987; 33:1409–
+                                         1425.
+                                   [85]. Berkland C, King M, Cox A, Kim K, Pack DW. Precise control of PLG microsphere size
+                                         provides enhanced control of drug release rate. J. Controlled Release. 2002; 82:137–147.
+                                   [86]. Berchane NS, Jebrail FF, Andrews MJ. Optimization of PLG microspheres for tailored drug
+                                         release. Int. J. Pharm. 2010; 383:81–88. [PubMed: 19748560]
+$watermark-text
+
+
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                            Page 16
+
+
+
+
+                                   Figure 1.
+                                   Structure of poly(α-hydroxy-esters). PLGA has a fraction of functional groups with lactide
+                                   units and the remaining fraction with glycolide units. n is the number of interior lactide and/
+                                   or glycolide monomeric units.
+$watermark-text
+$watermark-text
+$watermark-text
+
+
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                             Page 17
+$watermark-text
+
+
+
+
+                                   Figure 2.
+                                   Size-dependent autocatalysis in PLGA microspheres. Arrows indicate regions where
+                                   diffusion lengths are not prohibitive for reaction products to diffuse out of the particle before
+                                   leading to enhanced autocatalysis. Lighter shading indicates more accelerated autocatalysis.
+                                   Autocatalysis becomes more significant with time in the interior of the large particle than in
+                                   the small particle.
+$watermark-text
+$watermark-text
+
+
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                      Page 18
+$watermark-text
+$watermark-text
+
+
+
+
+                                   Figure 3.
+                                   Hierarchy of mathematical model categories for bulk-eroding, polymeric drug delivery
+                                   systems. Mechanistic models for PLGA microspheres with autocatalytic effects are the
+                                   subject of this article.
+$watermark-text
+
+
+
+
+                                     J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                     Page 19
+
+
+
+
+                                                                                   Table 1
+                  Reviews of mathematical models for polymeric drug delivery.
+$watermark-text
+
+
+
+
+                   Scope                             Review articles
+                   Polymeric drug delivery systems   Kanjickal and Lopina [13]
+                                                     Arifin et al. [10]
+                                                     Siepmann and Siepmann [9]
+                                                     Aguzzi et al. [51]
+
+                   Diffusion-controlled systems      Siepmann and Siepmann [52]
+
+                   Erosion-controlled systems        Siepmann and Göpferich [25]
+                                                     Sackett and Narasimhan [27]
+
+                   Bulk-eroding systems              Lao et al. [23]
+$watermark-text
+$watermark-text
+
+
+
+
+                                           J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                         Page 20
+
+
+
+
+                                                                                      Table 2
+                  Mathematical models for polymeric drug delivery systems with autocatalytic effects.
+$watermark-text
+
+
+
+
+                   Article                 Phenomena modeled              Delivery system    Role of autocatalysis
+
+                                                             PLGA degradation
+                   Siparsky et al. [54]    Pseudo-first order, second-    PLA in solution    Autocatalytic hydrolysis
+                                           order, and 1.5th-order                            kinetics
+                                           degradation
+
+                   Nishida et al. [55]     Second-order degradation       PLA films in       Autocatalytic hydrolysis
+                                                                          atmosphere of      kinetics
+                                                                          saturated water
+                                                                          vapor
+
+                   Lyu et al. [56]         Water-dependent third-order    PLA discs          Autocatalytic hydrolysis
+                                           and 2.5th-order degradation                       kinetics
+
+                   Antheunis et al.        Second-order degradation       PLA and PLGA       Autocatalytic hydrolysis
+                   [53,57]                                                rods               kinetics
+$watermark-text
+
+
+
+
+                                                               PLGA erosion
+                   Göpferich [58]          Stochastic degradation and     PLGA discs         Not explicitly
+                                           erosion                                           autocatalytic, pore
+                                                                                             percolation may cause
+                                                                                             lag and burst of mass
+                                                                                             loss rather than
+                                                                                             autocatalysis
+
+                   Chen et al. [59]        Stochastic degradation and     PLA films and      Empirical multiplicative
+                                           erosion                        scaffolds, PLGA    factor representing the
+                                                                          microspheres       strength of autocatalytic
+                                                                                             effects
+
+                   Batycky et al. [28]     Pseudo-first-order             PLGA               Not explicitly
+                                           degradation, erosion with      microspheres       autocatalytic, pore
+                                           pore formation, diffusive                         formation theory based
+                                           drug release with constant                        on experimental
+$watermark-text
+
+
+
+
+                                           diffusivity after induction                       polymer erosion
+                                           time
+
+                   Ding et al. [60]        Erosion by dissolution to      PLGA films         Not explicitly
+                                           determine microclimate pH                         autocatalytic; average
+                                                                                             microclimate pH as a
+                                                                                             function of time
+
+                   Arosio et al. [61]      Eroding core grows as          PLA cylinders      Geometry consist with
+                                           interface moves due to                            autocatalytic erosion,
+                                           pseudo-first-order                                degradation not
+                                           degradation and transport                         explicitly autocatalytic
+
+                   Wang et al. [62]        Non-catalytic and              PLA films,         Regimes where
+                                           autocatalytic degradation,     cylinders, and     autocatalytic
+                                           monomer diffusivity            three-             degradation dominates
+                                           linearly dependent on          dimensional        and where autocatalytic
+                                           porosity                       blocks             degradation is coupled
+                                                                                             to other effects is
+                                                                                             mapped to material
+                                                                                             parameters
+
+                                                                Drug release
+                   Charlier et al. [63],   Empirical fits between drug    PLGA films and     Not explicitly
+                   Faisant et al. [64],    diffusivity and degradation    microspheres       autocatalytic, variable
+                   Raman et al. [35],                                                        drug diffusivity fit to
+                   Berchane et al.                                                           data
+                   [65]
+
+                   He et al. [66]          Empirical fits between drug    PLA and            Empirical factor for
+                                           diffusivity and degradation    poly(lactide-co-   contribution of matrix
+                                                                          ε-caprolactone)    erosion on drug release
+                                                                          microspheres
+                                                                          and discs
+
+
+
+
+                                              J Control Release. Author manuscript; available in PMC 2014 January 10.
+                  Versypt et al.                                                                                           Page 21
+
+
+
+
+                   Article               Phenomena modeled                 Delivery system    Role of autocatalysis
+                   Siepmann et al.       Empirical fit of drug             PLGA               Size-dependent drug
+                   [43]                  diffusivity to analytical drug    microspheres       diffusivity captured
+$watermark-text
+
+
+
+
+                                         diffusion as a function of                           autocatalytic behavior
+                                         microsphere radii                                    while constant
+                                                                                              diffusivity did not
+
+                   Mollica et al. [67]   Drug diffusion and                PLGA               Geometry consistent
+                                         dissolution in microsphere        microspheres       with autocatalytic
+                                         with empirical degradation                           erosion, degradation not
+                                         front                                                explicitly autocatalytic
+
+                                                          Coupled phenomena
+                   Thombre and           Second-order degradation,         Poly(orthoester)   Autocatalytic hydrolysis
+                   Himmelstein [68],     erosion by diffusion,             slabs and discs    kinetics, drug diffusivity
+                   Joshi and             diffusive drug release                               is a function of extent of
+                   Himmelstein [69]                                                           catalytic polymer
+                                                                                              degradation
+
+                   Siepmann et al.       Stochastic degradation and        PLGA               Probabilistic effects for
+                   [70]                  erosion, drug diffusion           microspheres       random hydrolysis and
+$watermark-text
+
+
+
+
+                                         coupled to stochastic                                erosion with parameters
+                                         porosity                                             sensitive to autocatalysis
+
+                   Lemaire et al. [71]   Erosion with linear               PLA                Not explicitly
+                                         correlation, diffusive drug       microspheres       autocatalytic, erosion
+                                         release with constant drug                           rate modulates drug
+                                         diffusivities in two                                 release between
+                                         compartments with interface                          diffusion-controlled and
+                                         moving as erosion                                    erosion-controlled
+                                         progresses
+
+                   Zhang et al. [72]     Drug dissolution and              Bulk- and          Not explicitly
+                                         diffusion from eroding            surface-eroding    autocatalytic, erosion
+                                         polymer, erosion defined by       microspheres       patterns empirically
+                                         mathematical functions                               capture autocatalytic
+                                         rather than polymer                                  effects
+                                         degradation
+
+                   Prabhu and            Non-catalytic and                 PLA films for      Autocatalytic hydrolysis
+$watermark-text
+
+
+
+
+                   Hossainy [73]         autocatalytic degradation in      drug eluting       kinetics, drug diffusivity
+                                         parallel, erosion by diffusion,   stents             is a function of extent of
+                                         diffusive drug release                               catalytic polymer
+                                                                                              degradation
+
+                   Rothstein et al.      Drug dissolution and              Bulk- and          Not explicitly
+                   [74,75]               diffusion dependent on pore       surface-eroding    autocatalytic, pore
+                                         growth, empirical fits of         microspheres       formation and drug
+                                         porosity to pseudo-first-order                       diffusivity empirically
+                                         degradation and diffusivity                          dependent on
+                                         to microsphere size                                  autocatalytic effects
+                   Zhao et al. [76]      Erosion with non-catalytic        PLGA               Not explicitly
+                                         degradation kinetics and pore     microspheres       autocatalytic, pore
+                                         formation, transient drug                            formation and drug
+                                         diffusivities using hindered                         diffusivity based on
+                                         diffusion theory                                     degradation kinetics
+
+                   Ford et al. [77]      Second-order autocatalytic        PLGA               Autocatalytic
+                                         degradation, erosion by           microspheres       degradation, mass
+                                         diffusion, linear coupling of                        transport of polymer and
+                                         drug diffusivity to porosity,                        drug coupled to void
+                                         diffusive drug release                               fraction in polymer due
+                                                                                              to erosion
+
+
+
+
+                                            J Control Release. Author manuscript; available in PMC 2014 January 10.
+

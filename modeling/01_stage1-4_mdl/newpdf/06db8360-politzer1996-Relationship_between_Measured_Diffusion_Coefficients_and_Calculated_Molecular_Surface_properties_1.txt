@@ -1,0 +1,206 @@
+5538                                               J. Phys. Chem. 1996, 100, 5538-5540
+
+
+Relationship between Measured Diffusion Coefficients and Calculated Molecular Surface
+Properties
+
+                   Peter Politzer,* Jane S. Murray, and Pa1 r Flodmark
+                   Department of Chemistry, UniVersity of New Orleans, New Orleans, Louisiana 70148
+                   ReceiVed: NoVember 9, 1995; In Final Form: January 8, 1996X
+
+
+
+
+                   We show that the diffusion coefficients in both dry and swollen gelatin of a group of organic molecules can
+                   be expressed analytically in terms of computed molecular quantities: surface areas and measures of positive
+                   and negative electrostatic interaction tendencies, obtained by ab initio SCF calculations. The molecules’
+                   intrinsic mobilities are found to vary inversely with size and to be enhanced in these media by weakly positive
+                   and strongly negative surface electrostatic potentials.
+
+
+Introduction                                                               F(r) is the electronic density. V(r) was computed on each
+   In a recent series of applications of our general interaction           molecular surface, the latter being defined as the 0.001 au
+properties function [GIPF], we have shown that a variety of                contour of the electronic density, as suggested by Bader et al.20
+liquid, solid, and solution properties that reflect molecular              The conclusions reached with the GIPF technique are not
+interactions can be represented analytically in terms of quantities        sensitive to the exact contour chosen to represent the surface,
+computed for the individual molecules. Such relationships have             within the range 0.0005-0.002 au.21-23
+now been developed for pKa values,1-3 supercritical solubili-                 We have found that the variances of the positive and negative
+ties4,5 and enhancement factors,6 boiling points and critical              potentials on the surface of a molecule are effective quantitative
+constants,7 partition coefficients,8,9 heats of vaporization,10 liquid     measures of its tendencies for positive and negative electrostatic
+and solid densities,11 surface tensions,11 and impact sensitivi-           interactions.8,9 These are statistical quantities, defined by eqs
+ties.12 In the GIPF approach, we express the property of interest          2 and 3. V+(ri) and V-(rj) are the positive and negative values
+in terms of some subset of a group of eight quantities, most of                                           m
+which are related to the electrostatic potentials on molecular                               2
+                                                                                            σ+ ) (1/m)∑[V+(ri) - V
+                                                                                                                 h S+]2                    (2)
+surfaces and reflect various aspects of the molecules’ capacities                                         i)1
+for noncovalent interactions.13 Our objective is to develop
+                                                                                                          n
+relationships which provide insight into the factors that govern
+these molecular interactions.
+                                                                                              2
+                                                                                             σ- ) (1/n)  ∑
+                                                                                                         j)1
+                                                                                                                       h S-]2
+                                                                                                             [V-(rj) - V                   (3)
+   In the present work, we extend this approach for the first
+time to a transport property, diffusion. Specifically, we seek             of V(r) on the surface, and V      h S+ and V
+                                                                                                                       h S- are their averages:
+an analytical representation of the diffusion coefficients in              V +            m    +
+                                                                           h S ) (1/m)∑i)1V (ri) and V      -
+                                                                                                          h S ) (1/n)∑j)1 n
+                                                                                                                            V-(rj). σ+2      2
+                                                                                                                                        and σ-
+gelatin of a group of organic molecules. The latter are                    indicate the variabilities of the positive and negative potentials;
+photographic developing agents, the function of which is to react          because they involve squared terms, they emphasize the extrema
+with silver halide particles dispersed in the gelatin, reducing            in these regions. We have found that these two quantities,
+Ag+ to Ag.14,15 The intrinsic mobility of the organic molecule               2       2
+                                                                           σ+  and σ-  , plus the computed molecular surface area, suffice
+in this medium, as reflected in its diffusion coefficient D, is an
+                                                                           to permit accurate analytical representations of the diffusion
+important factor in determining the rate of the development
+                                                                           coefficients of 1-10 in gelatin. The SAS statistical analysis
+process.14-17
+                                                                           program was used for this purpose.24
+Methods
+                                                                           Results
+   Optimized geometries were computed for the molecules 1-10
+                                                                                                                               2       2
+with the code GAUSSIAN 9218 at the ab initio HF/STO-3G                       Table 1 presents the calculated surface area, σ+    and σ-  for
+level, which has been shown to be quite satisfactory for this              each of the molecules 1-10. Also listed are their experimentally
+purpose.19 These structures were used to calculate HF/STO-                 determined diffusion coefficients in both dry and swollen gelatin.
+5G molecular electrostatic potentials, from which were obtained            The larger are their magnitudes, the greater is the intrinsic
+the related quantities of interest, defined below.                         mobility of the molecule in the medium.
+   The electrostatic potential V(r) that is created at any point r           We found that the measured diffusion coefficients can be
+                                                                                                                  2       2
+by the nuclei and electrons of a molecule is given rigorously              expressed in terms of surface area, σ+   and σ-  by eqs 4 and 5.
+by eq 1. ZA is the charge on nucleus A, located at RA, and                 Dry gelatin:
+
+                               ZA           F(r′) dr′                      D × 107 (cm2 s-1) ) 533.5(area)-1 - 0.03168σ+
+                                                                                                                       2
+                                                                                                                         +
+               V(r) ) ∑          -∫                               (1)                                                       2
+                                                                                                                    0.01425σ- - 1.620 (4)
+                      A |RA - r|    |r′ - r|
+                                                                                           correlation coefficient ) 0.990
+  X Abstract published in AdVance ACS Abstracts, March 1, 1996.
+                                                                                              standard deviation ) 0.09
+                               0022-3654/96/20100-5538$12.00/0           © 1996 American Chemical Society
+Diffusion Coefficients and Surface Properties                                               J. Phys. Chem., Vol. 100, No. 13, 1996 5539
+
+TABLE 1: Diffusion Coefficients of Developing Agents in Gelatin Layera and Computed Molecular Surface Properties
+                                         107D,       predicted           107D,            predicted
+                                                                                                                          2                2
+                                       dry layer       107D,         swollen layer          107D,         area          σ+               σ-
+         developing agent              (cm2 s-1)     dry layer         (cm2 s-1)        swollen layer     (Å2)      (kcal/mol)2      (kcal/mol)2
+ 1                                       1.85          1.81              16.7               16.3           191          35.5            123.5
+
+
+ 2                                       1.69          1.61              15.2               14.5           142          69.9            118.6
+
+
+ 3                                       1.58          1.55              14.3               14.0           163          50.0            103.9
+
+
+ 4                                       1.42          1.49              12.8               13.5           156          72.4            141.1
+
+
+
+ 5                                       1.20          1.27              10.8               11.4           184          46.7            103.0
+
+
+ 6                                       1.05          0.97              9.46               8.70           226          39.8            104.3
+
+
+ 7                                       0.962         1.05              8.66               9.44           217          29.9             81.1
+
+
+ 8                                       0.69          0.79              6.2                7.12           137          90.9             98.0
+
+
+ 9                                       0.42          0.34              3.8                3.08           143          93.1             82.9
+
+
+
+
+ 10                                      0.32          0.31              2.9                2.78           157          83.6             82.8
+
+
+
+
+  a Levenson, G. I. P. In The Theory of the Photographic Process, 4th ed.; Macmillan:    New York, 1977; Chapter 16.
+
+Swollen gelatin:
+
+D × 107 (cm2 s-1) ) 4815(area)-1 - 0.2860σ+
+                                          2
+                                            +
+                                                2
+                                         0.1283σ- - 14.60 (5)
+
+               correlation coefficient ) 0.990
+                  standard deviation ) 0.83
+
+The values predicted for the diffusion coefficients from eqs 4
+and 5 are also in Table 1. Overall, they are in good agreement
+with the experimental data, as is shown in Figure 1.
+
+Discussion
+   Equations 4 and 5 show that the diffusion coefficients vary
+                                                                           Figure 1. Plot of predicted vs experimentally measured diffusion
+inversely with molecular area. This is in agreement with                   coefficients of the developing agents in Table 1 in a dry gelatin layer.
+theoretical analyses, which predict an inverse dependence of D             The linear correlation coefficient is 0.990.
+upon the size of the molecule.25,26                                                                                      2
+   However, the area is only one of three quantities which make            ingly diffusion should be promoted by σ+          being small in
+contributions of the same order of magnitude to D. Thus, 2                 magnitude, indicating a low tendency on the part of the molecule
+                                                                                                                               2
+and 9 have essentially the same areas but very different diffusion         for interaction through positive regions, and by σ-   being large,
+coefficients; the same is true of 4 and 10.                                suggesting repulsive interactions with the gelatin. For example,
+   The effects of the medium can be seen in the σ+      2
+                                                          and σ- 2         1 has the highest diffusion coefficients in Table 1 despite its
+                                                                                                                           2               2
+terms in eqs 4 and 5. Gelatin is a mixture of water-soluble                relatively large size, because of its low σ+       and high σ-    .
+proteins27 and consequently contains a large number of amide               Conversely, 8-10 are among the smallest of the molecules in
+groups, >N-C(dO)-, which are the peptide linkages. There                   Table 1 but have the lowest D values because of their relatively
+                                                                                   2           2
+are strongly negative electrostatic potentials associated with the         high σ+   and low σ-  , both of which impede diffusion in these
+lone pairs on the amide nitrogen and oxygen, which can interact            media. These considerations are reflected in the signs of the
+                                                                             2                                                         2
+with positive sites on the diffusing molecules, 1-10, such as              σ+   term being negative in eqs 4 and 5, while the σ-          are
+hydroxyl and amine hydrogens, and inhibit diffusion. Accord-               positive.
+5540 J. Phys. Chem., Vol. 100, No. 13, 1996                                                                                                   Politzer et al.
+
+   A striking feature of the experimentally determined diffusion                    (12) Murray, J. S.; Lane, P.; Politzer, P. Mol. Phys. 1995, 85, 1.
+coefficients in Table 1 is that the values for swollen gelatin are                  (13) Murray, J. S.; Brinck, T.; Lane, P.; Paulsen, K.; Politzer, P. J. Mol.
+                                                                                 Struct. (THEOCHEM) 1994, 307, 55.
+all 9.0 or 9.1 times as great as those for dry gelatin; as a result,                (14) The Theory of the Photographic Process, 4th ed.; Macmillan: New
+each coefficient in eq 5 is exactly 9.0 times as great as its                    York, 1977.
+counterpart in eq 4. This remarkably consistent enhancement                         (15) Kirk-Othmer Encyclopedia of Chemical Technology, 3rd ed.; Wiley-
+of diffusion in swollen gelatin may be due to a dilution effect.                 Interscience: New York, 1982; Vol. 17.
+                                                                                    (16) Jaenicke, W. J. Photogr. Sci. 1972, 20, 2.
+                                                                                    (17) Brown, E. R.; Tong, L. K. J. Photogr. Sci. Eng. 1975, 19, 314.
+  Acknowledgment. This work was supported in part by the                            (18) Frisch, M. J.; Trucks, G. W.; Head-Gordon, M.; Gill, P. M. W.;
+Eastman Kodak Co.                                                                Wong, M. W.; Foresman, J. B.; Johnson, B. G.; Schlegel, H. B.; Robb, M.
+                                                                                 A.; Replogle, E. S.; Gomperts, R.; Andres, J. L.; Raghavachari, K.; Binkley,
+                                                                                 J. S.; Gonzalez, C.; Martin, R. L.; Fox, D. J.; Defrees, D. J.; Baker, J.;
+References and Notes                                                             Stewart, J. J. P.; Pople, J. A. GAUSSIAN 92; Revision C; Gaussian, Inc.:
+    (1) Brinck, T.; Murray, J. S.; Politzer, P.; Carter, R. E. J. Org. Chem.     Pittsburgh, PA, 1992.
+1991, 56, 2934.                                                                     (19) Hehre, W. J.; Radom, L.; Schleyer, P. v. R.; Pople, J. A. Ab Initio
+    (2) Brinck, T.; Murray, J. S.; Politzer, P. J. Org. Chem. 1991, 56, 5012.    Molecular Orbital Theory; Wiley-Interscience: New York, 1986.
+    (3) Politzer, P.; Lane, P.; Murray, J. S.; Brinck, T. J. Phys. Chem. 1992,      (20) Bader, R. F. W.; Carroll, M. T.; Cheeseman, J. R.; Chang, C. J.
+96, 7938.                                                                        Am. Chem. Soc. 1987, 109, 7968.
+    (4) Brinck, T.; Murray, J. S.; Politzer, P. Int. J. Quantum Chem. 1993,         (21) Murray, J. S.; Brinck, T.; Politzer, P. Int. J. Quantum Chem.,
+48, 73.                                                                          Quantum Biol. Symp. 1991, 18, 91.
+    (5) Politzer, P.; Murray, J. S.; Lane, P.; Brinck, T. J. Phys. Chem. 1993,      (22) Murray, J. S.; Brinck, T.; Grice, M. E.; Politzer, P. J. Mol. Struct.
+97, 729.                                                                         (THEOCHEM) 1992, 256, 29.
+    (6) Murray, J. S.; Lane, P.; Brinck, T.; Politzer, P. J. Phys. Chem. 1993,      (23) Brinck, T.; Murray, J. S.; Politzer, P. Mol. Phys. 1992, 76, 609.
+97, 5144.                                                                           (24) SAS; SAS Institute Inc.: Cary, NC 27511.
+    (7) Murray, J. S.; Lane, P.; Brinck, T.; Paulsen, K.; Grice, M. E.;             (25) Hirschfelder, J. O.; Curtiss, C. F.; Bird, R. B. Molecular Theory of
+Politzer, P. J. Phys. Chem. 1993, 97, 9369.                                      Gases and Liquids; Wiley: New York, 1954.
+    (8) Brinck, T.; Murray, J. S.; Politzer, P. J. Org. Chem. 1993, 58, 7070.       (26) Levine, I. N. Physical Chemistry, 3rd ed.; McGraw-Hill Book
+    (9) Murray, J. S.; Brinck, T.; Politzer, P. J. Phys. Chem. 1993, 97,         Co.: New York, 1988.
+13807.                                                                              (27) The Merck Index, 10th ed.; Windholz, M., Ed.; Merck & Co.:
+   (10) Murray, J. S.; Lane, P.; Politzer, P. J. Mol. Struct. (THEOCHEM)         Rathway, NJ, 1983.
+1995, 342, 15.
+   (11) Murray, J. S.; Brinck, T.; Politzer, P. Chem. Phys., in press.           JP953312A
+

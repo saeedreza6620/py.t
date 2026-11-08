@@ -1,0 +1,857 @@
+                                                           ARTICLE IN PRESS
+
+
+
+                                                      Biomaterials 27 (2006) 3652–3662
+                                                                                                                www.elsevier.com/locate/biomaterials
+
+
+
+
+              Drug loading onto ion-exchange microspheres: Modeling
+                        study and experimental veriﬁcation
+                                      Mohammad J. Abdekhodaiea,b, Xiao Yu Wua,
+                                      a
+                                     Faculty of Pharmacy, University of Toronto, Toronto, Ont., Canada M5S 2S2
+                                  b
+                                   Department of Chemical Engineering, Sharif University of Technology, Tehran, Iran
+                                               Received 26 November 2005; accepted 13 February 2006
+                                                           Available online 6 March 2006
+
+
+
+Abstract
+
+  A new mathematical model was developed and an exact analytical solution without approximations of previous work was derived for
+the description of the kinetics and equilibrium characteristics of drug loading from a ﬁnite external solution onto ion-exchange
+microspheres. The inﬂuence of important parameters pertinent to material properties and loading conditions on the kinetics, efﬁciency,
+and equilibrium of drug loading was analyzed using the developed model and equations. The numerical results showed that the rate of
+drug loading increased with increasing initial drug concentration in the solution or with the relative volume of the external solution and
+the microsphere. The maximum binding capacity of the micrsophere and the association rate constant had positive effects on the loading
+rate and the equilibrium loading. A decrease in microsphere radius or an increase in drug diffusion coefﬁcient accelerated the loading
+process but did not inﬂuence the equilibrium drug loading. The model prediction agreed with experimental results of verapamil
+hydrochloride loading onto sulfopropyl dextran microspheres. The usefulness of the model in the design of loading experiments for
+desired drug loading efﬁciency and equilibrium loading was demonstrated by numerical analysis.
+r 2006 Elsevier Ltd. All rights reserved.
+
+Keywords: Ion-exchange microspheres; Mathematical modeling; Exact analytical solution; Drug loading kinetics; Equilibrium loading and efﬁciency;
+Experimental veriﬁcation
+
+
+
+1. Introduction                                                              the amount of drug loaded may be tailored by varying the
+                                                                             drug concentration in the solution, the ratio of microsphere
+   Ion-exchange resins and microspheres are of both                          to drug (MS/D), or the incubation time [11,13].
+practical and theoretical interests. They have long been                        An ion-exchange process can be described as a series of
+used in pharmacy and medicine for isolation of chemicals,                    reaction and mass transfer. The adsorption–desorption
+absorption of undesirable toxin in the body, masking taste                   reaction is a stoichiometric exchange of a solute in the
+of bitter drugs, delivery of anticancer drugs and chemo-                     liquid phase with the bound counterions [18–20]. Prior to
+sensitizers to multidrug resistant cells and solid tumors,                   ion exchange, diffusion of a species may take place in two
+controlled drug release for ocular and primarily oral                        regions: (1) the solution outside the particle, normally the
+applications, and for diagnosis [1–17]. Their high capacity                  stagnant ﬁlm surrounding the particle, and (2) within the
+of drug loading and ease of formulation provide additional                   particle. The transport resistance outside the particles may
+incentive to the use of microspheres as drug carriers. A                     be insigniﬁcant when rigorous stirring is applied. Several
+large amount of drug can be incorporated in the micro-                       kinetic models have been developed to describe the
+spheres by incubation of the microspheres in a drug                          behavior of ion-exchange polymers in ﬁxed bed columns,
+solution of deionized distilled water. Neither a complex                     which include homogeneous, heterogeneous, pore, surface
+loading process nor an organic solvent is needed. Besides,                   and combined diffusion models [21–30]. Often the reaction
+                                                                             rate at the ion-exchange site is assumed to be faster than
+  Corresponding author. Tel.: +1 416 978 5272; fax: +1 416 978 8511.        the rate of solute diffusion. Thus, the reaction is considered
+   E-mail address: xywu@phm.utoronto.ca (X.Y. Wu).                           to be instantaneous. Moreover, local equilibrium is
+
+0142-9612/$ - see front matter r 2006 Elsevier Ltd. All rights reserved.
+doi:10.1016/j.biomaterials.2006.02.011
+                                                 ARTICLE IN PRESS
+                                   M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662                              3653
+
+
+
+  Nomenclature                                                      Mp       amount of solute remaining in the external
+                                                                             solution at equilibrium
+  A       surface area of the microsphere                           N0       Avogadro’s number
+  Bi      constant of integration                                   Q        equilibrium swelling ratio
+  C       solute concentration in the microsphere                   r        position variable
+  C0      initial solute concentration in the external              rs       solute radius
+          solution                                                  R        position of the surface of microsphere
+  Cb      solute concentration in the external solution             T        absolute temperature
+  Cmax    maximum solute binding capacity of the ion-               V        external ﬂuid volume
+          exchange microsphere                                      V0 s     molal volume of solute
+  Cp      equilibrium solute concentration in the micro-            X        combined variable deﬁned by Eq. (15)
+          sphere                                                    a        dimensionless parameter deﬁned by Eq. (14)
+  Cb,p    equilibrium solute concentration in the external          b        dimensionless parameter deﬁned by Eq. (14)
+          solution                                                  ZB       viscosity of solvent
+  D       solute diffusion coefﬁcient through the polymer           j        association factor of solvent
+  Di,w    solute diffusion coefﬁcient through the solvent           y        dimensionless concentration deﬁned by Eq. (9)
+  K       Langmuir association constant                             y0       dimensionless initial concentration deﬁned by
+  Kads    association rate constant                                          Eq. (14)
+  Kdes    dissociation rate constant                                z        dimensionless spatial coordinate deﬁned by Eq.
+  M0      initial amount of solute in the external volume                    (9)
+  MB      molecular weight of solvent                               t        dimensionless time deﬁned by Eq. (9)
+  Mt      amount of solute remaining in the external                l        effective volume ratio deﬁned by Eq. (14)
+          volume at any time
+
+
+assumed to exist between the liquid and the solid at the           linked polymer networks through which diffusion of each
+particle surface and at the pore surfaces in the micropores.       individual species can be modeled by a single-phase
+   Although ion-exchange processes have been widely                diffusivity; that the diffusion coefﬁcient is independent of
+studied in chemistry and chemical engineering, only limited        drug concentration; and that mass transfer resistance in the
+work has been reported on the mathematical analysis of             liquid phase and the effect of electrostatic potential are
+kinetics of drug loading by ion-exchange [30] using                negligible. The microsphere is considered pre-swollen or
+previously derived approximated solutions [31]. This work          pre-hydrated in distilled-deionized (i.e., nearly electrolyte-
+was thus intended to provide a useful mathematical tool for        free) water prior to exposure to a drug solution. In this
+the prediction of drug loading behavior by considering             case, polymer swelling and mass transfer due to convection
+diffusion and reaction. A new mathematical model was               during drug loading are insigniﬁcant. Similarly to previous
+developed and an exact analytical solution was derived for         models, the rate of ion exchange in the microsphere is
+the description of the kinetics and equilibrium character-         assumed to be faster than drug diffusion. Hence drug
+istics of drug loading from a ﬁnite external solution onto         concentration in the microsphere as a function of time and
+ion-exchange microspheres. The inﬂuence of important               position (e.g. radius r) can be described by Fick’s second
+parameters associated with material properties and loading         law:
+conditions on drug loading kinetics, loading efﬁciency, and                           
+                                                                   qC D q 2 qC
+equilibrium loading level were analyzed using the devel-               ¼ 2       r      ,                                     (1)
+                                                                    qt    r qr      qr
+oped model and equations. To verify the model and the
+computational programs, drug loading experiments were              where D and C are, respectively, the diffusion coefﬁcient
+carried out using a cationic drug and microspheres of              and concentration of the solute in the microsphere. In a
+sulfopropyl dextran.                                               well-stirred ﬁnite external solution, the initial and bound-
+                                                                   ary conditions are:
+2. Theoretical analysis                                            C¼0       at t ¼ 0,                                        (2)
+
+2.1. Mathematical modeling and derivation of an exact              qC
+                                                                      ¼0      at r ¼ 0,                                       (3)
+solution                                                           qr
+
+   A kinetic diffusion model is developed to describe the               qC        dC b
+                                                                   DA      ¼V           at r ¼ R,                           (4)
+drug loading behavior of an ion-exchange microsphere that                qr        dt
+is immersed in a well-stirred drug solution. It is assumed         where V is the total external ﬂuid volume, Cb is the drug
+that the particle is a homogenous matrix such as cross-            concentration in the external bulk solution at time t, and R
+                                                           ARTICLE IN PRESS
+3654                                       M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662
+
+                              Sphere Surface                                                  Sphere Surface
+
+
+
+
+                                                   S       S                                                              S
+                            Na      Na      Na                                                              S       S
+                                                                                         Na         Na
+                                                   Na                                                      Na       Na
+
+
+
+
+                              Sphere Surface                                                   Sphere Surface
+
+
+
+
+                                                           S                                                                  S
+                             S       S         S   S
+                                                                                              Na       S        S     S
+                            Na                     Na                                                 Na             Na
+
+
+
+
+Fig. 1. Schematic illustration of drug loading mechanism proposed in the model. J indicates the available binding sites in a microsphere that are occupied
+either by drug (S) or counterions (Na).
+
+and A are the radius and the surface area of the                               solution, the counterions on the surface are displaced by
+microsphere, respectively. Eq. (2) states the initial condi-                   drug ions and carried away by the well-stirred bulk liquid.
+tion, Eq. (3) shows the symmetry of the system, and Eq. (4)                    The adsorbed drug ions further diffuse inwards due to a
+describes the mass balance at the interface between the                        concentration gradient, and exchange with counterions.
+microsphere and the external solution.                                         The freed counterions quickly diffuse to the surface of the
+   Apparently this is a problem of a variable boundary                         microsphere owing to a concentration gradient, weaker
+condition because Cb changes with time. Hence, to solve                        afﬁnity to the polymer and larger diffusion coefﬁcient than
+the differential equation (Eq. (1)), the following derivation                  drug ions. The counterions arriving at the surface exchange
+is conducted. First of all, it is assumed that ion exchange of                 with drug ions in the liquid adjacent to the micrsphere and
+a drug in the solution with counterions in the microsphere                     then removed. This ion exchange–diffusion–removal pro-
+mainly takes place at the interface by the mechanism                           cess proceeds until equilibrium between drug concentration
+illustrated in Fig. 1. This assumption is based on the                         in the microsphere and in the liquid is established.
+following facts: (a) the diffusion coefﬁcient of counterions,                     A second-order kinetic binding process is considered for
+which are normally small ions like Na+ and H+, is much                         the drug adsorption by a stoichiometric exchange between
+larger than that of drug ions, which are normally organic                      the drug and the counterions at the interface
+compounds with molecular weights of a few hundreds; and
+                                                                                                   K ads
+(b) drug binding onto the polymer of opposite charges is                       Solute þ Ligand Ð Solute Ligand ,                                      (5)
+                                                                                                   K des
+normally stronger than counterions. Moreover, it is
+reasonable to assume, as did in previous models, that                          where Solute is the solute in the external bulk solution,
+ion-exchange reaction is faster than drug diffusion in the                     Ligand is the ligand or available binding site in the
+polymer matrix. Hence only drug diffusion, the rate                            microsphere and SoluteLigand is the complex or the solute
+limiting step in drug loading, is considered in the micro-                     in the microsphere, Kads and Kdes are the association and
+sphere. In contrast, at the interface drug adsorption                          dissociation rate constant, respectively. The corresponding
+(binding) onto the surface of microspheres is a dominating                     concentrations of the above species are, respectively, Cb for
+factor as diffusion resistance is negligible under a well-                     Solute, (CmaxC) for Ligand, and C for SoluteLigand, where
+stirred condition. Besides, by assuming interface adsorp-                      Cmax is the maximum solute binding capacity of the ion-
+tion, we only consider bounded drug in the microsphere,                        exchange microsphere.
+which is important in modeling of equilibrium drug                               The change of Cb with time is a net result of the rate of
+loading.                                                                       drug adsorption and the rate of drug desorption, which can
+   Based on these assumptions, the process of drug loading                     be expressed as
+onto ion-exchange microspheres is described as follows (see
+also Fig. 1). Initially the binding sites in the microsphere                   dC b
+                                                                                    ¼ K des C  K ads C b ðC max  CÞ             at r ¼ R.           (6)
+are all occupied by counterions. Once exposed to a drug                         dt
+                                                        ARTICLE IN PRESS
+                                         M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662                             3655
+
+
+A total mass balance at any time gives:                                  Substituting Eq. (19) R and its derivative at z ¼ 1 into
+                                                                                                      1
+                   Z R                                                   Eq. (13), integrating 0 yz dz, and then simplifying the
+C b V ¼ C 0 V  4p     Cr2 dr,                                   (7)     resultant equation lead to the following equation:
+                       0                                                                                 
+                                                                         B1               pﬃﬃﬃ         1
+where C0 is the initial solute concentration in the external             pﬃﬃﬃ ¼ ð1  aÞB1 p erf pﬃﬃﬃ
+                                                                           t                         2 t
+solution. Combining Eqs. (4), (6) and (7) leads to an                                                       
+alternative boundary condition:                                                               pﬃﬃﬃ        1
+                                                                                  b 1 þ B1 p erf pﬃﬃﬃ
+                                       Z R                                                             2 t
+      qC                                                                                                      
+DA       ¼ VK des C  K ads C 0 V  4p        2
+                                            Cr dr                                        3B1 pﬃﬃﬃ              1
+       qr                                0                                       y0              t exp 
+                                                                                          l                   4t
+             ðC max  CÞ at r ¼ R.                              ð8Þ                                         
+                                                                                    pﬃﬃﬃ        1         pﬃﬃﬃ
+                                                                                 þ t p erf pﬃﬃﬃ  2 t .                      ð20Þ
+By using reduced dimensionless variables deﬁned as                                           2 t
+                              
+    r        Dt       r    C                                             One can solve for B1 from Eq. (20) and then substitute the
+z¼ ; t¼ 2; y¼                    .                               (9)
+   R         R        R C max                                            B1 value into Eq. (19) to ﬁnd a concentration proﬁle inside
+                                                                         the microsphere at any time.
+The deﬁning Eqs. (1)–(4) and (8) can now be reduced to
+                                                                           The amount of drug remaining in the solution at any
+their dimensionless forms:
+                                                                         time can be obtained by combination of a total mass
+qy q2 y                                                                  balance (Eq. (7)) and the concentration proﬁle (Eq. (19)).
+  ¼     ,                                                       (10)     The fraction of drug remaining in the solution in terms of
+qt qz2
+                                                                         dimensionless quantities is thus given by
+y¼0      at t ¼ 0,                                              (11)                                    
+                                                                         Mt          3       pﬃﬃﬃ      1
+                                                                             ¼1        B1    t exp 
+                                                                         M0         ly0                4t
+y¼0      at z ¼ 0,                                              (12)                                     
+                                                                                   pﬃﬃﬃ       1        pﬃﬃﬃ
+                           Z                                                  þ p t erf pﬃﬃﬃ  2 t ,                          ð21Þ
+    qy                     3 1                                                               2 t
+      ¼ ða  1Þy  b y0      yz dz ð1  yÞ at z ¼ 1,
+    qz                     l 0                                           where B1 is obtained from Eq. (20). Apparently the
+                                                    (13)                 corresponding fraction of drug loaded onto the micro-
+                                                                         sphere can be found to be: 1  M t =M 0 .
+where a, b, l, and y0 are deﬁned as
+                                                                           At the equilibrium of drug absorption, the fraction of
+    VK des R           VK ads RC max            3V                       drug remaining in the external solution reaches a plateau of
+a¼           ;    b¼                 ;    l¼        ,
+      DA                   DA                  4pR3                      minimum concentration, that is, dC b =dt ¼ 0. Thus Eq. (6)
+      C0                                                                 can be converted to the Langmuir isotherm:
+y0 ¼       .                                                    ð14Þ
+     C max                                                                       C max KC b;1
+                                                                         C1 ¼                 ,                                  (22)
+A combined variable X is deﬁned below, in order to reduce                        1 þ KC b;1
+Eq. (10) to an arbitrary differential equation:
+                                                                         where K is called Langmuir association constant and
+   1z                                                                   deﬁned as
+X ¼ pﬃﬃﬃ .                                                      (15)
+     t                                                                         K ads
+                                                                         K¼          ,                                           (23)
+Thus, the dimensionless concentration y becomes a total                        K des
+function of the combined variable:
+                                                                         C 1 and C b;1 are, respectively, the equilibrium drug
+yðz; tÞ ¼ yðX Þ                                                 (16)     concentration in the ion-exchange microsphere and the
+                                                                         external solution. Substituting Eq. (22) into Eq. (7) for the
+and the diffusion equation, Eq. (10), becomes:
+                                                                       total mass balance at equilibrium and rearranging the
+d2 y       X dy                                                          equation yield:
+    2
+      ¼          .                                             (17)
+dX         2 dX                                                             C max K      M0
+                                                                                       ¼     1,                                 (24)
+Directly integrating this equation twice gives:                          lð1 þ KC b;1 Þ M 1
+               
+       pﬃﬃﬃﬃ   X                                                         where MN/M0 is the fraction of drug remaining in the
+y ¼ B1 p erf        þ B2 ,                                      (18)
+                2                                                        solution at equilibrium.
+where B1 and B2 are constants of integration. By using the
+ﬁrst boundary condition, i.e., Eq. (12), y becomes:                      2.2. Determination of model parameters
+                               
+       pﬃﬃﬃ    1z              1
+y ¼ B1 p erf     pﬃﬃﬃ  erf pﬃﬃﬃ .                    (19)                 To determine model parameters, following derivations
+                2 t            2 t                                       are performed. At the equilibrium of drug absorption,
+                                                          ARTICLE IN PRESS
+3656                                       M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662
+
+
+rearrangement of Eq. (24) gives:                                            4. Results and discussion
+        1
+  M0            lC b;1      l                                               4.1. Drug concentration profiles inside the microspheres
+      1     ¼         þ         .                                  (25)
+  M1             C max   KC max
+                                                                              The drug concentration proﬁles inside the microsphere at
+Drawing ððM 0 =M 1 Þ  1Þ1 versus C b;1 from equilibrium
+                                                                            various dimensionless times were computed using Eq. (19)
+of drug loading from their aqueous solution with different
+                                                                            using l ¼ 40, a ¼ 0:04, b ¼ 60, and y0 ¼ 0:032. As shown
+values of initial drug concentration and similar l, the ratio
+                                                                            in Fig. 2, drug concentration inside the microsphere
+of slope versus intercept gives the value of Langmuir
+                                                                            increases with time at a given position r/R, and the
+association constant, K.
+                                                                            concentration gradient from the surface (r=R ¼ 1) to the
+  Given that the diffusion coefﬁcient of a solute through
+                                                                            center (r=R ¼ 0) decreases as time progresses. The drug
+the swollen cross-linked dextran depends on the equili-
+                                                                            concentration in the microsphere becomes uniform when
+brium swelling ratio (Q), the following equation proposed
+                                                                            the loading reaches equilibrium at t ﬃ 10 in this example.
+by Lustig and Peppas [32] is adapted for the calculation of
+                                                                            This result is consistent with the expectation that as time
+normalized solute diffusion coefﬁcient, i.e., the ratio of
+                                                                            progresses, the drug concentration in the external solution
+solute diffusion coefﬁcient in the swollen network to that in
+                                                                            decreases. As a result, the driving force for drug diffusion
+a solvent, Di,w:
+                                                                            decreases. The curves reach plateau at longer times
+                             
+ Di         3=4          Y                                                 indicating equilibration of drug loading.
+     ﬃ rs Q      exp           ,                        (26)                 The exact solution describing the kinetics of drug
+Di;w                    Q1
+                                                                            loading onto an ion-exchange microsphere from a ﬁnite
+where Y is a constant taken to be equal to 1 for most                       external medium (Eq. (21)) presented above was employed,
+polymeric system and rs is the solute radius, which                         together with other relevant equations, to study the effects
+according to Flynn et al. [33], can be estimated by the                     of various factors on the drug loading kinetics and
+following equation:                                                         equilibrium behavior. These factors can be categorized as
+                                                                          fabrication conditions such as volume ratio of the external
+        3V 0s 1=3                                                           solution to the microsphere and initial drug concentration
+rs ¼              ,                                (27)
+       4pN 0                                                                of the loading solution, and properties of the drug and the
+where N0 is Avogadro’s number and V 0s is the molal                         microsphere. The latter includes particle size and binding
+volume of solute. The molal volume of a compound is an                      capacity of the microspheres, association and dissociation
+additive property of its constituent atoms and functional                   rate constant, and drug diffusivity in the polymer.
+groups. With this advantage, V 0s can be estimated from the
+chemical structure of the diffusant [34].                                   4.2. Influence of loading conditions
+  To obtain the solute diffusion coefﬁcient in a solvent, the
+Wilke–Chang correlation [34], a modiﬁcation of the                            Fig. 3 illustrates the fraction of drug remaining in the
+Stoke–Einstein equation, is used:                                           solution versus time for different volume ratio (l ¼ 20, 50,
+                                                                            100, 150 and 200) computed with an initial drug
+                      ðjM B Þ1=2 T                                          concentration in the solution, C0 ¼ 0.25 mM, and the
+Di;w ¼ 7:4  108                     ,                             (28)    radius of a microsphere, R ¼ 100 mm. It is seen that as l
+                         ZB V 0 0:6
+                                s
+                                                                            decreases, the rate of drug absorption increases, whereas
+where T is the absolute temperature, MB is the molecular                    the equilibrium fraction of drug remaining in the solution
+weight of the solvent, ZB is the viscosity of the solvent, V0 s is          (M t =M 0 ) and the time for reaching the equilibrium
+the molal volume of the solute at its boiling temperature,                  decrease. This result is consistent with a previous experi-
+and j is the association factor of solvent that is taken as 2.6             mental ﬁnding reported by Liu et al. [13]. In a study of drug
+for water.                                                                  loading using a ﬁxed liquid volume and doxorubicin
+                                                                            concentration, the authors found that as the weight ratio
+                                                                            of MS/D increased, the rate of drug loading onto the
+3. Experimental                                                             micrsopheres increased.
+                                                                              This phenomenon is a characteristic of drug loading by
+   In the ﬁrst set of experiments, verapamil hydrochloride (VER, Sigma,     ion-exchange mechanism and can be attributed to the
+Canada) was loaded from aqueous solutions of three different initial drug
+concentrations (3.9, 7.2, and 10.5 mg/ml) onto pre-swollen cross-linked     competition of drug molecules for a given number of
+sulfopropyl dextran microspheres (Sephadex SP C-25, Pharmacia,              binding sites, which determines the equilibrium amount of
+Peapack, NJ) at various solution to microsphere ratios. The volume ratio    drug which can be loaded and the rate of drug loading. For
+of the solution to the microspheres was 15.67. The drug concentration in    a given microsphere, the number of binding sites of the
+the external solution at equilibrium was measured by a UV–V is              microspheres is ﬁxed. As l is reduced or MS/D is elevated,
+spectrophotometer at a wavelength of 290 nm. To determine the kinetics
+of drug loading, the microspheres were soaked in a VER solution with        the relative number of binding sites per drug molecule
+C0 ¼ 1.8 mg/ml and l ¼ 40.67. The drug concentration in the external        becomes larger, which reduces the competition of drug
+solution was monitored continuously.                                        molecules for the binding sites thus accelerating drug
+                                                                               ARTICLE IN PRESS
+                                                            M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662                                       3657
+
+            1                                                                               4.3. Influence of drug and microsphere properties
+                          τ =10
+                                                                                              The inﬂuence of the properties of a drug and a
+           0.8           τ =1                                                               microsphere were analyzed including particle size and
+                                                                                            maximum binding capacity of the microsphere, the
+                                                                                            association and dissociation constants and diffusion
+           0.6
+                                                                                            coefﬁcient of the drug.
+C/Cmax
+
+
+
+
+                           τ = 0.25
+
+           0.4                                                                              4.3.1. Particle size
+                                                                                               Fig. 5 shows the fraction of drug remaining in the
+                         τ = 0.1
+                                                                                            solution versus time for ﬁve different microsphere sizes
+           0.2                                                                              (R ¼ 20, 50, 100, 150, and 200 mm) at a given initial drug
+                                      τ = 0.05                                              concentration in the solution, C0 ¼ 0.25 mM, a ﬁxed
+                                                                    τ = 0.01
+                                                                                            volume ratio, l ¼ 50, and a given Cmax. It is seen that as
+            0
+                 0              0.2            0.4            0.6          0.8         1    the particle size decreases, the rate of solute depletion in the
+                                                     r /R                                   external solution accelerates, while the equilibrium fraction
+                                                                                            of drug remaining in the solution is virtually unchanged.
+Fig. 2. Drug concentration proﬁle inside the microsphere at different
+dimensionless times. l ¼ 40, a ¼ 0:04, b ¼ 60, and y0 ¼ 0:032.
+                                                                                            This example reveals that drug diffusion plays a role in
+                                                                                            the loading kinetics. Under the same condition of ion
+                                                                                            exchange (e.g. with ﬁxed C0, Cmax, and l values), a smaller
+                                                                                            microsphere radius means a larger ratio of surface area to
+             1
+                                                                                            volume and shorter distance for diffusion. As a result,
+                                                                          λ=                more drug molecules can react with the polymer and
+                                                                                 20
+           0.8
+                                                                                            diffuse into a unit volume of the microsphere in a given
+                                                                                 50
+                                                                                 100        time and a shorter time is required for drug molecules to
+                                                                                 150        complete the journey of diffusion, i.e., to reach the center
+           0.6                                                                   200        of the microsphere.
+M t / Mo
+
+
+
+
+                                                                                            4.3.2. Maximum binding capacity
+           0.4
+                                                                                              The effect of maximum solute binding capacity (Cmax) of
+                                                                                            the ion-exchange polymer on the fraction of drug remain-
+           0.2                                                                              ing in the solution is depicted in Fig. 6. As expected, as
+                                                                                            Cmax increases, the rate of drug loading increases while
+
+             0
+                     0                     2                        4                  6                 1
+                                                     t (hr)
+                                                                                                                                                 C0 =
+Fig. 3. Fraction of drug remaining in the solution versus time                                                                                          0.25
+as a function of volume ratio of external solution to micro-                                            0.8
+                                                                                                                                                        0.5
+spheres. Cmax ¼ 100 mM, D ¼ 1  109 cm2/s, Kads ¼ 5  103 (mM s)1,
+                                                                                                                                                        1.0
+Kdes ¼ 1  103 s1, C0 ¼ 0.25 mM, R ¼ 100 mm.
+                                                                                                                                                        1.5
+                                                                                                        0.6                                             2.0
+                                                                                             M t / Mo
+
+
+
+
+adsorption. On the other hand, with a ﬁxed total capacity
+for ion exchange, a larger l results in a smaller fraction of                                           0.4
+drug which can be loaded onto the microsphere at
+equilibrium due to saturation of the binding sites, which
+is reﬂected by a higher remaining concentration (M t =M 0 )                                             0.2
+when the curve reaches a plateau.
+   The effect of initial drug concentration in the solution on
+the fraction of drug remaining in the solution is shown in                                               0
+Fig. 4. For ﬁxed values of volume ratio (l ¼ 50) and                                                          0     2              4             6               8
+particle size (R ¼ 100 mm), M t =M 0 increases while the                                                                         t (hr)
+adsorption rate decreases with increasing initial drug
+                                                                                            Fig. 4. Fraction of drug remaining in the solution versus time
+concentration. This result can also be explained by the                                     as a function of initial drug concentration in the external
+competition of drug molecules for binding sites on the                                      solution. Cmax ¼ 100 mM, D ¼ 1  109 cm2/s, Kads ¼ 5  103 (mM s)1,
+micrsophere described above.                                                                Kdes ¼ 1  103 s1, l ¼ 50, R ¼ 100 mm.
+                                                                         ARTICLE IN PRESS
+3658                                                       M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662
+
+           1                                                                                            1
+                     1                                                 R=                                                                            Cmax =
+                                                                             20
+                    0.8                                                                                                                                    20
+          0.8                                                                50                       0.8
+                                                                                                                                                           50
+                                                                             100                                                                           100
+                    0.6
+                                                                             150                                                                           200
+          0.6       0.4                                                      200                      0.6                                                  400
+
+
+
+
+                                                                                            Mt / Mo
+Mt / M0
+
+
+
+
+                    0.2
+          0.4                                                                                         0.4
+                     0
+                          0        0.5            1           1.5
+                                         t (hr)
+                                                                                                      0.2
+          0.2
+
+
+                                                                                                        0
+           0
+                                                                                                            0       2               4               6               8
+                0             10            20              30         40          50
+                                                  t (hr)                                                                          t (hr)
+
+Fig. 5. Fraction of drug remaining in the solution versus time for                         Fig. 6. Fraction of drug remaining in the solution versus time
+microspheres with various sizes. Cmax ¼ 100 mM, D ¼ 1  109 cm2/S,                        for microspheres with various maximum solute binding capacities.
+Kads ¼ 5  103 (mM s)1, Kdes ¼ 1  103 s1, l ¼ 50, C0 ¼ 0.25 mM.                       D ¼ 1  109 cm2/s, Kads ¼ 5  103 (mM s)1, Kdes ¼ 1  103 s1, l ¼ 50,
+                                                                                           C0 ¼ 0.25 mM, R ¼ 100 mm.
+
+
+
+
+M t =M 0 decreases. This result suggests that Cmax is                                                  1
+a key parameter that inﬂuences both kinetics and                                                                                              K=             0.5
+                                                                                                                                                             1
+thermodynamics of the loading process. It provides a                                                                                                         5
+driving force for diffusion, meanwhile limiting the                                                   0.8
+                                                                                                                                                             10
+maximum amount of an ionic drug, which can be loaded                                                                                                         50
+by the ion-exchange mechanism. Therefore, to augment
+                                                                                                      0.6
+drug loading levels, microspheres with higher charge
+                                                                                            Mt / M0
+
+
+
+
+density, i.e., Cmax should be selected. Note that the type
+of charged groups on the polymer may also inﬂuence the                                                0.4
+effective Cmax, that is, the binding sites available for drug
+loading.
+                                                                                                      0.2
+4.3.3. Association and dissociation rate constants
+   Fig. 7 presents drug loading proﬁles as a function of the
+ratio of association rate constant to dissociation rate                                                0
+constant (K ¼ Kads/Kdes). Apparently, at ﬁxed values of                                                     0       1               2               3               4
+Cmax, C0, l, and R, the adsorption rate increases, while the                                                                      t (hr)
+equilibrium fraction of drug remaining in the solution,
+                                                                                           Fig. 7. Fraction of drug remaining in the solution versus time as a
+C b1 , decreases with an increase in the K value. The
+                                                                                           function of the ratio of association rate constant to the dissociation rate
+inﬂuence of the relative magnitude of Kabs and Kdes on                                     constant (K ¼ Kads/Kdes). Cmax ¼ 100 mM, D ¼ 1  109 cm2/s, l ¼ 50,
+the drug absorption rate is predicted by Eq. (6), and                                      C0 ¼ 0.25 mM, R ¼ 100 mm.
+the relation of C b1 with K can be found from Eq. (22).
+The relative value of Kabs and Kdes can be considered
+as the afﬁnity of a drug to a microsphere, which varies
+with the properties of the drug and the micrsophere. A                                     with other parameters remaining constant, the change in
+previous study of loading dual drugs onto the same ion-                                    diffusion coefﬁcient only inﬂuences the rate of drug
+exchange microspheres showed that vinblastine had a                                        loading. When diffusion coefﬁcient increases, the absorp-
+higher afﬁnity than verapamil to sulfopropyl dextran                                       tion rate increases as indicated by the faster drug depletion
+microspheres [11].                                                                         in the external solution. Consequently, the time for the
+                                                                                           adsorption reaches equilibrium is shortened. However, the
+4.3.4. Drug diffusion coefficient                                                          equilibrium fraction of drug remaining in the solution
+  Fig. 8 depicts how drug diffusion coefﬁcient in the                                      remains unchanged, because it is determined by the
+polymer can affect drug loading behavior. As expected,                                     thermodynamic properties of the system.
+                                                                     ARTICLE IN PRESS
+                                                       M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662                                            3659
+
+
+4.4. Prediction of loading efficiency and loading level in the                          A similar trend can also be seen in the plot of C 1 vs. l
+microsphere                                                                             (Fig. 9b). The curvature of the C 1  l plot increases with
+                                                                                        increasing C0. Moreover, as l is raised from 100 to 200, C 1
+  Once the ion-exchange microspheres are chosen for a                                   scarcely changes with l at high C0 levels, e.g. 2.0 mM. This
+given drug, the parameters associated with the properties                               result suggests that drug loading has reached the maximum
+of the drug and the mcirospheres are determined. To attain                              equilibrium capacity of the microsphere, beyond which, no
+desirable drug loading levels and loading efﬁciency,                                    more drug can be loaded.
+however, the loading conditions may be manipulated. As                                     Fig. 10 illustrates the dependence of drug loading
+presented above, the initial drug concentration in the                                  efﬁciency (1  M 1 =M 0 ) on l and C0. It is shown that,
+loading solution and the volume ratio of the solution to the                            for a given drug–microsphere system, the smaller the l, the
+microsphere have signiﬁcant impact on the maximum                                       higher the loading efﬁciency; and the lower the C0, the
+amount of drug that can be extracted from the solution.                                 higher the loading efﬁciency. At l ¼ 20, (1  M 1 =M 0 ) is
+For quantitative analyses, a relationship of l and C0 with                              virtually independent of C0 in the studied range (0.25–2.0)
+the equilibrium drug concentration in the microsphere,                                  with a value being around 0.94–0.96 (Fig. 10a). As l
+C 1 is obtained by combining Eqs. (7) and (22):                                         increases, (1  M 1 =M 0 ) decreases with increasing C0 more
+                                                                                        profoundly. This result suggests that a liquid/microsphere
+   lC 1
+              þ C 1 ¼ lC 0 .                                                     (29)   volume ratio as low as 20 should be selected for the highest
+KðC m  C 1 Þ                                                                           loading efﬁciency among these examples.
+In addition, substituting C b1 ¼ C o M 1 =M 0 in Eq. (24)
+gives                                                                                              100
+                                                                                                                                                       150
+       C max K            M 1 1                                                                                           λ = 200
+                      ¼           1.               (30)                                                                                                100
+l 1 þ KC 0 ðM 1 =M 0 Þ     M0                                                                       80
+                                                                                                                                                         50
+The dependence of C 1 and M 1 =M 0 on l and C0 is
+implicitly described by Eqs. (29) and (30). The values of                                           60
+                                                                                         Cα (mM)
+
+
+
+
+C 1 and M 1 =M 0 can be solved from these equations,
+respectively, by using a numerical method.
+                                                                                                    40
+   Fig. 9 presents some examples of C 1 as a function of
+l and C0. It can be seen that at ﬁxed values of Cmax and K,                                                                                        λ = 20
+C 1 increases with increasing C0 and l. A linear C 1  C 0                                          20
+relationship is observed in Fig. 9a at small l values, e.g. 20.
+As l is enlarged from 50 to 100, 150, and 200, the curves
+become more non-linear and merge at C0 about 2.0 mM.                                                 0
+                                                                                                         0.0   0.5        1.0         1.5          2.0         2.5
+           1                                                                                                                    C0 (mM)
+                     1                                                                  (a)
+                                                                     D=
+                    0.8                                                    -10                     100
+                                                                    1x10
+          0.8       0.6                                                                                                                                  2.0
+                                                                    5x10-10
+                    0.4                                                    -9                                                                            1.5
+                                                                    1x10                            80
+                                                                                                                                                         1.0
+                    0.2                                                    -9
+          0.6                                                       5x10
+Mt / M0
+
+
+
+
+                     0                                              1x10-8                          60
+                                                                                         Cα (mM)
+
+
+
+
+                          0        0.5   1        1.5
+                                                                                                                                                         0.5
+          0.4
+                                                                                                    40
+
+          0.2                                                                                                                                      C0 = 0.25
+                                                                                                    20
+
+
+           0
+                                                                                                     0
+                0             10         20             30          40            50
+                                                                                                          0    50        100          150          200         250
+                                              t (hr)
+                                                                                        (b)                                       λ
+
+Fig. 8. Fraction of drug remaining in the solution versus time as a                     Fig. 9. Equilibrium drug concentration in the ion exchange microspheres
+function of drug diffusion coefﬁcient through the ion-exchange polymer.                 as a function of (a) the volume ratio of solution to microsphere (l) and (b)
+Cmax ¼ 100 mM, Kads ¼ 5  103 (mM s)1, Kdes ¼ 1  103 s1, l ¼ 50,                   initial drug concentration in the solution (C0). Cmax ¼ 100 mM,
+C0 ¼ 0.25 mM, R ¼ 100 mm.                                                               Kads ¼ 5  103 (mM s)1, Kdes ¼ 1  103 s1, R ¼ 100 mm.
+                                                              ARTICLE IN PRESS
+3660                                           M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662
+
+
+   Nonetheless, as shown in Fig. 9, at l ¼ 20, C 1 is very                                           1                                                              100
+low. Taken together the results in Figs. 9 and 10, it can be
+concluded that the highest drug loading and the highest                                        0.8                                                                  80
+loading efﬁciency cannot be achieved at the same time.
+Therefore, a compromise in either loading levels or loading
+
+
+
+
+                                                                                   1−M∞ /M0
+                                                                                                                                                    λ = 50
+
+
+
+
+                                                                                                                                                                         C∞(mM)
+efﬁciency is needed. In cases that the highest possible                                        0.6                                                                  60
+loading level and loading efﬁciency are wanted, a plot of
+(1  M 1 =M 0 ) and C 1 in the same ﬁgure is useful. As                                        0.4                                                                  40
+demonstrated in Fig. 11, the points at which (1  M 1 =M 0 )
+and C 1 curves meet are the highest values for both.
+Apparently, in this typical example, the two curves for                                        0.2                                                                  20
+l ¼ 20 do not meet; and l ¼ 50 provides the highest overall
+values of loading efﬁciency and loading level.                                                       0                                                              0
+                                                                                                         0       0.5           1         1.5        2         2.5
+                                                                                                                                   C0 (mM)
+4.5. Comparison with experimental data
+                                                                                  Fig. 11. Drug loading efﬁciency (solid lines, left y-axis) and equilibrium
+  Fig. 12 shows a plot of ðM 0 =M 1  1Þ1 against                                drug loading (dashed lines, right y-axis) as a function of C0 and l.
+equilibrium drug concentration obtained from VER load-                            Symbols: (}) l ¼ 20, (’) l ¼ 50, (m) l ¼ 100, ( ) l ¼ 150, (E) l ¼ 200.
+                                                                                  The arrows indicate the points at which the two curves for the same l
+                                                                                  value meet. For all curves, Cmax ¼ 100 mM, Kads ¼ 5  103 (mM s)1,
+           1                                                                      Kdes ¼ 1  103 s1, R ¼ 100 mm.
+                                                                   20
+                                                                                                     0.6
+          0.8
+                                                                   50                                                                  y = 68.447x + 0.0113
+                                                                                                     0.5
+                                                                                                                                             R2 = 0.999
+1−M∞/M0
+
+
+
+
+          0.6
+                                                                                                     0.4
+                                                                                    (M o / M∞−1)-1
+
+
+
+
+                                                                   100
+          0.4
+                                                                                                     0.3
+                                                                   150
+          0.2                                                                                        0.2
+                                                                  λ = 200
+
+                                                                                                     0.1
+           0
+                0     0.5           1           1.5           2             2.5
+(a)                                     C0 (mM)                                                          0
+                                                                                                             0         0.002           0.004       0.006            0.008
+           1                                                                                                                           Cb,∞
+
+                                                                                  Fig. 12. (M0/MN1)1 vs. equilibrium drug concentration when VER
+          0.8                                                                     were loaded from their aqueous solutions with three values of initial drug
+                                                                                  concentrations (3.9, 7.2, and 10.5 mg/ml) onto pre-swollen Sephadex SP
+                                                                   C0 =
+                                                                                  C-25 microspheres, l ¼ 15.67 (n ¼ 3, error bars represent standard
+                                                                   0.25           deviations).
+          0.6
+1−M∞/M0
+
+
+
+
+                                                                    0.5
+                                                                                  ing onto sulfopropyl dextran microspheres. As shown in
+          0.4                                                      1.0            Eq. (25), the ratio of the slope to the intercept of the plot
+                                                                   1.5            equals the Langmuir constant ratio, K, which is found to
+          0.2                                                      2.0            be 6056 M1 from Fig. 12. The maximum binding capacity
+                                                                                  of the swollen microsphere, Cmax, was evaluated to be
+                                                                                  0.229 M from the slope of the plot. This value is very close
+           0                                                                      to the nominal ion-exchange capacity of the microspheres,
+                0     50          100           150         200             250
+                                                                                  0.23 M.
+(b)                                        λ                                         The diffusion coefﬁcient of VER through the cross-
+                                                                                  linked dextran was calculated to be 3.21  106 cm2/s by
+Fig. 10. Drug loading efﬁciency as a function of (a) the volume ratio of
+solution to microsphere (l) and (b) initial drug concentration in the solution    using Eqs. (26)–(28) and the experimentally determined
+(C0). Cmax ¼ 100 mM, Kads ¼ 5  103 (mM s)1, Kdes ¼ 1  103 s1,               swelling ratio of the dextran microspheres, Q ¼ 12 [11]. To
+R ¼ 100 mm.                                                                       predict the fraction of drug remaining in the solution at
+                                                                          ARTICLE IN PRESS
+                                                           M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662                                         3661
+
+                                    1                                                      onto an ion-exchange microsphere from a ﬁnite external
+                                                                          λ = 40.67        volume. Various factors inﬂuencing drug loading kinetic
+                                                                          λ = 82.33        and equilibrium loading have been analyzed using the
+Fraction of drug in the solution
+
+
+
+
+                                   0.8
+                                                                                           established equations. The numerical results have revealed
+                                                                                           that some factors would inﬂuence both kinetics and
+                                   0.6                                                     thermodynamics of drug loading, including the maximum
+                                                                                           binding capacity of the polymer, association/dissociation
+                                                                                           constants, and loading conditions (e.g. l and C0); while
+                                   0.4                                                     others like diffusivity of the drug and the particle size of the
+                                                                                           microsphere only affect loading kinetics.
+                                   0.2
+                                                                                              The equations obtained in this work can be employed for
+                                                                                           the selection of ion-exchange microspheres for a given drug
+                                                                                           and a desirable drug loading, or for the prediction of drug
+                                    0                                                      loading efﬁciency and equilibrium loading levels for a given
+                                         0   5       10              15               20   microsphere–drug system under a known loading condi-
+(a)                                              Time (min)                                tion. They can also be used to design a loading experiment
+                                                                                           for a targeted loading content and loading efﬁciency.
+                                    1                                                      Although the equations are derived for one sphere, they
+                                                                   Co=1.8 mg /ml           can be applied to sphere ensembles as well by using either
+                                                                   Co =3.6 mg /ml          an average diameter of the population or a distribution of
+Fraction of drug in the solution
+
+
+
+
+                                   0.8
+                                                                                           the particle size as suggested previously [35–36]. Experi-
+                                                                                           mentally, drug loading proﬁles from verapamil solutions
+                                   0.6                                                     onto pre-swollen cross-linked sulfopropyl dextran micro-
+                                                                                           spheres agreed with the mathematical predictions.
+
+                                   0.4
+                                                                                           Acknowledgment
+
+                                   0.2                                                        This project is supported in part by a research grant
+                                                                                           from the Canadian Institutes of Health Research of
+                                    0
+                                                                                           Canada to X.Y. Wu. The sponsorship from IDB and
+                                                                                           SUT of Iran to M.J. Abdekhodaie is also acknowledged.
+                                         0   5        10             15               20
+(b)                                              Time (min)
+                                                                                           References
+Fig. 13. Comparison of the experimental results and theoretical predic-
+tions of drug loading into cross-linked dextran microsphere contain                         [1] Martin GL. Ion exchange and adsorption agents in medicine. Boston:
+sulfopropyle groups from verapamil hydrochloride solution.                                      Little Brown; 1955.
+K ¼ 6056 M1, Cmax ¼ 0.229 M, D ¼ 3.21  106 cm2/s, Kads ¼ 0.133                           [2] Borodkin S, Sundberg DP. Polycarboxylic acid ion-exchange resin:
+(M s)1, and (a) C0 ¼ 1.8 mg/ml, and (b) l ¼ 40.67.                                             adsorbates for taste coverage in chewable tablets. J Pharm Sci
+                                                                                                1971;60:1523–7.
+any time using Eqs. (20) and (21), only one parameter (i.e.,                                [3] Goldberg EP, Iwata H, Longo W. Hydrophilic albumin and dextran
+                                                                                                ion-exchange microspheres for localized chemotherapy. In: Davis SS,
+the association rate constant) has to be determined. By                                         Illum L, McVie JG, Tomolinson E, editors. Microsphere and drug
+ﬁtting the kinetic data of VER loading from its aqueous                                         therapy: pharmaceutical, immunological and medical aspects.
+solution with C0 ¼ 1.8 mg/ml at l ¼ 40.67, with the                                             New York: Elsevier Science; 1984. p. 309–25.
+mathematical model, Kads was estimated to be 0.133                                          [4] Raghunathan Y, Controlled release pharmaceutical preparations. US
+(M s)1. In the next experiments, drug loading kinetics                                         Patent No. 4 847 077, 1989
+                                                                                            [5] Codde JP, Burton MA, Kelleher DK, Archer SG, Gray B. Reduced
+with different values of C0 and l have been studied. The                                        toxicity of adriamycin by incorporation into ion exchange micro-
+parameters obtained from the experimental results and                                           sphere: a therapeutic study using a rat liver tumor model. Aticancer
+theoretical calculations were then used for model computa-                                      Res 1990;10:1715–8.
+tion. The model predicted loading proﬁles at various                                        [6] Kogan PW, Rudnic EM, Sequeira JA, Chaudry IA. Sustained release
+conditions are compared with the experimental data in                                           oral suspensions. US Patent no. 4 999 189, 1991
+                                                                                            [7] Chen Y, Burton MA, Codde JP, Napoli S, Martins IJ, Gray BN.
+Fig. 13, which shows good agreement between the two.                                            Evaluation of ion-exchange microspheres as carrier for the anticancer
+                                                                                                drug doxorubicin: in vitro studies. J Pharm Pharmacol
+5. Conclusions                                                                                  1992;44:211–5.
+                                                                                            [8] Jani R, Gan O, Ali Y, Rodstorm R, Hancock S. Ion exchange resins
+                                                                                                for ophthalmic delivery. J Ocular Pharmacol 1994;10:57–67.
+  A new mathematical model and an exact solution have                                       [9] Burton S, Washington N, Steele RJ, Mussen R, Feely L. Intragastric
+been derived for describing the behavior of drug loading                                        distribution of ion-exchange resins: a drug delivery systems for the
+                                                              ARTICLE IN PRESS
+3662                                          M.J. Abdekhodaie, X.Y. Wu / Biomaterials 27 (2006) 3652–3662
+
+
+     topical treatment of the gastric mucosa. J Pharm Pharmacol                  [23] Weber WJ, Smith EH. Simulation and design models for adsorption
+     1995;47:901–6.                                                                   process. Environ Sci Tech 1987;21:1040–50.
+[10] Tarvainen T, Svarfvar B, Akreman S, Savolanien J, Karhu M,                  [24] Sun LM, Meunier F. An improved ﬁnite difference method for ﬁxed
+     Paronen P, et al. Drug release from a porous ion-exchange membrane               bed multicomponent sorption. A I Ch E J 1991;37:244–54.
+     in vitro. Biomaterials 1999;20:2177–83.                                     [25] Yao C, Tien C. Approximation of uptake rate of spherical absorbent
+[11] Liu Z, Wu XY, Bendayan R. In vitro investigation of ionic                        pellets and their application to batch adsorption calculations. Chem
+     polysaccharide for simultaneous delivery of chemosensitizer and anti-            Eng Sci 1993;48:187–98.
+     neoplastic agent to multidrug-resistant cells. J Pharm Sci 1999;88:412–8.   [26] Robinson SM, Arnold WD, Byers CH. Mass transfer mechanisms
+[12] Liu Z, Wu XY, Ballinger JR, Bendayan R. Synthetic and                            for zeolite ion-exchange in wastewater treatment. A I Ch E J
+     characterization of surface-hydrophobic ion-exchange microspheres                1994;40:2045–54.
+     and the effect of coating on drug release rate. J Pharm Sci                 [27] De Paoli SM, Perona JJ. Model for Sr–Cs–Ca–Mg–Na ion-exchange
+     2000;89:807–17.                                                                  uptake kinetics on chabozite. A I Ch E J 1996;42:3434–41.
+[13] Liu Z, Cheung R, Wu XY, Ballinger JR, Bendayan R, Rauth AM. A               [28] Carrere H, Bascoul A, Floquet P, Wilhelm AM, Delmas H. Whey
+     study of doxorubicin loading onto and release from sulfopropyl                   protein extraction by ﬂuidized ion-exchange chromatographi simpli-
+     dextran     ion-exchange     microspheres.        J   Control     Release        ﬁed modelindg and economical optimization. Chem Eng
+     2001;77:213–24.                                                                  J 1996;64:307–17.
+[14] Liu Z, Ballinger J, Rauth AM, Bendayan B, Wu XY. Delivery of an             [29] Latheef IM, Huckman ME, Anthony RG. Modeling cesium ion-
+     anticancer drug and a chemosensitizer to murine breast sarcoma by                exchange on ﬁxed bed columns on crystalline silicotitanate granules.
+     intratumoral injection of sulfopropyl dextran microspheres. J Pharm              Ind Eng Chem Res 2000;39:1356–63.
+     Pharmacol 2003;55:1063–73.                                                  [30] Boudy V, Voute N, Pradeau D, Chaumeil JC. Adsorption of an
+[15] Cheung RY, Kuba R, Rauth AM, Ying Y, Wu XY. A new approach                       ionizable drug onto microspheres: experimental and modeling
+     to the in vivo and in vitro investigation of drug release from                   studies. Int J Pharm 2002;239:13–22.
+     locoregionally delivered microspheres. J Control Rel 2004;100:121–33.       [31] Teo WK, Ruthven DM. Adsorption of water from aqueous ethanol
+[16] Fundueanu G, Constantin M, Esposito E, Cortesi R, Nastruzzi C,                   using 3-Å molecular sieves. Ind Eng Chem Progress Res Dev
+     Menegatti E. Cellulose acetate butyrate microcapsules containing                 1986;25:17–21.
+     dextran ion-exchange resins as self-propelled drug release system.          [32] Lustig SR, Peppas NA. Solute diffusion in swollen membrane: IX.
+     Biomaterials 2005;26:4337–47.                                                    Scaling laws for solute diffusion in gel. J Appl Poly Sci
+[17] Cheung RY, Ying Y, Wu XY, Rauth AM, Marcon N. Development                        1988;36:735–47.
+     of a microsphere system for the delivery of mitomycin C.                    [33] Flynn GL, Yalkowsky SH, Roseman TJ. Mass transport
+     Biomaterials 2005;26:5375–85.                                                    phenomena and models: theoretical concepts. J Pharm Sci
+[18] Helfferich F, editor. Ion exchange. New York: McGraw-Hill; 1962.                 1974;63:497–510.
+[19] Woodworth JR, Ludden TM, Ludden LK, Shepherd AM, Rotenberg                  [34] Kuu WY, Wood RW, Roseman TJ. Factors inﬂuencing the kinetics
+     KS. Comparative bioavailability of a sustained release ion-exchanged             of solute release. In: Kydonieus A, editor. Treaties on controlled drug
+     hydralizine product with a potassium (cation) challenge. J Pharm Sci             delivery, fundamentals, optimizations, applications. New York:
+     1992;81:541–2.                                                                   Marcel Dekker; 1992. p. 37–154.
+[20] Ruthven DM, editor. Principal of adsorption and adsorption process.         [35] Zhou Y, Wu XY. Modeling and analysis of dispersed-drug release
+     New York: Wiley; 1984.                                                           into a ﬁnite medium from sphere ensembles with boundary layer
+[21] Moon H, Lee WK. A lumped model for multicomponent adsorption                     effect. J Control Rel 2003;90:23–36.
+     in ﬁxed beds. Chem Eng Sci 1986;41:1995–2004.                               [36] Zhou Y, Chu JS, Wu XY. Theoretical analysis of drug release into a
+[22] Yu Q, Wang N. Multicomponent interference phenomena in ion-                      ﬁnite medium from sphere ensembles with various size and
+     exchange columns. Sep Purif Methods 1986;15:127–58.                              concentration distributions. Eur J Pharm Sci 2004;22:251–9.
+

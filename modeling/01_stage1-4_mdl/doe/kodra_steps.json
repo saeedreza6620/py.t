@@ -1,0 +1,44 @@
+[
+ {
+  "name": "MS/K-1 (4 h)",
+  "step1_rmse": 69.8,
+  "step1_t50_h": 0.0,
+  "step2_rmse": NaN,
+  "step2_t50_h": 0.0,
+  "step3_rmse": 14.1,
+  "step3_t50_h": 7.18,
+  "step4_rmse": 17.7,
+  "step4_t50_h": 6.29,
+  "step5_rmse": 10.3,
+  "step5_t50_h": 11.94,
+  "data_t50_h": 15.25
+ },
+ {
+  "name": "MS/K-2 (2 h)",
+  "step1_rmse": 59.4,
+  "step1_t50_h": 0.0,
+  "step2_rmse": NaN,
+  "step2_t50_h": 0.0,
+  "step3_rmse": 14.8,
+  "step3_t50_h": 4.55,
+  "step4_rmse": 12.5,
+  "step4_t50_h": 4.04,
+  "step5_rmse": 12.5,
+  "step5_t50_h": 4.04,
+  "data_t50_h": 3.38
+ },
+ {
+  "name": "MS/K-3 (0.5 h)",
+  "step1_rmse": 49.5,
+  "step1_t50_h": 0.0,
+  "step2_rmse": 49.5,
+  "step2_t50_h": 0.0,
+  "step3_rmse": 31.4,
+  "step3_t50_h": 3.6,
+  "step4_rmse": 12.4,
+  "step4_t50_h": 1.84,
+  "step5_rmse": 12.4,
+  "step5_t50_h": 1.84,
+  "data_t50_h": 1.41
+ }
+]
