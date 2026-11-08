@@ -1,126 +1,126 @@
-# vinext-starter
+# BeautyWallet (بیوتی‌ولت) — README for the next developer or AI
 
-A clean full-stack starter running on [vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and Drizzle support.
+> **Read this whole file before changing anything.** Then read `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
+> Owner: Saeedreza Barzkar (founder). Talk to him in **Persian**.
 
-## Prerequisites
+BeautyWallet is a Persian skincare web app (installable PWA). It checks a product against **her own skin and routine** before she buys. It also gives her:
+- a daily routine with reminders
+- an encrypted skin-photo journal
+- follow-ups on how each product worked (day 3, week 2, week 4…)
+- a skin chat assistant
+- a wallet of «الماس» (diamonds) used for paid checks
 
-- Node.js `>=22.13.0`
-- Portable: Windows, macOS, or Linux; no Bash required
-- Managed Linux: managed Linux runtime with Bash, `flock`, `curl`, `sha256sum`, and GNU `timeout`
-- Git is required only for publishing
+Live: site `https://beautywallet.liara.run/` · app `https://beautywallet.liara.run/legacy/` · admin `/admin`.
 
-## Sites Lifecycle
+---
 
-The Sites initializer copies the shared starter and selects managed-linux only when `SITES_MANAGED_LINUX_CONTAINER=1`; otherwise it selects portable. It saves the selection only in ignored `.sites-runtime/execution-profile.json`. Both profiles copy/configure first, then use the plugin's separate `install-dependencies.mjs` step to measure installation independently. Edit source under `app/` and follow the Sites skill for installation, preview, builds, and publishing.
+## 1. Where the real product lives
 
-Whenever reopening or moving a checkout, run `node <plugin-root>/scripts/configure-execution-profile.mjs` before project commands. Profile changes do not alter tracked source or require reinstalling otherwise-valid dependencies; restart an existing preview to use the new selection. Do not commit or upload `.sites-runtime/`.
+This repository started as a Next/vinext starter. **That starter (`app/`, `components/`, `db/`, `drizzle/`, `vite.config.ts` …) is NOT what runs in production.** What runs:
 
-This starter does not use `wrangler.jsonc`.
+| Path | Role |
+| --- | --- |
+| `lite/` | **The production server** (Node 22, no framework, no npm dependencies) and the built static files in `lite/public/`. This is what Liara runs. |
+| `lite/server.mjs` | All public HTTP routes, AI calls, sign-in, payments, static files. |
+| `lite/admin.mjs` | Owner panel `/admin/*`. |
+| `lite/*.mjs` | Modules:<br>`bank` — diamonds, card-to-card<br>`cloud` — her data under her phone number<br>`vault` — encrypted photos<br>`push` — web push<br>`studio` — messages and SMS<br>`skinchat` — assistant<br>`journeys`, `carekpi`, `kpi`, `insights`, `retention` — analytics<br>`layer2` — tagged records and city weather<br>`paybot` — optional bot receipts |
+| `claude/` | **Source** of the app layers added on top of the base app: `sweet.js/css`, `followup.js`, `skin-journal.js`, `gem-chat.js`, `cloud-sync.js`, `inbox.js`, `layer1.js`, `claude-bridge.js`, and `claude/site/` (the public website). |
+| `public/legacy/` | The base app the `claude/` layers are applied onto. |
+| `assistant/` | TypeScript review/catalog engine (used by the tests and bundled into `bw-review.js`). |
+| `scripts/` | Build scripts and tests. |
+| `.github/workflows/liara.yml` | Quality gate and deploy to Liara on every push to `main` that touches `lite/**`. |
 
-`install:ci` runs `npm ci` once against the shared lockfile, disables parent-workspace discovery, and includes required dev/optional dependencies despite production/omit settings. Sharp defaults to prebuilt binaries unless explicitly configured otherwise. Do not overlap installers.
+## 2. Build → test → deploy (the only correct order)
 
-- **Portable:** Preserve host HOME, npm cache, registry, proxy, temporary paths, retry/concurrency settings, and lifecycle-script policy. Use `--prefer-offline --no-audit --no-fund`.
-- **Managed Linux:** Use the existing project-local HOME/cache/tmp setup and Linux install lock, tarball preflight, and timeout. Restore the image-seeded npm cache only when its lockfile hash matches; retain network fallback. Builds keep their existing timeout. These helpers are not invoked by the portable profile.
-
-`scripts/sites-env.mjs` preserves the caller's HOME, npm cache, proxy, XDG, and temporary-directory configuration while defaulting Wrangler and Miniflare state to the checkout. If npm reports an unwritable cache, select a writable path with `npm_config_cache` for that install. The `dev` and `start` scripts also keep Wrangler logs inside the checkout. Generated `.sites-runtime/` and `.wrangler/` directories are disposable and ignored by Git.
-
-On portable, `npm run dev` uses `vinext dev` with HMR, starting at port 5173. Vinext records the running server in ignored `.vinext/` state, rejects an ordinary duplicate launch, and recovers stale state after a stopped process; exactly simultaneous starts can race. Pass `--port <port>` or `--hostname <host>` after `npm run dev --` when needed; keep portable previews on loopback.
-
-For browser QA on managed Linux, use `sites-preview start`. The project's dev script runs Vite and accepts the supervisor's `--host 0.0.0.0 --port 4173 --strictPort` arguments. The internal browser uses `http://terminal.local:4173/`; it is not a user-facing URL. The supervisor owns the preview lifecycle. The ignored local profile survives the supervisor's cleared process environment.
-
-The portable profile simulates ChatGPT sign-in only for loopback development requests. Visit `/signin-with-chatgpt?return_to=/` to sign in as `local_seedy` (`seedy@sites.test`, display name `Seedy`) and `/signout-with-chatgpt?return_to=/` to sign out. The development cookie preserves that identity across server restarts. Mock auth is disabled in the managed-linux profile and is not included in production builds; hosted authentication remains dispatch-owned.
-
-The Worker uses `vinext/server/fetch-handler`, including Vinext's config-aware image handling. After building, `npm start` runs that Worker locally through Wrangler on `127.0.0.1`, sharing `.wrangler/state` with dev preview and local D1 migrations; it does not deploy the site or simulate sign-in. Use the URL printed by the server. Pass `npm start -- --port <port>` to select a different built-preview port.
-
-Local previews use Miniflare's placeholder `Request.cf` metadata without a network lookup. Set `CLOUDFLARE_CF_FETCH_ENABLED=true` to opt into fetching preview metadata; this setting does not change hosted request metadata.
-
-Local tool usage metrics are disabled by default. Set `WRANGLER_SEND_METRICS=true` to opt in.
-
-## Included Shape
-
-- edit site code under `app/`
-- `app/chatgpt-auth.ts` provides optional dispatch-owned ChatGPT sign-in helpers
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/index.ts` reads the D1 binding from the Cloudflare Worker environment
-- `db/schema.ts` starts intentionally empty
-- `@cloudflare/workers-types` provides Worker types; `cloudflare-env.d.ts` declares optional `DB`/`BUCKET` bindings—update these declarations if binding names change
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-Signed-in visitors receive both `oai-authenticated-user-id` and `oai-authenticated-user-email`. Private Sites require every visitor to sign in; public Sites may also have anonymous visitors, for whom neither header is present.
-
-The user ID is stable for the same user on the same Site and different across Sites. Use it as the durable user key; use email and name for display or contact purposes.
-
-SIWC-authenticated workspace sites may also receive `oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty `name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by `oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const userId = requestHeaders.get("oai-authenticated-user-id");
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```bash
+# 1. edit files in claude/ (or public/legacy/, lite/*.mjs)
+# 2. apply the app layers with a NEW version number (bumps the service-worker cache so installed phones update):
+node scripts/apply-sweet-ui.mjs 137
+node scripts/build-lite.mjs                 # writes lite/public — commit it
+# 3. the 7 gate tests — ALL must pass (they also run in CI):
+npm i --no-save typescript@5.9.3
+for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data; do node scripts/test-$t.mjs || echo "FAIL $t"; done
+# 4. run locally and look at it (Playwright, 400px wide):
+cd lite && DATA_DIR=/tmp/bwdata PORT=3917 ADMIN_TOKEN=test node server.mjs   # app: http://localhost:3917/legacy/
+# 5. commit + push to main → GitHub Actions deploys to Liara (~2 min). Retry the push if GitHub returns a 500.
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+**Bridge gotcha:** `claude/claude-bridge.js` intercepts `fetch('/api/…')` in the browser. Every **new** server API must be added to its pass-through line. Note that its path regex `[A-Za-z/_-]` does not match digits.
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs optional or required ChatGPT sign-in:
+## 3. Rules that must never be broken
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use the returned `userId` as the stable user key for user-owned records; do not use email as a durable identifier.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send anonymous visitors through Sign in with ChatGPT.
-- In a Server Component, start sign-in with `<a href={chatGPTSignInPath(returnTo)} target="_top">`. The auth helper module is server-only; do not import it into a Client Component.
-- Do not use `fetch`, XHR, a client-side router, or a framework link that can prefetch the sign-in route. SIWC must start as a top-level navigation.
-- Never request the AuthAPI authorization endpoint directly. The dispatch-owned `/signin-with-chatgpt` route must start the SIWC flow.
-- Use `chatGPTSignOutPath(returnTo)` for browser sign-out links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because they depend on per-request identity headers.
+1. **Never lose a user's saved data on an update.** That covers her name, routine, morning/night choices, reminder times, profile, follow-up answers, skin photos and every change she made.
+   - Only ADD new localStorage keys. Never rename or delete existing ones.
+   - Never call `localStorage.clear`, `indexedDB.deleteDatabase` or unregister the service worker.
+   - The service worker may delete only its own `bw-static-*` / `bw-complete-*` caches.
+   - Keep the IndexedDB name `bw-skin-journal` / store `photos`.
+   - The cloud key lists in `lite/cloud.mjs` and `claude/cloud-sync.js` must stay identical.
+   - `scripts/test-keep-user-data.mjs` enforces all of this.
+2. **No secrets** in code, the repo, chat, screenshots or logs. Keys live only in Liara environment variables and GitHub Actions secrets. Never ask the owner to paste a key. **This repository is public.**
+3. **Never schedule or send SMS/messages to users.** The owner sends SMS himself from the Faraz SMS panel. Only prepare texts and lists for him.
+4. **Honesty in the product:**
+   - No promises of unbuilt features.
+   - No fabricated data, reviews, testimonials or links.
+   - No "human review" unless a real person does it.
+   - No romantic or dependency framing.
+   - Never claim the assistant analyses photos (it does not).
+   - No statistic shown to users under 10 samples.
+5. **Verdicts are decisive and personal** to her skin type and routine. Revenue or commission must never influence a verdict.
+6. **Never ask users for an ingredient list or a back-of-box photo.** Find the product by name with strong search, or ask for its link.
+7. **The assistant never sends users elsewhere to search** (Instagram, YouTube…). When she names a concern, give one concrete step for today.
+8. **Catalog:**
+   - No prices.
+   - New products need an image and the owner's approval.
+   - The catalog grows only from users' own checks.
+   - AI credit is spent only on real user actions — never on cron or background jobs.
+9. **The card number** is entered only by the owner, in the admin panel.
+10. **Updates reach installed users** through the in-app refresh (version bump), never by sending them a link.
+11. **Tone:** warm and gentle (Persian «با ناز»), never phrases that make her feel judged.
+12. **Before shipping:** pass the gate tests and verify with Playwright. Then tell the owner plainly what could not be tested for real (live AI, SMS, push, real payment, camera, iPhone).
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the OAuth cookies, and identity header injection. Do not implement app routes for those reserved paths. Routes that do not import and call the helper remain anonymous-compatible.
+## 4. Configuration (names only — values are in Liara)
 
-SIWC establishes identity only; it does not prove workspace membership. Use the Sites hosting platform's access policy controls for workspace-wide restrictions, or enforce explicit server-side membership or allowlist checks.
+- **AI:**
+  - `LIARA_API_KEY` (or `AI_API_KEY`), `AI_BASE_URL`
+  - Models: `AI_MODEL`, `AI_MODEL_LIGHT`, `AI_MODEL_COMPLEX`, `AI_MODEL_SEARCH`, `AI_MODEL_CHAT(_SEARCH)`, `AI_MODEL_RESEARCH(_FALLBACK)`
+  - Search depth: `WEB_RESULTS`, `RESEARCH_DEEP`
+- **Admin:** `ADMIN_TOKEN`
+- **Data:** `DATA_DIR=/data` (a Liara disk — without it data is wiped on deploy), `PUBLIC_URL`, `HOURLY_LIMIT`, `DAILY_LIMIT`, `VAULT_MAX_PHOTOS`, `VAULT_MAX_TOTAL_MB`
+- **SMS:**
+  - Sign-in codes (Kavenegar): `KAVENEGAR_API_KEY`, `KAVENEGAR_TEMPLATE`, `KAVENEGAR_SENDER`
+  - Messages (Faraz / IranPayamak, `api.iranpayamak.com`, header `Api-Key`): `FARAZ_API_KEY`, `FARAZ_SENDER`, `FARAZ_PATTERN`, `FARAZ_PATTERN_SENDER`, `FARAZ_BASE`
+- **Payments:** `PAY_SMS_TOKEN` (bank deposit SMS from the owner's Android phone), `PAY_LINK_SECRET`
+- **Optional:**
+  - Bot receipts: `BALE_BOT_TOKEN`, `BALE_CHAT_ID`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`
+  - Affiliate: `AFF_DIGIKALA`, `AFF_KHANOUMI`
+  - Push: `PUSH_CONTACT`
+- **GitHub Actions:**
+  - Secret: `LIARA_API_TOKEN`
+  - Optional variables: `LIARA_APP_NAME` (default `beautywallet`), `LIARA_PLATFORM` (default `node`)
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write actions tied to the current ChatGPT user. Leave public content anonymous.
+## 5. Useful places
 
-## Local D1 migrations
+- **Admin panel:**
+  - `/admin` — KPI, pending card-to-card orders, journeys
+  - `/admin/care` — daily-care dashboard and alarms
+  - `/admin/l2` — layer-2 data readiness
+  - `/admin/studio` — in-app messages and SMS
+- **Health:** `/healthz` (shows `version`, `ai`, `admin`, `disk`).
+- **Docs:** `BACKUP.md` (Persian, full rebuild guide) · `docs/` (older notes; `LIARA_TEST_FA.md`, `MODELS_AND_SECRETS.md` are partly historical).
+- **History:** `git log` — every release commit starts with `vNNN:` and explains what changed and why.
 
-For a D1-backed local preview, generate SQL with `npm run db:generate`. Build once through the Sites skill's build entrypoint (or `npm run build` for standalone use) to generate `dist/server/wrangler.json`, rebuilding if bindings change. From the project root, apply each pending migration in order:
+## 6. Current state (v136, 2026-11-07)
 
-```sh
-node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_example.sql
-```
-
-Replace the filename with the pending migration and `DB` with your D1 binding name if different. Use `.wrangler/state`, not `.wrangler/state/v3`; Wrangler adds the versioned directories. Do not replay migrations already applied locally. This updates only the preview database; publishing applies production migrations separately.
-
-## Diagnostic Commands
-
-- `npm run install:ci`: perform the one locked dependency install
-- `npm run dev`: start the Vite/Vinext development server
-- `npm run build`: build the deployable Sites artifact
-- `npm run start`: preview the built Worker locally with D1/R2 support
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-When using the Sites plugin, follow its skill instructions for installation, builds, and publishing. These npm commands remain available for standalone use.
-
-The portable build runs Vinext directly without a host `timeout` command. The managed-linux build uses `scripts/build-verified.sh` and its existing `SITES_BUILD_TIMEOUT` setting.
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+- About 20 real users; nobody has bought a subscription yet.
+- Payment is card-to-card, approved in `/admin`.
+- The Faraz SMS API key returns 401 from the code, so the owner sends SMS manually.
+- v136 added:
+  - authenticity via TTAC/Titak
+  - a framed camera with a light check
+  - «since you started X»
+  - reaction photos
+  - a monthly skin report (free preview)
+  - a progress film
+  - a city weather tip
+  - tagged layer-2 records
+- Not yet verified on real phones: camera, barcode scan, live weather from Liara, film on iPhone.
