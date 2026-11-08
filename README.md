@@ -124,3 +124,12 @@ cd lite && DATA_DIR=/tmp/bwdata PORT=3917 ADMIN_TOKEN=test node server.mjs   # a
   - a city weather tip
   - tagged layer-2 records
 - Not yet verified on real phones: camera, barcode scan, live weather from Liara, film on iPhone.
+- v137 added «پوستم به هم ریخته», a calm program (`claude/calm.js`):
+  - red-flag triage → doctor
+  - suspects from her routine start dates and follow-ups
+  - simple routine; daily 0–3 scores
+  - forearm ROAT test (two suspects at once), then a face re-try one at a time for 4 days
+  - result + «پرونده‌ی پوست من» (`bw_skin_passport`), warned on every later product check
+  - paid with diamonds (`cfg.calmPrice`, default 3) when the skin has calmed: `/api/calm/unlock`
+  - entry points: welcome choice, home chip, bad follow-up answer, chat offer `open_calm`
+  - Timings and sources are in the header comment of `claude/calm.js`.

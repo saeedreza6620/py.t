@@ -13,7 +13,7 @@ var HELLO='سلام قشنگم 💎 من دستیار پوستتم. سؤال پ�
 var ACTS='<button type="button" data-gc="ask">💭 یه سؤال دارم</button><button type="button" data-offer="build_routine">🧴 روتینم رو با هم بچینیم</button>';
 var START=['جوش دارم 🔴','لک دارم 🌤','پوستم خشکه 🍂','چربی و براقی 💧','منافذ باز','قرمزی و حساسیت 🌹','چین و چروک','نمی‌دونم پوستم چیه 🤍'];
 var READY=['یه روتین ساده برای شروع می‌خوام','فرق نیاسینامید و ویتامین C چیه؟','ضدآفتاب رو چطور درست بزنم؟','این محصول به پوستم می‌خوره؟'];
-var OFFER={open_journal:'📒 دفترچه‌ی عکس پوستم توی ولت',check_product:'🔍 بررسی یه محصول با پوستم',build_routine:'🧴 روتینم رو بچین',photo_journal:'📷 عکس شروع پوستم',add_routine:'➕ اضافه به روتینم',send_photo:'📷 عکس همون جا رو بفرستم'};
+var OFFER={open_journal:'📒 دفترچه‌ی عکس پوستم توی ولت',check_product:'🔍 بررسی یه محصول با پوستم',build_routine:'🧴 روتینم رو بچین',photo_journal:'📷 عکس شروع پوستم',add_routine:'➕ اضافه به روتینم',send_photo:'📷 عکس همون جا رو بفرستم',open_calm:'😣 پیدا کردن مقصر و آروم کردن پوستم'};
 
 function state(){var s=rj(K,null);if(!s||!Array.isArray(s.m))s={m:[]};return s}
 function save(s){s.m=s.m.slice(-MAX);wj(K,s)}
@@ -78,6 +78,7 @@ function sendMsg(text){if(busy)return;busy=true;var s=state();s.m.push({role:'us
   .catch(function(){var s2=state();s2.m.push({role:'assistant',content:'اینترنتت یه لحظه قطع شد قشنگم؛ دوباره بفرست 💜',chips:[text]});save(s2)})
   .then(function(){busy=false;paint()})}
 function offer(k){if(k==='send_photo')return startPhoto();
+  if(k==='open_calm'){close();setTimeout(function(){if(window.BWCalm)window.BWCalm.open()},150);return}
   // building a routine is personal: it needs her login first (then it's remembered and tailored to her)
   if(k==='build_routine'&&!registeredNow()){close();setTimeout(function(){if(typeof window.bwRegister==='function')window.bwRegister(function(){offer('build_routine')},window.bwRoutineWhy)},150);return}
   close();setTimeout(function(){

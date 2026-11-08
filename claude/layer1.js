@@ -98,7 +98,8 @@ document.addEventListener('click',function(e){var b=e.target.closest('[data-l1="
 /* ---------- 4) follow-up answer → tag it; when the skin is unhappy, offer a reaction photo for this product ---------- */
 var BAD={mild:1,bad:1,peel:1,new:1,tight:1};
 window.addEventListener('bw-fu-answer',function(ev){var d=ev.detail||{};if(!d.pid)return;window.bwL2({t:'fu',pid:d.pid,c:d.c,k:d.k,v:d.v});
-  if(!BAD[d.v])return;setTimeout(function(){style();var o=sheet('<h3>📍 یه عکس از همین الان؟</h3><p>اگه الان یه عکس بگیری، به «'+esc(d.name||pname(d.pid)||'این محصول')+'» وصل می‌شه؛ چند روز بعد کنار عکس تازه می‌بینی آروم‌تر شده یا نه. عکس روی گوشیت می‌مونه.</p><div class="l1-row"><button type="button" class="go" data-r="1">📷 عکس واکنش</button><button type="button" data-l1x="1">نه، ممنون</button></div>');
+  if(!BAD[d.v])return;setTimeout(function(){style();var o=sheet('<h3>📍 یه عکس از همین الان؟</h3><p>اگه الان یه عکس بگیری، به «'+esc(d.name||pname(d.pid)||'این محصول')+'» وصل می‌شه؛ چند روز بعد کنار عکس تازه می‌بینی آروم‌تر شده یا نه. عکس روی گوشیت می‌مونه.</p><div class="l1-row"><button type="button" class="go" data-r="1">📷 عکس واکنش</button>'+(window.BWCalm&&(d.v==='bad'||d.v==='new')?'<button type="button" data-calm="1">🔎 پیدا کردن مقصر و آروم کردن پوست</button>':'')+'<button type="button" data-l1x="1">نه، ممنون</button></div>');
+    var cb=o.querySelector('[data-calm]');if(cb)cb.onclick=function(){o.remove();window.BWCalm.open()};
     o.querySelector('[data-r]').onclick=function(){o.remove();window.bwReactCtx={pid:d.pid,name:d.name||pname(d.pid),at:Date.now()};if(typeof window.switchTab==='function')window.switchTab('track');
       setTimeout(function(){var j=document.getElementById('skinJournal');j&&j.scrollIntoView({behavior:'smooth',block:'start'});window.BWSkinJournal&&window.BWSkinJournal.photo&&window.BWSkinJournal.photo()},350)}},2600)});
 

@@ -339,7 +339,7 @@ function devId(){try{return localStorage.getItem('bw_device')||''}catch(e){retur
 function setWallet(w){if(w&&typeof w==='object'){WAL={free:0,negin:(Number(w.free)||0)+(Number(w.negin)||0),subUntil:w.subUntil||''};subNudge();neginUI();try{renderGuide()}catch(e){}}}
 function regPhone(){try{var r=JSON.parse(localStorage.getItem('bw_reg')||'null');return r&&r.phone?String(r.phone):''}catch(e){return ''}}
 function syncWallet(){if(!LIVE)return;var d=devId();if(!d){setTimeout(syncWallet,800);return}var ph=regPhone();fetch('/wallet?d='+encodeURIComponent(d)+(ph?'&p='+encodeURIComponent(ph):'')).then(function(r){return r.json()}).then(setWallet).catch(function(){})}
-window.bwWallet=setWallet;window.bwSyncWallet=syncWallet;window.bwNegin=function(){neginSheet(false)};
+window.bwWallet=setWallet;window.bwSyncWallet=syncWallet;window.bwNegin=function(){neginSheet(false)};window.bwNeginSheet=function(need,go){neginSheet(need,go)};
 function negin(){return WAL.negin}
 // monthly subscription is prepaid and renewed by hand: a gentle note 3 days before it ends (once a day), and right after
 function subLeft(){var u=Date.parse(WAL.subUntil||'');return u?Math.ceil((u-Date.now())/864e5):null}
@@ -692,6 +692,7 @@ function welcome(){var sp=location.search;if(/[?&](gift|q|su|sx|st)=/.test(sp))r
  w.innerHTML='<div class="bw-wel-glow" aria-hidden="true"></div><div class="bw-wel-in"><div class="bw-wel-gem" aria-hidden="true">'+gemArt()+'<i class="bw-wel-sp bw-wel-sp1">✦</i><i class="bw-wel-sp bw-wel-sp2">✦</i><i class="bw-wel-sp bw-wel-sp3">✦</i></div>'+
   '<p class="bw-wel-hi">'+esc(greet)+'</p><h2 class="bw-wel-q">امروز اومدی چیکار کنیم؟</h2>'+
   '<button type="button" class="bw-wel-c" data-wel="check"><span class="bw-wel-i">🔍</span><span><b>یه محصول رو با پوستم بسنجم</b><small>قبل از خرید بپرس: بخرم یا نخرم؟</small></span></button>'+
+  '<button type="button" class="bw-wel-c bw-wel-c4" data-wel="calm"><span class="bw-wel-i">😣</span><span><b>پوستم به هم ریخته</b><small>پیدا کنیم کدوم محصول بوده و آرومش کنیم</small></span></button>'+
   '<button type="button" class="bw-wel-c bw-wel-c3" data-wel="care"><span class="bw-wel-i">🌸</span><span><b>مراقبت روزانه‌م</b><small>روتین امروزم، تیک‌ها و یادآورم</small></span></button>'+
   '<button type="button" class="bw-wel-c bw-wel-c2" data-wel="chat"><span class="bw-wel-i">💬</span><span><b>بیا با هم حرف بزنیم</b><small>سؤال پوستی داری یا روتینت رو بچینیم</small></span></button>'+
   '<button type="button" class="bw-wel-skip" data-wel="skip">فقط می‌خوام یه دوری بزنم</button></div>';
@@ -701,6 +702,7 @@ function welcome(){var sp=location.search;if(/[?&](gift|q|su|sx|st)=/.test(sp))r
   if(k==='check')shut(function(){window.switchTab('sw-home');var a=$('#swAsk');if(a){a.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){a.focus()},300)}});
   else if(k==='chat')shut(function(){if(window.BWGem)window.BWGem.open()});
   else if(k==='care')shut(careGo);
+  else if(k==='calm')shut(function(){if(window.BWCalm)window.BWCalm.open()});
   else shut()});
  document.addEventListener('keydown',function esc_(e){if(e.key==='Escape'&&w.isConnected){shut();document.removeEventListener('keydown',esc_)}});
  return true}

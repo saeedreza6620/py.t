@@ -136,6 +136,8 @@ export function makeBank(DATA){
     c.routine=(c.routine||0)+1;ipRoutine.set(k,(ipRoutine.get(k)||0)+1);save(WAL,wallets);return true}
   function routineBack(d){if(!d)return;const c=cnt(d);c.routine=Math.max(0,(c.routine||0)-1);save(WAL,wallets)}
   function adjust(d,delta){if(!d)return;const w=bag(d);w.negin+=delta;save(WAL,wallets)}
+  // a program unlocked with several diamonds at once (the 21-day calm program); an active subscription covers it
+  function spendN(d,n){if(!d)return null;const w=bag(d);if(w.subUntil&&Date.parse(w.subUntil)>Date.now())return 'sub';if((w.negin||0)<n)return null;w.negin-=n;w.spent=(w.spent||0)+n;save(WAL,wallets);return 'negin'}
   function credit(d,n){if(!d)return;const w=bag(d);w.negin+=n;w.bought=(w.bought||0)+n;save(WAL,wallets)}
   // sign-in: link this device to her mobile. verified = the SMS code was checked (only then do the
   // account's diamonds open on this device). giftOk = the welcome gift may be given (once per person).
@@ -156,5 +158,5 @@ export function makeBank(DATA){
     const counters=[...ac,...dv.map(k=>wallets[k]).filter(w=>!w.phone)],bags=Object.values(wallets);
     return {devices:dv.length,accounts:ac.length,freeUsed:counters.reduce((s,w)=>s+(w.free||0),0),neginSpent:bags.reduce((s,w)=>s+(w.spent||0),0),neginBought:bags.reduce((s,w)=>s+(w.bought||0),0),neginLeft:bags.reduce((s,w)=>s+(w.negin||0),0)}}
 
-  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,walletStats,routineFree,routineBack,link,phoneOf,trust,subExtend};
+  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,spendN,walletStats,routineFree,routineBack,link,phoneOf,trust,subExtend};
 }

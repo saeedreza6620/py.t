@@ -9,7 +9,7 @@
 var LS;try{LS=window.localStorage;LS.getItem('x')}catch(e){return}if(!window.fetch)return;
 var KEYS=['bw_reg','bw_profile_v1_full','bw_profile','bw_skin_quick_v1','bw_check_products','bw_check_times','bw_routine_set','bw_routine_map','bw_routine_synced',
   'bw_own_products','bw_wallet','bw_reminder_v1','bw_fu_notif','bw_fu_start','bw_fu_answers','bw_life','bw_refill','bw_supplements_v1','bw_regret_v1','bw_quick_routine_v1',
-  'bw_budget_v1','bw_reviews_v1','bw_last_check','bw_city','bw_sellers','bw_auth_v1'];
+  'bw_budget_v1','bw_reviews_v1','bw_last_check','bw_city','bw_sellers','bw_auth_v1','bw_calm_v1','bw_skin_passport','bw_calm_hist'];
 var PRE=/^bw_(track|note|mood)_\d{4}-\d{2}-\d{2}$/,BASE='bw_cloud_base',CAP={bw_check_products:10};
 var hydrating=false,timer=null,running=false,lastStart=0;
 function ok(k){return KEYS.indexOf(k)>=0||PRE.test(k)}

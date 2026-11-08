@@ -381,6 +381,7 @@ button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(
 .sw-last4 input{font-size:22px;letter-spacing:10px;text-align:center;font-weight:800;padding:12px}
 
 .bw-wel-c3{background:linear-gradient(135deg,#ffb36b,#ff7fa8)!important;animation-delay:.28s}
+.bw-wel-c4{background:linear-gradient(135deg,#ff8aa8,#c86dd7)!important;animation-delay:.2s}
 .bw-care-tip{background:#fff7ec;border:1px solid #ffd9a8;border-radius:16px;padding:12px 14px;margin:10px 0;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:1.85;color:#4a3410}
 .bw-care-tip .sw-btn{align-self:flex-start;margin-top:4px}
 .bw-care-glow{outline:3px solid #ffb36b;outline-offset:3px;border-radius:18px;transition:outline-color .6s}
