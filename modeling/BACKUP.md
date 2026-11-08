@@ -11,7 +11,7 @@ Date: 2026-11-08. This folder lives in the BeautyWallet repo (separate project â
 
 ## 2. Restore and run
 ```bash
-git clone https://github.com/saeedreza6620/py.t && cd py.t
+git clone https://github.com/saeedreza6620/py.t && cd py.t/modeling
 pip install numpy scipy matplotlib pandas        # Node: npm i docx   (only for Word)
 bash link_original_paths.sh                       # recreates /home/claude/* paths as symlinks
 ```
