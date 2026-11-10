@@ -140,3 +140,5 @@ cd lite && DATA_DIR=/tmp/bwdata PORT=3917 ADMIN_TOKEN=test node server.mjs   # a
   - Reminders: server retries failed pushes (+2/+5/+15 min) and marks them sent only on success; the service worker renews a rotated push subscription (`pushsubscriptionchange`); the app re-syncs once a day. Morning notifications start with «صبحت بخیر».
   - Speed: the installed app opens from the service-worker cache at once (it used to wait up to 12 s for the network); static files are served with brotli/gzip.
   - Rule kept: diamonds are asked right after value is felt and before the next result is shown — never only at the very end.
+- v140: supplements hidden from the app (code in `claude/` and her saved `bw_supplements_v1` kept).
+- v141: «امروز» home for a returning user (`claude/today.js`): one card with this slot's three routine ticks (same `bw_track_YYYY-MM-DD` keys as the routine tab), a habit-strength ring computed like Loop Habit Tracker (a missed day lowers it a little, never resets), one «waiting for you» item (calm-program day or photo day), four quick actions. No guilt, no streak loss. New users still get the «امروز اومدی چیکار کنیم؟» welcome.
