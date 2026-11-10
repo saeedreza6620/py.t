@@ -1,6 +1,6 @@
 # BeautyWallet (بیوتی‌ولت) — README for the next developer or AI
 
-> **Read this whole file before changing anything.** Then read `docs/PROCESS.md`, `docs/PAYMENTS.md` (Persian: diamonds, chat paywall, card-to-card end to end) (Persian: the product journey, the customer's «job», the diamond model, the medical boundary, what to do next) and `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
+> **Start with `docs/HANDOFF.md`** (Persian: current state v143, rules, decisions, open tasks, traps). **Read this whole file before changing anything.** Then read `docs/PROCESS.md`, `docs/PAYMENTS.md` (Persian: diamonds, chat paywall, card-to-card end to end) (Persian: the product journey, the customer's «job», the diamond model, the medical boundary, what to do next) and `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
 > Owner: Saeedreza Barzkar (founder). Talk to him in **Persian**.
 
 BeautyWallet is a Persian skincare web app (installable PWA). It checks a product against **her own skin and routine** before she buys. It also gives her:
@@ -109,7 +109,7 @@ cd lite && DATA_DIR=/tmp/bwdata PORT=3917 ADMIN_TOKEN=test node server.mjs   # a
 - **Docs:** `BACKUP.md` (Persian, full rebuild guide) · `docs/` (older notes; `LIARA_TEST_FA.md`, `MODELS_AND_SECRETS.md` are partly historical).
 - **History:** `git log` — every release commit starts with `vNNN:` and explains what changed and why.
 
-## 6. Current state (v136, 2026-11-07)
+## 6. Current state (v143, 2026-11-10) — summary in `docs/HANDOFF.md`; browser checks in `scripts/e2e/`
 
 - About 20 real users; nobody has bought a subscription yet.
 - Payment is card-to-card, approved in `/admin`.
