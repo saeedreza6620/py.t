@@ -2,7 +2,10 @@
 // Knowledge: the model's dermatology knowledge anchored to named authorities; live web search only when
 // the shopper asks about a specific product/brand/new trend. It presents BeautyWallet features only when
 // they truly answer her need (check before buying, routine, photo journal, follow-up).
-// Cost control without a paywall: per-device and per-IP daily message caps + the server's global AI budget.
+// Cost control: per-device and per-IP daily message caps + the server's global AI budget.
+// Diamonds (v142): cfg.chatFree messages free once per person, then 1 diamond (cfg.chatGemPrice) opens cfg.chatPerGem
+// messages; a subscription covers it. A message that describes a warning sign (swelling, blisters, eyes, fever…) is
+// ALWAYS answered free — safety is never behind a paywall. Her question is kept and answered right after she pays.
 import fs from 'node:fs';import path from 'node:path';
 const SOURCES=[
   {t:'American Academy of Dermatology (AAD)',u:'https://www.aad.org/public'},
@@ -36,7 +39,8 @@ chips: ۲ تا ۴ گزینه‌ی خیلی کوتاه که کاربر می‌ت�
 const INGR=/^(niacinamide|retinol|retinal|retinoid|tretinoin|adapalene|vitamin|vit|acid|ceramides?|spf|bha|aha|pha|peptides?|hyaluronic|azelaic|salicylic|glycolic|lactic|mandelic|zinc|arbutin|tranexamic|bakuchiol|centella|cica|snail|panthenol|urea|squalane|benzoyl|peroxide|c|e|b3|b5|uv|uva|uvb|pa)$/i;
 function needsWeb(t){if(/برند|مارک|ترند|جدیدترین|تازه اومده|قیمت|دیجی ?کالا|ترب|خانومی|اولیو ?یانگ|این محصول|این کرم|این سرم/.test(t))return true;
   const w=(String(t).match(/[A-Za-z][A-Za-z0-9+.-]{1,}/g)||[]).filter(x=>!INGR.test(x));return w.length>=2}
-export function makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MODELS,getCfg,hasKey}){
+const SAFETY=/تورم|ورم (کرد|کرده)|(لب|زبون|زبان|پلک|صورت)(م|هام|ام)? ?(باد|ورم|پف)|تنگی ?نفس|نفس(م)? (تنگ|بند|سخت)|خس ?خس|تاول|چرک|ترشح|دلمه|(^|\s)تب(\s|$|م|\s?دار)|لرز|چشم(م|هام)? ?(می[\s\u200c]?سوز|قرمز|ورم|درد|تار|آب)|تاری ?دید|کهیر|خونریزی|درد (شدید|زیاد)|اورژانس|آنافیلاکسی|سوختگی شدید/;
+export function makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MODELS,BANK,getCfg,hasKey}){
   const DAYF=path.join(DATA,'skinchat-day.json');let day={d:'',dev:{},ip:{},n:0};try{day=JSON.parse(fs.readFileSync(DAYF,'utf8'))}catch{}
   const today=()=>new Date().toLocaleDateString('en-CA',{timeZone:'Asia/Tehran'});
   const save=()=>fs.writeFile(DAYF,JSON.stringify(day),()=>{});
@@ -58,9 +62,12 @@ export function makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage
     const last=msgs[msgs.length-1].content,web=needsWeb(last);
     const model=web?(E.AI_MODEL_CHAT_SEARCH||MODELS.search):(E.AI_MODEL_CHAT||MODELS.default);
     const messages=[{role:'system',content:SYSTEM+'\nمنابع مجاز برای «sources»: '+SOURCES.map(s=>s.t).join('، ')+(web?'\nاین پیام درباره‌ی یک محصول/برند/ترند است: از جست‌وجوی وب استفاده کن و فقط آنچه در منابع دیدی بگو.':'')+'\nتاریخ امروز: '+todayFa},{role:'system',content:ctx},...msgs];
+    const safety=SAFETY.test(last);let via='free';
+    if(BANK&&d!=='anon'&&!safety){via=BANK.chatTake(d,c);if(!via){const st=BANK.chatState(d,c);
+      return j(402,{code:'need_chat',per:Math.max(1,Number(c.chatPerGem??10)||10),price:Math.max(1,Number(c.chatGemPrice??1)||1),error:'need_chat',wallet:BANK.balance(d,c),chat:st})}}
     day.dev[d]=(day.dev[d]||0)+1;day.ip[a]=(day.ip[a]||0)+1;day.n++;save();
-    const t0=Date.now();let x;try{x=await chatCall(model,messages,undefined,undefined,{web:3})}catch(e){return j(502,{error:'یه لحظه حواسم پرت شد عزیزم؛ دوباره بفرست 💜'})}
-    if(!x.r.ok){day.dev[d]--;save();return j(x.r.status===429?429:502,{error:x.d?.error?.code==='budget'?'امروز دستیار خیلی شلوغ بوده؛ کمی بعد دوباره بیا 💜':'یه لحظه حواسم پرت شد عزیزم؛ دوباره بفرست 💜'})}
+    const t0=Date.now();let x;try{x=await chatCall(model,messages,undefined,undefined,{web:3})}catch(e){if(BANK&&!safety)BANK.chatBack(d,via);return j(502,{error:'یه لحظه حواسم پرت شد عزیزم؛ دوباره بفرست 💜'})}
+    if(!x.r.ok){day.dev[d]--;save();if(BANK&&!safety)BANK.chatBack(d,via);return j(x.r.status===429?429:502,{error:x.d?.error?.code==='budget'?'امروز دستیار خیلی شلوغ بوده؛ کمی بعد دوباره بیا 💜':'یه لحظه حواسم پرت شد عزیزم؛ دوباره بفرست 💜'})}
     const u=x.d?.usage;logUsage({at:new Date().toISOString(),status:200,model,act:'skinchat',search:web,ms:Date.now()-t0,usage:u?{in:u.prompt_tokens||0,out:u.completion_tokens||0}:null});
     const msg=x.d?.choices?.[0]?.message,o=parse(msg?.content)||{reply:clean(msg?.content,1200)};
     const KINDS=['check_product','build_routine','photo_journal','add_routine','send_photo','open_calm'];
@@ -70,7 +77,14 @@ export function makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage
       sources:[]};
     const named=(Array.isArray(o.sources)?o.sources:[]).map(String);for(const s of SOURCES)if(named.some(n=>n&&(s.t.includes(n)||n.includes(s.t.split(' ')[0]))))out.sources.push({title:s.t,url:s.u});
     if(web)for(const a2 of msg?.annotations||[]){const v=a2.url_citation||a2;try{const uu=new URL(v.url);if(uu.protocol==='https:'&&out.sources.length<4)out.sources.push({title:clean(v.title||uu.hostname,80),url:uu.href})}catch{}}
-    out.left=Math.max(0,capDev-day.dev[d]);
+    out.left=Math.max(0,capDev-day.dev[d]);if(BANK&&d!=='anon')out.chat={...BANK.chatState(d,c),via:safety?'safety':via};
     return j(200,out)}
-  return {handle,stats:()=>({today:day.n,devices:Object.keys(day.dev).length})};
+  async function unlock(req,res){const H={'Cache-Control':'no-store'},j=(st,b)=>send(res,st,b,'application/json',H);if(!sameOrigin(req))return j(403,{error:'forbidden'});
+    let b;try{b=await readBody(req,2000)}catch{return j(400,{error:'bad'})}const d=clean(b.d,40).replace(/[^a-z0-9]/g,''),c=getCfg()||{};if(!d||!BANK)return j(400,{error:'device'});
+    const r=BANK.chatBuy(d,c);if(!r)return j(402,{code:'need_negin',error:'برای ادامه‌ی گفت‌وگو ۱ الماس لازمه 💎',wallet:BANK.balance(d,c)});
+    try{fs.appendFileSync(path.join(DATA,'chat-unlocks.jsonl'),JSON.stringify({at:new Date().toISOString(),d,price:r.price,per:r.per})+'\n')}catch{}
+    return j(200,{ok:true,...r,chat:BANK.chatState(d,c),wallet:BANK.balance(d,c)})}
+  function state(req,res,url){const d=clean(url.searchParams.get('d'),40).replace(/[^a-z0-9]/g,''),c=getCfg()||{};
+    return send(res,200,{...(BANK&&d?BANK.chatState(d,c):{free:0,paid:0,sub:false}),per:Math.max(1,Number(c.chatPerGem??10)||10),price:Math.max(1,Number(c.chatGemPrice??1)||1)},'application/json',{'Cache-Control':'no-store'})}
+  return {handle,unlock,state,stats:()=>({today:day.n,devices:Object.keys(day.dev).length})};
 }

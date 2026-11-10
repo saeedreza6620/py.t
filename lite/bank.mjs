@@ -138,6 +138,16 @@ export function makeBank(DATA){
   function adjust(d,delta){if(!d)return;const w=bag(d);w.negin+=delta;save(WAL,wallets)}
   // a program unlocked with several diamonds at once (the 21-day calm program); an active subscription covers it
   function spendN(d,n){if(!d)return null;const w=bag(d);if(w.subUntil&&Date.parse(w.subUntil)>Date.now())return 'sub';if((w.negin||0)<n)return null;w.negin-=n;w.spent=(w.spent||0)+n;save(WAL,wallets);return 'negin'}
+  // skin chat: a few free messages once per person (she gets to feel the value), then 1 diamond opens a pack of messages.
+  // An active subscription covers it. Free counter lives with her phone account (cnt), paid messages with her diamonds (bag).
+  function chatState(d,cfg){if(!d)return {free:0,paid:0,sub:false};const c=cnt(d),w=bag(d);const sub=!!(w.subUntil&&Date.parse(w.subUntil)>Date.now());
+    return {free:Math.max(0,(Number(cfg.chatFree??8)||0)-(c.chatUsed||0)),paid:w.chatLeft||0,sub}}
+  function chatTake(d,cfg){if(!d)return null;const st=chatState(d,cfg);if(st.sub)return 'sub';
+    if(st.free>0){const c=cnt(d);c.chatUsed=(c.chatUsed||0)+1;save(WAL,wallets);return 'free'}
+    if(st.paid>0){const w=bag(d);w.chatLeft--;save(WAL,wallets);return 'paid'}return null}
+  function chatBack(d,via){if(!d||!via)return;if(via==='free'){const c=cnt(d);c.chatUsed=Math.max(0,(c.chatUsed||0)-1)}else if(via==='paid'){const w=bag(d);w.chatLeft=(w.chatLeft||0)+1}save(WAL,wallets)}
+  function chatBuy(d,cfg){if(!d)return null;const price=Math.max(1,Math.min(10,Number(cfg.chatGemPrice??1)||1)),per=Math.max(1,Math.min(100,Number(cfg.chatPerGem??10)||10));
+    const w=bag(d);if((w.negin||0)<price)return null;w.negin-=price;w.spent=(w.spent||0)+price;w.chatLeft=(w.chatLeft||0)+per;save(WAL,wallets);return {price,per}}
   function credit(d,n){if(!d)return;const w=bag(d);w.negin+=n;w.bought=(w.bought||0)+n;save(WAL,wallets)}
   // sign-in: link this device to her mobile. verified = the SMS code was checked (only then do the
   // account's diamonds open on this device). giftOk = the welcome gift may be given (once per person).
@@ -158,5 +168,5 @@ export function makeBank(DATA){
     const counters=[...ac,...dv.map(k=>wallets[k]).filter(w=>!w.phone)],bags=Object.values(wallets);
     return {devices:dv.length,accounts:ac.length,freeUsed:counters.reduce((s,w)=>s+(w.free||0),0),neginSpent:bags.reduce((s,w)=>s+(w.spent||0),0),neginBought:bags.reduce((s,w)=>s+(w.bought||0),0),neginLeft:bags.reduce((s,w)=>s+(w.negin||0),0)}}
 
-  return {find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,spendN,walletStats,routineFree,routineBack,link,phoneOf,trust,subExtend};
+  return {chatState,chatTake,chatBack,chatBuy,find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,spendN,walletStats,routineFree,routineBack,link,phoneOf,trust,subExtend};
 }

@@ -1,6 +1,6 @@
 # BeautyWallet (بیوتی‌ولت) — README for the next developer or AI
 
-> **Read this whole file before changing anything.** Then read `docs/PROCESS.md` (Persian: the product journey, the customer's «job», the diamond model, the medical boundary, what to do next) and `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
+> **Read this whole file before changing anything.** Then read `docs/PROCESS.md`, `docs/PAYMENTS.md` (Persian: diamonds, chat paywall, card-to-card end to end) (Persian: the product journey, the customer's «job», the diamond model, the medical boundary, what to do next) and `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
 > Owner: Saeedreza Barzkar (founder). Talk to him in **Persian**.
 
 BeautyWallet is a Persian skincare web app (installable PWA). It checks a product against **her own skin and routine** before she buys. It also gives her:
@@ -142,3 +142,5 @@ cd lite && DATA_DIR=/tmp/bwdata PORT=3917 ADMIN_TOKEN=test node server.mjs   # a
   - Rule kept: diamonds are asked right after value is felt and before the next result is shown — never only at the very end.
 - v140: supplements hidden from the app (code in `claude/` and her saved `bw_supplements_v1` kept).
 - v141: «امروز» home for a returning user (`claude/today.js`): one card with this slot's three routine ticks (same `bw_track_YYYY-MM-DD` keys as the routine tab), a habit-strength ring computed like Loop Habit Tracker (a missed day lowers it a little, never resets), one «waiting for you» item (calm-program day or photo day), four quick actions. No guilt, no streak loss. New users still get the «امروز اومدی چیکار کنیم؟» welcome.
+- v142: token (diamond) revenue model — see **`docs/PAYMENTS.md`**. Skin chat: `chatFree` gift messages once per person, then 1 diamond opens `chatPerGem` messages (her question is kept and answered right after paying; warning-sign messages are always free). Checkout page like a real shop (summary, buyer, method, purchase rules) → card-to-card with a one-off amount, last 4 digits, optional tracking number and receipt photo (`DATA/receipts/`, admin-only at `/admin/receipt?ref=`). The step that was waiting continues on its own after the instant diamond. Purchase funnel on `/admin/l2`. Prices editable in the admin panel.
+

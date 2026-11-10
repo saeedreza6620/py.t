@@ -398,3 +398,17 @@ button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(
 
 /* v140: supplements hidden from the app (code and her saved data kept: bw_supplements_v1) */
 #supplementLearning,.nav-btn[data-tab="supplements"]{display:none!important}
+
+/* v142: checkout like a real shop */
+.sw-co .co-h{font-size:19px;display:block;margin-bottom:10px}
+.co-sum{background:#faf8ff;border:1px solid #ece6fb;border-radius:18px;padding:12px 14px;display:grid;gap:8px;margin-bottom:12px}
+.co-sum>div{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:#4b4569}.co-sum b{color:#1f2a44}.co-free{color:#2f7a52!important}
+.co-sum .co-tot{border-top:1px dashed #d9cff5;padding-top:9px;font-size:15px}.co-sum .co-tot b{font-size:19px;color:#5b3fc4}.co-sum small{font-size:12px;color:#7a7395;line-height:1.8}
+.co-sec{border:1px solid #ece6fb;border-radius:18px;padding:12px 14px;margin-bottom:12px;display:grid;gap:6px}.co-sec>b{font-size:15px}
+.co-method{display:flex;gap:10px;align-items:flex-start;border:1.5px solid #c9b8f5;background:#f6f2ff;border-radius:14px;padding:10px 12px;cursor:pointer}
+.co-method input{margin-top:6px;accent-color:#6b4fd0}.co-method span b{display:block;font-size:14px}.co-method small{display:block;font-size:12.5px;color:#6d6688;line-height:1.8}
+.co-terms{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;line-height:1.9;margin:4px 2px 12px;cursor:pointer}.co-terms input{width:20px;height:20px;margin-top:4px;accent-color:#6b4fd0;flex:none}.co-terms a{color:#6b4fd0;font-weight:800}
+.co-rcpt input[type=file]{font-size:13px;margin-top:6px;max-width:100%}
+.gc-pay{background:linear-gradient(160deg,#8fd3ff,#c79bff)!important;color:#fff!important}
+/* v142: the diamond / checkout sheet must open above the chat and other full-screen layers; toasts stay on top */
+.sw-sheet-back{z-index:10060!important}.sw-toast{z-index:10070!important}

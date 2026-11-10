@@ -214,7 +214,7 @@ async function research(name,url){
 
 // Catalog completion comes only from shoppers' own checks (each researched product joins the bank); no background searches.
 async function readForm(req){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>4000){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>ok(Object.fromEntries(new URLSearchParams(Buffer.concat(parts).toString('utf8')))));req.on('error',bad)})}
-const EVENTS=new Set(['today_tick','today_untick','today_done','today_q_check','today_q_calm','today_q_chat','today_q_photo','today_q_routine','calm_reveal_ready','home_pack','home_gift','calm_pay_short','calm_alt_offer','calm_alt_unlock','calm_alt_short','calm_worse','refill_alt_offer','refill_alt_unlock','refill_alt_short','refill_auth','wel_calm','calm_open','calm_start','calm_redflag','calm_test','calm_unlock','calm_done','calm_stop','l1_auth','l1_report','l1_film','l1_city','paywall_view','negin_open','notif_off','wel_check','wel_chat','wel_skip','wel_back','wel_perm','wel_reg','wel_routine','wel_care','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
+const EVENTS=new Set(['chat_paywall','chat_unlock','chat_unlock_short','checkout_open','checkout_go','receipt_added','today_tick','today_untick','today_done','today_q_check','today_q_calm','today_q_chat','today_q_photo','today_q_routine','calm_reveal_ready','home_pack','home_gift','calm_pay_short','calm_alt_offer','calm_alt_unlock','calm_alt_short','calm_worse','refill_alt_offer','refill_alt_unlock','refill_alt_short','refill_auth','wel_calm','calm_open','calm_start','calm_redflag','calm_test','calm_unlock','calm_done','calm_stop','l1_auth','l1_report','l1_film','l1_city','paywall_view','negin_open','notif_off','wel_check','wel_chat','wel_skip','wel_back','wel_perm','wel_reg','wel_routine','wel_care','gift_panel','gem_open','gem_msg','gem_offer','notif_denied','life_set','cycle_set','notif_on','notif_open','followup_answer','routine_tick','share_in','share_out','check_noinci','journal_photo','vault_restore','site_open','app_open','app_open_installed','install','install_offer','install_click','check','aff_click','refill_due','refill_worked','refill_not_worked','refill_buy','negin_spend','negin_buy_click','sub_click','gift_open','gift_view','trial_gift','buy_request','register','register_skip','bale_order','bale_paid','result_unsure']);
 const evHits=new Map();let deepCache=null;
 function keyInfo(){const k=String(KEY);let type=null,issued=null;try{const p=JSON.parse(Buffer.from(k.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),'base64').toString());type=p.type||(p.key?'has_key_id':Object.keys(p).slice(0,4).join('|'));issued=p.iat?new Date(p.iat*1000).toISOString().slice(0,16):null}catch{}return {length:k.length,rawLength:String(RAW_KEY).length,keysInValue:(String(RAW_KEY).match(/eyJ[\w-]+\.eyJ/g)||[]).length,jwt:k.split('.').length===3,type,issued,spaces:/\s/.test(k)}}
 let lastUpstream=null;
@@ -267,6 +267,7 @@ function saveCfg(next){ // merges: a form only changes the fields it sends
     costs:{research:num('research',oc.research),live:num('live',oc.live),gift:num('gift',oc.gift),pack:num('pack',oc.pack)},
     packs:[{n:num('p1n',op[0].n,1),price:num('p1p',op[0].price)},{n:num('p2n',op[1].n,1),price:num('p2p',op[1].price)}],
     subscription:{price:num('subp',os.price),monthly:num('subn',os.monthly),perks:has('perks')?String(next.perks).slice(0,200):os.perks},
+    chatFree:num('chatFree',o.chatFree??8,0,100),chatPerGem:num('chatPerGem',o.chatPerGem??10,1,100),chatGemPrice:num('chatGemPrice',o.chatGemPrice??1,1,10),calmPrice:num('calmPrice',o.calmPrice??3,0,20),altPrice:num('altPrice',o.altPrice??1,0,20),
     trial:has('welcome')?(next.trial==='on'||next.trial===true):o.trial};
   cfg=c;try{fs.writeFileSync(CFG,JSON.stringify(c))}catch(e){console.error('config save',e.code)}return c}
 
@@ -379,7 +380,7 @@ globalThis.BW_PAYBOT=PAYBOT;
 const CLOUD=makeCloud({DATA,BANK,send,readBody,sameOrigin,smsOn:()=>SMS.on});
 const L2=makeLayer2({DATA,send,readBody,sameOrigin,BANK});
 const admin=makeAdmin({L2,BANK,BANK_ADJ:BANK,getReqStatus,setReqStatus,newRedeem,getRedeem,costs,loadPrices,getSpend:()=>(spend.day===tday()?spend:{day:tday(),calls:0,online:0}),getUsers,SMS_ON:SMS.on,getCfg:()=>cfg,saveCfg,getGifts:()=>gifts,chatCall,refreshBestsellers,getBest:()=>best,AFF,E,DATA,persistent,MODELS,FALLBACK,FALLBACK_SEARCH,KEY,BASE,ai,logUsage,send,readForm,sameOrigin});
-const CHAT=makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MODELS,getCfg:()=>cfg,hasKey:()=>!!(KEY&&BASE)});globalThis.BW_CHAT_STATS=CHAT.stats;
+const CHAT=makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage,E,MODELS,BANK,getCfg:()=>cfg,hasKey:()=>!!(KEY&&BASE)});globalThis.BW_CHAT_STATS=CHAT.stats;
 const PUSH=makePush({DATA,send,ip,sameOrigin,readBody,E});globalThis.BW_PUSH_STATS=PUSH.stats;
 // message studio: in-app cards + notifications written by the team, and four automatic moments (lite/studio.mjs)
 const PNAME=(()=>{const m=new Map();try{const t=fs.readFileSync(path.join(PUBLIC,'legacy','catalog-routine.js'),'utf8');for(const x of t.matchAll(/"id":"([a-z0-9-]+)","name":"([^"]+)"/g))if(!m.has(x[1]))m.set(x[1],x[2])}catch(e){console.error('studio names',e.message)}return m})();
@@ -446,13 +447,16 @@ const server=http.createServer(async(req,res)=>{
     }
     if(url.pathname==='/pay-proof'&&req.method==='POST'){ // the shopper says "I paid": tracking number + last 4 card digits → admin confirms
       if(!sameOrigin(req))return send(res,403,{error:'forbidden'});if(allow(ip(req)))return send(res,429,{error:'یه کم بعد دوباره بزن'});
-      const b=await readBody(req,1000);const digits=v=>String(v||'').replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'');
+      const b=await readBody(req,800*1024);const digits=v=>String(v||'').replace(/[۰-۹]/g,x=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(x)).replace(/\D/g,'');
       const ref=String(b.ref||''),d=String(b.d||'').replace(/[^a-z0-9]/g,'');const row=readJsonlSafe(path.join(DATA,'purchase-requests.jsonl')).find(r=>r.ref===ref&&r.d===d);
       if(!row)return send(res,404,{error:'سفارش پیدا نشد'});const track=digits(b.track).slice(0,24),last4=digits(b.last4).slice(-4);
       if(last4.length<4)return send(res,400,{error:'۴ رقم آخر کارتی که باهاش واریز کردی رو بنویس'});
       const prev=getReqStatus()[ref]||{};if(prev.status==='done')return send(res,200,{ok:true,done:true,wallet:BANK.balance(d,cfg)});if(prev.status==='rejected')return send(res,400,{error:'این سفارش قبلاً بررسی شده'});
       const adv=prev.advance!=null?prev.advance:Math.max(0,Math.min(Number(cfg.payAdvance??1),row.n||0));if(adv&&prev.advance==null)BANK.credit(d,adv);
-      setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv});PAYBOT.receipt(row,getReqStatus()[ref]||{},req);
+      // optional receipt photo: JPEG only, ≤ 600 KB, kept on the server disk for the owner's check in /admin (never public)
+      let receipt=!!prev.receipt;const im=String(b.img||'');if(/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(im)&&im.length<820000){const buf=Buffer.from(im.slice(23),'base64');
+        if(buf.length>200&&buf.length<620000&&buf[0]===0xff&&buf[1]===0xd8){try{const RD=path.join(DATA,'receipts');fs.mkdirSync(RD,{recursive:true});fs.writeFileSync(path.join(RD,ref.replace(/[^A-Z0-9-]/g,'')+'.jpg'),buf);receipt=true}catch{}}}
+      setReqStatus(ref,{status:'proof',track,last4,paidAt:String(b.time||'').slice(0,40),advance:adv,receipt});PAYBOT.receipt(row,getReqStatus()[ref]||{},req);
       return send(res,200,{ok:true,advance:adv,order:'#'+last4,bot:PAYBOT.ready(),wallet:BANK.balance(d,cfg)});
     }
     // short link for SMS (fits one Persian SMS): opens the app and asks to turn reminders on
@@ -568,6 +572,8 @@ const server=http.createServer(async(req,res)=>{
       return send(res,204,'');
     }
     if(url.pathname==='/api/skinchat'&&req.method==='POST')return await CHAT.handle(req,res);
+    if(url.pathname==='/api/skinchat/unlock'&&req.method==='POST')return await CHAT.unlock(req,res);
+    if(url.pathname==='/api/skinchat/state')return CHAT.state(req,res,url);
     if(url.pathname.startsWith('/api/push/'))return await PUSH.handle(req,res,url);
     if(url.pathname.startsWith('/api/cloud/'))return await CLOUD.handle(req,res,url);
     if(url.pathname.startsWith('/api/l2/'))return await L2.handle(req,res,url);
