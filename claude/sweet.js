@@ -284,6 +284,8 @@ function renderMe(){var p=profile();if(!$('#swPriv',me)){var pv=document.createE
 
 /* ---------- start ---------- */
 document.body.classList.add('sw-on');
+// v143: the boot cover (added in <head> by apply-sweet-ui) hides the old base screen until this UI is in place
+requestAnimationFrame(function(){requestAnimationFrame(function(){document.documentElement.classList.add('bw-ready')})});
 window.addEventListener('storage',function(e){if(/^bw_/.test(e.key||''))renderRoutine()});
 
 /* ---------- on-time refill: products you already use and that worked, before they run out ---------- */
