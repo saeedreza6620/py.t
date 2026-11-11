@@ -14,6 +14,7 @@
 | [`06-users-and-sms.md`](06-users-and-sms.md) | گروه‌بندی کاربران، کمپین پیامک برگشت، قانون پیامک |
 | [`07-decisions-log.md`](07-decisions-log.md) | فهرست تاریخ‌دار تصمیم‌های صاحب پروژه |
 | [`09-customer-research.md`](09-customer-research.md) | تحقیق مشتری، دور اول: ۵ موضوع درد با نقل‌قول واقعی، سطح اطمینان، قدم بعد |
+| [`10-content-pack-1.md`](10-content-pack-1.md) | بسته‌ی محتوای ۱: بیو، پست پین‌شده، پیام دایرکت، ۴ ریلز کامل، پست اسلایدی، جواب انجمن، برنامه‌ی ۱۴ روزه، جدول عددها |
 | [`08-marketing-playbook.md`](08-marketing-playbook.md) | کتابچه‌ی مارکتینگ: ترتیب کار با اسکیل‌های `.claude/skills/` و پرونده‌ی پایه‌ی `.agents/product-marketing.md` |
 
 ## چیزهایی که عمداً اینجا نیست
