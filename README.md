@@ -1,5 +1,6 @@
 # BeautyWallet (بیوتی‌ولت) — README for the next developer or AI
 
+> **Marketing:** skills in `.claude/skills/` (from coreyhaines31/marketingskills, MIT) read `.agents/product-marketing.md` first; playbook `docs/strategy/08-marketing-playbook.md`.
 > **Strategy (Persian):** `docs/strategy/` (positioning, moat, customers, Instagram, revenue, premium, SMS, decision log).
 > **Android app / signed APK:** read `android-app/README.md` (build on GitHub, signing secrets, stores).
 > **Start with `docs/HANDOFF.md`** (Persian: current state v144, rules, decisions, open tasks, traps). **Read this whole file before changing anything.** Then read `docs/PROCESS.md`, `docs/PAYMENTS.md` (Persian: diamonds, chat paywall, card-to-card end to end) (Persian: the product journey, the customer's «job», the diamond model, the medical boundary, what to do next) and `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
