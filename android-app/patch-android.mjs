@@ -10,9 +10,11 @@ const must = (f) => { if (!fs.existsSync(f)) throw new Error('missing ' + f + ' 
 // 1) AndroidManifest: notifications (Android 13+), exact alarms (Android 12+), re-schedule after reboot
 const manPath = must(path.join(app, 'src/main/AndroidManifest.xml'));
 let man = fs.readFileSync(manPath, 'utf8');
-for (const p of ['android.permission.POST_NOTIFICATIONS', 'android.permission.SCHEDULE_EXACT_ALARM', 'android.permission.RECEIVE_BOOT_COMPLETED', 'android.permission.WAKE_LOCK']) {
+for (const p of ['android.permission.POST_NOTIFICATIONS', 'android.permission.SCHEDULE_EXACT_ALARM', 'android.permission.RECEIVE_BOOT_COMPLETED', 'android.permission.WAKE_LOCK', 'android.permission.CAMERA']) {
   if (!man.includes(p)) man = man.replace('</manifest>', `    <uses-permission android:name="${p}" />\n</manifest>`);
 }
+// the camera is optional (photo journal, barcode): phones without one can still install
+if (!man.includes('android.hardware.camera')) man = man.replace('</manifest>', '    <uses-feature android:name="android.hardware.camera" android:required="false" />\n</manifest>');
 fs.writeFileSync(manPath, man);
 
 // 2) small white icon shown in the status bar for reminders (a gem outline)

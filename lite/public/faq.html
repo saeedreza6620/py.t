@@ -64,7 +64,7 @@ var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){retu
 var fa=BW.fa,money=BW.money,post=BW.post,dev=BW.dev,store={get:BW.get,set:BW.set};
 /* diamonds: live prices from the app's own config */
 fetch('/config.json',{cache:'no-store'}).then(function(r){return r.json()}).then(function(c){
-  var k=c.costs||{};$('#costs').innerHTML=[['بررسی محصول کاملاً تازه',k.research],['قیمت، تخفیف و قسط زنده',k.live],['سؤال آزاد از دستیار',1]].filter(function(x){return x[1]!=null}).map(function(x){return '<div><span>'+x[0]+'</span><b>'+fa(x[1])+' الماس</b></div>'}).join('')+'<div><span>محصولات کاتالوگ، روتین و چک تداخل‌ها</span><b>بدون الماس</b></div>';
+  var k=c.costs||{};$('#costs').innerHTML=[['بررسی محصول کاملاً تازه',k.research],['قیمت، تخفیف و قسط زنده',k.live],['ادامه‌ی گفت‌وگو با دستیار ('+fa(c.chatPerGem||10)+' پیام، بعد از پیام‌های هدیه)',c.chatGemPrice||1]].filter(function(x){return x[1]!=null}).map(function(x){return '<div><span>'+x[0]+'</span><b>'+fa(x[1])+' الماس</b></div>'}).join('')+'<div><span>محصولات کاتالوگ، روتین و چک تداخل‌ها</span><b>بدون الماس</b></div>';
   var p=(c.packs||[]).map(function(x){return '<div class="pack"><b>'+fa(x.n)+' الماس</b><span>'+money(x.price)+'</span></div>'});
   if(c.subscription&&c.subscription.price)p.push('<div class="pack"><b>اشتراک ماهانه</b><span>'+money(c.subscription.price)+' · هر ماه '+fa(c.subscription.monthly)+' الماس</span></div>');
   $('#packs').innerHTML=p.join('')||'<div class="pack"><span>قیمت‌ها داخل اپ نشون داده می‌شن.</span></div>';

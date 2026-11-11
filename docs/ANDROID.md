@@ -64,9 +64,22 @@ base64 -i beautywallet.keystore | tr -d '\n' > keystore.txt
 
 بعد یک بار **Run workflow** بزن تا APK امضاشده ساخته شود.
 
+### راه ساده‌تر: ساختن کلید روی گیت‌هاب، بدون نصب جاوا
+
+1. مخزن را **خصوصی** کن: Settings ← General ← Danger Zone ← Change visibility ← Private.
+2. یک رمز قوی انتخاب کن (حداقل ۸ حرف) و **به هیچ‌کس نگو، حتی در چت.** این سه secret را بساز:
+   - `ANDROID_KEYSTORE_PASSWORD` = همان رمز
+   - `ANDROID_KEY_PASSWORD` = همان رمز
+   - `ANDROID_KEY_ALIAS` = `beautywallet`
+3. Actions ← **Android signing key (one time)** ← Run workflow. اگر مخزن عمومی باشد یا قبلاً کلید ساخته شده باشد، خودش اجرا نمی‌شود.
+4. در صفحه‌ی همان اجرا، از **Artifacts** فایل `beautywallet-signing-key` را دانلود کن.
+5. محتوای `ANDROID_KEYSTORE_BASE64.txt` را کامل کپی کن و secret چهارم را بساز: `ANDROID_KEYSTORE_BASE64`.
+6. همان zip را با رمزش (جدا از هم) در دو جای امن نگه دار، و بعد artifact را در گیت‌هاب پاک کن.
+7. Actions ← **Android APK** ← Run workflow. از این به بعد APK امضاشده (`BeautyWallet-N.apk`) ساخته می‌شود.
+
 ## ۴. انتشار
 
-- **کافه‌بازار** و **مایکت:** با حساب توسعه‌دهنده، APK امضاشده را بارگذاری کن.
+- **کافه‌بازار** (پیشخوان توسعه‌دهندگان) و **مایکت:** با حساب توسعه‌دهنده، APK امضاشده را بارگذاری کن. متن صفحه‌ی اپ، کلیدواژه‌ها و اسکرین‌شات‌ها در `docs/STORE_LISTING.md` آماده است. سیاست حریم خصوصی: `https://beautywallet.liara.run/privacy.html`.
   - توضیح و عکس‌ها از سایت گرفته شود.
   - دسته‌ی پیشنهادی: «سلامت و زیبایی».
 - **لینک مستقیم:** همان APK را روی سایت هم می‌شود گذاشت.
