@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شبیه‌ساز رهایش ژلاتین</title>
+<style>
+/* Self-contained: no external fonts, scripts or images. Works offline from a local file. */
+:root{--bg:#f4f5f2;--panel:#ffffff;--ink:#1b2120;--muted:#5e6866;--line:#d9dedc;--soft:#eef1ef;--accent:#0d6b5f;--accent-ink:#ffffff;
+ --free:#2f5cf0;--weak:#1a9a6c;--bound:#d4622a;--data:#1b2120;--pin:#9aa3a1;--warn:#8a5300;--warn-bg:#fff4dc;--bad:#b3261e;
+ --fa:"Vazirmatn","Vazir","Tahoma","Segoe UI","Noto Sans Arabic",sans-serif;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111614;--panel:#1a201e;--ink:#e5ece9;--muted:#9aa8a4;--line:#2d3936;--soft:#222a28;--accent:#46c2ad;--accent-ink:#0f1513;
+ --free:#86a2ff;--weak:#5fd1a4;--bound:#ff9a66;--data:#e5ece9;--pin:#64706d;--warn:#ffd083;--warn-bg:#3a2f14;--bad:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#111614;--panel:#1a201e;--ink:#e5ece9;--muted:#9aa8a4;--line:#2d3936;--soft:#222a28;--accent:#46c2ad;--accent-ink:#0f1513;
+ --free:#86a2ff;--weak:#5fd1a4;--bound:#ff9a66;--data:#e5ece9;--pin:#64706d;--warn:#ffd083;--warn-bg:#3a2f14;--bad:#ff8a80;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--fa);font-size:15px;line-height:1.7}
+.wrap{max-width:1240px;margin:0 auto;padding:20px 16px 40px;display:flex;flex-direction:column;gap:16px}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px}
+h1{font-size:1.4rem;margin:0;font-weight:700}
+.lead{margin:2px 0 0;color:var(--muted);max-width:78ch;font-size:.92rem}
+.grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.panel h2{font-size:.98rem;margin:0 0 8px;font-weight:700}
+.panel h3{font-size:.86rem;margin:14px 0 6px;color:var(--muted);font-weight:700;border-top:1px solid var(--line);padding-top:10px}
+.presets{display:flex;flex-wrap:wrap;gap:6px}
+button,select,.filebtn{font:inherit;font-size:.84rem;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:7px;padding:5px 10px;cursor:pointer}
+button.p[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+button:hover,.filebtn:hover{border-color:var(--accent)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ctl{margin:8px 0}
+.ctl label{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:.88rem}
+.ctl output{font-family:var(--mono);font-size:.8rem;color:var(--accent);direction:ltr;white-space:nowrap}
+.ctl small{display:block;color:var(--muted);font-size:.76rem;line-height:1.5}
+input[type=range]{width:100%;accent-color:var(--accent);margin:2px 0}
+.ctl.off{opacity:.45}
+.chk{display:flex;align-items:center;gap:8px;font-size:.86rem;margin:6px 0}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{border:0;border-radius:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.chartbox{position:relative}
+canvas{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--muted);margin-top:6px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:20px;border-top:3px solid}
+.legend i.d{border-top-style:dashed;border-top-width:2px}
+.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:10px}
+.read div{border:1px solid var(--line);border-radius:8px;padding:7px 10px;background:var(--soft)}
+.read span{display:block;font-size:.76rem;color:var(--muted)}
+.read b{display:block;font-size:1rem;text-align:right;font-variant-numeric:tabular-nums}
+.note{background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:8px 12px;font-size:.86rem;margin-top:10px}
+.bars{display:grid;grid-template-columns:130px minmax(0,1fr) 56px;gap:5px 10px;align-items:center;font-size:.84rem}
+.bar{position:relative;height:12px;background:var(--soft);border-radius:3px}
+.bar i{position:absolute;top:0;bottom:0;border-radius:3px}
+.bars code{font-family:var(--mono);font-size:.8rem;direction:ltr;text-align:left}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:900px){.two{grid-template-columns:minmax(0,1fr)}}
+.muted{color:var(--muted);font-size:.82rem}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate}
+footer{color:var(--muted);font-size:.8rem;line-height:1.7}
+.pins{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pins span{font-size:.76rem;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted)}
+input[type=file]{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>شبیه‌ساز رهایش دارو از ژلاتین کراس‌لینک‌شده</h1>
+    <p class="lead">مدل GRM نسخه ۱٫۰: داروی آزاد، داروی متصلِ ضعیف (جداشدن مرتبه اول) و داروی متصل به شبکه (آزادشدن با تخریب)؛ داروی متحرک با قانون فیک از کره خارج می‌شود. حالت‌های مرجع همان داده‌های اعتبارسنجی‌اند. این فایل بدون اینترنت هم کار می‌کند.</p>
+  </div>
+  <div class="row">
+    <button id="theme" type="button" title="تغییر روشن/تیره">◐ پوسته</button>
+  </div>
+</header>
+
+<div class="grid">
+  <!-- controls -->
+  <section class="panel" aria-label="ورودی‌ها">
+    <h2>حالت مرجع</h2>
+    <div class="presets" id="presets">
+      <button class="p" data-p="cheng">Cheng: اثر GA</button>
+      <button class="p" data-p="hu">Hu 2024 (از Chang)</button>
+      <button class="p" data-p="mlad">Mladenovska: اندازه</button>
+      <button class="p" data-p="sar">Saravanan: فیک تنها</button>
+      <button class="p" data-p="custom">آزاد</button>
+    </div>
+    <p class="muted" id="presetNote"></p>
+
+    <h3>ذره و خروج دارو</h3>
+    <div class="row"><span class="muted">قانون خروج:</span>
+      <div class="seg" id="exitSeg"><button data-v="fick">فیک (نفوذ)</button><button data-v="first">جبهه (مرتبه اول)</button></div></div>
+    <div class="ctl" id="c-R"><label for="R">شعاع ذره R <output id="o-R"></output></label><input id="R" type="range" min="-0.3" max="2.3" step="0.005"><small>میکرون، مقیاس لگاریتمی</small></div>
+    <div class="ctl" id="c-D"><label for="D">ضریب نفوذ D <output id="o-D"></output></label><input id="D" type="range" min="-14" max="-5" step="0.01"><small>cm²/s. داروی کوچک در ژل متورم: حدود ۱۰⁻⁶؛ مقدار برازش‌شده Cheng برای کره ۱۰۰ میکرونی: حدود ۱۰⁻¹¹</small></div>
+    <div class="ctl" id="c-tex"><label for="tex">زمان خروج τ<sub>exit</sub> <output id="o-tex"></output></label><input id="tex" type="range" min="-2" max="2.5" step="0.01"><small>ساعت؛ برای پروتئین بزرگ که با فرسایش جبهه خارج می‌شود</small></div>
+
+    <h3>بخش‌های دارو</h3>
+    <div class="ctl"><label for="ff">کسر آزاد <output id="o-ff"></output></label><input id="ff" type="range" min="0" max="1" step="0.005"></div>
+    <div class="ctl"><label for="fw">کسر متصلِ ضعیف <output id="o-fw"></output></label><input id="fw" type="range" min="0" max="1" step="0.005"></div>
+    <div class="ctl" id="c-kw"><label for="kw">نیمه‌عمر جداشدن ضعیف <output id="o-kw"></output></label><input id="kw" type="range" min="-2" max="3" step="0.01"><small>ساعت؛ در بافر نمکی کوتاه‌تر، در آب مقطر بلندتر</small></div>
+    <div class="ctl"><label for="fi">کسر رهانشدنی <output id="o-fi"></output></label><input id="fi" type="range" min="0" max="0.6" step="0.005"></div>
+    <p class="muted">کسر متصل به شبکه = باقی‌مانده: <b class="mono" id="fb"></b></p>
+
+    <h3>تخریب شبکه (آزادشدن داروی متصل)</h3>
+    <div class="row"><div class="seg" id="degSeg"><button data-v="ga">از غلظت GA (Cheng)</button><button data-v="first">مرتبه اول μ</button><button data-v="table">کاهش وزن اندازه‌گیری‌شده</button></div></div>
+    <div class="chk"><input type="checkbox" id="enz"><label for="enz">آنزیم (کلاژناز) در محیط</label></div>
+    <div class="ctl" id="c-ga"><label for="ga">غلظت گلوتارآلدئید <output id="o-ga"></output></label><input id="ga" type="range" min="0.1" max="1" step="0.005"><small>D و μ و کسر آزاد از رابطه‌های Cheng؛ معتبر فقط در بازه ۰٫۱۲۵ تا ۰٫۸۷۵٪ (کلاژناز ۳۷۳ ng/ml، ژلاتین بازی، رنگ اسیدی)</small></div>
+    <div class="ctl" id="c-mu"><label for="mu">سرعت تخریب μ <output id="o-mu"></output></label><input id="mu" type="range" min="-3" max="1.5" step="0.01"><small>بر روز</small></div>
+    <div class="ctl" id="c-sd"><label for="sd">ضریب سرعت تخریب <output id="o-sd"></output></label><input id="sd" type="range" min="-1" max="1" step="0.01"><small>منحنی کاهش وزن همان مقاله، تندتر (بیش از ۱) یا کندتر</small></div>
+
+    <h3>نمایش</h3>
+    <div class="row"><label for="ds" class="muted">داده:</label><select id="ds"></select></div>
+    <div class="ctl"><label for="tmax">بازه زمان <output id="o-tmax"></output></label><input id="tmax" type="range" min="-1" max="2" step="0.01"></div>
+    <div class="chk"><input type="checkbox" id="logt"><label for="logt">محور زمان لگاریتمی</label></div>
+  </section>
+
+  <!-- chart + outputs -->
+  <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+    <section class="panel" aria-label="منحنی رهایش">
+      <h2 id="ctitle">رهایش تجمعی</h2>
+      <div class="chartbox"><canvas id="cv" width="900" height="460" role="img" aria-label="نمودار رهایش تجمعی"></canvas></div>
+      <div class="legend" id="legend"></div>
+      <div class="read" id="read"></div>
+      <div class="note" id="note"></div>
+      <div class="row" style="margin-top:12px">
+        <button id="pin" type="button">ثابت‌کردن منحنی برای مقایسه</button>
+        <button id="unpin" type="button">پاک‌کردن منحنی‌های ثابت</button>
+        <button id="csv" type="button">دانلود CSV</button>
+        <button id="png" type="button">دانلود تصویر</button>
+        <button id="save" type="button">ذخیره تنظیمات</button>
+        <label class="filebtn" for="load">بارگذاری تنظیمات</label><input type="file" id="load" accept=".json,application/json">
+        <button id="self" type="button">دانلود همین شبیه‌ساز</button>
+      </div>
+      <div class="pins" id="pins"></div>
+    </section>
+    <div class="two">
+      <section class="panel" aria-label="وزن پارامترها">
+        <h2>وزن پارامترها بر زمان نیمه‌رهایش</h2>
+        <div class="bars" id="bars"></div>
+        <p class="muted">کشسانی ∂ln t50/∂ln X: اگر X ده درصد زیاد شود، t50 تقریباً این عدد × ۱۰ درصد تغییر می‌کند. صفر یعنی آن پارامتر در این حالت اهرم طراحی نیست.</p>
+      </section>
+      <section class="panel" aria-label="رژیم">
+        <h2>کدام سازوکار کنترل می‌کند؟</h2>
+        <div id="regime"></div>
+        <p class="muted">Λ = μ·R²/(π²D) = زمان نفوذ ÷ زمان آزادشدن. Λ کوچک: تخریب و کسرها تعیین‌کننده‌اند، اندازه و D اثری ندارند. Λ بزرگ: t50 متناسب با R²/D است.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<footer>
+  منابع داده: Cheng F. (رساله دکتری، UIUC، ۲۰۱۰، فصل ۲؛ نقاط با استخراج برداری از PDF)؛ Chang K.-C. و همکاران، Polymers 15 (2023) 1504؛ Hu M.-H. و همکاران، Materials 17 (2024) 3578؛
+  Mladenovska K. و همکاران، Int. J. Pharm. 242 (2002) 247؛ Saravanan M. و همکاران، J. Drug Target. 19 (2011) 96. کد و اعتبارسنجی: github.com/saeedreza6620/py.t، شاخه modeling/gelatin-release-model-v1، پوشه modeling/gelatin_release_model.
+  <span id="ver"></span>
+</footer>
+</div>
+
+<script>
+"use strict";
+const DATA = {"cheng":{"R_um":50,"cal":{"0.125":0.5168,"0.375":0.4668,"0.875":0.5498},"pbs":{"0.125":[[0.999,28.975],[1.999,37.322],[2.999,42.918]],"0.375":[[0.999,24.385],[2.0,31.07],[3.0,35.463]],"0.875":[[0.998,26.568],[2.0,33.922],[3.0,39.404]]},"enz":{"0.125":[[0.991,39.922,2.227],[1.988,53.398,2.227],[2.986,69.18,0.0],[6.0,93.867,2.266],[8.991,98.633,2.266],[11.994,100.039,2.227],[14.997,100.352,2.227],[18.0,100.586,2.266]],"0.25":[[1.002,35.508,0.0],[1.999,50.703,0.0],[2.995,65.039,0.0],[6.002,89.961,3.086],[8.998,97.695,3.281],[11.999,99.961,3.359],[15.0,100.352,3.555],[18.001,100.664,3.672]],"0.375":[[0.991,33.88,8.229],[1.988,45.573,6.719],[2.991,57.37,3.398],[5.994,73.88,12.773],[8.997,89.089,7.578],[11.994,96.042,4.805],[15.003,98.385,3.789],[18.0,99.271,3.437]],"0.625":[[0.997,37.76,3.359],[1.999,50.651,0.0],[2.995,60.026,0.0],[6.002,77.604,10.052],[8.998,91.458,9.479],[11.993,98.62,4.414],[15.0,99.948,4.258],[17.995,99.948,4.375]],"0.875":[[0.991,38.086,3.789],[1.988,50.508,4.57],[2.986,58.633,5.469],[6.0,74.023,14.375],[8.991,87.07,10.469],[11.994,94.961,7.539],[14.997,98.242,7.852],[18.0,99.805,7.891]]}},"hu":{"t_h":[1.0,2.0,4.0,8.0,24.0,48.0,96.0,192.0,288.0,384.0,480.0,576.0,672.0,768.0],"y":[29.7,48.0,65.0,79.4,83.0,87.8,94.3,99.9,97.6,97.7,101.0,103.7,79.7,85.3],"mass_t_day":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,19,20,22,23,25,26,27,28,29,30,31],"mass_rem":[100.0,100.0,99.0,86.0,77.0,69.0,66.0,62.0,58.0,54.0,51.0,49.0,46.0,38.0,33.0,28.0,26.0,22.0,20.0,15.0,12.0,7.0,5.0,3.0,1.0,0.5,0.0,0.0],"R_um":8.05,"D":3.4819919600634097e-06,"f_first":0.828,"k_weak_h":0.968},"mlad":{"series":{"A":{"d":7.03,"t_h":[0.0,1.0,3.0,5.0,7.0,10.0,13.0,24.0],"y":[0.0,5.5,19.5,29.5,33.0,57.5,71.0,80.5],"mt_h":[0.0,1.0,3.0,5.0,7.0,13.0,24.0,48.0,72.0],"rem":[100.0,45.0,41.0,33.0,31.7,28.8,23.0,22.3,19.0]},"B":{"d":5.89,"t_h":[0.0,1.0,3.0,5.0,7.0,10.0,13.0,24.0],"y":[0.0,6.5,21.5,32.5,54.0,65.5,75.5,85.0],"mt_h":[0.0,1.0,3.0,5.0,7.0,13.0,24.0,48.0,72.0],"rem":[100.0,40.5,34.0,28.5,28.0,23.5,21.5,18.0,16.0]},"C":{"d":4.63,"t_h":[0.0,1.0,3.0,5.0,7.0,10.0,13.0,24.0],"y":[0.0,7.5,32.5,48.5,66.5,70.0,77.5,86.0],"mt_h":[0.0,1.0,3.0,5.0,7.0,13.0,24.0,48.0,72.0],"rem":[100.0,40.5,34.0,28.5,27.5,22.5,21.0,18.0,16.0]},"D":{"d":3.2,"t_h":[0.0,1.0,3.0,5.0,7.0,10.0,13.0,24.0],"y":[0.0,8.5,43.0,52.5,70.0,76.0,80.0,88.5],"mt_h":[0.0,1.0,3.0,5.0,7.0,13.0,24.0,48.0,72.0],"rem":[100.0,37.0,29.0,25.0,23.5,20.5,16.5,15.0,14.5]},"E":{"d":2.29,"t_h":[0.0,1.0,3.0,5.0,7.0,10.0,13.0,24.0],"y":[0.0,9.5,48.5,57.5,74.0,78.5,83.5,89.5],"mt_h":[0.0,1.0,3.0,5.0,7.0,13.0,24.0,48.0,72.0],"rem":[100.0,34.0,28.0,25.0,22.5,19.0,16.0,15.0,12.5]},"F":{"d":1.99,"t_h":[0.0,1.0,3.0,5.0,7.0,10.0,13.0,24.0],"y":[0.0,12.5,54.0,74.0,80.5,84.5,87.0,92.5],"mt_h":[0.0,1.0,3.0,5.0,7.0,13.0,24.0,48.0,72.0],"rem":[100.0,33.5,25.5,25.0,22.0,18.0,16.0,12.5,12.0]}},"tauA_h":5.69,"dA":7.03},"sar":{"Dw":7.380001521592059e-06,"R":{"GM1":18.945,"GM2":20.31,"GM3":22.705},"pts":{"GM1":[[1.009,9.981,1.813],[1.992,15.039,2.104],[2.999,20.021,1.988],[5.998,25.004,1.922],[8.995,30.993,2.096],[11.992,35.976,2.03],[15.012,41.033,2.487],[18.009,45.017,3.094],[21.008,48.012,3.71],[24.005,51.007,4.126],[27.001,53.993,4.201],[30.001,55.989,3.202]],"GM2":[[1.006,16.045,1.996],[1.989,26.011,1.922],[2.996,32.0,2.096],[5.995,38.047,2.529],[8.992,45.026,3.094],[11.989,51.015,2.096],[15.009,56.996,1.822],[18.006,63.052,1.53],[21.005,68.034,1.389],[24.002,72.027,1.714],[26.999,76.012,1.921],[29.998,80.004,2.387]],"GM3":[[1.009,25.004,2.063],[1.992,35.976,1.672],[2.999,44.02,1.597],[5.998,52.005,1.098],[8.995,58.984,1.389],[11.992,66.03,1.888],[15.012,73.017,2.105],[18.009,78.0,1.78],[21.008,81.984,2.105],[24.005,84.979,1.813],[27.001,88.04,1.389],[30.001,91.034,2.496]]}},"version":"1.0.0"};
+const H = 3600, DAY = 86400, PI2 = Math.PI * Math.PI;
+const $ = id => document.getElementById(id);
+const faNum = (x, d = 2) => Number(x).toLocaleString("fa-IR", { maximumFractionDigits: d, minimumFractionDigits: 0 });
+const sci = x => { if (!isFinite(x)) return "—"; const e = Math.floor(Math.log10(Math.abs(x))); return (x / 10 ** e).toFixed(2) + "e" + e; };
+
+/* ---------------- model (same equations as grm/model.py) ---------------- */
+function Phi(tau) {                      // Crank: fraction released from a sphere, uniform load, perfect sink
+  if (tau <= 0) return 0;
+  if (tau < 0.01) return Math.min(1, 6 * Math.sqrt(tau / Math.PI) - 3 * tau);
+  let s = 0; for (let n = 1; n <= 60; n++) { const e = Math.exp(-n * n * PI2 * tau); if (e < 1e-17) break; s += e / (n * n); }
+  return 1 - 6 / PI2 * s;
+}
+function interp(x, xs, ys) {
+  if (x <= xs[0]) return ys[0]; const n = xs.length; if (x >= xs[n - 1]) return ys[n - 1];
+  let i = 1; while (xs[i] < x) i++; const t = (x - xs[i - 1]) / (xs[i] - xs[i - 1]); return ys[i - 1] + t * (ys[i] - ys[i - 1]);
+}
+function makeTableLib(t_s, g, normalise) {    // L = (1 - g)/(1 - g_end) or 1 - g, monotone
+  let L = g.map(v => 1 - v); if (normalise && L[L.length - 1] > 0) { const e = L[L.length - 1]; L = L.map(v => v / e); }
+  for (let i = 1; i < L.length; i++) L[i] = Math.max(L[i], L[i - 1]);
+  return { t: t_s, L };
+}
+function K(t, P) { if (t <= 0) return 0; return P.exit === "fick" ? Phi(P.D * t / (P.R * P.R)) : 1 - Math.exp(-t / P.tex); }
+function Lw(s, P) { return s > 0 ? 1 - Math.exp(-P.kw * s) : 0; }
+function Lb(s, P) {
+  if (s <= 0) return 0;
+  if (P.bmode === "none") return 0;
+  if (P.bmode === "first") return 1 - Math.exp(-P.mu * s);
+  return interp(s * P.sdeg, P.tab.t, P.tab.L);
+}
+function stieltjes(t, Lf, P, nq) {
+  if (t <= 0) return 0; let sum = 0, Lp = 0, sp = 0;
+  for (let k = 1; k < nq; k++) {
+    const s = t * 0.5 * (1 - Math.cos(Math.PI * k / (nq - 1))); const L = Lf(s, P);
+    sum += K(t - 0.5 * (s + sp), P) * (L - Lp); Lp = L; sp = s;
+  }
+  return sum;
+}
+function fb(P) { return Math.max(0, 1 - P.ff - P.fw - P.fi); }
+function release(t, P, nq = 220) {
+  const free = P.ff * K(t, P);
+  const weak = P.fw > 0 ? P.fw * stieltjes(t, Lw, P, nq) : 0;
+  const bound = fb(P) > 0 && P.bmode !== "none" ? fb(P) * stieltjes(t, Lb, P, nq) : 0;
+  return { tot: free + weak + bound, free, weak, bound };
+}
+function tAt(P, level, tHi) {          // bisection on log t
+  const F = t => release(t, P, 260).tot;
+  let lo = 1e-4, hi = tHi; if (F(hi) < level) return NaN;
+  for (let i = 0; i < 56; i++) { const m = Math.sqrt(lo * hi); if (F(m) < level) lo = m; else hi = m; }
+  return Math.sqrt(lo * hi);
+}
+/* Cheng (2010) relations; Eq. 2.12 with coefficient 10 (the printed 0.1 is a typo) */
+const Dcheng = ga => 7.5132 * Math.pow(ga, -0.2281) * 1e-12;
+const muCheng = ga => 0.36 * (1 + 10 * Math.exp(-14.29 * ga)) / DAY;
+function ffCheng(ga) { const k = Object.keys(DATA.cheng.cal).map(Number).sort((a, b) => a - b); return interp(ga, k, k.map(x => DATA.cheng.cal[String(x)])); }
+
+/* ---------------- state ---------------- */
+const S = {}; let pins = [];
+const PRESETS = {
+  cheng: () => ({ preset: "cheng", exit: "fick", R_um: 50, D: Dcheng(0.375), tex_h: 5, ff: ffCheng(0.375), fw: 0, kw_h: 1, fi: 0, deg: "ga", enz: true, ga: 0.375, mu_d: 0.38, sdeg: 1, ds: "enz:0.375", tmax_d: 20, logt: false }),
+  hu: () => ({ preset: "hu", exit: "fick", R_um: DATA.hu.R_um, D: DATA.hu.D, tex_h: 5, ff: 0, fw: DATA.hu.f_first, kw_h: Math.LN2 / DATA.hu.k_weak_h, fi: 0, deg: "table", enz: false, ga: 0.375, mu_d: 0.1, sdeg: 1, ds: "hu", tmax_d: 33, logt: true }),
+  mlad: () => ({ preset: "mlad", exit: "first", R_um: DATA.mlad.series.A.d / 2, D: 1e-8, tex_h: DATA.mlad.tauA_h, ff: 0, fw: 0, kw_h: 1, fi: 0, deg: "table", enz: true, ga: 0.375, mu_d: 0.5, sdeg: 1, ds: "mlad:A", tmax_d: 1, logt: false }),
+  sar: () => ({ preset: "sar", exit: "fick", R_um: DATA.sar.R.GM1, D: DATA.sar.Dw * Math.pow(0.9 / 1.1, 2), tex_h: 5, ff: 1, fw: 0, kw_h: 1, fi: 0, deg: "first", enz: false, ga: 0.375, mu_d: 0.05, sdeg: 1, ds: "sar:GM1", tmax_d: 30, logt: false }),
+  custom: () => Object.assign({}, S, { preset: "custom" }),
+};
+const NOTES = {
+  cheng: "کره ۱۰۰ میکرونی ژلاتین بازی، رنگ اسیدی. کسر آزاد از آزمایش بدون آنزیم، D و μ از رابطه‌های Cheng. غلظت‌های ۰٫۲۵ و ۰٫۶۲۵٪ پیش‌بینی واقعی‌اند (خطای ۲٫۴ و ۴٫۰ واحد درصد).",
+  hu: "جنتامایسین، کره ۱۶ میکرونی، آب مقطر. هیچ عددی روی Hu تنظیم نشده: کسر فاز اول و سرعت جداشدن از Chang 2023 (بافر فسفات)، تخریب از کاهش وزن خود Hu. داده نسبت به سطح ۸ تا ۲۴ روز بهنجار شده؛ دو نقطه آخر خطای کم‌کردن زمینه است.",
+  mlad: "آلبومین (BSA) در کره‌های ۲ تا ۷ میکرونی با کلاژناز. همه دارو متصل است و با کاهش وزن اندازه‌گیری‌شده آزاد می‌شود؛ زمان خروج فقط از اندازه A گرفته شده و با قطر مقیاس می‌شود.",
+  sar: "کنترل منفی: دیکلوفناک با ضریب نفوذ مستقل (Wilke–Chang × Mackie–Meares). فیک تنها همه دارو را در کمتر از یک ثانیه بیرون می‌دهد؛ داده ۵ تا ۲۳ روز طول می‌کشد. بقیه مدل را نمی‌توان آزمود چون مقاله داده تخریب ندارد.",
+  custom: "همه پارامترها آزادند. برای مقایسه، منحنی فعلی را ثابت کنید و یک پارامتر را تغییر دهید.",
+};
+function datasets(p) {
+  const o = [["none", "بدون داده"]];
+  if (p === "cheng" || p === "custom") {
+    for (const g of Object.keys(DATA.cheng.enz).sort((a, b) => a - b)) o.push(["enz:" + g, `Cheng، کلاژناز، GA ${faNum(g, 3)}٪` + ((g === "0.25" || g === "0.625") ? " (پیش‌بینی)" : "")]);
+    for (const g of Object.keys(DATA.cheng.pbs).sort((a, b) => a - b)) o.push(["pbs:" + g, `Cheng، بافر بدون آنزیم، GA ${faNum(g, 3)}٪`]);
+  }
+  if (p === "hu" || p === "custom") o.push(["hu", "Hu 2024، رهایش خالص"]);
+  if (p === "mlad" || p === "custom") for (const k of Object.keys(DATA.mlad.series)) o.push(["mlad:" + k, `Mladenovska، اندازه ${k} (قطر ${faNum(DATA.mlad.series[k].d)} µm)`]);
+  if (p === "sar" || p === "custom") for (const k of Object.keys(DATA.sar.pts)) o.push(["sar:" + k, `Saravanan، ${k}`]);
+  return o;
+}
+function getData(ds) {           // -> [{t (s), y (%), e (%)}]
+  if (!ds || ds === "none") return [];
+  const [kind, key] = ds.split(":");
+  if (kind === "enz") return DATA.cheng.enz[key].map(r => ({ t: r[0] * DAY, y: r[1], e: r[2] }));
+  if (kind === "pbs") return DATA.cheng.pbs[key].map(r => ({ t: r[0] * DAY, y: r[1], e: 0 }));
+  if (kind === "hu") return DATA.hu.t_h.map((t, i) => ({ t: t * H, y: DATA.hu.y[i], e: 0 }));
+  if (kind === "mlad") { const s = DATA.mlad.series[key]; return s.t_h.map((t, i) => ({ t: t * H, y: s.y[i], e: 0 })).filter(p => p.t > 0); }
+  if (kind === "sar") return DATA.sar.pts[key].map(r => ({ t: r[0] * DAY, y: r[1], e: r[2] || 0 }));
+  return [];
+}
+function tableFor(ds) {           // measured mass-loss curve belonging to the preset / data set
+  if (S.preset === "mlad" || (ds || "").startsWith("mlad")) {
+    const key = (ds || "mlad:A").startsWith("mlad:") ? ds.split(":")[1] : "A"; const s = DATA.mlad.series[key];
+    return { lib: makeTableLib(s.mt_h.map(t => t * H), s.rem.map(v => v / 100), false), label: `کاهش وزن کره خالی، اندازه ${key}` };
+  }
+  return { lib: makeTableLib(DATA.hu.mass_t_day.map(t => t * DAY), DATA.hu.mass_rem.map(v => v / 100), true), label: "کاهش وزن کره خالی Hu 2024" };
+}
+function params() {
+  const P = { exit: S.exit, R: S.R_um * 1e-4, D: S.D, tex: S.tex_h * H, ff: S.ff, fw: S.fw, kw: Math.LN2 / (S.kw_h * H), fi: S.fi, sdeg: S.sdeg };
+  if (S.deg === "ga") { P.D = Dcheng(S.ga); P.ff = ffCheng(S.ga); P.bmode = S.enz ? "first" : "none"; P.mu = muCheng(S.ga); }
+  else if (S.deg === "first") { P.bmode = S.enz || S.preset === "custom" || S.preset === "sar" ? "first" : "first"; P.mu = S.mu_d / DAY; }
+  else { P.bmode = "table"; P.tab = tableFor(S.ds).lib; }
+  if (S.deg === "ga" && !S.enz) P.bmode = "none";
+  if (S.deg !== "ga" && S.deg === "first" && !S.enz && S.preset === "cheng") P.bmode = "none";
+  return P;
+}
+
+/* ---------------- UI binding ---------------- */
+const SL = {
+  R: { get: () => Math.log10(S.R_um), set: v => S.R_um = 10 ** v, out: () => faNum(S.R_um, S.R_um < 10 ? 2 : 1) + " µm" },
+  D: { get: () => Math.log10(S.D), set: v => S.D = 10 ** v, out: () => sci(S.deg === "ga" ? Dcheng(S.ga) : S.D) },
+  tex: { get: () => Math.log10(S.tex_h), set: v => S.tex_h = 10 ** v, out: () => faNum(S.tex_h, 2) + " h" },
+  ff: { get: () => S.ff, set: v => { S.ff = v; balance("ff"); }, out: () => faNum(S.deg === "ga" ? ffCheng(S.ga) : S.ff, 3) },
+  fw: { get: () => S.fw, set: v => { S.fw = v; balance("fw"); }, out: () => faNum(S.fw, 3) },
+  kw: { get: () => Math.log10(S.kw_h), set: v => S.kw_h = 10 ** v, out: () => faNum(S.kw_h, 2) + " h" },
+  fi: { get: () => S.fi, set: v => { S.fi = v; balance("fi"); }, out: () => faNum(S.fi, 3) },
+  ga: { get: () => S.ga, set: v => { S.ga = v; autoDs(); }, out: () => faNum(S.ga, 3) + " %" },
+  mu: { get: () => Math.log10(S.mu_d), set: v => S.mu_d = 10 ** v, out: () => (S.deg === "ga" ? faNum(muCheng(S.ga) * DAY, 3) : faNum(S.mu_d, 3)) + " /d" },
+  sd: { get: () => Math.log10(S.sdeg), set: v => S.sdeg = 10 ** v, out: () => "× " + faNum(S.sdeg, 2) },
+  tmax: { get: () => Math.log10(S.tmax_d), set: v => S.tmax_d = 10 ** v, out: () => S.tmax_d < 2 ? faNum(S.tmax_d * 24, 1) + " h" : faNum(S.tmax_d, 1) + " d" },
+};
+function balance(which) {     // keep ff + fw + fi <= 1 by trimming the slider just moved
+  const ff = S.deg === "ga" ? ffCheng(S.ga) : S.ff; const sum = ff + S.fw + S.fi;
+  if (sum > 1) { const ex = sum - 1; if (which === "ff") S.ff -= ex; else if (which === "fw") S.fw -= ex; else S.fi -= ex; }
+}
+function autoDs() {           // in the Cheng preset, show the data set of the nearest measured GA level
+  if (S.preset !== "cheng") return;
+  const kind = S.enz ? "enz" : "pbs"; const keys = Object.keys(kind === "enz" ? DATA.cheng.enz : DATA.cheng.pbs);
+  let best = null, bd = 1e9; for (const k of keys) { const d = Math.abs(+k - S.ga); if (d < bd) { bd = d; best = k; } }
+  S.ds = bd < 0.02 ? kind + ":" + best : "none";
+}
+function syncUI() {
+  for (const [id, s] of Object.entries(SL)) { $(id).value = s.get(); $("o-" + id).textContent = s.out(); }
+  document.querySelectorAll("#presets button").forEach(b => b.setAttribute("aria-pressed", b.dataset.p === S.preset));
+  document.querySelectorAll("#exitSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === S.exit));
+  document.querySelectorAll("#degSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === S.deg));
+  $("enz").checked = S.enz; $("logt").checked = S.logt;
+  const ga = S.deg === "ga";
+  $("c-R").classList.toggle("off", false); $("c-D").classList.toggle("off", S.exit !== "fick" || ga); $("D").disabled = S.exit !== "fick" || ga;
+  $("c-tex").classList.toggle("off", S.exit !== "first"); $("tex").disabled = S.exit !== "first";
+  $("ff").disabled = ga; $("ff").parentElement.classList.toggle("off", ga);
+  $("c-kw").classList.toggle("off", S.fw <= 0);
+  $("c-ga").classList.toggle("off", !ga); $("ga").disabled = !ga;
+  $("c-mu").classList.toggle("off", S.deg !== "first" && !ga); $("mu").disabled = S.deg !== "first";
+  $("c-sd").classList.toggle("off", S.deg !== "table"); $("sd").disabled = S.deg !== "table";
+  const P = params(); $("fb").textContent = faNum(fb(P), 3);
+  const opts = datasets(S.preset); const sel = $("ds"); sel.innerHTML = opts.map(([v, l]) => `<option value="${v}">${l}</option>`).join("");
+  if (!opts.some(o => o[0] === S.ds)) S.ds = "none"; sel.value = S.ds;
+  $("presetNote").textContent = NOTES[S.preset];
+}
+
+/* ---------------- drawing ---------------- */
+function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+let lastCurve = null;
+function draw() {
+  const cv = $("cv"), dpr = Math.max(1, window.devicePixelRatio || 1), W = cv.clientWidth || 900, Hh = Math.round(W * 0.5);
+  cv.width = Math.round(W * dpr); cv.height = Math.round(Hh * dpr); cv.style.height = Hh + "px";
+  const c = cv.getContext("2d"); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, Hh);
+  const P = params(), tmax = S.tmax_d * DAY, useH = S.tmax_d < 3, unit = useH ? H : DAY;
+  const m = { l: 58, r: 16, t: 14, b: 44 }, pw = W - m.l - m.r, ph = Hh - m.t - m.b;
+  const tmin = S.logt ? Math.max(tmax * 1e-4, 1) : 0;
+  const X = t => m.l + (S.logt ? (Math.log10(Math.max(t, tmin)) - Math.log10(tmin)) / (Math.log10(tmax) - Math.log10(tmin)) : t / tmax) * pw;
+  const Y = y => m.t + (1 - y / 105) * ph;
+  const ink = css("--ink"), muted = css("--muted"), line = css("--line");
+  c.font = "12px " + css("--fa"); c.strokeStyle = line; c.fillStyle = muted; c.lineWidth = 1;
+  for (const y of [0, 20, 40, 60, 80, 100]) { c.beginPath(); c.moveTo(m.l, Y(y)); c.lineTo(m.l + pw, Y(y)); c.stroke(); c.textAlign = "right"; c.fillText(faNum(y), m.l - 8, Y(y) + 4); }
+  let ticks = [];
+  if (S.logt) { for (let e = Math.ceil(Math.log10(tmin / unit)); e <= Math.floor(Math.log10(tmax / unit)); e++) ticks.push(10 ** e * unit); }
+  else { const span = tmax / unit, st = [0.1, 0.2, 0.25, 0.5, 1, 2, 5, 10, 20, 50, 100].find(s => span / s <= 8) || 100; for (let v = 0; v <= span + 1e-9; v += st) ticks.push(v * unit); }
+  c.textAlign = "center";
+  for (const t of ticks) { const x = X(t); c.beginPath(); c.moveTo(x, m.t); c.lineTo(x, m.t + ph); c.stroke(); c.fillText(faNum(t / unit, 2), x, m.t + ph + 17); }
+  c.fillStyle = ink; c.fillText(useH ? "زمان (ساعت)" : "زمان (روز)", m.l + pw / 2, Hh - 6);
+  c.save(); c.translate(14, m.t + ph / 2); c.rotate(-Math.PI / 2); c.fillText("رهایش تجمعی (٪)", 0, 0); c.restore();
+  // curves
+  const n = 180, ts = []; for (let i = 0; i <= n; i++) ts.push(S.logt ? tmin * (tmax / tmin) ** (i / n) : tmax * i / n);
+  const res = ts.map(t => release(t, P)); lastCurve = { ts, res };
+  const path = (vals, col, w, dash) => { c.strokeStyle = col; c.lineWidth = w; c.setLineDash(dash || []); c.beginPath(); vals.forEach((v, i) => { const x = X(ts[i]), y = Y(100 * v); i ? c.lineTo(x, y) : c.moveTo(x, y); }); c.stroke(); c.setLineDash([]); };
+  pins.forEach(p => { const r2 = ts.map(t => release(t, p.P).tot); path(r2, css("--pin"), 1.6, [2, 3]); });
+  if (P.ff > 0) path(res.map(r => r.free), css("--free"), 1.4, [6, 4]);
+  if (P.fw > 0) path(res.map(r => r.weak), css("--weak"), 1.4, [6, 4]);
+  if (fb(P) > 0 && P.bmode !== "none") path(res.map(r => r.bound), css("--bound"), 1.4, [6, 4]);
+  path(res.map(r => r.tot), css("--accent"), 2.6);
+  if (S.deg === "table") { c.strokeStyle = muted; c.lineWidth = 1; c.setLineDash([1, 3]); c.beginPath(); ts.forEach((t, i) => { const y = Y(100 * Lb(t, P)); i ? c.lineTo(X(t), y) : c.moveTo(X(t), y); }); c.stroke(); c.setLineDash([]); }
+  // data
+  const D = getData(S.ds).filter(p => p.t <= tmax * 1.0001 && (!S.logt || p.t >= tmin));
+  c.strokeStyle = css("--data"); c.fillStyle = css("--panel"); c.lineWidth = 1.5;
+  for (const p of D) { const x = X(p.t), y = Y(p.y); if (p.e > 0) { c.beginPath(); c.moveTo(x, Y(p.y - p.e)); c.lineTo(x, Y(p.y + p.e)); c.stroke(); } c.beginPath(); c.arc(x, y, 4, 0, 2 * Math.PI); c.fill(); c.stroke(); }
+  // legend
+  const lg = [[css("--accent"), "مدل (کل)", ""]];
+  if (P.ff > 0) lg.push([css("--free"), "سهم داروی آزاد", "d"]);
+  if (P.fw > 0) lg.push([css("--weak"), "سهم داروی متصل ضعیف", "d"]);
+  if (fb(P) > 0 && P.bmode !== "none") lg.push([css("--bound"), "سهم داروی آزادشده با تخریب", "d"]);
+  if (S.deg === "table") lg.push([muted, tableFor(S.ds).label, "d"]);
+  if (pins.length) lg.push([css("--pin"), "منحنی‌های ثابت‌شده", "d"]);
+  $("legend").innerHTML = lg.map(([col, t, d]) => `<span><i class="${d}" style="border-top-color:${col}"></i>${t}</span>`).join("") + (D.length ? `<span>● داده</span>` : "");
+  return { P, D };
+}
+
+/* ---------------- readouts, weights, regime ---------------- */
+function outputs({ P, D }) {
+  const thi = 400 * DAY;
+  const t50 = tAt(P, 0.5, thi), t90 = tAt(P, 0.9, thi);
+  const fmtT = t => !isFinite(t) ? "—" : t < 120 ? (t < 0.01 ? "<۰٫۰۱ ثانیه" : faNum(t, 2) + " ثانیه") : t < 2 * H ? faNum(t / 60, 1) + " دقیقه" : t < 2 * DAY ? faNum(t / H, 1) + " ساعت" : faNum(t / DAY, 1) + " روز";
+  const tauD = P.exit === "fick" ? P.R * P.R / (PI2 * P.D) : P.tex;
+  let rm = "—"; if (D.length) { const e = D.map(p => 100 * release(p.t, P, 300).tot - p.y); rm = faNum(Math.sqrt(e.reduce((a, b) => a + b * b, 0) / e.length), 1) + " واحد درصد"; }
+  const cells = [["رهایش ۱ ساعت", faNum(100 * release(H, P).tot, 1) + "٪"], ["رهایش ۱ روز", faNum(100 * release(DAY, P).tot, 1) + "٪"],
+                 ["t50", fmtT(t50)], ["t90", fmtT(t90)], [P.exit === "fick" ? "زمان نفوذ R²/(π²D)" : "زمان خروج", fmtT(tauD)], ["خطا نسبت به داده (RMSE)", rm]];
+  $("read").innerHTML = cells.map(([a, b]) => `<div><span>${a}</span><b>${b}</b></div>`).join("");
+  // liberation time scale
+  let tlib = NaN;
+  if (fb(P) > 0 && P.bmode === "first") tlib = 1 / P.mu;
+  else if (fb(P) > 0 && P.bmode === "table") { let lo = 1, hi = 1e9; for (let i = 0; i < 60; i++) { const mm = Math.sqrt(lo * hi); if (Lb(mm, P) < 0.5) lo = mm; else hi = mm; } tlib = hi / Math.LN2; }
+  if (P.fw > 0 && (!isFinite(tlib) || 1 / P.kw < tlib)) tlib = Math.min(isFinite(tlib) ? tlib : Infinity, 1 / P.kw);
+  const lam = isFinite(tlib) ? tauD / tlib : NaN;
+  let msg, cls = "";
+  if (!isFinite(lam)) msg = "هیچ داروی متصلی آزاد نمی‌شود: فقط داروی آزاد با " + (P.exit === "fick" ? "نفوذ" : "خروج جبهه‌ای") + " خارج می‌شود.";
+  else if (lam < 0.1) msg = `Λ = ${sci(lam)}: آزادشدن (جداشدن یا تخریب) کند است و نفوذ آنی. اندازه ذره و D اهرم طراحی نیستند؛ کسرها و سرعت تخریب/جداشدن تعیین‌کننده‌اند.`;
+  else if (lam > 10) msg = `Λ = ${sci(lam)}: نفوذ کندترین مرحله است. t50 تقریباً با R²/D پیش می‌رود؛ تخریب اثر کمی دارد.`;
+  else msg = `Λ = ${faNum(lam, 2)}: زمان نفوذ و زمان آزادشدن هم‌اندازه‌اند؛ همه پارامترها وزن دارند (مانند داده Cheng با Λ حدود ۱٫۲).`;
+  $("regime").innerHTML = `<p>${msg}</p>`;
+  const notes = [];
+  if (S.deg === "ga" && (S.ga < 0.125 || S.ga > 0.875)) notes.push("غلظت GA بیرون از بازه داده Cheng است؛ رابطه‌ها برون‌یابی شده‌اند.");
+  if (S.preset === "sar" && P.exit === "fick" && P.D > 1e-9) notes.push("با D مستقل، فیک تنها نیمه‌رهایش را کمتر از یک ثانیه پیش‌بینی می‌کند؛ این شکست نشان می‌دهد سازوکار دیگری (اتصال/تخریب) زمان رهایش را تعیین می‌کند.");
+  if (fb(P) > 0 && P.bmode === "none") notes.push("بدون آنزیم داروی متصل به شبکه در این بازه آزاد نمی‌شود و منحنی به سطح کسر آزاد می‌رسد.");
+  $("note").style.display = notes.length ? "" : "none"; $("note").textContent = notes.join(" ");
+  // weights: elasticity of t50
+  const items = [];
+  const elast = (name, mod) => { const up = mod(1.1), dn = mod(1 / 1.1); const a = tAt(up, 0.5, thi), b = tAt(dn, 0.5, thi); items.push([name, isFinite(a) && isFinite(b) ? Math.log(a / b) / (2 * Math.log(1.1)) : NaN]); };
+  if (isFinite(t50)) {
+    elast("شعاع R", h => Object.assign({}, P, { R: P.R * h }));
+    if (P.exit === "fick" && S.deg !== "ga") elast("ضریب نفوذ D", h => Object.assign({}, P, { D: P.D * h }));
+    if (P.exit === "first") elast("زمان خروج", h => Object.assign({}, P, { tex: P.tex * h }));
+    if (P.ff > 0) elast("کسر آزاد", h => Object.assign({}, P, { ff: Math.min(P.ff * h, 1 - P.fw - P.fi) }));
+    if (P.fw > 0) elast("سرعت جداشدن ضعیف", h => Object.assign({}, P, { kw: P.kw * h }));
+    if (fb(P) > 0 && P.bmode === "first" && S.deg !== "ga") elast("سرعت تخریب μ", h => Object.assign({}, P, { mu: P.mu * h }));
+    if (fb(P) > 0 && P.bmode === "table") elast("سرعت تخریب", h => Object.assign({}, P, { sdeg: P.sdeg * h }));
+    if (S.deg === "ga") { elast("ضریب نفوذ D", h => Object.assign({}, P, { D: P.D * h })); if (P.bmode === "first") elast("سرعت تخریب μ", h => Object.assign({}, P, { mu: P.mu * h }));
+      elast("غلظت GA (از راه D، μ، کسر آزاد)", h => Object.assign({}, P, { D: Dcheng(S.ga * h), mu: muCheng(S.ga * h), ff: ffCheng(S.ga * h) })); }
+  }
+  const mx = Math.max(1, ...items.map(i => Math.abs(i[1]) || 0));
+  $("bars").innerHTML = items.length ? items.map(([n, e]) => {
+    const w = isFinite(e) ? Math.abs(e) / mx * 50 : 0, col = e >= 0 ? "var(--accent)" : "var(--bound)";
+    const pos = e >= 0 ? `right:50%;width:${w}%` : `left:50%;width:${w}%`;   // RTL: positive grows to the left visually from centre
+    return `<span>${n}</span><div class="bar"><i style="${pos};background:${col}"></i><i style="left:50%;width:1px;background:var(--muted)"></i></div><code>${isFinite(e) ? (e >= 0 ? "+" : "") + e.toFixed(2) : "—"}</code>`;
+  }).join("") : `<span class="muted" style="grid-column:1/-1">در این بازه رهایش به ۵۰٪ نمی‌رسد.</span>`;
+  return { t50, t90 };
+}
+
+/* ---------------- persistence and export ---------------- */
+const KEY = "grm-sim-v1";
+function persist() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} }
+function download(name, blob) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
+$("csv").onclick = () => {
+  if (!lastCurve) return; const D = getData(S.ds);
+  let s = "# GRM simulator v" + DATA.version + " settings: " + JSON.stringify(S) + "\ntime_h,total_pct,free_pct,weak_pct,bound_pct\n";
+  lastCurve.ts.forEach((t, i) => { const r = lastCurve.res[i]; s += [t / H, 100 * r.tot, 100 * r.free, 100 * r.weak, 100 * r.bound].map(v => v.toFixed(5)).join(",") + "\n"; });
+  if (D.length) { s += "\n# data: " + S.ds + "\ntime_h,release_pct,errbar_pct\n"; D.forEach(p => s += [p.t / H, p.y, p.e].join(",") + "\n"); }
+  download("grm_release_curve.csv", new Blob([s], { type: "text/csv" }));
+};
+$("png").onclick = () => $("cv").toBlob(b => download("grm_release_curve.png", b));
+$("save").onclick = () => download("grm_settings.json", new Blob([JSON.stringify(S, null, 1)], { type: "application/json" }));
+$("load").onchange = e => { const f = e.target.files[0]; if (!f) return; f.text().then(t => { try { Object.assign(S, JSON.parse(t)); refresh(); } catch (err) { alertBox("فایل تنظیمات خوانده نشد."); } }); e.target.value = ""; };
+$("self").onclick = () => download("grm_simulator.html", new Blob(["<!doctype html>\n" + document.documentElement.outerHTML], { type: "text/html" }));
+function alertBox(t) { $("note").style.display = ""; $("note").textContent = t; }
+$("pin").onclick = () => { pins.push({ P: JSON.parse(JSON.stringify(params())), label: summary() }); if (pins.length > 6) pins.shift(); refresh(); };
+$("unpin").onclick = () => { pins = []; refresh(); };
+function summary() { const P = params(); return `R ${faNum(S.R_um, 1)}µm، آزاد ${faNum(P.ff, 2)}، ضعیف ${faNum(P.fw, 2)}` + (S.deg === "ga" ? `، GA ${faNum(S.ga, 3)}٪` : ""); }
+
+/* ---------------- events ---------------- */
+function refresh() { syncUI(); const r = draw(); outputs(r); $("pins").innerHTML = pins.map(p => `<span>${p.label}</span>`).join(""); persist(); }
+for (const [id, s] of Object.entries(SL)) $(id).addEventListener("input", e => { s.set(+e.target.value); if (S.preset !== "custom" && ["R", "D", "tex", "fw", "kw", "fi", "mu", "sd"].includes(id)) {} refresh(); });
+document.querySelectorAll("#presets button").forEach(b => b.onclick = () => { Object.assign(S, PRESETS[b.dataset.p]()); pins = []; refresh(); });
+document.querySelectorAll("#exitSeg button").forEach(b => b.onclick = () => { S.exit = b.dataset.v; refresh(); });
+document.querySelectorAll("#degSeg button").forEach(b => b.onclick = () => { S.deg = b.dataset.v; refresh(); });
+$("enz").onchange = e => { S.enz = e.target.checked; autoDs(); refresh(); };
+$("logt").onchange = e => { S.logt = e.target.checked; refresh(); };
+$("ds").onchange = e => { S.ds = e.target.value; refresh(); };
+$("theme").onclick = () => { const r = document.documentElement, cur = r.getAttribute("data-theme"); const dark = cur ? cur === "dark" : matchMedia("(prefers-color-scheme: dark)").matches; r.setAttribute("data-theme", dark ? "light" : "dark"); refresh(); };
+window.addEventListener("resize", () => { const r = draw(); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", refresh);
+$("ver").textContent = "نسخه " + DATA.version;
+let saved = null; try { saved = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
+Object.assign(S, PRESETS.cheng(), saved && saved.preset ? saved : {});
+refresh();
+</script>
+</body>
+</html>

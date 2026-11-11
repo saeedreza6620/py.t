@@ -43,7 +43,12 @@ pip install -r requirements.txt            # numpy, scipy, pandas, matplotlib, p
 python validation/run_all.py               # ~30 s: re-runs every test, writes results/*.json, results/VALIDATION.md, figures/*.png
 python -m pytest -q                        # 8 tests: mathematics + pinned validation numbers
 python ml/build_training_table.py          # writes ml/formulations.csv and ml/curves_long.csv
+python simulator/build_simulator.py        # rebuilds simulator/grm_simulator.html from data/ and results/
 ```
+
+**Interactive simulator:** open `simulator/grm_simulator.html` in any browser (one self-contained file, no internet needed).
+Same equations as `grm/model.py`; presets reproduce the validation cases (Cheng RMSE 2.4/2.9/4.0, Hu 12.4, Mladenovska A 6.5) with the data points;
+parameter weights (t50 elasticities) and the regime number Λ update live; curves can be pinned for comparison and exported as CSV/PNG; settings save to JSON.
 
 Minimal use:
 
@@ -257,6 +262,7 @@ data/                      extracted data with provenance (see §7)
 results/                   JSON outputs + VALIDATION.md (auto-generated)
 figures/                   PNG figures (auto-generated)
 ml/                        build_training_table.py -> formulations.csv, curves_long.csv
+simulator/                 template.html + build_simulator.py -> grm_simulator.html (offline, single file)
 tools/digitize_cheng2010.py  vector extraction from the dissertation PDF (needs pdfplumber and the PDF)
 tests/test_model.py        pytest: mathematics + pinned validation numbers
 AGENTS.md                  short operating rules for an AI agent continuing this repository

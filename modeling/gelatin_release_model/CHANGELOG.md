@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.1 — 2026-11-11
+- Offline single-file simulator (simulator/grm_simulator.html) built from the validated data; JS model mirrors grm/model.py.
+
 ## 1.0.0 — 2026-11-11
 - Consolidated model package `grm` (pools + liberation laws + Fick/first-order exit; Eq. (1) verified against the PDE).
 - Cheng 2010 data re-extracted from the PDF drawing commands (previously read by eye, ±2 %).
