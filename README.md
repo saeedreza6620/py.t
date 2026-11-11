@@ -1,5 +1,6 @@
 # BeautyWallet (بیوتی‌ولت) — README for the next developer or AI
 
+> **Strategy (Persian):** `docs/strategy/` (positioning, moat, customers, Instagram, revenue, premium, SMS, decision log).
 > **Android app / signed APK:** read `android-app/README.md` (build on GitHub, signing secrets, stores).
 > **Start with `docs/HANDOFF.md`** (Persian: current state v144, rules, decisions, open tasks, traps). **Read this whole file before changing anything.** Then read `docs/PROCESS.md`, `docs/PAYMENTS.md` (Persian: diamonds, chat paywall, card-to-card end to end) (Persian: the product journey, the customer's «job», the diamond model, the medical boundary, what to do next) and `BACKUP.md` (Persian: how it was built, how to rebuild, how to change it).
 > Owner: Saeedreza Barzkar (founder). Talk to him in **Persian**.
@@ -57,7 +58,7 @@ cd lite && DATA_DIR=/tmp/bwdata PORT=3917 ADMIN_TOKEN=test node server.mjs   # a
    - Keep the IndexedDB name `bw-skin-journal` / store `photos`.
    - The cloud key lists in `lite/cloud.mjs` and `claude/cloud-sync.js` must stay identical.
    - `scripts/test-keep-user-data.mjs` enforces all of this.
-2. **No secrets** in code, the repo, chat, screenshots or logs. Keys live only in Liara environment variables and GitHub Actions secrets. Never ask the owner to paste a key. **This repository is public.**
+2. **No secrets** in code, the repo, chat, screenshots or logs. Keys live only in Liara environment variables and GitHub Actions secrets. Never ask the owner to paste a key. The repository is **private** since 2026-11-11, but keys, card numbers and users' phone numbers still never go into git.
 3. **Never schedule or send SMS/messages to users.** The owner sends SMS himself from the Faraz SMS panel. Only prepare texts and lists for him.
 4. **Honesty in the product:**
    - No promises of unbuilt features.

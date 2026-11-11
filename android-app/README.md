@@ -48,7 +48,7 @@ The owner downloads the APK from the run page → **Artifacts**. Artifacts are k
 
 **Status as of v145 (2026-11-11):**
 - Debug APKs build fine (runs #2 and #3).
-- The repo is **public**, so the key is not created yet.
+- The repo became **private** on 2026-11-11. The owner can now run the one-time key workflow; until the 4 secrets exist, builds are debug.
 - The sandbox cannot list secrets (that GitHub path is blocked), so ask the owner whether the 4 secrets exist; never ask for their values.
 
 **If the key is lost:** the app can no longer be updated in Cafe Bazaar / Myket, and only a new package name would help. **Never generate a second key** if one exists.
