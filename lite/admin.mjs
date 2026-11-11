@@ -2,7 +2,7 @@
 // Login with ADMIN_TOKEN once → HttpOnly cookie (the token never sits in the address bar).
 import {retentionHtml} from './retention.mjs';
 import {insightsHtml} from './insights.mjs';
-import {kpiHtml} from './kpi.mjs';import {journeysHtml,journeysCsv} from './journeys.mjs';import {carePage} from './carekpi.mjs';
+import {kpiHtml} from './kpi.mjs';import {journeysHtml,journeysCsv} from './journeys.mjs';import {carePage} from './carekpi.mjs';import {makeMarketing,FUNNEL} from './marketing.mjs';
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
 
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -45,7 +45,9 @@ const secret=clean(adminKey?E[adminKey]:'');const secrets=adminKeys.map(k=>clean
   const same=(a,b)=>{const x=Buffer.from(String(a)),y=Buffer.from(String(b));return x.length===y.length&&crypto.timingSafeEqual(x,y)};
   function cookie(req,name){const m=String(req.headers.cookie||'').split(/;\s*/).find(c=>c.startsWith(name+'='));return m?decodeURIComponent(m.slice(name.length+1)):''}
   const okPass=t=>!!t&&secrets.some(x=>same(clean(t).toLowerCase(),x.toLowerCase())); // phones capitalise the first letter
-  function authed(req,url){if(!secret)return false;if(same(cookie(req,'bw_admin'),sig))return true;return okPass(url.searchParams.get('token'))}
+  // also accepts the token in an X-Admin-Token header (used by the weekly GitHub snapshot, so it never appears in a URL)
+  function authed(req,url){if(!secret)return false;if(same(cookie(req,'bw_admin'),sig))return true;if(okPass(req.headers['x-admin-token']))return true;return okPass(url.searchParams.get('token'))}
+  const MK=makeMarketing({DATA,readJsonl,getUsers,getReqStatus,L2});
   const origin=req=>(String(req.headers['x-forwarded-proto']||'').split(',')[0]||(req.socket.encrypted?'https':'http'))+'://'+req.headers.host;
 
   function stats(){
@@ -108,6 +110,7 @@ table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:8px 6px;b
     return page('پنل مدیریت بیوتی‌ولت',`
 <header><div class="brand"><div class="logo">BW</div><h1>پنل مدیریت بیوتی‌ولت<small>نسخه آزمایشی · آخرین فعالیت: ${s.lastAt?esc(new Date(s.lastAt).toLocaleString('fa-IR',{timeZone:'Asia/Tehran'})):'—'}</small></h1></div><div><a class="btn ghost" href="/admin">تازه‌سازی</a> <a class="btn ghost" href="/admin/logout">خروج</a></div></header>
 <div class="card links"><div class="l"><span>🧪 لینک تست برای کاربران</span><a href="${esc(o)}/legacy/" target="_blank">${esc(o)}/legacy/</a></div><div class="l"><span>🌐 وب‌سایت</span><a href="${esc(o)}/" target="_blank">${esc(o)}/</a></div><div class="l"><span>🛠 پنل مدیریت (همین صفحه)</span><a href="${esc(o)}/admin">${esc(o)}/admin</a></div></div>
+<a href="/admin/marketing" style="display:block;margin:0 0 10px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;background:linear-gradient(135deg,#ff8fb8,#c79bff);color:#fff">📈 مارکتینگ هفتگی · قیف، درآمد، عددهای اینستاگرام</a>
 <a href="/admin/l2" style="display:block;margin:0 0 10px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;background:linear-gradient(135deg,#8b6cf0,#5bb2ff);color:#fff">🧬 داده‌ی لایه‌ی دوم · اصالت، پیگیری، عکس با برچسب محصول و شهر</a>
 <a href="/admin/care" style="display:block;margin:0 0 10px;padding:14px 16px;border-radius:16px;text-decoration:none;font-weight:800;background:linear-gradient(135deg,#ff9a7a,#ff7fa8);color:#fff">🌸 داشبورد مراقبت روزانه · ستاره‌ی شمال و هشدارها</a>
 ${globalThis.BW_STUDIO?globalThis.BW_STUDIO.box():''}
@@ -232,6 +235,19 @@ ${s.fb.rows.length?s.fb.rows.slice().reverse().map(r=>`<tr><td>${esc(new Date(r.
       logUsage({at:new Date().toISOString(),test:true,status:r.status,model:r.body.model||'',search:true,ms:Date.now()-t0,sources:(r.body.sources||[]).length,code:r.body.code||''});
       return send(res,200,{ok:r.status===200,model:r.body.model,seconds:Math.round((Date.now()-t0)/100)/10,text:String(r.body.text||'').slice(0,1200),sources:r.body.sources||[],error:r.body.error},'application/json',{'Cache-Control':'no-store'});
     }
+    if(p==='/admin/marketing.json')return send(res,200,MK.snapshot(Math.max(1,Math.min(26,Number(url.searchParams.get('weeks'))||8))),'application/json',{'Cache-Control':'no-store'});
+    if(p==='/admin/marketing'&&req.method==='POST'){if(!sameOrigin(req))return send(res,403,'forbidden','text/plain');MK.saveIg(await readForm(req));res.writeHead(303,{Location:'/admin/marketing?ok=1'});return res.end()}
+    if(p==='/admin/marketing'){const S=MK.snapshot(8),fa=n=>n==null?'—':String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]),W=S.weeks.slice().reverse(),cur=W[0];/* newest week first, so it shows on a phone without scrolling */
+      const th='<tr><th style="text-align:right">مرحله</th>'+W.map((w,i)=>'<th>'+(i?fa(w.week.slice(5)):'این هفته')+'</th>').join('')+'</tr>';
+      const row=(label,f)=>'<tr><td>'+label+'</td>'+W.map(w=>'<td style="text-align:center">'+fa(f(w))+'</td>').join('')+'</tr>';
+      const rows=[row('👤 کاربر تازه',w=>w.newUsers),row('📱 دستگاه فعال',w=>w.activeDevices)].concat(FUNNEL.map(([k,l])=>row(l,w=>w.funnelPeople[k]))).concat([row('🧾 سفارش',w=>w.orders),row('🟠 ۴ رقم فرستاد',w=>w.proofs),row('🟢 تأیید',w=>w.approved),row('💰 درآمد (تومان)',w=>w.revenueToman)])
+        .concat(MK.IG_FIELDS.map(([k,l])=>row('📸 '+l,w=>w.instagram?w.instagram[k]:null))).join('');
+      const igv=(cur.instagram||{});const inp=MK.IG_FIELDS.map(([k,l])=>'<label>'+l+' <input name="'+k+'" inputmode="numeric" value="'+(igv[k]??'')+'"></label>').join('');
+      return send(res,200,page('مارکتینگ هفتگی',`<a href="/admin">← پنل</a><div class="card"><h1>📈 مارکتینگ هفتگی</h1>${url.searchParams.get('ok')?'<p class="note">✅ ذخیره شد.</p>':''}
+<p class="note">هفته از شنبه تا جمعه (وقت تهران). هر عدد = تعداد آدم‌ها یا دستگاه‌های متفاوت، نه تعداد کلیک. این صفحه هیچ اسم یا شماره‌ای ندارد؛ نسخه‌ی JSON همین را هر جمعه GitHub برای تیم و هوش مصنوعی برمی‌دارد: <a href="/admin/marketing.json">marketing.json</a></p>
+<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px">${th}${rows}</table></div></div>
+<div class="card"><h2>📸 عددهای اینستاگرام این هفته (${fa(cur.week)})</h2><p class="note">اپ به اینستاگرام دسترسی ندارد؛ این‌ها را هر جمعه از Insights پیج بنویس. خالی بگذاری ثبت نمی‌شود.</p>
+<form method="post" action="/admin/marketing" style="display:grid;gap:8px">${inp}<label>بهترین پست این هفته <input name="top" maxlength="120" value="${String(igv.top||'').replace(/"/g,'&quot;')}"></label><label>یادداشت <input name="note" maxlength="400" value="${String(igv.note||'').replace(/"/g,'&quot;')}"></label><input type="hidden" name="week" value="${cur.week}"><button>ذخیره</button></form></div>`),'text/html; charset=utf-8',{'Cache-Control':'no-store'})}
     if(p==='/admin/l2'){const S=L2.summary(),fa=n=>String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d]),bar=(n,of)=>`<div style="height:8px;border-radius:6px;background:#eee;overflow:hidden"><i style="display:block;height:8px;width:${Math.min(100,of?100*n/of:0)}%;background:#8b6cf0"></i></div>`;
       const row=(t,n,note)=>`<tr><td>${t}</td><td style="text-align:center"><b>${fa(n)}</b></td><td class="note">${note}</td></tr>`;
       return send(res,200,page('داده‌ی لایه‌ی دوم',`<div class="card"><h1>داده‌ی لایه‌ی دوم</h1><p class="note">هر استعلام اصالت، پیگیری و عکس با شناسه‌ی محصول، فروشنده، شهر، نوع پوست و تاریخ اینجا جمع می‌شود (بدون عکس، اسم یا شماره). هیچ آماری زیر ۱۰ مورد به کاربر نشان داده نمی‌شود.</p>

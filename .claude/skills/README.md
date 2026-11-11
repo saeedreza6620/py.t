@@ -20,6 +20,7 @@ These skills are copied from **[coreyhaines31/marketingskills](https://github.co
 | `launch` | Cafe Bazaar / Myket launch, ORB framework |
 | `aso` | Store title, keywords and screenshots |
 | `marketing-psychology` | Honest persuasion and its limits |
+| **`beautywallet-weekly`** (our own) | **The weekly data loop:** read `data/marketing/latest.json`, find the biggest drop, write the next content pack and report in Persian |
 
 ## Adapting for Iran and BeautyWallet
 
