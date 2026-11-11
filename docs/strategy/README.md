@@ -13,6 +13,7 @@
 | [`05-premium-private.md`](05-premium-private.md) | بیوتی‌ولت پرایوت برای مشتری مرفه، بررسی دبی و آمریکا، ایده‌های رد یا پارک‌شده |
 | [`06-users-and-sms.md`](06-users-and-sms.md) | گروه‌بندی کاربران، کمپین پیامک برگشت، قانون پیامک |
 | [`07-decisions-log.md`](07-decisions-log.md) | فهرست تاریخ‌دار تصمیم‌های صاحب پروژه |
+| [`09-customer-research.md`](09-customer-research.md) | تحقیق مشتری، دور اول: ۵ موضوع درد با نقل‌قول واقعی، سطح اطمینان، قدم بعد |
 | [`08-marketing-playbook.md`](08-marketing-playbook.md) | کتابچه‌ی مارکتینگ: ترتیب کار با اسکیل‌های `.claude/skills/` و پرونده‌ی پایه‌ی `.agents/product-marketing.md` |
 
 ## چیزهایی که عمداً اینجا نیست
