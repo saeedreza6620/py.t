@@ -5,7 +5,7 @@
 > 1. همین فایل
 > 2. `README.md`: قوانین، دستور ساخت و تست، متغیرها
 > 3. `docs/PROCESS.md`: مسیر محصول، «کار» مشتری، مدل الماس، مرز پزشکی
-> 4. `docs/ANDROID.md` و `docs/STORE_LISTING.md`: اپ اندروید، کلید امضا، صفحه‌ی بازار
+> 4. `android-app/README.md` (خلاصه‌ی سریع ساخت APK امضاشده)، `docs/ANDROID.md` و `docs/STORE_LISTING.md`: اپ اندروید، کلید امضا، صفحه‌ی بازار
 5. `docs/PAYMENTS.md`: الماس، دستیار پولی، کارت‌به‌کارت از اول تا آخر
 > 5. `BACKUP.md`: بازسازی از صفر
 >
