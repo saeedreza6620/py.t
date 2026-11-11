@@ -24,6 +24,8 @@ jobs:
           distribution: temurin
           java-version: 21
       - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'   # the old default 'tools' package no longer exists
       - name: Install
         run: npm ci --no-audit --no-fund
       - name: Create the Android project (icons, permissions, version, signing hooks)
