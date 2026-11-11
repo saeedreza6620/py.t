@@ -1,0 +1,21 @@
+{
+  "appId": "ir.beautywallet.app",
+  "appName": "بیوتی‌ولت",
+  "webDir": "www",
+  "server": {
+    "url": "https://beautywallet.liara.run/legacy/",
+    "androidScheme": "https",
+    "allowNavigation": ["beautywallet.liara.run"],
+    "errorPath": "error.html"
+  },
+  "android": {
+    "backgroundColor": "#f6f8ff",
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_bw",
+      "iconColor": "#7C5CD6"
+    }
+  }
+}

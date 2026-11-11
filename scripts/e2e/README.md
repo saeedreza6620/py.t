@@ -25,6 +25,7 @@ python3 -c "from PIL import Image;Image.new('RGB',(900,1400),(240,240,250)).save
 NODE_PATH=$(npm root -g) node scripts/e2e/today-home.cjs $OUT         # v141 «امروز» home: ticks sync with the routine tab, calm day, data kept
 NODE_PATH=$(npm root -g) node scripts/e2e/chat-pay-checkout.cjs $OUT  # v142 gift messages → paywall → checkout → card → last 4 + receipt → chat continues
 NODE_PATH=$(npm root -g) node scripts/e2e/no-flash-on-open.cjs $OUT   # v143 the old base screen never shows while opening (throttled CPU and network)
+NODE_PATH=$(npm root -g) node scripts/e2e/android-native.cjs $OUT     # v144 Android app (mock Capacitor): permission, daily + one-off reminders, iPhone nudge
 ```
 
 ## What the output should show

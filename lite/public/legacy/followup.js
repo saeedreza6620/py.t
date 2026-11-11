@@ -120,13 +120,15 @@ function answer(id,c,v){var ans=rj(K_ANS,{}),q=ask(info(id),Number(c));
 
 /* ---------- reminders outside the app (one setting, shared with the پیگیری tab) ---------- */
 var standalone=false;try{standalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
-var ios=/iphone|ipad|ipod/i.test(navigator.userAgent),canPush='serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+// v144: inside the Android app (Capacitor) reminders are scheduled on the phone by native.js instead of web push
+function NAT(){try{return !!(window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform())}catch(e){return false}}
+var ios=/iphone|ipad|ipod/i.test(navigator.userAgent),canPush=NAT()||('serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window);
 var TIME=/^([01]\d|2[0-3]):[0-5]\d$/;
 function notif(){var n=rj(K_NOTIF,{}),r=rj('bw_reminder_v1',{});n.am=TIME.test(n.am||'')?n.am:TIME.test(r.morning||'')?r.morning:(TIME.test(n.time||'')?n.time:'09:00');n.pm=TIME.test(n.pm||'')?n.pm:TIME.test(r.evening||'')?r.evening:'21:00';
   if(n.amOn===undefined)n.amOn=n.daily!==undefined?!!n.daily:true;if(n.pmOn===undefined)n.pmOn=false;return n}
 function saveNotif(n){wj(K_NOTIF,n);var r={enabled:!!(n.amOn||n.pmOn),morning:n.am,evening:n.pm};wj('bw_reminder_v1',r);mirror=JSON.stringify(r)}
 var mirror='';
-function granted(){return typeof Notification!=='undefined'&&Notification.permission==='granted'}
+function granted(){if(NAT()){try{return localStorage.getItem('bw_native_notif')==='granted'}catch(e){return false}}return typeof Notification!=='undefined'&&Notification.permission==='granted'}
 function notifBlock(){var n=notif(),has=ids().length>0;if(!has||(n.on&&granted()))return '';
   if(n.hide&&Date.now()-n.hide<14*DAY&&!permFail)return '';
   if(ios&&!standalone)return permHelp('default');
@@ -140,13 +142,14 @@ function settingsHtml(){var n=notif(),l=life(),c=l.cycle||{},st;
   return '<div class="fu" id="fuSettings"><button type="button" class="x" data-set-close="1" aria-label="بستن">✕</button><small class="k">⚙️ تنظیمات من</small><b>یادآور روی گوشی: '+st+'</b>'+timeRows(n)+'<hr><b>شرایط من</b><div class="row2"><select id="fuLife"><option value="">انتخاب کن</option>'+LIFE_OPTS.map(function(o){return '<option value="'+o[0]+'"'+(l.state===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+(l.state==='pb'?'<option value="pb" selected>بارداری یا شیردهی (از پروفایل)</option>':'')+'</select></div>'+
     '<div class="row2"><label><input type="checkbox" id="fuCycOn"'+(c.on?' checked':'')+'> چرخه‌ی ماهانه‌م رو در نظر بگیر</label></div><div class="row2"><label>آخرین شروع '+jPick('fuCycLast2',c.last||'')+'</label><label>هر<select id="fuCycLen2">'+[21,24,26,28,30,32,35].map(function(x){return '<option value="'+x+'"'+((Number(c.len)||28)===x?' selected':'')+'>'+fa(x)+'</option>'}).join('')+'</select>روز</label></div><span class="note">این‌ها فقط روی همین گوشی ذخیره می‌شن و هیچ‌جا فرستاده نمی‌شن.</span>'+
     '<div class="o" style="margin-top:8px"><button type="button" class="m" data-set-save="1">ذخیره</button></div></div>'}
-var UA=navigator.userAgent||'',inApp=/Instagram|FBAN|FBAV|Telegram|; wv\)|WebView/i.test(UA),android=/Android/i.test(UA),samsung=/SamsungBrowser/i.test(UA);
+var UA=navigator.userAgent||'',inApp=!NAT()&&/Instagram|FBAN|FBAV|Telegram|; wv\)|WebView/i.test(UA),android=/Android/i.test(UA),samsung=/SamsungBrowser/i.test(UA);
 var chrome=/Chrome\/\d/i.test(UA)&&!samsung&&!/EdgA|OPR|MiuiBrowser|HeyTap|YaBrowser/i.test(UA);
 var iosVer=(function(){var m=UA.match(/OS (\d+)_(\d+)/);return m?Number(m[1])+Number(m[2])/100:0})();
 function chromeLink(){return 'intent://'+location.host+'/legacy/?from=perm#Intent;scheme=https;package=com.android.chrome;end'}
 function permHelp(state){ // state: 'denied' (blocked before) or 'default' (window closed / never shown)
   var t,steps=[],btn='';
-  if(inApp){t='اینجا اعلان کار نمی‌کنه';steps=['الان بیوتی‌ولت داخل اینستاگرام یا تلگرام باز شده و این‌ها اجازه‌ی اعلان نمی‌دن.',ios?'سه‌نقطه‌ی بالای صفحه ← «Open in Safari» (باز کردن در Safari).':'دکمه‌ی زیر رو بزن تا در Chrome باز بشه.','بعد از اونجا «روشنش کن» رو بزن.'];}
+  if(NAT()){t=state==='default'?'هنوز اجازه نگرفتم':'اجازه‌ی اعلان بسته شده';steps=state==='default'?['«روشنش کن» رو بزن و در پنجره‌ای که میاد «اجازه» (Allow) رو انتخاب کن.']:['تنظیمات گوشی ← برنامه‌ها ← «بیوتی‌ولت» ← اعلان‌ها ← روشن.','برگرد اینجا و «روشنش کن» رو دوباره بزن.'];}
+  else if(inApp){t='اینجا اعلان کار نمی‌کنه';steps=['الان بیوتی‌ولت داخل اینستاگرام یا تلگرام باز شده و این‌ها اجازه‌ی اعلان نمی‌دن.',ios?'سه‌نقطه‌ی بالای صفحه ← «Open in Safari» (باز کردن در Safari).':'دکمه‌ی زیر رو بزن تا در Chrome باز بشه.','بعد از اونجا «روشنش کن» رو بزن.'];}
   else if(ios&&iosVer&&iosVer<16.4){t='آیفونت باید به‌روز بشه';steps=['اعلان وب‌اپ از iOS نسخه‌ی ۱۶٫۴ به بعد کار می‌کنه.','Settings ← General ← Software Update، بعد دوباره امتحان کن.']}
   else if(ios&&!standalone){t='اول اپ رو به صفحه‌ی اصلی اضافه کن';steps=['در Safari دکمه‌ی اشتراک‌گذاری (مربع با فلش رو به بالا) ← «Add to Home Screen».','بیوتی‌ولت رو از آیکن خودش در صفحه‌ی اصلی باز کن.','اینجا «روشنش کن» رو بزن و «Allow» رو انتخاب کن.']}
   else if(ios){t=state==='default'?'هنوز اجازه نگرفتم':'اجازه‌ی اعلان بسته شده';steps=state==='default'?['«روشنش کن» رو بزن و در پنجره‌ای که میاد «Allow» رو انتخاب کن.']:['Settings گوشی ← Notifications ← در فهرست برنامه‌ها «BeautyWallet» رو پیدا کن ← «Allow Notifications» رو روشن کن.','اگه BeautyWallet توی فهرست نبود: آیکن اپ رو از صفحه‌ی اصلی حذف کن، از Safari دوباره «Add to Home Screen» بزن و از آیکن جدید «روشنش کن» رو بزن.']}
@@ -161,6 +164,10 @@ function subscribe(){return Notification.requestPermission().then(function(p){if
   .then(function(reg){return fetch('/api/push/key',{cache:'no-store'}).then(function(r){return r.json()}).then(function(k){return reg.pushManager.getSubscription().then(function(s){return s||reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(k.key)})})}).then(function(sub){
     try{if(reg.periodicSync)reg.periodicSync.register('bw-daily',{minInterval:12*3600e3}).catch(function(){})}catch(e){}return sub})})}
 function enable(n,quiet){n=n||readTimes(notif());
+  if(NAT()){if(!window.BWNative||!BWNative.enable)return Promise.resolve(render('یه لحظه صبر کن و دوباره بزن 💜'));
+    return BWNative.enable().then(function(ok){settingsOpen=false;if(!ok){permFail='denied';track('notif_denied');return render()}
+      n.on=true;n.sig='';saveNotif(n);track('notif_on');planSig='';writePlan();setTimeout(function(){BWNative.schedule(true)},400);
+      render(quiet?'تنظیمات یادآورت ذخیره شد 🔔 '+whenText():'یادآور روشن شد 🔔 حتی بدون اینترنت سر ساعت میاد. '+whenText())})}
   return subscribe().then(function(sub){n.on=true;n.endpoint=sub.endpoint;n.sig='';saveNotif(n);track('notif_on');return syncSub(sub,true).then(function(ok){if(!ok)throw Error('server');return sub})})
   .then(function(){if(quiet)return true;return fetch('/api/push/test',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:notif().endpoint})}).then(function(r){return r.ok},function(){return false})})
   .then(function(ok){settingsOpen=false;render(quiet?'تنظیمات یادآورت ذخیره شد 🔔 '+whenText():ok?'یادآور روشن شد 🔔 یه اعلان آزمایشی هم فرستادم. '+whenText():'یادآور روشن شد، ولی اعلان آزمایشی نرسید؛ تیم بیوتی‌ولت بررسی می‌کنه. یادآورهای داخل اپ همچنان کار می‌کنن.')})
@@ -168,7 +175,7 @@ function enable(n,quiet){n=n||readTimes(notif());
 function whenText(){var n=notif();return n.amOn&&n.pmOn?'صبح‌ها ساعت '+fa(n.am)+' و شب‌ها ساعت '+fa(n.pm)+'.':n.pmOn&&!n.amOn?'شب‌ها ساعت '+fa(n.pm)+'.':'صبح‌ها ساعت '+fa(n.am)+'.'}
 function taskSlot(n){return n.amOn||!n.pmOn?'am':'pm'}
 var lastSig='';
-function syncSub(sub,force){var n=notif();if(!n.on)return Promise.resolve(false);var days=planDays().filter(function(x){return x.task}).map(function(x){return x.date});
+function syncSub(sub,force){var n=notif();if(!n.on)return Promise.resolve(false);if(NAT()){window.BWNative&&BWNative.schedule&&setTimeout(function(){BWNative.schedule(false)},300);return Promise.resolve(true)}var days=planDays().filter(function(x){return x.task}).map(function(x){return x.date});
   var body={am:n.am,pm:n.pm,amDaily:!!n.amOn,pmDaily:!!n.pmOn,taskSlot:taskSlot(n),days:days},sig=JSON.stringify(body);if(!force&&(sig===lastSig||sig===n.sig))return Promise.resolve(true);lastSig=sig;
   var dev='';try{dev=localStorage.getItem('bw_device')||''}catch(e){}
   return (sub?Promise.resolve(sub):navigator.serviceWorker.ready.then(function(r){return r.pushManager.getSubscription()})).then(function(s){if(!s){n.on=false;saveNotif(n);return false}
@@ -249,7 +256,7 @@ function init(){if(!document.getElementById('sw-home'))return setTimeout(init,50
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 // once a day on opening: if reminders are on and the phone still allows them, make sure the server has her current
 // push address and times (a lost or replaced subscription is renewed silently — no new permission prompt)
-function keepAlive(){var n=notif();if(!n.on||!canPush||typeof Notification==='undefined'||Notification.permission!=='granted')return;
+function keepAlive(){var n=notif();if(NAT())return;if(!n.on||!canPush||typeof Notification==='undefined'||Notification.permission!=='granted')return;
   var K='bw_push_check',last=0;try{last=Number(localStorage.getItem(K)||0)}catch(e){}if(Date.now()-last<20*3600e3)return;try{localStorage.setItem(K,String(Date.now()))}catch(e){}
   navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription().then(function(s){if(s)return s;
     return fetch('/api/push/key',{cache:'no-store'}).then(function(r){return r.json()}).then(function(k){return reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(k.key)})})})})

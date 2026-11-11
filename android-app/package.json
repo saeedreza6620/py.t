@@ -1,0 +1,18 @@
+{
+  "name": "beautywallet-android",
+  "private": true,
+  "version": "1.0.0",
+  "description": "BeautyWallet Android app: a Capacitor shell that opens https://beautywallet.liara.run/legacy/ and adds offline, on-time routine reminders (local notifications).",
+  "scripts": {
+    "prepare-android": "npx cap add android && npx capacitor-assets generate --android --iconBackgroundColor '#f6f8ff' --iconBackgroundColorDark '#f6f8ff' --splashBackgroundColor '#f6f8ff' --splashBackgroundColorDark '#f6f8ff' && node patch-android.mjs && npx cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/local-notifications": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.0.0"
+  }
+}
