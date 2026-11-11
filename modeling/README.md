@@ -1,5 +1,7 @@
 # Gelatin microsphere drug-release modelling (master's thesis, Persian) — folder `modeling/` of repo py.t
 
+> **Update 2026-11-11 — start here:** the consolidated, tested model is in [`gelatin_release_model/`](gelatin_release_model/README.md) (package `grm`, validation V0–V4, parameter weights, ML scaffolding). Everything below is the earlier exploratory work it was built from.
+
 > **For the next AI / person: read this file first, then `BACKUP.md`, then `docs/`.**
 > Backup date: 2026-11-08. Owner's language: Persian (Farsi). Reply in Persian unless asked otherwise.
 

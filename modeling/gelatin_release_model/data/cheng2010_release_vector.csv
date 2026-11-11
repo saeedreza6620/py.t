@@ -1,0 +1,58 @@
+figure,medium,series,marker,t_day,release_pct,errbar_half_pct,x_pt,y_pt
+2.6A,"PBS, no enzyme",GA 0.125 %,square,-0.0009,-0.0,,228.18,238.44
+2.6A,"PBS, no enzyme",GA 0.125 %,square,0.9991,28.975,,293.58,147.42
+2.6A,"PBS, no enzyme",GA 0.125 %,square,1.9991,37.322,,358.98,121.2
+2.6A,"PBS, no enzyme",GA 0.125 %,square,2.9991,42.918,,424.38,103.62
+2.6A,"PBS, no enzyme",GA 0.875 %,circle,-0.0018,-0.0,,228.12,238.44
+2.6A,"PBS, no enzyme",GA 0.875 %,circle,0.9982,26.568,,293.52,154.98
+2.6A,"PBS, no enzyme",GA 0.875 %,circle,2.0,33.922,,359.04,131.88
+2.6A,"PBS, no enzyme",GA 0.875 %,circle,3.0,39.404,,424.44,114.66
+2.6A,"PBS, no enzyme",GA 0.375 %,triangle,-0.0009,-0.025,,228.18,238.52
+2.6A,"PBS, no enzyme",GA 0.375 %,triangle,0.9991,24.385,,293.58,161.84
+2.6A,"PBS, no enzyme",GA 0.375 %,triangle,2.0,31.07,,359.04,140.84
+2.6A,"PBS, no enzyme",GA 0.375 %,triangle,3.0,35.463,,424.44,127.04
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,-0.0057,0.039,,201.66,263.58
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,0.9914,39.922,2.227,212.1,202.32
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,1.9885,53.398,2.227,222.54,181.62
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,2.9857,69.18,,232.98,157.38
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,6.0,93.867,2.266,264.54,119.46
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,8.9914,98.633,2.266,295.86,112.14
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,11.9943,100.039,2.227,327.3,109.98
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,14.9971,100.352,2.227,358.74,109.5
+2.7,PBS + collagenase 373 ng/ml,GA 0.125 %,square,18.0,100.586,2.266,390.18,109.14
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,-0.0057,0.039,,201.66,263.58
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,0.9914,38.086,3.789,212.1,205.14
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,1.9885,50.508,4.57,222.54,186.06
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,2.9857,58.633,5.469,232.98,173.58
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,6.0,74.023,14.375,264.54,149.94
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,8.9914,87.07,10.469,295.86,129.9
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,11.9943,94.961,7.539,327.3,117.78
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,14.9971,98.242,7.852,358.74,112.74
+2.7,PBS + collagenase 373 ng/ml,GA 0.875 %,circle,18.0,99.805,7.891,390.18,110.34
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,-0.0115,0.026,,201.6,263.6
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,0.9914,33.88,8.229,212.1,211.6
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,1.9885,45.573,6.719,222.54,193.64
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,2.9914,57.37,3.398,233.04,175.52
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,5.9943,73.88,12.773,264.48,150.16
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,8.9971,89.089,7.578,295.92,126.8
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,11.9943,96.042,4.805,327.3,116.12
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,15.0029,98.385,3.789,358.8,112.52
+2.7,PBS + collagenase 373 ng/ml,GA 0.375 %,triangle,18.0,99.271,3.437,390.18,111.16
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,-0.0,0.039,,210.6,272.46
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,1.0023,35.508,,221.1,217.98
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,1.9989,50.703,,231.54,194.64
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,2.9954,65.039,,241.98,172.62
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,6.0023,89.961,3.086,273.48,134.34
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,8.9977,97.695,3.281,304.86,122.46
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,11.9989,99.961,3.359,336.3,118.98
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,15.0,100.352,3.555,367.74,118.38
+2.8,PBS + collagenase 373 ng/ml,GA 0.25 %,square,18.0011,100.664,3.672,399.18,117.9
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,0.0,-0.026,,210.6,272.56
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,0.9966,37.76,3.359,221.04,214.52
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,1.9989,50.651,,231.54,194.72
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,2.9954,60.026,,241.98,180.32
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,6.0023,77.604,10.052,273.48,153.32
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,8.9977,91.458,9.479,304.86,132.04
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,11.9931,98.62,4.414,336.24,121.04
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,15.0,99.948,4.258,367.74,119.0
+2.8,PBS + collagenase 373 ng/ml,GA 0.625 %,triangle,17.9954,99.948,4.375,399.12,119.0

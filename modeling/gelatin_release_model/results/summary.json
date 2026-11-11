@@ -1,0 +1,55 @@
+{
+ "version": "1.0.0",
+ "rows": [
+  {
+   "id": "V0",
+   "case": "code verification",
+   "type": "FVM vs Crank series; Eq. (1) vs PDE",
+   "inputs": "none (mathematics)",
+   "result": "FVM error 0.011 %-pts at N = 80 (2nd order); Eq. (1) vs PDE ≤ 0.018 %-pts",
+   "verdict": "PASS"
+  },
+  {
+   "id": "V1",
+   "case": "Cheng 2010, GA 0.25 % & 0.625 %",
+   "type": "GA level never used for any parameter",
+   "inputs": "f_free from PBS curves; D(GA), μ(GA) published",
+   "result": "RMSE 2.44 and 3.98 %-pts; 8 of 11 points inside error bars",
+   "verdict": "PASS (prediction)"
+  },
+  {
+   "id": "V1b",
+   "case": "Cheng 2010, GA 0.125/0.375/0.875 %",
+   "type": "same curves Cheng used for μ(GA)",
+   "inputs": "as above",
+   "result": "RMSE 3.92 / 2.94 / 3.86 %-pts",
+   "verdict": "PASS (consistency only)"
+  },
+  {
+   "id": "V2",
+   "case": "Hu 2024 from Chang 2023",
+   "type": "different paper, same chemistry, no tuning on Hu",
+   "inputs": "f_free and desorption rate from Chang; Hu's own mass loss",
+   "result": "RMSE after day 1: 9.4; first 8 h: 33.0 (free pool instant) → 17.7 (Chang desorption rate)",
+   "verdict": "PARTIAL"
+  },
+  {
+   "id": "V3",
+   "case": "Mladenovska 2002, six sizes",
+   "type": "sizes B–F predicted from size A",
+   "inputs": "measured mass loss; τ_exit from size A, ∝ diameter",
+   "result": "RMSE 3.6–5.7 %-pts (release = mass loss without exit step: 22–31)",
+   "verdict": "PASS (prediction)"
+  },
+  {
+   "id": "V4",
+   "case": "Saravanan 2011 (negative control)",
+   "type": "Fick with independent D",
+   "inputs": "Wilke–Chang × Mackie–Meares",
+   "result": "t50 predicted < 0.1 s vs observed 5.2–23.0 d (ratio ≥ 6.2e+06)",
+   "verdict": "FAILS AS EXPECTED"
+  }
+ ],
+ "Lambda_cheng_0p375": 1.1758833489225173,
+ "Lambda_hu": 7.274937291697183e-09
+}

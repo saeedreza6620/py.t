@@ -1,0 +1,123 @@
+{
+ "chang_1.0dM-G": {
+  "f_free": 0.828,
+  "early_fraction_of_plateau_1h": 0.62,
+  "early_fraction_of_plateau_2h": 0.964
+ },
+ "chang_2.5dM-G": {
+  "f_free": 0.538,
+  "early_fraction_of_plateau_1h": 0.638,
+  "early_fraction_of_plateau_2h": 0.966
+ },
+ "hu_pred_with_1.0dM-G": {
+  "f_free": 0.828,
+  "rmse_all": 19.33,
+  "rmse_after_1d": 9.42,
+  "rmse_first_8h": 32.95,
+  "pred": [
+   82.8,
+   82.8,
+   82.8,
+   82.8,
+   82.8,
+   82.9,
+   86.7,
+   90.0,
+   92.1,
+   95.2,
+   96.6,
+   98.4,
+   99.8,
+   100.0
+  ]
+ },
+ "hu_pred_with_2.5dM-G": {
+  "f_free": 0.538,
+  "rmse_all": 21.1,
+  "rmse_after_1d": 21.99,
+  "rmse_first_8h": 18.68,
+  "pred": [
+   53.8,
+   53.8,
+   53.8,
+   53.8,
+   53.8,
+   54.3,
+   64.4,
+   73.2,
+   78.7,
+   87.1,
+   90.8,
+   95.6,
+   99.5,
+   100.0
+  ]
+ },
+ "hu_pred_B_weak_rate_from_chang": {
+  "k_weak_per_h": 0.968,
+  "half_life_h": 0.72,
+  "rmse_all": 12.36,
+  "rmse_after_1d": 9.42,
+  "rmse_first_8h": 17.69,
+  "pred": [
+   51.3,
+   70.8,
+   81.0,
+   82.7,
+   82.8,
+   82.9,
+   86.7,
+   90.0,
+   92.1,
+   95.2,
+   96.6,
+   98.4,
+   99.8,
+   100.0
+  ]
+ },
+ "hu_data": {
+  "t_h": [
+   1.0,
+   2.0,
+   4.0,
+   8.0,
+   24.0,
+   48.0,
+   96.0,
+   192.0,
+   288.0,
+   384.0,
+   480.0,
+   576.0,
+   672.0,
+   768.0
+  ],
+  "y_pct_of_plateau": [
+   29.7,
+   48.0,
+   65.0,
+   79.4,
+   83.0,
+   87.8,
+   94.3,
+   99.9,
+   97.6,
+   97.7,
+   101.0,
+   103.7,
+   79.7,
+   85.3
+  ],
+  "D_cm2s": 3.4819919600634097e-06,
+  "tau_D_s": 0.0188566374600791
+ },
+ "diagnostic_weak_pool_fit_on_hu_first_24h": {
+  "f_weak": 0.769,
+  "k_weak_per_h": 0.381,
+  "half_life_h": 1.82,
+  "rmse_first_24h": 0.74,
+  "rmse_after_1d": 9.42,
+  "note": "fitted on Hu; shows the size of the missing mechanism, not a validation"
+ }
+}

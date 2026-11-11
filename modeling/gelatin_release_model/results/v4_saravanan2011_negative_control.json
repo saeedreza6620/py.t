@@ -1,0 +1,57 @@
+{
+ "Dw_cm2s": 7.380001521592059e-06,
+ "V_LeBas": 303.1,
+ "cases": {
+  "GM1": {
+   "R_um": 18.945,
+   "t50_obs_day": 23.0,
+   "t50_fick_s": {
+    "phi=0.05": 0.0181,
+    "phi=0.1": 0.0222,
+    "phi=0.3": 0.0512
+   },
+   "ratio_obs_over_fick": [
+    109000000.0,
+    89500000.0,
+    38800000.0
+   ],
+   "diagnostic_apparent_D_cm2s": 5.31e-14,
+   "diagnostic_rmse_pct": 1.31,
+   "D_w_over_apparent_D": 139000000.0
+  },
+  "GM2": {
+   "R_um": 20.31,
+   "t50_obs_day": 11.48,
+   "t50_fick_s": {
+    "phi=0.05": 0.0209,
+    "phi=0.1": 0.0255,
+    "phi=0.3": 0.0589
+   },
+   "ratio_obs_over_fick": [
+    47600000.0,
+    38900000.0,
+    16800000.0
+   ],
+   "diagnostic_apparent_D_cm2s": 1.5e-13,
+   "diagnostic_rmse_pct": 2.53,
+   "D_w_over_apparent_D": 49200000.0
+  },
+  "GM3": {
+   "R_um": 22.705,
+   "t50_obs_day": 5.24,
+   "t50_fick_s": {
+    "phi=0.05": 0.0261,
+    "phi=0.1": 0.0319,
+    "phi=0.3": 0.0736
+   },
+   "ratio_obs_over_fick": [
+    17400000.0,
+    14200000.0,
+    6160000.0
+   ],
+   "diagnostic_apparent_D_cm2s": 3.5e-13,
+   "diagnostic_rmse_pct": 2.04,
+   "D_w_over_apparent_D": 21100000.0
+  }
+ }
+}
