@@ -35,7 +35,7 @@
 | مخزن | https://github.com/saeedreza6620/py.t |
 | شاخه | `modeling/gelatin-release-model-v1` |
 | پوشه پروژه | `modeling/gelatin_release_model/` |
-| آخرین commit هنگام ساخت بسته | `f060a2e` |
+| آخرین commit هنگام ساخت بسته | `0e30a0c` |
 | مشاهده مستقیم در مرورگر | https://github.com/saeedreza6620/py.t/tree/modeling/gelatin-release-model-v1/modeling/gelatin_release_model |
 
 دستور دریافت:

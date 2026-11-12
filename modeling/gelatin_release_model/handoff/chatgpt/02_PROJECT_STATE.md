@@ -1,4 +1,4 @@
-# 02 — Project state at hand-off (GRM v1.1.0, commit f060a2e, 12 Nov 2026)
+# 02 — Project state at hand-off (GRM v1.1.0, commit 0e30a0c, 12 Nov 2026)
 
 ## 1. Scientific question
 Which formulation and process parameters control drug release from glutaraldehyde (GA)-crosslinked gelatin microspheres, and by how much? Can release be *predicted* (not fitted) from independently measured or published quantities?

@@ -77,7 +77,7 @@ Saeedreza Barzkar, graduate student. The work is his thesis (advisor: Dr. Kiaei,
 GRM (Gelatin Release Model) is a mechanistic model of drug release from glutaraldehyde (GA)-crosslinked gelatin microspheres. Drug sits in pools — free, weakly bound (first-order desorption), network-bound (freed by degradation), non-releasable — and leaves a sphere by Fickian diffusion after hydration. Release is F(t) = Σ fᵢ ∫ K(t−s) dLᵢ(s) (exact for the linear PDE with uniform source; verified). It is validated on published data with NO parameter fitted to the curve it is tested on. Version 1.1 also quantifies the weight of every parameter (Fick, swelling, crosslink/binding, degradation, other) with local elasticities, global Sobol indices and time-resolved mechanism weights. An offline HTML simulator mirrors the model.
 
 ## Where the code is
-- GitHub: https://github.com/saeedreza6620/py.t — branch `modeling/gelatin-release-model-v1` — folder `modeling/gelatin_release_model/` (model code at commit f060a2e; later commits only add hand-off documents).
+- GitHub: https://github.com/saeedreza6620/py.t — branch `modeling/gelatin-release-model-v1` — folder `modeling/gelatin_release_model/` (model code at commit 0e30a0c; later commits only add hand-off documents).
 - A full copy is in `repo_snapshot/gelatin_release_model/` of the uploaded ZIP.
 - Read `12_USER_AND_COLLABORATION.md` first (who the user is, how he works, decision log). Your main assignment is `13_MISSION_COMPLETE_MODEL_HTML.md`.
 - Then read, in this order: `README.md` (sections 2, 4, 5, 6, 6.1, 10), `AGENTS.md`, `02_PROJECT_STATE.md`, `11_SIMULATION_HISTORY_AND_NOTES.md` (full history, all lessons), `03_TECHNICAL_ROADMAP.md`, `07_RULES_AND_QUALITY.md`, `09_WRITING_STYLE_GUIDE.md` (how every document is written), `10_LITERATURE_REVIEW_GUIDE.md` + `thesis_docs/markdown/Literature_Review_Gelatin_Microspheres_final.md` (the latest literature review).
@@ -206,7 +206,7 @@ Reply with: (a) a 10-line summary of the model and of the provenance rule in you
 
 # FILE: 02_PROJECT_STATE.md
 
-# 02 — Project state at hand-off (GRM v1.1.0, commit f060a2e, 12 Nov 2026)
+# 02 — Project state at hand-off (GRM v1.1.0, commit 0e30a0c, 12 Nov 2026)
 
 ## 1. Scientific question
 Which formulation and process parameters control drug release from glutaraldehyde (GA)-crosslinked gelatin microspheres, and by how much? Can release be *predicted* (not fitted) from independently measured or published quantities?
@@ -1171,7 +1171,7 @@ Repository:  https://github.com/saeedreza6620/py.t
 Branch:      modeling/gelatin-release-model-v1      (NEVER use main)
 Folder:      modeling/gelatin_release_model/
 Browse:      https://github.com/saeedreza6620/py.t/tree/modeling/gelatin-release-model-v1/modeling/gelatin_release_model
-Commit at hand-off: f060a2e  (version 1.1.0)
+Commit at hand-off: 0e30a0c  (version 1.1.0)
 
 Clone & run:
   git clone -b modeling/gelatin-release-model-v1 https://github.com/saeedreza6620/py.t

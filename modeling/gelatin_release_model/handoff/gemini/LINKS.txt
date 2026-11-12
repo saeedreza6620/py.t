@@ -4,7 +4,7 @@ Repository:  https://github.com/saeedreza6620/py.t
 Branch:      modeling/gelatin-release-model-v1      (NEVER use main)
 Folder:      modeling/gelatin_release_model/
 Browse:      https://github.com/saeedreza6620/py.t/tree/modeling/gelatin-release-model-v1/modeling/gelatin_release_model
-Commit at hand-off: f060a2e  (version 1.1.0)
+Commit at hand-off: 0e30a0c  (version 1.1.0)
 
 Clone & run:
   git clone -b modeling/gelatin-release-model-v1 https://github.com/saeedreza6620/py.t
