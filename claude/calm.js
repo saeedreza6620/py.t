@@ -93,7 +93,7 @@ function readScores(o){var x={},ok=true;DIM.forEach(function(d){var v=picked(o,'
 
 /* ---------- start: intro → red flags → what / since when → suspects → plan for today ---------- */
 function open(){var s=st();track('calm_open');if(s)return status();style();
-  var o=sheet('<h3>😣 پوستت به هم ریخته؟</h3><p>با هم پیدا می‌کنیم <b>کدوم محصول</b> بوده، و تا پوستت آروم بشه روتینت رو ساده و قدم‌به‌قدم نگه می‌داریم. آخرش اون محصول توی «پرونده‌ی پوست من» علامت می‌خوره که دیگه تکرار نشه.</p>'+
+  var o=sheet('<h3>زدی و پوستت داغون شد؟</h3><p>امروز همه‌ی محصولات تازه رو کنار بذار. بعد با هم پیدا می‌کنیم کدوم بوده.</p>'+
    '<div class="cm-box">⏱ تا ۲۱ روز، معمولاً ۷ تا ۱۴ روز. شروع و آروم کردن پوست رایگانه.</div><p class="cm-note">بیوتی‌ولت پزشک نیست و تشخیص نمی‌ده؛ اگه علامت جدی باشه، همون اول می‌گیم پیش پزشک بری.</p>'+
    '<div class="cm-row"><button type="button" class="cm-go" data-a="go">شروع کنیم</button><button type="button" data-cx="1">بعداً</button></div>');
   o.querySelector('[data-a="go"]').onclick=redFlags}

@@ -412,3 +412,5 @@ button.sw-hero-gem[aria-expanded="true"] svg{filter:drop-shadow(0 6px 22px rgba(
 .gc-pay{background:linear-gradient(160deg,#8fd3ff,#c79bff)!important;color:#fff!important}
 /* v142: the diamond / checkout sheet must open above the chat and other full-screen layers; toasts stay on top */
 .sw-sheet-back{z-index:10060!important}.sw-toast{z-index:10070!important}
+
+.sw-calm-door{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:4px 0 12px;padding:14px 16px;border:0;border-radius:18px;cursor:pointer;font:800 16px var(--sw-font);color:#fff;background:linear-gradient(135deg,#ff8aa8,#c86dd7)}
