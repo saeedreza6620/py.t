@@ -1,0 +1,21 @@
+GRM — Gelatin Release Model — links
+
+Repository:  https://github.com/saeedreza6620/py.t
+Branch:      modeling/gelatin-release-model-v1      (NEVER use main)
+Folder:      modeling/gelatin_release_model/
+Browse:      https://github.com/saeedreza6620/py.t/tree/modeling/gelatin-release-model-v1/modeling/gelatin_release_model
+Commit at hand-off: f060a2e  (version 1.1.0)
+
+Clone & run:
+  git clone -b modeling/gelatin-release-model-v1 https://github.com/saeedreza6620/py.t
+  cd py.t/modeling/gelatin_release_model
+  pip install -r requirements.txt
+  python validation/run_all.py
+  python -m pytest -q
+
+Offline simulator: simulator/GRM_simulator_v1.1.html (open in any browser)
+
+Market / competitor sources used in 06_MARKETING_GTM.md:
+  https://www.mordorintelligence.com/industry-reports/long-acting-injectables-market
+  https://www.simulations-plus.com/software/dddplus/
+  https://www.businesswire.com/news/home/20180115005279/en/4266611/PSE-Releases-Major-gPROMS-FormulatedProducts-Update
