@@ -65,7 +65,7 @@ Deliver the result as **one self-contained HTML file** plus the code changes.
 - Write a `VALIDATION.md` table showing before → after.
 
 ### M8 — The HTML deliverable (`GRM_2.0_Model_Report.html`)
-One file that works offline: no CDN and no external fonts. It is built by a script (`simulator/build_report.py`) from Python results, so the numbers in the HTML are produced by code, not typed.
+One file that works offline: no CDN and no external fonts. **It keeps the visual design of simulator 1.1** (`simulator/template.html`: same CSS, colours, layout, components). Extend it; do not redesign. It is built by a script (`simulator/build_report.py`) from Python results, so the numbers in the HTML are produced by code, not typed.
 
 | Tab (Persian title) | Content |
 |---|---|

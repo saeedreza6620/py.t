@@ -77,11 +77,35 @@ Saeedreza Barzkar, graduate student. The work is his thesis (advisor: Dr. Kiaei,
 GRM (Gelatin Release Model) is a mechanistic model of drug release from glutaraldehyde (GA)-crosslinked gelatin microspheres. Drug sits in pools — free, weakly bound (first-order desorption), network-bound (freed by degradation), non-releasable — and leaves a sphere by Fickian diffusion after hydration. Release is F(t) = Σ fᵢ ∫ K(t−s) dLᵢ(s) (exact for the linear PDE with uniform source; verified). It is validated on published data with NO parameter fitted to the curve it is tested on. Version 1.1 also quantifies the weight of every parameter (Fick, swelling, crosslink/binding, degradation, other) with local elasticities, global Sobol indices and time-resolved mechanism weights. An offline HTML simulator mirrors the model.
 
 ## Where the code is
-- GitHub: https://github.com/saeedreza6620/py.t — branch `modeling/gelatin-release-model-v1` — folder `modeling/gelatin_release_model/` (commit f060a2e at hand-off).
+- GitHub: https://github.com/saeedreza6620/py.t — branch `modeling/gelatin-release-model-v1` — folder `modeling/gelatin_release_model/` (model code at commit f060a2e; later commits only add hand-off documents).
 - A full copy is in `repo_snapshot/gelatin_release_model/` of the uploaded ZIP.
 - Read `12_USER_AND_COLLABORATION.md` first (who the user is, how he works, decision log). Your main assignment is `13_MISSION_COMPLETE_MODEL_HTML.md`.
 - Then read, in this order: `README.md` (sections 2, 4, 5, 6, 6.1, 10), `AGENTS.md`, `02_PROJECT_STATE.md`, `11_SIMULATION_HISTORY_AND_NOTES.md` (full history, all lessons), `03_TECHNICAL_ROADMAP.md`, `07_RULES_AND_QUALITY.md`, `09_WRITING_STYLE_GUIDE.md` (how every document is written), `10_LITERATURE_REVIEW_GUIDE.md` + `thesis_docs/markdown/Literature_Review_Gelatin_Microspheres_final.md` (the latest literature review).
 - You cannot push. Deliver changes as complete files with their repository paths, or as a unified `git diff` patch. Never target branch `main` (it belongs to an unrelated web app).
+
+## Continue with the SAME design (do not redesign)
+- **Model architecture stays.** Keep the pools (free / weak / bound / irr), the exit kernels and F = Σ fᵢ ∫K dLᵢ. Keep the primitive-parameter route of `grm/fast.py` and the provenance labels. New physics enters as new liberation laws, new kernels, or new relations for fᵢ, k, μ, D, R. Never replace the structure.
+- **Validation design stays.** V0–V4 and W1–W2 remain; new cases continue the numbering (V5, V6 …, W3 …). `run_all.py` remains the single entry point.
+- **HTML design stays.** GRM 2.0 is an *extension* of `simulator/template.html`, built with `build_simulator.py`. Keep:
+  - the same layout, CSS, colours, typography and components;
+  - the stage-grouped weight bars, the mechanism-weight chart and the Sobol panel;
+  - the export buttons and the localStorage key pattern.
+  Add new tabs and inputs in the same visual language. Do not switch to another framework or style.
+
+## Working inside Grok
+- **If you have code execution:** run the code yourself:
+  ```
+  unzip -q GRM_Grok_Handoff.zip -d work
+  cd work/GRM_Grok_Handoff/repo_snapshot/gelatin_release_model
+  python validation/run_all.py && python -m pytest -q
+  ```
+  Compare the output with `results/VALIDATION.md` before changing anything.
+- **If you do not have code execution:** say so in the first reply. Mark every number you have not run as **NOT RUN**. The user will run the code and paste the output.
+- **Return work as files:**
+  - the full changed files with their paths, or a `git diff` patch;
+  - a `CHANGES_LOG.md` for this session, so the next chat can resume;
+  - the HTML as a complete file. If it is too long for one message, send numbered parts and say exactly how to join them.
+- **New chats start empty.** If the conversation restarts, ask the user to upload the latest files and `CHANGES_LOG.md` you produced.
 
 ## Non-negotiable rules (details in 07_RULES_AND_QUALITY.md)
 1. Never fit a parameter (especially the diffusion coefficient D) to the release curve that is used to judge the model. Allowed sources: MEASURED in the same paper, PUBLISHED_RELATION, CALIBRATED_SEPARATE (on a different experiment, stated), TRANSFERRED (from another paper). A fit on the test curve is a DIAGNOSTIC and must be labelled so everywhere.
@@ -877,7 +901,7 @@ Deliver the result as **one self-contained HTML file** plus the code changes.
 - Write a `VALIDATION.md` table showing before → after.
 
 ### M8 — The HTML deliverable (`GRM_2.0_Model_Report.html`)
-One file that works offline: no CDN and no external fonts. It is built by a script (`simulator/build_report.py`) from Python results, so the numbers in the HTML are produced by code, not typed.
+One file that works offline: no CDN and no external fonts. **It keeps the visual design of simulator 1.1** (`simulator/template.html`: same CSS, colours, layout, components). Extend it; do not redesign. It is built by a script (`simulator/build_report.py`) from Python results, so the numbers in the HTML are produced by code, not typed.
 
 | Tab (Persian title) | Content |
 |---|---|
