@@ -19,6 +19,197 @@
  if(app)location.replace('/legacy/')})();
 </script>
 <link rel="stylesheet" href="/site.css?v=5">
-PLACEHOLDER_TOO_BIG
+<style>
+.hero{padding:34px 18px 24px;text-align:center;position:relative;overflow:hidden}
+.hero>*{position:relative;z-index:1}
+.hero:before{content:"";position:absolute;z-index:0;left:50%;top:40px;width:min(560px,120%);height:420px;transform:translateX(-50%);background:radial-gradient(closest-side at 35% 45%,rgba(152,206,255,.55),transparent),radial-gradient(closest-side at 68% 55%,rgba(255,190,214,.55),transparent),radial-gradient(closest-side at 50% 80%,rgba(255,226,170,.45),transparent);filter:blur(10px);pointer-events:none}
+.photo{display:block;width:min(100%,400px);margin:0 auto 18px;position:relative;border-radius:28px;padding:5px;background:linear-gradient(135deg,#7cc0ff,#a58bff 50%,#ff9cc4);box-shadow:0 26px 50px -22px rgba(130,90,230,.55),0 0 0 1px rgba(255,255,255,.6) inset}
+.photo:before{content:"";position:absolute;inset:-26px;z-index:-1;border-radius:50%;background:radial-gradient(closest-side at 25% 40%,rgba(124,192,255,.55),transparent),radial-gradient(closest-side at 75% 45%,rgba(255,156,196,.5),transparent),radial-gradient(closest-side at 50% 85%,rgba(165,139,255,.45),transparent);filter:blur(14px)}
+.photo span{display:block;position:relative;border-radius:23px;overflow:hidden;aspect-ratio:1}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+.photo span:after{content:"";position:absolute;inset:0;background:linear-gradient(140deg,rgba(90,170,255,.38),rgba(160,120,255,.22) 48%,rgba(255,130,180,.36));mix-blend-mode:soft-light;pointer-events:none}
+@keyframes halo{50%{transform:scale(1.12);opacity:.7}}
+.hero .leaf.l1{top:-8px;right:-40px;width:170px;transform:rotate(18deg);--r2:12deg}
+.hero .leaf.l2{bottom:10px;left:-50px;width:150px;transform:scaleX(-1) rotate(10deg);animation-delay:-3s}
+.hero .drop.d1{width:22px;height:22px;top:120px;left:12%}
+.hero .drop.d2{width:14px;height:14px;top:60px;right:22%;animation-delay:-2s}
+.hero .drop.d3{width:30px;height:30px;bottom:70px;right:8%;animation-delay:-4s}
+.hero h1{font-family:var(--display);font-size:clamp(36px,10vw,72px);line-height:1.45;font-weight:700;margin:0}
+.hero p{color:var(--ink2);font-size:clamp(16px,4.4vw,19px);margin:14px auto 0;max-width:30em}
+.hint{display:inline-flex;flex-direction:column;align-items:center;gap:4px;margin-top:26px;color:var(--ink2);font-size:14px}
+.hint i{width:22px;height:34px;border:2px solid var(--ink2);border-radius:12px;position:relative;opacity:.6}
+.hint i:after{content:"";position:absolute;top:6px;left:50%;width:4px;height:7px;margin-left:-2px;border-radius:2px;background:var(--ink2);animation:wheel 1.6s ease-in-out infinite}
+@keyframes wheel{50%{transform:translateY(9px);opacity:.2}}
+.story{position:relative;height:560vh;overflow-x:clip;--tint:#ffe9df;background:linear-gradient(180deg,transparent,var(--tint) 10%,var(--tint) 90%,transparent);transition:--tint .6s}
+.story[data-ch="1"]{--tint:#ffdcea}.story[data-ch="2"]{--tint:#d8edff}.story[data-ch="3"]{--tint:#fff0c9}
+@property --tint{syntax:'<color>';inherits:true;initial-value:#ffe9df}
+.rail{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;max-width:420px}
+.rail li{height:4px;border-radius:4px;background:rgba(34,24,77,.12);position:relative;overflow:hidden}
+.rail li:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#e8799f,#8a6cf0,#3f9be9);transform:scaleX(var(--f,0));transform-origin:right;transition:transform .25s linear}
+.chlabel{text-align:center;font-size:13px;color:var(--ink2);font-weight:700;margin-top:-4px}
+.stage{position:sticky;top:60px;height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:flex-start;gap:10px;padding-top:max(12px,3vh)!important;max-width:560px;margin:0 auto;padding:10px 18px 14px}
+.stage>*{flex-shrink:0}
+.cap{min-height:78px;text-align:center}
+.cap b{display:block;font-family:var(--display);font-size:clamp(21px,5.8vw,28px);line-height:1.6;font-weight:700}
+.cap span{display:block;color:var(--ink2);font-size:15px;margin-top:2px}
+.cap.swap{animation:cap .45s ease}
+@keyframes cap{from{opacity:0;transform:translateY(8px)}}
+.skin{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;min-height:34px}
+.skin span{background:var(--pink-soft);color:#9b2f56;border-radius:999px;padding:4px 12px;font-size:14px;font-weight:700;opacity:0;transform:translateY(8px) scale(.9);transition:.35s}
+.skin.on span{opacity:1;transform:none}
+.skin.on span:nth-child(2){transition-delay:.12s}.skin.on span:nth-child(3){transition-delay:.24s}
+.basket{margin-top:30px;position:relative;background:rgba(255,255,255,.74);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius:24px 24px 32px 32px;box-shadow:0 1px 2px rgba(34,24,77,.05),0 24px 48px -22px rgba(74,120,220,.45);padding:20px 12px 10px;border:1.5px solid rgba(255,255,255,.95)}
+.stage .leaf.s1{top:96px;right:-58px;width:120px;opacity:.95;transform:rotate(30deg)}
+.stage .leaf.s2{bottom:90px;left:-60px;width:110px;transform:scaleX(-1) rotate(-6deg);animation-delay:-2.5s}
+.stage>.leaf{position:absolute}.stage{position:sticky}
+.basket:before{content:"";position:absolute;top:-26px;left:50%;width:46%;height:40px;margin-left:-23%;border:4px solid rgba(138,108,240,.35);border-bottom:0;border-radius:40px 40px 0 0}
+.item{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:10px;padding:7px 6px;border-radius:14px;max-height:90px;opacity:0;transform:translateY(-60px) rotate(-4deg);transition:transform .5s cubic-bezier(.2,1.3,.4,1),opacity .35s,max-height .45s .25s,padding .45s .25s,background .3s}
+.item.in{opacity:1;transform:none}
+.item.out{opacity:0;transform:translate(-40px,60px) rotate(-16deg);max-height:0;padding-top:0;padding-bottom:0;transition:transform .55s ease-in,opacity .5s,max-height .4s .45s,padding .4s .45s}
+.item+.item{border-top:1px dashed var(--line)}
+.btl{width:26px;height:38px;border-radius:9px 9px 7px 7px;position:relative;justify-self:center}
+.btl:before{content:"";position:absolute;top:-7px;left:7px;width:12px;height:8px;border-radius:3px 3px 0 0;background:inherit;filter:brightness(.82)}
+.btl{background-image:linear-gradient(90deg,rgba(255,255,255,.0) 0 18%,rgba(255,255,255,.75) 26% 34%,rgba(255,255,255,0) 44%),linear-gradient(180deg,rgba(255,255,255,.35),rgba(0,0,0,.06));box-shadow:inset 0 -6px 10px rgba(0,0,0,.06),0 6px 12px -6px rgba(34,24,77,.35)}
+.nm{font-weight:800;font-size:15px;line-height:1.4}
+.nm small{display:block;font-weight:400;color:var(--ink2);font-size:13px;min-height:18px;transition:color .3s}
+.pr{font-weight:800;font-size:14px;white-space:nowrap;color:var(--ink2)}
+.st{position:absolute;inset-inline-end:0;border:3px solid currentColor;border-radius:10px;padding:0 9px;font-weight:900;font-size:16px;background:rgba(255,255,255,.88);transform:rotate(-10deg) scale(2.2);opacity:0;transition:transform .35s cubic-bezier(.2,1.6,.4,1),opacity .2s;pointer-events:none}
+.item{position:relative}
+.item.judged .st{opacity:1;transform:rotate(-10deg) scale(1)}
+.st.buy{color:var(--buy)}.st.care{color:var(--care)}.st.stop{color:var(--stop)}
+.item.judged.v-stop{background:rgba(255,228,237,.8)}
+.item.judged.v-buy{background:rgba(222,248,236,.7)}
+.item.judged .st.buy{animation:ring .9s ease-out .2s 1}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(29,154,108,.55)}100%{box-shadow:0 0 0 16px rgba(29,154,108,0)}}
+.pr{min-width:74px;text-align:left;transition:opacity .3s}
+.item.judged .pr{opacity:.18}
+.meter{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.meter div{background:rgba(255,255,255,.74);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:16px;padding:8px 12px;border:1px solid rgba(255,255,255,.95);box-shadow:0 12px 26px -18px rgba(74,120,220,.45)}
+.meter .saved b.pop{animation:pop .5s ease}
+@keyframes pop{40%{transform:scale(1.12);text-shadow:0 0 18px rgba(29,154,108,.5)}}
+.meter .saved b{display:inline-block}
+.meter small{display:block;color:var(--ink2);font-size:13px}
+.meter b{font-size:clamp(17px,4.8vw,21px);font-weight:900}
+.meter .saved b{color:var(--buy)}
+.end{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(10px);transition:.4s;pointer-events:none}
+.end.on{opacity:1;transform:none;pointer-events:auto}
+.end .btn.big{padding:12px 16px;font-size:15px;border-radius:14px}
+@media (max-height:820px){.cap{min-height:0}.cap span{display:none}.item{padding:4px 6px}.btl{height:30px;width:22px}.skin span{font-size:13px;padding:2px 10px}.meter div{padding:6px 10px}.basket{padding-top:16px}}
+@media (max-height:640px){.chlabel{display:none}.nm small{font-size:12px}}
+.after{padding-top:20px}
+.three{display:grid;gap:10px;margin-top:6px}
+.three>div{border-radius:20px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.95);box-shadow:0 18px 36px -22px rgba(74,120,220,.4)}
+.three>div:nth-child(1){background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(216,237,255,.8))}
+.three>div:nth-child(2){background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,220,234,.8))}
+.three>div:nth-child(3){background:linear-gradient(135deg,rgba(255,255,255,.85),rgba(255,240,201,.85))}
+.three div{padding:16px 18px}
+.three h3{display:flex;align-items:center;gap:8px}.three .ico{color:var(--sky)}
+.three p{margin:2px 0 0;color:var(--ink2);font-size:15px}
+.go{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.go a{display:flex;align-items:center;gap:12px;text-decoration:none;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.95);border-radius:18px;padding:14px 16px;box-shadow:0 14px 30px -20px rgba(74,120,220,.45);transition:transform .15s}
+.go a:hover{transform:translateY(-2px)}
+.go b{display:block}
+.go span{color:var(--ink2);font-size:14.5px}
+.go i{margin-inline-start:auto;font-style:normal;color:var(--sky);font-weight:900}
+.final{text-align:center;padding:40px 0 0;position:relative}
+.final .leaf{position:absolute;top:-10px;right:-30px;width:120px;transform:rotate(24deg)}
+.final .btn{margin:6px 4px}
+@media (prefers-reduced-motion:reduce){
+  .story{height:auto}.stage{position:static;height:auto}
+  .item,.item.out,.st,.skin span,.end{transition:none!important;animation:none!important}
+  .hint i:after{animation:none}
+}
+@media (min-width:900px){.hero{overflow:visible}.hero .leaf.l1{right:-190px;top:30px;width:220px}.hero .leaf.l2{left:-200px;bottom:-10px;width:200px}.hero .drop.d1{left:-6%}.hero .drop.d3{right:-8%}}
+</style>
 </head>
+<body>
+<main>
+  <section class="hero wrap" aria-labelledby="h1">
+    <figure class="photo" style="margin-top:0"><span><img src="/hero-mirror.webp" alt="آینه‌های رومیزی روی سنگ، با شاخه‌ی اکالیپتوس؛ روتین هر روز جلوی آینه شروع می‌شه" width="720" height="720" decoding="async" fetchpriority="high"></span></figure>
+    <h1 id="h1">زدی و پوستت داغون شد؟</h1>
+    <p>امروز تازه‌ها رو کنار بذار. بعد با هم پیدا می‌کنیم کدوم بوده.</p>
+    <p><a class="btn big" href="/app?door=calm">اول آرومش کنیم</a></p>
+    <div class="hint" aria-hidden="true"><i></i>اسکرول کن و ببین سر یه سبد خرید معمولی چی میاد</div>
+  </section>
+  <section class="story" id="story" aria-label="داستان یک سبد خرید">
+    <div class="stage">
+      <img class="leaf s1" src="/leaf.svg?v=4" alt=""><img class="leaf s2" src="/leaf2.svg?v=4" alt="">
+      <ol class="rail" id="rail" aria-hidden="true"><li></li><li></li><li></li><li></li></ol>
+      <div class="chlabel" id="chlabel" aria-hidden="true"></div>
+      <div class="cap" id="cap" aria-live="polite"><b></b><span></span></div>
+      <div class="skin" id="skin" aria-label="پوست سارا"><span>پوست حساس</span><span>شب‌ها رتینول می‌زنه</span><span>هدف: کم شدن لک</span></div>
+      <div class="basket" id="basket" aria-label="سبد خرید"></div>
+      <div class="meter" aria-live="off">
+        <div><small>مبلغ سبد</small><b id="total">۰ تومان</b></div>
+        <div class="saved"><small>جلوی هدر رفتنش گرفته شد</small><b id="saved">۰ تومان</b></div>
+      </div>
+      <div class="end" id="end"><a class="btn big" href="/app?door=calm">اول آرومش کنیم</a><a class="btn big soft" href="/install.html">نصب روی گوشی</a></div>
+    </div>
+  </section>
+  <section class="after wrap">
+    <h2>سه چیز رو کنار هم می‌ذاریم</h2>
+    <div class="three">
+      <div><h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6L5 19a1.5 1.5 0 0 0 1.3 2h11.4A1.5 1.5 0 0 0 19 19l-5-10V3"/></svg> ترکیبات خود محصول</h3><p>نه اسم و تبلیغش؛ موادی که واقعاً توشه.</p></div>
+      <div><h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg> پوست تو</h3><p>نوعش، حال امروزش و هدفی که داری.</p></div>
+      <div><h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/><path d="M19 5a8 8 0 0 1 0 14"/></svg> روتینی که الان داری</h3><p>دو محصول خوب گاهی کنار هم پوست رو اذیت می‌کنن؛ اینو قبل از خرید می‌گیم.</p></div>
+    </div>
+    <p class="note">بیوتی‌ولت طرف خریداره. اگه محصولی به پوستت نمی‌خوره، می‌گیم نخر؛ هیچ درآمدی روی این جواب اثر نداره.</p>
+    <h2>بیشتر بدون</h2>
+    <ul class="go">
+      <li><a href="/learn.html"><span><b>آموزش پوست و راهنمای اپ</b><span>نوع پوست، روتین پایه، ترکیب‌های خطرناک و هر بخش اپ</span></span><i>←</i></a></li>
+      <li><a href="/faq.html"><span><b>سؤال‌ها و الماس</b><span>حریم خصوصی، بی‌طرفی، قیمت‌ها و پرداخت</span></span><i>←</i></a></li>
+      <li><a href="/join.html"><span><b>عضویت و نظرت</b><span>عضو شو یا مستقیم به تیم پیام بده</span></span><i>←</i></a></li>
+    </ul>
+    <div class="final">
+      <img class="leaf" src="/leaf.svg?v=4" alt="">
+      <h2 style="margin-top:0">پولت پای محصول درست، پوستت در امان.</h2>
+      <a class="btn big" href="/app">یا قبل از خرید بسنج</a>
+      <a class="btn big soft" href="/install.html">نصب روی گوشی</a>
+    </div>
+  </section>
+</main>
+<script src="/site.js?v=4"></script>
+<script>
+(function(){
+'use strict';
+var fa=BW.fa,money=BW.money;
+var ITEMS=[
+  {n:'سرم ویتامین C ده درصد',p:1250000,c:'#f6c76b',v:'care',s:'با احتیاط',why:'فقط صبح بزن؛ جدا از رتینول شبت'},
+  {n:'تونر لایه‌بردار اسیدی',p:890000,c:'#f2a1bd',v:'stop',s:'نخر',why:'کنار رتینول، پوست حساس رو می‌سوزونه'},
+  {n:'کرم رتینول شب',p:1450000,c:'#b9a5f2',v:'stop',s:'نخر',why:'رتینول داری؛ دومی فقط تحریک بیشتره'},
+  {n:'ضدآفتاب فلوئید',p:780000,c:'#8fcaf5',v:'buy',s:'بخر',why:'مهم‌ترین قدم برای کم شدن لک'},
+  {n:'ژل شستشوی ملایم',p:520000,c:'#9fdcc0',v:'buy',s:'بخر',why:'بدون عطر، مناسب پوست حساس'}];
+var CAPS=[
+  ['سارا یه سبد پر کرده.','از روی ریلز و پیشنهاد دوستاش؛ همه معروف و پرفروش.'],
+  ['ولی پوست سارا مال خودشه.','حساسه، شب‌ها رتینول می‌زنه و می‌خواد لکش کم شه.'],
+  ['بیوتی‌ولت هر کدوم رو با پوست و روتین خودش می‌سنجه.','ترکیبات محصول، کنار پوست و روتین فعلی.'],
+  ['همون پوست، سبد کوچیک‌تر، تصمیم درست.','پولش پای محصول درست رفت و پوستش تحریک نشد.']];
+var basket=document.getElementById('basket'),cap=document.getElementById('cap'),skin=document.getElementById('skin'),totalEl=document.getElementById('total'),savedEl=document.getElementById('saved'),end=document.getElementById('end'),story=document.getElementById('story');
+basket.innerHTML=ITEMS.map(function(it,i){return '<div class="item" data-i="'+i+'"><span class="btl" style="background:'+it.c+'" aria-hidden="true"></span><span class="nm">'+it.n+'<small></small></span><span class="pr">'+fa((it.p/1000).toLocaleString('en'))+' هزار</span><span class="st '+it.v+'">'+it.s+'</span></div>'}).join('');
+var rows=[].slice.call(basket.children);
+var lastCap=-1,shown={tot:0,sav:0},rail=[].slice.call(document.querySelectorAll('#rail li')),chl=document.getElementById('chlabel'),CH=['فصل ۱ از ۴ · خرید از روی تبلیغ','فصل ۲ از ۴ · پوست خودش','فصل ۳ از ۴ · سنجش','فصل ۴ از ۴ · تصمیم درست'],BOUNDS=[0,0.22,0.36,0.8,1];
+function setCap(k){if(k===lastCap)return;lastCap=k;cap.querySelector('b').textContent=CAPS[k][0];cap.querySelector('span').textContent=CAPS[k][1];cap.classList.remove('swap');void cap.offsetWidth;cap.classList.add('swap')}
+function count(el,key,to){var from=shown[key];if(from===to)return;shown[key]=to;if(key==='sav'&&to>from){el.classList.remove('pop');void el.offsetWidth;el.classList.add('pop')}var t0=performance.now();(function step(t){var k=Math.min(1,(t-t0)/450),v=Math.round(from+(to-from)*k);el.textContent=money(v);if(k<1)requestAnimationFrame(step)})(t0)}
+function render(p){
+  var tot=0,sav=0;
+  rows.forEach(function(r,i){var it=ITEMS[i];
+    var inAt=0.03+i*0.035,judgeAt=0.38+i*0.075,outAt=judgeAt+0.035;
+    var isIn=p>=inAt,judged=p>=judgeAt,out=it.v==='stop'&&p>=outAt;
+    r.classList.toggle('in',isIn&&!out);r.classList.toggle('judged',judged);r.classList.toggle('v-'+it.v,judged);r.classList.toggle('out',out);
+    r.querySelector('small').textContent=judged?it.why:'';
+    if(isIn)tot+=it.p;if(out)sav+=it.p});
+  count(totalEl,'tot',tot-sav);count(savedEl,'sav',sav);
+  skin.classList.toggle('on',p>=0.22);
+  var ch=p<0.22?0:p<0.36?1:p<0.8?2:3;setCap(ch);story.dataset.ch=ch;chl.textContent=CH[ch];
+  rail.forEach(function(li,i){var f=Math.max(0,Math.min(1,(p-BOUNDS[i])/(BOUNDS[i+1]-BOUNDS[i])));li.style.setProperty('--f',f)});
+  end.classList.toggle('on',p>=0.86);
+}
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce){render(1);return}
+var ticking=false;
+function onScroll(){if(ticking)return;ticking=true;requestAnimationFrame(function(){ticking=false;var r=story.getBoundingClientRect(),h=story.offsetHeight-innerHeight;var p=Math.max(0,Math.min(1,-r.top/(h||1)));render(p)})}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);render(0);onScroll();
+})();
+</script>
+</body>
 </html>
