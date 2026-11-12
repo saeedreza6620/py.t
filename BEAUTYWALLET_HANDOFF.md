@@ -337,6 +337,8 @@ git add -A && git commit -m "v146: …" && git push origin main
 | فایل | موضوع |
 | --- | --- |
 | `BEAUTYWALLET_HANDOFF.md` | **همین فایل؛ نقطه‌ی شروع** |
+| `docs/CURRENT_STATE_AND_NEXT.md` | وضع دقیق لحظه‌ی تحویل، کارهای باز، کار زمان‌بندی‌شده |
+| `docs/PROJECT_HISTORY.md` | تاریخچه‌ی کامل از ChatGPT تا امروز: هر تصمیم کِی و چرا |
 | `docs/HANDOFF.md` | تحویل فنی با جزئیات نسخه‌ها |
 | `README.md` | قانون‌ها و ساخت (انگلیسی) |
 | `BACKUP.md` | بازسازی از صفر |
