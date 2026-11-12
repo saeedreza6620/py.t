@@ -11,7 +11,8 @@ GRM (Gelatin Release Model) is a mechanistic model of drug release from glutaral
 ## Where the code is
 - GitHub: https://github.com/saeedreza6620/py.t — branch `modeling/gelatin-release-model-v1` — folder `modeling/gelatin_release_model/` (commit f060a2e at hand-off).
 - A full copy is in `repo_snapshot/gelatin_release_model/` of the uploaded ZIP.
-- Read, in this order: `README.md` (sections 2, 4, 5, 6, 6.1, 10), `AGENTS.md`, `02_PROJECT_STATE.md`, `11_SIMULATION_HISTORY_AND_NOTES.md` (full history, all lessons), `03_TECHNICAL_ROADMAP.md`, `07_RULES_AND_QUALITY.md`, `09_WRITING_STYLE_GUIDE.md` (how every document is written), `10_LITERATURE_REVIEW_GUIDE.md` + `thesis_docs/markdown/Literature_Review_Gelatin_Microspheres_final.md` (the latest literature review).
+- Read `12_USER_AND_COLLABORATION.md` first (who the user is, how he works, decision log). Your main assignment is `13_MISSION_COMPLETE_MODEL_HTML.md`.
+- Then read, in this order: `README.md` (sections 2, 4, 5, 6, 6.1, 10), `AGENTS.md`, `02_PROJECT_STATE.md`, `11_SIMULATION_HISTORY_AND_NOTES.md` (full history, all lessons), `03_TECHNICAL_ROADMAP.md`, `07_RULES_AND_QUALITY.md`, `09_WRITING_STYLE_GUIDE.md` (how every document is written), `10_LITERATURE_REVIEW_GUIDE.md` + `thesis_docs/markdown/Literature_Review_Gelatin_Microspheres_final.md` (the latest literature review).
 - You cannot push. Deliver changes as complete files with their repository paths, or as a unified `git diff` patch. Never target branch `main` (it belongs to an unrelated web app).
 
 ## Non-negotiable rules (details in 07_RULES_AND_QUALITY.md)
