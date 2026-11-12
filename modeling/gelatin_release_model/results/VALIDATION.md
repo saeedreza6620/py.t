@@ -12,3 +12,5 @@
 Regime number Λ = μ·R²/(π²D): Cheng GA 0.375 % → 1.18 (mixed); Hu 2024 → ~7e-09 (diffusion is never limiting).
 
 Elasticities of t50 (Cheng, GA 0.375 %): R +1.20, D -0.60, f_free -0.62, mu -0.40, GA +0.23
+
+Global weights (total Sobol index of log t50, W2): A: f_free 0.84, w_weak 0.20, t_weak_h 0.09; B: K_b 0.90, f_free 0.07, R_dry 0.04; C: R_dry 0.54, enzyme 0.27, f_free 0.15

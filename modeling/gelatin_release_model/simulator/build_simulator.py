@@ -20,7 +20,13 @@ mlad = dict(series=ser, tauA_h=v3["per_size"]["A"]["tau_exit_h"], dA=v3["per_siz
 s = pd.read_csv(os.path.join(D, "saravanan2011_fig6_vector.csv")); s = s[s.time_day_raw > 0.5]
 sar = dict(Dw=v4["Dw_cm2s"], R={k: v["R_um"] for k, v in v4["cases"].items()},
            pts={f.split()[0]: x[["time_day_raw", "release_pct", "SE_pct_from_caps"]].round(3).values.tolist() for f, x in s.groupby("formulation", sort=False)})
-data = dict(cheng=cheng, hu=hu, mlad=mlad, sar=sar, version="1.0.0")
+w2 = json.load(open(os.path.join(R, "w2_all_parameters.json")))
+LAB = {"A": "A: میکروسفر ۵ تا ۵۰ میکرون، داروی کوچک، بافر", "B": "B: کره متورم بزرگ، نفوذ بسیار کند، آنزیم (نوع Cheng)", "C": "C: سامانه Cheng، فقط متغیرهای طراحی"}
+glob = dict(N=int(os.environ.get("GRM_SOBOL_N", 1024)), regimes={k: dict(label=LAB[k], title=LAB[k], ranges=v["ranges"],
+            sobol={o: {n: dict(S1=round(x["S1"], 4), ST=round(x["ST"], 4)) for n, x in d.items() if not n.startswith("_")} for o, d in v["sobol"].items()})
+            for k, v in w2["regimes"].items()})
+data = dict(cheng=cheng, hu=hu, mlad=mlad, sar=sar, global_=None, version="1.1.0")
+data["global"] = glob; del data["global_"]
 html = open(os.path.join(HERE, "template.html"), encoding="utf-8").read().replace("/*__DATA__*/null", json.dumps(data, separators=(",", ":")))
 open(os.path.join(HERE, "grm_simulator.html"), "w", encoding="utf-8").write(html)
 print("wrote grm_simulator.html", len(html) // 1024, "kB")

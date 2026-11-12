@@ -41,14 +41,14 @@ can continue the work — including a machine-learning layer — without re-deri
 ```bash
 pip install -r requirements.txt            # numpy, scipy, pandas, matplotlib, pytest (pdfplumber only for tools/)
 python validation/run_all.py               # ~30 s: re-runs every test, writes results/*.json, results/VALIDATION.md, figures/*.png
-python -m pytest -q                        # 8 tests: mathematics + pinned validation numbers
+python -m pytest -q                        # 11 tests: mathematics + pinned validation numbers
 python ml/build_training_table.py          # writes ml/formulations.csv and ml/curves_long.csv
 python simulator/build_simulator.py        # rebuilds simulator/grm_simulator.html from data/ and results/
 ```
 
 **Interactive simulator:** open `simulator/grm_simulator.html` in any browser (one self-contained file, no internet needed).
 Same equations as `grm/model.py`; presets reproduce the validation cases (Cheng RMSE 2.4/2.9/4.0, Hu 12.4, Mladenovska A 6.5) with the data points;
-parameter weights (t50 elasticities) and the regime number Λ update live; curves can be pinned for comparison and exported as CSV/PNG; settings save to JSON.
+weights of ALL parameters (Fick, swelling, crosslink/binding, degradation, other) as local elasticities on any output, the time-resolved weight of each mechanism, and the global Sobol weights of §6.1 update live, together with the regime number Λ; curves can be pinned for comparison and exported as CSV/PNG; settings save to JSON.
 
 Minimal use:
 
@@ -225,6 +225,70 @@ the desorption rate (F(1 h) 0.59) and the degradation time scale (t95 −1.0).
 
 This is the key design rule and the most important feature for any data-driven extension (§9).
 
+### 6.1 All parameters: Fick → swelling → crosslinking / binding → degradation → other
+
+`validation/w2_all_parameters.py`, model `grm/fast.py` (closed form of Eq. (1) with a hydration gate; verified against the PDE in `tests/test_fast.py`).
+Every *primitive* parameter a formulator can change is mapped into the model:
+
+| Stage | Primitive parameter | How it enters |
+|---|---|---|
+| Fick | dry radius *R_dry*; drug size (MW) | *R = R_dry Q^(1/3)*; *D_w* by Stokes–Einstein from MW |
+| swelling | volume swelling ratio *Q*; collective gel diffusivity *D_coop* | polymer fraction 1/*Q* in Mackie–Meares; hydration time *τ_sw = R²/(π² D_coop)* (Tanaka & Fillmore 1979) gates every pool |
+| crosslink / binding | fast reversible binding *K_b*; free fraction; share of weakly bound drug; desorption half-life; (GA % through Cheng's relations) | *D_eff = D_w MM(1/Q)/(1+K_b)*; pool sizes; first-order desorption |
+| degradation | degradation half-life (or enzyme level, or the measured mass-loss curve) | first-order liberation of network-bound drug |
+| other | non-releasable fraction | plateau below 100 % |
+
+**(1) Global weights** — total Sobol index *S_T* (share of output variance incl. interactions; Saltelli/Jansen estimators, 1024 scrambled-Sobol base samples, 200 bootstrap resamples) over two design regimes:
+regime **A** = GA microspheres 5–50 µm, small drug, buffer (Saravanan/Chang/Hu/Liu type); regime **B** = large swollen spheres with strongly hindered diffusion and enzyme (Cheng type). Ranges are in the script and in `results/w2_all_parameters.json`.
+
+| Stage | Parameter | A: t50 | A: release 1 d | A: t90 | B: t50 | B: release 1 d |
+|---|---|---|---|---|---|---|
+| Fick | dry radius R_dry | 0.01 | 0.00 | 0.00 | 0.04 | 0.04 |
+| Fick | drug size MW | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| swelling | swelling ratio Q | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| swelling | gel network diffusivity D_coop (hydration time) | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| crosslink / binding | fast reversible binding 1+K_b | 0.01 | 0.00 | 0.00 | **0.90** | **0.90** |
+| crosslink / binding | free fraction | **0.84** | **0.47** | **0.13** | 0.07 | 0.03 |
+| crosslink / binding | share of weakly bound drug | **0.20** | **0.53** | **0.26** | 0.02 | 0.02 |
+| crosslink / binding | desorption half-life | 0.09 | 0.04 | 0.04 | 0.01 | 0.00 |
+| degradation | degradation half-life | 0.01 | 0.02 | 0.07 | 0.01 | 0.04 |
+| other | non-releasable fraction | 0.04 | 0.06 | **0.85** | 0.00 | 0.00 |
+
+In regime A the release at 7 days is shared by weakly bound share 0.44, free fraction 0.32, degradation half-life 0.30 and non-releasable fraction 0.12 (t90 is dominated by the non-releasable fraction because 90 % is often never reached).
+
+![global weights](figures/W2_global_weights.png)
+
+Regime **C** = Cheng's own design variables (GA 0.125–0.875 %, swollen radius 25–75 µm, enzyme ×0.25–4, free fraction 0.3–0.7):
+
+| Cheng design variable | t50 | release 7 d |
+|---|---|---|
+| R_dry | 0.54 | 0.41 |
+| enzyme | 0.27 | 0.50 |
+| f_free | 0.15 | 0.06 |
+| GA | 0.07 | 0.08 |
+
+**(2) Local elasticities** at the validated Cheng point (Q = 6 and D_coop = 10⁻⁷ cm²/s assumed; K_b set so that D_eff equals Cheng's fitted D, i.e. 1+K_b ≈ 1.6×10⁵):
+
+| Parameter (Cheng, GA 0.375 %) | t50 | release 1 h | release 1 d |
+|---|---|---|---|
+| dry radius R_dry | +1.20 | -0.97 | -0.82 |
+| drug size MW | +0.20 | -0.16 | -0.14 |
+| swelling ratio Q | -0.01 | +0.01 | +0.01 |
+| gel network diffusivity D_coop (hydration time) | -0.00 | +0.00 | +0.00 |
+| fast reversible binding 1+K_b | +0.60 | -0.48 | -0.41 |
+| free fraction | -0.62 | +0.98 | +0.61 |
+| degradation half-life | +0.40 | -0.01 | -0.18 |
+
+**(3) Which mechanism controls at each moment** (degree of rate control on the four rates):
+
+![mechanism weights](figures/W2_mechanism_weights_time.png)
+
+**Answer to "which parameters control release, and how much".**
+1. **Swelling (Q, hydration time) has ~zero weight in every regime.** Hydration takes seconds to a minute (τ_sw ≈ 0.3–25 s for swollen diameters of 10–100 µm with D_coop ≈ 10⁻⁷ cm²/s, an assumed typical value), and the swelling ratio cancels in the diffusion time: t_D ∝ R²/D ∝ Q^(2/3)/MM(1/Q), whose elasticity 2/3 − 4Q/(Q²−1) is zero at Q = 3+√10 ≈ 6.2 and small for 3 < Q < 15. Swelling matters only for tightly crosslinked gels (Q < 2.5) in the diffusion-limited regime.
+2. **Fick parameters (radius, drug size) matter only when diffusion is the slow step (Λ ≳ 0.1).** In regime A their weight is ≈ 0; in Cheng's system the radius is the largest single weight (S_T 0.54 for t50).
+3. **Crosslinking acts through binding, not through mesh size.** In regime A the free fraction (S_T 0.84 for t50) and the weakly bound share decide the burst and t50; in regime B the fast binding constant K_b (S_T 0.90) decides everything, because it is what slows diffusion by five orders of magnitude. GA concentration itself, through Cheng's relations, carries only S_T 0.07 — its effect saturates above ~0.375 %.
+4. **Degradation controls the tail** (release after a week, t90): S_T 0.30 for release at 7 days in regime A, 0.50 for Cheng; and in enzyme media it is the second lever after size.
+
 ---
 
 ## 7. Data
@@ -257,6 +321,7 @@ grm/                       the model (import grm)
   model.py                 pools, liberation laws, exit kernels, release() = Eq. (1), release_pde() = Eq. (2)
   correlations.py          Wilke–Chang, Le Bas volumes, Mackie–Meares, Stokes–Einstein, Cheng D(GA) and μ(GA), drug table
   analysis.py              RMSE, R², t_x, elasticities, degree of rate control
+  fast.py                  closed-form Eq. (1) with hydration gate and primitive parameters (R_dry, MW, Q, D_coop, K_b, ...) — vectorised
 validation/                one script per test; run_all.py regenerates results/ and figures/
 data/                      extracted data with provenance (see §7)
 results/                   JSON outputs + VALIDATION.md (auto-generated)
