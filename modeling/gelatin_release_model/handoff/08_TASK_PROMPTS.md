@@ -57,3 +57,11 @@ Outline a 12-slide deck (problem, insight Λ, validation, weights, product, mark
 ---
 ## P13 — Thesis Chapter 5 and paper
 Draft Chapter 5 (discussion and conclusion) in Persian (B Nazanin, RTL, Persian digits) from 02_PROJECT_STATE.md and results, then an English paper outline. References must be real and verifiable; list any you are unsure of separately.
+
+---
+## P14 — Advisor's new comments on the literature review
+I am attaching the advisor's commented Word file. Read 09_WRITING_STYLE_GUIDE.md and 10_LITERATURE_REVIEW_GUIDE.md. For every comment: (1) quote it, (2) say what you will change and with which reference, (3) produce the change as tracked changes in the same Word file (author "Saeedreza"), (4) draft a short Persian reply to each comment. Do not add our project results to the review. List any reference you are unsure exists.
+
+---
+## P15 — Continue the literature review (new GA papers)
+Search for GA-crosslinked gelatin micro/nanoparticle release papers from 2020 onward that are not in the 85 references. For each: full citation with DOI, crosslinking conditions, drug, size, medium, the authors' mechanism interpretation (their words), fitted empirical model and parameters, and whether release data are digitisable. Give the table first; write the Persian text for §4-8 only after I approve the list.

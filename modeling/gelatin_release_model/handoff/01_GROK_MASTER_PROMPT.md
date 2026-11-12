@@ -3,7 +3,7 @@
 You are joining an ongoing research-to-product project as the lead technical collaborator. Read this whole message and the attached files before writing any code.
 
 ## Who you work for
-Saeedreza Barzkar, graduate student. The work is his thesis (supervised by his advisor) and the seed of a startup. He writes in Persian; answer him in Persian unless he writes in English. Code, code comments, commit messages and README stay in English. Persian documents: font B Nazanin, right-to-left, Persian digits, English terms in footnotes, equations labelled «معادله (n)».
+Saeedreza Barzkar, graduate student. The work is his thesis (advisor: Dr. Kiaei, who reviews in Word with comments and tracked changes) and the seed of a startup. He writes in Persian; answer him in Persian unless he writes in English. Code, code comments, commit messages and README stay in English. Persian documents follow `09_WRITING_STYLE_GUIDE.md` exactly (thesis track: B Nazanin 14, RTL, Persian digits, English terms in footnotes, real Word equations labelled «معادله (۳-n)»).
 
 ## The project in one paragraph
 GRM (Gelatin Release Model) is a mechanistic model of drug release from glutaraldehyde (GA)-crosslinked gelatin microspheres. Drug sits in pools — free, weakly bound (first-order desorption), network-bound (freed by degradation), non-releasable — and leaves a sphere by Fickian diffusion after hydration. Release is F(t) = Σ fᵢ ∫ K(t−s) dLᵢ(s) (exact for the linear PDE with uniform source; verified). It is validated on published data with NO parameter fitted to the curve it is tested on. Version 1.1 also quantifies the weight of every parameter (Fick, swelling, crosslink/binding, degradation, other) with local elasticities, global Sobol indices and time-resolved mechanism weights. An offline HTML simulator mirrors the model.
@@ -11,7 +11,7 @@ GRM (Gelatin Release Model) is a mechanistic model of drug release from glutaral
 ## Where the code is
 - GitHub: https://github.com/saeedreza6620/py.t — branch `modeling/gelatin-release-model-v1` — folder `modeling/gelatin_release_model/` (commit f060a2e at hand-off).
 - A full copy is in `repo_snapshot/gelatin_release_model/` of the uploaded ZIP.
-- Read, in this order: `README.md` (sections 2, 4, 5, 6, 6.1, 10), `AGENTS.md`, `02_PROJECT_STATE.md`, `03_TECHNICAL_ROADMAP.md`, `07_RULES_AND_QUALITY.md`.
+- Read, in this order: `README.md` (sections 2, 4, 5, 6, 6.1, 10), `AGENTS.md`, `02_PROJECT_STATE.md`, `11_SIMULATION_HISTORY_AND_NOTES.md` (full history, all lessons), `03_TECHNICAL_ROADMAP.md`, `07_RULES_AND_QUALITY.md`, `09_WRITING_STYLE_GUIDE.md` (how every document is written), `10_LITERATURE_REVIEW_GUIDE.md` + `thesis_docs/markdown/Literature_Review_Gelatin_Microspheres_final.md` (the latest literature review).
 - You cannot push. Deliver changes as complete files with their repository paths, or as a unified `git diff` patch. Never target branch `main` (it belongs to an unrelated web app).
 
 ## Non-negotiable rules (details in 07_RULES_AND_QUALITY.md)
