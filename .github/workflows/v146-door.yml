@@ -1,0 +1,28 @@
+name: Apply v146 door
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode and apply
+        run: |
+          base64 -d .github/scripts/v146_door.b64 > .github/scripts/v146_door.py
+          echo "2e03f2a69a9badbc4fab0069832231753765d69f555b6fa9290e044cbff10714  .github/scripts/v146_door.py" | sha256sum -c
+          python3 .github/scripts/v146_door.py
+      - name: Commit and push
+        run: |
+          git config user.name "saeedreza6620"
+          git config user.email "148044962+saeedreza6620@users.noreply.github.com"
+          git add \
+            lite/public/legacy/sweet.js lite/public/legacy/calm.js lite/public/legacy/sweet.css \
+            lite/public/legacy/sw.js lite/public/legacy/index.html lite/public/legacy/install-app.js \
+            claude/sweet.js claude/calm.js claude/sweet.css claude/landing.html \
+            public/legacy/sweet.js public/legacy/calm.js public/legacy/sweet.css \
+            public/legacy/sw.js public/legacy/index.html public/legacy/install-app.js
+          if git diff --cached --quiet; then echo already applied; exit 0; fi
+          git commit -m "v146: در ورود اپ، پوست به هم ریخته اول است"
+          git push origin HEAD:main
