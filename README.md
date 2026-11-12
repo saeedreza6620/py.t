@@ -1,5 +1,7 @@
 # BeautyWallet (بیوتی‌ولت) — README for the next developer or AI
 
+> **New here (human or AI)? Start with [`BEAUTYWALLET_HANDOFF.md`](BEAUTYWALLET_HANDOFF.md)** — the whole project, strategy and how to continue, in one Persian file.
+
 > **Marketing:** skills in `.claude/skills/` (from coreyhaines31/marketingskills, MIT) read `.agents/product-marketing.md` first; playbook `docs/strategy/08-marketing-playbook.md`.
 > **Strategy (Persian):** `docs/strategy/` (positioning, moat, customers, Instagram, revenue, premium, SMS, decision log).
 > **Android app / signed APK:** read `android-app/README.md` (build on GitHub, signing secrets, stores).
