@@ -1,0 +1,44 @@
+# Deploys SanatHub (sanathub/) to its own Liara app on every push to the "sanathub" branch.
+# Needs: repository secret LIARA_API_TOKEN (already used by BeautyWallet) and repository variable
+# SANATHUB_APP_NAME (the new Liara app's name). Without the variable it only builds and stops.
+name: SanatHub build & deploy
+on:
+  push:
+    branches: [sanathub]
+    paths: ['sanathub/**', '.github/workflows/sanathub.yml']
+  workflow_dispatch:
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: sanathub
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Install
+        run: npm ci --no-audit --no-fund
+      - name: Build (type check + production build)
+        run: npm run build
+      - name: Smoke test (seed demo data, start, hit pages)
+        run: |
+          export DATA_DIR=/tmp/shdata SESSION_SECRET=ci-secret-ci-secret-ci-secret-1234 ADMIN_PHONES=09120000000
+          npm run seed:demo
+          (npx next start -p 3999 > /tmp/sh.log 2>&1 &) && sleep 6
+          curl -sf localhost:3999/api/prices | head -c 300 || { cat /tmp/sh.log; exit 1; }
+          for p in / /prices /login; do curl -sf -o /dev/null "localhost:3999$p" || { echo "::error::page $p failed"; cat /tmp/sh.log; exit 1; }; done
+          echo "::notice title=smoke test::passed"
+      - name: Deploy to Liara
+        env:
+          LIARA_TOKEN: ${{ secrets.LIARA_API_TOKEN }}
+          APP: ${{ vars.SANATHUB_APP_NAME }}
+        run: |
+          if [ -z "$APP" ]; then echo "::notice title=deploy skipped::Create a Liara app (platform Next.js) and set the repository variable SANATHUB_APP_NAME"; exit 0; fi
+          test -n "$LIARA_TOKEN" || { echo "::error::Add the LIARA_API_TOKEN repository secret"; exit 1; }
+          for try in 1 2; do
+            if timeout 420 npx --yes @liara/cli@9.5.1 deploy --app "$APP" --api-token "$LIARA_TOKEN" --port 3000 --platform next --detach; then exit 0; fi
+            echo "::warning title=liara deploy::attempt $try failed"; sleep 20
+          done
+          exit 1
