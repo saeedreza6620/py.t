@@ -49,7 +49,7 @@ var STRONG=/^(RETINOID|AHA|BHA|VITC_LAA)$/,BADV={mild:1,bad:1,peel:1,new:1,tight
 var CLS={RETINOID:'رتینوئید',AHA:'لایه‌بردار AHA',BHA:'سالیسیلیک اسید (BHA)',VITC_LAA:'ویتامین C خالص',PHA:'PHA',AZELAIC:'آزلائیک اسید',VITAMIN_B3:'نیاسینامید'},FL={fragrance:'عطر',essential_oil:'روغن معطر'};
 
 function info(id){var f=formula(id)||{},cls=(f.actives||[]).map(function(a){return a.cls}),fl=f.flags||[];
-  return {id:id,name:pname(id)||id,cls:cls,fl:fl,rinse:!!f.rinseOff,role:f.role||'',strong:cls.some(function(c){return STRONG.test(c)})||fl.indexOf('high_strength')>=0}}
+  return {id:id,name:pname(id)||id,cls:cls,fl:fl,rinse:!!f.rinseOff,role:f.role||'',filters:f.filters||'',strong:cls.some(function(c){return STRONG.test(c)})||fl.indexOf('high_strength')>=0}}
 function suspects(since){var start=rj('bw_fu_start',{}),ans=rj('bw_fu_answers',{}),onset=dnum(tday())-(+since||3);
   return routine().map(function(id){var i=info(id),sc=0,why=[];var s0=start&&start[id]?dnum(start[id]):null;
     if(s0!=null){var gap=onset-s0;if(gap>=-1&&gap<=14){sc+=3;i.recent=true;why.push(gap<=0?'همین روزها شروعش کردی':'حدود '+fa(gap)+' روز قبل از شروع مشکل اضافه شده')}else if(gap>14&&gap<=30){sc+=1;why.push('در یک ماه اخیر اضافه شده')}}
@@ -57,8 +57,56 @@ function suspects(since){var start=rj('bw_fu_start',{}),ans=rj('bw_fu_answers',{
     if(i.strong){sc+=2;why.push('ماده‌ی فعال قوی داره')}
     if(i.fl.indexOf('essential_oil')>=0){sc+=1;why.push('روغن معطر داره')}else if(i.fl.indexOf('fragrance')>=0){sc+=1;why.push('عطر داره')}
     if(!i.rinse)sc+=1;i.score=sc;i.why=why;return i}).sort(function(a,b){return b.score-a.score})}
-function simple(){var ids=routine().map(info),plain=function(i){return !i.strong&&i.fl.indexOf('fragrance')<0&&i.fl.indexOf('essential_oil')<0},pick=function(re){var x=ids.find(function(i){return re.test(i.role)&&plain(i)});return x?x.name:''};
-  return [['شوینده‌ی ملایم',pick(/^(cleanser|micellar)$/)],['مرطوب‌کننده‌ی ساده (بدون عطر)',pick(/^moisturizer$/)],['ضدآفتاب صبح',(ids.find(function(i){return i.role==='sunscreen'})||{}).name||'']]}
+/* ---------- v147: the calm routine never names a product it just told her to stop ----------
+   Before v147 the «simple routine» was picked from the whole routine, so a suspect (e.g. a micellar water she ticked)
+   showed under «don't use» and again under «use this». Now one function decides every product once:
+   suspect → «don't use»; anything else that can sting irritated skin → «put aside until calm»; only the rest can be named
+   in the calm routine, and a step with nothing safe gets what to look for instead of a product name.
+   What counts as «can sting irritated skin» (consensus advice for irritated / barrier-damaged skin):
+   - retinoids, AHA/BHA, pure vitamin C, high strength: barrier needs ~2–3 weeks (Lee et al. 1997), these slow it;
+   - fragrance and essential oils: the most common cosmetic contact allergens (fragrance mix, EU SCCS 2012), leave-on and rinse-off;
+   - soap-based cleansers: high pH, strip lipids; micellar water leaves surfactant on skin → rinse it off while irritated;
+   - extra steps (serum, toner, mask, spot treatment, eye/lash products): each one is another variable on irritated skin;
+   - products started in the 2 weeks before it began, even if not ticked: same window as contact allergy (24–72 h, DermNet);
+   - rich oils when there are new bumps (can block pores); one moisturizer is enough (fewer variables).
+   Sunscreen: mineral filters (zinc oxide / titanium dioxide) rarely cause contact or photo-allergy, chemical filters
+   (e.g. oxybenzone, octocrylene) more often → a suspect sunscreen is replaced by shade + a fragrance-free mineral one.
+   Petrolatum: very rarely allergenic, a safe occlusive for dry, peeling patches. Not a treatment and not a diagnosis. */
+var ASIDE_ROLE={serum:'سرم',toner:'تونر',treatment:'محصول درمانی',mask:'ماسک',spot:'ضدجوش موضعی',eye:'دور چشم',lash:'مژه و ابرو'};
+function calmPlan(L,sus,sym){sus=sus||[];sym=sym||[];var bumps=sym.indexOf('bumps')>=0||sym.indexOf('deep')>=0,stop=[],aside=[],used={};
+  function scented(i){return i.fl.indexOf('fragrance')>=0||i.fl.indexOf('essential_oil')>=0}
+  function asideWhy(i){if(i.recent)return 'تازه شروعش کردی؛ تا آروم شدن چیز تازه نه';if(i.bad)return 'توی پیگیری گفتی اذیتت کرده';
+    if(i.strong)return (i.cls.filter(function(c){return STRONG.test(c)}).map(function(c){return CLS[c]||c})[0]||'ماده‌ی فعال قوی')+' داره؛ برای پوست تحریک‌شده زیاده';
+    if(i.fl.indexOf('essential_oil')>=0)return 'روغن معطر داره';if(i.fl.indexOf('fragrance')>=0)return 'عطر داره؛ عطر شایع‌ترین علت حساسیت به آرایشیه';
+    if(i.fl.indexOf('soap_base')>=0)return 'پایه‌ی صابونی داره و پوست رو خشک‌تر می‌کنه';if(i.fl.indexOf('enzyme_exfoliant')>=0||i.fl.indexOf('exfoliating_undeclared')>=0)return 'لایه‌بردار داره';
+    if(ASIDE_ROLE[i.role])return ASIDE_ROLE[i.role]+'؛ تا آروم شدن فقط مراحل اصلی';if(bumps&&i.fl.indexOf('rich_oils')>=0)return 'روغن سنگین داره و با جوش تازه بهتره نباشه';return ''}
+  L.forEach(function(i){if(sus.indexOf(i.id)>=0){stop.push(i);used[i.id]=1}});
+  var free=L.filter(function(i){if(used[i.id])return false;var w=asideWhy(i);if(w){aside.push({id:i.id,name:i.name,why:w});used[i.id]=1;return false}return true});
+  function take(test,sort){var c=free.filter(function(i){return !used[i.id]&&test(i)});if(sort)c.sort(sort);var x=c[0];if(x)used[x.id]=1;return x||null}
+  var cleanser=take(function(i){return i.role==='cleanser'})||take(function(i){return i.role==='micellar'});
+  var moist=take(function(i){return i.role==='moisturizer'},function(a,b){var s=function(i){return (i.cls.indexOf('CERAMIDE')>=0?-2:0)+(i.cls.indexOf('SOOTHING')>=0?-1:0)};return s(a)-s(b)});
+  var sun=take(function(i){return i.role==='sunscreen'},function(a,b){var r={mineral:0,hybrid:1,chemical:2};return (r[a.filters]||1)-(r[b.filters]||1)});
+  // any other safe-looking leftover (a second moisturizer, a balm…) is put aside too: one product per step
+  free.forEach(function(i){if(!used[i.id]){aside.push({id:i.id,name:i.name,why:'برای این چند روز یکی از هر مرحله بسه'});used[i.id]=1}});
+  var sunSus=stop.some(function(i){return i.role==='sunscreen'}),clSus=stop.some(function(i){return i.role==='cleanser'||i.role==='micellar'}),moSus=stop.some(function(i){return i.role==='moisturizer'});
+  var am=[{step:'شستشو',p:null,how:'فقط آب ولرم؛ صبح شوینده لازم نیست. با حوله‌ی تمیز آروم خشک کن، نمال.'},
+    {step:'مرطوب‌کننده',p:moist,how:moist?'یه لایه‌ی نازک روی پوست کمی نم‌دار.':(moSus?'مرطوب‌کننده‌ات جزو مظنون‌هاست. ':'')+'از روتینت مرطوب‌کننده‌ای نداریم که مطمئن باشیم. اگه داری یا می‌خری: بدون عطر و روغن معطر، با گلیسیرین، سرامید یا پنتنول، بدون اسید و رتینول. تا اون موقع یه لایه‌ی خیلی نازک وازلین ساده روی جاهای خشک.'},
+    {step:'ضدآفتاب',p:sun,how:sun?(sun.filters==='chemical'?'اگه موقع زدن سوزش داد، کنارش بذار و فقط سایه و کلاه.':'هر ۲ تا ۳ ساعت بیرون از خونه تجدید کن.'):(sunSus?'ضدآفتابت جزو مظنون‌هاست؛ ':'')+'تا یه ضدآفتاب مینرال بدون عطر (زینک اکسید یا تیتانیوم دی‌اکسید) پیدا کنی: سایه، کلاه لبه‌دار و کمتر بیرون بودن بین ۱۰ تا ۱۶. فیلترهای مینرال کمتر حساسیت می‌دن.'}];
+  var pm=[{step:'پاک‌کردن',p:cleanser,how:cleanser?(cleanser.role==='micellar'?'با پنبه بزن، بعد حتماً با آب ولرم بشور؛ میسلار روی پوست تحریک‌شده نباید بمونه.':'یه بار، با آب ولرم و کمتر از یک دقیقه؛ دوبار شستن نه.'):(clSus?'پاک‌کننده‌ات جزو مظنون‌هاست. ':'')+'فقط آب ولرم. اگه آرایش یا ضدآفتاب داشتی و شوینده لازم شد: بدون عطر، بدون صابون و SLS، با pH ملایم.'},
+    {step:'مرطوب‌کننده',p:moist,how:(moist?'یه لایه‌ی نازک، مثل صبح.':'همون معیارهای صبح؛ تا پیدا کردنش یه لایه‌ی نازک وازلین ساده روی جاهای خشک.')+(sym.indexOf('dry')>=0?' روی جاهای خشک و پوسته‌دار، رویش یه لایه‌ی نازک وازلین ساده.':'')}];
+  var tips=['هیچ محصول تازه‌ای نزن، حتی اگه روش نوشته «مخصوص پوست حساس»؛ هر محصول تازه یعنی یه مظنون تازه.'];
+  if(sym.indexOf('burn')>=0)tips.push('سوزش: دستمال تمیزِ خیس با آب خنک (نه یخ) ۵ تا ۱۰ دقیقه. اگه حتی مرطوب‌کننده هم سوزوند، فقط آب و یه لایه‌ی نازک وازلین.');
+  if(sym.indexOf('red')>=0)tips.push('قرمزی: آب داغ، بخور، سونا، ورزش سنگین در گرما و مالیدن صورت قرمزی رو بیشتر می‌کنن.');
+  if(sym.indexOf('dry')>=0)tips.push('پوسته‌ها رو نکَن و لایه‌بردار و اسکراب نزن، حتی وقتی پوسته داره؛ خودش می‌ریزه.');
+  if(bumps)tips.push('جوش: دست نزن و نترکون؛ ماسک، روغن صورت و کرم سنگین فعلاً نه.');
+  if(sym.indexOf('hives')>=0)tips.push('کهیر: اگه با تورم لب یا پلک یا تنگی نفس بود، اورژانس. اگه بیشتر از یک روز موند یا پخش شد، پزشک ببینه.');
+  tips.push('آرایش هر چی کمتر بهتر؛ اگه لازم شد، ساده و همون شب پاکش کن.');
+  return {stop:stop,aside:aside,am:am,pm:pm,tips:tips}}
+function planFor(s){return calmPlan(suspects(s.since),s.sus||[],s.sym||[])}
+function stepsHtml(rows){return rows.map(function(r){return '<div class="cm-step"><b>'+esc(r.step)+':</b> '+(r.p?'<span class="cm-pn">'+esc(r.p.name)+'</span><br>':'')+'<small>'+esc(r.how)+'</small></div>'}).join('')}
+function routineHtml(P){return '<div class="cm-ok"><b>روتین ساده تا آروم شدن</b><div class="cm-sub">☀️ صبح</div>'+stepsHtml(P.am)+'<div class="cm-sub">🌙 شب</div>'+stepsHtml(P.pm)+'</div>'}
+function asideHtml(P){return P.aside.length?'<div class="cm-pp"><b>این‌ها مظنون نیستن، ولی تا آروم شدن کنار بمونن:</b>'+P.aside.map(function(a){return '<div>• '+esc(a.name)+' <small>('+esc(a.why)+')</small></div>'}).join('')+'</div>':''}
+window.BWCalmPlan=calmPlan;
 
 /* ---------- styles ---------- */
 var CSS='.cm-sheet{position:fixed;inset:0;z-index:9990;background:rgba(25,18,60,.5);display:flex;align-items:flex-end;justify-content:center}.cm-in{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));direction:rtl;line-height:1.9;font-size:14px;color:#241a4f}'+
@@ -67,7 +115,8 @@ var CSS='.cm-sheet{position:fixed;inset:0;z-index:9990;background:rgba(25,18,60,
  '.cm-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.cm-go{background:linear-gradient(135deg,#7c5cf0,#c86dd7)!important;color:#fff!important;font-weight:800}.cm-sus{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed #ece6ff}.cm-sus small{display:block;color:#6d6496;font-size:12px}'+
  '.cm-dim{margin:6px 0}.cm-dim b{display:block;font-size:13px}.cm-card{background:#fff;border:1px solid #f0d9e6;border-radius:18px;padding:12px 14px;margin:0 0 12px;line-height:1.9;font-size:14px;color:#241a4f;direction:rtl}.cm-card h4{margin:0 0 4px;font-size:15px}'+
  '.cm-chip{display:block;width:100%;text-align:right;margin:8px 0 2px;background:linear-gradient(135deg,#fff0f4,#f4efff)!important;border:1px solid #f3d6e3!important;font-weight:700}.cm-chip small{display:block;font-weight:400;color:#6d6496;font-size:12px}.cm-trend{font-size:12.5px;color:#4d5670}'+
- '.cm-in .bw-action-icon::before,.cm-in .bw-action-icon::after,.cm-card .bw-action-icon::before,.cm-card .bw-action-icon::after{display:none!important;content:none!important}.cm-nrs{gap:4px!important}.cm-nrs button{padding:6px 0!important;min-width:27px;flex:1 0 27px;text-align:center}.cm-pp{background:#fff6e9;border-radius:12px;padding:6px 10px;margin-top:8px;font-size:13px;color:#6b4a14;line-height:1.8}';
+ '.cm-in .bw-action-icon::before,.cm-in .bw-action-icon::after,.cm-card .bw-action-icon::before,.cm-card .bw-action-icon::after{display:none!important;content:none!important}.cm-nrs{gap:4px!important}.cm-nrs button{padding:6px 0!important;min-width:27px;flex:1 0 27px;text-align:center}.cm-pp{background:#fff6e9;border-radius:12px;padding:6px 10px;margin-top:8px;font-size:13px;color:#6b4a14;line-height:1.8}'+
+ '.cm-sub{margin-top:6px;font-weight:800;font-size:13px}.cm-step{margin:3px 0;font-size:13.5px}.cm-step small{color:#3d5a4c;font-size:12.5px}.cm-pn{font-weight:700}.cm-det{margin-top:8px}.cm-det summary{cursor:pointer;font-size:13px;color:#5b3fd6;font-weight:700}.cm-pp small{color:#8a6a33}';
 function style(){if(document.getElementById('cmCss'))return;var s=document.createElement('style');s.id='cmCss';s.textContent=CSS;document.head.appendChild(s)}
 var cur=null;
 function sheet(html){style();if(cur)cur.remove();var o=document.createElement('div');o.className='cm-sheet';o.setAttribute('role','dialog');o.innerHTML='<div class="cm-in">'+html+'</div>';
@@ -114,10 +163,11 @@ function pickSuspects(d){var L=suspects(d.since),top=L.filter(function(i){return
    '<div class="cm-row"><button type="button" class="cm-go" data-a="next">ادامه</button><button type="button" data-cx="1">بستن</button></div>');
   o.querySelector('[data-a="next"]').onclick=function(){var sus=[].slice.call(o.querySelectorAll('input[name=sus]:checked')).map(function(x){return x.value}),ex=(o.querySelector('#cmExtra').value||'').trim().slice(0,80);
     planToday(Object.assign(d,{sus:sus,extra:ex?[ex]:[]}))}}
-function planToday(d){var names=d.sus.map(pname).concat(d.extra),simp=simple();
-  var o=sheet('<h3>📋 از امروز</h3>'+(names.length?'<div class="cm-warn"><b>این‌ها رو فعلاً نزن:</b><br>'+names.map(esc).join('<br>')+'</div>':'<div class="cm-box">مظنون مشخصی انتخاب نکردی؛ هر محصول تازه‌ای رو فعلاً کنار بذار.</div>')+
-   '<div class="cm-ok"><b>روتین ساده تا آروم شدن:</b><br>'+simp.map(function(x){return '• '+esc(x[0])+(x[1]?': '+esc(x[1]):'')}).join('<br>')+'</div>'+
-   '<p class="cm-note">صورتت رو با آب ولرم بشور، نمال، و چیز تازه‌ای امتحان نکن. هر روز یک بار اینجا (مراقبت روزانه) فقط سه سؤال کوچیک جواب بده.</p>'+
+function planToday(d){var P=calmPlan(suspects(d.since),d.sus,d.sym),names=P.stop.map(function(i){return i.name}).concat(d.extra);
+  var o=sheet('<h3>📋 از امروز</h3>'+(names.length?'<div class="cm-warn"><b>این‌ها رو فعلاً نزن (مظنون‌ها):</b><br>'+names.map(esc).join('<br>')+'</div>':'<div class="cm-box">مظنون مشخصی انتخاب نکردی؛ هر محصول تازه‌ای رو فعلاً کنار بذار.</div>')+
+   asideHtml(P)+routineHtml(P)+
+   '<div class="cm-box"><b>این چند روز:</b>'+P.tips.map(function(t){return '<div>• '+esc(t)+'</div>'}).join('')+'</div>'+
+   '<p class="cm-note">سد پوست بعد از تحریک معمولاً ۲ تا ۳ هفته طول می‌کشه تا کامل برگرده؛ برای همین روتین رو تا آروم شدن ساده نگه می‌داریم. هر روز یک بار اینجا (مراقبت روزانه) فقط سه سؤال کوچیک جواب بده.</p>'+
    '<div class="cm-box">📷 یه عکس از امروز بگیر تا روز هفتم کنارش ببینی (روی گوشیت رمزگذاری می‌مونه).</div>'+
    '<div class="cm-row"><button type="button" class="cm-go" data-a="start">شروع برنامه + عکس امروز</button><button type="button" data-a="nophoto">شروع بدون عکس</button></div>');
   function go(photo){var s={v:1,scale:2,id:'c'+Date.now().toString(36),start:tday(),since:d.since,sym:d.sym,base:d.base,sus:d.sus,extra:d.extra,days:{},phase:'calm',unlocked:false};s.days[tday()]=d.base;wj(K,s);
@@ -135,6 +185,7 @@ function card(s){var n=dayN(s),done=!!s.days[tday()],h='<div class="cm-card" id=
   var paused=s.sus.map(pname).concat(s.extra||[]);
   if(s.phase==='calm'){var v2=s.scale===2,v=v2?verdict2(s):verdict(s);
     h+=paused.length?'<div class="cm-pp">✋ فعلاً نزن: '+esc(paused.join('، '))+'</div>':'';
+    var P=planFor(s);h+='<details class="cm-det"><summary>روتین ساده‌ی امروز و چیزهایی که کنار گذاشتی</summary>'+asideHtml(P)+routineHtml(P)+'</details>';
     if(!done)h+='<p style="margin:8px 0 0"><b>امروز چطوره؟</b></p>'+(v2?scoreForm2():scoreForm())+'<div class="cm-row"><button type="button" class="cm-go" data-c="save">ثبت امروز</button></div>';
     else h+='<p class="cm-trend">'+(v2?trend2(s):trend(s))+'</p>';
     if(done&&v==='worse')h+='<div class="cm-warn">از روز اول بدتر شده. لطفاً همین روزها پزشک ببینه؛ برنامه رو نگه می‌داریم، ولی جای پزشک نیست.</div>';
@@ -251,5 +302,5 @@ window.addEventListener('bw-journal',function(){setTimeout(paint,80)});
 document.addEventListener('visibilitychange',function(){if(!document.hidden)paint()});
 function start(){watchChecks();paint()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(start,700)});else setTimeout(start,700);
-window.BWCalm={open:open,paint:paint,state:st,spend:spend,price:function(){return PRICE},altList:altList};
+window.BWCalm={plan:planFor,open:open,paint:paint,state:st,spend:spend,price:function(){return PRICE},altList:altList};
 })();

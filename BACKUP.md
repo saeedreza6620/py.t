@@ -76,7 +76,7 @@
    ```
 3. هفت تست گیت را اجرا کن؛ همه باید PASS شوند:
    ```bash
-   for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data; do node scripts/test-$t.mjs || echo "FAIL $t"; done
+   for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data calm-plan; do node scripts/test-$t.mjs || echo "FAIL $t"; done
    ```
 4. محلی اجرا کن و صفحه را ببین:
    ```bash

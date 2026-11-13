@@ -20,7 +20,9 @@ function save(s){s.m=s.m.slice(-MAX);wj(K,s)}
 function profileCtx(){var p=rj('bw_profile_v1_full',{})||{},ids=rj('bw_check_products',[]),names=[];
   try{names=(Array.isArray(ids)?ids:[]).slice(0,10).map(function(id){var f=window.BWCatalog&&BWCatalog.formula(id);return f&&f.name||''}).filter(Boolean)}catch(e){}
   var careful=false;try{careful=!!(window.BWFollowup&&BWFollowup.careful())}catch(e){}
-  return {skinBase:p.skinBase||'',skinToday:p.skinToday||'',symptoms:p.symptoms||[],goal1:p.goal1||'',routine:names,careful:careful,registered:!!rj('bw_reg',null)}}
+  // v147: while the calm program runs, the chat knows what she paused, so it never suggests it back
+  var calm=null;try{var cs=window.BWCalm&&BWCalm.state&&BWCalm.state();if(cs&&cs.phase!=='done'){var P=BWCalm.plan(cs);calm={suspects:P.stop.map(function(i){return i.name}).concat(cs.extra||[]),aside:P.aside.map(function(a){return a.name})}}}catch(e){}
+  return {skinBase:p.skinBase||'',skinToday:p.skinToday||'',symptoms:p.symptoms||[],goal1:p.goal1||'',routine:names,careful:careful,registered:!!rj('bw_reg',null),calm:calm}}
 function learn(pr){if(!pr)return '';var p=rj('bw_profile_v1_full',{})||{},said=[];
   if(pr.skinBase&&!p.skinBase){p.skinBase=pr.skinBase;said.push('پوست '+pr.skinBase)}
   var map={'جوش':'جوش فعال','لک':'لک و تیرگی','خشکی':'خشکی','چربی':'چربی و براقی زیاد','منافذ باز':'منافذ باز','قرمزی و حساسیت':'قرمزی','چین و چروک':'خطوط ریز و چین‌وچروک'};

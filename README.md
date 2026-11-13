@@ -44,7 +44,7 @@ node scripts/apply-sweet-ui.mjs 137
 node scripts/build-lite.mjs                 # writes lite/public — commit it
 # 3. the 7 gate tests — ALL must pass (they also run in CI):
 npm i --no-save typescript@5.9.3
-for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data; do node scripts/test-$t.mjs || echo "FAIL $t"; done
+for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data calm-plan; do node scripts/test-$t.mjs || echo "FAIL $t"; done
 # 4. run locally and look at it (Playwright, 400px wide):
 cd lite && DATA_DIR=/tmp/bwdata PORT=3917 ADMIN_TOKEN=test node server.mjs   # app: http://localhost:3917/legacy/
 # 5. commit + push to main → GitHub Actions deploys to Liara (~2 min). Retry the push if GitHub returns a 500.

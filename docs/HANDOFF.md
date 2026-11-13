@@ -133,7 +133,7 @@ git clone https://github.com/saeedreza6620/py.t && cd py.t
 # change files in claude/ (the app), lite/*.mjs (the server), claude/site/ (the site)
 node scripts/apply-sweet-ui.mjs 144 && node scripts/build-lite.mjs   # a NEW version number every time
 npm i --no-save typescript@5.9.3
-for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data; do node scripts/test-$t.mjs || echo "FAIL $t"; done
+for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data calm-plan; do node scripts/test-$t.mjs || echo "FAIL $t"; done
 # browser checks: scripts/e2e/README.md
 git add -A && git commit -m "v144: …" && git push origin main      # GitHub Actions deploys to Liara (~2 min)
 ```

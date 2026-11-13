@@ -80,7 +80,7 @@
    - کاتالوگ قیمت ندارد.
    - دستیار کاربر را برای جستجو جای دیگری نفرستد؛ یک قدم مشخص برای همان لحظه بدهد.
 9. **قبل از هر انتشار:**
-   - ۷ تست نگهبان رد شوند.
+   - ۸ تست نگهبان رد شوند.
    - با Playwright بررسی شود.
    - صادقانه گفته شود چه چیزی روی گوشی واقعی تست نشده: هوش مصنوعی زنده، پیامک، push، پرداخت واقعی، دوربین، آیفون.
 10. **مستندسازی:** کل روند روی گیت‌هاب با فایل md بماند. بعد از هر نسخه، `README.md` بخش ۶، `docs/PROCESS.md`، `docs/HANDOFF.md` و همین فایل به‌روز شوند.
@@ -127,7 +127,7 @@
 node scripts/apply-sweet-ui.mjs 146     # a NEW version number every release (bumps the service-worker cache)
 node scripts/build-lite.mjs             # writes lite/public — commit it
 npm i --no-save typescript@5.9.3
-for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data; do node scripts/test-$t.mjs || echo "FAIL $t"; done
+for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data calm-plan; do node scripts/test-$t.mjs || echo "FAIL $t"; done
 # browser checks: scripts/e2e/README.md (mock AI, local server, Playwright)
 git add -A && git commit -m "v146: …" && git push origin main
 # GitHub Actions deploys lite/** to Liara (~2 min); android-app/** builds the APK
@@ -323,7 +323,7 @@ git add -A && git commit -m "v146: …" && git push origin main
 ```
 تو ادامه‌دهنده‌ی پروژه‌ی بیوتی‌ولت هستی. مخزن خصوصی گیت‌هاب saeedreza6620/py.t را باز کن و اول فایل BEAUTYWALLET_HANDOFF.md را کامل بخوان، بعد docs/HANDOFF.md و README.md. همه‌ی پاسخ‌ها به من فارسی باشد.
 قانون‌های بخش ۳ را هرگز نشکن: داده‌ی کاربر از بین نرود؛ هیچ کلید و رمز و شماره کارتی در چت یا کد نباشد و از من کلید نخواه؛ هیچ پیامکی خودکار نفرست؛ داده یا نظر ساختگی نساز؛ مرز پزشکی را نگه دار.
-قبل از هر انتشار ۷ تست نگهبان را اجرا کن، با Playwright روی سرور محلی بررسی کن، و صادقانه بگو چه چیزی روی گوشی واقعی تست نشده.
+قبل از هر انتشار ۸ تست نگهبان را اجرا کن، با Playwright روی سرور محلی بررسی کن، و صادقانه بگو چه چیزی روی گوشی واقعی تست نشده.
 برای مارکتینگ، اول .agents/product-marketing.md و docs/strategy/ را بخوان و از اسکیل‌های .claude/skills/ استفاده کن.
 کار امروز من: [اینجا بنویس]
 ```

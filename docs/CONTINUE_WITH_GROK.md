@@ -91,7 +91,7 @@ git clone https://github.com/saeedreza6620/py.t && cd py.t      # needs your Git
 # put Grok's changed files in place, then:
 node scripts/apply-sweet-ui.mjs 146 && node scripts/build-lite.mjs   # a NEW version number every time
 npm i --no-save typescript@5.9.3
-for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data; do node scripts/test-$t.mjs || echo "FAIL $t"; done
+for t in skin-fit catalog-review catalog-routine bank explain catalog-quality keep-user-data calm-plan; do node scripts/test-$t.mjs || echo "FAIL $t"; done
 git add -A && git commit -m "v146: …" && git push origin main        # GitHub deploys to Liara automatically
 ```
 
