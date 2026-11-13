@@ -123,7 +123,7 @@ export function makeBank(DATA){
   function cnt(d){const w=dev(d);return w.phone?acct(w.phone):w}               // free / routine counters
   function bag(d){const w=dev(d);return w.phone&&w.merged?acct(w.phone):w}      // where her diamonds are
   function wallet(d){return bag(d)}
-  function balance(d,cfg){if(!d)return {free:0,negin:0};const c=cnt(d),b=bag(d);const o={free:Math.max(0,(Number(cfg.freeChecks)||0)-(c.free||0)),negin:b.negin||0};if(b.subUntil&&Date.parse(b.subUntil)>Date.now()-30*864e5)o.subUntil=b.subUntil;return o}
+  function balance(d,cfg){if(!d)return {free:0,negin:0};const c=cnt(d),b=bag(d);const o={free:Math.max(0,(Number(cfg.freeChecks)||0)-(c.free||0)),negin:b.negin||0,starterOk:starterOk(d)};if(b.subUntil&&Date.parse(b.subUntil)>Date.now()-30*864e5)o.subUntil=b.subUntil;return o}
   function charge(d,ip,cfg){if(!d)return null;const c=cnt(d),w=bag(d);const day=now().slice(0,10);const k=ip+'|'+day;
     if((c.free||0)<(Number(cfg.freeChecks)||0)&&(ipFree.get(k)||0)<(Number(cfg.freePerIpDay)||6)){c.free=(c.free||0)+1;ipFree.set(k,(ipFree.get(k)||0)+1);save(WAL,wallets);return 'free'}
     if(w.negin>0){w.negin--;w.spent=(w.spent||0)+1;save(WAL,wallets);return 'negin'}
@@ -135,19 +135,30 @@ export function makeBank(DATA){
     if((c.routine||0)>=(Number(cfg.freeRoutine??5))||(ipRoutine.get(k)||0)>=(Number(cfg.freeRoutinePerIpDay)||25))return false;
     c.routine=(c.routine||0)+1;ipRoutine.set(k,(ipRoutine.get(k)||0)+1);save(WAL,wallets);return true}
   function routineBack(d){if(!d)return;const c=cnt(d);c.routine=Math.max(0,(c.routine||0)-1);save(WAL,wallets)}
+  // v148: the one-time first purchase (3 diamonds at a starter price) — only for someone who has never bought
+  function starterOk(d){if(!d)return false;const b=bag(d),w=dev(d);return !(b.bought>0)&&!b.starterUsed&&!w.starterUsed}
+  function markStarter(d){if(!d)return;const b=bag(d);b.starterUsed=new Date().toISOString();dev(d).starterUsed=b.starterUsed;save(WAL,wallets)}
   function adjust(d,delta){if(!d)return;const w=bag(d);w.negin+=delta;save(WAL,wallets)}
   // a program unlocked with several diamonds at once (the 21-day calm program); an active subscription covers it
   function spendN(d,n){if(!d)return null;const w=bag(d);if(w.subUntil&&Date.parse(w.subUntil)>Date.now())return 'sub';if((w.negin||0)<n)return null;w.negin-=n;w.spent=(w.spent||0)+n;save(WAL,wallets);return 'negin'}
   // skin chat: a few free messages once per person (she gets to feel the value), then 1 diamond opens a pack of messages.
   // An active subscription covers it. Free counter lives with her phone account (cnt), paid messages with her diamonds (bag).
-  function chatState(d,cfg){if(!d)return {free:0,paid:0,sub:false};const c=cnt(d),w=bag(d);const sub=!!(w.subUntil&&Date.parse(w.subUntil)>Date.now());
-    return {free:Math.max(0,(Number(cfg.chatFree??8)||0)-(c.chatUsed||0)),paid:w.chatLeft||0,sub}}
-  function chatTake(d,cfg){if(!d)return null;const st=chatState(d,cfg);if(st.sub)return 'sub';
+  // v148: after the free messages, 1 diamond opens a PASS: cfg.chatPassHours (24) hours, up to cfg.chatPassCap messages.
+  // Messages bought before v148 (chatLeft) stay hers and are used after the pass. «ولت پلاس» covers chat up to a fair
+  // monthly cap (cfg.subChatMonth); past it, the pass works for her like for anyone.
+  function passOn(w){return !!(w.passUntil&&Date.parse(w.passUntil)>Date.now()&&(w.passLeft||0)>0)}
+  function subChatOk(w,cfg){const cap=Number(cfg.subChatMonth??300);const m=now().slice(0,7);if(w.subChatM!==m){w.subChatM=m;w.subChat=0}return cap<=0||(w.subChat||0)<cap}
+  function chatState(d,cfg){if(!d)return {free:0,paid:0,sub:false};const c=cnt(d),w=bag(d);const sub=!!(w.subUntil&&Date.parse(w.subUntil)>Date.now())&&subChatOk(w,cfg);const pass=passOn(w);
+    return {free:Math.max(0,(Number(cfg.chatFree??8)||0)-(c.chatUsed||0)),paid:(pass?(w.passLeft||0):0)+(w.chatLeft||0),sub,pass:pass?{until:w.passUntil,left:w.passLeft||0}:null}}
+  function chatTake(d,cfg){if(!d)return null;const st=chatState(d,cfg);if(st.sub){const w=bag(d);w.subChat=(w.subChat||0)+1;save(WAL,wallets);return 'sub'}
     if(st.free>0){const c=cnt(d);c.chatUsed=(c.chatUsed||0)+1;save(WAL,wallets);return 'free'}
-    if(st.paid>0){const w=bag(d);w.chatLeft--;save(WAL,wallets);return 'paid'}return null}
-  function chatBack(d,via){if(!d||!via)return;if(via==='free'){const c=cnt(d);c.chatUsed=Math.max(0,(c.chatUsed||0)-1)}else if(via==='paid'){const w=bag(d);w.chatLeft=(w.chatLeft||0)+1}save(WAL,wallets)}
-  function chatBuy(d,cfg){if(!d)return null;const price=Math.max(1,Math.min(10,Number(cfg.chatGemPrice??1)||1)),per=Math.max(1,Math.min(100,Number(cfg.chatPerGem??10)||10));
-    const w=bag(d);if((w.negin||0)<price)return null;w.negin-=price;w.spent=(w.spent||0)+price;w.chatLeft=(w.chatLeft||0)+per;save(WAL,wallets);return {price,per}}
+    const w=bag(d);if(passOn(w)){w.passLeft--;save(WAL,wallets);return 'pass'}
+    if((w.chatLeft||0)>0){w.chatLeft--;save(WAL,wallets);return 'paid'}return null}
+  function chatBack(d,via){if(!d||!via)return;if(via==='free'){const c=cnt(d);c.chatUsed=Math.max(0,(c.chatUsed||0)-1)}else if(via==='paid'){const w=bag(d);w.chatLeft=(w.chatLeft||0)+1}else if(via==='pass'){const w=bag(d);w.passLeft=(w.passLeft||0)+1}else if(via==='sub'){const w=bag(d);w.subChat=Math.max(0,(w.subChat||0)-1)}save(WAL,wallets)}
+  function chatBuy(d,cfg){if(!d)return null;const price=Math.max(1,Math.min(10,Number(cfg.chatGemPrice??1)||1)),hours=Math.max(1,Math.min(168,Number(cfg.chatPassHours??24)||24)),cap=Math.max(1,Math.min(300,Number(cfg.chatPassCap??20)||20));
+    const w=bag(d);if((w.negin||0)<price)return null;w.negin-=price;w.spent=(w.spent||0)+price;
+    // a pass bought while one is running starts after it (nothing she paid for is lost)
+    const running=passOn(w),base=running?Date.parse(w.passUntil):Date.now();w.passUntil=new Date(base+hours*3600e3).toISOString();w.passLeft=(running?(w.passLeft||0):0)+cap;save(WAL,wallets);return {price,per:cap,hours,until:w.passUntil}}
   function credit(d,n){if(!d)return;const w=bag(d);w.negin+=n;w.bought=(w.bought||0)+n;save(WAL,wallets)}
   // sign-in: link this device to her mobile. verified = the SMS code was checked (only then do the
   // account's diamonds open on this device). giftOk = the welcome gift may be given (once per person).
@@ -168,5 +179,5 @@ export function makeBank(DATA){
     const counters=[...ac,...dv.map(k=>wallets[k]).filter(w=>!w.phone)],bags=Object.values(wallets);
     return {devices:dv.length,accounts:ac.length,freeUsed:counters.reduce((s,w)=>s+(w.free||0),0),neginSpent:bags.reduce((s,w)=>s+(w.spent||0),0),neginBought:bags.reduce((s,w)=>s+(w.bought||0),0),neginLeft:bags.reduce((s,w)=>s+(w.negin||0),0)}}
 
-  return {chatState,chatTake,chatBack,chatBuy,find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,spendN,walletStats,routineFree,routineBack,link,phoneOf,trust,subExtend};
+  return {wallet,starterOk,markStarter,chatState,chatTake,chatBack,chatBuy,find,toFormula,add,hit,setImage,setReplaces,approve,remove,publicBank,list:()=>bank.products,balance,charge,refund,credit,adjust,spendN,walletStats,routineFree,routineBack,link,phoneOf,trust,subExtend};
 }

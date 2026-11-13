@@ -64,7 +64,7 @@ function build(){if(root)return;var st=document.createElement('style');st.textCo
 function bubble(m,i,last){var h='<div class="gc-m '+(m.role==='user'?'gc-u':'gc-b')+'">'+esc(m.content)+'</div>';
   if(m.role!=='user'){if(m.note)h+='<span class="gc-note">📝 '+esc(m.note)+'</span>';
     if(m.meta)h+='<span class="gc-note">'+esc(m.meta)+'</span>';
-    if(last&&m.pay)h+='<button type="button" class="gc-offer gc-pay" data-gcunlock="1">ادامه با '+fa(m.pay.price)+' الماس 💎 <small style="display:block;font-weight:400;opacity:.9">'+fa(m.pay.per)+' پیام دیگه، و همین الان جواب همین سؤالت</small></button>';
+    if(last&&m.pay)h+='<button type="button" class="gc-offer gc-pay" data-gcunlock="1">ادامه با '+fa(m.pay.price)+' الماس 💎 <small style="display:block;font-weight:400;opacity:.9">'+(m.pay.hours?fa(m.pay.hours)+' ساعت گفت‌وگو (تا '+fa(m.pay.per)+' پیام)':fa(m.pay.per)+' پیام دیگه')+'، و همین الان جواب همین سؤالت</small></button>';
     if(m.sources&&m.sources.length)h+='<div class="gc-src">منبع: '+m.sources.map(function(s){var u;try{u=new URL(s.url)}catch(e){return ''}return '<a href="'+esc(u.href)+'" target="_blank" rel="noopener noreferrer">'+esc(s.title)+'</a>'}).join(' · ')+'</div>';
     if(last&&m.offer)h+='<button type="button" class="gc-offer" data-offer="'+esc(m.offer.kind)+'">'+esc(OFFER[m.offer.kind]||m.offer.text)+(m.offer.text?' <small style="display:block;font-weight:400;opacity:.9">'+esc(m.offer.text)+'</small>':'')+'</button>';
     if(last&&m.acts)h+='<div class="gc-chips gc-acts">'+m.acts+'</div>';
@@ -75,20 +75,20 @@ function paint(typing){var s=state(),h=bubble({role:'assistant',content:HELLO,ch
   list.innerHTML=h;list.scrollTop=list.scrollHeight}
 function sendMsg(text,again){if(busy)return;busy=true;var s=state();if(!again){s.m.push({role:'user',content:String(text).slice(0,900)});save(s)}paint(true);track(again?'gem_msg_again':'gem_msg');
   var dev='';try{dev=localStorage.getItem('bw_device')||''}catch(e){}
-  fetch('/api/skinchat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({d:dev,profile:profileCtx(),messages:s.m.slice(-10).map(function(m){return {role:m.role,content:m.content}})})})
+  fetch('/api/skinchat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({d:dev,profile:profileCtx(),messages:s.m.slice(-6).map(function(m){return {role:m.role,content:m.content}})})})
   .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})
-  .then(function(x){var j=x.j||{},s2=state();if(j.code==='need_chat'){track('chat_paywall');s2.m.push({role:'assistant',content:'سؤالت رو گرفتم 💜 پیام‌های هدیه‌ت تموم شده. با '+fa(j.price||1)+' الماس، '+fa(j.per||10)+' پیام دیگه با هم حرف می‌زنیم و اولیش جواب همین سؤالته.',pay:{price:j.price||1,per:j.per||10},pending:text});save(s2);return}
+  .then(function(x){var j=x.j||{},s2=state();if(j.code==='need_chat'){track('chat_paywall');s2.m.push({role:'assistant',content:'سؤالت رو گرفتم 💜 پیام‌های هدیه‌ت تموم شده. با '+fa(j.price||1)+' الماس، تا '+fa(j.hours||24)+' ساعت هر چی خواستی بپرس (تا '+fa(j.per||20)+' پیام) و اولیش جواب همین سؤالته.',pay:{price:j.price||1,per:j.per||20,hours:j.hours||24},pending:text});save(s2);return}
     if(!x.ok&&!j.reply){s2.m.push({role:'assistant',content:j.error||'یه لحظه حواسم پرت شد عزیزم؛ دوباره بفرست 💜',chips:[text]});save(s2);return}
     var note=learn(j.profile);s2.m.push({role:'assistant',content:j.reply,chips:j.chips||[],offer:j.offer||null,sources:j.sources||[],note:note?'تو پروفایلت نوشتم: '+note:'',meta:metaOf(j.chat)});save(s2)})
   .catch(function(){var s2=state();s2.m.push({role:'assistant',content:'اینترنتت یه لحظه قطع شد قشنگم؛ دوباره بفرست 💜',chips:[text]});save(s2)})
   .then(function(){busy=false;paint()})}
 function fa(n){return String(n).replace(/\d/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[d]})}
-function metaOf(c){if(!c||c.sub||c.via==='safety')return '';if(c.via==='free'&&c.free<=3)return c.free?'🎁 '+fa(c.free)+' پیام هدیه مونده':'🎁 این آخرین پیام هدیه بود';if(c.via==='paid'&&c.paid<=3)return '💎 '+fa(c.paid)+' پیام دیگه داری';return ''}
+function metaOf(c){if(!c||c.sub||c.via==='safety')return '';if(c.via==='free'&&c.free<=3)return c.free?'🎁 '+fa(c.free)+' پیام هدیه مونده':'🎁 این آخرین پیام هدیه بود';if((c.via==='paid'||c.via==='pass')&&c.paid<=3)return '💎 '+fa(c.paid)+' پیام دیگه داری';if(c.via==='pass'&&c.pass&&c.pass.until){var h=Math.max(0,Math.round((Date.parse(c.pass.until)-Date.now())/36e5));if(h<=2)return '⏳ پاس گفت‌وگوت حدود '+fa(Math.max(1,h))+' ساعت دیگه تموم می‌شه'}return ''}
 function unlockChat(btn){var dev='';try{dev=localStorage.getItem('bw_device')||''}catch(e){}if(btn)btn.disabled=true;
   fetch('/api/skinchat/unlock',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({d:dev})}).then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})
   .then(function(x){var j=x.j||{};if(j.wallet&&window.bwWallet)try{window.bwWallet(j.wallet)}catch(e){}
     if(!x.ok){if(btn)btn.disabled=false;track('chat_unlock_short');if(window.bwNeginSheet)window.bwNeginSheet(1,function(){unlockChat()});return}
-    track('chat_unlock');var s=state(),i=-1;for(var k=s.m.length-1;k>=0;k--)if(s.m[k].pay){i=k;break}var q=i>=0?s.m[i].pending:'';if(i>=0)s.m.splice(i,1);save(s);
+    track('chat_unlock');track('chat_pass');var s=state(),i=-1;for(var k=s.m.length-1;k>=0;k--)if(s.m[k].pay){i=k;break}var q=i>=0?s.m[i].pending:'';if(i>=0)s.m.splice(i,1);save(s);
     if(q)sendMsg(q,true);else paint()}).catch(function(){if(btn)btn.disabled=false})}
 document.addEventListener('click',function(e){var b=e.target.closest('[data-gcunlock]');if(b)unlockChat(b)});
 function offer(k){if(k==='send_photo')return startPhoto();

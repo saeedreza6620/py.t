@@ -65,7 +65,7 @@ export function makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage
     const messages=[{role:'system',content:SYSTEM+'\nمنابع مجاز برای «sources»: '+SOURCES.map(s=>s.t).join('، ')+(web?'\nاین پیام درباره‌ی یک محصول/برند/ترند است: از جست‌وجوی وب استفاده کن و فقط آنچه در منابع دیدی بگو.':'')+'\nتاریخ امروز: '+todayFa},{role:'system',content:ctx},...msgs];
     const safety=SAFETY.test(last);let via='free';
     if(BANK&&d!=='anon'&&!safety){via=BANK.chatTake(d,c);if(!via){const st=BANK.chatState(d,c);
-      return j(402,{code:'need_chat',per:Math.max(1,Number(c.chatPerGem??10)||10),price:Math.max(1,Number(c.chatGemPrice??1)||1),error:'need_chat',wallet:BANK.balance(d,c),chat:st})}}
+      return j(402,{code:'need_chat',per:Math.max(1,Number(c.chatPassCap??20)||20),hours:Math.max(1,Number(c.chatPassHours??24)||24),price:Math.max(1,Number(c.chatGemPrice??1)||1),error:'need_chat',wallet:BANK.balance(d,c),chat:st})}}
     day.dev[d]=(day.dev[d]||0)+1;day.ip[a]=(day.ip[a]||0)+1;day.n++;save();
     const t0=Date.now();let x;try{x=await chatCall(model,messages,undefined,undefined,{web:3})}catch(e){if(BANK&&!safety)BANK.chatBack(d,via);return j(502,{error:'یه لحظه حواسم پرت شد عزیزم؛ دوباره بفرست 💜'})}
     if(!x.r.ok){day.dev[d]--;save();if(BANK&&!safety)BANK.chatBack(d,via);return j(x.r.status===429?429:502,{error:x.d?.error?.code==='budget'?'امروز دستیار خیلی شلوغ بوده؛ کمی بعد دوباره بیا 💜':'یه لحظه حواسم پرت شد عزیزم؛ دوباره بفرست 💜'})}
@@ -83,9 +83,9 @@ export function makeSkinChat({DATA,send,ip,sameOrigin,readBody,chatCall,logUsage
   async function unlock(req,res){const H={'Cache-Control':'no-store'},j=(st,b)=>send(res,st,b,'application/json',H);if(!sameOrigin(req))return j(403,{error:'forbidden'});
     let b;try{b=await readBody(req,2000)}catch{return j(400,{error:'bad'})}const d=clean(b.d,40).replace(/[^a-z0-9]/g,''),c=getCfg()||{};if(!d||!BANK)return j(400,{error:'device'});
     const r=BANK.chatBuy(d,c);if(!r)return j(402,{code:'need_negin',error:'برای ادامه‌ی گفت‌وگو ۱ الماس لازمه 💎',wallet:BANK.balance(d,c)});
-    try{fs.appendFileSync(path.join(DATA,'chat-unlocks.jsonl'),JSON.stringify({at:new Date().toISOString(),d,price:r.price,per:r.per})+'\n')}catch{}
+    try{fs.appendFileSync(path.join(DATA,'chat-unlocks.jsonl'),JSON.stringify({at:new Date().toISOString(),d,price:r.price,per:r.per,hours:r.hours})+'\n')}catch{}
     return j(200,{ok:true,...r,chat:BANK.chatState(d,c),wallet:BANK.balance(d,c)})}
   function state(req,res,url){const d=clean(url.searchParams.get('d'),40).replace(/[^a-z0-9]/g,''),c=getCfg()||{};
-    return send(res,200,{...(BANK&&d?BANK.chatState(d,c):{free:0,paid:0,sub:false}),per:Math.max(1,Number(c.chatPerGem??10)||10),price:Math.max(1,Number(c.chatGemPrice??1)||1)},'application/json',{'Cache-Control':'no-store'})}
+    return send(res,200,{...(BANK&&d?BANK.chatState(d,c):{free:0,paid:0,sub:false}),per:Math.max(1,Number(c.chatPassCap??20)||20),hours:Math.max(1,Number(c.chatPassHours??24)||24),price:Math.max(1,Number(c.chatGemPrice??1)||1)},'application/json',{'Cache-Control':'no-store'})}
   return {handle,unlock,state,stats:()=>({today:day.n,devices:Object.keys(day.dev).length})};
 }

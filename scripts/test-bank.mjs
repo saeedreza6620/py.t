@@ -2,7 +2,7 @@
 // judged per skin by the catalog engine, and paid checks follow free → Negin → none.
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import ts from 'typescript';import assert from 'node:assert/strict';
 import {makeBank} from '../lite/bank.mjs';
-const dir=fs.mkdtempSync(path.join(os.tmpdir(),'bw-bank-'));const B=makeBank(dir);const cfg={freeChecks:2,freePerIpDay:6};
+const fn=o=>({free:o.free,negin:o.negin});const dir=fs.mkdtempSync(path.join(os.tmpdir(),'bw-bank-'));const B=makeBank(dir);const cfg={freeChecks:2,freePerIpDay:6};
 const research={found:true,name_en:'Hydrating Oil Control Gel',name_fa:'ژل کنترل چربی تست',brand:'TestBrand',role:'cleanser',rinse_off:true,texture:'gel',actives:[{cls:'BHA',name:'Salicylic Acid',pct:2},{cls:'NOPE',name:'x'}],made_for:['oily','acne','bogus'],flags:['fragrance','bogus'],inci:['Aqua','Glycerin','Salicylic Acid','Zinc PCA','Parfum','Sodium Laureth Sulfate'],variants:['For dry skin']};
 const f=B.toFormula(research,'ژل کنترل چربی تست برند',[{url:'https://incidecoder.com/x'}],'openai/gpt-4.1:online');
 assert.equal(f.role,'cleanser');assert.equal(f.basis,'inci_sourced');assert.deepEqual(f.claims,['oily','acne'],'unknown claims dropped');assert.deepEqual(f.actives.map(a=>a.cls),['BHA','ZINC'],'unknown classes dropped; actives on the INCI list added');assert.deepEqual(B.toFormula({...research,actives:[{cls:'RETINOID',name:'Retinol'},{cls:'BHA',name:'Salicylic Acid'}]},'x',[{url:'https://incidecoder.com/x'}],'m').actives.map(a=>a.cls).includes('RETINOID'),false,'an active the INCI list does not have is dropped');assert.equal(B.toFormula({...research,flags:[],fragrance:false},'x',[{url:'https://incidecoder.com/x'}],'m').flags.includes('fragrance'),true,'Parfum on the list = fragrance');assert.deepEqual(f.flags,['fragrance']);
@@ -13,7 +13,7 @@ B.hit(row,'تست برند ژل');assert.equal(B.find('تست برند ژل').id
 assert(!JSON.stringify(B.publicBank()).includes('aliases'),'other shoppers\' queries are not published');
 // wallet: two free checks, then Negin, then nothing; refunds when nothing new was bought
 assert.equal(B.charge('dev1','1.1.1.1',cfg),'free');assert.equal(B.charge('dev1','1.1.1.1',cfg),'free');assert.equal(B.charge('dev1','1.1.1.1',cfg),null);
-B.credit('dev1',2);assert.deepEqual(B.balance('dev1',cfg),{free:0,negin:2});assert.equal(B.charge('dev1','1.1.1.1',cfg),'negin');B.refund('dev1','negin');assert.equal(B.balance('dev1',cfg).negin,2);
+B.credit('dev1',2);assert.deepEqual(fn(B.balance('dev1',cfg)),{free:0,negin:2});assert.equal(B.charge('dev1','1.1.1.1',cfg),'negin');B.refund('dev1','negin');assert.equal(B.balance('dev1',cfg).negin,2);
 for(let i=0;i<6;i++)B.charge('d'+i,'9.9.9.9',cfg);assert.equal(B.charge('fresh','9.9.9.9',cfg),null,'free checks capped per IP per day');
 // brand-declared formulas wait for the owner; a full sourced list found later replaces them
 {const dj={...research,name_en:'Declared Cream',brand:'DeclBrand',role:'moisturizer',inci:[],actives:[{cls:'CERAMIDE',name:'Ceramides'}],made_for:['dry']};
@@ -25,14 +25,24 @@ for(let i=0;i<6;i++)B.charge('d'+i,'9.9.9.9',cfg);assert.equal(B.charge('fresh',
 // sign-in: free checks are per person, diamonds follow her (after SMS), the welcome gift is once per person
 {const c2={freeChecks:2,freePerIpDay:99,registerGift:3};
  assert.equal(B.charge('pa','5.5.5.1',c2),'free');assert.equal(B.charge('pa','5.5.5.1',c2),'free');B.credit('pa',4);
- let L=B.link('pa','09120000001',{verified:true,cfg:c2,giftOk:true});assert.equal(L.returning,false);assert.equal(L.gift,3);assert.deepEqual(B.balance('pa',c2),{free:0,negin:7});
+ let L=B.link('pa','09120000001',{verified:true,cfg:c2,giftOk:true});assert.equal(L.returning,false);assert.equal(L.gift,3);assert.deepEqual(fn(B.balance('pa',c2)),{free:0,negin:7});
  L=B.link('pa','09120000001',{verified:true,cfg:c2,giftOk:true});assert.equal(L.gift,0,'signing in again never re-gifts');assert.equal(B.balance('pa',c2).negin,7,'or re-charges');
  L=B.link('pb','09120000001',{verified:true,cfg:c2,giftOk:true});assert.equal(L.returning,true,'a new device / the installed app is a returning person');assert.equal(L.gift,0);
- assert.deepEqual(B.balance('pb',c2),{free:0,negin:7},'free allowance not handed out again; her diamonds are here');
+ assert.deepEqual(fn(B.balance('pb',c2)),{free:0,negin:7},'free allowance not handed out again; her diamonds are here');
  assert.equal(B.charge('pb','5.5.5.2',c2),'negin');assert.equal(B.balance('pa',c2).negin,6,'one purse across her devices');
- B.link('pc','09120000001',{verified:false,cfg:c2,giftOk:true});assert.deepEqual(B.balance('pc',c2),{free:0,negin:0},'unverified sign-in: no free checks again, and no access to her diamonds');
+ B.link('pc','09120000001',{verified:false,cfg:c2,giftOk:true});assert.deepEqual(fn(B.balance('pc',c2)),{free:0,negin:0},'unverified sign-in: no free checks again, and no access to her diamonds');
  B.link('pd','09120000002',{verified:false,cfg:c2,giftOk:false});assert.equal(B.balance('pd',c2).negin,0,'no gift without the go-ahead');
  assert.equal(B.phoneOf('pb'),'09120000001');const st=B.walletStats();assert(st.accounts>=2&&st.neginLeft>=6)}
+
+// v148: one-time first purchase, and the assistant as a 24-hour pass (messages bought before v148 are kept)
+{const C={chatFree:1,chatGemPrice:1,chatPassHours:24,chatPassCap:3,subChatMonth:2};
+ assert.equal(B.balance('nw',C).starterOk,true,'never bought → first purchase offered');B.credit('nw',3);B.markStarter('nw');assert.equal(B.balance('nw',C).starterOk,false,'only once');
+ assert.equal(B.chatTake('nw',C),'free');assert.equal(B.chatTake('nw',C),null,'gift used up');
+ const r=B.chatBuy('nw',C);assert.equal(r.per,3);assert.equal(r.hours,24);assert.equal(B.balance('nw',C).negin,2);
+ assert.equal(B.chatTake('nw',C),'pass');assert.equal(B.chatState('nw',C).paid,2);B.chatBack('nw','pass');assert.equal(B.chatState('nw',C).paid,3,'failed answer gives the message back');
+ B.chatBuy('nw',C);assert.equal(B.chatState('nw',C).paid,6,'a second pass adds to the running one');
+ const w=B.wallet('nw');w.chatLeft=4;w.passUntil=new Date(Date.now()-1000).toISOString();assert.equal(B.chatState('nw',C).paid,4,'old messages bought before v148 still count after the pass ends');assert.equal(B.chatTake('nw',C),'paid');
+ B.subExtend('nw',30);assert.equal(B.chatTake('nw',C),'sub');assert.equal(B.chatTake('nw',C),'sub');assert.equal(B.chatState('nw',C).sub,false,'plus has a fair monthly cap');assert.equal(B.chatTake('nw',C),'paid','past the cap she uses what she has')}
 // engine: the bank formula is judged per skin like any catalog product
 const t=x=>ts.transpile(fs.readFileSync(x,'utf8'),{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022});
 fs.writeFileSync(path.join(dir,'catalog-routine.mjs'),t('assistant/catalog-routine.ts'));fs.writeFileSync(path.join(dir,'ingredient-guide.mjs'),t('assistant/ingredient-guide.ts'));fs.copyFileSync('assistant/resources/catalog-formulas.json',path.join(dir,'catalog-formulas.json'));

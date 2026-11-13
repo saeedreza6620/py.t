@@ -36,6 +36,8 @@ function card(){var sl=slot(),t=rj('bw_track_'+today(),{})||{},items=TRACK[sl],d
   items.forEach(function(x){var on=t[x[0]]===true;h+='<button type="button" class="td-tick'+(on?' on':'')+'" data-td="'+x[0]+'" aria-pressed="'+on+'"><i>'+(on?'✓':x[1])+'</i>'+x[2]+'</button>'});
   h+='</div>'+(all?'<p class="td-yay">'+(sl==='am'?'آفرین 💜 صبحت رو با مراقبت شروع کردی. شب دوباره همین‌جا.':'آفرین 💜 امشب پوستت با خیال راحت می‌خوابه.')+'</p>':'');
   h+='<div class="td-habit">'+ring(st.s)+'<div class="td-hw"><b>پایداری روتینت '+fa(Math.round(st.s*100))+'٪</b><small>'+words(st)+'</small><div class="td-week">'+week()+'</div></div></div>';
+  // v148: the 4-week report offer appears only once it is worth reading (care.js decides)
+  try{if(window.BWCare){BWCare.style();h+=BWCare.offerHtml()}}catch(e){}
   h+='<button type="button" class="td-more" data-tq="routine">روتین کامل و محصولاتم ←</button></div>';return h}
 var QUICK=[['check','🔍','بسنجم'],['calm','😣','پوستم به هم ریخته'],['chat','💬','حرف بزنیم'],['photo','📸','عکس امروز']];
 function quick(){return '<div class="td-quick">'+QUICK.map(function(q){return '<button type="button" data-tq="'+q[0]+'"><i>'+q[1]+'</i>'+q[2]+'</button>'}).join('')+'</div>'}
