@@ -120,7 +120,7 @@
 - Tagline: «طرف خریدار» (alternatives: «اول با پوستت بسنج، بعد بخر» · «ما چیزی نمی‌فروشیم؛ می‌گیم چی نخری»).
 - Voice: warm «با ناز» · blunt and honest · calming, never alarming.
 - Logo: «الماسِ تیک» (`brand/logo/`), not final yet. Text colours: `#15384B`, `#4A30C2`; `#E2669F` only for decoration or large text (contrast 3.2 on white).
-- Brand and marketing are run by Shaghayegh (co-founder); final brand decisions are taken jointly with Saeedreza.
+- 2026-11-15: Shaghayegh (co-founder, brand and marketing) left. Until a new brand/marketing co-founder joins (`docs/team/cofounder-recruiting-form.md`), Saeedreza owns brand and marketing; content is made without anyone's face on camera unless he chooses (`docs/strategy/14-instagram-solo.md`).
 
 ## 11. Proof points (only real ones)
 
