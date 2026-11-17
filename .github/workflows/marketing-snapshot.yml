@@ -17,11 +17,13 @@ jobs:
       - name: Fetch snapshot
         env:
           ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
+          # v149: the panel's private path (same value as ADMIN_PATH in Liara); empty → /admin
+          ADMIN_PATH: ${{ secrets.ADMIN_PATH }}
           SITE: https://beautywallet.liara.run
         run: |
           if [ -z "$ADMIN_TOKEN" ]; then echo "::error::Add the repository secret ADMIN_TOKEN (same value as in Liara)."; exit 1; fi
           mkdir -p data/marketing
-          curl -fsS --max-time 60 -H "X-Admin-Token: $ADMIN_TOKEN" "$SITE/admin/marketing.json?weeks=12" -o /tmp/snap.json
+          curl -fsS --max-time 60 -H "X-Admin-Token: $ADMIN_TOKEN" "$SITE/${ADMIN_PATH:-admin}/marketing.json?weeks=12" -o /tmp/snap.json
           python3 - <<'PY'
           import json,re,sys
           raw=open('/tmp/snap.json',encoding='utf-8').read(); d=json.loads(raw)

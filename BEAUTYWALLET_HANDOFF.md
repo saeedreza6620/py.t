@@ -109,7 +109,7 @@
 | دسته | متغیرها |
 | --- | --- |
 | هوش مصنوعی | `LIARA_API_KEY`، `AI_BASE_URL`، `AI_MODEL*` |
-| پنل | `ADMIN_TOKEN` |
+| پنل | `ADMIN_TOKEN` (رمز)، `ADMIN_PATH` (آدرس خصوصی پنل؛ از نسخه‌ی ۱۴۹. اگر گذاشته شود، `/admin` جواب ۴۰۴ می‌دهد و پنل فقط در `/<ADMIN_PATH>` باز می‌شود) |
 | داده | `DATA_DIR=/data` (بدون این، داده با هر انتشار پاک می‌شود)، `PUBLIC_URL` |
 | پیامک | `KAVENEGAR_*` (کد ورود)، `FARAZ_*` |
 | پرداخت | `PAY_SMS_TOKEN`، `PAY_LINK_SECRET` |
@@ -118,6 +118,7 @@
 **Secrets گیت‌هاب:**
 - `LIARA_API_TOKEN`
 - `ADMIN_TOKEN` (برای داده‌ی هفتگی؛ اگر هنوز گذاشته نشده، باید گذاشته شود)
+- `ADMIN_PATH` (همان مقدار لیارا؛ وقتی پنل آدرس خصوصی دارد، گزارش هفتگی از آن آدرس می‌خواند)
 - ۴ secret اندروید: `ANDROID_KEYSTORE_PASSWORD`، `ANDROID_KEY_PASSWORD`، `ANDROID_KEY_ALIAS`، `ANDROID_KEYSTORE_BASE64`
 
 ## ۵. ساخت، تست، انتشار

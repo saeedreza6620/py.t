@@ -42,6 +42,16 @@ const HOURLY=Number(E.HOURLY_LIMIT||40),DAILY=Number(E.DAILY_LIMIT||600);
 const ZIPPABLE=new Set(['.js','.mjs','.css','.html','.json','.svg','.ttf','.otf','.webmanifest','.txt','.xml','.map']),ZCACHE=new Map();
 const TYPES={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.webmanifest':'application/manifest+json','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.PNG':'image/png','.JPG':'image/jpeg','.webp':'image/webp','.svg':'image/svg+xml','.ico':'image/x-icon','.woff2':'font/woff2','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8','.xml':'application/xml'};
 const SEC={'X-Content-Type-Options':'nosniff','Referrer-Policy':'strict-origin-when-cross-origin','X-Frame-Options':'DENY'};
+// v149: private admin path. ADMIN_PATH = letters, digits, - or _ (12 or more); anything else is ignored (panel stays at /admin).
+const ADMIN_BASE=(()=>{const k=Object.keys(process.env).find(k=>k.replace(/[\s\u200c\u200f\u200e]/g,'').toUpperCase()==='ADMIN_PATH');
+  const v=String(k?process.env[k]:'').trim().replace(/^\/+|\/+$/g,'');return /^[A-Za-z0-9_-]{12,80}$/.test(v)?'/'+v:'/admin'})();
+// the panel's pages are written for /admin: links, forms, redirects and the cookie path are moved to the private path on the way out
+function adminRes(res){const fix=v=>String(v).replace(/\/admin(?![A-Za-z0-9_-])/g,ADMIN_BASE);let html=false;const wh=res.writeHead.bind(res),wr=res.write.bind(res),en=res.end.bind(res);
+  res.writeHead=(st,a,b)=>{const h=typeof a==='object'&&a?a:(b||{});const o={};for(const k in h){const lk=k.toLowerCase();if(lk==='content-length')continue;o[k]=lk==='location'||lk==='set-cookie'?(Array.isArray(h[k])?h[k].map(fix):fix(h[k])):h[k];if(lk==='content-type'&&/text\/html/.test(h[k]))html=true}
+    for(const k of res.getHeaderNames())if(k==='location'||k==='set-cookie'){const v=res.getHeader(k);res.setHeader(k,Array.isArray(v)?v.map(fix):fix(v))}else if(k==='content-type'&&/text\/html/.test(res.getHeader(k)))html=true;
+    if(res.getHeader('content-length')!=null&&html)res.removeHeader('content-length');return typeof a==='string'?wh(st,a,o):wh(st,o)};
+  res.write=(c,...r)=>wr(html&&c!=null?fix(Buffer.isBuffer(c)?c.toString('utf8'):c):c,...r);
+  res.end=(c,...r)=>en(html&&c!=null&&typeof c!=='function'?fix(Buffer.isBuffer(c)?c.toString('utf8'):c):c,...r);return res}
 const send=(res,status,body,type='application/json',extra={})=>{res.writeHead(status,{'Content-Type':type,...SEC,...extra});res.end(typeof body==='string'||Buffer.isBuffer(body)?body:JSON.stringify(body))};
 const ip=req=>String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].trim();
 async function readBody(req,max){return new Promise((ok,bad)=>{let n=0;const parts=[];req.on('data',c=>{n+=c.length;if(n>max){bad(Object.assign(new Error('too_large'),{status:413}));req.destroy();return}parts.push(c)});req.on('end',()=>{try{ok(JSON.parse(Buffer.concat(parts).toString('utf8')||'{}'))}catch{bad(Object.assign(new Error('bad_json'),{status:400}))}});req.on('error',bad)})}
@@ -587,7 +597,14 @@ const server=http.createServer(async(req,res)=>{
     if(url.pathname.startsWith('/api/l2/'))return await L2.handle(req,res,url);
     if(url.pathname==='/api/inbox'||url.pathname.startsWith('/api/inbox/'))return await STUDIO.handle(req,res,url);
     if(url.pathname.startsWith('/api/vault'))return await VAULT.handle(req,res,url);
-    if(url.pathname==='/admin'||url.pathname.startsWith('/admin/'))return await admin(req,res,url);
+    // v149: the panel can live at a private path. ADMIN_PATH (a Liara variable, only the owner knows it) moves it there,
+    // and then /admin answers like any unknown page. Without ADMIN_PATH nothing changes (/admin works as before).
+    if(ADMIN_BASE!=='/admin'){
+      if(url.pathname==='/admin'||url.pathname.startsWith('/admin/'))return send(res,404,'Not found','text/plain; charset=utf-8',{'Cache-Control':'no-store'});
+      if(url.pathname===ADMIN_BASE||url.pathname.startsWith(ADMIN_BASE+'/')){
+        const inner=new URL(url.href);inner.pathname='/admin'+url.pathname.slice(ADMIN_BASE.length);req.url=inner.pathname+inner.search;
+        return await admin(req,adminRes(res),inner)}}
+    else if(url.pathname==='/admin'||url.pathname.startsWith('/admin/'))return await admin(req,res,url);
     if(url.pathname.startsWith('/api/'))return send(res,404,{error:'این بخش در نسخه آزمایشی فعال نیست'});
     // static files
     let p=decodeURIComponent(url.pathname);if((p==='/'||p==='/index.html')&&!fs.existsSync(path.join(PUBLIC,'index.html'))){res.writeHead(302,{Location:'/legacy/'});return res.end()}
