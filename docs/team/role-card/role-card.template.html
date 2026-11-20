@@ -11,7 +11,7 @@
 @page{size:A4;margin:0}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#fff}
-body{font-family:Vazir,sans-serif;color:var(--ink);width:210mm;height:297mm;padding:13mm 14mm 11mm;display:flex;flex-direction:column;gap:5.2mm;font-size:10.4pt;line-height:1.75}
+body{font-family:Vazir,sans-serif;color:var(--ink);width:210mm;height:296mm;overflow:hidden;padding:12mm 14mm 10mm;display:flex;flex-direction:column;gap:3.6mm;font-size:10.4pt;line-height:1.75}
 header{display:flex;align-items:center;gap:5mm;background:linear-gradient(135deg,var(--pd),var(--p));color:#fff;border-radius:6mm;padding:6mm 7mm}
 header svg{width:19mm;height:19mm;flex:none;background:#fff;border-radius:5mm;padding:1.6mm}
 header h1{font-weight:800;font-size:18pt;line-height:1.35}
@@ -43,69 +43,62 @@ footer{margin-top:auto;display:grid;grid-template-columns:1.25fr 1fr;gap:4mm;ali
 .note b{color:#b8457b}
 .sig{border:.35mm dashed var(--p);border-radius:4mm;padding:3.4mm 5mm;font-size:9.6pt;color:var(--muted)}
 .sig b{color:var(--pd)}
+.share{display:flex;align-items:center;gap:5mm;background:linear-gradient(135deg,#fff1d6,#ffe4f0);border-radius:4mm;padding:4mm 6mm}
+.share .pct{font-weight:800;font-size:24pt;color:var(--pd);direction:ltr;line-height:1.2;white-space:nowrap}
+.share b{font-weight:800;font-size:11.5pt}.share p{font-size:10pt;color:var(--ink)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:2.6mm;margin-top:2mm}
+.path{margin-top:2mm;display:flex;flex-direction:column;gap:2.2mm}
+.st{display:grid;grid-template-columns:24mm 1fr 1fr;gap:3mm;align-items:center;background:var(--bg);border-radius:3.5mm;padding:2.4mm 4mm}
+.st .d{background:var(--pink);color:#fff;font-weight:800;border-radius:2.4mm;text-align:center;font-size:9.4pt;padding:.8mm 0}
+.st .w b{font-weight:800;font-size:10.4pt;display:block}.st .w span{font-size:9.2pt;color:var(--muted);display:block;line-height:1.55}
+.st .me{font-size:9.2pt;color:var(--pd);border-right:.5mm solid #d8cffd;padding-right:3mm;line-height:1.55}
+.st .me b{font-weight:800}
+.st.last{background:linear-gradient(135deg,var(--pd),var(--p));color:#fff}.st.last .w span,.st.last .me{color:#fff;opacity:.95}.st.last .me{border-color:rgba(255,255,255,.5)}
+.goal{font-size:9.8pt;color:var(--muted);margin-top:1.4mm}.goal b{color:var(--pd)}
 </style>
 </head>
 <body>
 <header>
 __LOGO__
 <div>
-<h1>هم‌بنیان‌گذار برند و مارکتینگ بیوتی‌ولت</h1>
-<p>صدای «طرف خریدار؛ می‌گیم چی نخری»، با یک شریک کنارت</p>
+<h1>هم‌بنیان‌گذار برند بیوتی‌ولت</h1>
+<p>صدای «طرف خریدار؛ می‌گیم چی نخری»، و من کنارت</p>
 </div>
 </header>
 
-<div class="lead">لازم نیست همه‌ی این‌ها را از روز اول بلد باشی. <b>هیچ‌کس هم‌بنیان‌گذار به دنیا نمی‌آید؛ آدم در کار هم‌بنیان‌گذار می‌شود.</b> چیزی که می‌خواهیم، تعهد و کنجکاوی است.</div>
+<div class="lead">لازم نیست همه‌چیز را از روز اول بلد باشی. <b>هیچ‌کس هم‌بنیان‌گذار به دنیا نمی‌آید؛ آدم در کار هم‌بنیان‌گذار می‌شود.</b> مسیر را قدم‌به‌قدم و با هم می‌رویم.</div>
 
-<div class="two">
-<div class="box serious">
-<h2>چیزهایی که جدی است</h2>
-<ul>
-<li>صداقت، خط قرمز است: نه نظر ساختگی، نه «قبل و بعد» ساختگی، نه کمیابی ساختگی</li>
-<li>هر هفته به عدد نگاه می‌کنیم، نه به حس</li>
-<li>تصمیم‌های نهایی را با هم می‌گیریم</li>
-<li>سهم با قرارداد رسمی و وستینگ است</li>
-</ul>
+<div class="share">
+<div class="pct">۲۰٪ +</div>
+<div><b>تو صاحب این برندی، نه همکارش.</b><p>بیش از ۲۰ درصد سهام بیوتی‌ولت مال توست؛ جزئیاتش را با هم در قرارداد رسمی می‌نویسیم.</p></div>
 </div>
-<div class="box calm">
-<h2>چیزهایی که نگرانش نباش</h2>
-<ul>
-<li>کد و بخش فنی محصول با تو نیست</li>
-<li>آمدن جلوی دوربین اجباری نیست</li>
-<li>اشتباه کردن، بخشی از یاد گرفتن است</li>
-<li>۱۵ روز اول برای شناختن هم است، نه برای عدد بزرگ</li>
-</ul>
+
+<div>
+<h3>برند بیوتی‌ولت، دست تو</h3>
+<div class="grid3">
+<div class="c"><i>۱</i><b>جایگاه و پیام</b><span>اینکه بیوتی‌ولت در ذهن مردم «کیست» و چه قولی می‌دهد</span></div>
+<div class="c"><i>۲</i><b>صدا و لحن</b><span>گرم، صادق و با ناز؛ در پست، پیام و متن‌های اپ</span></div>
+<div class="c"><i>۳</i><b>هویت بصری</b><span>لوگو، رنگ، فونت و قالب‌هایی که برند را یک‌دست نگه می‌دارند</span></div>
+<div class="c"><i>۴</i><b>داستان برند</b><span>چرا ساخته شدیم و برای چه کسی؛ روایتی که آدم‌ها به هم بگویند</span></div>
+<div class="c"><i>۵</i><b>اینستاگرام</b><span>ویترین برند: پست‌ها، هایلایت‌ها و بیو</span></div>
+<div class="c"><i>۶</i><b>حس برند در اپ</b><span>اینکه کاربر از ورود تا نتیجه، همان برند را حس کند</span></div>
 </div>
 </div>
 
 <div>
-<h3>هشت حوزه‌ی این نقش</h3>
-<div class="grid">
-<div class="c"><i>۱</i><b>جایگاه و صدای برند</b><span>لحن گرم و صادق، و تأیید هر متنی که بیرون می‌رود</span></div>
-<div class="c"><i>۲</i><b>هویت بصری</b><span>انتخاب نهایی لوگو، رنگ، فونت و قالب پست‌ها</span></div>
-<div class="c"><i>۳</i><b>اینستاگرام و محتوا</b><span>بعد از جا افتادن: هفته‌ای ۲ تا ۳ پست؛ بدون چهره هم می‌شود</span></div>
-<div class="c"><i>۴</i><b>گفت‌وگو با مشتری</b><span>جواب دایرکت‌ها و ماهی ۲ تا ۳ گفت‌وگو با کاربر</span></div>
-<div class="c"><i>۵</i><b>رشد و قیف</b><span>ذخیره، پیام و شروع برنامه؛ نه تعداد دنبال‌کننده</span></div>
-<div class="c"><i>۶</i><b>همکاری‌ها</b><span>پیج‌های مستقل، پزشک‌های همسو و انجمن‌ها؛ بدون پول از برندها</span></div>
-<div class="c"><i>۷</i><b>فروشگاه اپ</b><span>متن و تصویرهای کافه‌بازار و مایکت</span></div>
-<div class="c"><i>۸</i><b>نگهبان صداقت</b><span>هر چیزی که اعتماد کاربر را خرج کند، رد می‌شود</span></div>
+<h3>۱۵ روز اول، گام‌به‌گام</h3>
+<div class="path">
+<div class="st"><div class="d">روز ۱ تا ۲</div><div class="w"><b>آشنایی با بیوتی‌ولت</b><span>اپ را با هم مرور می‌کنیم و مخاطبش را می‌شناسی</span></div><div class="me"><b>من:</b> یک جلسه‌ی کامل معرفی، و جواب هر سؤال</div></div>
+<div class="st"><div class="d">روز ۳ تا ۵</div><div class="w"><b>ایده‌ی ۳ پست اول</b><span>پست‌هایی که بالای پیج سنجاق می‌شوند</span></div><div class="me"><b>من:</b> فهرست ایده‌ها و نمونه‌ها را آماده می‌کنم</div></div>
+<div class="st"><div class="d">روز ۶ تا ۹</div><div class="w"><b>نوشتن متن‌ها</b><span>با لحن بیوتی‌ولت</span></div><div class="me"><b>من:</b> پیش‌نویس اول را با هم می‌نویسیم</div></div>
+<div class="st"><div class="d">روز ۱۰ تا ۱۳</div><div class="w"><b>طراحی</b><span>با رنگ و فونت برند</span></div><div class="me"><b>من:</b> قالب و فایل‌های برند دستت است</div></div>
+<div class="st last"><div class="d">روز ۱۴ تا ۱۵</div><div class="w"><b>مرور و انتشار</b><span>اولین کار برندت روی پیج می‌رود</span></div><div class="me"><b>با هم:</b> مرور نهایی، و گپ درباره‌ی قدم بعد</div></div>
 </div>
+<p class="goal"><b>خروجی ۱۵ روز:</b> فقط یک کار؛ ۳ پست اول پیج بیوتی‌ولت.</p>
 </div>
 
-<div>
-<h3>۱۵ روز اول: فقط یک کار</h3>
-<div class="one">
-<div class="task"><b>۳ پست اول پیج بیوتی‌ولت</b><span>همان پست‌هایی که بالای پیج سنجاق می‌شوند. متن و طراحی را با هم می‌سازیم.</span></div>
-<div class="pace">
-<div class="s"><em>روز ۱ تا ۵</em><p>ایده و متن ۳ پست</p></div>
-<div class="s"><em>روز ۶ تا ۱۲</em><p>طراحی با رنگ و فونت برند</p></div>
-<div class="s"><em>روز ۱۳ تا ۱۵</em><p>مرور با هم و انتشار</p></div>
-</div>
-</div>
-</div>
-
-<footer>
-<div class="note"><b>در تمام این مسیر من کنارت هستم.</b> هر جا گیر کردی، با هم حلش می‌کنیم؛ تنها نیستی. آخر ۱۵ روز هم با هم گپ می‌زنیم که چطور گذشت.</div>
-<div class="sig"><b>با تو نیست:</b> کد، موتور محصول، و قیمت‌گذاری به‌تنهایی.<br><b>با هم است:</b> هر تصمیم نهایی.</div>
+<footer style="grid-template-columns:1fr">
+<div class="note"><b>در تمام این مسیر من کنارت هستم.</b> هر جا گیر کردی، با هم حلش می‌کنیم؛ تنها نیستی.</div>
 </footer>
 </body>
 </html>
