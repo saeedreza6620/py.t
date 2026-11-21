@@ -7,6 +7,14 @@ on:
     branches: [main]
     paths: ['android-app/**', '.github/workflows/android.yml']
   workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Put the SIGNED APK on the site (/download/beautywallet.apk) and redeploy. Debug builds are never published.'
+        type: boolean
+        default: false
+permissions:
+  contents: write
+  actions: write
 jobs:
   apk:
     runs-on: ubuntu-latest
@@ -49,3 +57,18 @@ jobs:
           name: BeautyWallet-apk-${{ github.run_number }}
           path: BeautyWallet-*.apk
           retention-days: 30
+      - name: Publish signed APK to the site
+        if: ${{ inputs.publish == true }}
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          f=$(ls BeautyWallet-*.apk | grep -v -- '-debug' | head -1 || true)
+          if [ -z "$f" ]; then echo "::error title=publish::No signed APK (signing secrets missing). Debug builds are never published."; exit 1; fi
+          mkdir -p lite/public/download && cp "$f" lite/public/download/beautywallet.apk
+          git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lite/public/download/beautywallet.apk
+          git commit -m "apk: publish $f to /download/beautywallet.apk" || { echo "same APK already published"; exit 0; }
+          git pull --rebase -q origin main && git push -q origin HEAD:main
+          gh workflow run liara.yml --ref main
+          echo "::notice title=publish::$f is on its way to https://beautywallet.liara.run/download/beautywallet.apk (Liara deploy started)"
